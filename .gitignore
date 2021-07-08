@@ -1,11 +1,3 @@
-# Compiled
-*.elc
+.metadata
 
-# Packaging
-.cask
-
-# Backup files
-*~
-
-# Undo-tree save-files
-*.~undo-tree
+Servers
