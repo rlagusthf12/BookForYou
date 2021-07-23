@@ -5,7 +5,7 @@
 	<setting name="jdbcTypeForNull" value="NULL"/>
 </settings>
 <typeAliases>
-<typeAlias type="com.kh.bk4u.member.model.vo.Member" alias="Member"/>
+<typeAlias type="com.bookforyou.bk4u.member.model.vo.Member" alias="Member"/>
 
 
 </typeAliases>
