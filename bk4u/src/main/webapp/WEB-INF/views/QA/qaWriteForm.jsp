@@ -77,7 +77,23 @@
     border: 1px solid #ccc;
     border-radius: 4px;    
     font-size: 20px;
+    text-align:center;
     
+	}
+	.uploadfile{
+	width:500px;
+	height:100px;
+	}
+	.emailinpu{
+	width:500px;
+	height:100px;
+	}
+	.emailinput>*{
+	margin-top:18px;
+	margin-left:10px;
+	}
+	.check{
+	margin-left:50px;
 	}
 	
 </style>
@@ -86,18 +102,27 @@
 
 <jsp:include page="../menubar.jsp"/>
 <div class="body1">
-<div class="faqTitle">FAQ</div>
+<div class="faqTitle">1:1문의 하기</div>
 
-<h2 style="margin-top:10px;">문의 제목</h2>
-<input type="text" placeholder="제목을 입력해주세요." class="titleinput">
-<br><br><br>
 <h2 style="margin-top:10px;">유형 선택</h2>
-<select style="margin-left:40px;"><option>기타</option></select>
+<select style="margin-left:50px;"><option>기타</option></select>
 <br><br><br>
 
-<h2 style="margin-left:35px;">내용</h2>
+<h2 style="margin-left:40px;">내용</h2>
 <textarea class="content">문의내용</textarea>
-
+<br><br><br><br>
+<h2>사진 첨부</h2>
+<div class="uploadfile">
+<input type="file" style="margin-top:5px; float:right;" >
+</div>
+<h2 style="margin-top:10px;">답변 알림</h2>
+<div class="emailinput">
+<input type="checkbox" class="check">
+<b>이메일</b>
+<input type="text" class="email">
+</div>
+<br><br><br>
+<hr>
 <div class="uploadButton">등록하기</div> 
  
 <div class="ListButton">목록으로</div>
