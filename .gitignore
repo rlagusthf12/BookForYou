@@ -80,3 +80,5 @@ bk4u/.settings/org.eclipse.jdt.core.prefs
 bk4u/.settings/org.eclipse.wst.common.component
 bk4u/.settings/org.eclipse.wst.validation.prefs
 pom.properties
+
+bk4u\target\classes
