@@ -21,7 +21,7 @@
         
         .wrap{width:1200px; height:1200px; margin:auto;}
         .wrap>div{width:100%; box-sizing:border-box;}
-        #top{height:40%;}
+        #top{height:40%; margin-left: -20px;}
         #mid{height:25%;}
         #bottom{height:35%;}
 
@@ -197,9 +197,6 @@ hr::after{
 
 </head>
 <body>
-
-	<a href="adminBookList.ad">임시 관리자페이지 이동</a>
-	
     <!-- 메뉴바-->
     <jsp:include page="common/menubar.jsp"/>
 	
@@ -208,7 +205,7 @@ hr::after{
         <div class="wrap">
             <br><br><br><br><br>
             <div id="top">
-                <div id="top_1">
+                <div id="top_1"><br>
                     <ul class="slides">
                         <input type="radio" name="radio-btn" id="img-1" checked />
                         <li class="slide-container">
@@ -301,7 +298,7 @@ hr::after{
                     </div>
                   </div>
 
-                  <div id="paging-wrap">
+                  <div id="paging-wrap"><br>
                     <ul class="pagination">
                         <li class="page-item disabled"><a class="page-link"> < </a></li>
                         <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
@@ -456,7 +453,7 @@ hr::after{
 
   <div class="popularbook">
     <div class="username" style="font-size: 25px; font-weight: bold;">user1 님  &nbsp; <a id="enrolldate" style="font-size: 20px; color: black; font-weight: normal;">2021-07-27
-       <a style="font-size: 15px; color: black;">작성</a></a>
+       <p style="font-size: 15px; color: black;">작성</p></a>
     </div>
       <br>
       
@@ -480,19 +477,21 @@ hr::after{
     </div>
 </div>  
 
-<div class="populartext" style="float: left; width: 35%;">
-  <textarea style="width: 90%; height: 100px; resize: none;">책 소감문 쓰는 곳1</textarea>
+    <div class="populartext" style="float: left; width: 35%;">
+      <textarea style="width: 90%; height: 100px; resize: none;">책 소감문 쓰는 곳1</textarea>
+    </div>
+
+    <div class="populartext" style="float: left; width: 35% ">
+      <textarea style="width: 90%; height: 100px; resize: none;">책 소감문 쓰는 곳2</textarea>
+    </div>
+
+    <div class="populartext" style="float: left;">
+      <textarea style="width: 200%; height: 100px; resize: none;">책 소감문 쓰는 곳3</textarea>
+    </div>
+
+
+  </div>
 </div>
-
-<div class="populartext" style="float: left; width: 35% ">
-  <textarea style="width: 90%; height: 100px; resize: none;">책 소감문 쓰는 곳2</textarea>
-</div>
-
-<div class="populartext" style="float: left;">
-  <textarea style="width: 200%; height: 100px; resize: none;">책 소감문 쓰는 곳3</textarea>
-</div>
-
-
       <!-- 별점 스크립트 -->
       <script>
         $('.starRev span').click(function(){
@@ -501,10 +500,14 @@ hr::after{
       return false;
       });
       </script>
-      
-<br><br><br><br><br>
 
-    <!-- 푸터바 -->
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+     
+     <!-- 푸터바 -->
     <jsp:include page="common/footer.jsp"/>
+
+    <br><br><br><br><br><br>
+
+
 </body>
 </html>
