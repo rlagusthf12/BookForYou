@@ -331,7 +331,7 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="../resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src=".../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>CS 관리</p>
         </div> 
         <br>
@@ -339,7 +339,7 @@
             <div>
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="img-content" src="../resources/cancel .png" alt="">
+                        <img class="img-content" src="../../../resources/adminCommon/images/cancel .png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -355,7 +355,7 @@
             <div>
                 <div class="processing-box selected">
                     <div class="img-area selected">
-                        <img class="img-content" src="../resources/return selected.png" alt="">
+                        <img class="img-content" src="../../../resources/adminCommon/images/return selected.png" alt="">
                     </div>
     
                     <div class="text-area selected">
@@ -371,7 +371,7 @@
             <div>
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="img-content" src="../resources/refund.png" alt="">
+                        <img class="img-content" src="../../../resources/adminCommon/images/refund.png" alt="">
                     </div>
     
                     <div class="text-area">

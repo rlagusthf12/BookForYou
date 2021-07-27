@@ -78,7 +78,7 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="../resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>환불 상세</p>
         </div>
         <br>
