@@ -158,7 +158,13 @@
 		    <artifactId>commons-dbcp</artifactId>
 		    <version>1.4</version>
 		</dependency>
-		
+		<!-- * 롬복 라이브러리 -->
+		<dependency>
+    		<groupId>org.projectlombok</groupId>
+    		<artifactId>lombok</artifactId>
+    		<version>1.18.12</version>
+    		<scope>provided</scope>
+		</dependency>
 
 
 	</dependencies>
