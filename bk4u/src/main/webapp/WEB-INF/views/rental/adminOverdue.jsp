@@ -235,7 +235,7 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="../resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>주문/배송관리</p>
         </div> 
         <br>
@@ -243,7 +243,7 @@
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="selected img-content" src="../resources/reservation.png" alt="">
+                        <img class="selected img-content" src="../../../resources/adminCommon/images/reservation.png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -257,13 +257,13 @@
             </div>
 
             <div class="processing-next">
-                <img src="../resources/processing-next.png" alt="">
+                <img src="../../../resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="selected img-content" src="../resources/rental.png" alt="">
+                        <img class="selected img-content" src="../../../resources/adminCommon/images/rental.png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -277,13 +277,13 @@
             </div>
 
             <div class="processing-next">
-                <img src="../resources/processing-next.png" alt="">
+                <img src="../../../resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="img-content" src="../resources/returnbook.png" alt="">
+                        <img class="img-content" src="../../../resources/adminCommon/images/returnbook.png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -299,7 +299,7 @@
             <div class="processing-outer" style="margin-left:40px;">
                 <div class="processing-box selected">
                     <div class="img-area selected">
-                        <img class="img-content" src="../resources/overdue selected.png" alt="">
+                        <img class="img-content" src="../../../resources/adminCommon/images/overdue selected.png" alt="">
                     </div>
     
                     <div class="text-area selected">
@@ -315,7 +315,7 @@
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="selected img-content" src="../resources/cancel .png" alt="">
+                        <img class="selected img-content" src="../../../resources/adminCommon/images/cancel .png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -345,7 +345,7 @@
                         <input type="text" name="">
                     </div>
                     <div id="search-btn">
-                        <input type="image" src="../resources/search.png" name="Submit" value="Submit" align="absmiddle">
+                        <input type="image" src="../../../resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
                     </div>
                 </div>
             </form>

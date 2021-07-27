@@ -136,11 +136,11 @@
 <body>
 
 	<jsp:include page="../adminSidebar.jsp"/>
-	
+
 	<div id="outer">
         <div id="main-title">
-            <img src="../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
-            <p>주문 상세 정보</p>
+            <img src="../resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <p>정기구독권 상세 정보</p>
         </div>
         <br>
 
@@ -148,81 +148,55 @@
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">주문번호</th>
-                        <th scope="col">주문일(결제일)</th>
-                        <th scope="col">도서명</th>
-                        <th scope="col">결제상태</th>
-                        <th scope="col">주문상태</th>
-                        <th scope="col">cs상태</th>
-                        <th scope="col">배송상태</th>
+                        <th scope="col">구독번호</th>
+                        <th scope="col">구독이름</th>
+                        <th scope="col">구독기간</th>
+                        <th scope="col">정기배송일</th>
+                        <th scope="col">가격</th>
+                        <th scope="col">구독시작일/종료일</th>
+                        <th scope="col">구독종료일</th>
+                        <th scop="col">구독상태</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>0001</td>
+                        <td>프리미엄</td>
+                        <td>3개월</td>
+                        <td>10일</td>
+                        <td>15,000</td>
                         <td>2021-07-01</td>
-                        <td>완전한 행복 외 2권</td>
-                        <td>결제완료</td>
-                        <td>주문확인</td>
-                        <td>-</td>
-                        <td>배송준비중</td>
+                        <td>2021-10-01</td>
+                        <td>구독중</td>
                     </tr>
                 </tbody>
             </table>
             <br>
             <div>
                 <div class="caption">
-                    <p>-- 주문상품 --</p>
+                    <p>-- 구독회원 --</p>
                 </div>
                 <div>
                     <table class="table table-bordered table-sm">
                         <thead>
                             <tr>
-                                <th scope="col">NO</th>
-                                <th scope="col" width="100">도서번호</th>
-                                <th scope="col">도서명</th>
-                                <th scope="col">저자</th>
-                                <th scope="col">출판사</th>
-                                <th scope="col">정가</th>
+                                <th scope="col">회원번호</th>
+                                <th scope="col">아이디</th>
+                                <th scope="col">이름</th>
+                                <th scope="col">연락처</th>
+                                <th scope="col">이메일</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>1</td>
-                                <td>0001</td>
-                                <td>완전한행복</td>
-                                <td>정유정</td>
-                                <td>은행나무</td>
-                                <td>15,000</td>
+                                <td>0011</td>
+                                <td>kim002</td>
+                                <td>김바람</td>
+                                <td>010-1111-2222</td>
+                                <td>kim00@naver.com</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <br>
-                <div>
-                    <div class="caption">
-                        <p>-- 주문자 정보 --</p>
-                    </div>
-                    <div>
-                        <table class="table table-bordered table-sm">
-                            <thead>
-                                <tr>
-                                    <th scope="col">주문자ID</th>
-                                    <th scope="col">주문자 이름</th>
-                                    <th scope="col">전화번호</th>
-                                    <th scope="col">이메일</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>namu32</td>
-                                    <td>김나무</td>
-                                    <td>010-2222-3333</td>
-                                    <td>namu33@naver.com</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
                 <br>
                 <div>
@@ -267,24 +241,24 @@
                 <br>
                 <div>
                     <div class="caption">
-                        <p>-- 배송정보 --</p>
+                        <p>-- 최근 배송정보 --</p>
                     </div>
                     <div>
                         <table class="table table-bordered table-sm">
                             <thead>
                                 <tr>
+                                    <th>발송일</th>
                                     <th>운송장번호</th>
                                     <th>택배사</th>
                                     <th>배송상태</th>
-                                    <th>배송비</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>2021-07-02</td>
                                     <td>-</td>
                                     <td>-</td>
                                     <td>-</td>
-                                    <td>2,500</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -297,9 +271,15 @@
                     <p>-- 결제정보 --</p>
                 </div>
                 <div>
+                    <table class="table table-bordered table-sm vertical" style="width:300px;">
+                        <tr>
+                            <th>결제번호</th>
+                            <td>001</td>
+                        </tr>
+                    </table>
                     <table class="table table-bordered table-sm vertical">
                         <tr>
-                            <th>주문 금액</th>
+                            <th>구독권 금액</th>
                             <td>53,600</td>
                             <th>결제 금액</th>
                             <td>48,240</td>
@@ -334,63 +314,60 @@
             </div>
             <br><br>
             <div id="btn-area">
-                <button type="button">입금전 처리</button>
-                <button type="button">주문 취소</button>
-                <button type="button">반품</button>
+                <button type="button">닫기</button>
             </div>
             <br><br><br>
         </div>   
     </div>
     
-    <!-- 우편번호API -->
     <script>
-	    function sample6_execDaumPostcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	
-	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                if(data.userSelectedType === 'R'){
-	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("sample6_extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("sample6_extraAddress").value = '';
-	                }
-	
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('sample6_postcode').value = data.zonecode;
-	                document.getElementById("sample6_address").value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("sample6_detailAddress").focus();
-	            }
-	        }).open();
-	    }
+        function sample6_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var addr = ''; // 주소 변수
+                    var extraAddr = ''; // 참고항목 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+                    // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                    if(data.userSelectedType === 'R'){
+                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraAddr += data.bname;
+                        }
+                        // 건물명이 있고, 공동주택일 경우 추가한다.
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                        if(extraAddr !== ''){
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                        // 조합된 참고항목을 해당 필드에 넣는다.
+                        document.getElementById("sample6_extraAddress").value = extraAddr;
+                    
+                    } else {
+                        document.getElementById("sample6_extraAddress").value = '';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('sample6_postcode').value = data.zonecode;
+                    document.getElementById("sample6_address").value = addr;
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("sample6_detailAddress").focus();
+                }
+            }).open();
+        }
     </script>
 </body>
 </html>

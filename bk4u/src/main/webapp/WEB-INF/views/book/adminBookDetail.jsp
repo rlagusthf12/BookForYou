@@ -187,7 +187,7 @@
 	<div id="outer">
         
         <div id="main-title">
-            <img src="../resources/next.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="../../../resources/adminCommon/images/next.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>도서상세</p>
         </div>
 

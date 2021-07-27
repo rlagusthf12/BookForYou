@@ -9,9 +9,9 @@
 <!-- 부트스트랩  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    
+
 <style>
-        #outer{
+		#outer{
             display:inline-block;
             position:absolute;
             margin-top:50px;
@@ -28,24 +28,17 @@
             font-weight: 600;
         }
 
-        /* 상태바 */
+        /* 공통 테두리 */
         .bar-outer{
             border:1px solid grey;
             padding:15px;
         }
-        #status-bar{
-            margin:30px 0 30px 0;
-            font-size: 17px;
-        }
-        #status-bar > div{
-            display: inline-block;
-            margin: 0 10px 0 10px;
-        }
 
-        /* 검색바 */
+        /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
+            margin-top:40px;
         }
         #search-bar{
             border-radius: 40px;
@@ -53,11 +46,15 @@
             width:600px;
             height: 40px;
             padding:1px;
+            margin:auto;
+            vertical-align: middle;
         }
+
+        /* 검색 조건 select */
         #search-condition{
             display: inline-block;
             border-right:2px solid #EC573B;
-            width:150px;
+            width:25%;
             height: 100%;
         }
         #search-condition>select{
@@ -71,15 +68,16 @@
         select:focus, #search-input>input:focus{
             outline:none;
         }
-
+        
+        /* 검색어 입력 */
         #search-input{
             display: inline-block;
-            width:400px;
+            width:65%;
             height: 100%;
         }
         #search-input > input{
             border-radius: 40px;
-            width:400px;
+            width:100%;
             height: 100%;
             border:none;
             font-size: 15px;
@@ -87,34 +85,26 @@
             text-align: center;
         }
 
-        .form-check{margin-bottom: 10px; display:block;}
-        .form-check  span{
-            font-size: 17px;
-            font-weight: 600;
-            margin-right: 20px;
+        /* 검색 이미지 버튼 */
+        #search-btn{
+            width: 5%;
+            float:right;
+            margin:3px 20px 3px 0;
         }
-        /* 검색 버튼 */
-        #search-btn{text-align: center;}
-        #search-btn button{
-            width:80px;
+        #search-btn input{
+            width: 30px;
             height: 30px;
-            font-size: 15px;
-            font-weight: 600;
-            border: none;
-            border-radius: 5px;
-            margin-left:20px;
         }
-        #search-btn button:hover{
-            cursor: pointer;
-        }
-        #search-btn button[type="submit"]{
-            background-color: #EC573B;
-            color:white;
-        }
-        #search-btn button[type="reset"]{
-            background-color:grey;
-            color: white;
-        }
+
+        /**/
+        #recommand-condition{padding:15px; text-align: center;}
+        #recommand-condition>div>p {display: inline-block;}
+        #bold{font-weight: 600; font-size: 18px;}
+        
+        #recommand-condition table{width:auto; margin: auto; text-align: left;} 
+        #recommand-condition table th{font-size: 15px; width:130px;}
+        #recommand-condition ul{list-style: none; margin: 0px; padding:0px;}
+        #recommand-condition li{float:left; margin: 0 5px 0 5px;}
 
         /* 검색 결과 구역 */
         #result-area{margin-top:50px;}
@@ -175,12 +165,12 @@
             color: #EC573B;
         }
 </style>
-    
-    <script>
-	    $(document).ready(function(){
-	        $("#handling-btn").children().addClass("btn btn-outline-success");
-	    })
-    </script>
+
+<script>
+	$(document).ready(function(){
+	    $("#handling-btn").children().addClass("btn btn-outline-success");
+	})
+</script>
 </head>
 <body>
 
@@ -188,23 +178,56 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
-            <p>도서목록</p>
+            <img src="../resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <p>정기배송 도서 선택</p>
         </div>
-
-        <div class="bar-outer" id="status-bar">
-            <div><span>전체</span> <span>10</span> <span>건</span></div>
-            <div>|</div>
-            <div><span>판매중</span> <span>10</span> <span>건</span></div>
-            <div>|</div>
-            <div> <span>품절</span> <span>10</span> <span>건</span></div>
-            <div>|</div>
-            <div><span>게시함</span> <span>10</span> <span>건</span></div>
-            <div>|</div>
-            <div><span>게시안함</span> <span>10</span> <span>건</span> </div>
+        <br>
+        <div class="bar-outer" id="recommand-condition">
+            <div>
+                <p id="bold">김유정</p>
+                <p>님의 도서 추천</p>
+            </div>
+            <div>
+                <table class="table-sm">
+                    <tr>
+                        <th>나이/성별</th>
+                        <td>20/여</td>
+                    </tr>
+                    <tr>
+                        <th>직업</th>
+                        <td>무직</td>
+                    </tr>
+                    <tr>
+                        <th>난이도</th>
+                        <td>상</td>
+                    </tr>
+                    <tr>
+                        <th>관심사</th>
+                        <td>
+                            <ul>
+                                <li>#여행</li>
+                                <li>#진로</li>
+                                <li>#리더십</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>서브카테고리</th>
+                        <td>
+                            <ul>
+                                <li>#시</li>
+                                <li>#정치/사회</li>
+                                <li>#기술/공학</li>
+                                <li>#어학/사전</li>
+                                <li>#예술/건축</li>
+                                <li>#인문/사회</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-
-        <div class="bar-outer" id="search-area">
+        <div id="search-area">
             <form action="">
                 <div id="search-bar">
                     <div id="search-condition">
@@ -219,25 +242,9 @@
                     <div id="search-input">
                         <input type="text" name="">
                     </div>
-                </div>
-                <br>
-                <div class="form-check form-check-inline">
-                    <span>판매상태</span>
-                    <input type="radio"> 전체
-                    <input type="radio"> 판매중
-                    <input type="radio"> 품절
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <span>게시상태</span>
-                    <input type="radio"> 전체
-                    <input type="radio"> 게시함
-                    <input type="radio"> 게시안함
-                </div>
-                <br>
-                <div id="search-btn">
-                    <button type="submit">검색</button>
-                    <button type="reset">초기화</button>
+                    <div id="search-btn">
+                        <input type="image" src="../resources/search.png" name="Submit" value="Submit" align="absmiddle">
+                    </div>
                 </div>
             </form>
         </div>
@@ -258,11 +265,7 @@
             </div>
 
             <div id="handling-btn">
-                <button>핀매중</button>
-                <button>품절</button>
-                <button>게시함</button>
-                <button>게시안함</button>
-                <button>도서등록</button>
+                <button>도서선택</button>
             </div>
 
             <div  id="result-div">
@@ -270,7 +273,7 @@
                     <thead>
                         <tr>
                             <th>NO</th>
-                            <th><input type="checkbox"></th>
+                            <th>-</th>
                             <th width="90px">이미지</th>
                             <th>도서번호</th>
                             <th>도서명</th>
@@ -279,8 +282,7 @@
                             <th>출간일</th>
                             <th>정가</th>
                             <th>재고</th>
-                            <th>상태</th>
-                            <th>게시</th>
+                            <th>중복여부</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -295,7 +297,6 @@
                             <td>2021-07-05</td>
                             <td>25,000</td>
                             <td>150</td>
-                            <td>판매중</td>
                             <td>Y</td>
                         </tr>
                     </tbody>
@@ -313,7 +314,7 @@
                     <li><a>&gt;</a></li>
                 </ul>
             </div>
-        </div> 
+        </div>
     </div>
 </body>
 </html>

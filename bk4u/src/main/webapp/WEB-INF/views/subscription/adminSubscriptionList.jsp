@@ -11,7 +11,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 <style>
-	#outer{
+		#outer{
             display:inline-block;
             position:absolute;
             margin-top:50px;
@@ -21,67 +21,15 @@
         #main-title > p{
             display:inline-block;
             position: absolute;
-            width:120px;
             height:30px;
             line-height: 30px;
             margin:0 0 0 15px;
             font-size:18px;
             font-weight: 600;
         }
-
         a{text-decoration: none;}
 
-        /* 절차 */
-        #processing-area>div{display:inline-block; width:32%;}
-        .processing-box{
-            border:1px solid grey;
-            width:180px;
-            height: 80px;
-            border-radius: 10px;
-            padding:10px;
-            margin:auto;
-        }
-        .processing-box.selected{border:1px solid rgb(255, 150, 59);}
-        .img-area{
-            display: inline-block;
-            width:55px;
-            height: 100%;
-            border-radius: 70%;
-            text-align: center;
-            vertical-align: middle;
-            background-color:rgb(224, 224, 224);
-            
-        }
-        .selected.img-area{background-color: rgb(255, 150, 59);}
-        .img-content{
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            margin:9px 0 9px 0;
-            vertical-align: middle;
-        }
-        .text-area, .number-area{
-            display: inline-block;
-            position:absolute;
-        }
-        .text-area{
-            font-size:18px;
-            height: 22px;
-            width: 100px;
-            text-align: center;
-        }
-        .text-area > p, .number-area > p{
-            margin:auto;
-        }
-        .selected.text-area > p{color: rgb(255, 150, 59);}
-        .number-area{
-            margin: 30px 0 0 0;
-            font-size:20px;
-            font-weight: 700;
-            height: 25px;
-            width: 100px;
-            text-align: center;
-        }
+        
 
         /* 공통 테두리 */
         .bar-outer{
@@ -169,7 +117,13 @@
             background-color:grey;
             color: white;
         }
-
+        #result-area{margin-top:50px;}
+        #result-title p{
+            float:left; 
+            margin:0 15px 0 0;
+            font-size:18px;
+            font-weight: 600;
+        }
 
         /* 타이틀 */
         #result-area{margin-top:50px;}
@@ -187,11 +141,6 @@
             height: 25px;
         }
 
-        /* 처리 버튼 */
-        .btn, .handling{
-            padding:0.1em 0.5em;
-        }
-
         /* 조회 결과 테이블 */
         #result-div{
             margin-top:20px; 
@@ -203,18 +152,6 @@
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
 
-        /* 취소 처리 컬럼 버튼 */
-        .handling.detail{
-            border: 0.1em solid #EC573B;
-            background-color: white;
-        }
-        .handling.detail>a{color:#EC573B;}
-        .handling{
-            border-radius: 5px;
-            font-weight: 600;
-            background-color: #EC573B;
-        }
-        .handling>a{color: white;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -277,7 +214,6 @@
         .memo-delete-btn{color:rgb(255, 150, 59);}
         .memo-upgrade-btn{color:black;}
 
-
         /* 페이징 */
         #paging-area{
             width:fit-content;
@@ -307,6 +243,7 @@
 
 <script>
 	$(function(){
+	
 	    $(".admin-memo button").click(function(){
 	        $(".admin-memo-content").toggleClass("hide");
 	
@@ -325,68 +262,20 @@
 	        const a = $(this).offset();
 	        $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
 	    })
+	
 	})
 </script>
 </head>
 <body>
-	
+
 	<jsp:include page="../adminSidebar.jsp"/>
-	
+
 	<div id="outer">
         <div id="main-title">
-            <img src="../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
-            <p>CS 관리</p>
+            <img src="../resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <p>정기구독 전체 조회</p>
         </div> 
         <br>
-        <div id="processing-area">
-            <div>
-                <div class="processing-box selected">
-                    <div class="img-area selected">
-                        <img class="selected img-content" src="../../../resources/adminCommon/images/cancel selected.png" alt="">
-                    </div>
-                    
-                    <div class="text-area selected">
-                        <p>취소</p>
-                    </div>
-    
-                    <div class="number-area selected">
-                        <p>10</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div class="processing-box">
-                    <div class="img-area">
-                        <img class="img-content" src="../../../resources/adminCommon/images/return.png" alt="">
-                    </div>
-                    
-                    <div class="text-area">
-                        <p>반품</p>
-                    </div>
-    
-                    <div class="number-area">
-                        <p>10</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div class="processing-box">
-                    <div class="img-area">
-                        <img class="img-content" src="../../../resources/adminCommon/images/refund.png" alt="">
-                    </div>
-    
-                    <div class="text-area">
-                        <p>환불</p>
-                    </div>
-    
-                    <div class="number-area">
-                        <p>10</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="bar-outer" id="search-area">
             <form action="">
@@ -396,20 +285,19 @@
                             <option value="searchAll">전체</option>
                             <option value="productCode">주문번호</option>
                             <option value="bookName">주문자명</option>
+                            <option value="">주문자ID</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="" id="search-input">
+                        <input type="text" name="">
                     </div>
                 </div>
                 <br>
                 <div class="form-check form-check-inline">
                     <span>취소상태</span>
                     <input type="radio"> 전체
-                    <input type="radio"> 취소신청
-                    <input type="radio"> 취소처리중
-                    <input type="radio"> 취소완료
-                    <input type="radio"> 입금전취소
+                    <input type="radio"> 이용전
+                    <input type="radio"> 해지
                 </div>
                 <br>
                 <div id="search-btn">
@@ -424,53 +312,43 @@
                 <p>조회결과</p>
                 <span>[총 10개]</span>
             </div>
+            
             <div id="array-div">
                 <select name="" id="array-condition">
-                    <option value="">주문일 최신순</option>
-                    <option value="">주문일 역순 </option>
+                    <option value="">신청일순</option>
+                    <option value="">신청일 역순 </option>
                 </select>
             </div>
 
             <div id="result-div">
-                <table  class="table table-bordered">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>NO</th>
-                            <th>취소번호</th>
-                            <th>취소신청일<br>(취소접수일)</th>
-                            <th>주문번호</th>
-                            <th>주문자</th>
-                            <th>도서명</th>
-                            <th>취소금액</th>
-                            <th>결제수단</th>
-                            <th>취소상태</th>
-                            <th>취소처리</th>
+                            <th>구독번호</th>
+                            <th>신청일/종료일</th>
+                            <th>구독자</th>
+                            <th>구독이름</th>
+                            <th>구독기간</th>
+                            <th>배송희망일</th>
+                            <th>결제금액</th>
+                            <th>결제상태</th>
+                            <th>구독상태</th>
                             <th width="70px">메모</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td>ca001</td>
-                            <td>2021-07-01</td>
-                            <td>ca0003</td>
-                            <td>최하늘<br>(choi1111)</td>
-                            <td>부의시나리오</td>
-                            <td>17,000</td>
-                            <td>무통장</td>
-                            <td>입금전취소</td>
-                            <td>
-                                <!-- 취소상태(STATUS)가 입금전취소, 취소처리중, 취소완료일 경우 -->
-                                <div class="handling detail">
-                                    <a href="cancelDetail.html">상세</a>
-                                </div>
-                                <!-- 취소상태(STATUS)가 취소신청일 경우-->
-                                <!--
-                                <div class="handling">
-                                    <a href="">처리</a>
-                                </div>
-                                -->
-                            </td>
+                            <td>on0001</td>
+                            <td>2021-07-01 <br> 2021-10-01</td>
+                            <td>최하늘<br>(choi0001)</td>
+                            <td>프리미엄</td>
+                            <td>3개월권</td>
+                            <td>10일</td>
+                            <td>15,000</td>
+                            <td>결제완료</td>
+                            <td>이용중</td>
                             <td>
                                 <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재하지 않을(NULL) 경우 -->
                                 <div class="user-memo no-exist">
@@ -480,138 +358,25 @@
                                 <div class="admin-memo no-exist">
                                     <button type="button">admin</button>
                                 </div>
-
-                                <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재할 경우 -->
-                                <!--
-                                <div class="user-memo exist">
-                                    <a href="#">user</a>
-                                </div>    
-                                -->
-                                <!-- 관리자 메모(ADMIN_MEMO)가 존재할 경우 -->
-                                <!--
-                                <div class="admin-memo exist">
-                                    <a href="#" >admin</a>
-                                </div>    
-                                -->
-
-
                             </td>
                         </tr>
                         <tr>
-                            <td>2</td>
-                            <td>ca001</td>
-                            <td>2021-07-01</td>
-                            <td>ca0003</td>
-                            <td>최하늘<br>(choi1111)</td>
-                            <td>부의시나리오</td>
-                            <td>17,000</td>
-                            <td>무통장</td>
-                            <td>입금전취소</td>
+                            <td>1</td>
+                            <td>on0001</td>
+                            <td>2021-07-01 <br> 2021-10-01</td>
+                            <td>최하늘<br>(choi0001)</td>
+                            <td>프리미엄</td>
+                            <td>3개월권</td>
+                            <td>10일</td>
+                            <td>15,000</td>
+                            <td>결제완료</td>
+                            <td>해지</td>
                             <td>
-                                <div class="handling">
-                                    <a href="cancelProcess.html">처리</a>
-                                </div>
-                            </td>
-                            <td>
+                                <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재하지 않을(NULL) 경우 -->
                                 <div class="user-memo exist">
                                     <button type="button">user</button>
                                 </div>
-                                <div class="admin-memo exist">
-                                    <button type="button">admin</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>ca001</td>
-                            <td>2021-07-01</td>
-                            <td>ca0003</td>
-                            <td>최하늘<br>(choi1111)</td>
-                            <td>부의시나리오</td>
-                            <td>17,000</td>
-                            <td>무통장</td>
-                            <td>입금전취소</td>
-                            <td>
-                                <div class="handling">
-                                    <a href="cancelProcess.html">처리</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="user-memo exist">
-                                    <button type="button">user</button>
-                                </div>
-                                <div class="admin-memo exist">
-                                    <button type="button">admin</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>ca001</td>
-                            <td>2021-07-01</td>
-                            <td>ca0003</td>
-                            <td>최하늘<br>(choi1111)</td>
-                            <td>부의시나리오</td>
-                            <td>17,000</td>
-                            <td>무통장</td>
-                            <td>입금전취소</td>
-                            <td>
-                                <div class="handling">
-                                    <a href="cancelProcess.html">처리</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="user-memo exist">
-                                    <button type="button">user</button>
-                                </div>
-                                <div class="admin-memo exist">
-                                    <button type="button">admin</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>ca001</td>
-                            <td>2021-07-01</td>
-                            <td>ca0003</td>
-                            <td>최하늘<br>(choi1111)</td>
-                            <td>부의시나리오</td>
-                            <td>17,000</td>
-                            <td>무통장</td>
-                            <td>입금전취소</td>
-                            <td>
-                                <div class="handling">
-                                    <a href="">처리</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="user-memo exist">
-                                    <button type="button">user</button>
-                                </div>
-                                <div class="admin-memo exist">
-                                    <button type="button">admin</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>ca001</td>
-                            <td>2021-07-01</td>
-                            <td>ca0003</td>
-                            <td>최하늘<br>(choi1111)</td>
-                            <td>부의시나리오</td>
-                            <td>17,000</td>
-                            <td>무통장</td>
-                            <td>입금전취소</td>
-                            <td>
-                                <div class="handling">
-                                    <a href="">처리</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="user-memo exist">
-                                    <button type="button">user</button>
-                                </div>
+                                <!-- 관리자 메모(ADMIN_MEMO)가 존재하지 않을(NULL) 경우 -->
                                 <div class="admin-memo exist">
                                     <button type="button">admin</button>
                                 </div>
@@ -620,7 +385,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="user-memo-content hide">
                 <div class="memo-top">
                     <p>구매자 배송메세지</p>
@@ -643,7 +407,6 @@
                     <button type="button" class="memo-upgrade-btn">저장</button>
                 </div>
             </div>
-
             <br>
             <div id="paging-area">
                 <ul id="pagination">
