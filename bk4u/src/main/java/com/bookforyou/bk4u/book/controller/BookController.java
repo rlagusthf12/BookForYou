@@ -21,13 +21,19 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@RequestMapping("adminBookList.ad")
-	public String goAdminBookList(Model model) {
+	@RequestMapping("adminBookList.bk")
+	public ModelAndView adminBookList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		ArrayList<Book> bList = (ArrayList)bookService.goAdminBookList();
-		System.out.println(bList);
-		model.addAttribute("bList", "bList");
-		return "book/adminBookList";
+		int listCount = bookService.selectAdminListCount();
+	
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);	
+		ArrayList<Book> bList = (ArrayList)bookService.selectAdminBookList(pi);
+		
+		mv.addObject("pi", pi)
+		  .addObject("bList", bList)
+		  .setViewName("book/adminBookList");
+		
+		return mv;
 	}
 	
 	@RequestMapping("search.bk")

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +35,11 @@
         /* 상태바 */
         .bar-outer{
             border:1px solid grey;
-            padding:15px;
+            padding:10px;
         }
         #status-bar{
             margin:30px 0 30px 0;
-            font-size: 17px;
+            font-size: 15px;
         }
         #status-bar > div{
             display: inline-block;
@@ -68,7 +69,7 @@
             border: none;
             width: 95%;
             height: 100%;
-            font-size: 15px;
+            font-size: 14px;
             text-align-last: center;
         }
         select:focus, #search-input>input:focus{
@@ -85,23 +86,25 @@
             width:400px;
             height: 100%;
             border:none;
-            font-size: 15px;
+            font-size: 14px;
             text-align-last: center;
             text-align: center;
         }
 
         .form-check{margin-bottom: 10px; display:block;}
         .form-check  span{
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 600;
             margin-right: 20px;
         }
+        .form-check label{margin-right:5px; font-size:14px;}
+        
         /* 검색 버튼 */
         #search-btn{text-align: center;}
         #search-btn button{
-            width:80px;
+            width:75px;
             height: 30px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             border: none;
             border-radius: 5px;
@@ -124,13 +127,14 @@
         #result-title p{
             float:left; 
             margin:0 15px 0 0;
-            font-size:18px;
+            font-size:17px;
             font-weight: 600;
         }
 
         /* 처리 버튼 */
         .btn{
             padding:0.1em 0.5em;
+            font-size: 14px;
         }
 
         /* 정렬 select */
@@ -138,14 +142,17 @@
         #array-condition{
             width:140px;
             height: 25px;
+            font-size:14px;
         }
 
+		/* 조회 결과 테이블 */
         #result-div{
             margin-top:20px; 
             font-size: 14px;
             text-align: center;
-            
         }
+        
+        /* 테이블 */
         .table{
             border:0.08em solid grey;
             vertical-align: middle;
@@ -153,30 +160,10 @@
         .table td, .table th{border: 0.01em solid #dee2e6;}
         
         /* 페이징 */
-        #paging-area{
-            width:fit-content;
-            margin:auto;
-        }
-        #pagination{
-            padding:0;
-            list-style: none;
-        }
-        #pagination li{
-            display:inline-block;
-            width:35px;
-            height: 30px;
-            text-align: center;
-            line-height: 18px;
-            font-size:16px;
-            padding:5px;
-            border: 1px solid black;
-            border-radius: 5px;
-        }
-        #pagination li:hover{
-            cursor: pointer;
-            font-weight: 600;
-            color: #EC573B;
-        }
+       	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
+
+        #paging-wrap{width:fit-content; margin:auto;}
+        .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 </style>
     
     <script>
@@ -226,16 +213,16 @@
                 <br>
                 <div class="form-check form-check-inline">
                     <span>판매상태</span>
-                    <input type="radio"> 전체
-                    <input type="radio"> 판매중
-                    <input type="radio"> 품절
+                    <input type="radio" id="statusAll" name="bkStatus"><label for="statusAll">전체</label>
+                    <input type="radio" id="statusY" name="bkStatus"><label for="statusY">판매중</label>
+                    <input type="radio" id="statusN" name="bkStatus"><label for="statusN">품절</label>
                 </div>
 
                 <div class="form-check form-check-inline">
                     <span>게시상태</span>
-                    <input type="radio"> 전체
-                    <input type="radio"> 게시함
-                    <input type="radio"> 게시안함
+                    <input type="radio" id="selStatusAll" name="bkSelStatus"><label for="selStatusAll">전체</label>
+                    <input type="radio" id="selStatusY" name="bkSelStatus"><label for="selStatusY">게시함</label>
+                    <input type="radio" id="selStatusN" name="bkSelStatus"><label for="selStatusN">게시안함</label>
                 </div>
                 <br>
                 <div id="search-btn">
@@ -269,53 +256,70 @@
             </div>
 
             <div  id="result-div">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th><input type="checkbox"></th>
-                            <th width="90px">이미지</th>
-                            <th>도서번호</th>
-                            <th>도서명</th>
-                            <th>저자</th>
-                            <th>출판사</th>
-                            <th>출간일</th>
-                            <th>정가</th>
-                            <th>재고</th>
-                            <th>상태</th>
-                            <th>게시</th>
+                            <th width="45px">NO</th>
+                            <th width="30px"><input type="checkbox"></th>
+                            <th width="85px">이미지</th>
+                            <th width="70px">도서번호</th>
+                            <th width="170px">도서명</th>
+                            <th width="130px">저자</th>
+                            <th width="105px">출판사</th>
+                            <th width="90px">출간일</th>
+                            <th width="60px">정가</th>
+                            <th width="50px">재고</th>
+                            <th width="60px">상태</th>
+                            <th width="50px">게시</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><input type="checkbox"></td>
-                            <td><img src="" alt="" width="80" height="90"></td>
-                            <td>pn0001</td>
-                            <td>완전한 행복</td>
-                            <td>정유정</td>
-                            <td>은행나무</td>
-                            <td>2021-07-05</td>
-                            <td>25,000</td>
-                            <td>150</td>
-                            <td>판매중</td>
-                            <td>Y</td>
-                        </tr>
+                    	<c:forEach var="b" items="${ bList }">
+	                        <tr>
+	                            <td>1234</td>
+	                            <td><input type="checkbox"></td>
+	                            <td><img src="" alt="" width="65" height="80"></td>
+	                            <td>${ b.bkNo }</td>
+	                            <td>${ b.bkTitle }</td>
+	                            <td>${ b.writerName }</td>
+	                            <td>${ b.bkPublish }</td>
+	                            <td>${ b.bkDate }</td>
+	                            <td>${ b.bkPrice }</td>
+	                            <td>${ b.bkStock }</td>
+	                            <td>${ b.bkStatus }</td>
+	                            <td>${ b.bkSelStatus }</td>
+	                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
             <br>
-            <div id="paging-area">
-                <ul id="pagination">
-                    <li><a>&lt;</a></li>
-                    <li><a>1</a></li>
-                    <li><a>2</a></li>
-                    <li><a>3</a></li>
-                    <li><a>4</a></li>
-                    <li><a>5</a></li>
-                    <li><a>&gt;</a></li>
-                </ul>
-            </div>
+            <div id="paging-wrap">
+	            <ul class="pagination">
+	            	<c:choose>
+	            		<c:when test="${ pi.currentPage eq 1 }">
+	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+	                	</c:when>
+	                	<c:otherwise>
+			                <li class="page-item"><a class="page-link" href="adminBookList.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
+	    				</c:otherwise>
+	    			</c:choose>            	
+	                
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                <li class="page-item"><a class="page-link" href="adminBookList.bk?currentPage=${ p }">${ p }</a></li>
+	                </c:forEach>
+	                
+	                
+	                <c:choose>
+	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<li class="page-item"><a class="page-link" href="adminBookList.bk?currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                	</c:otherwise>
+	                </c:choose>
+	            </ul>
+	        </div>
         </div> 
     </div>
 </body>

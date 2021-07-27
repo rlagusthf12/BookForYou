@@ -12,7 +12,8 @@ public interface BookService {
 	 * 관리자 도서목록 조회 (한진)
 	 * @return
 	 */
-	ArrayList<Book> goAdminBookList();
+	int selectAdminListCount();
+	ArrayList<Book> selectAdminBookList(PageInfo pi);
 
 	int selectSearchBookCount(HashMap<String, String> map);
 

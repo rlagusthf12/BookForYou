@@ -15,14 +15,19 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 public class BookServiceImpl implements BookService {
 	
 	@Autowired
-	BookDao bookDao;
+	private BookDao bookDao;
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public ArrayList<Book> goAdminBookList() {
-		return bookDao.goAdminBookList(sqlSession);
+	public int selectAdminListCount() {
+		return bookDao.selectAdminListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Book> selectAdminBookList(PageInfo pi) {
+		return bookDao.selectAdminBookList(sqlSession, pi);
 	}
 	
 	@Override
@@ -34,5 +39,6 @@ public class BookServiceImpl implements BookService {
 	public ArrayList<Book> selectSearchBook(PageInfo pi, String condition, String keyword){
 		return bookDao.selectSearchBook(sqlSession, pi, condition, keyword);
 	}
+
 
 }

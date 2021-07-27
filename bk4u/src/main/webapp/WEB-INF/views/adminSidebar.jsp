@@ -211,7 +211,7 @@
                 <a href="javascript:void(0);"><i class="fa fa fa-tasks"></i><span>도서</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="adminBookList.ad">도서 리스트</a>
+                        <a href="adminBookList.bk">도서 리스트</a>
                     </li>
                 </ul>
             </li>

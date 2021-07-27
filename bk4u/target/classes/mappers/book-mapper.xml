@@ -26,8 +26,15 @@
 		<result column="writer_change_name" property="writerChangeName"/>
 		<result column="bk_content" property="bkContent"/>
 	</resultMap>
+	
+	<select id="selectAdminListCount" resultType="_int">
+		select 
+			   count(*)
+	      from book
+	</select>
 
-	<select id="bookList" resultMap="bookResult">
+	<!-- 관리자 전체 도서 목록 조회 (한진) -->
+	<select id="selectAdminBookList" resultMap="bookResult">
 		select 
 		       bk_no,
 		       sub_cate_no,
@@ -52,6 +59,8 @@
 		       writer_change_name,
 		       bk_content
 		  from book
+		 order
+    		by bk_date desc
 	</select>
 	
 	<select id="selectSearchBookCount" resultType="_int">
