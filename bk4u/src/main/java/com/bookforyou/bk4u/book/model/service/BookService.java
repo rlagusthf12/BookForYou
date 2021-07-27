@@ -1,8 +1,10 @@
 package com.bookforyou.bk4u.book.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
 
 public interface BookService {
 
@@ -11,4 +13,8 @@ public interface BookService {
 	 * @return
 	 */
 	ArrayList<Book> goAdminBookList();
+
+	int selectSearchBookCount(HashMap<String, String> map);
+
+	ArrayList<Book> selectSearchBook(PageInfo pi, String condition, String keyword);
 }
