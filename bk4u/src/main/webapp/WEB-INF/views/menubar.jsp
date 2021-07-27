@@ -139,9 +139,9 @@
             <div id="header_1_right">
                 <c:choose>
                
-                    <c:when test="">
+                    <c:when test="${ empty loginUser }">
                         <a href="">회원가입</a> | 
-                        <a href="">로그인</a>
+                        <a href="loginForm.me">로그인</a>
                     </c:when>
                     <c:otherwise>   
                       
@@ -149,7 +149,7 @@
                         <br>
                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="">마이페이지</a>
-                        <a href="">로그아웃</a>
+                        <a href="logout.me">로그아웃</a>
                     </c:otherwise>
                 </c:choose>
             </div>
