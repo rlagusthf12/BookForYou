@@ -27,4 +27,37 @@
 		<result column="change_img_name" property="changeImgName"/>
 	</resultMap>
   
+  	<select id="loginMember" resultMap="memberResult">
+  		<!-- 암호화 전 -->
+  		select
+    		mem_no,
+    		mem_id,
+    		mem_pwd,
+    		mem_name,
+    		mem_post,
+    		mem_basic_address,
+    		mem_detail_address,
+    		mem_address_refer,
+    		mem_gender,
+    		mem_age,
+    		mem_phone,
+    		mem_email,
+    		email_status,
+    		mem_status,
+    		mem_nickname,
+    		mem_work,
+    		mem_level,
+    		mem_enrolldate,
+    		black_reason,
+    		black_date,
+    		report_count,
+    		origin_img_name,
+    		change_img_name
+		from members
+		where 
+  			mem_id = #{memId}
+    		and mem_pwd = #{memPwd}
+    		and email_status = 'Y'
+    		and not mem_status = 'N'
+  	</select>
 </mapper>
