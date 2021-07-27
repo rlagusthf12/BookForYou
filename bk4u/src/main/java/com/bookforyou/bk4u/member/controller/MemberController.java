@@ -28,7 +28,6 @@ public class MemberController {
 	 */
 	@RequestMapping("login.me")
 	public String loginMember(Member member,Model model,HttpSession session) {
-		System.out.println(member.getMemId());
 		Member loginUser = memberService.loginMember(member);
 		
 		if(loginUser == null) {
@@ -41,4 +40,6 @@ public class MemberController {
 		}
 		
 	}
+	
+	
 }
