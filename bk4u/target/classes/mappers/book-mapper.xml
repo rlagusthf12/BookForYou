@@ -53,5 +53,67 @@
 		       bk_content
 		  from book
 	</select>
+	
+	<select id="selectSearchBookCount" resultType="_int">
+		select
+		       count(*)
+		  from book
+		 where bk_selstatus = 'Y'
+	 	<choose>
+	 		<when test="condition == 'searchAll'">
+	 			and bk_title
+	 		</when>
+	 		<when test="condition == 'bookTitle'">
+	 			and bk_title
+	 		</when>
+	 		<otherwise>
+	 			and writer_name
+	 		</otherwise>
+	 	</choose>
+	 	like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectSearchBook" resultMap="bookResult">
+		select
+		       bk_no
+		     , sub_cate_no
+		     , bk_title
+		     , bk_publish
+		     , bk_price
+		     , bk_date
+			 , bk_price,
+		     , intro_originname
+		     , intro_changename
+		     , bk_stock
+		     , bk_seldate
+		     , bk_mdate
+		     , bk_selstatus
+		     , bk_age
+		     , bk_gender
+		     , bk_work
+		     , bk_level
+		     , bk_status
+		     , writer_name
+		     , writer_intro
+		     , writer_origin_name
+		     , writer_change_name
+		     , bk_content
+		  from book
+		 where bk_selstatus = 'Y'
+	 	<choose>
+	 		<when test="condition == 'searchAll'">
+	 			and bk_title
+	 		</when>
+	 		<when test="condition == 'bookTitle'">
+	 			and bk_title
+	 		</when>
+	 		<otherwise>
+	 			and writer_name
+	 		</otherwise>
+	 	</choose>
+	 			like '%' || #{keyword} || '%'
+		 order
+		    by bk_no desc
+	</select>
 
 </mapper>

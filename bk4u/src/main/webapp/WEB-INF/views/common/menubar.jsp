@@ -117,8 +117,6 @@
 	                                    <option value="searchAll">전체</option>
 			                            <option value="bookTitle">제목</option>
 			                            <option value="writerName">저자명</option>
-                                        <option value="productCode">주문번호</option>
-                                        <option value="bookName">주문자명</option>
                                     </select>
                                 </div>
                                 <div id="search-input">
