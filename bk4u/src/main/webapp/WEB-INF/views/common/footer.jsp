@@ -17,6 +17,9 @@
             width:100%;
             height:20%;
             border-bottom:5px solid lightgray;
+            width: 1500px;
+            margin-bottom: 20px;
+            margin-left: -250px;
         }
     #footer-1 > a{
             text-decoration:none;
@@ -44,11 +47,12 @@
         }
     .text2{
             width:40%;
-            font-size: 20px;
+            font-size: 23px;
     }
     .text3{
         width:40%;
-        font-size: 20px;
+        font-size: 23px;
+        margin-top: -18px;
     }
     
 </style>
@@ -61,6 +65,8 @@
             <a href="#">청소년보호정책</a> &nbsp;&nbsp;
             <a href="#">고객센터</a> &nbsp;&nbsp;
         </div>
+
+        
 
     <div id="footer-2">
         <div class="text1"><p>BK4U</p></div>
