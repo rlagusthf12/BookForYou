@@ -188,22 +188,22 @@
                 <a href="javascript:void(0);"><i class="fa fa-home"></i><span>매장</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="ui-alerts-notifications.html">온라인</a>
+                        <a href="ui-alerts-notifications.html"></a>
                     </li>
                     <li>
-                        <a href="ui-panels.html">도서목록</a>
+                        <a href="ui-panels.html"></a>
                     </li>
                     <li>
-                        <a href="ui-buttons.html">도서등록</a>
+                        <a href="ui-buttons.html"></a>
                     </li>
                     <li>
-                        <a href="ui-slider-progress.html">오프라인</a>
+                        <a href="ui-slider-progress.html"></a>
                     </li>
                     <li>
-                        <a href="ui-modals-popups.html">도서목록</a>
+                        <a href="ui-modals-popups.html"></a>
                     </li>
                     <li>
-                        <a href="ui-icons.html">도서등록</a>
+                        <a href="ui-icons.html"></a>
                     </li>
                 </ul>
             </li>
@@ -211,22 +211,7 @@
                 <a href="javascript:void(0);"><i class="fa fa fa-tasks"></i><span>도서</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="forms-components.html">Components</a>
-                    </li>
-                    <li>
-                        <a href="forms-validation.html">Validation</a>
-                    </li>
-                    <li>
-                        <a href="forms-mask.html">Mask</a>
-                    </li>
-                    <li>
-                        <a href="forms-wizard.html">Wizard</a>
-                    </li>
-                    <li>
-                        <a href="forms-multiple-file.html">Multiple File Upload</a>
-                    </li>
-                    <li>
-                        <a href="forms-wysiwyg.html">WYSIWYG Editor</a>
+                        <a href="book/adminBookList.jsp">도서 리스트</a>
                     </li>
                 </ul>
             </li>
@@ -234,10 +219,70 @@
                 <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>주문/배송</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li class="active">
-                        <a href="mail-inbox.html">Inbox</a>
+                        <a href="order/adminOrderList.jsp">전체 주문 조회</a>
                     </li>
                     <li>
-                        <a href="mail-compose.html">Compose Mail</a>
+                        <a href="order/adminOrderConfirm.jsp">주문확인</a>
+                    </li>
+                    <li>
+                        <a href="order/adminProductReady.jsp">상품준비중</a>
+                    </li>
+                    <li>
+                        <a href="order/adminDeliveryReady.jsp">배송준비중</a>
+                    </li>
+                    <li>
+                        <a href="order/adminDeliveryIng.jsp">배송중</a>
+                    </li>
+                    <li>
+                        <a href="order/adminComplete.jsp">배송완료</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>CS</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+                <ul>
+                    <li class="active">
+                        <a href="cs/adminCancel.jsp">주문취소</a>
+                    </li>
+                    <li>
+                        <a href="cs/adminReturn.jsp">반품</a>
+                    </li>
+                    <li>
+                        <a href="cs/adminRefund.jsp">환불</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>정기구독</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+                <ul>
+                    <li class="active">
+                        <a href="subscription/adminSubscriptionList.jsp">정기구독 리스트</a>
+                    </li>
+                    <li>
+                        <a href="subscription/adminDelivery">정기구독 발송</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sub-menu">
+                <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>대여</span><i class="arrow fa fa-angle-right pull-right"></i></a>
+                <ul>
+                    <li class="active">
+                        <a href="rental/adminRentalList.jsp">대여 리스트</a>
+                    </li>
+                    <li>
+                        <a href="rental/adminReserve.jsp">예약</a>
+                    </li>
+                    <li>
+                        <a href="rental/adminRentalIng.jsp">대여중</a>
+                    </li>
+                    <li>
+                        <a href="rental/adminReturnBook.jsp">반납완료</a>
+                    </li>
+                    <li>
+                        <a href="rental/adminRentalCancel.jsp">예약취소</a>
+                    </li>
+                    <li>
+                        <a href="rental/adminOverdue.jsp">연체</a>
                     </li>
                 </ul>
             </li>
