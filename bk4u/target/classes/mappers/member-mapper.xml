@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
+	<resultMap id="memberResult" type="Member">
+		<result column="mem_no" property="memNo"/>
+		<result column="mem_id" property="memId"/>
+		<result column="mem_pwd" property="memPwd"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_post" property="memPost"/>
+		<result column="mem_basic_address" property="memBasicAddress"/>
+		<result column="mem_detail_address" property="memDetailAddress"/>
+		<result column="mem_address_refer" property="memAddressRefer"/>
+		<result column="mem_gender" property="memGender"/>
+		<result column="mem_age" property="memAge"/>
+		<result column="mem_phone" property="memPhone"/>
+		<result column="mem_email" property="memEmail"/>
+		<result column="email_status" property="emailStatus"/>
+		<result column="mem_status" property="memStatus"/>
+		<result column="mem_nickname" property="memNickname"/>
+		<result column="mem_work" property="memWork"/>
+		<result column="mem_level" property="memLevel"/>
+		<result column="mem_enrolldate" property="memEnrolldate"/>
+		<result column="black_reason" property="blackReason"/>
+		<result column="black_date" property="blackDate"/>
+		<result column="report_count" property="reportCount"/>
+		<result column="origin_img_name" property="originImgName"/>
+		<result column="change_img_name" property="changeImgName"/>
+	</resultMap>
   
 </mapper>
