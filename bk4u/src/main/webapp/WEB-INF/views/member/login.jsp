@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BK4U ë¡ê·¸ì¸</title>
+    <title>BK4U 로그인</title>
     <style>
         body{
             background-color: #f6f4f4;
@@ -107,31 +107,31 @@
         <header>
             <div id="logo-box">
                 <div id="blank-box"></div>
-                <img src="..\images\bk4u_logo.png" width="200px">
+                <img src="resources\member\images\bk4u_logo.png" width="200px">
             </div>
             <div id="head-of-content-box">
-                <h3>ë¡ê·¸ì¸</h3>
+                <h3>로그인</h3>
             </div>
         </header>
         <hr width="480px" style="margin-top: 30px;"/>
         <div class="login-box">
             <form class="login-container">
-                <p><input type="text" placeholder="ìì´ëë¥¼ ìë ¥í´ì£¼ì¸ì." required/></p>
-                <p><input type="password" placeholder="ë¹ë°ë²í¸ë¥¼ ìë ¥í´ì£¼ì¸ì" required/></p>
-                <p><input type="submit" value="ë¡ê·¸ì¸"/></p>
+                <p><input type="text" placeholder="아이디를 입력해주세요." required/></p>
+                <p><input type="password" placeholder="비밀번호를 입력해주세요" required/></p>
+                <p><input type="submit" value="로그인"/></p>
             </form>
         </div>
         <div id="find-box">
             <div id="find-inner-box">
-                <a href="">ìì´ë ì°¾ê¸°</a>
+                <a href="">아이디 찾기</a>
                 <span style="color:gainsboro">|</span>
-                <a href="">ë¹ë°ë²í¸ ì°¾ê¸°</a>
+                <a href="">비밀번호 찾기</a>
             </div>
         </div>
         <hr width="480px" style="margin-top: 40px;"/>
         <div id="sign-up-box">
-            BK4Uê° ì²ìì´ë¼ë©´?
-            <span><a href="">íìê°ì</a></span>
+            BK4U가 처음이라면?
+            <span><a href="">회원가입</a></span>
         </div>
         
 
