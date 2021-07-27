@@ -28,7 +28,6 @@
 	</resultMap>
   
   	<select id="loginMember" resultMap="memberResult">
-  		<!-- 암호화 전 -->
   		select
     		mem_no,
     		mem_id,

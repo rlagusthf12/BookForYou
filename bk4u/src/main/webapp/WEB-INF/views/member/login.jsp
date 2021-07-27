@@ -3,12 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BK4U 로그인</title>
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <style>
     @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
     *{
@@ -111,6 +118,12 @@
 </head>
 
 <body>
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
     <div id="content-box">
         <header>
             <div id="logo-box">
@@ -123,9 +136,9 @@
         </header>
         <hr width="480px" style="margin-top: 30px;"/>
         <div class="login-box">
-            <form action="login.me" class="login-container">
-                <p><input type="text" placeholder="아이디를 입력해주세요." name="userId" required/></p>
-                <p><input type="password" placeholder="비밀번호를 입력해주세요" name="userPwd" required/></p>
+            <form action="login.me" class="login-container" method="post">
+                <p><input type="text" placeholder="아이디를 입력해주세요." name="memId" required/></p>
+                <p><input type="password" placeholder="비밀번호를 입력해주세요" name="memPwd" required/></p>
                 <p><input type="submit" value="로그인"/></p>
             </form>
         </div>
