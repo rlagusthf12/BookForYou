@@ -9,6 +9,8 @@
 <!-- 부트스트랩  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
 	#outer{
@@ -268,7 +270,7 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="../../../resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>주문/배송관리</p>
         </div> 
         <br>
@@ -276,7 +278,7 @@
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="selected img-content" src="../../../resources/adminCommon/images/processing.png" alt="">
+                        <img class="selected img-content" src="resources/adminCommon/images/processing.png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -290,13 +292,13 @@
             </div>
 
             <div class="processing-next">
-                <img src="../../../resources/adminCommon/images/processing-next.png" alt="">
+                <img src="resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="img-content" src="../../../resources/adminCommon/images/production.png" alt="">
+                        <img class="img-content" src="resources/adminCommon/images/production.png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -310,13 +312,13 @@
             </div>
             
             <div class="processing-next">
-                <img src="../../../resources/adminCommon/images/processing-next.png" alt="">
+                <img src="resources/adminCommon/images/processing-next.png" alt="">
             </div>
             
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="img-content" src="../../../resources/adminCommon/images/box.png" alt="">
+                        <img class="img-content" src="resources/adminCommon/images/box.png" alt="">
                     </div>
     
                     <div class="text-area">
@@ -330,13 +332,13 @@
             </div>
 
             <div class="processing-next">
-                <img src="../../../resources/adminCommon/images/processing-next.png" alt="">
+                <img src="resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
             <div class="processing-outer">
                 <div class="processing-box selected">
                     <div class="img-area selected">
-                        <img class="selected img-content" src="../../../resources/adminCommon/images/delivery selected.png" alt="">
+                        <img class="selected img-content" src="resources/adminCommon/images/delivery selected.png" alt="">
                     </div>
     
                     <div class="text-area selected">
@@ -350,13 +352,13 @@
             </div>
 
             <div class="processing-next">
-                <img src="../../../resources/adminCommon/images/processing-next.png" alt="">
+                <img src="resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
             <div class="processing-outer">
                 <div class="processing-box">
                     <div class="img-area">
-                        <img class="selected img-content" src="../../../resources/adminCommon/images/complete.png" alt="">
+                        <img class="selected img-content" src="resources/adminCommon/images/complete.png" alt="">
                     </div>
     
                     <div class="text-area">
