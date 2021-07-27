@@ -10,6 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BK4U 로그인</title>
     <style>
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    *{
+    	font-family: "Noto Sans KR", sans-serif !important;
+    }
         body{
             background-color: #f6f4f4;
             width:1500px;
@@ -17,7 +21,7 @@
             margin:auto;
         }
         #content-box{
-            width: 550px;
+            width: 600px;
             height:100%;
             background-color: #FFFFFF;
             margin-left: auto;
@@ -25,7 +29,7 @@
             margin-top: 0;
         }
         #blank-box{
-            height:60px;
+            height:130px;
         }
         #logo-box{
             text-align: center;
@@ -33,12 +37,13 @@
         #head-of-content-box{
             margin-top: 30px;
             text-align: center;
+            margin-bottom: 50px;
         }
         .login-box{
             width: 80%;
             height: fit-content;
             margin: auto;
-            margin-top: 40px;
+            margin-top: 50px;
             text-align: center;
         }
         #login-container{
@@ -71,6 +76,7 @@
             border: 1px solid #000;
             color: #fff;
             cursor: pointer;
+            font-size: large;
         }
         
         .login-box input[type="submit"]:hover{
@@ -84,6 +90,7 @@
             text-align: right;
             margin: auto;
             margin-top: 40px;
+            font-size:large;
         }
         #find-inner-box a{
             cursor: pointer;
@@ -93,6 +100,7 @@
         #sign-up-box{
             margin-top: 80px;
             text-align: center;
+            font-size: larger;
         }
         #sign-up-box span a{
             text-decoration: none;
@@ -110,14 +118,14 @@
                 <img src="resources\member\images\bk4u_logo.png" width="200px">
             </div>
             <div id="head-of-content-box">
-                <h3>로그인</h3>
+                <h2>로그인</h2>
             </div>
         </header>
         <hr width="480px" style="margin-top: 30px;"/>
         <div class="login-box">
-            <form class="login-container">
-                <p><input type="text" placeholder="아이디를 입력해주세요." required/></p>
-                <p><input type="password" placeholder="비밀번호를 입력해주세요" required/></p>
+            <form action="login.me" class="login-container">
+                <p><input type="text" placeholder="아이디를 입력해주세요." name="userId" required/></p>
+                <p><input type="password" placeholder="비밀번호를 입력해주세요" name="userPwd" required/></p>
                 <p><input type="submit" value="로그인"/></p>
             </form>
         </div>
