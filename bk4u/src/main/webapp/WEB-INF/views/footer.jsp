@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style>
     #footer{
-            width:1200px;
+            width:80%;
             height:200px;
             margin:auto;
             margin-top:50px;
@@ -17,6 +17,9 @@
             width:100%;
             height:20%;
             border-bottom:5px solid lightgray;
+            width: 1500px;
+            margin-bottom: 20px;
+            margin-left: -250px;
         }
     #footer-1 > a{
             text-decoration:none;
@@ -44,11 +47,12 @@
         }
     .text2{
             width:40%;
-            font-size: 20px;
+            font-size: 23px;
     }
     .text3{
         width:40%;
-        font-size: 20px;
+        font-size: 23px;
+        margin-top: -18px;
     }
     
 </style>
@@ -62,16 +66,18 @@
             <a href="#">고객센터</a> &nbsp;&nbsp;
         </div>
 
+        
+
     <div id="footer-2">
         <div class="text1"><p>BK4U</p></div>
         <div class="text2" align="center">
             <p id="p1">(주) BookForYou</p>
             대표이사 : 내코드가 최고조<br>
             사업자등록 : 111-11-11111<br>
-            본사 : 서울시 종로구 종로 1<br><br><br><br><br><br><br><br><br><br>
+            본사 : 서울시 종로구 종로 1<br><br><br><br><br><br><br><br>
         </div>
 
-        <br>
+        
 
         <div class="text3"><br><br>
             FAX : 02-1111-1111<br>
