@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.kh.bk4u">
+	<logger name="com.bookforyou.bk4u">
 		<level value="info" />
 	</logger>
 	
