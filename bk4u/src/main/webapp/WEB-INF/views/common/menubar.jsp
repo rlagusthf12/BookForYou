@@ -110,17 +110,19 @@
 
             <div id="header_1_center">
                     <div class="bar-outer" id="search-area">
-                        <form action="">
+                        <form action="search.bk method="get">
                             <div id="search-bar">
                                 <div id="search-condition">
                                     <select name="condition" id="search-condition">
-                                        <option value="searchAll">전체</option>
+	                                    <option value="searchAll">전체</option>
+			                            <option value="bookTitle">제목</option>
+			                            <option value="writerName">저자명</option>
                                         <option value="productCode">주문번호</option>
                                         <option value="bookName">주문자명</option>
                                     </select>
                                 </div>
                                 <div id="search-input">
-                                    <input type="text" name="" id="search-input">
+                                    <input type="text" name="keyword" id="search-input">
                                 </div>
                             </div>
                            <br>
