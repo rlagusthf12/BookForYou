@@ -131,12 +131,7 @@
                     <div id="search-input">
                         <input type="text" name="" id="search-input">
                     </div>                    
-                </div>    
-                
-                   <div id="search-btn">
-                    <button type="submit" style=" border:2px solid #EC573B; background-color:#EC573B;">검색</button>
-                    <button type="reset"  style="border:2px solid gray; background-color:gray;">초기화</button>
-                </div>                           
+                </div>               
              
             </form>
         </div>
