@@ -38,9 +38,18 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			// main페이지 업로딩 되면 여기만 수정
 			System.out.println("로그인 성공" + loginUser);
-			return "main";
+			return "redirect:/";
 		}
 		
+	}
+	
+	/**
+	 * logout메서드
+	 */
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 	
 	
