@@ -32,10 +32,12 @@ public class MemberController {
 		
 		if(loginUser == null) {
 			model.addAttribute("alertMsg", "일치하지 않는 회원정보입니다.");
-			return "redirect:/";
+			System.out.println("로그인 실패" + loginUser);
+			return "member/login";
 		}else {
 			session.setAttribute("loginUser", loginUser);
 			// main페이지 업로딩 되면 여기만 수정
+			System.out.println("로그인 성공" + loginUser);
 			return "main";
 		}
 		
