@@ -90,6 +90,9 @@ public class BookDao {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSearchList", map, rowBounds);
 	}
 
+	/*
+	 * [공통] 도서 상세 조회 (연지)
+	 */
 	public Book selectBook(SqlSessionTemplate sqlSession, int bkNo) {
 		return sqlSession.selectOne("bookMapper.selectBook", bkNo);
 	}
