@@ -20,11 +20,17 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	/**
+	 * [관리자] 전체 도서 개수 조회 (한진)
+	 */
 	@Override
-	public int selectAdminListCount() {
-		return bookDao.selectAdminListCount(sqlSession);
+	public int selectAllListCount() {
+		return bookDao.selectAllListCount(sqlSession);
 	}
 
+	/**
+	 * [관리자] 전체 도서 목록 조회 (한진)
+	 */
 	@Override
 	public ArrayList<Book> selectAdminBookList(PageInfo pi) {
 		return bookDao.selectAdminBookList(sqlSession, pi);
@@ -38,6 +44,22 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public ArrayList<Book> selectSearchBook(PageInfo pi, String condition, String keyword){
 		return bookDao.selectSearchBook(sqlSession, pi, condition, keyword);
+	}
+
+	/**
+	 * [관리자] '판매중'인 도서 개수 조회 (한진)
+	 */
+	@Override
+	public int selectStatusYCount() {
+		return bookDao.selectStatusYCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] 게시 'Y'인 도서 개수 조회 (한진)
+	 */
+	@Override
+	public int selectSelStatusYCount() {
+		return bookDao.selectSelStatusYCount(sqlSession);
 	}
 
 

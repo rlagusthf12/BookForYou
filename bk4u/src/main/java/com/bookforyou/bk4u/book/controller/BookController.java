@@ -21,16 +21,32 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
+	/**
+	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 개수 조회 (한진)
+	 * @param mv
+	 * @param currentPage
+	 * @return
+	 */
 	@RequestMapping("adminBookList.bk")
 	public ModelAndView adminBookList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		int listCount = bookService.selectAdminListCount();
+		int listCount = bookService.selectAllListCount();
 	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);	
 		ArrayList<Book> bList = (ArrayList)bookService.selectAdminBookList(pi);
 		
+		int selectStatusY = bookService.selectStatusYCount();
+		int selectSelStatusY = bookService.selectSelStatusYCount();
+		int selectStatusN = listCount - selectStatusY;
+		int selectSelStatusN = listCount - selectSelStatusY;
+		
 		mv.addObject("pi", pi)
 		  .addObject("bList", bList)
+		  .addObject("bCount", listCount)
+		  .addObject("statusY", selectStatusY)
+		  .addObject("statusN", selectStatusN)
+		  .addObject("selStatusY", selectSelStatusY)
+		  .addObject("selStatusN", selectSelStatusN)
 		  .setViewName("book/adminBookList");
 		
 		return mv;

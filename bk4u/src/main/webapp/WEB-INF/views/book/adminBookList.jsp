@@ -159,6 +159,17 @@
         }
         .table td, .table th{border: 0.01em solid #dee2e6;}
         
+        /* 테이블 번호 
+        .table {counter-reset : rowNumber;}
+        .table tr::before{
+        	display:table-cell;
+        	counter-increment:rowNumber;
+        	content:counter(rowNumber) ".";
+        	text-align:center;
+        }
+        */
+       	
+        
         /* 페이징 */
        	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 
@@ -183,15 +194,15 @@
         </div>
 
         <div class="bar-outer" id="status-bar">
-            <div><span>전체</span> <span>10</span> <span>건</span></div>
+            <div><span>전체</span> <span>${ bCount }</span> <span>건</span></div>
             <div>|</div>
-            <div><span>판매중</span> <span>10</span> <span>건</span></div>
+            <div><span>판매중</span> <span>${ statusY }</span> <span>건</span></div>
             <div>|</div>
-            <div> <span>품절</span> <span>10</span> <span>건</span></div>
+            <div> <span>품절</span> <span>${ statusN }</span> <span>건</span></div>
             <div>|</div>
-            <div><span>게시함</span> <span>10</span> <span>건</span></div>
+            <div><span>게시함</span> <span>${ selStatusY }</span> <span>건</span></div>
             <div>|</div>
-            <div><span>게시안함</span> <span>10</span> <span>건</span> </div>
+            <div><span>게시안함</span> <span>${ selStatusN }</span> <span>건</span> </div>
         </div>
 
         <div class="bar-outer" id="search-area">
@@ -274,9 +285,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<c:forEach var="b" items="${ bList }">
+                    	<c:forEach var="b" items="${ bList }" varStatus="no">
 	                        <tr>
-	                            <td>1234</td>
+	                            <td>${ no.count }</td>
 	                            <td><input type="checkbox"></td>
 	                            <td><img src="" alt="" width="65" height="80"></td>
 	                            <td>${ b.bkNo }</td>
