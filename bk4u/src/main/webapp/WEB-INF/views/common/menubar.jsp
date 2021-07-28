@@ -110,7 +110,7 @@
 
             <div id="header_1_center">
                     <div class="bar-outer" id="search-area">
-                        <form action="search.bk method="get">
+                        <form action="search.bk" method="get">
                             <div id="search-bar">
                                 <div id="search-condition">
                                     <select name="condition" id="search-condition">
@@ -133,17 +133,17 @@
                 </div>
             <div id="header_1_right">
                 <c:choose>
-                    <c:when test="">
+                    <c:when test="${ empty loginUser }">
                 <!-- 로그인 전 -->
-                        <a href="">회원가입</a> | 
-                        <a href="">로그인</a>
+                        <a href="enrollForm.me">회원가입</a> | 
+                        <a href="loginForm.me">로그인</a>
                     </c:when>
                     <c:otherwise>
                 <!-- 로그인 후  -->
                         <label>Bk4U님 환영합니다</label> &nbsp;&nbsp;
                         <a href="">마이페이지</a>
                         <a href="">장바구니</a>
-                        <a href="">로그아웃</a>
+                        <a href="logout.me">로그아웃</a>
                     </c:otherwise>
                 </c:choose>
             </div>
