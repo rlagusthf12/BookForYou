@@ -32,24 +32,34 @@
             font-weight: 600;
         }
 
-        /* 상태바 */
-        .bar-outer{
-            border:1px solid grey;
-            padding:10px;
-        }
+		/* 도서 상태 바 */
         #status-bar{
-            margin:30px 0 30px 0;
+            margin:30px 0 40px 0;
             font-size: 15px;
         }
         #status-bar > div{
             display: inline-block;
             margin: 0 10px 0 10px;
+            width:165px;
+            height:87px;
+            border:1px solid black;
+            text-align: center;
+            padding:10px;
+            font-weight: 600;
+           box-shadow: 5px 5px 5px grey;
         }
+        #status-bar p {font-size:17px; margin-bottom:10px;}
+        #status-bar span {color:#EC573B; font-size:20px;}
+		#status-bar > div:hover {
+			cursor:pointer;
+			box-shadow: 15px 15px 15px grey; 
+		}
 
         /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
+            margin-top:40px;
         }
         /* 검색 바 */
         #search-bar{
@@ -140,17 +150,6 @@
         }
         .table td, .table th{border: 0.01em solid #dee2e6;}
         
-        /* 테이블 번호 
-        .table {counter-reset : rowNumber;}
-        .table tr::before{
-        	display:table-cell;
-        	counter-increment:rowNumber;
-        	content:counter(rowNumber) ".";
-        	text-align:center;
-        }
-        */
-       	
-        
         /* 페이징 */
        	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 
@@ -161,8 +160,32 @@
     <script>
 	    $(document).ready(function(){
 	        $("#handling-btn").children().addClass("btn btn-outline-success");
+	        
+	        /* 상태 클릭  */
+	        $("#getStatusAll").click(function(){
+		        location.href="adminBookList.bk";
+		    })
+		    
+		    $("#getStatusY").click(function(){
+		        location.href="adminStatusYBookList.bk";
+		    })
+		    
+		    $("#getStatusN").click(function(){
+		        location.href="adminStatusNBookList.bk";
+		    })
+		    
+		    $("#getSelStatusY").click(function(){
+		        location.href="adminSelStatusYBookList.bk";
+		    })
+		    
+		    $("#getSelStatusN").click(function(){
+		        location.href="adminSelStatusNBookList.bk";
+		    })
+		    
 	    })
+	    
     </script>
+    
   
 </head>
 <body>
@@ -175,18 +198,49 @@
             <p>도서목록</p>
         </div>
 
-        <div class="bar-outer" id="status-bar">
-            <div><span>전체</span> <span>${ listCount }</span> <span>건</span></div>
-            <div>|</div>
-            <div><span>판매중</span> <span>${ selectStatusY }</span> <span>건</span></div>
-            <div>|</div>
-            <div> <span>품절</span> <span>${ selectStatusN }</span> <span>건</span></div>
-            <div>|</div>
-            <div><span>게시함</span> <span>${ selectSelStatusY }</span> <span>건</span></div>
-            <div>|</div>
-            <div><span>게시안함</span> <span>${ selectSelStatusN }</span> <span>건</span> </div>
+        <div id="status-bar">
+            <div id="getStatusAll">
+                <div>
+                    <p>전체</p>
+                </div>
+                <div>
+                    <span>${ listCount }</span>
+                </div>
+            </div>
+            <div id="getStatusY">
+                <div>
+                    <p>판매중</p>
+                </div>
+                <div>
+                    <span>${ selectStatusY }</span>
+                </div>
+            </div>
+            <div id="getStatusN">
+                <div>
+                    <p>품절</p>
+                </div>
+                <div>
+                    <span>${ selectStatusN }</span>
+                </div>
+            </div>
+            <div id="getSelStatusY">
+                <div>
+                    <p>게시함</p>
+                </div>
+                <div>
+                    <span>${ selectSelStatusY }</span>
+                </div>
+            </div>
+            <div id="getSelStatusN">
+                <div>
+                    <p>게시안함</p>
+                </div>
+                <div>
+                    <span>${ selectSelStatusY }</span>
+                </div>
+            </div>
         </div>
-
+		<hr>
         <div id="search-area">
             <form action="adminSearch.bk" method="GET">
                 <div id="search-bar">
@@ -206,7 +260,6 @@
                         <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
                     </div>
                 </div>
-                
             </form>
         </div>
 
