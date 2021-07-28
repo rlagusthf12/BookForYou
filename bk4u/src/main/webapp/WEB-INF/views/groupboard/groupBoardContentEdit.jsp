@@ -10,7 +10,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    
+    <script type="text/javascript">
+        function cityChange(province){
+            $.ajax({
+                type: "POST",
+                url: "/tc/placeSelect.do",
+                dataType: "json",
+                data: {param:province},
+                success: function(result){
+
+                    $("#city").find("option").remove().end().append("<option value=''>시/구/군</option>");
+
+                    $.each(result, function(i){
+                        $("#city").append("<option value'"+result[i]+"'>"+result[i]+"</option>")
+                    });
+                }
+            })
+        }
+    </script>
+
     <style>
       .content{
         background-color:#FCBE34;
@@ -45,7 +63,7 @@
                             <h4 align="center">독서모임 개설</h4>
                             <thead>
                                 <tr>
-                                    <td rowspan="2"><br>모임이름</td>
+                                    <td rowspan="2"><br>*모임이름</td>
                                     <td colspan="2">  
                                         <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="customRadio" name="on" value="customEx">
@@ -59,7 +77,7 @@
                                 </tr>
                                 <tr>
                                   
-                                    <td colspan="2" ><input type="text" readonly placeholder="원래소모임이름"></td>
+                                    <td colspan="2" ><input type="text"></td>
                                    
                                 </tr>
 
@@ -74,7 +92,33 @@
                                 
                                     <tr>
                                         <td>지역검색</td>
-                                        <td colspan="2" ><input type="text" readonly placeholder="원래지역이름"></td>
+                                        <td>
+                                            <select name="province" id="province" onChange="cityChange(this.value)">
+                                                <option>광역시도</option>
+                                                <option value='1'>서울</option>
+                                                <option value='2'>부산</option>
+                                                <option value='3'>대구</option>
+                                                <option value='4'>인천</option>
+                                                <option value='5'>광주</option>
+                                                <option value='6'>대전</option>
+                                                <option value='7'>울산</option>
+                                                <option value='8'>강원</option>
+                                                <option value='9'>경기</option>
+                                                <option value='10'>경남</option>
+                                                <option value='11'>경북</option>
+                                                <option value='12' >전남</option>
+                                                <option value='13'>전북</option>
+                                                <option value='14'>제주</option>
+                                                <option value='15'>충남</option>
+                                                <option value='16'>충북</option>
+                                            </select>
+                                            <select name="city" id="city">
+                                                <option value=''>시/구/군</option>
+                                            </select>
+                                            
+                                                </td>
+                                      
+                                            </form>
 
                                 </tr>
                          
