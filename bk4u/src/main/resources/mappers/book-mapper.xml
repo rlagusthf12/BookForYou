@@ -276,5 +276,33 @@
 		</if>	
 	</select>
 	
+	<select id="selectBook" resultMap="bookResult">
+		select 
+		       bk_no,
+		       sub_cate_no,
+		       bk_title,
+		       bk_publish,
+		       bk_date,
+		       bk_price,
+		       intro_originname,
+		       intro_changename,
+		       bk_stock,
+		       bk_seldate,
+		       bk_mdate,
+		       bk_selstatus,
+		       bk_age,
+		       bk_gender,
+		       bk_work,
+		       bk_level,
+		       bk_status,
+		       writer_name,
+		       writer_intro,
+		       writer_origin_name,
+		       writer_change_name,
+		       bk_content
+		  from book
+		 where bk_no = #{bkNo}
+	</select>
+	
 	
 </mapper>
