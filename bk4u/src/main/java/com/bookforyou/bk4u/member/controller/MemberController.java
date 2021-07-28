@@ -18,7 +18,7 @@ public class MemberController {
 	
 	
 	@RequestMapping("loginForm.me")
-	public String enrollFrom() {
+	public String loginForm() {
 		return "member/login";
 	}
 	
@@ -52,5 +52,10 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping("enrollForm.me")
+	public String enrollForm() {
+		
+		return "member/signup";
+	}
 	
 }
