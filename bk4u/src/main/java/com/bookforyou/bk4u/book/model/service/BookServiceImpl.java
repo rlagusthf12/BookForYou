@@ -84,7 +84,13 @@ public class BookServiceImpl implements BookService {
 		return bookDao.selectAdminSearchList(sqlSession, pi, map);
 	}
 	
-	
+	/*
+	 * [공통] 도서 상세 조회 (연지)
+	 */
+	@Override
+	public Book selectBook(int bkNo) {
+		return bookDao.selectBook(sqlSession, bkNo);
+	}
 
 
 }

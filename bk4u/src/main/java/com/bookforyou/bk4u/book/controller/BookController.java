@@ -52,6 +52,9 @@ public class BookController {
 		return mv;
 	}
 	
+	/*
+	 * [공통] 도서 검색 (연지)
+	 */
 	@RequestMapping("search.bk")
 	public ModelAndView searchBook(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value = "condition") String condition, @RequestParam(value = "keyword") String keyword) {
 		
@@ -119,5 +122,17 @@ public class BookController {
 		
 		return mv;
 		
+	}
+	
+	/*
+	 * [공통] 도서 상세 조회 (연지)
+	 */
+	@RequestMapping("detail.bk")
+	public ModelAndView selectBook(ModelAndView mv, int bkNo) {
+		
+		Book bk = bookService.selectBook(bkNo);
+		mv.addObject("bk", bk).setViewName("book/bookDetailView");
+		
+		return mv;
 	}
 }
