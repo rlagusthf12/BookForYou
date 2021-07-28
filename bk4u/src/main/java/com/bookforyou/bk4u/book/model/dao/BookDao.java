@@ -89,4 +89,8 @@ public class BookDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSearchList", map, rowBounds);
 	}
+
+	public Book selectBook(SqlSessionTemplate sqlSession, int bkNo) {
+		return sqlSession.selectOne("bookMapper.selectBook", bkNo);
+	}
 }

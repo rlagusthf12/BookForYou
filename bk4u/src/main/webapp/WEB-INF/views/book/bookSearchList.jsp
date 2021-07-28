@@ -235,7 +235,7 @@
 	                <div class="book_img"><img src=""></div>
 	                <div class="book_info">
 	                    <div>
-	                        <div>${ b.bkTitle }</div>
+	                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
 	                        <div>
 	                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
 	                            <span>&nbsp;★★★★☆</span>
@@ -244,6 +244,7 @@
 	                            <span>${ b.bkPrice }</span>
 	                            <span>원</span>
 	                            <span>${ b.bkPrice * 0.01}원 적립</span>
+	                            <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
 	                        </div>
 	                    </div>
 	                    
