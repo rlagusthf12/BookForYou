@@ -118,6 +118,11 @@
             font-weight: 700;
         }
 
+        .book_info>div:nth-child(1)>div a{
+            color: black;
+            text-decoration: none;
+        }
+
         .book_info>div:nth-child(1)>div:nth-child(2){
             font-size: 13px;
         }
@@ -232,7 +237,7 @@
             
             <c:forEach var="b" items="${ bList }">
 	            <div class="search_book">
-	                <div class="book_img"><img src=""></div>
+	                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src=""></a></div>
 	                <div class="book_info">
 	                    <div>
 	                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
@@ -268,6 +273,14 @@
 	                </div>
 	            </div>
             </c:forEach>
+            
+            <script>
+            	$(function(){
+            		$("#boardList>tbody>tr").click(function(){
+            			location.href="detail.bo?bno=" + $(this).children(".bno").text();
+            		})
+            	})
+            </script>
             
             <div id="paging-wrap">
                 <ul class="pagination">
