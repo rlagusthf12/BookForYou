@@ -36,14 +36,20 @@ public class BookServiceImpl implements BookService {
 		return bookDao.selectAdminBookList(sqlSession, pi);
 	}
 	
+	/*
+	 * [공통] 도서 검색 개수 조회 (연지)
+	 */
 	@Override
 	public int selectSearchBookCount(HashMap<String, String> map) {
 		return bookDao.selectSearchBookCount(sqlSession, map);
 	}
 	
+	/*
+	 * [공통] 도서 검색 (연지)
+	 */
 	@Override
-	public ArrayList<Book> selectSearchBook(PageInfo pi, String condition, String keyword){
-		return bookDao.selectSearchBook(sqlSession, pi, condition, keyword);
+	public ArrayList<Book> selectSearchBook(PageInfo pi, HashMap<String, String> map){
+		return bookDao.selectSearchBook(sqlSession, pi, map);
 	}
 
 	/**
