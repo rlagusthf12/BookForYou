@@ -139,7 +139,7 @@
         <header>
             <div id="logo-box">
                 <div id="blank-box"></div>
-                <img src="..\images\bk4u_logo.png" width="200px">
+                <img src="resources\member\images\bk4u_logo.png" width="200px">
             </div>
             <div id="head-of-content-box">
                 <h5><b>회원가입</b></h5>

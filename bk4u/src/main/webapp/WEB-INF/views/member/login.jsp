@@ -23,12 +23,12 @@
     }
         body{
             background-color: #f6f4f4;
-            width:1500px;
-            height:1200px;
+            width:1200px;
+            height:1000px;
             margin:auto;
         }
         #content-box{
-            width: 600px;
+            width: 550px;
             height:100%;
             background-color: #FFFFFF;
             margin-left: auto;
@@ -36,7 +36,7 @@
             margin-top: 0;
         }
         #blank-box{
-            height:130px;
+            height:60px;
         }
         #logo-box{
             text-align: center;
@@ -44,13 +44,12 @@
         #head-of-content-box{
             margin-top: 30px;
             text-align: center;
-            margin-bottom: 50px;
         }
         .login-box{
             width: 80%;
             height: fit-content;
             margin: auto;
-            margin-top: 50px;
+            margin-top: 40px;
             text-align: center;
         }
         #login-container{
@@ -97,7 +96,6 @@
             text-align: right;
             margin: auto;
             margin-top: 40px;
-            font-size:large;
         }
         #find-inner-box a{
             cursor: pointer;
@@ -107,7 +105,6 @@
         #sign-up-box{
             margin-top: 80px;
             text-align: center;
-            font-size: larger;
         }
         #sign-up-box span a{
             text-decoration: none;
@@ -131,7 +128,7 @@
                 <img src="resources\member\images\bk4u_logo.png" width="200px">
             </div>
             <div id="head-of-content-box">
-                <h2>로그인</h2>
+                <h3>로그인</h3>
             </div>
         </header>
         <hr width="480px" style="margin-top: 30px;"/>
@@ -152,7 +149,7 @@
         <hr width="480px" style="margin-top: 40px;"/>
         <div id="sign-up-box">
             BK4U가 처음이라면?
-            <span><a href="">회원가입</a></span>
+            <span><a href="enrollForm.me">회원가입</a></span>
         </div>
         
 
