@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -56,6 +57,13 @@ public class MemberController {
 	public String enrollForm() {
 		
 		return "member/signup";
+	}
+	
+	@ResponseBody
+	@RequestMapping("idCheck.me")
+	public String ajaxIdCheck(String checkId){
+		int count = memberService.idCheck(checkId);
+		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
 }

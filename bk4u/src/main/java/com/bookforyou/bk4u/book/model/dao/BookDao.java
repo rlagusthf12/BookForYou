@@ -33,11 +33,17 @@ public class BookDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBookList", null, rowBounds);
 	}
-
-	public int selectSearchBookCount(SqlSessionTemplate sqlSession, String condition, String keyword) {
+	
+	/*
+	 * [공통] 도서 검색 개수 조회 (연지)
+	 */
+	public int selectSearchBookCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("bookMapper.selectSearchBookCount");
 	}
-
+	
+	/*
+	 * [공통] 도서 검색 (연지)
+	 */
 	public ArrayList<Book> selectSearchBook(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());

@@ -53,7 +53,7 @@ public class BookController {
 	}
 	
 	@RequestMapping("search.bk")
-	public ModelAndView searchBook(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String condition, String keyword) {
+	public ModelAndView searchBook(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, @RequestParam(value = "condition") String condition, @RequestParam(value = "keyword") String keyword) {
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
@@ -63,11 +63,12 @@ public class BookController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 
-		ArrayList<Book> bList = bookService.selectSearchBook(pi, condition, keyword);
+		ArrayList<Book> bList = bookService.selectSearchBook(pi, map);
 		
 		mv.addObject("pi", pi)
+		  .addObject("keyword", keyword)
 		  .addObject("bList", bList)
-		  .setViewName("book/bookSearchList.jsp");
+		  .setViewName("book/bookSearchList");
 		
 		return mv;
 	}
