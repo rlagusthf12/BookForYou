@@ -84,7 +84,7 @@ public class BookDao {
 	 * @param map
 	 * @return
 	 */
-	public ArrayList<Book> selectAdminSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+	public ArrayList<Book> selectAdminSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSearchList", map, rowBounds);

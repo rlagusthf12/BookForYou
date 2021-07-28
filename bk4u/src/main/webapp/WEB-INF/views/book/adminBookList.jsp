@@ -46,22 +46,26 @@
             margin: 0 10px 0 10px;
         }
 
-        /* 검색바 */
+        /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
         }
+        /* 검색 바 */
         #search-bar{
             border-radius: 40px;
             border:2px solid #EC573B;
             width:600px;
             height: 40px;
             padding:1px;
+            margin:auto;
+            vertical-align: middle;
         }
+        /* 검색 조건 select */
         #search-condition{
             display: inline-block;
             border-right:2px solid #EC573B;
-            width:150px;
+            width: 25%;
             height: 100%;
         }
         #search-condition>select{
@@ -72,54 +76,31 @@
             font-size: 14px;
             text-align-last: center;
         }
-        select:focus, #search-input>input:focus{
-            outline:none;
-        }
-
+        select:focus, #search-input>input:focus{outline:none;}
+		/* 검색어 입력 */
         #search-input{
             display: inline-block;
-            width:400px;
+            width: 65%;
             height: 100%;
         }
         #search-input > input{
             border-radius: 40px;
-            width:400px;
+            width: 100%;
             height: 100%;
             border:none;
             font-size: 14px;
             text-align-last: center;
             text-align: center;
         }
-
-        .form-check{margin-bottom: 10px; display:block;}
-        .form-check  span{
-            font-size: 15px;
-            font-weight: 600;
-            margin-right: 20px;
+        /* 검색 이미지 버튼 */
+        #search-btn{
+            width: 5%;
+            float:right;
+            margin:3px 20px 3px 0;
         }
-        .form-check label{margin-right:5px; font-size:14px;}
-        
-        /* 검색 버튼 */
-        #search-btn{text-align: center;}
-        #search-btn button{
-            width:75px;
+        #search-btn input{
+            width: 30px;
             height: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
-            border-radius: 5px;
-            margin-left:20px;
-        }
-        #search-btn button:hover{
-            cursor: pointer;
-        }
-        #search-btn button[type="submit"]{
-            background-color: #EC573B;
-            color:white;
-        }
-        #search-btn button[type="reset"]{
-            background-color:grey;
-            color: white;
         }
 
         /* 검색 결과 구역 */
@@ -206,7 +187,7 @@
             <div><span>게시안함</span> <span>${ selectSelStatusN }</span> <span>건</span> </div>
         </div>
 
-        <div class="bar-outer" id="search-area">
+        <div id="search-area">
             <form action="adminSearch.bk" method="GET">
                 <div id="search-bar">
                     <div id="search-condition">
@@ -221,26 +202,11 @@
                     <div id="search-input">
                         <input type="text" name="keyword">
                     </div>
+                    <div id="search-btn">
+                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
+                    </div>
                 </div>
-                <br>
-                <div class="form-check form-check-inline">
-                    <span>판매상태</span>
-                    <input type="radio" id="statusAll" name="bkStatus" value="statusAll"><label for="statusAll">전체</label>
-                    <input type="radio" id="statusY" name="bkStatus" value="statusY"><label for="statusY">판매중</label>
-                    <input type="radio" id="statusN" name="bkStatus" value="statusN"><label for="statusN">품절</label>
-                </div>
-
-                <div class="form-check form-check-inline">
-                    <span>게시상태</span>
-                    <input type="radio" id="selStatusAll" name="bkSelStatus" value="selStatusAll"><label for="selStatusAll">전체</label>
-                    <input type="radio" id="selStatusY" name="bkSelStatus" value="selStatusY"><label for="selStatusY">게시함</label>
-                    <input type="radio" id="selStatusN" name="bkSelStatus" value="selStatusN"><label for="selStatusN">게시안함</label>
-                </div>
-                <br>
-                <div id="search-btn">
-                    <button type="submit">검색</button>
-                    <button type="reset">초기화</button>
-                </div>
+                
             </form>
         </div>
 

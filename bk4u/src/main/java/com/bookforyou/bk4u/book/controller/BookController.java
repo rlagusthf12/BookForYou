@@ -85,17 +85,13 @@ public class BookController {
 	 */
 	@RequestMapping("adminSearch.bk")
 	public ModelAndView adminBookSearch(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
-										String condition, String bkStatus, String bkSelStatus, String keyword) {
+										String condition, String keyword) {
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
-		map.put("bkStatus", bkStatus);
-		map.put("bkStatus", bkStatus);
 		map.put("keyword", keyword);
 		
 		int conListCount = bookService.selectAdminSearchCount(map);
-		
-		System.out.println(conListCount);
 		
 		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 		ArrayList<Book> bList = bookService.selectAdminSearchList(pi, map);
@@ -115,8 +111,6 @@ public class BookController {
 		  .addObject("selectSelStatusY", selectSelStatusY)
 		  .addObject("selectSelStatusN", selectSelStatusN)
 		  .addObject("keyword", keyword)
-		  .addObject("bkStatus", bkStatus)
-		  .addObject("bkSelStatus", bkSelStatus)
 		  .setViewName("book/adminBookList");
 		
 		return mv;
