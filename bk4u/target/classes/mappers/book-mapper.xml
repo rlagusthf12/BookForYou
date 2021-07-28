@@ -184,11 +184,11 @@
 		</if>
 		<if test="selStatus != null">
 			<choose>
-				<when test="selStatus == 'selStatusAll'">
+				<when test="bkSelStatus == 'selStatusAll'">
 					  and sel_status = 'Y'
 					   or sel_status = 'N'
 				</when>
-				<when test="selStatus == 'selStatusY'">
+				<when test="bkSelStatus == 'selStatusY'">
 					  and sel_status = 'Y'
 				</when>
 				<otherwise>

@@ -92,13 +92,14 @@ public class BookController {
 		map.put("bkStatus", bkStatus);
 		map.put("keyword", keyword);
 		
-		int listCount = bookService.selectAdminSearchCount(map);
+		int conListCount = bookService.selectAdminSearchCount(map);
 		
-		System.out.println(listCount);
+		System.out.println(conListCount);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 		ArrayList<Book> bList = bookService.selectAdminSearchList(pi, map);
 		
+		int listCount = bookService.selectAllListCount();
 		int selectStatusY = bookService.selectStatusYCount();
 		int selectSelStatusY = bookService.selectSelStatusYCount();
 		int selectStatusN = listCount - selectStatusY;
@@ -106,6 +107,7 @@ public class BookController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("bList", bList)
+		  .addObject("conListCount", conListCount)
 		  .addObject("listCount", listCount)
 		  .addObject("selectStatusY", selectStatusY)
 		  .addObject("selectStatusN", selectStatusN)
