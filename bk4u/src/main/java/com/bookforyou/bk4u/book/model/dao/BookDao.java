@@ -61,4 +61,26 @@ public class BookDao {
 	public int selectSelStatusYCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookMapper.selectSelStatusYCount");
 	}
+	
+	/**
+	 * [관리자] 검색조건에 일치하는 도서 개수 조회 (한진)
+	 * @param sqlSession
+	 * @return
+	 */
+	public int selectAdminSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("bookMapper.selectAdminSearchCount", map);
+	}
+	
+	/**
+	 * [관리자] 검색조건에 일치하는 도서 목록 조회 (한진)
+	 * @param sqlSession
+	 * @param pi
+	 * @param map
+	 * @return
+	 */
+	public ArrayList<Book> selectAdminSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSearchList", map, rowBounds);
+	}
 }

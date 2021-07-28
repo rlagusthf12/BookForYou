@@ -182,6 +182,7 @@
 	        $("#handling-btn").children().addClass("btn btn-outline-success");
 	    })
     </script>
+  
 </head>
 <body>
 
@@ -194,46 +195,46 @@
         </div>
 
         <div class="bar-outer" id="status-bar">
-            <div><span>전체</span> <span>${ bCount }</span> <span>건</span></div>
+            <div><span>전체</span> <span>${ listCount }</span> <span>건</span></div>
             <div>|</div>
-            <div><span>판매중</span> <span>${ statusY }</span> <span>건</span></div>
+            <div><span>판매중</span> <span>${ selectStatusY }</span> <span>건</span></div>
             <div>|</div>
-            <div> <span>품절</span> <span>${ statusN }</span> <span>건</span></div>
+            <div> <span>품절</span> <span>${ selectStatusN }</span> <span>건</span></div>
             <div>|</div>
-            <div><span>게시함</span> <span>${ selStatusY }</span> <span>건</span></div>
+            <div><span>게시함</span> <span>${ selectSelStatusY }</span> <span>건</span></div>
             <div>|</div>
-            <div><span>게시안함</span> <span>${ selStatusN }</span> <span>건</span> </div>
+            <div><span>게시안함</span> <span>${ selectSelStatusN }</span> <span>건</span> </div>
         </div>
 
         <div class="bar-outer" id="search-area">
-            <form action="">
+            <form action="adminSearch.bk" method="GET">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition">
-                            <option value="searchAll">전체</option>
-                            <option value="productCode">상품코드</option>
-                            <option value="bookName">도서명</option>
-                            <option value="writerName">저자</option>
+                            <option value="AllBook">전체</option>
+                            <option value="bookNo">도서번호</option>
+                            <option value="bookTitle">도서명</option>
+                            <option value="bookWriter">저자</option>
                             <option value="publisher">출판사</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="">
+                        <input type="text" name="keyword">
                     </div>
                 </div>
                 <br>
                 <div class="form-check form-check-inline">
                     <span>판매상태</span>
-                    <input type="radio" id="statusAll" name="bkStatus"><label for="statusAll">전체</label>
-                    <input type="radio" id="statusY" name="bkStatus"><label for="statusY">판매중</label>
-                    <input type="radio" id="statusN" name="bkStatus"><label for="statusN">품절</label>
+                    <input type="radio" id="statusAll" name="bkStatus" value="statusAll"><label for="statusAll">전체</label>
+                    <input type="radio" id="statusY" name="bkStatus" value="statusY"><label for="statusY">판매중</label>
+                    <input type="radio" id="statusN" name="bkStatus" value="statusN"><label for="statusN">품절</label>
                 </div>
 
                 <div class="form-check form-check-inline">
                     <span>게시상태</span>
-                    <input type="radio" id="selStatusAll" name="bkSelStatus"><label for="selStatusAll">전체</label>
-                    <input type="radio" id="selStatusY" name="bkSelStatus"><label for="selStatusY">게시함</label>
-                    <input type="radio" id="selStatusN" name="bkSelStatus"><label for="selStatusN">게시안함</label>
+                    <input type="radio" id="selStatusAll" name="bkSelStatus" value="selStatusAll"><label for="selStatusAll">전체</label>
+                    <input type="radio" id="selStatusY" name="bkSelStatus" value="selStatusY"><label for="selStatusY">게시함</label>
+                    <input type="radio" id="selStatusN" name="bkSelStatus" value="selStatusN"><label for="selStatusN">게시안함</label>
                 </div>
                 <br>
                 <div id="search-btn">

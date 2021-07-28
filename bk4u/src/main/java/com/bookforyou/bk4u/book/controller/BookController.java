@@ -42,11 +42,11 @@ public class BookController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("bList", bList)
-		  .addObject("bCount", listCount)
-		  .addObject("statusY", selectStatusY)
-		  .addObject("statusN", selectStatusN)
-		  .addObject("selStatusY", selectSelStatusY)
-		  .addObject("selStatusN", selectSelStatusN)
+		  .addObject("listCount", listCount)
+		  .addObject("selectStatusY", selectStatusY)
+		  .addObject("selectStatusN", selectStatusN)
+		  .addObject("selectSelStatusY", selectSelStatusY)
+		  .addObject("selectSelStatusN", selectSelStatusN)
 		  .setViewName("book/adminBookList");
 		
 		return mv;
@@ -70,5 +70,53 @@ public class BookController {
 		  .setViewName("book/bookSearchList.jsp");
 		
 		return mv;
+	}
+	
+	/**
+	 * [관리자] 검색조건에 일치하는 도서 목록 조회 (한진) 
+	 * @param mv
+	 * @param currentPage
+	 * @param condition
+	 * @param bkStatus
+	 * @param bkSelStatus
+	 * @param keyword
+	 * @return
+	 */
+	@RequestMapping("adminSearch.bk")
+	public ModelAndView adminBookSearch(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
+										String condition, String bkStatus, String bkSelStatus, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("bkStatus", bkStatus);
+		map.put("bkStatus", bkStatus);
+		map.put("keyword", keyword);
+		
+		int listCount = bookService.selectAdminSearchCount(map);
+		
+		System.out.println(listCount);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Book> bList = bookService.selectAdminSearchList(pi, map);
+		
+		int selectStatusY = bookService.selectStatusYCount();
+		int selectSelStatusY = bookService.selectSelStatusYCount();
+		int selectStatusN = listCount - selectStatusY;
+		int selectSelStatusN = listCount - selectSelStatusY;
+		
+		mv.addObject("pi", pi)
+		  .addObject("bList", bList)
+		  .addObject("listCount", listCount)
+		  .addObject("selectStatusY", selectStatusY)
+		  .addObject("selectStatusN", selectStatusN)
+		  .addObject("selectSelStatusY", selectSelStatusY)
+		  .addObject("selectSelStatusN", selectSelStatusN)
+		  .addObject("keyword", keyword)
+		  .addObject("bkStatus", bkStatus)
+		  .addObject("bkSelStatus", bkSelStatus)
+		  .setViewName("book/adminBookList");
+		
+		return mv;
+		
 	}
 }

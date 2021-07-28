@@ -36,4 +36,13 @@ public interface BookService {
 	 * @return
 	 */
 	int selectSelStatusYCount();
+	
+	/**
+	 * [관리자] 검색조건에 일치하는 도서 개수 조회 (한진)
+	 * @param map
+	 * @return
+	 */
+	int selectAdminSearchCount(HashMap<String, String> map);
+	
+	ArrayList<Book> selectAdminSearchList(PageInfo pi, HashMap<String, String> map);
 }
