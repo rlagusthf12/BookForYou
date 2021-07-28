@@ -60,8 +60,6 @@
 		       writer_change_name,
 		       bk_content
 		  from book
-		 order
-    		by bk_date desc
 	</select>
 	
 	<select id="selectSearchBookCount" resultType="_int">
@@ -72,6 +70,8 @@
 	 	<choose>
 	 		<when test="condition == 'searchAll'">
 	 			and bk_title
+	 			like '%' || #{keyword} || '%'
+	 			or writer_name
 	 		</when>
 	 		<when test="condition == 'bookTitle'">
 	 			and bk_title
@@ -91,7 +91,7 @@
 		     , bk_publish
 		     , bk_price
 		     , bk_date
-			 , bk_price,
+			 , bk_price
 		     , intro_originname
 		     , intro_changename
 		     , bk_stock
@@ -113,6 +113,8 @@
 	 	<choose>
 	 		<when test="condition == 'searchAll'">
 	 			and bk_title
+	 			like '%' || #{keyword} || '%'
+	 			or writer_name
 	 		</when>
 	 		<when test="condition == 'bookTitle'">
 	 			and bk_title
@@ -122,8 +124,6 @@
 	 		</otherwise>
 	 	</choose>
 	 			like '%' || #{keyword} || '%'
-		 order
-		    by bk_no desc
 	</select>
 	
 	<!-- [관리자] '판매중'인 도서 개수 조회 (한진) -->

@@ -217,8 +217,8 @@
         <div id="content">
             <div id="search_top">
                 <div id="search_result">
-                    <span>"검색어" 검색결과</span>
-                    <span>30건</span>
+                    <span>"${ keyword }" 검색결과</span>
+                    <span>${ pi.listCount }건</span>
                 </div>
                 <div id="search_sort">
                     <a href="" style="font-weight: bolder;">정확도순</a>
@@ -229,123 +229,89 @@
                     <a href="">저가격순</a>
                 </div>
             </div>
-            <div class="search_book">
-                <div class="book_img"><img src=""></div>
-                <div class="book_info">
-                    <div>
-                        <div>달까지 가자</div>
-                        <div>
-                            <span>장류진 | 창비 | 2021년 4월</span>
-                            <span>&nbsp;★★★★☆</span>
-                        </div>
-                        <div>
-                            <span>13000</span>
-                            <span>원</span>
-                            <span>650원 적립</span>
-                        </div>
-                    </div>
-                    
-                    <span>
-                        수량&nbsp;&nbsp;
-                        <input type="number" min="1" max="5" value="1">
-                    </span>
-                    
-                    <div class="book_content">
-                        낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
-                    </div>
-                    <div>
-                        <button class="btn_order">즉시구매</button>
-                        <button class="btn_cart"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_cart">장바구니</button>
-                        <button class="btn_list"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_list">리스트</button>
-                    </div>
-                </div>
-            </div>
             
-            <div class="search_book">
-                <div class="book_img"><img src=""></div>
-                <div class="book_info">
-                    <div>
-                        <div>달까지 가자</div>
-                        <div>
-                            <span>장류진 | 창비 | 2021년 4월</span>
-                            <span>&nbsp;★★★★☆</span>
-                        </div>
-                        <div>
-                            <span>13000</span>
-                            <span>원</span>
-                            <span>650원 적립</span>
-                        </div>
-                    </div>
-                    
-                    <span>
-                        수량&nbsp;&nbsp;
-                        <input type="number" min="1" max="5" value="1">
-                    </span>
-                    
-                    <div class="book_content">
-                        낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
-                    </div>
-                    <div>
-                        <button class="btn_order">즉시구매</button>
-                        <button class="btn_cart"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_cart">장바구니</button>
-                        <button class="btn_list"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_list">리스트</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="search_book">
-                <div class="book_img"><img src=""></div>
-                <div class="book_info">
-                    <div>
-                        <div>달까지 가자</div>
-                        <div>
-                            <span>장류진 | 창비 | 2021년 4월</span>
-                            <span>&nbsp;★★★★☆</span>
-                        </div>
-                        <div>
-                            <span>13000</span>
-                            <span>원</span>
-                            <span>650원 적립</span>
-                        </div>
-                    </div>
-                    
-                    <span>
-                        수량&nbsp;&nbsp;
-                        <input type="number" min="1" max="5" value="1">
-                    </span>
-                    
-                    <div class="book_content">
-                        낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
-                    </div>
-                    <div>
-                        <button class="btn_order">즉시구매</button>
-                        <button class="btn_cart"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_cart">장바구니</button>
-                        <button class="btn_list"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_list">리스트</button>
-                    </div>
-                </div>
-            </div>
+            <c:forEach var="b" items="${ bList }">
+	            <div class="search_book">
+	                <div class="book_img"><img src=""></div>
+	                <div class="book_info">
+	                    <div>
+	                        <div>${ b.bkTitle }</div>
+	                        <div>
+	                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
+	                            <span>&nbsp;★★★★☆</span>
+	                        </div>
+	                        <div>
+	                            <span>${ b.bkPrice }</span>
+	                            <span>원</span>
+	                            <span>${ b.bkPrice * 0.01}원 적립</span>
+	                        </div>
+	                    </div>
+	                    
+	                    <span>
+							수량&nbsp;&nbsp;
+	                        <input type="number" min="1" max="5" value="1">
+	                    </span>
+	                    
+	                    <div class="book_content">
+							낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
+	                    </div>
+	                    <div>
+	                        <button class="btn_order">즉시구매</button>
+	                        <button class="btn_cart"
+	                        data-bs-toggle="modal"
+	                        data-bs-target="#modal_cart">장바구니</button>
+	                        <button class="btn_list"
+	                        data-bs-toggle="modal"
+	                        data-bs-target="#modal_list">리스트</button>
+	                    </div>
+	                </div>
+	            </div>
+            </c:forEach>
             
             <div id="paging-wrap">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link">이전</a></li>
-                    <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                    <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                    <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                    <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                    <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                    <li class="page-item disabled"><a class="page-link">다음</a></li>
+                    <c:choose>
+                		<c:when test="${ pi.currentPage eq 1 }">
+	                    	<li class="page-item disabled"><a class="page-link">이전</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<c:choose>
+	                    		<c:when test="${ !empty condition }">
+	                    			<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }&condition=${condition}&keyword=${keyword}">Previous</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+                    				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                    	<c:choose>
+                    		<c:when test="${ !empty condition }">
+                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+                   			</c:when>
+                   			<c:otherwise>
+                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
+                   			</c:otherwise>
+                    	</c:choose>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<c:choose>
+	                    		<c:when test="${ !empty condition }">
+		                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+		                    	</c:otherwise>
+		                    </c:choose>
+	                    </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
 

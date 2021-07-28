@@ -21,9 +21,15 @@ public interface BookService {
 	 */
 	ArrayList<Book> selectAdminBookList(PageInfo pi);
 
+	/*
+	 * [공통] 도서 검색 카운트 조회 (연지)
+	 */
 	int selectSearchBookCount(HashMap<String, String> map);
-
-	ArrayList<Book> selectSearchBook(PageInfo pi, String condition, String keyword);
+	
+	/*
+	 * [공통] 도서 검색 (연지)
+	 */
+	ArrayList<Book> selectSearchBook(PageInfo pi, HashMap<String, String> map);
 
 	/**
 	 * [관리자] '판매중'인 도서 개수 조회 (한진)
