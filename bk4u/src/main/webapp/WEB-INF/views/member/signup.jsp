@@ -159,10 +159,10 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>비밀번호</b></label>
-                <input type="password" class="custom-input custom-input-basic" placeholder="숫자,영문,특수문자 조합 최소 8자" required/>
-                <div id="emailCheck" class="form-text" style="color: red;">비밀번호는 필수 정보입니다.</div>
-                <input type="password" class="custom-input custom-input-basic" placeholder="비밀번호 확인" required/>
-                <div id="emailCheck" class="form-text" style="color: red;">비밀번호가 일치하지 않습니다.</div>
+                <input type="password" class="custom-input custom-input-basic" id="pwdInput" name="memPwd" placeholder="숫자,영문,특수문자 조합 최소 8자" maxlength='30' required/>
+                <div id="pwdInfo" class="form-text"></div>
+                <input type="password" class="custom-input custom-input-basic" id="pwdCheckInput" maxlength='30' placeholder="비밀번호 확인" required/>
+                <div id="pwdCheckInfo" class="form-text"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>닉네임</b></label>
@@ -263,11 +263,14 @@
             </div>
             <br>
             <p><input type="submit" value="다음 단계" class="green-button"/></p>
-            <!-- 아이디 중복검사 및 글자 수 확인 -->
+            <!-- 유효성 체크 스크립트-->
             <script>
             	$(function(){
             		var $idInput = $("#enrollForm1 input[name=memId]");
-            		
+            		var $pwdInput = $("#enrollForm1 input[name=memPwd]");
+            		var $pwdCheckInput = $("#enrollForm1 input[id=pwdCheckInput]");
+            		let check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/; 
+            		// 아이디 유효성 체크
             		$idInput.keyup(function(){
             			console.log($idInput.val());
             			
@@ -303,7 +306,50 @@
             				$("#enrollForm1:submit").attr("disabled",true);
             			}
             			
-            		})
+            		});
+            		
+            		// 비밀번호 유효성 체크
+            		$pwdInput.keyup(function(){
+            			console.log($pwdInput.val());
+            			// 정규 표현식을 통과하지 못하면 
+            			if($pwdInput.val().length == 0){
+            				$("#pwdInfo").css("color","red").text("비밀번호는 필수 입력사항입니다.");
+							$("#pwdInput").removeClass("custom-input-basic");
+							$("#pwdInput").addClass("custom-input-danger");
+            			}else if(!check.test($pwdInput.val())) { 
+            				// 처리할 문장
+            				$("#pwdInfo").css("color","red").text("비밀번호는 영어,숫자,특수문자 포함 최소 8글자 이상입니다.");
+							$("#pwdInput").removeClass("custom-input-basic");
+							$("#pwdInput").addClass("custom-input-danger");
+            			}else if(check.test($pwdInput.val())){
+            				$("#pwdInput").removeClass("custom-input-danger");
+							$("#pwdInput").addClass("custom-input-basic");
+							$("#pwdInfo").css("color","green").text("사용가능한 비밀번호입니다.");
+            			}
+
+            		});
+            		
+            		$pwdCheckInput.keyup(function(){
+            			// 위의 정규 표현식을 다 통과했을 경우 비밀번호 일치하는지 체크
+            			if(check.test($pwdInput.val())){
+            				// 아무것도 입력하지 않는다면
+            				console.log($pwdCheckInput.val());
+            				if($pwdCheckInput.val().length == 0){
+                				$("#pwdCheckInfo").css("color","red").text("비밀번호 확인은 필수 입력사항입니다.");
+    							$("#pwdCheckInput").removeClass("custom-input-basic");
+    							$("#pwdCheckInput").addClass("custom-input-danger");
+                			}else if($pwdCheckInput.val() == $pwdInput.val()){
+                				$("#pwdCheckInput").removeClass("custom-input-danger");
+    							$("#pwdCheckInput").addClass("custom-input-basic");
+    							$("#pwdCheckInfo").css("color","green").text("비밀번호가 일치합니다.");
+                			}else if($pwdCheckInput.val() != $pwdInput.val()){
+                				$("#pwdCheckInfo").css("color","red").text("비밀번호 확인이 일치하지 않습니다.");
+    							$("#pwdCheckInput").removeClass("custom-input-basic");
+    							$("#pwdCheckInput").addClass("custom-input-danger");
+                			}
+            			}
+
+            		});
             		
             	})
             

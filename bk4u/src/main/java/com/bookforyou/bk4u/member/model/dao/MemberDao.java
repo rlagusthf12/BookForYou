@@ -14,6 +14,7 @@ public class MemberDao {
 	}
 
 	public int idCheck(SqlSessionTemplate sqlSession, String memId) {
+		System.out.println("memberDao: " + memId);
 		return sqlSession.selectOne("memberMapper.idCheck", memId);
 	}
 	

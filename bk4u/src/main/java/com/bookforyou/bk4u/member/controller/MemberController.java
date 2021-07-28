@@ -63,6 +63,7 @@ public class MemberController {
 	@RequestMapping("idCheck.me")
 	public String ajaxIdCheck(String checkId){
 		int count = memberService.idCheck(checkId);
+		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
