@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BK4U 로그인</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         body{
             background-color: #f6f4f4;
@@ -58,11 +59,11 @@
             padding: 10px;
             outline: 0;
         }
-        .custom-input{
+        .custom-input-basic{
             border-color: #bbb;
             color: #555;
         }
-        .custom-input:focus{
+        .custom-input-basic:focus{
             border-color: #555;
         }
         .custom-input-danger{
@@ -148,44 +149,45 @@
         <div id="divider-box">
             <hr width="480px" style="margin-top: 30px; margin-left: auto; margin-right: auto;"/>
         </div>
+        <form action="first-enroll.me" method="post" id="enrollForm1">
         <div id="sign-up-box">
-            <br>
+             <br>
             <div class="mb-3">
                 <label class="form-label"><b>아이디</b></label>
-                <input type="text" class="custom-input custom-input-danger" placeholder="아이디(5자~11자)" required/>
-                <div id="emailCheck" class="form-text" style="color: red;">아이디는 필수 정보입니다.</div>
+                <input type="text" class="custom-input custom-input-basic" id="idInput" name="memId" placeholder="아이디(5자~11자)" required/>
+                <div id="idInfo" class="form-text"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>비밀번호</b></label>
-                <input type="password" class="custom-input" placeholder="숫자,영문,특수문자 조합 최소 8자" required/>
+                <input type="password" class="custom-input custom-input-basic" placeholder="숫자,영문,특수문자 조합 최소 8자" required/>
                 <div id="emailCheck" class="form-text" style="color: red;">비밀번호는 필수 정보입니다.</div>
-                <input type="password" class="custom-input" placeholder="비밀번호 확인" required/>
+                <input type="password" class="custom-input custom-input-basic" placeholder="비밀번호 확인" required/>
                 <div id="emailCheck" class="form-text" style="color: red;">비밀번호가 일치하지 않습니다.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>닉네임</b></label>
-                <input type="text" class="custom-input custom-input-danger" placeholder="닉네임(최대 8자)" required/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger" placeholder="닉네임(최대 8자)" required/>
                 <div id="nickCheck" class="form-text" style="color: red;">닉네임은 필수 정보입니다.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>이메일</b></label>
-                <input type="email" class="custom-input custom-input-danger" placeholder="이메일을 입력해주세요. 인증에 사용됩니다." required/>
+                <input type="email" class="custom-input custom-input-basic custom-input-danger" placeholder="이메일을 입력해주세요. 인증에 사용됩니다." required/>
                 <div id="emailCheck" class="form-text" style="color: red;">이메일은 필수 정보입니다.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>실명</b></label>
-                <input type="email" class="custom-input custom-input-danger" placeholder="실명" required/>
+                <input type="email" class="custom-input custom-input-basic custom-input-danger" placeholder="실명" required/>
                 <div id="emailCheck" class="form-text" style="color: red;">실명은 필수 정보입니다.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>주소</b></label>
                 
-                <div id="post-box"><input type="email" class="custom-input-post custom-input-danger" id="memPost" placeholder="우편번호" required/>
+                <div id="post-box"><input type="email" class="custom-input-post custom-input-basic custom-input-danger" id="memPost" placeholder="우편번호" required/>
                 <button type="button" class="black-button" onclick="sample6_execDaumPostcode();">우편번호 찾기</button></div>
                 
-                <input type="text" class="custom-input custom-input-danger margin-top" id="memBasicAddress" placeholder="기본 주소" required/>
-                <input type="text" class="custom-input custom-input-danger margin-top" id="detailAddress" placeholder="상세 주소" required/>
-                <input type="text" class="custom-input custom-input-danger margin-top" id="memAddressRefer" placeholder="참고"/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memBasicAddress" placeholder="기본 주소" required/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="detailAddress" placeholder="상세 주소" required/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memAddressRefer" placeholder="참고"/>
                 <div id="emailCheck" class="form-text" style="color: red;">주소는 필수 정보입니다.</div>
             </div>
             <!-- 다음 주소 api -->
@@ -244,7 +246,7 @@
             
             <div class="mb-3">
                 <label class="form-label"><b>연령대</b></label>
-                <select class="custom-input" required>
+                <select class="custom-input custom-input-basic" required>
                     <option value="10" selected>10대</option>
                     <option value="20">20대</option>
                     <option value="30">30대</option>
@@ -256,14 +258,60 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>연락처</b></label>
-                <input type="text" class="custom-input custom-input-danger" placeholder="연락처(-를 빼고 입력해주세요.)" required/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger" placeholder="연락처(-를 빼고 입력해주세요.)" required/>
                 <div id="phoneCheck" class="form-text" style="color: red;">연락처는 필수정보입니다.</div>
             </div>
             <br>
             <p><input type="submit" value="다음 단계" class="green-button"/></p>
+            <!-- 아이디 중복검사 및 글자 수 확인 -->
+            <script>
+            	$(function(){
+            		var $idInput = $("#enrollForm1 input[name=memId]");
+            		
+            		$idInput.keyup(function(){
+            			console.log($idInput.val());
+            			
+            			if($idInput.val().length >=5 && $idInput.val().length <=11){
+            				// 5글자이상 11자 이하일때 아이디에 대한 중복검사 진행
+            				$.ajax({
+            					url:"idCheck.me",
+            					data: {
+            						checkId: $idInput.val()
+            					},
+            					success:function(result){
+            						if(result=="NNNNN"){
+            							console.log(result);
+            							$("#idInfo").css("color","red").text("중복된 아이디입니다.");
+            							$("#idInput").removeClass("custom-input-basic");
+            							$("#idInput").addClass("custom-input-danger");
+            						}else{
+            							console.log(result);
+            							$("#idInput").removeClass("custom-input-danger");
+            							$("#idInput").addClass("custom-input-basic");
+            							$("#idInfo").css("color","green").text("사용가능한 아이디입니다.");
+            							
+            						}
+            					}, error:function(result){
+            						console.log("아이디 중복 체크용 ajax통신 실패");
+            					}
+            				});
+            			}else{
+            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+            				$("#idInput").removeClass("custom-input-basic");
+            				$("#idInput").addClass("custom-input-danger");
+            				$("#idInfo").css("color","red").text("아이디는 5글자 이상 11글자 이하로 입력해주세요.");
+            				$("#enrollForm1:submit").attr("disabled",true);
+            			}
+            			
+            		})
+            		
+            	})
             
-        </div>
+            </script>
+        	</div>
+        </form>
     </div>
+    
 </body>
 
 </html>
