@@ -53,12 +53,18 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * 회원가입 창으로 가는 메서드
+	 */
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {
 		
 		return "member/signup";
 	}
 	
+	/**
+	 * 아이디 중복 확인 메서드
+	 */
 	@ResponseBody
 	@RequestMapping("idCheck.me")
 	public String ajaxIdCheck(String checkId){
@@ -67,10 +73,24 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 닉네임 중복 확인 메서드
+	 */
 	@ResponseBody
 	@RequestMapping("nickCheck.me")
 	public String ajaxNickCheck(String checkNick) {
 		int count = memberService.nickCheck(checkNick);
+		System.out.println(count);
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	
+	/**
+	 * 이메일 중복 확인 메서드
+	 */
+	@ResponseBody
+	@RequestMapping("emailCheck.me")
+	public String emailCheck(String checkEmail) {
+		int count = memberService.emailCheck(checkEmail);
 		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}

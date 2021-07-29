@@ -21,6 +21,10 @@ public class MemberDao {
 	public int nickCheck(SqlSessionTemplate sqlSession, String memNickname) {
 		return sqlSession.selectOne("memberMapper.nickCheck",memNickname);
 	}
+
+	public int emailCheck(SqlSessionTemplate sqlSession, String memEmail) {
+		return sqlSession.selectOne("memberMapper.emailCheck",memEmail);
+	}
 	
 	
 }
