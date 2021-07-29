@@ -8,11 +8,13 @@
 	<typeAliases>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.bookforyou.bk4u.book.model.vo.Book" alias="Book"/>
+		<typeAlias type="com.bookforyou.bk4u.groupboard.model.vo.GroupBoard" alias="GroupBoard"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/book-mapper.xml"/>
+		<mapper resource="/mappers/groupBoard-mapper.xml"/> 
 	</mappers>
 
 </configuration>
