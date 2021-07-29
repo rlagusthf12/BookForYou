@@ -2,6 +2,9 @@ package com.bookforyou.bk4u.book.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -173,6 +176,32 @@ public class BookController {
 		  .setViewName("book/bookCartList");
 		
 		return mv;
+	}
+	
+	@RequestMapping("adminBookStatusHandling.bk")
+	public String updateBookStatus(HttpSession session, 
+									@RequestParam(value="selectedBook") List<String> bkNoArr,
+									String statusValue) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		for(int i=0; i<bkNoArr.size(); i++) {
+			String bkNo = bkNoArr.get(i);
+			map.put("bkNo", bkNo);
+			map.put("statusValue", statusValue);
+		}
+		
+		int result = bookService.updateBookStatus(map);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+		}else {
+			session.setAttribute("errorMsg", "수정 실패하였습니다.");
+		}
+		
+		return "redirect:/adminBookList.bk";
+		
+		
 	}
 	
 	

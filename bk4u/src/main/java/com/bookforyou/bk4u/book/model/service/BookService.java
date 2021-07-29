@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.book.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -54,6 +55,8 @@ public interface BookService {
 	 * [공통] 도서 장바구니 조회
 	 */
 	ArrayList<Book> selectCartList(int memNo);
+	
+	int updateBookStatus(HashMap<String, String> map);
 
 	
 }

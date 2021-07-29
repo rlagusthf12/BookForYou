@@ -326,6 +326,25 @@
                          where mem_no = #{memNo})
 	</select>
 	
-	
+	<update id="updateBookStatus">
+		update
+			   book
+		   set 
+		   <choose>
+		   		<when test="statusValue == 1">
+		   			bk_status = '판매중'
+		   		</when>
+		   		<when test="statusValue == 2">
+		   			bk_status = '품절'
+		   		</when>
+		   		<when test="statusValue == 3">
+		   			bk_selstatus = 'Y'
+		   		</when>
+		   		<when test="statusValue == 4">
+		   			bk_selstatus = 'N'
+		   		</when>
+		   </choose>
+		 where bk_no = #{ bkNo }
+	</update>
 	
 </mapper>

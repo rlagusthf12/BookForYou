@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.book.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,6 +98,11 @@ public class BookServiceImpl implements BookService {
 	 */
 	public ArrayList<Book> selectCartList(int memNo) {
 		return bookDao.selectCartList(sqlSession, memNo);
+	}
+
+	@Override
+	public int updateBookStatus(HashMap<String, String> map) {
+		return bookDao.updateBookStatus(sqlSession, map);
 	}
 
 

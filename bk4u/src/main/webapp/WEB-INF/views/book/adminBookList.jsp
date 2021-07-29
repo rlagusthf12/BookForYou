@@ -218,15 +218,18 @@
 	        })
 	        
 	        /* 판매중으로 바꾸기 */
-	        $("#handling-statusY").click(function(){
-	        	var obj = $("[name=bCheck]");
-	        	var checkArr = new Array();
-	        	
-	        	$("input:checkbox[name='bCheck']:checked").each(function(){
-	        		checkArr.push(this.value);
-	        	});
-	        	
-	        	location.href="adminBookUpdate.bk?selectedBook=" + checkArr;
+	        $("#handling-btn button").each(function(){
+	        	$(this).click(function(){
+	        		
+	        		var obj = $("[name=bCheck]");
+		        	var checkArr = new Array();
+		        	$("input:checkbox[name='bCheck']:checked").each(function(){
+		        		checkArr.push(this.value);
+		        	});
+		        	
+			        location.href="adminBookStatusHandling.bk?selectedBook=" + checkArr + "&statusValue=" + $(this).val();	        		
+		        	
+		        })
 	        })
 	        
 	    })
@@ -336,11 +339,11 @@
             </div>
 
             <div id="handling-btn">
-                <button id="handling-statusY">핀매중</button>
-                <button id="handling-statusN">품절</button>
-                <button id="handling-selStatusY">게시함</button>
-                <button id="handling-selStatusN">게시안함</button>
-                <button id="enroll-newBook">도서등록</button>
+                <button id="handling-statusY" value="1">핀매중</button>
+                <button id="handling-statusN" value="2">품절</button>
+                <button id="handling-selStatusY" value="3">게시함</button>
+                <button id="handling-selStatusN" value="4">게시안함</button>
+                <button id="enroll-newBook" value="5">도서등록</button>
             </div>
 
             <div  id="result-div">
