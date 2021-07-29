@@ -15,8 +15,6 @@ public class BookDao {
 	
 	/**
 	 * [관리자] 도서 전체 개수  조회 (한진)
-	 * @param sqlSession
-	 * @return
 	 */
 	public int selectAllListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookMapper.selectAllListCount");
@@ -24,14 +22,11 @@ public class BookDao {
 	
 	/**
 	 * [관리자] 도서 전체 목록 조회 (한진)
-	 * @param sqlSession
-	 * @param pi
-	 * @return
 	 */
-	public ArrayList<Book> selectAdminBookList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Book> selectAdminBookList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> filter) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBookList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBookList", filter, rowBounds);
 	}
 	
 	/*
@@ -52,8 +47,6 @@ public class BookDao {
 	
 	/**
 	 * [관리자] '판매중'인 도서 개수 조회 (한진)
-	 * @param sqlSession
-	 * @return
 	 */
 	public int selectStatusYCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookMapper.selectStatusYCount");
@@ -61,8 +54,6 @@ public class BookDao {
 	
 	/**
 	 * [관리자]  게시 'Y'인 도서 개수 조회 (한진)
-	 * @param sqlSession
-	 * @return
 	 */
 	public int selectSelStatusYCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookMapper.selectSelStatusYCount");
@@ -70,8 +61,6 @@ public class BookDao {
 	
 	/**
 	 * [관리자] 검색조건에 일치하는 도서 개수 조회 (한진)
-	 * @param sqlSession
-	 * @return
 	 */
 	public int selectAdminSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("bookMapper.selectAdminSearchCount", map);
@@ -79,10 +68,6 @@ public class BookDao {
 	
 	/**
 	 * [관리자] 검색조건에 일치하는 도서 목록 조회 (한진)
-	 * @param sqlSession
-	 * @param pi
-	 * @param map
-	 * @return
 	 */
 	public ArrayList<Book> selectAdminSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -96,4 +81,6 @@ public class BookDao {
 	public Book selectBook(SqlSessionTemplate sqlSession, int bkNo) {
 		return sqlSession.selectOne("bookMapper.selectBook", bkNo);
 	}
+	
+	
 }

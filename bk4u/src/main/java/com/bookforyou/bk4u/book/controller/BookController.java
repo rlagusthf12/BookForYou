@@ -25,24 +25,46 @@ public class BookController {
 	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 개수 조회 (한진)
 	 * @param mv
 	 * @param currentPage
+	 * @param bkStatus
 	 * @return
 	 */
 	@RequestMapping("adminBookList.bk")
-	public ModelAndView adminBookList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public ModelAndView adminBookList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
+									  @RequestParam(value="bkStatus", defaultValue="0") String bkStatus) {
+		
+		HashMap<String, String> filter = new HashMap<>();
+		filter.put("bkStatus", bkStatus);
 		
 		int listCount = bookService.selectAllListCount();
 	
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);	
-		ArrayList<Book> bList = (ArrayList)bookService.selectAdminBookList(pi);
+		PageInfo pi = null;
+		ArrayList<Book> bList = null;
 		
 		int selectStatusY = bookService.selectStatusYCount();
 		int selectSelStatusY = bookService.selectSelStatusYCount();
 		int selectStatusN = listCount - selectStatusY;
 		int selectSelStatusN = listCount - selectSelStatusY;
 		
+		if(bkStatus.equals("0")) {
+			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		}else {
+			if(bkStatus.equals("1")) {
+				pi = Pagination.getPageInfo(selectStatusY, currentPage, 10, 5);				
+			}else if(bkStatus.equals("2")) {
+				pi = Pagination.getPageInfo(selectStatusN, currentPage, 10, 5);
+			}else if(bkStatus.equals("3")) {
+				pi = Pagination.getPageInfo(selectSelStatusY, currentPage, 10, 5);
+			}else if(bkStatus.equals("4")){
+				pi = Pagination.getPageInfo(selectSelStatusN, currentPage, 10, 5);
+			}
+		}
+		
+		bList = (ArrayList)bookService.selectAdminBookList(pi, filter);
+		
 		mv.addObject("pi", pi)
 		  .addObject("bList", bList)
 		  .addObject("listCount", listCount)
+		  .addObject("bkStatus", bkStatus)
 		  .addObject("selectStatusY", selectStatusY)
 		  .addObject("selectStatusN", selectStatusN)
 		  .addObject("selectSelStatusY", selectSelStatusY)
@@ -131,4 +153,6 @@ public class BookController {
 		
 		return mv;
 	}
+	
+	
 }

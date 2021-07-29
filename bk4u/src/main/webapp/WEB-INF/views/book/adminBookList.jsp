@@ -34,7 +34,7 @@
 
 		/* 도서 상태 바 */
         #status-bar{
-            margin:30px 0 40px 0;
+            margin:30px 0 60px 0;
             font-size: 15px;
         }
         #status-bar > div{
@@ -46,20 +46,19 @@
             text-align: center;
             padding:10px;
             font-weight: 600;
-           box-shadow: 5px 5px 5px grey;
+           	box-shadow: 3px 3px 3px grey;
         }
         #status-bar p {font-size:17px; margin-bottom:10px;}
         #status-bar span {color:#EC573B; font-size:20px;}
 		#status-bar > div:hover {
 			cursor:pointer;
-			box-shadow: 15px 15px 15px grey; 
+			box-shadow: 10px 10px 10px grey; 
 		}
 
         /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
-            margin-top:40px;
         }
         /* 검색 바 */
         #search-bar{
@@ -163,23 +162,23 @@
 	        
 	        /* 상태 클릭  */
 	        $("#getStatusAll").click(function(){
-		        location.href="adminBookList.bk";
+		        location.href="adminBookList.bk?";
 		    })
 		    
 		    $("#getStatusY").click(function(){
-		        location.href="adminStatusYBookList.bk";
+		        location.href="adminBookList.bk?bkStatus=1";
 		    })
 		    
 		    $("#getStatusN").click(function(){
-		        location.href="adminStatusNBookList.bk";
+		        location.href="adminBookList.bk?bkStatus=2";
 		    })
 		    
 		    $("#getSelStatusY").click(function(){
-		        location.href="adminSelStatusYBookList.bk";
+		        location.href="adminBookList.bk?bkStatus=3";
 		    })
 		    
 		    $("#getSelStatusN").click(function(){
-		        location.href="adminSelStatusNBookList.bk";
+		        location.href="adminBookList.bk?bkStatus=4";
 		    })
 		    
 	    })
@@ -236,11 +235,11 @@
                     <p>게시안함</p>
                 </div>
                 <div>
-                    <span>${ selectSelStatusY }</span>
+                    <span>${ selectSelStatusN }</span>
                 </div>
             </div>
         </div>
-		<hr>
+	
         <div id="search-area">
             <form action="adminSearch.bk" method="GET">
                 <div id="search-bar">
@@ -312,22 +311,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                    	<c:forEach var="b" items="${ bList }" varStatus="no">
-	                        <tr>
-	                            <td>${ no.count }</td>
-	                            <td><input type="checkbox"></td>
-	                            <td><img src="" alt="" width="65" height="80"></td>
-	                            <td>${ b.bkNo }</td>
-	                            <td>${ b.bkTitle }</td>
-	                            <td>${ b.writerName }</td>
-	                            <td>${ b.bkPublish }</td>
-	                            <td>${ b.bkDate }</td>
-	                            <td>${ b.bkPrice }</td>
-	                            <td>${ b.bkStock }</td>
-	                            <td>${ b.bkStatus }</td>
-	                            <td>${ b.bkSelStatus }</td>
-	                        </tr>
-                        </c:forEach>
+                    	<c:choose>
+                    		<c:when test = "${ bList.size() != 0}"> 
+		                    	<c:forEach var="b" items="${ bList }" varStatus="no">
+			                        <tr>
+			                            <td>${ no.count }</td>
+			                            <td><input type="checkbox"></td>
+			                            <td><img src="" alt="" width="65" height="80"></td>
+			                            <td>${ b.bkNo }</td>
+			                            <td>${ b.bkTitle }</td>
+			                            <td>${ b.writerName }</td>
+			                            <td>${ b.bkPublish }</td>
+			                            <td>${ b.bkDate }</td>
+			                            <td>${ b.bkPrice }</td>
+			                            <td>${ b.bkStock }</td>
+			                            <td>${ b.bkStatus }</td>
+			                            <td>${ b.bkSelStatus }</td>
+			                        </tr>
+		                        </c:forEach>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<tr>
+		                			<td colspan="12">조회된 결과가 존재하지 않습니다.</td>
+		                		</tr>
+		                	</c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
             </div>
@@ -339,21 +347,21 @@
 	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
 	                	</c:when>
 	                	<c:otherwise>
-			                <li class="page-item"><a class="page-link" href="adminBookList.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
+			                <li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&currentPage=${ pi.currentPage-1 }">이전</a></li>
 	    				</c:otherwise>
 	    			</c:choose>            	
 	                
 	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                <li class="page-item"><a class="page-link" href="adminBookList.bk?currentPage=${ p }">${ p }</a></li>
+		                <li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&currentPage=${ p }">${ p }</a></li>
 	                </c:forEach>
 	                
 	                
 	                <c:choose>
-	                	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                	<c:when test="${ pi.currentPage ge pi.maxPage }">
 			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
 	                	</c:when>
 	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="adminBookList.bk?currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                		<li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }currentPage=${ pi.currentPage+1 }">다음</a></li>
 	                	</c:otherwise>
 	                </c:choose>
 	            </ul>

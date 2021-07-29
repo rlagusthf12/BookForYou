@@ -32,8 +32,8 @@ public class BookServiceImpl implements BookService {
 	 * [관리자] 전체 도서 목록 조회 (한진)
 	 */
 	@Override
-	public ArrayList<Book> selectAdminBookList(PageInfo pi) {
-		return bookDao.selectAdminBookList(sqlSession, pi);
+	public ArrayList<Book> selectAdminBookList(PageInfo pi, HashMap<String, String> filter) {
+		return bookDao.selectAdminBookList(sqlSession, pi, filter);
 	}
 	
 	/*
@@ -91,6 +91,8 @@ public class BookServiceImpl implements BookService {
 	public Book selectBook(int bkNo) {
 		return bookDao.selectBook(sqlSession, bkNo);
 	}
+
+	
 
 
 }

@@ -10,16 +10,13 @@ public interface BookService {
 
 	/**
 	 * [관리자] 전체 도서 개수 조회 (한진)
-	 * @return
 	 */
 	int selectAllListCount();
 	
 	/**
 	 * [관리자] 전체 도서 목록 조회 (한진)
-	 * @param pi
-	 * @return
 	 */
-	ArrayList<Book> selectAdminBookList(PageInfo pi);
+	ArrayList<Book> selectAdminBookList(PageInfo pi, HashMap<String, String> filter);
 
 	/*
 	 * [공통] 도서 검색 카운트 조회 (연지)
@@ -33,20 +30,16 @@ public interface BookService {
 
 	/**
 	 * [관리자] '판매중'인 도서 개수 조회 (한진)
-	 * @return
 	 */
 	int selectStatusYCount();
 	
 	/**
 	 * [관리자] 게시'Y'인 도서 개수 조회 (한진)
-	 * @return
 	 */
 	int selectSelStatusYCount();
 	
 	/**
 	 * [관리자] 검색조건에 일치하는 도서 개수 조회 (한진)
-	 * @param map
-	 * @return
 	 */
 	int selectAdminSearchCount(HashMap<String, String> map);
 	
@@ -56,4 +49,6 @@ public interface BookService {
 	 * [공통] 도서 상세 조회 (연지)
 	 */
 	Book selectBook(int bkNo);
+
+	
 }

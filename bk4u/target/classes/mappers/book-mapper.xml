@@ -60,6 +60,20 @@
 		       writer_change_name,
 		       bk_content
 		  from book
+		 <choose>
+		 	<when test="bkStatus == 1">
+		 		where bk_status = '판매중'
+		 	</when> 
+		 	<when test="bkStatus == 2">
+		 		where bk_status = '품절'
+		 	</when>	
+		 	<when test="bkStatus == 3">
+		 		where bk_selstatus = 'Y'
+		 	</when>
+		 	<when test="bkStatus == 4">
+		 		where bk_selstatus = 'N'
+		 	</when>
+		 </choose>
 		 order
 		    by bk_date desc
 	</select>
@@ -246,6 +260,7 @@
 		  from book
 		 where bk_no = #{bkNo}
 	</select>
+	
 	
 	
 </mapper>
