@@ -22,7 +22,7 @@ public class BookController {
 	private BookService bookService;
 	
 	/**
-	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 개수 조회 (한진)
+	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 도서 개수&목록 조회(한진)
 	 * @param mv
 	 * @param currentPage
 	 * @param bkStatus
