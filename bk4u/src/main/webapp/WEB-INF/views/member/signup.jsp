@@ -171,8 +171,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>이메일</b></label>
-                <input type="email" class="custom-input custom-input-basic custom-input-danger" name="memEmail" placeholder="이메일을 입력해주세요. 인증에 사용됩니다." required/>
-                <div id="emailCheck" class="form-text" style="color: red;">이메일은 필수 정보입니다.</div>
+                <input type="email" class="custom-input custom-input-basic" id="emailInput" name="memEmail" placeholder="이메일을 입력해주세요. 인증에 사용됩니다." required/>
+                <div id="emailInfo" class="form-text"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>실명</b></label>
@@ -270,6 +270,7 @@
             		var $pwdInput = $("#enrollForm1 input[name=memPwd]");
             		var $pwdCheckInput = $("#enrollForm1 input[id=pwdCheckInput]");
             		var $nickInput = $("#enrollForm1 input[name=memNickname]");
+            		var $emailInput = $("#enrollForm1 input[name=memEmail]");
             		
             		let check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/; 
             		// 아이디 유효성 체크
@@ -391,6 +392,43 @@
             			
             		});
             		
+            		//이메일 유효성 체크
+            		$emailInput.keyup(function(){
+            			console.log($emailInput.val());
+            			
+            			if($emailInput.val().length >=1 && $emailInput.val().includes("@")){
+            				
+            				$.ajax({
+            					url:"emailCheck.me",
+            					data: {
+            						checkEmail: $emailInput.val()
+            					},
+            					success:function(result){
+            						if(result=="NNNNN"){
+            							console.log(result);
+            							$("#emailInfo").css("color","red").text("중복된 이메일입니다.");
+            							$("#emailInput").removeClass("custom-input-basic");
+            							$("#emailInput").addClass("custom-input-danger");
+            						}else{
+            							console.log(result);
+            							$("#emailInput").removeClass("custom-input-danger");
+            							$("#emailInput").addClass("custom-input-basic");
+            							$("#emailInfo").css("color","green").text("사용 가능한 이메일입니다.");
+            							
+            						}
+            					}, error:function(result){
+            						console.log("이메일 중복 체크용 ajax통신 실패");
+            					}
+            				});
+            			}else{
+            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+            				$("#emailInput").removeClass("custom-input-basic");
+            				$("#emailInput").addClass("custom-input-danger");
+            				$("#emailInfo").css("color","red").text("이메일 형식(@)이 일치하지 않습니다.");
+            				$("#enrollForm1:submit").attr("disabled",true);
+            			}
+            			
+            		});
             	})
             
             </script>

@@ -75,4 +75,11 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	@ResponseBody
+	@RequestMapping("emailCheck.me")
+	public String emailCheck(String checkEmail) {
+		int count = memberService.emailCheck(checkEmail);
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	
 }
