@@ -341,15 +341,16 @@
                     <button class="btn_delete">삭제</button>
                 </div>
             </div>
-
+			
+			<c:forEach var="b" items="${ bList }">
             <div class="cart_book">
                 <input type="checkbox">
                 <div class="book_img"><img src=""></div>
                 <div class="book_info">
                     <div>
-                        <div>달까지 가자</div>
+                        <div>${ b.bkTitle }</div>
                         <div>
-                            <span>장류진 | 창비 | 2021년 4월</span>
+                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
                             <span>&nbsp;★★★★☆</span>
                         </div>
                         <div>
@@ -361,7 +362,7 @@
                         <div><input type="number" min="1" max="5" value="1"></div>
                         <div><button>수량변경</button></div>
                     </div>
-                    <div>14000원</div>
+                    <div>${ b.bkPrice }원</div>
                     <div>
                         <div>주문하기</div>
                         <div>리스트</div>
@@ -369,62 +370,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="cart_book">
-                <input type="checkbox">
-                <div class="book_img"><img src=""></div>
-                <div class="book_info">
-                    <div>
-                        <div>달까지 가자</div>
-                        <div>
-                            <span>장류진 | 창비 | 2021년 4월</span>
-                            <span>&nbsp;★★★★☆</span>
-                        </div>
-                        <div>
-                            <div>내일 (7/8) 출고 예정</div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div><input type="number" min="1" max="5" value="1"></div>
-                        <div><button>수량변경</button></div>
-                    </div>
-                    <div>14000원</div>
-                    <div>
-                        <div>주문하기</div>
-                        <div>리스트</div>
-                        <div>삭제</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="cart_book">
-                <input type="checkbox">
-                <div class="book_img"><img src=""></div>
-                <div class="book_info">
-                    <div>
-                        <div>달까지 가자</div>
-                        <div>
-                            <span>장류진 | 창비 | 2021년 4월</span>
-                            <span>&nbsp;★★★★☆</span>
-                        </div>
-                        <div>
-                            <div>내일 (7/8) 출고 예정</div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div><input type="number" min="1" max="5" value="1"></div>
-                        <div><button>수량변경</button></div>
-                    </div>
-                    <div>14000원</div>
-                    <div>
-                        <div>주문하기</div>
-                        <div>리스트</div>
-                        <div>삭제</div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
             
             <div id="cart_bottom">
                 <div>

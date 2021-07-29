@@ -161,7 +161,7 @@ public class BookController {
 	}
 	
 	/*
-	 * [공통] 도서 장바구니 조회
+	 * [공통] 도서 장바구니 조회 (연지)
 	 */
 	@RequestMapping("cart.bk")
 	public ModelAndView selectCartList(ModelAndView mv, int memNo) {
@@ -169,7 +169,7 @@ public class BookController {
 		ArrayList<Book> bList = bookService.selectCartList(memNo);
 		
 		mv.addObject("bList", bList)
-		  .setViewName("book/bookSearchList");
+		  .setViewName("book/bookCartList");
 		
 		return mv;
 	}
