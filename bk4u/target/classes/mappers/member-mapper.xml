@@ -75,4 +75,11 @@
 		where 
   			mem_nickname = #{memNickname}
   	</select>
+  	<select id="emailCheck" resultType="_int">
+  		select
+    		count(*)
+		from members
+		where 
+  			mem_email = #{memEmail}
+  	</select>
 </mapper>

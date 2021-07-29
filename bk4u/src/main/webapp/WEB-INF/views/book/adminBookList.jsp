@@ -181,6 +181,18 @@
 		        location.href="adminBookList.bk?bkStatus=4";
 		    })
 		    
+		    $("#array-condition").change(function(){
+	            let ar = $(this).val();
+	            console.log(ar);
+
+	            if(${ empty keyword }){
+		            location.href=`adminBookList.bk?bkStatus=${ bkStatus }&array=` + ar;					           	
+	            }else {
+	            	location.href=`adminSearch.bk?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	            }
+	        
+		    })
+		    
 	    })
 	    
     </script>
@@ -242,6 +254,7 @@
 	
         <div id="search-area">
             <form action="adminSearch.bk" method="GET">
+            	<input type="hidden" name="array" value="${ ar }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition">
@@ -276,11 +289,11 @@
             </div>
             <br>
             <div id="array-div">
-                <select name="" id="array-condition">
-                    <option value="">출간일 최신순</option>
-                    <option value="">출간일 역순 </option>
-                    <option value="">재고 많은순</option>
-                    <option value="">재고 적은순</option>
+                <select name="array-condition" id="array-condition">
+                    <option value="0">출간일 최신순</option>
+                    <option value="1">출간일 역순 </option>
+                    <option value="2">재고 많은순</option>
+                    <option value="3">재고 적은순</option>
                 </select>
             </div>
 
@@ -347,12 +360,12 @@
 	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
 	                	</c:when>
 	                	<c:otherwise>
-			                <li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+			                <li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
 	    				</c:otherwise>
 	    			</c:choose>            	
 	                
 	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                <li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&currentPage=${ p }">${ p }</a></li>
+		                <li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
 	                </c:forEach>
 	                
 	                
@@ -361,7 +374,7 @@
 			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
 	                	</c:when>
 	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                		<li class="page-item"><a class="page-link" href="adminBookList.bk?bkStatus=${ bkStatus }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
 	                	</c:otherwise>
 	                </c:choose>
 	            </ul>
