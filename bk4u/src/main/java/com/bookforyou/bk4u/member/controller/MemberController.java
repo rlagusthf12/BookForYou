@@ -67,4 +67,12 @@ public class MemberController {
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	@ResponseBody
+	@RequestMapping("nickCheck.me")
+	public String ajaxNickCheck(String checkNick) {
+		int count = memberService.nickCheck(checkNick);
+		System.out.println(count);
+		return count > 0 ? "NNNNN" : "NNNNY";
+	}
+	
 }

@@ -17,6 +17,10 @@ public class MemberDao {
 		System.out.println("memberDao: " + memId);
 		return sqlSession.selectOne("memberMapper.idCheck", memId);
 	}
+
+	public int nickCheck(SqlSessionTemplate sqlSession, String memNickname) {
+		return sqlSession.selectOne("memberMapper.nickCheck",memNickname);
+	}
 	
 	
 }

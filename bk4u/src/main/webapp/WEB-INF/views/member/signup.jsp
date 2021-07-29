@@ -166,28 +166,28 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>닉네임</b></label>
-                <input type="text" class="custom-input custom-input-basic custom-input-danger" placeholder="닉네임(최대 8자)" required/>
-                <div id="nickCheck" class="form-text" style="color: red;">닉네임은 필수 정보입니다.</div>
+                <input type="text" class="custom-input custom-input-basic" id="nickInput" name="memNickname" placeholder="닉네임(최대 8자)" maxlength='8' required/>
+                <div id="nickInfo" class="form-text"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>이메일</b></label>
-                <input type="email" class="custom-input custom-input-basic custom-input-danger" placeholder="이메일을 입력해주세요. 인증에 사용됩니다." required/>
+                <input type="email" class="custom-input custom-input-basic custom-input-danger" name="memEmail" placeholder="이메일을 입력해주세요. 인증에 사용됩니다." required/>
                 <div id="emailCheck" class="form-text" style="color: red;">이메일은 필수 정보입니다.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>실명</b></label>
-                <input type="email" class="custom-input custom-input-basic custom-input-danger" placeholder="실명" required/>
+                <input type="email" class="custom-input custom-input-basic custom-input-danger" name="memName" placeholder="실명" required/>
                 <div id="emailCheck" class="form-text" style="color: red;">실명은 필수 정보입니다.</div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>주소</b></label>
                 
-                <div id="post-box"><input type="email" class="custom-input-post custom-input-basic custom-input-danger" id="memPost" placeholder="우편번호" required/>
+                <div id="post-box"><input type="email" class="custom-input-post custom-input-basic custom-input-danger" name="memPost" id="memPost" placeholder="우편번호" required/>
                 <button type="button" class="black-button" onclick="sample6_execDaumPostcode();">우편번호 찾기</button></div>
                 
-                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memBasicAddress" placeholder="기본 주소" required/>
-                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="detailAddress" placeholder="상세 주소" required/>
-                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memAddressRefer" placeholder="참고"/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="detailAddress" name="memDetailAddress" placeholder="상세 주소" required/>
+                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memAddressRefer" name="memAddressRefer" placeholder="참고"/>
                 <div id="emailCheck" class="form-text" style="color: red;">주소는 필수 정보입니다.</div>
             </div>
             <!-- 다음 주소 api -->
@@ -269,6 +269,8 @@
             		var $idInput = $("#enrollForm1 input[name=memId]");
             		var $pwdInput = $("#enrollForm1 input[name=memPwd]");
             		var $pwdCheckInput = $("#enrollForm1 input[id=pwdCheckInput]");
+            		var $nickInput = $("#enrollForm1 input[name=memNickname]");
+            		
             		let check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/; 
             		// 아이디 유효성 체크
             		$idInput.keyup(function(){
@@ -349,6 +351,44 @@
                 			}
             			}
 
+            		});
+            		
+            		// 닉네임 유효성 체크 
+            		$nickInput.keyup(function(){
+            			console.log($nickInput.val());
+            			
+            			if($nickInput.val().length >=1 && $idInput.val().length <=8){
+            				// 5글자이상 11자 이하일때 아이디에 대한 중복검사 진행
+            				$.ajax({
+            					url:"nickCheck.me",
+            					data: {
+            						checkNick: $nickInput.val()
+            					},
+            					success:function(result){
+            						if(result=="NNNNN"){
+            							console.log(result);
+            							$("#nickInfo").css("color","red").text("중복된 닉네임입니다.");
+            							$("#nickInput").removeClass("custom-input-basic");
+            							$("#nickInput").addClass("custom-input-danger");
+            						}else{
+            							console.log(result);
+            							$("#nickInput").removeClass("custom-input-danger");
+            							$("#nickInput").addClass("custom-input-basic");
+            							$("#nickInfo").css("color","green").text("사용가능한 닉네임입니다.");
+            							
+            						}
+            					}, error:function(result){
+            						console.log("닉네임 중복 체크용 ajax통신 실패");
+            					}
+            				});
+            			}else{
+            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+            				$("#nickInput").removeClass("custom-input-basic");
+            				$("#nickInput").addClass("custom-input-danger");
+            				$("#nickInfo").css("color","red").text("닉네임은 1글자 이상 8글자 이하로 입력해주세요.");
+            				$("#enrollForm1:submit").attr("disabled",true);
+            			}
+            			
             		});
             		
             	})

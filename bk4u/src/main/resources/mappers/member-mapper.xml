@@ -67,4 +67,12 @@
 		where 
   			mem_id = #{memId}
   	</select>
+  	
+  	<select id="nickCheck" resultType="_int">
+  		select
+    		count(*)
+		from members
+		where 
+  			mem_nickname = #{memNickname}
+  	</select>
 </mapper>

@@ -7,6 +7,8 @@ public interface MemberService {
 	Member loginMember(Member member);
 
 	int idCheck(String memId);
+
+	int nickCheck(String memNickname);
 	
 }
 
