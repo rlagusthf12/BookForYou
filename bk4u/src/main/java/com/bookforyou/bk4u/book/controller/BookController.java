@@ -142,6 +142,7 @@ public class BookController {
 		  .addObject("selectSelStatusN", selectSelStatusN)
 		  .addObject("condition", condition)
 		  .addObject("keyword", keyword)
+		  .addObject("ar", array)
 		  .setViewName("book/adminBookList");
 		
 		return mv;
