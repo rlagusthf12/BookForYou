@@ -76,7 +76,21 @@
 		 	</when>
 		 </choose>
 		 order
-		    by bk_date desc
+		    by 
+		 <choose>
+		 	<when test="array == 0">
+		 		bk_date desc
+		 	</when> 
+		 	<when test="array == 1">
+		 		bk_date asc
+		 	</when>	
+		 	<when test="array == 2">
+		 		bk_stock desc
+		 	</when>
+		 	<when test="array == 3">
+		 		bk_stock asc
+		 	</when>
+		 </choose> 
 	</select>
 	
 	<select id="selectSearchBookCount" resultType="_int">
@@ -232,6 +246,22 @@
 			</otherwise>
 		</choose>
 		like '%' || #{keyword} || '%'
+		 order
+		    by 
+		 <choose>
+		 	<when test="array == 0">
+		 		bk_date desc
+		 	</when> 
+		 	<when test="array == 1">
+		 		bk_date asc
+		 	</when>	
+		 	<when test="array == 2">
+		 		bk_stock desc
+		 	</when>
+		 	<when test="array == 3">
+		 		bk_stock asc
+		 	</when>
+		 </choose> 
 	</select>
 	
 	<select id="selectBook" resultMap="bookResult">

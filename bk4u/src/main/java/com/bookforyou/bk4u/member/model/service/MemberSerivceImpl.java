@@ -30,5 +30,10 @@ public class MemberSerivceImpl implements MemberService{
 	public int nickCheck(String memNickname) {
 		return memberDao.nickCheck(sqlSession,memNickname);
 	}
+
+	@Override
+	public int emailCheck(String memEmail) {
+		return memberDao.emailCheck(sqlSession,memEmail);
+	}
 	
 }

@@ -30,10 +30,12 @@ public class BookController {
 	 */
 	@RequestMapping("adminBookList.bk")
 	public ModelAndView adminBookList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
-									  @RequestParam(value="bkStatus", defaultValue="0") String bkStatus) {
+									  @RequestParam(value="bkStatus", defaultValue="0") String bkStatus,
+									  @RequestParam(value="array", defaultValue="0") String array) {
 		
 		HashMap<String, String> filter = new HashMap<>();
 		filter.put("bkStatus", bkStatus);
+		filter.put("array", array);
 		
 		int listCount = bookService.selectAllListCount();
 	
@@ -65,6 +67,7 @@ public class BookController {
 		  .addObject("bList", bList)
 		  .addObject("listCount", listCount)
 		  .addObject("bkStatus", bkStatus)
+		  .addObject("ar", array)
 		  .addObject("selectStatusY", selectStatusY)
 		  .addObject("selectStatusN", selectStatusN)
 		  .addObject("selectSelStatusY", selectSelStatusY)
@@ -110,11 +113,13 @@ public class BookController {
 	 */
 	@RequestMapping("adminSearch.bk")
 	public ModelAndView adminBookSearch(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
-										String condition, String keyword) {
+										String condition, String keyword,
+										@RequestParam(value="array", defaultValue="0") String array) {
 		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
+		map.put("array", array);
 		
 		int conListCount = bookService.selectAdminSearchCount(map);
 		
@@ -135,6 +140,7 @@ public class BookController {
 		  .addObject("selectStatusN", selectStatusN)
 		  .addObject("selectSelStatusY", selectSelStatusY)
 		  .addObject("selectSelStatusN", selectSelStatusN)
+		  .addObject("condition", condition)
 		  .addObject("keyword", keyword)
 		  .setViewName("book/adminBookList");
 		
