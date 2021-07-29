@@ -77,17 +77,32 @@
                                         <td colspan="2" ><input type="text" readonly placeholder="원래지역이름"></td>
 
                                 </tr>
+                                
+                                <tr>
+                                    <td><label for="">모임소개</label></td>
+                                    <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
+                                </tr>
                          
 
                                 <tr>
-                                    <td rowspan="2">사진</td>
-                                    <td colspan="2" height="130">사진미리보기</td>
-                                  
-                                </tr>
+                                    <td><label for="">사진</label></td>
+                                    <td height="130">
+                                       
+                                        <img src="" id="img">
+                                        <br>
+                                        <input type="file" name="groupImg" onchange="miri(this);">
 
-                                <tr>
-                                    <td>group.jpg</td>
-                                    <td><button style="float: right;  border-color: black; background-color: white; border-radius: 10px;">파일첨부</button></td>
+                                        <script>
+                                            function miri(tag){
+                                                var reader = new FileReader();
+                                                reader.readAsDataURL(tag.files[0]);
+                                                reader.onload = function() {
+                                                    document.getElementById("img").src = this.result;
+                                                } 
+                                            }
+                                        </script>
+                                    </td>
+                                    
                                 </tr>
 
                                 <tr>
@@ -101,6 +116,7 @@
                                 </tr>
                             </thead>
                         </table>
+
                         <br>
                         <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">개설하기</button>
                         <button type="reset" style="border-color: grey; background-color: white; border-radius: 10px;">초기화</button>

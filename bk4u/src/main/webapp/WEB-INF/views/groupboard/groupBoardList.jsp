@@ -7,9 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
         .content{
           background-color:#FCBE34;
           margin:auto;
@@ -22,7 +22,7 @@
           padding:5% 15%;
           background:white;
       }
-      #pagingArea{width:fit-content;margin:auto;}
+ 
 </style>
 </head>
 <body>
@@ -44,13 +44,14 @@
                         </li>
                 </div>
 
-                    <div align="center" style="width: 800px; border-radius: 10px; height: 850px; border: 1px solid; padding-right: 20px; padding-left: 20px;"> 
+                    <div align="center" style="width: 800px; border-radius: 10px; height: auto; border: 1px solid; padding-right: 20px; padding-left: 20px;"> 
                             <br><br>
                             <h6 align="left"><b>소게시판<b></h6>
                                 
-                            <button type="submit" style="float: right; margin: auto;">글쓰기</button>
+                            <button type="submit" style="float: right; margin: auto; border-radius: 10px; background: white;">글쓰기</button>
                         
                     <br><br>
+                    <c:forEach var="g" items="${ groupBoardList }">
                     <div style="border: 1px solid; width: 750; height: 800; margin: auto; border-radius: 10px;">
                         <table align="center" >
                             <tr>
@@ -72,49 +73,77 @@
                         <table  align="center">
                             <tr>
                                 <td width="550" onclick="">댓글(1)</td>
-                                <td width="100"><button type="submit" style="float: left;">댓글달기</button></td>
+                                <td width="100"><button type="submit" style="float: left; border-radius: 10px; background: white;">댓글달기</button></td>
                             </tr>
                         </table>
                         <br>
                     </div>
-
+                    </c:forEach>
                     <br><br><br>
-                    <div style="border: 1px solid; width: 750; height: 800; margin: auto; border-radius: 10px;">
-                        <table align="center" >
-                            <tr>
-                                <td width="200">작성자아이콘 </td>
-                                <td>작성자닉네임</td>
-                            </tr>
-                            <tr>
-                                <td>작성날짜</td>
-                                <td>작성시간</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" width="650px" height="150"> 작성내용 미리보기 </td>
-                            </tr>
-                        </table>
-                    </div>
+              
 
 
-                    <div style="border: 1px solid; width: 750; margin: auto; border-radius: 10px;">
-                        <table  align="center">
-                            <tr>
-                                <td width="550" onclick="">댓글(1)</td>
-                                <td width="100"><button type="submit" style="float: left;">댓글달기</button></td>
-                            </tr>
-                        </table>
-                        <br>
-                    </div>
+                    
 
 
                     <br><br>
-                        <div id="pagingArea">
-
-                            <ul class="pagination" >
-                                <li class="page-item"><a class="page-link" href="#">더보기▼</a></li>
-                            </ul>
+                    <button type="button" id="more" style="border-radius: 10px; background: white; ">더보기▼</button>
+             
+                    <script>
+                        var more = -1;
+                         $(function(){$('#more').on('click',function(){
+                             
+                                 more = more +1;
+                                
+                                $.ajax({
+                                    url : "groupBoardList.do",
+                                    type: 'POST',
+                                    data: { more : more,		    
+                                         
+                                        },
+                                    dataType: "json",
+                                    success: function(data){
                         
-                        </div>
+                                            var addListHtml ="";
+                                            addListHtml += "<div class='fixed_img_col' style='height:200px'>";
+                                            for(var i in data.list){
+                                            
+                                            addListHtml += "<table>"
+                                    	    addListHtml += "<tr>"
+                                            addListHtml += "<td>"+data.list[i].작성자아이콘+"</td>";
+                                            addListHtml += "<td>"+data.list[i].작성자이름+"</td>";
+                                            addListHtml += "</tr>"
+                                     	    addListHtml += "<tr>"
+                                           	addListHtml += "<td>"+data.list[i].작성날짜+"</td>";
+                                            addListHtml += "<td>"+data.list[i].작성시간+"</td>";
+                                            addListHtml += "<tr>"
+                                            addListHtml += "<td>"+data.list[i].작성내용+"</td>";
+                                            addListHtml += "</tr>"
+                                            addListHtml += "<tr>"
+                                            addListHtml += "</table>";
+                                            addListHtml += "<table>"
+                                            addListHtml += "<tr>"
+                                            addListHtml += "<td>"+data.list[i].댓글+data.list[i].댓글수+"</td>";
+ 				                            addListHtml += "<td>"+"<button>댓글달기</button>"+"</td>";
+                                            addListHtml += "</tr>"
+                                            addListHtml += "</table>";	
+                                        }
+                                            addListHtml += "</div>";
+                                        if(data.list.length>=1){
+                                            $("#morePage").append(addListHtml);
+                                        }else{
+                                            alert("다음페이지가 없습니다.");
+                                        }						
+                                    },
+                                    error: function (request,status,errorData){   
+                                        alert('error code: '+request.status+"\n"
+                                                +'message:' +request.reponseText+'\n'
+                                                + 'error :'+  errorData);
+                                    }
+                                });
+                            }); 
+                         }); 
+                        </script>
                         <br><br><br>
                 </div>            
            </div>   
@@ -128,3 +157,4 @@
     </body>
 
 </html>
+  

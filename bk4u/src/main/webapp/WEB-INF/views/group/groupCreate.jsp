@@ -10,24 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript">
-        function cityChange(province){
-            $.ajax({
-                type: "POST",
-                url: "/tc/placeSelect.do",
-                dataType: "json",
-                data: {param:province},
-                success: function(result){
 
-                    $("#city").find("option").remove().end().append("<option value=''>시/구/군</option>");
-
-                    $.each(result, function(i){
-                        $("#city").append("<option value'"+result[i]+"'>"+result[i]+"</option>")
-                    });
-                }
-            })
-        }
-    </script>
 
     <style>
       .content{
@@ -60,10 +43,10 @@
                         <div style="border-radius: 10%; border: solid; width: 600px;">
                         <table>
                             <br>
-                            <h4 align="center">독서모임 개설</h4>
+                            <h4 align="center">독서모임 만들기</h4>
                             <thead>
                                 <tr>
-                                    <td rowspan="2"><br>*모임이름</td>
+                                    <td rowspan="2"><br><label for="">*모임이름</label></td>
                                     <td colspan="2">  
                                         <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="customRadio" name="on" value="customEx">
@@ -82,16 +65,16 @@
                                 </tr>
 
                                 <tr>
-                                    <td>*참여인원</td>
+                                    <td><label for="">*참여인원</label></td>
                                     <td colspan="2"><input type="number"></td>
                                 </tr>
                                
                                                                    
+                                </script>
+                                    <form name="cityForm">
                                 
-                                <form name="cityForm">
-                                <table>
                                     <tr>
-                                        <td>지역검색</td>
+                                        <td><label for="">지역검색</label></td>
                                         <td>
                                             <select name="province" id="province" onChange="cityChange(this.value)">
                                                 <option>광역시도</option>
@@ -117,26 +100,58 @@
                                             </select>
                                             
                                                 </td>
-                                          </tr>
-                                </table>      
-                           </form>
+                                      
+                                            </form>
 
+                                </tr>
+
+                                <script type="text/javascript">
+                                    function cityChange(province){
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/tc/placeSelect.do",
+                                            dataType: "json",
+                                            data: {param:province},
+                                            success: function(result){
                             
+                                                $("#city").find("option").remove().end().append("<option value=''>시/구/군</option>");
+                            
+                                                $.each(result, function(i){
+                                                    $("#city").append("<option value'"+result[i]+"'>"+result[i]+"</option>")
+                                                });
+                                            }
+                                        })
+                                    }
+                                </script>
                          
+                                <tr>
+                                    <td><label for="">모임소개</label></td>
+                                    <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
+                                </tr>
 
                                 <tr>
-                                    <td rowspan="2">사진</td>
-                                    <td colspan="2" height="130">사진미리보기</td>
+                                    <td><label for="">사진</label></td>
+                                    <td height="130">
+                                       
+                                        <img src="" id="img">
+                                        <br>
+                                        <input type="file" name="groupImg" onchange="miri(this);">
+
+                                        <script>
+                                            function miri(tag){
+                                                var reader = new FileReader();
+                                                reader.readAsDataURL(tag.files[0]);
+                                                reader.onload = function() {
+                                                    document.getElementById("img").src = this.result;
+                                                } 
+                                            }
+                                        </script>
+                                    </td>
                                   
                                 </tr>
 
                                 <tr>
-                                    <td>group.jpg</td>
-                                    <td><button style="float: right;  border-color: black; background-color: white; border-radius: 10px;">파일첨부</button></td>
-                                </tr>
-
-                                <tr>
-                                    <td>*회원정보</td>
+                                    <td><label for="">*회원정보</label></td>
                                     <td colspan="2">
                                         <select name="groupInfo">
                                             <option value="onlyMember">회원공개</option>
@@ -144,10 +159,13 @@
                                         </select>
                                     </td>
                                 </tr>
+
+                                
                             </thead>
+
                         </table>
                         <br>
-                        <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">개설하기</button>
+                        <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">만들기</button>
                         <button type="reset" style="border-color: grey; background-color: white; border-radius: 10px;">초기화</button>
                         <br><br>
                         </div>>

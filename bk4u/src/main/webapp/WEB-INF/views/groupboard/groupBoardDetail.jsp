@@ -9,20 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script>
-  $(function(){
-    $(document).on('click','#btn',function(){
-      var text = $("#editform").text();
-      $("#editform").html("<input type='text' value='"+text+"'id='editDo'>");
-      $("#editbtn").html("<buttontype='button' id='btnDo'>댓글수정</button>");
-    })
 
-    $(document).on('click','#btnDo',function(){
-      $("#editform").text($("#editDo").val());
-      $("#editbtn").html("<button type='button' id='btn'>댓글수정</button>");
-    })
-  })
-  </script>
 <style>
     .content{
       background-color:#FCBE34;
@@ -107,8 +94,23 @@
                     </div>
                     <br>
                     <div id='editbtn'><button type="button" id='btn' style="float: right;">댓글수정</button></div>
-                    <br>
                     
+                    <script>
+                      $(function(){
+                        $(document).on('click','#btn',function(){
+                          var text = $("#editform").text();
+                          $("#editform").html("<input type='text' value='"+text+"'id='editDo'>");
+                          $("#editbtn").html("<buttontype='button' id='btnDo'>댓글수정</button>");
+                        })
+                    
+                        $(document).on('click','#btnDo',function(){
+                          $("#editform").text($("#editDo").val());
+                          $("#editbtn").html("<button type='button' id='btn'>댓글수정</button>");
+                        })
+                      })
+                      </script>
+
+                <br>  
 
                 
                 
@@ -116,7 +118,24 @@
                 <div align="right">
                   <input type="text" style="border: 1px solid; width: 760px; height: 100px; margin: auto; border-radius: 10px;">
                   <br><br>
-                  <button>파일첨부</button>
+                  <tr>
+                    <td>
+                      <img src="" id="img">
+                                      <br>
+                                      <input type="file" name="groupImg" onchange="miri(this);">
+
+                                      <script>
+                                          function miri(tag){
+                                              var reader = new FileReader();
+                                              reader.readAsDataURL(tag.files[0]);
+                                              reader.onload = function() {
+                                                  document.getElementById("img").src = this.result;
+                                              } 
+                                          }
+                                      </script>
+                    </td>
+
+                  </tr>
                   <button>댓글작성</button>
                 </div>
                 <br>

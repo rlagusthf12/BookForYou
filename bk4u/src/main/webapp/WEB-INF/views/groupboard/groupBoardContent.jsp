@@ -51,16 +51,34 @@
                 <table align="center" style="padding: 40px;">
                     <tr>
                         <td>
-                          <input type="text" style="width:550px; height: 600px;"> 
+                          <textarea name="" id="" cols="70" rows="10"></textarea>
                         </td>
                         
                     </tr>
+                    <tr>
+                      <td>
+                        <img src="" id="img">
+                                        <br>
+                                        <input type="file" name="groupImg" onchange="miri(this);">
+
+                                        <script>
+                                            function miri(tag){
+                                                var reader = new FileReader();
+                                                reader.readAsDataURL(tag.files[0]);
+                                                reader.onload = function() {
+                                                    document.getElementById("img").src = this.result;
+                                                } 
+                                            }
+                                        </script>
+                      </td>
+
+                    </tr>
+                    
 
                 </table>
 
                <br>
-                <input type="text"></tr>  <button>첨부파일</button> <br><br>
-                <button type="submit" class="">글쓰기</button>
+                <button type="submit" class="" style="border-radius: 10px; background: white;">작성하기</button>
                 <br>
                    <br>
             </div>

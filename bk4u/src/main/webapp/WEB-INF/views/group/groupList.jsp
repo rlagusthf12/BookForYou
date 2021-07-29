@@ -9,76 +9,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-<script>
-        $(document).ready(function() {
-
-            $(window).scroll(function() {
-                // top button controll
-                if ($(this).scrollTop() > 500) {
-                    $('#topButton').fadeIn();
-                } else {
-                    $('#topButton').fadeOut();
-                }
-            });
-
-            $("#headbutton").click(function() {
-                $('html, body').animate({scrollTop:0}, '300');
-            });
-
-        });
-</script>
-<script>
-var more = -1;
- $(function(){$('#more').on('click',function(){
-	 
-	 	more = more +1;
-		
-		$.ajax({
-			url : "groupBoardList.do",
-		    type: 'POST',
-		    data: { more : more,		    
-			     
-			    },
-			dataType: "json",
-			success: function(data){
-
-				var addListHtml ="";
-					addListHtml += "<div class='fixed_img_col' style='height:200px'>";
-				for(var i in data.list){
-					
-					addListHtml += "<table>"
-                    addListHtml += "<tr>"
-					addListHtml += "<td>"+data.list[i].group_img+"</td>";
-				 	addListHtml += "<td>"+data.list[i].group_type+"</td>";
-				   	addListHtml += "<td>"+data.list[i].group_date+"</td>";
-                    addListHtml += "</tr>"
-                    addListHtml += "<tr>"
-				   	addListHtml += "<td>"+data.list[i].group_title+"</td>";
-                    addListHtml += "</tr>"
-                    addListHtml += "<tr>"
-				   	addListHtml += "<td>"+data.list[i].group_script+"</td>";
-                    addListHtml += "</tr>"
-				   	addListHtml += "</table>";	
-				}
-					addListHtml += "</div>";
-					
-				if(data.list.length>=1){
-					$("#morePage").append(addListHtml);
-				}else{
-					alert("다음페이지가 없습니다.");
-				}						
-			},
-		    error: function (request,status,errorData){   
-		    	alert('error code: '+request.status+"\n"
-		    			+'message:' +request.reponseText+'\n'
-		    			+ 'error :'+  errorData);
-		    }
-		});
-	}); 
- }); 
-</script>
-
-    <style>
+<style>
       
 
         #searchForm{
@@ -116,8 +47,12 @@ var more = -1;
         }
 
         
+         #topButton {position: fixed; right: 2%; bottom: 50px; display: none; z-index: 999; float: right;}
+    
+         #editbtn {float: right;}
         
-    </style>
+        
+</style>
 </head>
 <body>
 
@@ -128,28 +63,46 @@ var more = -1;
 
            
         <div id="topButton" style="cursor: pointer"><button id="headbutton" style="border-radius: 10px;">맨위로△</button></div>
-
+            
+            <script>
+            $(document).ready(function() {
+    
+                $(window).scroll(function() {
+                    // top button controll
+                    if ($(this).scrollTop() > 500) {
+                        $('#topButton').fadeIn();
+                    } else {
+                        $('#topButton').fadeOut();
+                    }
+                });
+    
+                $("#headbutton").click(function() {
+                    $('html, body').animate({scrollTop:0}, '300');
+                });
+    
+            });
+        </script>
 
            <div class="innerOuter" style="padding:5% 10%;">
             <br><br><br><br><br><br><br><br>
-            <h6 align="left"><b>독서모임게시판</b></h6>
-            <br><br>
+                <h6 align="left"><b>독서모임게시판</b></h6>
+                <br><br>
 
-                <br clear="both"><br>
-                <form id="searchForm" action="" method="Get" align="center">
-                    <div class="select">
-                        <select class="custom-select" name="condition">
-                            <option value="all">전체검색</option>
-                            <option value="title">모임이름</option>
-                            <option value="place">지역</option>
-                            <option value="type">온라인/오프라인</option>  
-                        </select>
-                    </div>
-                    <div class="text">
-                        <input type="text" class="form-control" name="keyword">
-                    </div>
-                        <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-                </form>
+                    <br clear="both"><br>
+                    <form id="searchForm" action="" method="Get" align="center">
+                        <div class="select">
+                            <select class="custom-select" name="condition">
+                                <option value="all">전체검색</option>
+                                <option value="title">모임이름</option>
+                                <option value="place">지역</option>
+                                <option value="type">온라인/오프라인</option>  
+                            </select>
+                        </div>
+                        <div class="text">
+                            <input type="text" class="form-control" name="keyword">
+                        </div>
+                            <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                    </form>
                 <br><br><br><br>
 
                 <!--로그인한 모든 회원에게 보이는 버튼-->
@@ -180,15 +133,66 @@ var more = -1;
                         </tr>
                         
                     </table> 
-                    </c:forEach>   
+                    </c:forEach>
+                       
             </div>
                               
                <hr>
             
                 <br>
-      
-            <button type="button" id="more" style="border-radius: 10px; background: white; ">더 많은 검색결과 보기▼</button>
-              
+                <button type="button" id="more" style="border-radius: 10px; background: white; ">더보기▼</button>
+             
+                <script>
+                    var more = -1;
+                     $(function(){$('#more').on('click',function(){
+                         
+                             more = more +1;
+                            
+                            $.ajax({
+                                url : "groupBoardList.do",
+                                type: 'POST',
+                                data: { more : more,		    
+                                     
+                                    },
+                                dataType: "json",
+                                success: function(data){
+                    
+                                    var addListHtml ="";
+                                        addListHtml += "<div class='fixed_img_col' style='height:200px'>";
+                                    for(var i in data.list){
+                                        
+                                        addListHtml += "<table>"
+                                        addListHtml += "<tr>"
+                                        addListHtml += "<td>"+data.list[i].group_img+"</td>";
+                                         addListHtml += "<td>"+data.list[i].group_type+"</td>";
+                                           addListHtml += "<td>"+data.list[i].group_date+"</td>";
+                                        addListHtml += "</tr>"
+                                        addListHtml += "<tr>"
+                                           addListHtml += "<td>"+data.list[i].group_title+"</td>";
+                                        addListHtml += "</tr>"
+                                        addListHtml += "<tr>"
+                                           addListHtml += "<td>"+data.list[i].group_script+"</td>";
+                                        addListHtml += "</tr>"
+                                           addListHtml += "</table>";	
+                                    }
+                                        addListHtml += "</div>";
+                                        
+                                    if(data.list.length>=1){
+                                        $("#morePage").append(addListHtml);
+                                    }else{
+                                        alert("다음페이지가 없습니다.");
+                                    }						
+                                },
+                                error: function (request,status,errorData){   
+                                    alert('error code: '+request.status+"\n"
+                                            +'message:' +request.reponseText+'\n'
+                                            + 'error :'+  errorData);
+                                }
+                            });
+                        }); 
+                     }); 
+                    </script>
+          
                 </div>
 
               
