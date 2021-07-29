@@ -92,7 +92,12 @@ public class BookServiceImpl implements BookService {
 		return bookDao.selectBook(sqlSession, bkNo);
 	}
 
-	
+	/*
+	 * [공통] 도서 장바구니 조회 (연지)
+	 */
+	public ArrayList<Book> selectCartList(int memNo) {
+		return bookDao.selectCartList(sqlSession, memNo);
+	}
 
 
 }
