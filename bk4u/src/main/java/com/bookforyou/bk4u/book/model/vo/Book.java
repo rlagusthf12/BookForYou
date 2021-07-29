@@ -36,5 +36,6 @@ public class Book {
 	public String writerOriginName;
 	public String writerChangeName;
 	public String bkContent;
+	public double bkGrade;
 	
 }
