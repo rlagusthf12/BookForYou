@@ -176,8 +176,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>실명</b></label>
-                <input type="email" class="custom-input custom-input-basic custom-input-danger" name="memName" placeholder="실명" required/>
-                <div id="emailCheck" class="form-text" style="color: red;">실명은 필수 정보입니다.</div>
+                <input type="text" class="custom-input custom-input-basic" id="nameInput" name="memName" placeholder="실명" maxlength="6" required/>
+                <div id="nameInfo" class="form-text"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>주소</b></label>
@@ -271,6 +271,7 @@
             		var $pwdCheckInput = $("#enrollForm1 input[id=pwdCheckInput]");
             		var $nickInput = $("#enrollForm1 input[name=memNickname]");
             		var $emailInput = $("#enrollForm1 input[name=memEmail]");
+            		var $nameInput = $("#enrollForm1 input[name=memName]");
             		
             		let check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/; 
             		// 아이디 유효성 체크
@@ -425,6 +426,24 @@
             				$("#emailInput").removeClass("custom-input-basic");
             				$("#emailInput").addClass("custom-input-danger");
             				$("#emailInfo").css("color","red").text("이메일 형식(@)이 일치하지 않습니다.");
+            				$("#enrollForm1:submit").attr("disabled",true);
+            			}
+            			
+            		});
+            		
+            		//실명 유효성 체크
+            		$nameInput.keyup(function(){
+            			console.log($emailInput.val());
+            			
+            			if($nameInput.val().length >=1){
+            				$("#nameInput").removeClass("custom-input-danger");
+							$("#nameInput").addClass("custom-input-basic");
+							$("#nameInfo").css("color","green").text("");
+            			}else{
+            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+            				$("#nameInput").removeClass("custom-input-basic");
+            				$("#nameInput").addClass("custom-input-danger");
+            				$("#nameInfo").css("color","red").text("실명은 필수 입력사항입니다.");
             				$("#enrollForm1:submit").attr("disabled",true);
             			}
             			
