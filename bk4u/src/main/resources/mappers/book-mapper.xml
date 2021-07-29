@@ -25,6 +25,7 @@
 		<result column="writer_origin_name" property="writerOriginName"/>
 		<result column="writer_change_name" property="writerChangeName"/>
 		<result column="bk_content" property="bkContent"/>
+		<result column="grade_star" property="bk_grade"/>
 	</resultMap>
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
@@ -263,7 +264,7 @@
 	
 	<select id="selectCartList" resultMap="bookResult">
 		select 
-		       bk_no,
+		       bk.bk_no,
 		       sub_cate_no,
 		       bk_title,
 		       bk_publish,
@@ -284,11 +285,15 @@
 		       writer_intro,
 		       writer_origin_name,
 		       writer_change_name,
-		       bk_content
-		  from cart c
-		  join book bk using (bk_no)
-		  where mem_no = #{memNo}
-		  	and bk.bk_selstatus = 'Y'
+		       bk_content,
+               bk_grade
+		  from (select bk_no, avg(grade_star) bk_grade
+                from grade
+                group by bk_no) g
+		  join book bk on (g.bk_no = bk.bk_no)
+         where bk.bk_no in (select bk_no
+                         from cart
+                         where mem_no = #{memNo})
 	</select>
 	
 	
