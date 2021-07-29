@@ -157,7 +157,7 @@
 </style>
     
     <script>
-	    $(document).ready(function(){
+	    $(function(){
 	        $("#handling-btn").children().addClass("btn btn-outline-success");
 	        
 	        /* 상태 클릭  */
@@ -181,19 +181,57 @@
 		        location.href="adminBookList.bk?bkStatus=4";
 		    })
 		    
+		    /* 정렬 방법 변경 */
 		    $("#array-condition").change(function(){
 	            let ar = $(this).val();
-	            console.log(ar);
 
-	            if(${ empty keyword }){
-		            location.href=`adminBookList.bk?bkStatus=${ bkStatus }&array=` + ar;					           	
+	            if(${ empty keyword }){            	
+		            location.href=`adminBookList.bk?bkStatus=${ bkStatus }&array=` + ar;		 
 	            }else {
 	            	location.href=`adminSearch.bk?condition=${ condition }&keyword=${ keyword }&array=` + ar;
 	            }
 	        
 		    })
 		    
+		    /* 정렬 시 해당 값 selected */
+		    $("#array-condition").val("${ ar }").prop("selected", true);
+		    
+	        /* Click on select all checkbox */
+	        $("#result-div thead input[type='checkbox']").click(function(){
+	        	
+	        	if($(this).prop("checked")){
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", true);
+	        		})
+	        	}else {
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", false);
+	        		})
+	        	}
+	        })
+	        
+	        /* Click on another checkbox can affect the select all checkbox */
+	        $("#result-div tbody input[type='checkbox']").click(function(){
+	        	if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
+	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+	        	}
+	        })
+	        
+	        /* 판매중으로 바꾸기 */
+	        $("#handling-statusY").click(function(){
+	        	var obj = $("[name=bCheck]");
+	        	var checkArr = new Array();
+	        	
+	        	$("input:checkbox[name='bCheck']:checked").each(function(){
+	        		checkArr.push(this.value);
+	        	});
+	        	
+	        	location.href="adminBookUpdate.bk?selectedBook=" + checkArr;
+	        })
+	        
 	    })
+	    
+	    
 	    
     </script>
     
@@ -298,11 +336,11 @@
             </div>
 
             <div id="handling-btn">
-                <button>핀매중</button>
-                <button>품절</button>
-                <button>게시함</button>
-                <button>게시안함</button>
-                <button>도서등록</button>
+                <button id="handling-statusY">핀매중</button>
+                <button id="handling-statusN">품절</button>
+                <button id="handling-selStatusY">게시함</button>
+                <button id="handling-selStatusN">게시안함</button>
+                <button id="enroll-newBook">도서등록</button>
             </div>
 
             <div  id="result-div">
@@ -329,7 +367,7 @@
 		                    	<c:forEach var="b" items="${ bList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td><input type="checkbox"></td>
+			                            <td><input type="checkbox" name="bCheck" value="${ b.bkNo }"></td>
 			                            <td><img src="" alt="" width="65" height="80"></td>
 			                            <td>${ b.bkNo }</td>
 			                            <td>${ b.bkTitle }</td>
