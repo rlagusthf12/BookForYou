@@ -154,5 +154,19 @@ public class BookController {
 		return mv;
 	}
 	
+	/*
+	 * [공통] 도서 장바구니 조회
+	 */
+	@RequestMapping("cart.bk")
+	public ModelAndView selectCartList(ModelAndView mv, int memNo) {
+
+		ArrayList<Book> bList = bookService.selectCartList(memNo);
+		
+		mv.addObject("bList", bList)
+		  .setViewName("book/bookSearchList");
+		
+		return mv;
+	}
+	
 	
 }

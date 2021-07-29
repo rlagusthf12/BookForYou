@@ -81,6 +81,13 @@ public class BookDao {
 	public Book selectBook(SqlSessionTemplate sqlSession, int bkNo) {
 		return sqlSession.selectOne("bookMapper.selectBook", bkNo);
 	}
+
+	/*
+	 * [공통] 도서 장바구니 조회 (연지)
+	 */
+	public ArrayList<Book> selectCartList(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectCartList", memNo);
+	}
 	
 	
 }

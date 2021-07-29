@@ -50,5 +50,10 @@ public interface BookService {
 	 */
 	Book selectBook(int bkNo);
 
+	/*
+	 * [공통] 도서 장바구니 조회
+	 */
+	ArrayList<Book> selectCartList(int memNo);
+
 	
 }
