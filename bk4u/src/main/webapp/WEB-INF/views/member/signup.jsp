@@ -15,7 +15,7 @@
         body{
             background-color: #f6f4f4;
             width:1200px;
-            height:1500px;
+            height:1450px;
             margin:auto;
         }
         #content-box{
@@ -182,13 +182,13 @@
             <div class="mb-3">
                 <label class="form-label"><b>주소</b></label>
                 
-                <div id="post-box"><input type="email" class="custom-input-post custom-input-basic custom-input-danger" name="memPost" id="memPost" placeholder="우편번호" required/>
+                <div id="post-box"><input type="email" class="custom-input-post custom-input-basic" name="memPost" id="memPost" placeholder="우편번호" required/>
                 <button type="button" class="black-button" onclick="sample6_execDaumPostcode();">우편번호 찾기</button></div>
                 
-                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required/>
-                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="detailAddress" name="memDetailAddress" placeholder="상세 주소" required/>
-                <input type="text" class="custom-input custom-input-basic custom-input-danger margin-top" id="memAddressRefer" name="memAddressRefer" placeholder="참고"/>
-                <div id="emailCheck" class="form-text" style="color: red;">주소는 필수 정보입니다.</div>
+                <input type="text" class="custom-input custom-input-basic margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required/>
+                <input type="text" class="custom-input custom-input-basic margin-top" id="detailAddress" name="memDetailAddress" placeholder="상세 주소" required/>
+                <input type="text" class="custom-input custom-input-basic margin-top" id="memAddressRefer" name="memAddressRefer" placeholder="참고"/>
+                <div id="emailCheck" class="form-text"></div>
             </div>
             <!-- 다음 주소 api -->
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -246,7 +246,7 @@
             
             <div class="mb-3">
                 <label class="form-label"><b>연령대</b></label>
-                <select class="custom-input custom-input-basic" required>
+                <select class="custom-input custom-input-basic" name="memAge" required>
                     <option value="10" selected>10대</option>
                     <option value="20">20대</option>
                     <option value="30">30대</option>
@@ -258,8 +258,8 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>연락처</b></label>
-                <input type="text" class="custom-input custom-input-basic custom-input-danger" placeholder="연락처(-를 빼고 입력해주세요.)" required/>
-                <div id="phoneCheck" class="form-text" style="color: red;">연락처는 필수정보입니다.</div>
+                <input type="text" class="custom-input custom-input-basic" id="phoneInput" name="memPhone" placeholder="연락처" required/>
+                <div id="phoneInfo" class="form-text"></div>
             </div>
             <br>
             <p><input type="submit" value="다음 단계" class="green-button"/></p>
@@ -272,6 +272,7 @@
             		var $nickInput = $("#enrollForm1 input[name=memNickname]");
             		var $emailInput = $("#enrollForm1 input[name=memEmail]");
             		var $nameInput = $("#enrollForm1 input[name=memName]");
+            		var $phoneInput = $("#enrollForm1 input[name=memPhone]");
             		
             		let check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/; 
             		// 아이디 유효성 체크
@@ -444,6 +445,24 @@
             				$("#nameInput").removeClass("custom-input-basic");
             				$("#nameInput").addClass("custom-input-danger");
             				$("#nameInfo").css("color","red").text("실명은 필수 입력사항입니다.");
+            				$("#enrollForm1:submit").attr("disabled",true);
+            			}
+            			
+            		});
+            		
+            		// 핸드폰 번호 유효성 체크
+            		$phoneInput.keyup(function(){
+            			console.log($phoneInput.val());
+            			
+            			if($phoneInput.val().length >=1){
+            				$("#phoneInput").removeClass("custom-input-danger");
+							$("#phoneInput").addClass("custom-input-basic");
+							$("#phoneInfo").css("color","green").text("");
+            			}else{
+            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+            				$("#phoneInput").removeClass("custom-input-basic");
+            				$("#phoneInput").addClass("custom-input-danger");
+            				$("#phoneInfo").css("color","red").text("핸드폰 번호는 필수 입력사항입니다.");
             				$("#enrollForm1:submit").attr("disabled",true);
             			}
             			
