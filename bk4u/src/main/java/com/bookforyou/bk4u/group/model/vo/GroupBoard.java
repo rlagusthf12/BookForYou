@@ -11,7 +11,7 @@ import oracle.sql.DATE;
 @ToString
 public class GroupBoard {
 	
-	private int groupBoard;
+	private int groupBoardNo;
 	private int memNo;
 	private String groupType;
 	private String groupTitle;
