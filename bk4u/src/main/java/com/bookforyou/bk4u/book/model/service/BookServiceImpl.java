@@ -96,10 +96,14 @@ public class BookServiceImpl implements BookService {
 	/*
 	 * [공통] 도서 장바구니 조회 (연지)
 	 */
+	@Override
 	public ArrayList<Book> selectCartList(int memNo) {
 		return bookDao.selectCartList(sqlSession, memNo);
 	}
 
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
 	@Override
 	public int updateBookStatus(HashMap<String, String> map) {
 		return bookDao.updateBookStatus(sqlSession, map);

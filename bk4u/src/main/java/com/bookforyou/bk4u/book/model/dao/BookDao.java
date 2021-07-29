@@ -90,6 +90,9 @@ public class BookDao {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectCartList", memNo);
 	}
 	
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
 	public int updateBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("bookMapper.updateBookStatus", map);
 	}

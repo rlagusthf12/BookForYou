@@ -178,6 +178,9 @@ public class BookController {
 		return mv;
 	}
 	
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
 	@RequestMapping("adminBookStatusHandling.bk")
 	public String updateBookStatus(HttpSession session, 
 									@RequestParam(value="selectedBook") List<String> bkNoArr,

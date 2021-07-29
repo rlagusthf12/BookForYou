@@ -56,6 +56,9 @@ public interface BookService {
 	 */
 	ArrayList<Book> selectCartList(int memNo);
 	
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
 	int updateBookStatus(HashMap<String, String> map);
 
 	
