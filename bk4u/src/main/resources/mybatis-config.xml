@@ -8,6 +8,12 @@
 	<typeAliases>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.bookforyou.bk4u.book.model.vo.Book" alias="Book"/>
+<<<<<<< Updated upstream
+=======
+		<typeAlias type="com.bookforyou.bk4u.groupboard.model.vo.MeetBoard" alias="GroupBoard"/>
+		<typeAlias type="com.bookforyou.bk4u.group.model.vo.GroupBoard" alias="Group"/>
+			<typeAlias type="com.bookforyou.bk4u.notice.model.vo.Notice" alias="Notice"/>
+>>>>>>> Stashed changes
 	</typeAliases>
 
 	<mappers>
@@ -15,6 +21,7 @@
 		<mapper resource="/mappers/book-mapper.xml"/>
 		<mapper resource="/mappers/groupBoard-mapper.xml"/> 
 		<mapper resource="/mappers/group-mapper.xml"/>
+		<mapper resource="/mappers/notice-mapper.xml"/>
 	</mappers>
 
 </configuration>

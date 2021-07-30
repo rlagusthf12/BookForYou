@@ -65,51 +65,72 @@
 </style>
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="notice">
 	
 		<div class="noticeTitle">공지사항</div>
 	
 		<div class="noticeListTable">
-		<table class="table_board" >
+		<table id="noticeList" class="table_board" >
 			<tbody>
-		
 				<tr>
 					<th>No.</th>
 					<th style="width: 69%;">제목</th>
 					<th style="width: 18%;">작성일자</th>
 					<th style="width: 9%;">조회수</th>
 				</tr>
+				<c:forEach var="n" items="${list}">
 				<tr>
-					<td>3</td>
-					<td style="width: 69%;">&nbsp;북포유 이용안내</td>
-					<td style="width: 18%;">&nbsp;2021-07-01</td>
-					<td style="width: 9%;">2</td>
+					<td class="noNo">${n.noNo}</td>
+					<td style="width: 69%;">${n.noTitle}</td>
+					<td style="width: 18%;">${n.noDate}</td>
+					<td style="width: 9%;">${n.noCount}</td>
 				</tr>
-				<tr>
-					<td>3</td>
-					<td style="width: 69%;">&nbsp;북포유 이용안내</td>
-					<td style="width: 18%;">&nbsp;2021-07-01</td>
-					<td style="width: 9%;">2</td>
-				</tr>
+				</c:forEach>	
 				
 			</tbody>
 		</table>
+		<br><br><br>
 		 <div id="paging-wrap">
             <ul class="pagination">
+            	<c:choose>
+            	<c:when test="${pi.currentPage eq 1}">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+                </c:when>
+                <c:otherwise>
+                	<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                </c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}"> 
+                <li class="page-item"><a class="page-link" href="list.no?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+             
+             <c:choose>
+             	<c:when test="${pi.currentPage eq pi.maxPage}">
+             		    <li class="page-item disabled"><a class="page-link">다음</a></li>
+             	</c:when>
+             	<c:otherwise>
+             		<li class="page-item"><a class="page-link" href="list.no?currentPage=${ pi.currentPage+1 }">Next</a></li>
+		        </c:otherwise>
+             </c:choose>
+            
             </ul>
         </div>
-		<div class="writeButton">글쓰기</div>
+        <c:if test="${loginUser.memNo==1}">
+		<div class="writeButton" onclick="location.href='writeForm.no'">글쓰기</div>
+		</c:if>		
 		</div>
+		<script>
+            	$(function(){
+            		$(".table_board>tbody>tr").click(function(){
+            			location.href="detail.no?noNo=" + $(this).children(".noNo").text();
+            		})
+            	});
+           
+            </script>
 		
 	</div>
-	<jsp:include page="../footer.jsp"/>
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="noticeMapper">
+	<resultMap id="noticeResult" type="Notice">
+		<result column="NO_NO" property="noNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="NO_TITLE" property="noTitle"/>
+		<result column="NO_CONTENT" property="noContent"/>
+		<result column="NO_DATE" property="noDate"/>
+		<result column="NO_COUNT" property="noCount"/>	
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from notice	
+	</select>
+	
+	<select id="selectList" resultMap="noticeResult">
+		select
+		       no_no
+		     , no_title
+		     , mem_no
+		     , no_count
+		     , to_char(no_date, 'YYYY-MM-DD') as no_date		   
+		  from notice		
+		 order
+		    by no_no desc
+	</select>
+	
+	<select id="selectNotice" resultMap="noticeResult">
+		select
+			  no_no
+			 ,mem_no
+			 ,no_title
+			 ,no_content			
+			 ,no_count
+			 ,to_char(no_date, 'YYYY-MM-DD') as no_date	
+		 from notice
+		 	where no_no= #{noNo}		
+	</select>
+	
+	<update id="increaseCount">
+		update
+		       notice
+		   set no_count = no_count+1
+		 where no_no = #{noNo}		 
+	</update>
+	
+	<update id="updateNotice">
+		update
+			notice
+		 set no_title = #{noTitle}
+		 	,no_content = #{noContent}
+		 where no_no = #{noNo}		 	
+	</update>
+	
+	<delete id="deleteNotice">
+		delete from notice
+		where no_no = #{noNo}
+	</delete>
+	
+	<insert id="writeNotice">
+		insert into notice(no_no,mem_no,no_title,no_content,no_count)
+		values(seq_nono.nextval,1,#{noTitle},#{noContent},0)
+	</insert>
+	
+</mapper>
+	
