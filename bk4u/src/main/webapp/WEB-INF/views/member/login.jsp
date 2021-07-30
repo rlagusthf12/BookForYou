@@ -149,7 +149,7 @@
         <hr width="480px" style="margin-top: 40px;"/>
         <div id="sign-up-box">
             BK4U가 처음이라면?
-            <span><a href="enrollForm.me">회원가입</a></span>
+            <span><a href="enroll-form.me">회원가입</a></span>
         </div>
         
 

@@ -19,7 +19,7 @@
         body{
             background-color: #f6f4f4;
             width:1200px;
-            height:1450px;
+            height:1550px;
             margin:auto;
         }
         #content-box{
@@ -136,6 +136,9 @@
         .custom-input-post-basic:focus{
             border-color: #555;
         }
+        .gender-box{
+            display: inline-flex;
+        }
     </style>
 </head>
 
@@ -153,7 +156,7 @@
         <div id="divider-box">
             <hr width="480px" style="margin-top: 30px; margin-left: auto; margin-right: auto;"/>
         </div>
-        <form action="first-enroll.me" method="post" name="first_enroll" id="enrollForm1">
+        <form action="second-enroll.me" method="post" name="first_enroll" id="enrollForm1">
         <div id="sign-up-box">
              <br>
             <div class="mb-3">
@@ -252,8 +255,27 @@
 		        }).open();
 		    }
 		</script>
-            
-            
+            <div class="mb-3">
+                <label class="form-label"><b>성별</b></label>
+                <div>
+                    <div class="gender-box">
+                        <div class="form-check" style="margin-right: 50px;">
+                            <input class="form-check-input" type="radio" name="memGender"
+                                id="flexRadioDefault1" value="M" checked>
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                	남
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="memGender"
+                                id="flexRadioDefault1" value="F">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                	여
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="mb-3">
                 <label class="form-label"><b>연령대</b></label>
                 <select class="custom-input custom-input-basic" name="memAge" required>
@@ -302,7 +324,7 @@
     				if($idInput.val().length >=5 && $idInput.val().length <=11){
         				// 5글자이상 11자 이하일때 아이디에 대한 중복검사 진행
         				$.ajax({
-        					url:"idCheck.me",
+        					url:"id-check.me",
         					data: {
         						checkId: $idInput.val()
         					},
@@ -384,7 +406,7 @@
     				if($nickInput.val().length >=1 && $idInput.val().length <=8){
         				// 5글자이상 11자 이하일때 아이디에 대한 중복검사 진행
         				$.ajax({
-        					url:"nickCheck.me",
+        					url:"nick-check.me",
         					data: {
         						checkNick: $nickInput.val()
         					},
@@ -422,7 +444,7 @@
     				if($emailInput.val().length >=1 && $emailInput.val().includes("@")){
         				
         				$.ajax({
-        					url:"emailCheck.me",
+        					url:"email-check.me",
         					data: {
         						checkEmail: $emailInput.val()
         					},

@@ -135,8 +135,8 @@
                 <c:choose>
                     <c:when test="${ empty loginUser }">
                 <!-- 로그인 전 -->
-                        <a href="enrollForm.me">회원가입</a> | 
-                        <a href="loginForm.me">로그인</a>
+                        <a href="enroll-form.me">회원가입</a> | 
+                        <a href="login-form.me">로그인</a>
                     </c:when>
                     <c:otherwise>
                 <!-- 로그인 후  -->
