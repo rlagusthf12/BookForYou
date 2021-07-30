@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
@@ -208,14 +209,26 @@ public class BookController {
 	}
 
 	/*
-	 * [공통] 도서 장바구니 추가
+	 * [공통] 도서 장바구니 추가 (연지)
 	 */
 	@ResponseBody
-	@RequestMapping(value="cartUpdate.bk", produces="application/json; charset=utf-8")
+	@RequestMapping(value="cartUpdate.bk", produces="text/html; charset=utf-8")
 	public String updateCart(int memNo, int bkNo) {
 		
-		int result = bookService.updateCart(memNo, bkNo);
-		return "";
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memNo", memNo);
+		map.put("bkNo", bkNo);
+		
+		int check = bookService.checkCart(map);
+		int result = 0;
+		
+		if(check > 0) {
+			result = bookService.updateCartQty(map);
+		}else {
+			result = bookService.insertCart(map);
+		}
+		
+		return result> 0 ? "success" : "fail";
 	}
 	
 	
