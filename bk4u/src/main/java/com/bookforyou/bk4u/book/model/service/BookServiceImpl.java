@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.book.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,9 +96,24 @@ public class BookServiceImpl implements BookService {
 	/*
 	 * [공통] 도서 장바구니 조회 (연지)
 	 */
+	@Override
 	public ArrayList<Book> selectCartList(int memNo) {
 		return bookDao.selectCartList(sqlSession, memNo);
 	}
 
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
+	@Override
+	public int updateBookStatus(HashMap<String, String> map) {
+		return bookDao.updateBookStatus(sqlSession, map);
+	}
 
+	/*
+	 * [공통] 도서 장바구니 추가
+	 */
+	@Override
+	public int updateCart(int memNo, int bkNo) {
+		return bookDao.updateCart(sqlSession, memNo, bkNo);
+	}
 }

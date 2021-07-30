@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.book.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -89,5 +90,15 @@ public class BookDao {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectCartList", memNo);
 	}
 	
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
+	public int updateBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("bookMapper.updateBookStatus", map);
+	}
+
+	public int updateCart(SqlSessionTemplate sqlSession, int memNo, int bkNo) {
+		return sqlSession.update("bookMapper.updateCart");
+	}
 	
 }

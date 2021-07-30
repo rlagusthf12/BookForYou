@@ -57,7 +57,7 @@
 <body>
 
     <!--메뉴바 입력-->
-    <jsp:include page="../main.jsp"/>
+    <jsp:include page=""/>
         
         <div class="content">
 

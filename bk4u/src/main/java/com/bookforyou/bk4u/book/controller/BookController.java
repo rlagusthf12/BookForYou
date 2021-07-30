@@ -2,6 +2,9 @@ package com.bookforyou.bk4u.book.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -142,6 +145,7 @@ public class BookController {
 		  .addObject("selectSelStatusN", selectSelStatusN)
 		  .addObject("condition", condition)
 		  .addObject("keyword", keyword)
+		  .addObject("ar", array)
 		  .setViewName("book/adminBookList");
 		
 		return mv;
@@ -161,7 +165,7 @@ public class BookController {
 	}
 	
 	/*
-	 * [공통] 도서 장바구니 조회
+	 * [공통] 도서 장바구니 조회 (연지)
 	 */
 	@RequestMapping("cart.bk")
 	public ModelAndView selectCartList(ModelAndView mv, int memNo) {
@@ -169,9 +173,49 @@ public class BookController {
 		ArrayList<Book> bList = bookService.selectCartList(memNo);
 		
 		mv.addObject("bList", bList)
-		  .setViewName("book/bookSearchList");
+		  .setViewName("book/bookCartList");
 		
 		return mv;
+	}
+	
+	/**
+	 * [관리자] 도서 상태 변경 + 다중체크박스 (한진)
+	 */
+	@RequestMapping("adminBookStatusHandling.bk")
+	public String updateBookStatus(HttpSession session, 
+									@RequestParam(value="selectedBook") List<String> bkNoArr,
+									String statusValue) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		for(int i=0; i<bkNoArr.size(); i++) {
+			String bkNo = bkNoArr.get(i);
+			map.put("bkNo", bkNo);
+			map.put("statusValue", statusValue);
+		}
+		
+		int result = bookService.updateBookStatus(map);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
+		}else {
+			session.setAttribute("errorMsg", "수정 실패하였습니다.");
+		}
+		
+		return "redirect:/adminBookList.bk";
+		
+		
+	}
+
+	/*
+	 * [공통] 도서 장바구니 추가
+	 */
+	@ResponseBody
+	@RequestMapping(value="cartUpdate.bk", produces="application/json; charset=utf-8")
+	public String updateCart(int memNo, int bkNo) {
+		
+		int result = bookService.updateCart(memNo, bkNo);
+		return "";
 	}
 	
 	

@@ -75,6 +75,7 @@
 		where 
   			mem_nickname = #{memNickname}
   	</select>
+  
   	<select id="emailCheck" resultType="_int">
   		select
     		count(*)

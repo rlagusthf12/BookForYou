@@ -249,7 +249,6 @@
 	                            <span>${ b.bkPrice }</span>
 	                            <span>원</span>
 	                            <span>${ b.bkPrice * 0.01}원 적립</span>
-	                            <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
 	                        </div>
 	                    </div>
 	                    
@@ -263,12 +262,11 @@
 	                    </div>
 	                    <div>
 	                        <button class="btn_order">즉시구매</button>
-	                        <button class="btn_cart"
-	                        data-bs-toggle="modal"
-	                        data-bs-target="#modal_cart">장바구니</button>
+	                        <button class="btn_cart">장바구니</button>
 	                        <button class="btn_list"
 	                        data-bs-toggle="modal"
 	                        data-bs-target="#modal_list">리스트</button>
+	                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
 	                    </div>
 	                </div>
 	            </div>
@@ -280,6 +278,24 @@
             			location.href="detail.bo?bno=" + $(this).children(".bno").text();
             		})
             	})
+            </script>
+            
+            <script>
+	        	$(".search_book .btn_cart").click(function(){
+	        		$.ajax({
+	            		url:"cartUpdate.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:$(this).parent().children("input[id=book_no]").val()
+	            		},
+	            		type:"post",
+	            		success:function(daily){ // 성공시 실행 함수
+	    	        		$("#modal_cart").modal('show');
+	            		},error:function(){ // 실패시 실행 함수
+	            			console.log("장바구니 추가 실패");
+	            		}
+	            	})
+	        	})
             </script>
             
             <div id="paging-wrap">

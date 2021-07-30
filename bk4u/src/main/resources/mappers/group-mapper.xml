@@ -2,6 +2,59 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="groupMapper">
 	
-
+	<resultMap type="GroupBoard" id="groupResult">
+			<result column="group_boardno" property="groupBoardNo"/>
+			<result column="mem_no" property="memNo"/>
+			<result column="group_type" property="groupType"/>
+			<result column="group_title" property="groupTitle"/>
+			<result column="group_script" property="groupScript"/>
+			<result column="group_date" property="groupDate"/>
+			<result column="group_limit" property="groupLimit"/>			
+			<result column="group_notice" property="groupNotice"/>			
+			<result column="group_place" property="groupPlace"/>			
+			<result column="group_open" property="groupOpen"/>		
+			<result column="group_img" property="groupImg"/>
+						
+	</resultMap>
+	
+	
+	<select id="selectList" resultMap="groupResult" >
+		SELECT *              
+        FROM (SELECT ROWNUM NUM 
+            , s.group_boardno 
+            , s.group_type
+            , s.group_title
+            , s.group_script
+            , s.group_place
+            , s.group_img
+            
+              FROM 
+                    (SELECT * FROM GROUPBOARD 
+             
+                    ORDER BY GROUP_BOARDNO DESC)s) 
+        WHERE NUM BETWEEN 1 AND 4; 
+	
+	
+	</select>
+	
+	<select id="selectListMore" resultMap="groupResult">
+		SELECT *              
+        FROM (SELECT ROWNUM NUM 
+            , s.group_boardno 
+            , s.group_type
+            , s.group_title
+            , s.group_script
+            , s.group_place
+            , s.group_img
+            
+              FROM 
+                    (SELECT * FROM GROUPBOARD 
+             
+                    ORDER BY GROUP_BOARDNO DESC)s) 
+        WHERE NUM BETWEEN 5+(4*3{more}) AND 8+(4*#{MORE})
+	
+	
+	</select>
+	
 
 </mapper>
