@@ -76,10 +76,9 @@ public interface BookService {
 	 */
 	int insertCart(HashMap<String, Integer> map);
 
-	/*
-	 * [공통] 도서 장바구니 삭제 (연지)
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
 	 */
-	int deleteCart(HashMap<String, Integer> map);
-
+	Book selectAdminBookDetail(int bkNo);
 	
 }

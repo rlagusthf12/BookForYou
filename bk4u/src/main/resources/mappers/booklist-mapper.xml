@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="booklistMapper">
+
+	<resultMap id="booklistResult" type="Booklist">
+		<result column="bl_no" property="blNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="mem_nickname" property="blWriter"/>
+		<result column="bk_no" property="bkNo"/>
+		<result column="bl_title" property="blTitle"/>
+		<result column="bl_content" property="blContent"/>
+		<result column="bl_count" property="blCount"/>
+		<result column="bl_rate" property="blRate"/>
+		<result column="bl_cdate" property="blCdate"/>
+		<result column="bl_mdate" property="blMdate"/>
+		<result column="bl_like" property="blLike"/>
+		<result column="bl_scrap" property="blScrap"/>
+	</resultMap>
+	
+	<resultMap id="bookResult" type="Book">
+		<result column="bk_no" property="bkNo"/>
+	</resultMap>
+	
+	<!-- 독서록 게시글 갯수 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectListCount" resultType="_int">
+		select count(*)
+		  from booklist
+		 where bl_status='Y'
+	</select>
+	
+	<!-- 독서록 리스트 조회용 + 페이징 -->
+	<!-- @author daeunlee -->
+	<select id="selectList" resultMap="booklistResult">
+		select 
+		       bl_no
+		     , mem_nickname
+		     , bk_no
+		     , bl_title
+		     , bl_content
+		     , bl_count
+		     , bl_rate
+		     , bl_cdate
+		     , bl_mdate
+		     , bl_like
+		     , bl_scrap
+		  from booklist
+		  join members using(mem_no)
+		 where bl_status='Y'
+		 order
+		    by bl_no desc
+	</select>
+	
+	<!-- 독서록 작성용 -->
+	<!-- @author daeunlee -->
+	<insert id="insertBooklist">
+		insert 
+		  into booklist
+		     (
+		       bl_no
+		     , mem_no
+		     , bk_no
+		     , bl_title
+		     , bl_content
+		     , bl_rate
+		     )
+		values
+		     (
+		       seq_blno.nextval
+		     , #{memNo}
+		     , #{bkNo}
+		     , #{blTitle}
+		     , #{blContent}
+		     , #{blRate}
+		     )
+	</insert>
+	
+	<select id="selectSearchListCount" resultType="_int">
+		select
+		       count(*)
+		  from book
+		 where bk_selstatus = 'Y'
+	 	<choose>
+	 		<when test="condition == 'bkTitle'">
+	 			and bk_title
+	 		</when>
+	 		<when test="condition == 'writer'">
+	 			and bk_writer
+	 		</when>
+	 	</choose>
+	 	like '%' || #{keyword} || '%'	
+	</select>
+
+</mapper>

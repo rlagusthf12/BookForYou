@@ -265,4 +265,26 @@ public class BookController {
 	}
 	
 	
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
+	 */
+	@RequestMapping("adminBookDetail.bk")
+	public ModelAndView selectAdminBookDetail(ModelAndView mv, int bkNo) {
+		
+		Book b = bookService.selectAdminBookDetail(bkNo);
+
+		String publishDate = b.getBkDate();
+		
+		String year = publishDate.substring(0, 4);
+		String month = publishDate.substring(5, 7);
+		String day = publishDate.substring(8);
+		System.out.println(month);
+		mv.addObject("book", b);
+		mv.addObject("year", year);
+		mv.addObject("month", month);
+		mv.addObject("day", day);
+		mv.setViewName("book/adminBookDetail");
+		return mv;
+	}
+	
 }

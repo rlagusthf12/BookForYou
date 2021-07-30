@@ -133,10 +133,11 @@ public class BookServiceImpl implements BookService {
 		return bookDao.insertCart(sqlSession, map);
 	}
 
-	/*
-	 * [공통] 도서 장바구니 삭제 (연지)
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
 	 */
-	public int deleteCart(HashMap<String, Integer> map) {
-		return bookDao.deleteCart(sqlSession, map);
+	@Override
+	public Book selectAdminBookDetail(int bkNo) {
+		return bookDao.selectAdminBookDetail(sqlSession, bkNo);
 	}
 }

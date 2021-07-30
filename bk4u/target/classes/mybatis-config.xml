@@ -10,7 +10,8 @@
 		<typeAlias type="com.bookforyou.bk4u.book.model.vo.Book" alias="Book"/>
 		<typeAlias type="com.bookforyou.bk4u.groupboard.model.vo.MeetBoard" alias="GroupBoard"/>
 		<typeAlias type="com.bookforyou.bk4u.group.model.vo.GroupBoard" alias="Group"/>
-			<typeAlias type="com.bookforyou.bk4u.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.bookforyou.bk4u.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.bookforyou.bk4u.faq.model.vo.Faq" alias="Faq"/>
 
 	</typeAliases>
 
@@ -20,6 +21,7 @@
 		<mapper resource="/mappers/groupBoard-mapper.xml"/> 
 		<mapper resource="/mappers/group-mapper.xml"/>
 		<mapper resource="/mappers/notice-mapper.xml"/>
+		<mapper resource="/mappers/faq-mapper.xml"/>
 	</mappers>
 
 </configuration>

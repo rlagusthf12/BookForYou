@@ -12,7 +12,7 @@ import com.bookforyou.bk4u.notice.model.vo.Notice;
 @Repository
 public class NoticeDao {
 	
-	//게스글 목록수
+	//게시글 목록수
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("noticeMapper.selectListCount");
 	}
@@ -34,15 +34,15 @@ public class NoticeDao {
 	public int increaseCount(SqlSessionTemplate sqlSession, int noNo) {
 		return sqlSession.update("noticeMapper.increaseCount",noNo);
 	}
-	
+	//게시글 수정
 	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
 		return sqlSession.update("noticeMapper.updateNotice",n);
 	}
-	
+	//게시글 삭제
 	public int deleteNotice(SqlSessionTemplate sqlSession, int noNo) {
 		return sqlSession.delete("noticeMapper.deleteNotice",noNo);
 	}
-	
+	//게시글 작성
 	public int writeNotice(SqlSessionTemplate sqlSession, Notice n) {
 		return sqlSession.insert("noticeMapper.writeNotice", n);
 	}

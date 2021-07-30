@@ -353,6 +353,35 @@
 		 where bk_no = #{ bkNo }
 	</update>
 	
+	<!-- [관리자] 도서 상세 보기 (한진) -->
+	<select id="selectAdminBookDetail" resultMap="bookResult">
+		select 
+		       bk_no,
+		       sub_cate_no,
+		       bk_title,
+		       bk_publish,
+		       bk_date,
+		       bk_price,
+		       intro_originname,
+		       intro_changename,
+		       bk_stock,
+		       bk_seldate,
+		       bk_mdate,
+		       bk_selstatus,
+		       bk_age,
+		       bk_gender,
+		       bk_work,
+		       bk_level,
+		       bk_status,
+		       writer_name,
+		       writer_intro,
+		       writer_origin_name,
+		       writer_change_name,
+		       bk_content
+		  from book
+		 where bk_no = #{bkNo}
+	</select>	
+	
 	<!-- [공통] 장바구니 유무 확인 (연지) -->
 	<select id="checkCart" resultType="_int">
 		select 
