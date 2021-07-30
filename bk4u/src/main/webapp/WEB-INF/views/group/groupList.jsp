@@ -57,7 +57,7 @@
 <body>
 
     <!--메뉴바 입력-->
-    <jsp:include page="../main.jsp"/>
+    <jsp:include page=""/>
         
         <div class="content">
 
@@ -151,9 +151,7 @@
                             $.ajax({
                                 url : "groupBoardList.do",
                                 type: 'POST',
-                                data: { more : more,		    
-                                     
-                                    },
+                                data: { more : more},
                                 dataType: "json",
                                 success: function(data){
                     

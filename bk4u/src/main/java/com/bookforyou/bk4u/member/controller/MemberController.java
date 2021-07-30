@@ -13,12 +13,12 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 
 @Controller
 public class MemberController {
-	
+	// Author : 안세아
 	@Autowired
 	private MemberService memberService;
 	
 	
-	@RequestMapping("loginForm.me")
+	@RequestMapping("login-form.me")
 	public String loginForm() {
 		return "member/login";
 	}
@@ -53,14 +53,14 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("enrollForm.me")
+	@RequestMapping("enroll-form.me")
 	public String enrollForm() {
 		
 		return "member/signup";
 	}
 	
 	@ResponseBody
-	@RequestMapping("idCheck.me")
+	@RequestMapping("id-check.me")
 	public String ajaxIdCheck(String checkId){
 		int count = memberService.idCheck(checkId);
 		System.out.println(count);
@@ -68,7 +68,7 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("nickCheck.me")
+	@RequestMapping("nick-check.me")
 	public String ajaxNickCheck(String checkNick) {
 		int count = memberService.nickCheck(checkNick);
 		System.out.println(count);
@@ -76,10 +76,30 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("emailCheck.me")
+	@RequestMapping("email-check.me")
 	public String emailCheck(String checkEmail) {
 		int count = memberService.emailCheck(checkEmail);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 
+	 */
+	@RequestMapping("second-enroll.me")
+	public String firstEnroll(Member member, Model model) {
+		model.addAttribute("memId", member.getMemId());
+		model.addAttribute("memPwd", member.getMemPwd());
+		model.addAttribute("memName",member.getMemName());
+		model.addAttribute("memPost", member.getMemPost());
+		model.addAttribute("memBasicAddress",member.getMemBasicAddress());
+		model.addAttribute("memDetailAddress",member.getMemDetailAddress());
+		model.addAttribute("memAddressRefer",member.getMemAddressRefer());
+		model.addAttribute("memGender",member.getMemGender());
+		model.addAttribute("memAge",member.getMemAge());
+		model.addAttribute("memPhone",member.getMemPhone());
+		model.addAttribute("memEmail",member.getMemEmail());
+		model.addAttribute("memNickname",member.getMemNickname());
+		
+		return "member/signup-recommend";
+	}
 }

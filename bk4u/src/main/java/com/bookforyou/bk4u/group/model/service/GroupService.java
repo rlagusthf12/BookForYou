@@ -7,6 +7,8 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 
 public interface GroupService {
   
+	// 게시글 리스트
+	ArrayList<GroupBoard> selectList();
 	
 	// 게시글 작성하기
 	int insertGBoard(GroupBoard g);

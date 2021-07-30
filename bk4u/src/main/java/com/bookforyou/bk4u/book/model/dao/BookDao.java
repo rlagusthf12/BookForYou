@@ -96,9 +96,26 @@ public class BookDao {
 	public int updateBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("bookMapper.updateBookStatus", map);
 	}
+	
+	/*
+	 * [공통] 도서 장바구니 유무 확인 (연지)
+	 */
+	public int checkCart(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("bookMapper.checkCart", map);
+	}
 
-	public int updateCart(SqlSessionTemplate sqlSession, int memNo, int bkNo) {
-		return sqlSession.update("bookMapper.updateCart");
+	/*
+	 * [공통] 도서 장바구니 수량 증가 (연지)
+	 */
+	public int updateCartQty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.update("bookMapper.updateCartQty", map);
+	}
+
+	/*
+	 * [공통] 도서 장바구니 추가 (연지)
+	 */
+	public int insertCart(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.insert("bookMapper.insertCart", map);
 	}
 	
 	/**

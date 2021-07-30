@@ -377,4 +377,40 @@
 		 where bk_no = #{bkNo}
 	</select>	
 	
+	<!-- [공통] 장바구니 유무 확인 (연지) -->
+	<select id="checkCart" resultType="_int">
+		select 
+		       count(*)
+		  from cart
+         where mem_no = #{memNo}
+           and bk_no = #{bkNo}
+	</select>
+	
+	<!-- [공통] 장바구니 수량 증가 (연지) -->
+	<update id="updateCartQty">
+		update
+			   cart
+		   set 
+		   	   cart_qty = cart_qty + 1
+		 where mem_no = #{memNo}
+           and bk_no = #{bkNo}
+	</update>
+	
+	<insert id="insertCart">
+		insert
+		  into cart
+		  (
+		    bk_no
+		  , mem_no
+		  , cart_qty
+		  , cart_date
+		  )
+		  values
+		  (
+		    #{bkNo}
+		  , #{memNo}
+		  , 1
+		  , sysdate
+		  )
+	</insert>
 </mapper>

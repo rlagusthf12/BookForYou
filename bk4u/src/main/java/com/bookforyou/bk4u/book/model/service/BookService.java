@@ -62,9 +62,19 @@ public interface BookService {
 	int updateBookStatus(HashMap<String, String> map);
 
 	/*
-	 * [공통] 도서 장바구니 추가
+	 * [공통] 도서 장바구니 유무 확인 (연지)
 	 */
-	int updateCart(int memNo, int bkNo);
+	int checkCart(HashMap<String, Integer> map);
+
+	/*
+	 * [공통] 도서 장바구니 수량 증가 (연지)
+	 */
+	int updateCartQty(HashMap<String, Integer> map);
+
+	/*
+	 * [공통] 도서 장바구니 추가 (연지)
+	 */
+	int insertCart(HashMap<String, Integer> map);
 
 	/**
 	 * [관리자] 도서 상세 보기 (한진)
