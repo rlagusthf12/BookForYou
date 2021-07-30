@@ -138,10 +138,11 @@
         
         
         /* 저자소개 */
+        
         #writer-profile{
-            display: inline-block;
+            float:left;
             height: 150px;
-            margin-right: 30px;
+            margin: 30px 30px 30px 0;
         }
         #writer-img{
             display: inline-block;
@@ -161,11 +162,11 @@
             font-size: 18px;
         }
         .writer-name{
-            margin-top:10px;
+            
             text-align: center;
             font-weight: 600;
         }
-        .textarea.info{position: absolute;}
+        
         .textarea{
             display: inline-block;
             border:1px solid gray;
@@ -175,9 +176,7 @@
             text-align: center;
             padding:10px;
         }
-        .textarea > textarea{width: 700px; height: 120px; border:none;}
-        #writer-say{margin: 50px 0 20px 0}
-        #writer-say textarea{width:850px;}
+        .textarea > textarea{width: 700px; height: 180px; border:none;}
 
         /* 저장 버튼 */
         #btn-submit{float:right;}
@@ -472,18 +471,12 @@
                         <div id="writerInfo" class="container tab-pane fade"><br>
                             <div id="writer-profile">
                                 <div id="writer-img">
-                                    <img src="resources/person.png" alt="">
+                                    <img src="resources/adminCommon/images/person.png" alt="">
                                 </div>
-                                <div class="writer-title writer-name"><span>정유정</span></div>
+                                <div class="writer-title writer-name"><span>${ book.writerName }</span></div>
                             </div>
                             <div class="textarea info">
-                                <textarea name="" style="resize: none;"></textarea>
-                            </div>
-                            <div id="writer-say">
-                                <div class="writer-title"><p>작가의 말</p></div>
-                                <div class="textarea">
-                                    <textarea name=""style="resize: none;"></textarea>
-                                </div>
+                                <textarea name="writerIntro" style="resize: none;">${ book.writerIntro }</textarea>
                             </div>
                         </div>
 
