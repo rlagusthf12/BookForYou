@@ -68,8 +68,8 @@
         /* 상태 체크 구역 */
 		#status-area{float:right;}
         .book-status{margin:5px;}
-        .book-status input[type="radio"], .recommended input[type="radio"]{display: none;}
-        .book-status input[type="radio"] + label, .recommended input[type="radio"] + label{
+        .book-status input[type="radio"], .recommended input[type="radio"], .recommended input[type="checkbox"]{display: none;}
+        .book-status input[type="radio"] + label, .recommended input[type="radio"] + label, .recommended input[type="checkbox"]+label{
             cursor: pointer;
             font-weight: bold;
             font-size: 13px;
@@ -88,13 +88,13 @@
             background-color: #333;
             color:#fff;
         }
-        .recommended input[type="radio"] + label{
+        .recommended input[type="radio"] + label, .recommended input[type="checkbox"] + label{
         	padding: 0.1em 1em;
         	border:0.1em solid #EC573B;
             border-radius: 10px;
             width: auto;
         }
-        .recommended input[type="radio"]:checked + label{
+        .recommended input[type="radio"]:checked + label, .recommended input[type="checkbox"]:checked + label{
         	background-color: #EC573B;
             color:#fff;
         }
@@ -217,7 +217,7 @@
         	})
         	
         	const $selStatus = `${ book.bkSelStatus }`
-        	$("input[name='selStatus']").each(function(){
+        	$("input[name='bkSelStatus']").each(function(){
 	        	if($(this).val() === $selStatus){
 	        		$(this).attr("checked", true);
 	        	}
@@ -309,8 +309,8 @@ $(document).ready(function() {
         </div>
         
         <div>
-            <form action="">
-                
+            <form action="adminBookUpdate.bk">
+                <input type="hidden" name="bkNo" value="${ book.bkNo }"/>
                  <div id="info-area">
                     <div id="book-img">
                         <img src="" alt="" width="150px;" height="180px;">
@@ -377,8 +377,8 @@ $(document).ready(function() {
                             <input type="radio" id="bkStatusN" name="bkStatus" value="품절"><label for="bkStatusN">품절</label>
                         </div>
                         <div class="book-status b">
-                            <input type="radio" id="selStatusY" name="selStatus" value="Y"><label for="selStatusY">게시함</label>
-                            <input type="radio" id="selStatusN" name="selStatus" value="N"><label for="selStatusN">게시안함</label>
+                            <input type="radio" id="selStatusY" name="bkSelStatus" value="Y"><label for="selStatusY">게시함</label>
+                            <input type="radio" id="selStatusN" name="bkSelStatus" value="N"><label for="selStatusN">게시안함</label>
                         </div>
     
                     </div>
@@ -428,31 +428,31 @@ $(document).ready(function() {
                                 <div><p>관심사 (중복가능)</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="radio" id="bkInt1" value="여행"><label for="bkInt1">여행</label></div></li>
-                                        <li><div><input type="radio" id="bkInt2" value="진로"><label for="bkInt2">진로</label></div></li>
-                                        <li><div><input type="radio" id="bkInt3" value="기획/마케팅"><label for="bkInt3">기획/마케팅</label></div></li>
-                                        <li><div><input type="radio" id="bkInt4" value="리더십"><label for="bkInt4">리더십</label></div></li>
-                                        <li><div><input type="radio" id="bkInt5" value="자녀교육"><label for="bkInt5">자녀교육</label></div></li>
-                                        <li><div><input type="radio" id="bkInt6" value="지식/상식"><label for="bkInt6">지식/상식</label></div></li>
-                                        <li><div><input type="radio" id="bkInt7" value="시간관리"><label for="bkInt7">시간관리</label></div></li>
-                                        <li><div><input type="radio" id="bkInt8" value="심리"><label for="bkInt8">심리</label></div></li>
-                                        <li><div><input type="radio" id="bkInt9" value="경제"><label for="bkInt9">경제</label></div></li>
-                                        <li><div><input type="radio" id="bkInt10" value="재테크"><label for="bkInt10">재테크</label></div></li>
-                                        <li><div><input type="radio" id="bkInt11" value="정치/사회"><label for="bkInt11">정치/사회</label></div></li>
-                                        <li><div><input type="radio" id="bkInt12" value="과학"><label for="bkInt12">과학</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt1" name="itrs" value="여행"><label for="bkInt1">여행</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt2" name="itrs" value="진로"><label for="bkInt2">진로</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt3" name="itrs" value="기획/마케팅"><label for="bkInt3">기획/마케팅</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt4" name="itrs" value="리더십"><label for="bkInt4">리더십</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt5" name="itrs" value="자녀교육"><label for="bkInt5">자녀교육</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt6" name="itrs" value="지식/상식"><label for="bkInt6">지식/상식</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt7" name="itrs" value="시간관리"><label for="bkInt7">시간관리</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt8" name="itrs" value="심리"><label for="bkInt8">심리</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt9" name="itrs" value="경제"><label for="bkInt9">경제</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt10" name="itrs" value="재테크"><label for="bkInt10">재테크</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt11" name="itrs" value="정치/사회"><label for="bkInt11">정치/사회</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt12" name="itrs" value="과학"><label for="bkInt12">과학</label></div></li>
                                         
-                                        <li><div><input type="radio" id="bkInt13" value="미술"><label for="bkInt13">미술</label></div></li>
-                                        <li><div><input type="radio" id="bkInt14" value="철학"><label for="bkInt14">철학</label></div></li>
-                                        <li><div><input type="radio" id="bkInt15" value="음악"><label for="bkInt15">음악</label></div></li>
-                                        <li><div><input type="radio" id="bkInt16" value="외국어"><label for="bkInt16">외국어</label></div></li>
-                                        <li><div><input type="radio" id="bkInt17" value="예술"><label for="bkInt17">예술</label></div></li>
-                                        <li><div><input type="radio" id="bkInt18" value="신앙"><label for="bkInt18">신앙</label></div></li>
-                                        <li><div><input type="radio" id="bkInt19" value="문학"><label for="bkInt19">문학</label></div></li>
-                                        <li><div><input type="radio" id="bkInt20" value="역사"><label for="bkInt20">역사</label></div></li>
-                                        <li><div><input type="radio" id="bkInt21" value="환경"><label for="bkInt21">환경</label></div></li>
-                                        <li><div><input type="radio" id="bkInt22" value="프로그래밍"><label for="bkInt22">프로그래밍</label></div></li>
-                                        <li><div><input type="radio" id="bkInt23" value="공부"><label for="bkInt23">공부</label></div></li>
-                                        <li><div><input type="radio" id="bkInt24" value="요리"><label for="bkInt24">요리</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt13" name="itrs" value="미술"><label for="bkInt13">미술</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt14" name="itrs" value="철학"><label for="bkInt14">철학</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt15" name="itrs" value="음악"><label for="bkInt15">음악</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt16" name="itrs" value="외국어"><label for="bkInt16">외국어</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt17" name="itrs" value="예술"><label for="bkInt17">예술</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt18" name="itrs" value="신앙"><label for="bkInt18">신앙</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt19" name="itrs" value="문학"><label for="bkInt19">문학</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt20" name="itrs" value="역사"><label for="bkInt20">역사</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt21" name="itrs" value="환경"><label for="bkInt21">환경</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt22" name="itrs" value="프로그래밍"><label for="bkInt22">프로그래밍</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt23" name="itrs" value="공부"><label for="bkInt23">공부</label></div></li>
+                                        <li><div><input type="checkbox" id="bkInt24" name="itrs" value="요리"><label for="bkInt24">요리</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -460,26 +460,26 @@ $(document).ready(function() {
                                 <div><p>장르</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="radio" id="bkSubCate1" value="소설"><label for="bkSubCate1">소설</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate2" value="시/에세이"><label for="bkSubCate2">시/에세이</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate3" value="경제/경영"><label for="bkSubCate3">경제/경영</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate4" value="자기계발"><label for="bkSubCate4">자기계발</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate5" value="요리"><label for="bkSubCate5">요리</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate6" value="역사/문화"><label for="bkSubCate6">역사/문화</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate7" value="종교"><label for="bkSubCate7">종교</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate8" value="정치/사회"><label for="bkSubCate8">정치/사회</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate9" value="예술"><label for="bkSubCate9">예술</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate10" value="유아"><label for="bkSubCate10">유아</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate11" value="기술/공학"><label for="bkSubCate11">기술/공학</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate12" value="컴퓨터/IT"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate13" value="문학/소설"><label for="bkSubCate13">문학/소설</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate14" value="어학/사전"><label for="bkSubCate14">어학/사전</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate15" value="생활/요리"><label for="bkSubCate15">생활/요리</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate16" value="예술/건축"><label for="bkSubCate16">예술/건축</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate17" value="경제/경영"><label for="bkSubCate17">경제/경영</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate18" value="인문/사회"><label for="bkSubCate18">인문/사회</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate19" value="일본도서"><label for="bkSubCate19">일본도서</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate20" value="중국도서"><label for="bkSubCate20">중국도서</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate1" name="ganre" value="소설"><label for="bkSubCate1">소설</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate2" name="ganre" value="시/에세이"><label for="bkSubCate2">시/에세이</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate3" name="ganre" value="경제/경영"><label for="bkSubCate3">경제/경영</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate4" name="ganre" value="자기계발"><label for="bkSubCate4">자기계발</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate5" name="ganre" value="요리"><label for="bkSubCate5">요리</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate6" name="ganre" value="역사/문화"><label for="bkSubCate6">역사/문화</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate7" name="ganre" value="종교"><label for="bkSubCate7">종교</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate8" name="ganre" value="정치/사회"><label for="bkSubCate8">정치/사회</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate9" name="ganre" value="예술"><label for="bkSubCate9">예술</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate10" name="ganre" value="유아"><label for="bkSubCate10">유아</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate11" name="ganre" value="기술/공학"><label for="bkSubCate11">기술/공학</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate12" name="ganre" value="컴퓨터/IT"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate13" name="ganre" value="문학/소설"><label for="bkSubCate13">문학/소설</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate14" name="ganre" value="어학/사전"><label for="bkSubCate14">어학/사전</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate15" name="ganre" value="생활/요리"><label for="bkSubCate15">생활/요리</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate16" name="ganre" value="예술/건축"><label for="bkSubCate16">예술/건축</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate17" name="ganre" value="경제/경영"><label for="bkSubCate17">경제/경영</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate18" name="ganre" value="인문/사회"><label for="bkSubCate18">인문/사회</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate19" name="ganre" value="일본도서"><label for="bkSubCate19">일본도서</label></div></li>
+                                        <li><div><input type="checkbox" id="bkSubCate20" name="ganre" value="중국도서"><label for="bkSubCate20">중국도서</label></div></li>
                                     </ul>
                                 </div>
                             </div>

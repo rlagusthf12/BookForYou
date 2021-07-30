@@ -287,12 +287,48 @@ public class BookController {
 			
 		}
 		
-		System.out.println(jsonList);
-		
 		mv.addObject("book", b.get(0));
 		mv.addObject("bkObj", jsonList);
 		mv.setViewName("book/adminBookDetail");
 		return mv;
+	}
+	
+	/**
+	 * [관리자] 도서 수정 (한진)
+	 */
+	@RequestMapping("adminBookUpdate.bk")
+	public String updateAdminBook(Book b, int bkNo, String year, String month, String day, 
+									@RequestParam(value="itrs") List<String> itrs, 
+									@RequestParam(value="ganre")List<String> ganre) {
+		
+		
+		String date = year + "-" + month + "-" + day;
+		
+		b.setBkDate(date);
+		b.setBkNo(bkNo);
+		
+		int result = bookService.updateAdminBook(b);
+		
+		List<String> selectedIntr = bookService.selectAdminBookInterest(b);
+
+		String interest = "";
+		for(int i=0; i<selectedIntr.size(); i++) {
+			if(!itrs.contains(selectedIntr.get(i))) {
+				b.setInterestContent(selectedIntr.get(i));
+				int delete = bookService.deleteAdminBookItrs(b);
+			}
+		}
+		
+		for(int i=0; i<itrs.size(); i++) {
+			interest = itrs.get(i);
+			
+			if(!selectedIntr.contains(interest)) {
+				b.setInterestContent(interest);
+				int	result1 = bookService.insertAdminBookItrs(b);					
+			}
+		}
+		
+		return "redirect:/adminBookDetail.bk?bkNo=" + b.bkNo;
 	}
 	
 }

@@ -140,4 +140,36 @@ public class BookServiceImpl implements BookService {
 	public ArrayList<Book> selectAdminBookDetail(int bkNo) {
 		return bookDao.selectAdminBookDetail(sqlSession, bkNo);
 	}
+
+	/**
+	 * [관리자] 도서 수정 (한진)
+	 */
+	@Override
+	public int updateAdminBook(Book b) {
+		return bookDao.updateAdminBook(sqlSession, b);
+	}
+
+	/**
+	 * [관리자] 도서 추천 관심사 삽입 (한진)
+	 */
+	@Override
+	public int insertAdminBookItrs(Book b) {
+		return bookDao.insertAdminBookItrs(sqlSession, b);
+	}
+
+	/**
+	 * [관리자] 도서 추천 관심사 조회 (한진)
+	 */
+	@Override
+	public List<String> selectAdminBookInterest(Book b) {
+		return bookDao.selectAdminBookInterest(sqlSession, b);
+	}
+
+	/**
+	 * [관리자] 도서 추천 관심사 삭제 (한진)
+	 */
+	@Override
+	public int deleteAdminBookItrs(Book b) {
+		return bookDao.deleteAdminBookItrs(sqlSession, b);
+	}
 }

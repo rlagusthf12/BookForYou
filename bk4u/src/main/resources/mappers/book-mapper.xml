@@ -438,4 +438,67 @@
 		 where mem_no = #{memNo}
            and bk_no = #{bkNo}
 	</delete>
+	
+	<!-- [관리자] 도서 수정 (한진) -->
+	<update id="updateAdminBook">
+		update
+			   (
+			   	 select
+			   	 		*
+			   	   from book
+				  where bk_no = #{bkNo}
+			    )
+		   set bk_title = #{bkTitle},
+		   	   writer_name = #{writerName},
+		   	   bk_publish = #{bkPublish},
+		   	   bk_date = #{bkDate},
+		   	   bk_price = #{bkPrice},
+		   	   bk_stock = #{bkStock},
+		   	   bk_status = #{bkStatus},
+		   	   bk_selstatus = #{bkSelStatus},
+		   	   bk_age = #{bkAge},
+		   	   bk_gender = #{bkGender},
+		   	   bk_work = #{bkWork},
+		   	   bk_level = #{bkLevel},
+		   	   writer_intro = #{writerIntro},
+		   	   bk_content = #{bkContent}
+	</update>
+	
+	<!-- [관리자] 도서 추천 관심사 조회 (한진) -->
+	<select id="selectAdminBookInterest" resultType="string">
+		select 
+		        interest_content
+		  from interest
+		  join book_interest using(interest_no)
+		 where bk_no = #{bkNo}
+	</select>
+	
+	<!-- [관리자] 도서 추천 관심사 삽입 (한진) -->
+	<insert id="insertAdminBookItrs">
+		insert
+		  into book_interest
+		 	    (
+		 		 interest_no,
+		 		 bk_no
+		  		)
+		 values (
+		 		 (select interest_no
+		 		    from interest
+		 		   where interest_content = #{interestContent}
+		 		 ),
+		 		 #{bkNo}	
+		 		)		 
+	</insert>
+	
+	<!-- [관리자] 도서 추천 관심사 삭제 (한진) -->
+	<delete id="deleteAdminBookItrs">
+		delete
+		  from book_interest
+		 where bk_no = #{bkNo}
+		   and interest_no = (
+		   					   select interest_no
+		   					     from interest
+		   					    where interest_content = #{interestContent}
+		   					  )
+	</delete>
 </mapper>

@@ -81,4 +81,24 @@ public interface BookService {
 	 */
 	ArrayList<Book> selectAdminBookDetail(int bkNo);
 	
+	/**
+	 * [관리자] 도서 수정 (한진)
+	 */
+	int updateAdminBook(Book b);
+
+	/**
+	 * [관리자] 도서 추천 관심사 삽입 (한진)
+	 */
+	int insertAdminBookItrs(Book b);
+
+	/**
+	 * [관리자] 도서 추천 관심사 조회 (한진)
+	 */
+	List<String> selectAdminBookInterest(Book b);
+
+	/**
+	 * [관리자] 도서 추천 관심사 삭제 (한진)
+	 */
+	int deleteAdminBookItrs(Book b);
+	
 }

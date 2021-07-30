@@ -131,4 +131,32 @@ public class BookDao {
 	public ArrayList<Book> selectAdminBookDetail(SqlSessionTemplate sqlSession, int bkNo) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBookDetail", bkNo);
 	}
+	
+	/**
+	 * [관리자] 도서 수정 (한진)
+	 */
+	public int updateAdminBook(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.update("bookMapper.updateAdminBook", b);
+	}
+	
+	/**
+	 * [관리자] 도서 추천 관심사 삽입 (한진)
+	 */
+	public int insertAdminBookItrs(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.insert("bookMapper.insertAdminBookItrs", b);
+	}
+	
+	/**
+	 * [관리자] 도서 추천 관심사 조회 (한진)
+	 */
+	public List<String> selectAdminBookInterest(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.selectList("bookMapper.selectAdminBookInterest", b);
+	}
+	
+	/**
+	 * [관리자] 도서 추천 관심사 삭제 (한진)
+	 */
+	public int deleteAdminBookItrs(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.delete("bookMapper.deleteAdminBookItrs", b);
+	}
 }

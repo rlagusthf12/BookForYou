@@ -371,7 +371,7 @@
                 <button id="handling-statusN" value="2">품절</button>
                 <button id="handling-selStatusY" value="3">게시함</button>
                 <button id="handling-selStatusN" value="4">게시안함</button>
-                <button id="enroll-newBook" value="5">도서등록</button>
+                <button id="enroll-newBook" >도서등록</button>
             </div>
 
             <div  id="result-div">
