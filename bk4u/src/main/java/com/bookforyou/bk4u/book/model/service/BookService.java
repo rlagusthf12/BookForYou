@@ -61,5 +61,10 @@ public interface BookService {
 	 */
 	int updateBookStatus(HashMap<String, String> map);
 
+	/*
+	 * [공통] 도서 장바구니 추가
+	 */
+	int updateCart(int memNo, int bkNo);
+
 	
 }

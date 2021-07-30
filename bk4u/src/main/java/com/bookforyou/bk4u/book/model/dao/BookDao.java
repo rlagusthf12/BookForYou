@@ -96,5 +96,9 @@ public class BookDao {
 	public int updateBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("bookMapper.updateBookStatus", map);
 	}
+
+	public int updateCart(SqlSessionTemplate sqlSession, int memNo, int bkNo) {
+		return sqlSession.update("bookMapper.updateCart");
+	}
 	
 }
