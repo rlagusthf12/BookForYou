@@ -76,5 +76,9 @@ public interface BookService {
 	 */
 	int insertCart(HashMap<String, Integer> map);
 
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
+	 */
+	Book selectAdminBookDetail(int bkNo);
 	
 }

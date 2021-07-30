@@ -232,6 +232,17 @@
 		        })
 	        })
 	        
+	        /* 테이블 행 선택 */
+	        $("#result-div table tbody tr").click(function(){
+	        	
+	        	var tr = $(this);
+	        	var td = tr.children();
+	        	
+	        	var bkNo = td.eq(3).text();
+	        	location.href='adminBookDetail.bk?bkNo=' + bkNo;
+	        	
+	        })
+	        
 	    })
 	    
 	    
@@ -323,8 +334,20 @@
 	                <c:when test="${ not empty conListCount }">
 	                	<span>[총 ${ conListCount }개]</span>
 	                </c:when>
+	            	<c:when test="${ bkStatus eq 1 }">
+			            <span>[총 ${ selectStatusY }개]</span>
+			        </c:when>
+			        <c:when test="${ bkStatus eq 2 }">
+			            <span>[총 ${ selectStatusN }개]</span>
+			        </c:when>
+			        <c:when test="${ bkStatus eq 3 }">
+			            <span>[총 ${ selectSelStatusY }개]</span>
+			        </c:when>
+			        <c:when test="${ bkStatus eq 4 }">
+			            <span>[총 ${ selectSelStatusN }개]</span>
+			        </c:when>
 	                <c:otherwise>
-	                	<span>[총 ${ listCount }개]</span>
+			            <span>[총 ${ listCount }개]</span>			                
 	                </c:otherwise>
                 </c:choose>
             </div>

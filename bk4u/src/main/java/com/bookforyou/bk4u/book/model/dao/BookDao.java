@@ -118,4 +118,10 @@ public class BookDao {
 		return sqlSession.insert("bookMapper.insertCart", map);
 	}
 	
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
+	 */
+	public Book selectAdminBookDetail(SqlSessionTemplate sqlSession, int bkNo) {
+		return sqlSession.selectOne("bookMapper.selectAdminBookDetail", bkNo);
+	}
 }

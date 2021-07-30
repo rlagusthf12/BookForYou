@@ -15,10 +15,10 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <style>
-	 #outer{
+	    #outer{
             display:inline-block;
             position:absolute;
-            margin-top:50px;
+            margin:50px 0 0 250px;
             width: 950px;
         }
         #main-title > p{
@@ -30,43 +30,70 @@
             font-size:18px;
             font-weight: 600;
         }
-        #content-title{margin:30px 0 30px 0;}
-        #content-title p{ 
-            float:left;
-            margin:0 15px 0 0;
-            font-size:18px;
-            font-weight: 600;
-        }
+       
 
         /* 기본정보 구역 */
         #info-area{
             width:auto;
-            border:1px solid black;
-            border-radius: 10px;
+            border-top:1px solid black;
+            border-bottom:1px solid black;
             padding:15px;
         }
-        #book-img{
-            position:absolute;
-            margin:20px 0 0 10px;
-        }
+        #book-img{float:left;}
         #book-info{
             display: inline-block;
-            margin-left:250px;
+            margin-left:60px;
         }
-        th{
-            text-align: left; 
-            width:150px;
-            height: 30px;
+        
+        #numberNo{
+            display: inline-block;
+            margin: 30px 0 10px 0;
+            background-color: rgba(209, 213, 218, 0.466);
+            padding:0 0.5em;
         }
-        td input{
-            height: 20px;
-        }
+        #numberNo p {margin:0px;}
 
-        /* radio 태그 */
-        .form-check{
-            padding:0px;
+        .book-info-content{margin: 5px 0;}
+        .book-info-content div{display:inline-block;}
+        .div-name{
+            font-size:16px;
+            font-weight: 600;
+            width:100px;
         }
-
+        
+        /* 상태 체크 구역 */
+		#status-area{float:right;}
+        .book-status{margin:5px;}
+        .book-status input[type="radio"], .recommended input[type="radio"]{display: none;}
+        .book-status input[type="radio"] + label, .recommended input[type="radio"] + label{
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .book-status input[type="radio"] + label{
+        	padding:0.1em 0.2em;
+        	height: 25px;
+            width: 70px;
+            border:1px solid grey;
+            background-color: #fff;
+            color:#333;
+        }
+        .book-status input[type="radio"]:checked+label{
+            background-color: #333;
+            color:#fff;
+        }
+        .recommended input[type="radio"] + label{
+        	padding: 0.1em 1em;
+        	border:0.1em solid #EC573B;
+            border-radius: 10px;
+            width: auto;
+        }
+        .recommended input[type="radio"]:checked + label{
+        	background-color: #EC573B;
+            color:#fff;
+        }
 
         /* 상세정보 구역 */
 
@@ -103,25 +130,12 @@
 
         .recommended{margin-bottom: 10px;}
         .recommended>div>p{
-            font-size: 18px;
+            font-size: 16px;
+            
             margin:0 0 10px 0;
             height: 17px;
         }
-        #keyword li>div{
-            border:0.1em solid #EC573B;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            width: auto;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        #keyword li>div:hover{
-            cursor: pointer;
-            background-color: #EC573B;
-            color:white;
-        }
+        
         
         /* 저자소개 */
         #writer-profile{
@@ -179,7 +193,61 @@
             color:#EC573B;
         }
 </style>
-
+<script>
+        $(function(){
+        	
+        	const $month = '${ month }'
+        	$("select[name='month'] > option").each(function(){
+        		if($(this).val() == $month){
+        			$(this).attr("selected", true);
+        		}
+        	})
+        	
+        	const $bkStatus = `${ book.bkStatus }`
+        	$("input[name='bkStatus']").each(function(){
+        		if($(this).val() === $bkStatus){
+        			$(this).attr("checked", true);
+        		}
+        	})
+        	
+        	const $selStatus = `${ book.bkSelStatus }`
+        	
+        	$("input[name='selStatus']").each(function(){
+	        	if($(this).val() === $selStatus){
+	        		$(this).attr("checked", true);
+	        	}
+        	})
+        	
+        	const $bkAge = `${ book.bkAge }`
+        	$("input[name='bkAge']").each(function(){
+        		if($(this).val() === $bkAge){
+        			$(this).attr("checked", true);
+        		}
+        	})
+        	
+        	const $bkGender = `${ book.bkGender }`
+        	$("input[name='bkGender']").each(function(){
+        		if($(this).val() === $bkGender){
+        			$(this).attr("checked", true);
+        		}
+        	})
+        	
+        	const $bkWork = `${ book.bkWork }`
+        	$("input[name='bkWork']").each(function(){
+        		if($(this).val() === $bkWork){
+        			$(this).attr("checked", true);
+        		}
+        	})
+        	
+        	const $bkLevel = `${ book.bkLevel }`
+        	$("input[name='bkLevel']").each(function(){
+        		if($(this).val() === $bkLevel){
+        			$(this).attr("checked", true);
+        		}
+        	})
+        	
+        })
+</script>
 </head>
 <body>
 
@@ -188,72 +256,88 @@
 	<div id="outer">
         
         <div id="main-title">
-            <img src="resources/adminCommon/images/next.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/next.png" alt="메뉴아이콘" width="20px" height="20px">
             <p>도서상세</p>
         </div>
 
+		<div id="numberNo">
+            <p>[${ book.bkNo }]</p>
+        </div>
         
         <div>
             <form action="">
                 
-                <div id="content-title">
-                    <p>기본 정보</p>
-                    <span>( 상품코드 : pn0001 )</span>
-                </div>
-
-                <div id="info-area">
+                 <div id="info-area">
                     <div id="book-img">
-                        <img src="" alt="" width="180px;" height="200px;">
+                        <img src="" alt="" width="150px;" height="180px;">
                     </div>
                     <div id="book-info">
-                        <table>
-                            <tr>
-                                <th>제목</th>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <th>저자</th>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <th>출판사</th>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <th>출간일</th>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <th>상태</th>
-                                <td class="form-check form-check-inline">
-                                    <input type="radio"> <label for="" calss="radio-label">전체</label>
-                                    <input type="radio"> <label for="" calss="radio-label">판매중</label>
-                                    <input type="radio"> <label for="" calss="radio-label">품절</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>게시상태</th>
-                                <td class="form-check form-check-inline">
-                                    <input type="radio"> <label for="" calss="radio-label">전체</label>
-                                    <input type="radio"> <label for="" calss="radio-label">게시함</label>
-                                    <input type="radio"> <label for="" calss="radio-label">게시안함</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>정가</th>
-                                <td><input type="text"></td>
-                            </tr>
-                            <tr>
-                                <th>재고</th>
-                                <td><input type="text"></td>
-                            </tr>
-                        </table>
+                        <div class="book-info-content">
+                            <div class="div-name">제목</div>
+                            <div>
+                                <input type="text" style="width:400px;" name="bkTitle" value="${ book.bkTitle }">
+                            </div>
+                        </div>
+                        <div class="book-info-content">
+                            <div class="div-name">저자</div>
+                            <div>
+                                <input type="text" name="writerName" value="${ book.writerName }">
+                            </div>
+                        </div>
+                        <div class="book-info-content">
+                            <div class="div-name">출판사</div>
+                            <div>
+                                <input type="text" name="bkPublish" value="${ book.bkPublish }">
+                            </div>
+                        </div>
+                        <div class="book-info-content">
+                            <div class="div-name">출판일</div>
+                            <div>
+                                <input type="text" id="year" name="year" value="${ year }" placeholder="년(4자리)" style="width: 80px;">
+                                <span style="margin-left:5px;">
+                                    <select name="month" id="month" style="height:30px; width:70px;">
+                                        <option>월</option>
+                                        <option value="01">1</option>
+                                        <option value="02">2</option>
+                                        <option value="03">3</option>
+                                        <option value="04">4</option>
+                                        <option value="05">5</option>
+                                        <option value="06">6</option>
+                                        <option value="07">7</option>
+                                        <option value="08">8</option>
+                                        <option value="09">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </span>
+                                <input type="text" id="day" name="day" value="${ day }" placeholder="일" style="margin-left:5px; width: 70px;">
+                            </div>
+                        </div>
+                        <div class="book-info-content">
+                            <div class="div-name">정가</div>
+                            <div>
+                                <input type="text" name="bkPrice" value="${ book.bkPrice }" style="width:100px;">
+                            </div>
+                        </div>
+                        <div class="book-info-content">
+                            <div class="div-name">재고</div>
+                            <div>
+                                <input type="text" name="bkStock" value="${ book.bkStock }" style="width:100px;">
+                            </div>
+                        </div>
+                    </div>   
+                    <div id="status-area">
+                        <div class="book-status a">
+                            <input type="radio" id="bkStatusY" name="bkStatus" value="판매중"><label for="bkStatusY">판매중</label>
+                            <input type="radio" id="bkStatusN" name="bkStatus" value="품절"><label for="bkStatusN">품절</label>
+                        </div>
+                        <div class="book-status b">
+                            <input type="radio" id="selStatusY" name="selStatus" value="Y"><label for="selStatusY">게시함</label>
+                            <input type="radio" id="selStatusN" name="selStatus" value="N"><label for="selStatusN">게시안함</label>
+                        </div>
+    
                     </div>
-                </div>
-                <br>
-
-                <div id="content-title">
-                    <p>상세 정보</p>
                 </div>
 
                 <div id="book-content">
@@ -277,13 +361,13 @@
                                 <div><p>나이</p></div>
                                 <div>
                                     <ul>
-                                        <li><div>10대</div></li>
-                                        <li><div>20대</div></li>
-                                        <li><div>30대</div></li>
-                                        <li><div>40대</div></li>
-                                        <li><div>50대</div></li>
-                                        <li><div>60대</div></li>
-                                        <li><div>70대</div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge10" name="bkAge" value="10"><label for="bkAge10">10대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge20" name="bkAge" value="20"><label for="bkAge20">20대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge30" name="bkAge" value="30"><label for="bkAge30">30대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge40" name="bkAge" value="40"><label for="bkAge40">40대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge50" name="bkAge" value="50"><label for="bkAge50">50대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge60" name="bkAge" value="60"><label for="bkAge60">60대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge70" name="bkAge" value="70"><label for="bkAge70">70대</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -291,8 +375,8 @@
                                 <div><p>성별</p></div>
                                 <div>
                                     <ul>
-                                        <li><div>여성</div></li>
-                                        <li><div>남성</div></li>
+                                        <li><div><input type="radio" id="bkGenF" name="bkGender" value="F"><label for="bkGenF">여성</label></div></li>
+                                        <li><div><input type="radio" id="bkGenM" name="bkGender" value="M"><label for="bkGenM">남성</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -300,12 +384,31 @@
                                 <div><p>관심사 (중복가능)</p></div>
                                 <div>
                                     <ul>
-                                        <li><div>여행</div></li>
-                                        <li><div>진로</div></li>
-                                        <li><div>리더십</div></li>
-                                        <li><div>자기계발</div></li>
-                                        <li><div>사회</div></li>
-                                        <li><div>지식/상식</div></li>
+                                        <li><div><input type="radio" id="bkInt1" value="여행"><label for="bkInt1">여행</label></div></li>
+                                        <li><div><input type="radio" id="bkInt2" value="진로"><label for="bkInt2">진로</label></div></li>
+                                        <li><div><input type="radio" id="bkInt3" value="기획/마케팅"><label for="bkInt3">기획/마케팅</label></div></li>
+                                        <li><div><input type="radio" id="bkInt4" value="리더십"><label for="bkInt4">리더십</label></div></li>
+                                        <li><div><input type="radio" id="bkInt5" value="자녀교육"><label for="bkInt5">자녀교육</label></div></li>
+                                        <li><div><input type="radio" id="bkInt6" value="지식/상식"><label for="bkInt6">지식/상식</label></div></li>
+                                        <li><div><input type="radio" id="bkInt7" value="시간관리"><label for="bkInt7">시간관리</label></div></li>
+                                        <li><div><input type="radio" id="bkInt8" value="심리"><label for="bkInt8">심리</label></div></li>
+                                        <li><div><input type="radio" id="bkInt9" value="경제"><label for="bkInt9">경제</label></div></li>
+                                        <li><div><input type="radio" id="bkInt10" value="재테크"><label for="bkInt10">재테크</label></div></li>
+                                        <li><div><input type="radio" id="bkInt11" value="정치/사회"><label for="bkInt11">정치/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkInt12" value="과학"><label for="bkInt12">과학</label></div></li>
+                                        
+                                        <li><div><input type="radio" id="bkInt13" value="미술"><label for="bkInt13">미술</label></div></li>
+                                        <li><div><input type="radio" id="bkInt14" value="철학"><label for="bkInt14">철학</label></div></li>
+                                        <li><div><input type="radio" id="bkInt15" value="음악"><label for="bkInt15">음악</label></div></li>
+                                        <li><div><input type="radio" id="bkInt16" value="외국어"><label for="bkInt16">외국어</label></div></li>
+                                        <li><div><input type="radio" id="bkInt17" value="예술"><label for="bkInt17">예술</label></div></li>
+                                        <li><div><input type="radio" id="bkInt18" value="신앙"><label for="bkInt18">신앙</label></div></li>
+                                        <li><div><input type="radio" id="bkInt19" value="문학"><label for="bkInt19">문학</label></div></li>
+                                        <li><div><input type="radio" id="bkInt20" value="역사"><label for="bkInt20">역사</label></div></li>
+                                        <li><div><input type="radio" id="bkInt21" value="환경"><label for="bkInt21">환경</label></div></li>
+                                        <li><div><input type="radio" id="bkInt22" value="프로그래밍"><label for="bkInt22">프로그래밍</label></div></li>
+                                        <li><div><input type="radio" id="bkInt23" value="공부"><label for="bkInt23">공부</label></div></li>
+                                        <li><div><input type="radio" id="bkInt24" value="요리"><label for="bkInt24">요리</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -313,10 +416,26 @@
                                 <div><p>장르</p></div>
                                 <div>
                                     <ul>
-                                        <li><div>문학</div></li>
-                                        <li><div>소설</div></li>
-                                        <li><div>판타지</div></li>
-                                        <li><div>고전문학</div></li>
+                                        <li><div><input type="radio" id="bkSubCate1" value="소설"><label for="bkSubCate1">소설</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate2" value="진로"><label for="bkSubCate2">시/에세이</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate3" value="기획/마케팅"><label for="bkSubCate3">경제/경영</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate4" value="리더십"><label for="bkSubCate4">자기계발</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate5" value="자녀교육"><label for="bkSubCate5">요리</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate6" value="지식/상식"><label for="bkSubCate6">역사/문화</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate7" value="시간관리"><label for="bkSubCate7">종교</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate8" value="심리"><label for="bkSubCate8">정치/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate9" value="경제"><label for="bkSubCate9">예술</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate10" value="재테크"><label for="bkSubCate10">유아</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate11" value="정치/사회"><label for="bkSubCate11">기술/공학</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate12" value="과학"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate13" value="여행"><label for="bkSubCate13">문학/소설</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate14" value="진로"><label for="bkSubCate14">어학/사전</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate15" value="기획/마케팅"><label for="bkSubCate15">생활/요리</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate16" value="리더십"><label for="bkSubCate16">예술/건축</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate17" value="자녀교육"><label for="bkSubCate17">경제/경영</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate18" value="지식/상식"><label for="bkSubCate18">인문/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate19" value="시간관리"><label for="bkSubCate19">일본도서</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate20" value="심리"><label for="bkSubCate20">중국도서</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -324,10 +443,16 @@
                                 <div><p>직업</p></div>
                                 <div>
                                     <ul>
-                                        <li><div>컴퓨터/IT</div></li>
-                                        <li><div>경제</div></li>
-                                        <li><div>경영</div></li>
-                                        <li><div>예체능</div></li>
+                                        <li><div><input type="radio" id="bkWorkStudent" name="bkWork" value="학생"><label for="bkWorkStudent">학생</label></div></li>
+                                        <li><div><input type="radio" id="bkWorkPo" name="bkWork" value="공무원"><label for="bkWorkPo">공무원</label></div></li>
+                                        <li><div><input type="radio" id="bkWorkMk" name="bkWork" value="마케터"><label for="bkWorkMk">마케터</label></div></li>
+                                        <li><div><input type="radio" id="bkWorkPl" name="bkWork" value="기획자"><label for="bkWorkPl">기획자</label></div></li>
+                                        <li><div><input type="radio" id="bkWorkDoc" name="bkWork" value="의사"><label for="bkWorkDoc">의사</label></div></li>
+                                    	<li><div><input type="radio" id="bkWorkSe" name="bkWork" value="자영업"><label for="bkWorkSe">자영업</label></div></li>
+                                    	<li><div><input type="radio" id="bkWorkSv" name="bkWork" value="서비스"><label for="bkWorkSv">서비스</label></div></li>
+                                    	<li><div><input type="radio" id="bkWorkIT" name="bkWork" value="IT"><label for="bkWorkIt">IT</label></div></li>
+                                    	<li><div><input type="radio" id="bkWorkN" name="bkWork" value="무직"><label for="bkWorkN">무직</label></div></li>
+                                    	<li><div><input type="radio" id="bkWorkSt" name="bkWork" value="취업준비생"><label for="bkWorkSt">취업준비생</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -335,10 +460,10 @@
                                 <div><p>난이도</p></div>
                                 <div>
                                     <ul>
-                                        <li><div>초급</div></li>
-                                        <li><div>중급</div></li>
-                                        <li><div>고급</div></li>
-                                        <li><div>아무거나</div></li>
+                                        <li><div><input type="radio" id="bkLevelE" name="bkLevel" value="쉬움"><label for="bkLevelE">쉬움</label></div></li>
+                                        <li><div><input type="radio" id="bkLevelM" name="bkLevel" value="보통"><label for="bkLevelM">보통</label></div></li>
+                                        <li><div><input type="radio" id="bkLevelH" name="bkLevel" value="어려움"><label for="bkLevelH">어려움</label></div></li>
+                                        <li><div><input type="radio" id="bkLevelA" name="bkLevel" value="무관"><label for="bkLevelA">무관</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -382,31 +507,6 @@
         <br><br><br>
     </div>
     
-    <script>
-        $(document).ready(function() {
-            var toolbar = [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'hr']],
-                ['view', ['fullscreen', 'codeview']],
-                ['help', ['help']]
-            ];
-
-            $('#summernote').summernote({
-                    height: 300,                 // set editor height
-                    minHeight: null,             // set minimum height of editor
-                    maxHeight: null,             // set maximum height of editor
-                    focus: true,                // set focus to editable area after initializing summernote
-                    lang: 'ko-KR'
-            });
-
-            $('#summernote').summernote(setting);
-        });
-    </script>
+    
 </body>
 </html>
