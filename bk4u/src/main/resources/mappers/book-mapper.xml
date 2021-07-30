@@ -5,6 +5,9 @@
 	<resultMap id="bookResult" type="Book">
 		<result column="bk_no" property="bkNo"/>
 		<result column="sub_cate_no" property="subCateNo"/>
+		<result column="main_cate_name" property="mainCateName"/>
+		<result column="sub_cate_name" property="subCateName"/>
+		<result column="interest_content" property="interestContent"/>
 		<result column="bk_title" property="bkTitle"/>
 		<result column="bk_publish" property="bkPublish"/>
 		<result column="bk_date" property="bkDate"/>
@@ -28,6 +31,8 @@
 		<result column="grade_star" property="bkGrade"/>
 		<result column="cart_qty" property="bkQty"/>
 	</resultMap>
+	
+	
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
 	<select id="selectAllListCount" resultType="_int">
@@ -357,7 +362,9 @@
 	<select id="selectAdminBookDetail" resultMap="bookResult">
 		select 
 		       bk_no,
-		       sub_cate_no,
+		       main_cate_name,
+		       sub_cate_name,
+		       interest_content,
 		       bk_title,
 		       bk_publish,
 		       bk_date,
@@ -379,6 +386,10 @@
 		       writer_change_name,
 		       bk_content
 		  from book
+		  join sub_category using(sub_cate_no)
+		  join main_category using(main_cate_no)
+		  join book_interest using(bk_no)
+		  join interest using(interest_no)
 		 where bk_no = #{bkNo}
 	</select>	
 	

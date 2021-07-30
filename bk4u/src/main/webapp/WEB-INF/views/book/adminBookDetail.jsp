@@ -9,10 +9,14 @@
 <!-- 부트스트랩  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- summernote -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.9/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.9/dist/summernote-lite.min.js"></script>
+<script src="/js/summernote-ko-KR.js"></script>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- 우편번호 API -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
 
 <style>
 	    #outer{
@@ -142,30 +146,26 @@
         #writer-profile{
             float:left;
             height: 150px;
-            margin: 30px 30px 30px 0;
+            width:150px;
+            margin: 30px 40px 0 0;
         }
         #writer-img{
-            display: inline-block;
             width: 100px;
             height: 100px;
             border-radius: 70%;
             border:2px solid black;
             text-align: center;
             line-height: 90px;
+            margin:auto;
+            margin-bottom:10px;
         }
         #writer-img>img{
             width: 80%;
             height: 80%;
             object-fit: cover;
         }
-        .writer-title{
-            font-size: 18px;
-        }
-        .writer-name{
-            
-            text-align: center;
-            font-weight: 600;
-        }
+        .writer-title{font-size: 16px;}
+        .writer-name{text-align: center;font-weight: 600;}
         
         .textarea{
             display: inline-block;
@@ -176,7 +176,7 @@
             text-align: center;
             padding:10px;
         }
-        .textarea > textarea{width: 700px; height: 180px; border:none;}
+        .textarea > textarea{width: 650px; height: 180px; border:none;}
 
         /* 저장 버튼 */
         #btn-submit{float:right;}
@@ -195,13 +195,20 @@
 <script>
         $(function(){
         	
-        	const $month = '${ month }'
+        	/* 출간일 */
+        	var $date = `${ book.bkDate }`
+        	var $year = $date.substring(0, 4);
+        	var $month = $date.substring(5, 7);
+        	var $day = $date.substring(8);
+        	$("input[name='year']").val( $year );
         	$("select[name='month'] > option").each(function(){
         		if($(this).val() == $month){
         			$(this).attr("selected", true);
         		}
         	})
+        	$("input[name='day']").val( $day );
         	
+        	/* 도서 상태 */
         	const $bkStatus = `${ book.bkStatus }`
         	$("input[name='bkStatus']").each(function(){
         		if($(this).val() === $bkStatus){
@@ -210,13 +217,13 @@
         	})
         	
         	const $selStatus = `${ book.bkSelStatus }`
-        	
         	$("input[name='selStatus']").each(function(){
 	        	if($(this).val() === $selStatus){
 	        		$(this).attr("checked", true);
 	        	}
         	})
         	
+        	/* 나이 */
         	const $bkAge = `${ book.bkAge }`
         	$("input[name='bkAge']").each(function(){
         		if($(this).val() === $bkAge){
@@ -224,6 +231,7 @@
         		}
         	})
         	
+        	/* 성별 */
         	const $bkGender = `${ book.bkGender }`
         	$("input[name='bkGender']").each(function(){
         		if($(this).val() === $bkGender){
@@ -231,6 +239,7 @@
         		}
         	})
         	
+        	/* 직업 */
         	const $bkWork = `${ book.bkWork }`
         	$("input[name='bkWork']").each(function(){
         		if($(this).val() === $bkWork){
@@ -238,6 +247,7 @@
         		}
         	})
         	
+        	/* 난이도 */
         	const $bkLevel = `${ book.bkLevel }`
         	$("input[name='bkLevel']").each(function(){
         		if($(this).val() === $bkLevel){
@@ -245,8 +255,43 @@
         		}
         	})
         	
+        	/* 관심사 & 장르 */
+        	var array = ${bkObj}
+        	for(idx in array){
+        		
+        		$(".recommended.interest input").each(function(){
+        			if($(this).val() === array[idx].interest){
+        				$(this).attr("checked", true);
+        			}
+        		})
+        		
+        		$(".recommended.ganre input").each(function(){
+        			if($(this).val() === array[idx].subCate){
+        				$(this).attr("checked", true);
+        			}
+        		})
+        	}
+        	
+        		
+        	
+        		
+        	
         })
+        
+        
 </script>
+<script>
+$(document).ready(function() {
+	  $('#summernote').summernote({
+ 	    	placeholder: 'content',
+	        minHeight: 370,
+	        maxHeight: null,
+	        focus: true, 
+	        lang : 'ko-KR'
+	  });
+	});
+</script>
+
 </head>
 <body>
 
@@ -290,9 +335,9 @@
                             </div>
                         </div>
                         <div class="book-info-content">
-                            <div class="div-name">출판일</div>
+                            <div class="div-name">출간일</div>
                             <div>
-                                <input type="text" id="year" name="year" value="${ year }" placeholder="년(4자리)" style="width: 80px;">
+                                <input type="text" id="year" name="year" placeholder="년(4자리)" style="width: 80px;">
                                 <span style="margin-left:5px;">
                                     <select name="month" id="month" style="height:30px; width:70px;">
                                         <option>월</option>
@@ -310,7 +355,7 @@
                                         <option value="12">12</option>
                                     </select>
                                 </span>
-                                <input type="text" id="day" name="day" value="${ day }" placeholder="일" style="margin-left:5px; width: 70px;">
+                                <input type="text" id="day" name="day" placeholder="일" style="margin-left:5px; width: 70px;">
                             </div>
                         </div>
                         <div class="book-info-content">
@@ -416,25 +461,25 @@
                                 <div>
                                     <ul>
                                         <li><div><input type="radio" id="bkSubCate1" value="소설"><label for="bkSubCate1">소설</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate2" value="진로"><label for="bkSubCate2">시/에세이</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate3" value="기획/마케팅"><label for="bkSubCate3">경제/경영</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate4" value="리더십"><label for="bkSubCate4">자기계발</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate5" value="자녀교육"><label for="bkSubCate5">요리</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate6" value="지식/상식"><label for="bkSubCate6">역사/문화</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate7" value="시간관리"><label for="bkSubCate7">종교</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate8" value="심리"><label for="bkSubCate8">정치/사회</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate9" value="경제"><label for="bkSubCate9">예술</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate10" value="재테크"><label for="bkSubCate10">유아</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate11" value="정치/사회"><label for="bkSubCate11">기술/공학</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate12" value="과학"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate13" value="여행"><label for="bkSubCate13">문학/소설</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate14" value="진로"><label for="bkSubCate14">어학/사전</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate15" value="기획/마케팅"><label for="bkSubCate15">생활/요리</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate16" value="리더십"><label for="bkSubCate16">예술/건축</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate17" value="자녀교육"><label for="bkSubCate17">경제/경영</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate18" value="지식/상식"><label for="bkSubCate18">인문/사회</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate19" value="시간관리"><label for="bkSubCate19">일본도서</label></div></li>
-                                        <li><div><input type="radio" id="bkSubCate20" value="심리"><label for="bkSubCate20">중국도서</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate2" value="시/에세이"><label for="bkSubCate2">시/에세이</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate3" value="경제/경영"><label for="bkSubCate3">경제/경영</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate4" value="자기계발"><label for="bkSubCate4">자기계발</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate5" value="요리"><label for="bkSubCate5">요리</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate6" value="역사/문화"><label for="bkSubCate6">역사/문화</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate7" value="종교"><label for="bkSubCate7">종교</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate8" value="정치/사회"><label for="bkSubCate8">정치/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate9" value="예술"><label for="bkSubCate9">예술</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate10" value="유아"><label for="bkSubCate10">유아</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate11" value="기술/공학"><label for="bkSubCate11">기술/공학</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate12" value="컴퓨터/IT"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate13" value="문학/소설"><label for="bkSubCate13">문학/소설</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate14" value="어학/사전"><label for="bkSubCate14">어학/사전</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate15" value="생활/요리"><label for="bkSubCate15">생활/요리</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate16" value="예술/건축"><label for="bkSubCate16">예술/건축</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate17" value="경제/경영"><label for="bkSubCate17">경제/경영</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate18" value="인문/사회"><label for="bkSubCate18">인문/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate19" value="일본도서"><label for="bkSubCate19">일본도서</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate20" value="중국도서"><label for="bkSubCate20">중국도서</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -486,6 +531,22 @@
                             </div>
 
                             <div id="summernote"></div>
+                            <script>
+						      $('#summernote').summernote({
+						        placeholder: 'Hello stand alone ui',
+						        tabsize: 2,
+						        height: 120,
+						        toolbar: [
+						          ['style', ['style']],
+						          ['font', ['bold', 'underline', 'clear']],
+						          ['color', ['color']],
+						          ['para', ['ul', 'ol', 'paragraph']],
+						          ['table', ['table']],
+						          ['insert', ['link', 'picture', 'video']],
+						          ['view', ['fullscreen', 'codeview', 'help']]
+						        ]
+						      });
+						    </script>
 
                         </div>
                     </div>

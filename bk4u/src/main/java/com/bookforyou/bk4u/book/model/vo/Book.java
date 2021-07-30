@@ -16,6 +16,9 @@ public class Book {
 
 	public int bkNo;
 	public int subCateNo;
+	public String mainCateName;
+	public String subCateName;
+	public String interestContent;
 	public String bkTitle;
 	public String bkPublish;
 	public String bkDate;

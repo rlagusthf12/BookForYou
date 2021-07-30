@@ -137,7 +137,7 @@ public class BookServiceImpl implements BookService {
 	 * [관리자] 도서 상세 보기 (한진)
 	 */
 	@Override
-	public Book selectAdminBookDetail(int bkNo) {
+	public ArrayList<Book> selectAdminBookDetail(int bkNo) {
 		return bookDao.selectAdminBookDetail(sqlSession, bkNo);
 	}
 }

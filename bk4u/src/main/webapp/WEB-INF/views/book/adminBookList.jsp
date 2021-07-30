@@ -149,6 +149,11 @@
         }
         .table td, .table th{border: 0.01em solid #dee2e6;}
         
+        #result-div table tbody tr:hover{
+        	color:#EC573B;
+        	cursor:pointer;
+        }
+        
         /* 페이징 */
        	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 

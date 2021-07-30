@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +17,8 @@ import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Controller
 public class BookController {
@@ -268,21 +269,28 @@ public class BookController {
 	/**
 	 * [관리자] 도서 상세 보기 (한진)
 	 */
+	@ResponseBody
 	@RequestMapping("adminBookDetail.bk")
 	public ModelAndView selectAdminBookDetail(ModelAndView mv, int bkNo) {
 		
-		Book b = bookService.selectAdminBookDetail(bkNo);
-
-		String publishDate = b.getBkDate();
+		ArrayList<Book> b = bookService.selectAdminBookDetail(bkNo);
 		
-		String year = publishDate.substring(0, 4);
-		String month = publishDate.substring(5, 7);
-		String day = publishDate.substring(8);
-		System.out.println(month);
-		mv.addObject("book", b);
-		mv.addObject("year", year);
-		mv.addObject("month", month);
-		mv.addObject("day", day);
+		JsonArray jsonList = new JsonArray();
+		
+		for(Book bk :b) {
+			
+			JsonObject jObj = new JsonObject();
+			jObj.addProperty("subCate", bk.getSubCateName());
+			jObj.addProperty("interest", bk.getInterestContent());
+			
+			jsonList.add(jObj);
+			
+		}
+		
+		System.out.println(jsonList);
+		
+		mv.addObject("book", b.get(0));
+		mv.addObject("bkObj", jsonList);
 		mv.setViewName("book/adminBookDetail");
 		return mv;
 	}
