@@ -25,7 +25,8 @@
 		<result column="writer_origin_name" property="writerOriginName"/>
 		<result column="writer_change_name" property="writerChangeName"/>
 		<result column="bk_content" property="bkContent"/>
-		<result column="grade_star" property="bk_grade"/>
+		<result column="grade_star" property="bkGrade"/>
+		<result column="cart_qty" property="bkQty"/>
 	</resultMap>
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
@@ -316,10 +317,14 @@
 		       writer_origin_name,
 		       writer_change_name,
 		       bk_content,
-               bk_grade
-		  from (select bk_no, avg(grade_star) bk_grade
-                from grade
-                group by bk_no) g
+               bk_grade,
+               cart_qty
+		  from (select g.*, c.cart_qty
+                  from (select bk_no, avg(grade_star) bk_grade
+                        from grade
+                        group by bk_no) g
+                  join cart c on (c.bk_no = g.bk_no)
+                  where mem_no = 2) g
 		  join book bk on (g.bk_no = bk.bk_no)
          where bk.bk_no in (select bk_no
                          from cart
@@ -396,6 +401,7 @@
            and bk_no = #{bkNo}
 	</update>
 	
+	<!-- [공통] 장바구니 추가 (연지)-->
 	<insert id="insertCart">
 		insert
 		  into cart
@@ -413,4 +419,12 @@
 		  , sysdate
 		  )
 	</insert>
+	
+	<!-- [공통] 도서 삭제 (연지) -->
+	<delete id="deleteCart">
+		delete
+		  from cart
+		 where mem_no = #{memNo}
+           and bk_no = #{bkNo}
+	</delete>
 </mapper>
