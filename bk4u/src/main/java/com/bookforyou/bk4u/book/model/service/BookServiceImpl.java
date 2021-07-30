@@ -116,4 +116,12 @@ public class BookServiceImpl implements BookService {
 	public int updateCart(int memNo, int bkNo) {
 		return bookDao.updateCart(sqlSession, memNo, bkNo);
 	}
+
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
+	 */
+	@Override
+	public Book selectAdminBookDetail(int bkNo) {
+		return bookDao.selectAdminBookDetail(sqlSession, bkNo);
+	}
 }

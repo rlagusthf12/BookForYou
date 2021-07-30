@@ -66,5 +66,9 @@ public interface BookService {
 	 */
 	int updateCart(int memNo, int bkNo);
 
+	/**
+	 * [관리자] 도서 상세 보기 (한진)
+	 */
+	Book selectAdminBookDetail(int bkNo);
 	
 }
