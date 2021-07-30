@@ -14,12 +14,14 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 public class GroupServiceImpl implements GroupService{
 	@Autowired
 	private GroupDao gDao;
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-
-	
-
+	@Override
+	public ArrayList<GroupBoard> selectList() {
+		return gDao.selectList(sqlSession);
+	}
 	
 	@Override
 	public int insertGBoard(GroupBoard g) {
@@ -56,6 +58,8 @@ public class GroupServiceImpl implements GroupService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	
 
 	
 	
