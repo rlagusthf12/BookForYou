@@ -7,21 +7,21 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
 	.body1{
 		width:900px;
 		margin:auto;
-
 	}
 	
-	.noticeTitle{	
+	.noticeTitle{
 		width:100%;
 		height:80px;	
 		font-weight:bold;
 		font-size:36px;
 		margin-top:200px;
 		margin-bottom:70px;
-		margin-left:80px;	
-	}
+		margin-left:80px;
+		}		
 	
 	.ListButton{		
 		font-size: 19px; 
@@ -80,13 +80,14 @@
 <div class="body1">
 <div class="noticeTitle">공지사항</div>
 
-<form id="noticeWrite" method="post" action="write.no" >
+<form id="noticeUpdate" method="post" action="update.no" >
+<input type="hidden" value="${n.noNo}" name="noNo">
 <h4 style="margin-top:12px;">제목</h4>
-<input type="text" placeholder="제목을 입력해주세요" name="noTitle" class="titleinput">
+<input type="text" value="${n.noTitle}" name="noTitle" class="titleinput">
 <br><br><br><br><br><br>
 
 <h4 style="margin-top:12px;">내용</h4>
-<textarea class="content" placeholder="내용을 입력해주세요" name="noContent"></textarea>
+<textarea class="content" name="noContent">${n.noContent}</textarea>
 
 <div style="width:360px; height:100px; float:right;">
 <button type="submit" class="uploadButton">등록하기</button>

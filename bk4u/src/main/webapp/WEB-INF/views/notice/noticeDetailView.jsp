@@ -8,32 +8,32 @@
 <title>Insert title here</title>
 
 <style>
-	body{
-	position: absolute;
-	left: 22%;
-	}
+	
 	.noticeDetail{
-	 	margin-left:100px;
-		width:977px;
+		width:800px;
+		margin:auto;
 	}
 	
 	.noticeDetailTitle{
+		width:100%;
 		height:80px;	
 		font-weight:bold;
-		font-size:36px;
-		margin-top:100px;
+		font-size:30px;
+		margin-top:200px;
 		}
 		
 	.noticeDate{
 	font-size: 18px; 
 	color: rgb(158, 158, 158);
-	margin-bottom:80px;
+	margin-bottom:80px;	
+	margin-left:5px;
 	}
 	
 	.noticeContent{
 	font-size: 20px;
 	width:765px;
 	height:503px;
+	margin-left:5px;
 	}
 	.Button{
 	font-size: 16px; 
@@ -55,7 +55,7 @@
 	 background-color: rgb(252, 190, 52);
 	 width:120px;
 	margin-top:300px;
-	margin-left:420px;
+	margin-left:330px;
 	margin-bottom:200px;
 	}
 	
@@ -65,21 +65,36 @@
 </head>
 
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="noticeDetail">
-	<div class="noticeDetailTitle">북포유 이용안내</div>
-	<div class="noticeDate">2021-07-01</div>
+	<div class="noticeDetailTitle">${n.noTitle}</div>
+	<div class="noticeDate">${n.noDate}</div>
 	
 	<div class="noticeContent">
-	<p>북포유 이용안내 상세 내용</p>
+	<p>${n.noContent}</p>
 	</div>	
 	<hr>
-		
-	<div class="Button">수정</div>
-	<div class="Button">삭제</div>
 	
-	<div class="ListButton">목록으로</div>
+	<c:if test="${loginUser.memNo==1}">	
+	<div class="Button" onclick="action(1)">수정</div>
+	<div class="Button" onclick="action(2)">삭제</div>
+	</c:if>
+	
+	<form id="postForm" action="" method="post">
+		<input type="hidden" name="noNo" value="${n.noNo}">		
+	</form>
+	
+	<script>
+		function action(num){
+			if(num==1){
+				$("#postForm").attr("action","updateForm.no").submit();
+			} else{
+				$("#postForm").attr("action","delete.no").submit();
+			}
+		}
+	</script>
+	<div class="ListButton" onclick="location.href='list.no'">목록으로</div>
 	</div>
-	<jsp:include page="../footer.jsp"/>
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>
