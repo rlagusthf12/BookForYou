@@ -294,7 +294,7 @@
 	            			if(result == "success"){
 		    	        		$("#modal_cart").modal('show');
 	            			}else{
-	            				console.log(result);
+	            				alert("장바구니 추가에 실패했습니다.");
 	            			}
 	            		},error:function(){
 	            			console.log("장바구니 추가 실패");
