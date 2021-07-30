@@ -129,11 +129,11 @@
             padding: 10px;
             outline: 0;
         }
-        .custom-input-post{
+        .custom-input-post-basic{
             border-color: #bbb;
             color: #555;
         }
-        .custom-input-post:focus{
+        .custom-input-post-basic:focus{
             border-color: #555;
         }
     </style>
@@ -153,7 +153,7 @@
         <div id="divider-box">
             <hr width="480px" style="margin-top: 30px; margin-left: auto; margin-right: auto;"/>
         </div>
-        <form action="first-enroll.me" method="post" id="enrollForm1">
+        <form action="first-enroll.me" method="post" name="first_enroll" id="enrollForm1">
         <div id="sign-up-box">
              <br>
             <div class="mb-3">
@@ -186,13 +186,13 @@
             <div class="mb-3">
                 <label class="form-label"><b>주소</b></label>
                 
-                <div id="post-box"><input type="email" class="custom-input-post custom-input-basic" name="memPost" id="memPost" placeholder="우편번호" required/>
+                <div id="post-box"><input type="text" class="custom-input-post custom-input-post-basic" name="memPost" id="memPost" placeholder="우편번호" required disabled/>
                 <button type="button" class="black-button" onclick="sample6_execDaumPostcode();">우편번호 찾기</button></div>
                 
-                <input type="text" class="custom-input custom-input-basic margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required/>
-                <input type="text" class="custom-input custom-input-basic margin-top" id="detailAddress" name="memDetailAddress" placeholder="상세 주소" required/>
+                <input type="text" class="custom-input custom-input-basic margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required disabled/>
+                <input type="text" class="custom-input custom-input-basic margin-top" id="detailAddress" name="memDetailAddress" placeholder="상세 주소"/>
                 <input type="text" class="custom-input custom-input-basic margin-top" id="memAddressRefer" name="memAddressRefer" placeholder="참고"/>
-                <div id="emailCheck" class="form-text"></div>
+                <div id="postInfo" class="form-text"></div>
             </div>
             <!-- 다음 주소 api -->
             <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -240,6 +240,12 @@
 		                document.getElementById('memPost').value = data.zonecode;
 		                document.getElementById("memBasicAddress").value = addr;
 		                // 커서를 상세주소 필드로 이동한다.
+		                basicAddress = true;
+        				$("#memBasicAddress").removeClass("custom-input-danger");
+						$("#memBasicAddress").addClass("custom-input-basic");
+						$("#memPost").removeClass("custom-input-danger");
+						$("#memPost").addClass("custom-input-post-basic");
+						$("#postInfo").css("color","green").text("");
 		 
 		                self.close();
 		            }
@@ -276,12 +282,16 @@
     			var $emailInput = $("#enrollForm1 input[name=memEmail]");
     			var $nameInput = $("#enrollForm1 input[name=memName]");
     			var $phoneInput = $("#enrollForm1 input[name=memPhone]");
+    			var $postInput = $("#enrollForm1 input[name=memPost]");
+    			var $basicAddressInput = $("#enrollForm1 input[name=memBasicAddress]");
     			
     			var id = false;
     			var pwd = false;
     			var pwdCheck = false;
     			var nick = false;
     			var email = false;
+    			var post = false;
+    			var basicAddress = false;
     			var name = false;
     			var phone = false;
     			
@@ -478,212 +488,86 @@
         			}
     			}
     			
+    			function postInputCheck(){
+    				if($postInput.val().length >=1){
+    					post = true;
+    					$("#memBasicAddress").removeClass("custom-input-danger");
+						$("#memBasicAddress").addClass("custom-input-basic");
+        				$("#memPost").removeClass("custom-input-danger");
+						$("#memPost").addClass("custom-input-post-basic");
+						$("#postInfo").css("color","green").text("");
+        			}else{
+        				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+        				post = false;
+        				$("#memPost").removeClass("custom-input-post-basic");
+        				$("#memPost").addClass("custom-input-danger");
+        				$("#memBasicAddress").removeClass("custom-input-basic");
+        				$("#memBasicAddress").addClass("custom-input-danger");
+        				$("#postInfo").css("color","red").text("우편 번호와 기본 주소는 필수 입력사항입니다.");
+        				$("#enrollForm1:submit").attr("disabled",true);
+        			}
+    			}
+    			
+    			function basicAddressInputCheck(){
+    				if($basicAddressInput.val().length >=1){
+    					basicAddress = true;
+        				$("#memBasicAddress").removeClass("custom-input-danger");
+						$("#memBasicAddress").addClass("custom-input-basic");
+						$("#memPost").removeClass("custom-input-danger");
+						$("#memPost").addClass("custom-input-post-basic");
+						$("#postInfo").css("color","green").text("");
+        			}else{
+        				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
+        				basicAddress = false;
+        				$("#memPost").removeClass("custom-input-post-basic");
+        				$("#memPost").addClass("custom-input-danger");
+        				$("#memBasicAddress").removeClass("custom-input-basic");
+        				$("#memBasicAddress").addClass("custom-input-danger");
+        				$("#postInfo").css("color","red").text("우편 번호와 기본 주소는 필수 입력사항입니다.");
+        				$("#enrollForm1:submit").attr("disabled",true);
+        			}
+    			}
+    			
     			
             	$(function(){
-            		
-            		
-            		
             		// 아이디 유효성 체크
             		$idInput.keyup(function(){
             			console.log($idInput.val());
             			idCheck();
-            			/*
-            			if($idInput.val().length >=5 && $idInput.val().length <=11){
-            				// 5글자이상 11자 이하일때 아이디에 대한 중복검사 진행
-            				$.ajax({
-            					url:"idCheck.me",
-            					data: {
-            						checkId: $idInput.val()
-            					},
-            					success:function(result){
-            						if(result=="NNNNN"){
-            							console.log(result);
-            							$("#idInfo").css("color","red").text("중복된 아이디입니다.");
-            							$("#idInput").removeClass("custom-input-basic");
-            							$("#idInput").addClass("custom-input-danger");
-            						}else{
-            							console.log(result);
-            							$("#idInput").removeClass("custom-input-danger");
-            							$("#idInput").addClass("custom-input-basic");
-            							$("#idInfo").css("color","green").text("사용가능한 아이디입니다.");
-            							
-            						}
-            					}, error:function(result){
-            						console.log("아이디 중복 체크용 ajax통신 실패");
-            					}
-            				});
-            			}else{
-            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
-            				$("#idInput").removeClass("custom-input-basic");
-            				$("#idInput").addClass("custom-input-danger");
-            				$("#idInfo").css("color","red").text("아이디는 5글자 이상 11글자 이하로 입력해주세요.");
-            				$("#enrollForm1:submit").attr("disabled",true);
-            			}
-            			*/
             		});
             		
             		// 비밀번호 유효성 체크
             		$pwdInput.keyup(function(){
             			passwordCheck();
-            			// 정규 표현식을 통과하지 못하면
-            			/*
-            			if($pwdInput.val().length == 0){
-            				$("#pwdInfo").css("color","red").text("비밀번호는 필수 입력사항입니다.");
-							$("#pwdInput").removeClass("custom-input-basic");
-							$("#pwdInput").addClass("custom-input-danger");
-            			}else if(!check.test($pwdInput.val())) { 
-            				// 처리할 문장
-            				$("#pwdInfo").css("color","red").text("비밀번호는 영어,숫자,특수문자 포함 최소 8글자 이상입니다.");
-							$("#pwdInput").removeClass("custom-input-basic");
-							$("#pwdInput").addClass("custom-input-danger");
-            			}else if(check.test($pwdInput.val())){
-            				$("#pwdInput").removeClass("custom-input-danger");
-							$("#pwdInput").addClass("custom-input-basic");
-							$("#pwdInfo").css("color","green").text("사용가능한 비밀번호입니다.");
-            			}
-						*/
             		});
             		
             		$pwdCheckInput.keyup(function(){
             			// 위의 정규 표현식을 다 통과했을 경우 비밀번호 일치하는지 체크
             			pwdInputCheck();
-            			/*
-            			if(check.test($pwdInput.val())){
-            				// 아무것도 입력하지 않는다면
-            				console.log($pwdCheckInput.val());
-            				if($pwdCheckInput.val().length == 0){
-                				$("#pwdCheckInfo").css("color","red").text("비밀번호 확인은 필수 입력사항입니다.");
-    							$("#pwdCheckInput").removeClass("custom-input-basic");
-    							$("#pwdCheckInput").addClass("custom-input-danger");
-                			}else if($pwdCheckInput.val() == $pwdInput.val()){
-                				$("#pwdCheckInput").removeClass("custom-input-danger");
-    							$("#pwdCheckInput").addClass("custom-input-basic");
-    							$("#pwdCheckInfo").css("color","green").text("비밀번호가 일치합니다.");
-                			}else if($pwdCheckInput.val() != $pwdInput.val()){
-                				$("#pwdCheckInfo").css("color","red").text("비밀번호 확인이 일치하지 않습니다.");
-    							$("#pwdCheckInput").removeClass("custom-input-basic");
-    							$("#pwdCheckInput").addClass("custom-input-danger");
-                			}
-            			}
-					*/
             		});
             		
             		// 닉네임 유효성 체크 
             		$nickInput.keyup(function(){
             			console.log($nickInput.val());
             			nickInputCheck();
-            			/*
-            			if($nickInput.val().length >=1 && $idInput.val().length <=8){
-            				// 5글자이상 11자 이하일때 아이디에 대한 중복검사 진행
-            				$.ajax({
-            					url:"nickCheck.me",
-            					data: {
-            						checkNick: $nickInput.val()
-            					},
-            					success:function(result){
-            						if(result=="NNNNN"){
-            							console.log(result);
-            							$("#nickInfo").css("color","red").text("중복된 닉네임입니다.");
-            							$("#nickInput").removeClass("custom-input-basic");
-            							$("#nickInput").addClass("custom-input-danger");
-            						}else{
-            							console.log(result);
-            							$("#nickInput").removeClass("custom-input-danger");
-            							$("#nickInput").addClass("custom-input-basic");
-            							$("#nickInfo").css("color","green").text("사용가능한 닉네임입니다.");
-            							
-            						}
-            					}, error:function(result){
-            						console.log("닉네임 중복 체크용 ajax통신 실패");
-            					}
-            				});
-            			}else{
-            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
-            				$("#nickInput").removeClass("custom-input-basic");
-            				$("#nickInput").addClass("custom-input-danger");
-            				$("#nickInfo").css("color","red").text("닉네임은 1글자 이상 8글자 이하로 입력해주세요.");
-            				$("#enrollForm1:submit").attr("disabled",true);
-            			}
-            			*/
             		});
             		
             		//이메일 유효성 체크
             		$emailInput.keyup(function(){
             			console.log($emailInput.val());
             			emailInputCheck();
-            			/*
-            			if($emailInput.val().length >=1 && $emailInput.val().includes("@")){
-            				
-            				$.ajax({
-            					url:"emailCheck.me",
-            					data: {
-            						checkEmail: $emailInput.val()
-            					},
-            					success:function(result){
-            						if(result=="NNNNN"){
-            							console.log(result);
-            							$("#emailInfo").css("color","red").text("중복된 이메일입니다.");
-            							$("#emailInput").removeClass("custom-input-basic");
-            							$("#emailInput").addClass("custom-input-danger");
-            						}else{
-            							console.log(result);
-            							$("#emailInput").removeClass("custom-input-danger");
-            							$("#emailInput").addClass("custom-input-basic");
-            							$("#emailInfo").css("color","green").text("사용 가능한 이메일입니다.");
-            							
-            						}
-            					}, error:function(result){
-            						console.log("이메일 중복 체크용 ajax통신 실패");
-            					}
-            				});
-            			}else{
-            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
-            				$("#emailInput").removeClass("custom-input-basic");
-            				$("#emailInput").addClass("custom-input-danger");
-            				$("#emailInfo").css("color","red").text("이메일 형식(@)이 일치하지 않습니다.");
-            				$("#enrollForm1:submit").attr("disabled",true);
-            			}
-            			*/
             		});
             		
             		//실명 유효성 체크
             		$nameInput.keyup(function(){
             			console.log($emailInput.val());
             			nameInputCheck();
-            			/*
-            			if($nameInput.val().length >=1){
-            				$("#nameInput").removeClass("custom-input-danger");
-							$("#nameInput").addClass("custom-input-basic");
-							$("#nameInfo").css("color","green").text("");
-            			}else{
-            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
-            				$("#nameInput").removeClass("custom-input-basic");
-            				$("#nameInput").addClass("custom-input-danger");
-            				$("#nameInfo").css("color","red").text("실명은 필수 입력사항입니다.");
-            				$("#enrollForm1:submit").attr("disabled",true);
-            			}*/
-            			
             		});
             		
             		// 핸드폰 번호 유효성 체크
             		$phoneInput.keyup(function(){
-            			console.log($phoneInput.val());
-            			
-            			phoneInputCheck();
-            			
-            			/*
-            			if($phoneInput.val().length >=1){
-            				$("#phoneInput").removeClass("custom-input-danger");
-							$("#phoneInput").addClass("custom-input-basic");
-							$("#phoneInfo").css("color","green").text("");
-            			}else{
-            				// 빨간색의 테두리 쓰여지고, 메세지도 보여진다.
-            				$("#phoneInput").removeClass("custom-input-basic");
-            				$("#phoneInput").addClass("custom-input-danger");
-            				$("#phoneInfo").css("color","red").text("핸드폰 번호는 필수 입력사항입니다.");
-            				$("#enrollForm1:submit").attr("disabled",true);
-            			}
-            			*/
+            			console.log($phoneInput.val());	
+            			phoneInputCheck(); 
             		});
             	})
             	
@@ -701,9 +585,34 @@
             			$pwdCheckInput.focus();
             			pwdInputCheck();
             			return false;
+            		}if(nick == false){
+            			$nickInput.focus();
+            			nickInputCheck();
+            			return false;
+            		}if(email == false){
+            			$emailInput.focus();
+            			emailInputCheck();
+            			return false;
+            		}if(name == false){
+            			$nameInput.focus();
+            			nameInputCheck();
+            			return false;
+            		}if(post == false){
+            			$postInput.focus();
+            			postInputCheck();
+            			return false;
+            		}if(basicAddress == false){
+            			$basicAddressInput.focus();
+            			basicAddressInputCheck();
+            			return false;
+            		}if(phone == false){
+            			$phoneInput.focus();
+            			phoneInputCheck();
+            			return false;
             		}
-       				
-    				
+            		
+            		document.first_enroll.submit();
+            		
             	}
             </script>
         	</div>
