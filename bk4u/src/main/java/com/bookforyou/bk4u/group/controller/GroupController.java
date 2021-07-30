@@ -24,6 +24,7 @@ public class GroupController {
 		model.addAttribute("groupList", groupList);
 		
 		return "group/groupList";
+		
 	}
 	
 }

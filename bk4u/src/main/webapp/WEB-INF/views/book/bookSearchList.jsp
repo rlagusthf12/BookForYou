@@ -282,6 +282,7 @@
             
             <script>
 	        	$(".search_book .btn_cart").click(function(){
+	        		
 	        		$.ajax({
 	            		url:"cartUpdate.bk",
 	            		data:{
@@ -289,12 +290,16 @@
 	            			bkNo:$(this).parent().children("input[id=book_no]").val()
 	            		},
 	            		type:"post",
-	            		success:function(daily){ // 성공시 실행 함수
-	    	        		$("#modal_cart").modal('show');
-	            		},error:function(){ // 실패시 실행 함수
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_cart").modal('show');
+	            			}else{
+	            				console.log(result);
+	            			}
+	            		},error:function(){
 	            			console.log("장바구니 추가 실패");
 	            		}
-	            	})
+		            })
 	        	})
             </script>
             
@@ -351,7 +356,7 @@
                         <div class="modal-body">
                             <div>성공적으로 장바구니에 담겼습니다</div>
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="openWindow();">장바구니 보러가기</button>
+                                <button type="button" class="btn btn-primary" onclick="goToCart();">장바구니 보러가기</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
                             </div>
                         </div>
@@ -372,6 +377,12 @@
                     </div>
                 </div>
             </div>
+            
+            <script>
+            	function goToCart(){
+            		location.href = "cart.bk?memNo=${loginUser.memNo}";
+            	}
+            </script>
 
         </div>
     </div>

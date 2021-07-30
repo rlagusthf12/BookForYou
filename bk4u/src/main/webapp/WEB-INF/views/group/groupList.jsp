@@ -151,9 +151,7 @@
                             $.ajax({
                                 url : "groupBoardList.do",
                                 type: 'POST',
-                                data: { more : more,		    
-                                     
-                                    },
+                                data: { more : more},
                                 dataType: "json",
                                 success: function(data){
                     

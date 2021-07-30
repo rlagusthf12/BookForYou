@@ -110,10 +110,26 @@ public class BookServiceImpl implements BookService {
 	}
 
 	/*
-	 * [공통] 도서 장바구니 추가
+	 * [공통] 도서 장바구니 유무 확인 (연지)
 	 */
 	@Override
-	public int updateCart(int memNo, int bkNo) {
-		return bookDao.updateCart(sqlSession, memNo, bkNo);
+	public int checkCart(HashMap<String, Integer> map) {
+		return bookDao.checkCart(sqlSession, map);
+	}
+
+	/*
+	 * [공통] 도서 장바구니 수량 증가 (연지)
+	 */
+	@Override
+	public int updateCartQty(HashMap<String, Integer> map) {
+		return bookDao.updateCartQty(sqlSession, map);
+	}
+
+	/*
+	 * [공통] 도서 장바구니 추가 (연지)
+	 */
+	@Override
+	public int insertCart(HashMap<String, Integer> map) {
+		return bookDao.insertCart(sqlSession, map);
 	}
 }
