@@ -109,5 +109,11 @@ public class BookServiceImpl implements BookService {
 		return bookDao.updateBookStatus(sqlSession, map);
 	}
 
-
+	/*
+	 * [공통] 도서 장바구니 추가
+	 */
+	@Override
+	public int updateCart(int memNo, int bkNo) {
+		return bookDao.updateCart(sqlSession, memNo, bkNo);
+	}
 }

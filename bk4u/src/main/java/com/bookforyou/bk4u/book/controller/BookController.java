@@ -206,6 +206,17 @@ public class BookController {
 		
 		
 	}
+
+	/*
+	 * [공통] 도서 장바구니 추가
+	 */
+	@ResponseBody
+	@RequestMapping(value="cartUpdate.bk", produces="application/json; charset=utf-8")
+	public String updateCart(int memNo, int bkNo) {
+		
+		int result = bookService.updateCart(memNo, bkNo);
+		return "";
+	}
 	
 	
 }

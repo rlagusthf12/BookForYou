@@ -351,7 +351,7 @@
                         <div>${ b.bkTitle }</div>
                         <div>
                             <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
-                            <span>&nbsp;★★★★☆</span>
+                            <span>&nbsp;★★★★☆ </span>
                         </div>
                         <div>
                             <div>내일 (7/8) 출고 예정</div>
