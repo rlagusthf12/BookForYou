@@ -13,8 +13,6 @@
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/book-mapper.xml"/>
-		<mapper resource="/mappers/groupBoard-mapper.xml"/> 
-		<mapper resource="/mappers/group-mapper.xml"/>
 	</mappers>
 
 </configuration>
