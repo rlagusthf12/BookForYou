@@ -230,6 +230,39 @@ public class BookController {
 		
 		return result> 0 ? "success" : "fail";
 	}
+
+	/*
+	 * [공통] 도서 장바구니 삭제 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="cartDelete.bk", produces="text/html; charset=utf-8")
+	public String deleteCart(int memNo, int bkNo) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memNo", memNo);
+		map.put("bkNo", bkNo);
+
+		int result = bookService.deleteCart(map);
+		
+		return result> 0 ? "success" : "fail";
+	}
+
+	/*
+	 * [공통] 도서 장바구니 수량 갱신 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="updateCartQty.bk", produces="text/html; charset=utf-8")
+	public String deleteCart(int memNo, int bkNo, int cartQty) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memNo", memNo);
+		map.put("bkNo", bkNo);
+		map.put("cartQty", cartQty);
+
+		int result = bookService.updateCartQty(map);
+		
+		return result> 0 ? "success" : "fail";
+	}
 	
 	
 }

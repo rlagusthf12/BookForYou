@@ -117,5 +117,12 @@ public class BookDao {
 	public int insertCart(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.insert("bookMapper.insertCart", map);
 	}
+
+	/*
+	 * [공통] 도서 장바구니 삭제 (연지)
+	 */
+	public int deleteCart(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.delete("bookMapper.deleteCart", map);
+	}
 	
 }

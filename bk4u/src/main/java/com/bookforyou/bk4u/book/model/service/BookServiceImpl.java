@@ -132,4 +132,11 @@ public class BookServiceImpl implements BookService {
 	public int insertCart(HashMap<String, Integer> map) {
 		return bookDao.insertCart(sqlSession, map);
 	}
+
+	/*
+	 * [공통] 도서 장바구니 삭제 (연지)
+	 */
+	public int deleteCart(HashMap<String, Integer> map) {
+		return bookDao.deleteCart(sqlSession, map);
+	}
 }

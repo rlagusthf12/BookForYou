@@ -180,7 +180,7 @@
             margin: auto;
         }
 
-        .book_info>div:nth-child(2) button{
+        .book_info>div:nth-child(2) .btn_qty{
             font-size: 12px;
             text-align: center;
             width: 60px;
@@ -210,6 +210,7 @@
         }
 
         .book_info>div:nth-child(4)>div{
+        	cursor: pointer;
             margin: 5px 0px;
         }
         
@@ -359,18 +360,72 @@
                     </div>
                     
                     <div>
-                        <div><input type="number" min="1" max="5" value="1"></div>
-                        <div><button>수량변경</button></div>
+                        <div><input type="number" min="1" max="5" value="${ b.bkQty }"></div>
+                        <div><button class="btn_qty" onclick="updateQty();">수량변경</button></div>
                     </div>
                     <div>${ b.bkPrice }원</div>
                     <div>
                         <div>주문하기</div>
                         <div>리스트</div>
                         <div>삭제</div>
+                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
                     </div>
                 </div>
             </div>
             </c:forEach>
+            
+            <script>
+            	$(function(){
+            		$(".book_info>div:nth-child(4)>div:nth-child(3)").click(function(){
+            			
+            			var div = $(this).parent().parent().parent();
+            			
+            			$.ajax({
+    	            		url:"cartDelete.bk",
+    	            		data:{
+    	            			memNo:${ loginUser.memNo },
+    	            			bkNo:$(this).parent().children("input[id=book_no]").val()
+    	            		},
+    	            		type:"post",
+    	            		success:function(result){
+    	            			if(result == "success"){
+    	            				div.remove();
+    	            			}else{
+    	            				alert("장바구니 삭제에 실패했습니다.");
+    	            			}
+    	            		},error:function(){
+    	            			console.log("장바구니 삭제 실패");
+    	            		}
+    		            })
+            		})
+            	})
+            </script>
+            
+            <script>
+            
+            	val input = $(this).parent().children("input[type=number]");
+            	
+	            function updateQty(){
+	            	$.ajax({
+	            		url:"updateCartQty.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:$(this).parent().next().next().children("input[id=book_no]").val()
+	            			cartQty:input.val()
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+	            				console.log("성공");
+	            			}else{
+	            				alert("장바구니 수량 갱신에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("장바구니 수량 갱신 실패");
+	            		}
+		            })
+	        	}
+            </script>
             
             <div id="cart_bottom">
                 <div>
