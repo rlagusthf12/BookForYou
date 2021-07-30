@@ -1,5 +1,5 @@
 package com.bookforyou.bk4u.groupboard.model.service;
 
-public interface GroupBoardService {
+public interface MeetBoardService {
 
 }
