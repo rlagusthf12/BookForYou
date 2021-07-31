@@ -1,10 +1,11 @@
 package com.bookforyou.bk4u.group.model.vo;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import oracle.sql.DATE;
 
 
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class GroupBoard {
 	private String groupType;
 	private String groupTitle;
 	private String groupScript;
-	private DATE groupDate;
+	private Date groupDate;
 	private int groupLimit;
 	private String groupNotice;
 	private String groupPlace;
