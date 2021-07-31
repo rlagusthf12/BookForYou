@@ -14,7 +14,7 @@
 		<typeAlias type="com.bookforyou.bk4u.faq.model.vo.Faq" alias="Faq"/>
 		<typeAlias type="com.bookforyou.bk4u.booklist.model.vo.Booklist" alias="Booklist"/>
 		<typeAlias type="com.bookforyou.bk4u.subscription.model.vo.Subscription" alias="Subscription"/>
-		
+		<typeAlias type="com.bookforyou.bk4u.order.model.vo.Order" alias="Order"/>
 	</typeAliases>
 
 	<mappers>
@@ -24,7 +24,7 @@
 		<mapper resource="/mappers/notice-mapper.xml"/>
 		<mapper resource="/mappers/booklist-mapper.xml"/>
 		<mapper resource="/mappers/subscription-mapper.xml"/>
-		
+		<mapper resource="/mappers/order-mapper.xml"/>
 	</mappers>
 
 </configuration>

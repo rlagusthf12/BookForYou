@@ -44,6 +44,9 @@ public interface BookService {
 	 */
 	int selectAdminSearchCount(HashMap<String, String> map);
 	
+	/**
+	 * [관리자] 검색된 도서 목록 조회 (한진)
+	 */
 	ArrayList<Book> selectAdminSearchList(PageInfo pi, HashMap<String, String> map);
 
 	/*
