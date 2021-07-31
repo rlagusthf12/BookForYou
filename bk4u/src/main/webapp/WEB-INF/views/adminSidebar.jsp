@@ -222,7 +222,7 @@
                 <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>주문/배송</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li class="active">
-                        <a href="order/adminOrderList.jsp">전체 주문 조회</a>
+                        <a href="adminOrderList.or">전체 주문 조회</a>
                     </li>
                     <li>
                         <a href="order/adminOrderConfirm.jsp">주문확인</a>

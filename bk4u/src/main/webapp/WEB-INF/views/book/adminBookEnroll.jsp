@@ -468,7 +468,7 @@ $(document).ready(function() {
                                 <div id="writer-img">
                                     <img src="resources/adminCommon/images/person.png" alt="">
                                 </div>
-                                <div class="writer-title writer-name"><span>fff</span></div>
+                                <div class="writer-title writer-name"><span></span></div>
                             </div>
                             <div class="textarea info">
                                 <textarea name="writerIntro" style="resize: none;"></textarea>
