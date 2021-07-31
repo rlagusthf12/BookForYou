@@ -302,12 +302,8 @@
                     </div>
                     <div>
                         <button class="btn_order">즉시구매</button>
-                        <button class="btn_cart"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_cart">장바구니</button>
-                        <button class="btn_list"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_list">리스트</button>
+                        <button class="btn_cart">장바구니</button>
+                        <button class="btn_list">리스트</button>
                     </div>
                 </div>
             </div>
@@ -432,6 +428,56 @@
                     </div>
                 </div>
             </div>
+            
+            <script>
+	        	$(".book_info .btn_cart").click(function(){
+	        		
+	        		$.ajax({
+	            		url:"cartUpdate.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:${ bk.bkNo }
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_cart").modal('show');
+	            			}else{
+	            				alert("장바구니 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("장바구니 추가 실패");
+	            		}
+		            })
+	        	})
+            </script>
+            
+            <script>
+	        	$(".book_info .btn_list").click(function(){
+	        		
+	        		$.ajax({
+	            		url:"listInsert.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:${ bk.bkNo }
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_list").modal('show');
+	            			}else if(result == "done"){
+	            				alert("이미 리스트에 존재하는 도서입니다.")
+	            			}
+	            			else{
+	            			}
+	            				alert("리스트 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("리스트 추가 실패");
+	            		}
+		            })
+	        	})
+            </script>
 
             <div id="modal_cart" class="modal fade">
                 <div class="modal-dialog">
