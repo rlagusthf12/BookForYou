@@ -1,9 +1,12 @@
 package com.bookforyou.bk4u.member.model.dao;
 
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.member.model.vo.MemberCategory;
+import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 
 @Repository
 public class MemberDao {
@@ -23,9 +26,39 @@ public class MemberDao {
 	}
 
 	public int emailCheck(SqlSessionTemplate sqlSession, String memEmail) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.emailCheck",memEmail);
 	}
+
+	public int insertMember(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.insert("memberMapper.insertMember",member);
+	}
+
+	public int updateEmailStatus(SqlSessionTemplate sqlSession, Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateEmailStatus",member);
+	}
+
+	public int selectByMemId(SqlSessionTemplate sqlSession, Member member) {
+		
+		return sqlSession.selectOne("memberMapper.selectMemberById",member);
+	}
+
+	public int insertMemberInterest(SqlSessionTemplate sqlSession, MemberInterest memberInterest) {
+		
+		return sqlSession.insert("memberMapper.insertMemberInterest", memberInterest);
+	}
+
+	public int insertMemberCategory(SqlSessionTemplate sqlSession, MemberCategory memberCategory) {
+		
+		return sqlSession.insert("memberMapper.insertMemberCategory",memberCategory);
+	}
+
+	public Member selectEmailAndAuthKey(SqlSessionTemplate sqlSession, Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectEmailAndAuthKey",member);
+	}
+
+
 	
 	
 }

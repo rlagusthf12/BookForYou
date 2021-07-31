@@ -1,5 +1,6 @@
 package com.bookforyou.bk4u.member.model.vo;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

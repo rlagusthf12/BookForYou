@@ -17,10 +17,10 @@
 	<!-- Semantic UI theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <style>
-    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-    *{
-    	font-family: "Noto Sans KR", sans-serif !important;
-    }
+    	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif !important;
+    	}
         body{
             background-color: #f6f4f4;
             width:1200px;
