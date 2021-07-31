@@ -314,7 +314,7 @@
 	            		success:function(result){
 	            			if(result == "success"){
 		    	        		$("#modal_list").modal('show');
-	            			}else if(result == "success"){
+	            			}else if(result == "done"){
 	            				alert("이미 리스트에 존재하는 도서입니다.")
 	            			}
 	            			else{
