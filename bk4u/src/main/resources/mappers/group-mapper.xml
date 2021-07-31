@@ -32,7 +32,7 @@
                     (SELECT * FROM GROUPBOARD 
              
                     ORDER BY GROUP_BOARDNO DESC)s) 
-        WHERE NUM BETWEEN 1 AND 4; 
+        WHERE NUM BETWEEN 1 AND 4
 	
 	
 	</select>
