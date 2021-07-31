@@ -100,5 +100,15 @@ public interface BookService {
 	 * [관리자] 도서 추천 관심사 삭제 (한진)
 	 */
 	int deleteAdminBookItrs(Book b);
+
+	/**
+	 * [관리자] 도서 등록 (한진)
+	 */
+	int insertAdminBook(Book b);
+
+	/**
+	 * [관리자] 마지막 bkNo알아내기 (한진)
+	 */
+	int selectAdminLastBkNo();
 	
 }

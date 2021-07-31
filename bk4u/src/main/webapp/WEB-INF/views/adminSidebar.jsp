@@ -213,6 +213,9 @@
                     <li>
                         <a href="adminBookList.bk">도서 리스트</a>
                     </li>
+                    <li>
+                        <a href="adminBookEnrollForm.bk">도서 등록</a>
+                    </li>
                 </ul>
             </li>
             <li class="sub-menu">

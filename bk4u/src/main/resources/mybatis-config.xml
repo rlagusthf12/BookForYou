@@ -24,6 +24,7 @@
 		<mapper resource="/mappers/notice-mapper.xml"/>
 		<mapper resource="/mappers/booklist-mapper.xml"/>
 		<mapper resource="/mappers/subscription-mapper.xml"/>
+		
 	</mappers>
 
 </configuration>

@@ -159,4 +159,18 @@ public class BookDao {
 	public int deleteAdminBookItrs(SqlSessionTemplate sqlSession, Book b) {
 		return sqlSession.delete("bookMapper.deleteAdminBookItrs", b);
 	}
+	
+	/*
+	 * [관리자] 도서 등록 (한진)
+	 */
+	public int insertAdminBook(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.insert("bookMapper.insertAdminBook", b);
+	}
+	
+	/*
+	 * [관리자] 마지막 bkNo알아내기 (한진)
+	 */
+	public int selectAdminLastBkNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("bookMapper.selectAdminLastBkNo");
+	}
 }

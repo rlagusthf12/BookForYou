@@ -331,4 +331,38 @@ public class BookController {
 		return "redirect:/adminBookDetail.bk?bkNo=" + b.bkNo;
 	}
 	
+	/**
+	 * [관리자] 도서 등록 폼으로 이동 (한진)
+	 */
+	@RequestMapping("adminBookEnrollForm.bk")
+	public String adminBookEnrollForm(){
+		return "book/adminBookEnroll";
+	}
+	
+	/**
+	 * [관리자] 도서 등록 (한진)
+	 */
+	@RequestMapping("adminBookInsert.bk")
+	public String insertAdminBook(Book b, String year, String month, String day,
+							      @RequestParam(value="ganre") String subCateName,
+							      @RequestParam(value="itrs") List<String> itrs) {
+		String date = year + "-" + month + "-" + day;
+		b.setBkDate(date);
+		b.setSubCateName(subCateName);
+		
+		int result = bookService.insertAdminBook(b);
+		
+		int lastBkNo = bookService.selectAdminLastBkNo();
+		int bkNo = lastBkNo - 1;
+		b.setBkNo(bkNo);
+		
+		for(int i=0; i<itrs.size(); i++) {
+			String interest = itrs.get(i);
+			b.setInterestContent(interest);
+			bookService.insertAdminBookItrs(b);					
+		}
+		
+		
+		return "redirect:/adminBookDetail.bk?bkNo=" + bkNo;
+	}
 }

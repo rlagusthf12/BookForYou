@@ -172,4 +172,20 @@ public class BookServiceImpl implements BookService {
 	public int deleteAdminBookItrs(Book b) {
 		return bookDao.deleteAdminBookItrs(sqlSession, b);
 	}
+
+	/**
+	 * [관리자] 도서 등록 (한진)
+	 */
+	@Override
+	public int insertAdminBook(Book b) {
+		return bookDao.insertAdminBook(sqlSession, b);
+	}
+
+	/**
+	 * [관리자] 마지막 bkNo알아내기 (한진)
+	 */
+	@Override
+	public int selectAdminLastBkNo() {
+		return bookDao.selectAdminLastBkNo(sqlSession);
+	}
 }

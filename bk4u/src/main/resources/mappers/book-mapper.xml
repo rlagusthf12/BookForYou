@@ -501,4 +501,70 @@
 		   					    where interest_content = #{interestContent}
 		   					  )
 	</delete>
+	
+	<!-- [관리자] 도서 등록 (한진)  -->
+	<insert id="insertAdminBook">
+		insert
+		  into book
+		     (
+		       bk_no,
+		       sub_cate_no,
+		       bk_title,
+		       bk_publish,
+		       bk_date,
+		       bk_price,
+		       intro_originname,
+		       intro_changename,
+		       bk_stock,
+		       bk_seldate,
+		       bk_mdate,
+		       bk_selstatus,
+		       bk_age,
+		       bk_gender,
+		       bk_work,
+		       bk_level,
+		       bk_status,
+		       writer_name,
+		       writer_intro,
+		       writer_origin_name,
+		       writer_change_name,
+		       bk_content
+		     )
+		values
+		     (
+		       seq_bkno.nextval,
+		       (select sub_cate_no
+		          from sub_category
+		         where sub_cate_name = #{subCateName}
+		        ),        
+		        #{bkTitle},
+		        #{bkPublish},
+		        #{bkDate},
+		        #{bkPrice},
+		        #{introOriginName},
+		        #{introChangeName},
+		        #{bkStock},
+		        sysdate,
+		        sysdate,
+		        #{bkSelStatus},
+		        #{bkAge},
+		        #{bkGender},
+		        #{bkWork},
+		        #{bkLevel},
+		        #{bkStatus},
+		        #{writerName},
+		        #{writerIntro},
+		        #{writerOriginName},
+		        #{writerChangeName},
+		        #{bkContent}  
+		     )
+	</insert>
+	
+	<!-- [관리자] 마지막 bkNo알아내기 (한진) -->
+	<select id="selectAdminLastBkNo" resultType="_int">
+		select last_number
+		  from user_sequences
+		 where sequence_name = 'SEQ_BKNO'
+	</select>
+	
 </mapper>
