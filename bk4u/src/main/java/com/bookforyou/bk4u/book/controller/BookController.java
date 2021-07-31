@@ -365,4 +365,27 @@ public class BookController {
 		
 		return "redirect:/adminBookDetail.bk?bkNo=" + bkNo;
 	}
+
+	/*
+	 * [공통] 도서 장바구니 추가 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="listInsert.bk", produces="text/html; charset=utf-8")
+	public String insertList(int memNo, int bkNo) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memNo", memNo);
+		map.put("bkNo", bkNo);
+		
+		int check = bookService.checkList(map);
+		int result = 0;
+		
+		if(check > 0) {
+			return "done";
+		}else {
+			result = bookService.insertList(map);
+		}
+		
+		return result> 0 ? "success" : "fail";
+	}
 }

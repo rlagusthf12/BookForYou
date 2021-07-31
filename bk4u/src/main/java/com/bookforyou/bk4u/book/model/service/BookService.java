@@ -120,4 +120,14 @@ public interface BookService {
 	 * [공통] 도서 장바구니 수량 갱신 (연지)
 	 */
 	int updateCartQty(HashMap<String, Integer> map);
+
+	/*
+	 * [공통] 도서 리스트 유무 확인 (연지)
+	 */
+	int checkList(HashMap<String, Integer> map);
+
+	/*
+	 * [공통] 도서 리스트 추가 (연지)
+	 */
+	int insertList(HashMap<String, Integer> map);
 }
