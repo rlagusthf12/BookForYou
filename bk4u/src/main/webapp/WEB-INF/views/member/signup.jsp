@@ -189,10 +189,10 @@
             <div class="mb-3">
                 <label class="form-label"><b>주소</b></label>
                 
-                <div id="post-box"><input type="text" class="custom-input-post custom-input-post-basic" name="memPost" id="memPost" placeholder="우편번호" required disabled/>
+                <div id="post-box"><input type="text" class="custom-input-post custom-input-post-basic" name="memPost" id="memPost" placeholder="우편번호" required readonly/>
                 <button type="button" class="black-button" onclick="sample6_execDaumPostcode();">우편번호 찾기</button></div>
                 
-                <input type="text" class="custom-input custom-input-basic margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required disabled/>
+                <input type="text" class="custom-input custom-input-basic margin-top" id="memBasicAddress" name="memBasicAddress" placeholder="기본 주소" required readonly/>
                 <input type="text" class="custom-input custom-input-basic margin-top" id="detailAddress" name="memDetailAddress" placeholder="상세 주소"/>
                 <input type="text" class="custom-input custom-input-basic margin-top" id="memAddressRefer" name="memAddressRefer" placeholder="참고"/>
                 <div id="postInfo" class="form-text"></div>
@@ -244,6 +244,7 @@
 		                document.getElementById("memBasicAddress").value = addr;
 		                // 커서를 상세주소 필드로 이동한다.
 		                basicAddress = true;
+		                post = true;
         				$("#memBasicAddress").removeClass("custom-input-danger");
 						$("#memBasicAddress").addClass("custom-input-basic");
 						$("#memPost").removeClass("custom-input-danger");
@@ -261,14 +262,14 @@
                     <div class="gender-box">
                         <div class="form-check" style="margin-right: 50px;">
                             <input class="form-check-input" type="radio" name="memGender"
-                                id="flexRadioDefault1" value="M" checked>
+                            value="M" checked>
                             <label class="form-check-label" for="flexRadioDefault1">
                                 	남
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="memGender"
-                                id="flexRadioDefault1" value="F">
+                             value="F">
                             <label class="form-check-label" for="flexRadioDefault1">
                                 	여
                             </label>
@@ -354,7 +355,7 @@
         				$("#idInput").removeClass("custom-input-basic");
         				$("#idInput").addClass("custom-input-danger");
         				$("#idInfo").css("color","red").text("아이디는 5글자 이상 11글자 이하로 입력해주세요.");
-        				$("#enrollForm1:submit").attr("disabled",true);
+        				
         			}
     			}
     			
@@ -436,7 +437,7 @@
         				$("#nickInput").removeClass("custom-input-basic");
         				$("#nickInput").addClass("custom-input-danger");
         				$("#nickInfo").css("color","red").text("닉네임은 1글자 이상 8글자 이하로 입력해주세요.");
-        				$("#enrollForm1:submit").attr("disabled",true);
+        				
         			}
     			}
     			
@@ -490,7 +491,7 @@
         				$("#nameInput").removeClass("custom-input-basic");
         				$("#nameInput").addClass("custom-input-danger");
         				$("#nameInfo").css("color","red").text("실명은 필수 입력사항입니다.");
-        				$("#enrollForm1:submit").attr("disabled",true);
+        				
         			}
     			}
     			
@@ -506,7 +507,7 @@
         				$("#phoneInput").removeClass("custom-input-basic");
         				$("#phoneInput").addClass("custom-input-danger");
         				$("#phoneInfo").css("color","red").text("핸드폰 번호는 필수 입력사항입니다.");
-        				$("#enrollForm1:submit").attr("disabled",true);
+        				
         			}
     			}
     			
@@ -526,7 +527,7 @@
         				$("#memBasicAddress").removeClass("custom-input-basic");
         				$("#memBasicAddress").addClass("custom-input-danger");
         				$("#postInfo").css("color","red").text("우편 번호와 기본 주소는 필수 입력사항입니다.");
-        				$("#enrollForm1:submit").attr("disabled",true);
+        				
         			}
     			}
     			
@@ -546,7 +547,7 @@
         				$("#memBasicAddress").removeClass("custom-input-basic");
         				$("#memBasicAddress").addClass("custom-input-danger");
         				$("#postInfo").css("color","red").text("우편 번호와 기본 주소는 필수 입력사항입니다.");
-        				$("#enrollForm1:submit").attr("disabled",true);
+        				
         			}
     			}
     			
@@ -594,45 +595,55 @@
             	})
             	
             	function form_check(){
+            		console.log("시작");
             		if(id == false){
+            			console.log("아이디");
             			$idInput.focus();
             			idCheck();
             			return false;
             		}
             		if(pwd == false){
+            			console.log("패스워드");
             			$pwdInput.focus();
             			passwordCheck();
             			return false;
             		}if(pwdCheck == false){
+            			console.log("패스워드체크");
             			$pwdCheckInput.focus();
             			pwdInputCheck();
             			return false;
             		}if(nick == false){
+            			console.log("닉체크");
             			$nickInput.focus();
             			nickInputCheck();
             			return false;
             		}if(email == false){
+            			console.log("이메일체크");
             			$emailInput.focus();
             			emailInputCheck();
             			return false;
             		}if(name == false){
+            			console.log("실명체크");
             			$nameInput.focus();
             			nameInputCheck();
             			return false;
             		}if(post == false){
+            			console.log("우편번호체크");
             			$postInput.focus();
             			postInputCheck();
             			return false;
             		}if(basicAddress == false){
+            			console.log("기본주소체크");
             			$basicAddressInput.focus();
             			basicAddressInputCheck();
             			return false;
             		}if(phone == false){
+            			console.log("폰체크");
             			$phoneInput.focus();
             			phoneInputCheck();
             			return false;
             		}
-            		
+            		console.log("대기");
             		document.first_enroll.submit();
             		
             	}

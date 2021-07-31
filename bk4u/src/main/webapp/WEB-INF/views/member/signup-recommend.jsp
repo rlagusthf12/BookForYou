@@ -11,6 +11,7 @@
     <title>BK4U 로그인</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="resources\member\css\sign-style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
     	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
     	*{
@@ -171,8 +172,24 @@
         <div id="divider-box">
             <hr width="480px" style="margin-top: 30px; margin-left: auto; margin-right: auto;" />
         </div>
+        <form id="recommend-enroll" action="insert.me" method="post">
         <div id="sign-up-box">
             <br>
+            <!-- 이전에 받아온 회원들 정보 넣어주기 -->
+            <input type="hidden" name="memId" value="${memId }">
+            <input type="hidden" name="memPwd" value="${memPwd }">
+            <input type="hidden" name="memName" value="${memName }">
+            <input type="hidden" name="memPost" value="${memPost }">
+            <input type="hidden" name="memBasicAddress" value="${memBasicAddress }">
+            <input type="hidden" name="memDetailAddress" value="${memDetailAddress }">
+            <input type="hidden" name="memAddressRefer" value="${memAddressRefer }">
+            <input type="hidden" name="memGender" value="${memGender }">
+            <input type="hidden" name="memAge" value="${memAge }">
+            <input type="hidden" name="memPhone" value="${memPhone }">
+            <input type="hidden" name="memEmail" value="${memEmail }">
+            <input type="hidden" name="memNickname" value="${memNickname }">
+            <input type="hidden" id="interestArray" name="interestArray"/>
+            <input type="hidden" id="subCategoryArray" name="subCategoryArray"/>
             <div class="mb-3">
                 <label class="form-label"><b>관심사(다중 선택 가능)</b></label>
                 <br>
@@ -460,8 +477,27 @@
                 </div>
             </div> 
             <br>
-            <p><input type="submit" value="이메일 인증하고 회원가입" class="green-button" /></p>
-
+            <script>
+            	function recommend_enroll(){
+            		var interestArray = new Array();
+            		$('input:checkbox[name=interestNo]:checked').each(function(){
+            			interestArray.push(this.value);
+            		});
+            		
+            		$("#interestArray").val(interestArray);
+            		
+            		var subCategoryArray = new Array();
+            		$('input:checkbox[name=subCategoryNo]:checked').each(function(){
+            			subCategoryArray.push(this.value);
+            		});
+            		$("#subCategoryArray").val(subCategoryArray);
+            		console.log(interestArray);
+            		console.log(subCategoryArray);
+            		$("#recommend-enroll").submit();
+            	}
+            </script>
+            <button class="green-button" onClick="recommend_enroll();">이메일 인증하고 회원가입</button>
+			</form>
         </div>
 </body>
 
