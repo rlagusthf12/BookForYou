@@ -403,7 +403,7 @@
 	</select>
 	
 	<!-- [공통] 장바구니 수량 증가 (연지) -->
-	<update id="updateCartQty">
+	<update id="updateCart">
 		update
 			   cart
 		   set 
@@ -566,5 +566,14 @@
 		  from user_sequences
 		 where sequence_name = 'SEQ_BKNO'
 	</select>
+	
+	<!-- [공통] 도서 장바구니 수량 갱신 (연지) -->
+	<update id="updateCartQty">
+		update
+			   cart
+		   set cart_qty = #{cartQty}
+		 where mem_no = #{memNo}
+           and bk_no = #{bkNo}
+	</update>
 	
 </mapper>
