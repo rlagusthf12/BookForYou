@@ -5,6 +5,10 @@
 	<resultMap type="Order" id="orderResult">
 		<result column="order_no" property="orderNo"/>
 		<result column="mem_no" property="memNo"/>
+		<result column="mem_name" property="memName"/>
+		<result column="mem_id" property="memId"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="pay_way" property="payWay"/>
 		<result column="pay_no" property="payNo"/>
 		<result column="order_date" property="orderDate"/>
 		<result column="order_receiver" property="orderReceiver"/>
@@ -39,8 +43,10 @@
 	<select id="selectAdminOrderList" resultMap="orderResult">
 		select 
 			   order_no,
-			   mem_no,
-			   pay_no,
+			   mem_name,
+               mem_id,
+               bk_title,
+			   pay_way,
 			   order_date,
 			   order_receiver,
 			   order_post,
@@ -62,6 +68,10 @@
 			   delivery_status,
 			   coupon_issue_num
 		  from orders
+		  join members using(mem_no)
+          join payment using(pay_no)
+          join order_detail using(order_no)
+          join book using(bk_no)
 		 <choose>
 		 	<when test="bkStatus == 1">
 		 		where bk_status = '판매중'

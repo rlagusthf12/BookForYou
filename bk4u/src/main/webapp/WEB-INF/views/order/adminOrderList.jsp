@@ -140,10 +140,8 @@
         }
         
         /* 테이블 */
-        .table{
-            border:0.08em solid grey;
-            vertical-align: middle;
-        }
+        .table{border:0.08em solid grey;}
+        .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
 
         /* 반품 처리 컬럼 버튼 */
@@ -340,15 +338,15 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>주문번호</th>
-                            <th>주문일<br>(결제일)</th>
-                            <th>주문자</th>
-                            <th>도서명</th>
-                            <th>결제금액</th>
-                            <th>결제수단<br>결제상태</th>
-                            <th>주문/CS상태</th>
-                            <th>배송상태</th>
+                            <th width="45px">NO</th>
+                            <th width="50px">주문번호</th>
+                            <th width="90px">주문일<br>(결제일)</th>
+                            <th width="100px">주문자</th>
+                            <th width="170px">도서명</th>
+                            <th width="70px">결제금액</th>
+                            <th width="80px">결제수단<br>결제상태</th>
+                            <th width="130px">주문/CS상태</th>
+                            <th width="80px">배송상태</th>
                             <th width="70px">메모</th>
                         </tr>
                     </thead>
@@ -360,10 +358,10 @@
 			                            <td>${ no.count }</td>
 			                            <td>${ o.orderNo }</td>
 			                            <td>${ o.orderDate }</td>
-			                            <td>주문자명</td>
-			                            <td>도서명</td>
+			                            <td>${ o.memName } <br> (${ o.memId })</td>
+			                            <td>${ o.bkTitle }</td>
 			                            <td>${ o.orderPrice }</td>
-			                            <td>결제수단<br>${ o.payStatus }</td>
+			                            <td>${ o.payWay }<br>${ o.payStatus }</td>
 			                            <td>${ o.orderStatus }<br>${ o.csStatus }</td>
 			                            <td>${ o.deliveryStatus }</td>
 					                    <td>

@@ -15,6 +15,10 @@ import lombok.ToString;
 public class Order {
 	public int orderNo;
 	public int memNo;
+	public String memName;
+	public String memId;
+	public String bkTitle;
+	public String payWay;
 	public int payNo;
 	public Date orderDate;
 	public String orderReceiver;
