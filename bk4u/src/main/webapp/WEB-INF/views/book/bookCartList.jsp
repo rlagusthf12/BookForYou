@@ -361,7 +361,7 @@
                     
                     <div>
                         <div><input type="number" min="1" max="5" value="${ b.bkQty }"></div>
-                        <div><button class="btn_qty" onclick="updateQty();">수량변경</button></div>
+                        <div><button class="btn_qty">수량변경</button></div>
                     </div>
                     <div>${ b.bkPrice }원</div>
                     <div>
@@ -375,56 +375,81 @@
             </c:forEach>
             
             <script>
-            	$(function(){
-            		$(".book_info>div:nth-child(4)>div:nth-child(3)").click(function(){
-            			
-            			var div = $(this).parent().parent().parent();
-            			
-            			$.ajax({
-    	            		url:"cartDelete.bk",
-    	            		data:{
-    	            			memNo:${ loginUser.memNo },
-    	            			bkNo:$(this).parent().children("input[id=book_no]").val()
-    	            		},
-    	            		type:"post",
-    	            		success:function(result){
-    	            			if(result == "success"){
-    	            				div.remove();
-    	            			}else{
-    	            				alert("장바구니 삭제에 실패했습니다.");
-    	            			}
-    	            		},error:function(){
-    	            			console.log("장바구니 삭제 실패");
-    	            		}
-    		            })
-            		})
-            	})
-            </script>
-            
-            <script>
-            
-            	val input = $(this).parent().children("input[type=number]");
-            	
-	            function updateQty(){
-	            	$.ajax({
-	            		url:"updateCartQty.bk",
+	        	$(".book_info>div:nth-child(4)>div:nth-child(2)").click(function(){
+	        		
+	        		$.ajax({
+	            		url:"listInsert.bk",
 	            		data:{
 	            			memNo:${ loginUser.memNo },
-	            			bkNo:$(this).parent().next().next().children("input[id=book_no]").val()
-	            			cartQty:input.val()
+	            			bkNo:$(this).parent().children("input[id=book_no]").val()
 	            		},
 	            		type:"post",
 	            		success:function(result){
 	            			if(result == "success"){
-	            				console.log("성공");
-	            			}else{
-	            				alert("장바구니 수량 갱신에 실패했습니다.");
+		    	        		$("#modal_list").modal('show');
+	            			}else if(result == "done"){
+	            				alert("이미 리스트에 존재하는 도서입니다.")
 	            			}
+	            			else{
+	            				alert("리스트 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("리스트 추가 실패");
+	            		}
+		            })
+	        	})
+            </script>
+            
+            <script>
+            $(".book_info>div:nth-child(4)>div:nth-child(3)").click(function(){
+    			
+    			var div = $(this).parent().parent().parent();
+    			
+    			$.ajax({
+            		url:"cartDelete.bk",
+            		data:{
+            			memNo:${ loginUser.memNo },
+            			bkNo:$(this).parent().children("input[id=book_no]").val()
+            		},
+            		type:"post",
+            		success:function(result){
+            			if(result == "success"){
+            				div.remove();
+            			}else{
+            				alert("장바구니 삭제에 실패했습니다.");
+            			}
+            		},error:function(){
+            			console.log("장바구니 삭제 실패");
+            		}
+	            })
+    		})
+            </script>
+            
+            <script>
+            	$(".btn_qty").click(function(){
+    				var input = $(this).parent().prev().children().val();
+    				
+    				console.log(input)
+                    
+    				$.ajax({
+	            		url:"updateCartQty.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+                			bkNo:$(this).parent().next().next().children("input[id=book_no]").val()
+                			cartQty:input
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+                				console.log("성공");
+                			}else{
+                				alert("장바구니 수량 갱신에 실패했습니다.");
+                			}
 	            		},error:function(){
 	            			console.log("장바구니 수량 갱신 실패");
 	            		}
 		            })
-	        	}
+        		})
             </script>
             
             <div id="cart_bottom">

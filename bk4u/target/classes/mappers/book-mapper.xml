@@ -407,7 +407,7 @@
 		update
 			   cart
 		   set 
-		   	   cart_qty = cart_qty + 1
+		   	   cart_qty = cart_qty + #{cartQty}
 		 where mem_no = #{memNo}
            and bk_no = #{bkNo}
 	</update>
@@ -426,7 +426,7 @@
 		  (
 		    #{bkNo}
 		  , #{memNo}
-		  , 1
+		  , #{cartQty}
 		  , sysdate
 		  )
 	</insert>
