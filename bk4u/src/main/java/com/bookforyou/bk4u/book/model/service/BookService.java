@@ -72,7 +72,7 @@ public interface BookService {
 	/*
 	 * [공통] 도서 장바구니 수량 증가 (연지)
 	 */
-	int updateCartQty(HashMap<String, Integer> map);
+	int updateCart(HashMap<String, Integer> map);
 
 	/*
 	 * [공통] 도서 장바구니 추가 (연지)
@@ -114,4 +114,13 @@ public interface BookService {
 	 */
 	int selectAdminLastBkNo();
 	
+	/*
+	 * [공통] 도서 장바구니 삭제 (연지)
+	 */
+	int deleteCart(HashMap<String, Integer> map);
+
+	/*
+	 * [공통] 도서 장바구니 수량 갱신 (연지)
+	 */
+	int updateCartQty(HashMap<String, Integer> map);
 }

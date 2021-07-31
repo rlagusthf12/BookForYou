@@ -121,7 +121,7 @@ public class BookServiceImpl implements BookService {
 	 * [공통] 도서 장바구니 수량 증가 (연지)
 	 */
 	@Override
-	public int updateCartQty(HashMap<String, Integer> map) {
+	public int updateCart(HashMap<String, Integer> map) {
 		return bookDao.updateCartQty(sqlSession, map);
 	}
 
@@ -187,5 +187,21 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public int selectAdminLastBkNo() {
 		return bookDao.selectAdminLastBkNo(sqlSession);
+	}
+	
+	/*
+	 * [공통] 도서 장바구니 삭제 (연지)
+	 */
+	@Override
+	public int deleteCart(HashMap<String, Integer> map) {
+		return bookDao.deleteCart(sqlSession, map);
+	}
+
+	/*
+	 * [공통] 도서 장바구니 수량 갱신 (연지)
+	 */
+	@Override
+	public int updateCartQty(HashMap<String, Integer> map) {
+		return bookDao.updateCartQty(sqlSession, map);
 	}
 }
