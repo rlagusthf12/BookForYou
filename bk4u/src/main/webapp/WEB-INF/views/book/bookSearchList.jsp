@@ -263,9 +263,7 @@
 	                    <div>
 	                        <button class="btn_order">즉시구매</button>
 	                        <button class="btn_cart">장바구니</button>
-	                        <button class="btn_list"
-	                        data-bs-toggle="modal"
-	                        data-bs-target="#modal_list">리스트</button>
+	                        <button class="btn_list">리스트</button>
 	                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
 	                    </div>
 	                </div>
@@ -298,6 +296,33 @@
 	            			}
 	            		},error:function(){
 	            			console.log("장바구니 추가 실패");
+	            		}
+		            })
+	        	})
+            </script>
+            
+            <script>
+	        	$(".search_book .btn_list").click(function(){
+	        		
+	        		$.ajax({
+	            		url:"listInsert.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:$(this).parent().children("input[id=book_no]").val()
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_list").modal('show');
+	            			}else if(result == "success"){
+	            				alert("이미 리스트에 존재하는 도서입니다.")
+	            			}
+	            			else{
+	            			}
+	            				alert("리스트 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("리스트 추가 실패");
 	            		}
 		            })
 	        	})
