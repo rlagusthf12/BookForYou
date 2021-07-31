@@ -1,4 +1,4 @@
-package com.bookforyou.bk4u.meetboard.model.service;
+package com.bookforyou.bk4u.groupboard.model.service;
 
 public class MeetBoardServiceImpl implements MeetBoardService{
 

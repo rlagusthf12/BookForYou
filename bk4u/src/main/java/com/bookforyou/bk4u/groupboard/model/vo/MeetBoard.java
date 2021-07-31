@@ -1,4 +1,4 @@
-package com.bookforyou.bk4u.meetboard.model.vo;
+package com.bookforyou.bk4u.groupboard.model.vo;
 
 import java.util.Date;
 
