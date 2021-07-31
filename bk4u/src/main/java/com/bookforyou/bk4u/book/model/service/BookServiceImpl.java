@@ -204,4 +204,20 @@ public class BookServiceImpl implements BookService {
 	public int updateCartQty(HashMap<String, Integer> map) {
 		return bookDao.updateCartQty(sqlSession, map);
 	}
+
+	/*
+	 * [공통] 도서 리스트 유무 확인 (연지)
+	 */
+	@Override
+	public int checkList(HashMap<String, Integer> map) {
+		return bookDao.checkList(sqlSession, map);
+	}
+
+	/*
+	 * [공통] 도서 리스트 추가 (연지)
+	 */
+	@Override
+	public int insertList(HashMap<String, Integer> map) {
+		return bookDao.insertList(sqlSession, map);
+	}
 }

@@ -574,6 +574,32 @@
 		   set cart_qty = #{cartQty}
 		 where mem_no = #{memNo}
            and bk_no = #{bkNo}
-	</update>
+	</update>	
+	
+	<!-- [공통] 리스트 유무 확인 (연지) -->
+	<select id="checkList" resultType="_int">
+		select 
+		       count(*)
+		  from list
+         where mem_no = #{memNo}
+           and bk_no = #{bkNo}
+	</select>
+	
+	<!-- [공통] 리스트 추가 (연지)-->
+	<insert id="insertList">
+		insert
+		  into list
+		  (
+		    bk_no
+		  , mem_no
+		  , list_date
+		  )
+		  values
+		  (
+		    #{bkNo}
+		  , #{memNo}
+		  , sysdate
+		  )
+	</insert>
 	
 </mapper>

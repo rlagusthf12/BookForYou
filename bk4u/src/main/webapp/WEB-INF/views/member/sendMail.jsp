@@ -192,7 +192,7 @@
         <header>
             <div id="logo-box">
                 <div id="blank-box"></div>
-                <img src="..\images\bk4u_logo.png" width="200px">
+                <img src="resources\member\images\bk4u_logo.png" width="200px">
             </div>
             <div id="head-of-content-box">
                 <h3><b>인증 메일 전송 완료</b></h3>
@@ -203,7 +203,7 @@
         </div>
         <div id="sign-up-box">
             <div id="info-img-box">
-                <img src="..\images\mail.PNG">
+                <img src="resources\member\images\mail.PNG">
             </div>
             <div id="info-text-box">
                 <p>
@@ -218,8 +218,8 @@
             </div>
             <div id="blank-box"></div>
             <div id="blank-box"></div>
-            <p><input type="submit" value="로그인 하러 가기" class="black-button" /></p>
-            <p><input type="submit" value="메인 페이지로" class="silver-button" /></p>
+            <p><button class="black-button" onClick="location.href='login-form.me'">로그인하러가기</button></p>
+            <p><button class="silver-button" onClick="location.href='/'">메인페이지로</button></p>
 
         </div>
     </div>
