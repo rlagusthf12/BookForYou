@@ -271,21 +271,14 @@
             </c:forEach>
             
             <script>
-            	$(function(){
-            		$("#boardList>tbody>tr").click(function(){
-            			location.href="detail.bo?bno=" + $(this).children(".bno").text();
-            		})
-            	})
-            </script>
-            
-            <script>
 	        	$(".search_book .btn_cart").click(function(){
 	        		
 	        		$.ajax({
 	            		url:"cartUpdate.bk",
 	            		data:{
 	            			memNo:${ loginUser.memNo },
-	            			bkNo:$(this).parent().children("input[id=book_no]").val()
+	            			bkNo:$(this).parent().children("input[id=book_no]").val(),
+	            			cartQty:$(this).parent().closest(".book_info").find("input[type=number]").val()
 	            		},
 	            		type:"post",
 	            		success:function(result){
@@ -304,6 +297,8 @@
             <script>
 	        	$(".search_book .btn_list").click(function(){
 	        		
+	        		console.log("d");
+	        		
 	        		$.ajax({
 	            		url:"listInsert.bk",
 	            		data:{
@@ -318,7 +313,6 @@
 	            				alert("이미 리스트에 존재하는 도서입니다.")
 	            			}
 	            			else{
-	            			}
 	            				alert("리스트 추가에 실패했습니다.");
 	            			}
 	            		},error:function(){

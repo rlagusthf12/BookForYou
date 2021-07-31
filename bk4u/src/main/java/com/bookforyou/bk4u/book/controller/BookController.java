@@ -214,11 +214,12 @@ public class BookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="cartUpdate.bk", produces="text/html; charset=utf-8")
-	public String updateCart(int memNo, int bkNo) {
+	public String updateCart(int memNo, int bkNo, @RequestParam(value="cartQty", defaultValue="1") int cartQty) {
 		
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("memNo", memNo);
 		map.put("bkNo", bkNo);
+		map.put("cartQty", cartQty);
 		
 		int check = bookService.checkCart(map);
 		int result = 0;
@@ -254,6 +255,10 @@ public class BookController {
 	@ResponseBody
 	@RequestMapping(value="updateCartQty.bk", produces="text/html; charset=utf-8")
 	public String updateCartQty(int memNo, int bkNo, int cartQty) {
+		
+		System.out.println(memNo);
+		System.out.println(bkNo);
+		System.out.println(cartQty);
 		
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("memNo", memNo);
@@ -367,7 +372,7 @@ public class BookController {
 	}
 
 	/*
-	 * [공통] 도서 장바구니 추가 (연지)
+	 * [공통] 도서 리스트 추가 (연지)
 	 */
 	@ResponseBody
 	@RequestMapping(value="listInsert.bk", produces="text/html; charset=utf-8")
@@ -378,14 +383,16 @@ public class BookController {
 		map.put("bkNo", bkNo);
 		
 		int check = bookService.checkList(map);
-		int result = 0;
+		String result = "";
 		
-		if(check > 0) {
-			return "done";
+		if(check != 0) {
+			result = "done";
 		}else {
-			result = bookService.insertList(map);
+			int i = bookService.insertList(map);
+			result = i>0 ? "success" : "fail";
+			
 		}
 		
-		return result> 0 ? "success" : "fail";
+		return result;
 	}
 }
