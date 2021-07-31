@@ -224,7 +224,7 @@ public class BookController {
 		int result = 0;
 		
 		if(check > 0) {
-			result = bookService.updateCartQty(map);
+			result = bookService.updateCart(map);
 		}else {
 			result = bookService.insertCart(map);
 		}
@@ -253,7 +253,7 @@ public class BookController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="updateCartQty.bk", produces="text/html; charset=utf-8")
-	public String deleteCart(int memNo, int bkNo, int cartQty) {
+	public String updateCartQty(int memNo, int bkNo, int cartQty) {
 		
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("memNo", memNo);
