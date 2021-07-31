@@ -107,8 +107,8 @@ public class BookDao {
 	/*
 	 * [공통] 도서 장바구니 수량 증가 (연지)
 	 */
-	public int updateCartQty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
-		return sqlSession.update("bookMapper.updateCartQty", map);
+	public int updateCart(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.update("bookMapper.updateCart", map);
 	}
 
 	/*
@@ -172,5 +172,12 @@ public class BookDao {
 	 */
 	public int selectAdminLastBkNo(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("bookMapper.selectAdminLastBkNo");
+	}
+	
+	/*
+	 * [공통] 도서 장바구니 수량 갱신 (연지)
+	 */
+	public int updateCartQty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.update("bookMapper.updateCartQty", map);
 	}
 }
