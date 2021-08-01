@@ -31,6 +31,7 @@
             width: 80%;
             height: 100%;
             margin: auto;
+            margin-top: 140px;
             position: relative;
         }
         
@@ -336,7 +337,7 @@
 
             <div id="cart_top">
                 <div>
-                    <input type="checkbox"> 전체선택
+                    <input type="checkbox" id="check_all"> 전체선택
                 </div>
                 <div>
                     <span>선택한 상품을</span>
@@ -350,7 +351,7 @@
 			
 			<c:forEach var="b" items="${ bList }">
             <div class="cart_book">
-                <input type="checkbox">
+                <input type="checkbox" name="bkNo" value="${ b.bkNo }">
                 <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src=""></a></div>
                 <div class="book_info">
                     <div>
@@ -458,6 +459,16 @@
             		}
 	            })
     		})
+            </script>
+            
+            <script>
+            $("#check_all").change(function(){
+            	if($("#check_all").is(":checked")){
+            		$(".cart_book").children("input[type=checkbox]").attr('checked', true);
+            	}else{
+            		$(".cart_book").children("input[type=checkbox]").attr('checked', false);
+            	}
+            })
             </script>
             
             <div id="cart_bottom">

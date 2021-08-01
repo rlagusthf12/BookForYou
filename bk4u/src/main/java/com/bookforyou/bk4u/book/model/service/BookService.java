@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 public interface BookService {
 
