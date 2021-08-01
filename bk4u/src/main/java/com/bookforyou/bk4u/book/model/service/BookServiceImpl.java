@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 @Service
 public class BookServiceImpl implements BookService {

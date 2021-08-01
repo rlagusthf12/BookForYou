@@ -28,4 +28,18 @@ public class OrderDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("orderMapper.selectAdminOrderList", filter, rowBounds);
 	}
+
+	/*
+	 * [사용자] 도서 주문 조회 (연지)
+	 */
+	public Order selectOrder(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("orderMapper.selectOrder");
+	}
+
+	/*
+	 * [사용자] 도서 상세 주문 리스트 조회 (연지)
+	 */
+	public ArrayList<Order> selectOrderList(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectOrderList", orderNo);
+	}
 }
