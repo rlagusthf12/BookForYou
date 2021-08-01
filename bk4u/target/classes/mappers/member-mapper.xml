@@ -26,6 +26,16 @@
 		<result column="origin_img_name" property="originImgName"/>
 		<result column="change_img_name" property="changeImgName"/>
 	</resultMap>
+	
+	<resultMap id="memberInterestResult" type="MemberInterest">
+		<result column="mem_no" property="memNo"/>
+		<result column="interest_no" property="interestNo"/>
+	</resultMap>
+	
+	<resultMap id="memberCategoryResult" type="MemberCategory">
+		<result column="mem_no" property="memNo"/>
+		<result column="sub_cate_no" property="subCategoryNo"/>
+	</resultMap>
   
   	<select id="loginMember" resultMap="memberResult">
   		select
@@ -81,5 +91,89 @@
 		from members
 		where 
   			mem_email = #{memEmail}
+  	</select>
+  	<insert id="insertMember">
+  		insert 
+  		into members(
+  			mem_no,
+    		mem_id,
+    		mem_pwd,
+    		mem_name,
+    		mem_post,
+    		mem_basic_address,
+    		mem_detail_address,
+    		mem_address_refer,
+    		mem_gender,
+    		mem_age,
+    		mem_phone,
+    		mem_email,
+    		email_status,
+    		mem_status,
+    		mem_nickname,
+    		mem_work,
+    		mem_level
+  		)values(
+  			seq_mem.nextval,
+  			#{memId},
+  			#{memPwd},
+  			#{memName},
+  			#{memPost},
+  			#{memBasicAddress},
+  			#{memDetailAddress},
+  			#{memAddressRefer},
+  			#{memGender},
+  			#{memAge},
+  			#{memPhone},
+  			#{memEmail},
+  			#{emailStatus},
+  			#{memStatus},
+  			#{memNickname},
+  			#{memWork},
+  			#{memLevel}
+  		)
+  	</insert>
+  	<update id="updateEmailStatus">
+  		update members
+			set
+			 email_status = #{emailStatus}
+		where mem_email = #{memEmail}
+  	</update>
+  	
+  	<select id="selectMemberById" resultType="_int">
+  		select 
+  			mem_no
+  		from members
+  		where 
+  			mem_id = #{memId}
+  	</select>
+  	
+  	<insert id="insertMemberInterest">
+  		insert
+  		into mem_interest(
+  			mem_no,
+  			interest_no
+  		)values(
+  			#{memNo},
+  			#{interestNo}
+  		)
+  	</insert>
+  	
+  	<insert id="insertMemberCategory">
+  		insert
+  		into mem_category(
+  			mem_no,
+  			sub_cate_no
+  		)values(
+  			#{memNo},
+  			#{subCategoryNo}
+  		)
+  	</insert>
+  	
+  	<select id="selectEmailAndAuthKey" resultMap="memberResult">
+  		select mem_email,
+    		email_status
+    	from members
+    	where mem_email=#{memEmail}
+    	and email_status = #{emailStatus}
   	</select>
 </mapper>
