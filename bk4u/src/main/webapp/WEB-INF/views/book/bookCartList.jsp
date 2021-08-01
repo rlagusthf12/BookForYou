@@ -153,6 +153,11 @@
             margin-bottom: 5px;
         }
 
+        .book_info>div:nth-child(1)>div:nth-child(1)>a{
+        	color: black;
+        	text-decoration: none;
+        }
+
         .book_info>div:nth-child(1)>div:nth-child(2){
             font-size: 14px;
             margin-bottom: 5px;
@@ -346,10 +351,10 @@
 			<c:forEach var="b" items="${ bList }">
             <div class="cart_book">
                 <input type="checkbox">
-                <div class="book_img"><img src=""></div>
+                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src=""></a></div>
                 <div class="book_info">
                     <div>
-                        <div>${ b.bkTitle }</div>
+                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
                         <div>
                             <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
                             <span>&nbsp;★★★★☆ </span>
@@ -426,30 +431,33 @@
             </script>
             
             <script>
-            	$(".btn_qty").click(function(){
-    				var input = $(this).parent().prev().children().val();
-    				
-    				console.log(input)
-                    
-    				$.ajax({
-	            		url:"updateCartQty.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-                			bkNo:$(this).parent().next().next().children("input[id=book_no]").val()
-                			cartQty:input
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-                				console.log("성공");
-                			}else{
-                				alert("장바구니 수량 갱신에 실패했습니다.");
-                			}
-	            		},error:function(){
-	            			console.log("장바구니 수량 갱신 실패");
-	            		}
-		            })
-        		})
+        	$(".btn_qty").click(function(){
+    			
+        		var input = $(this).parent().prev().children().val();
+        		
+        		console.log(${ loginUser.memNo });
+        		console.log($(this).parent().parent().next().next().children("input[id=book_no]").val());
+        		console.log(input);
+    			
+    			$.ajax({
+    				url:"updateCartQty.bk",
+            		data:{
+            			memNo:${ loginUser.memNo },
+            			bkNo:$(this).parent().parent().next().next().children("input[id=book_no]").val(),
+            			cartQty:input
+            		},
+            		type:"post",
+            		success:function(result){
+            			if(result == "success"){
+            				alert("장바구니 수량을 변경했습니다.");
+            			}else{
+            				alert("장바구니 수량 변경에 실패했습니다.");
+            			}
+            		},error:function(){
+            			console.log("장바구니 수량 갱신 실패");
+            		}
+	            })
+    		})
             </script>
             
             <div id="cart_bottom">
