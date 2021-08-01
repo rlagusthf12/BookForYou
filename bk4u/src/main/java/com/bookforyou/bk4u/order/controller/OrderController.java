@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -42,6 +43,22 @@ public class OrderController {
 		
 		return mv;
 	}
-		
 	
+	/*
+	 * [사용자] 도서 결제 결과 페이지 (연지)
+	 */
+	@RequestMapping("result.bk")
+	public ModelAndView resultPayment(ModelAndView mv, int orderNo) {
+
+		Order od = oService.selectOrder(orderNo);
+		ArrayList<Order> oList = oService.selectOrderList(orderNo);
+		
+		System.out.println(od);
+		System.out.println(oList);
+		
+		mv.addObject("od", od)
+		  .setViewName("book/bookPaymentResultView");
+		
+		return mv;
+	}
 }

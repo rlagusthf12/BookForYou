@@ -35,4 +35,20 @@ public class OrderServiceImpl implements OrderService {
 	public ArrayList<Order> selectAdminOrderList(PageInfo pi, HashMap<String, String> filter) {
 		return oDao.selectAdminOrderList(sqlSession, pi, filter);
 	}
+
+	/*
+	 * [사용자] 도서 주문 조회 (연지)
+	 */
+	@Override
+	public Order selectOrder(int orderNo) {
+		return oDao.selectOrder(sqlSession, orderNo);
+	}
+
+	/*
+	 * [사용자] 도서 상세 주문 리스트 조회 (연지)
+	 */
+	@Override
+	public ArrayList<Order> selectOrderList(int orderNo){
+		return oDao.selectOrderList(sqlSession, orderNo);
+	}
 }

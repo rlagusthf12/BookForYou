@@ -1,6 +1,11 @@
 package com.bookforyou.bk4u.group.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,14 +34,19 @@ public class GroupController {
 	
 	@RequestMapping("createGroup.bo")
 	public String createGroup() {
-		return"group/groupCreate";
-		 
+		return"group/groupCreate";	
 	}
 	
 	@RequestMapping("insertGroup.bo")
-	public void insertGroup(GroupBoard g) {
-		
-		
+	public String insertGroup() {
+		return "redirect";
 	}
+	
+	@RequestMapping("insertMem.me")
+	public String insertMem (GroupBoard g) {
+		return"redirect";
+	}
+	
+	
 	
 }
