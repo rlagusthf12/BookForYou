@@ -49,11 +49,11 @@
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
                                     <td colspan="2">  
                                         <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio" name="on" value="customEx">
+                                        <input type="radio" class="custom-control-input" id="customRadio" name="on" value="groupType">
                                         <label class="custom-control-label" for="customRadio">온라인</label>
                                       </div>
                                       <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio2" name="off" value="customEx">
+                                        <input type="radio" class="custom-control-input" id="customRadio2" name="off" value="groupType">
                                         <label class="custom-control-label" for="customRadio2">오프라인</label>
                                       </div>
                                     </td>

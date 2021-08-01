@@ -33,5 +33,10 @@ public class GroupController {
 		 
 	}
 	
+	@RequestMapping("insertGroup.bo")
+	public void insertGroup(GroupBoard g) {
+		
+		
+	}
 	
 }
