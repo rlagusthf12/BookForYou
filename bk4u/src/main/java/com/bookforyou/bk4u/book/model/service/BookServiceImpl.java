@@ -122,7 +122,7 @@ public class BookServiceImpl implements BookService {
 	 */
 	@Override
 	public int updateCart(HashMap<String, Integer> map) {
-		return bookDao.updateCartQty(sqlSession, map);
+		return bookDao.updateCart(sqlSession, map);
 	}
 
 	/*
