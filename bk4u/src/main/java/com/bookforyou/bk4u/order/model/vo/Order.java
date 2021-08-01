@@ -40,4 +40,7 @@ public class Order {
 	public Date shippingDate;
 	public String deliveryStatus;
 	public int couponIssueNum;
+	public int detailPrice;
+	public int couponPrice;
+	public int couponPriceRate;
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 @Repository
 public class BookDao {

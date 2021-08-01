@@ -38,8 +38,8 @@
         }
          #status-bar > div{
             display: inline-block;
-            margin: 0 10px 0 10px;
-            width:165px;
+            margin: 0 3px 0 3px;
+            width:147px;
             height:87px;
             border:1px solid black;
             text-align: center;
@@ -224,21 +224,72 @@
 	
 	
 		$(function(){
+			
+			/* 상태 클릭  */
+	        $("#getStatusAll").click(function(){
+		        location.href="adminOrderList.or?";
+		    })
+		    
+		    $("#getStatus1").click(function(){
+		        location.href="adminOrderList.or?orStatus=1";
+		    })
+		    
+		    $("#getStatus2").click(function(){
+		        location.href="adminOrderList.or?orStatus=2";
+		    })
+		    
+		    $("#getStatus3").click(function(){
+		        location.href="adminOrderList.or?orStatus=3";
+		    })
+		    
+		    $("#getStatus4").click(function(){
+		        location.href="adminOrderList.or?orStatus=4";
+		    })
+		    
+		    $("#getStatus5").click(function(){
+		        location.href="adminOrderList.or?orStatus=5";
+		    })
+			
+		    /* 정렬 방법 변경 */
+		    $("#array-condition").change(function(){
+	            let ar = $(this).val();
 
+	            if(${ empty keyword }){            	
+		            location.href=`adminOrderList.or?orStatus=${ orStatus }&array=` + ar;		 
+	            }else {
+	            	location.href=`adminOListSearch.or?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	            }
+	        
+		    })
+		    
+			/* admin-memo 모달 보여주기 */
             $(".admin-memo button").click(function(){
+            	
                 $(".admin-memo-content").toggleClass("hide");
 
                 if($(this).parent().is(".no-exist")){
-                    $(".admin-memo-content .memo-delete-btn").hide();
+                    $(".admin-memo-content .memo-bottom input").val('');
+
                 }else{
-                    $(".admin-memo-content .memo-delete-btn").show();
+                	var tr = $(this).parent().parent().parent();
+                	var td = tr.children();
+                	var $memo = td.eq(10).text();
+                	$(".admin-memo-content .memo-bottom input").val($memo);
+                	
                 }
 
                 const a = $(this).offset();
                 $(".admin-memo-content").offset({top: a.top , left: a.left-320});
             })
 
+            /* user-memo 모달 보여주기 */
             $(".user-memo.exist button").click(function(){
+            	
+            	var tr = $(this).parent().parent().parent();
+            	var td = tr.children();
+            	var $memo = td.eq(9).text();
+            	$(".user-memo-content .memo-bottom p").text($memo);
+            	
                 $(".user-memo-content").toggleClass("hide");
                 const a = $(this).offset();
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
@@ -267,49 +318,58 @@
                     <span>${ listCount }</span>
                 </div>
             </div>
-            <div id="getStatusY">
+            <div id="getStatus1">
                 <div>
-                    <p>판매중</p>
+                    <p>주문확인</p>
                 </div>
                 <div>
-                    <span>${ selectStatusY }</span>
-                </div>
-            </div>
-            <div id="getStatusN">
-                <div>
-                    <p>품절</p>
-                </div>
-                <div>
-                    <span>${ selectStatusN }</span>
+                    <span>${ confirmCnt }</span>
                 </div>
             </div>
-            <div id="getSelStatusY">
+            <div id="getStatus2">
                 <div>
-                    <p>게시함</p>
+                    <p>상품준비중</p>
                 </div>
                 <div>
-                    <span>${ selectSelStatusY }</span>
+                    <span>${ productReadyCnt }</span>
                 </div>
             </div>
-            <div id="getSelStatusN">
+            <div id="getStatus3">
                 <div>
-                    <p>게시안함</p>
+                    <p>배송준비중</p>
                 </div>
                 <div>
-                    <span>${ selectSelStatusN }</span>
+                    <span>${deliveryReadyCnt }</span>
+                </div>
+            </div>
+            <div id="getStatus4">
+                <div>
+                    <p>배송중</p>
+                </div>
+                <div>
+                    <span>${ deliveryCnt }</span>
+                </div>
+            </div>
+            <div id="getStatus5">
+                <div>
+                    <p>배송완료</p>
+                </div>
+                <div>
+                    <span>${ finishCnt }</span>
                 </div>
             </div>
         </div>
 
         <div id="search-area">
-            <form action="">
+            <form action="adminOListSearch.or">
+            <input type="hidden" name="array" value="${ ar }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
                             <option value="searchAll">전체</option>
-                            <option value="productCode">주문번호</option>
-                            <option value="bookName">주문자명</option>
-                            <option value="">주문자ID</option>
+                            <option value="orderNo">주문번호</option>
+                            <option value="memName">주문자명</option>
+                            <option value="memId">주문자ID</option>
                         </select>
                     </div>
                     <div id="search-input">
@@ -324,8 +384,30 @@
 
         <div id="result-area">
             <div id="result-title">
-                <p>조회목록</p>
-                <span>[총 10개]</span>
+                <p>조회결과</p>
+                <c:choose>
+	                <c:when test="${ not empty conListCount }">
+	                	<span>[총 ${ conListCount }개]</span>
+	                </c:when>
+	            	<c:when test="${ orStatus eq 1 }">
+			            <span>[총 ${ confirmCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 2 }">
+			            <span>[총 ${ productReadyCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 3 }">
+			            <span>[총 ${ deliveryReadyCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 4 }">
+			            <span>[총 ${ deliveryCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 5 }">
+			            <span>[총 ${ finishCnt }개]</span>
+			        </c:when>
+	                <c:otherwise>
+			            <span>[총 ${ listCount }개]</span>			                
+	                </c:otherwise>
+                </c:choose>
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">
@@ -364,6 +446,8 @@
 			                            <td>${ o.payWay }<br>${ o.payStatus }</td>
 			                            <td>${ o.orderStatus }<br>${ o.csStatus }</td>
 			                            <td>${ o.deliveryStatus }</td>
+			                            <td style="display:none">${ o.deliveryMsg }</td>
+			                            <td style="display:none">${ o.adminMemo }</td>
 					                    <td>
 				                            <c:choose>
 				                            	<c:when test="${ empty o.deliveryMsg }">
@@ -373,10 +457,18 @@
 						                                </div>
 					                            </c:when>
 					                            <c:otherwise>
-						                                <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재하지 않을(NULL) 경우 -->
-						                                <div class="user-memo exist">
-						                                    <button type="button">user</button>
-						                                </div>
+						                         	 <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재할 (not NULL) 경우 -->
+							                                <div class="user-memo exist">
+							                                    <button type="button">user</button>
+							                                </div>
+							                                <div class="user-memo-content hide">
+																<div class="memo-top">
+																	<p>구매자 배송메세지</p>
+																</div>
+																<div class="memo-bottom">
+																	<p></p>
+																</div>
+															</div>      
 					                            </c:otherwise>
 					                        </c:choose>
 					                        <c:choose>
@@ -385,38 +477,42 @@
 						                                <div class="admin-memo no-exist">
 						                                    <button type="button">admin</button>
 						                                </div>
+						                                <div class="admin-memo-content hide">
+															<div class="memo-top">
+																<p>관리자 메모</p>
+															</div>
+															<div class="memo-bottom">
+																<p><input type="text"></p>
+															</div>
+															<div class="memo-btn-area">
+																<button type="button" class="memo-upgrade-btn">저장</button>
+															</div>
+														</div>
+						                                
 					                        	</c:when>
 					                        	<c:otherwise>
-						                                <!-- 관리자 메모(ADMIN_MEMO)가 존재하지 않을(NULL) 경우 -->
+						                                <!-- 관리자 메모(ADMIN_MEMO)가 존재할 (not NULL) 경우 -->
 						                                <div class="admin-memo exist">
 						                                    <button type="button">admin</button>
-						                                </div>				                        	
+						                                </div>
+						                                 <div class="admin-memo-content hide">
+															<div class="memo-top">
+																<p>관리자 메모</p>
+															</div>
+															<div class="memo-bottom">
+																<p><input type="text"></p>
+															</div>
+															<div class="memo-btn-area">
+																<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
+																<button type="button" class="memo-delete-btn">삭제</button>
+																<button type="button" class="memo-upgrade-btn">저장</button>
+															</div>
+														</div>				                      	
 					                        	</c:otherwise>
 					                        </c:choose>
+					                        
 					                    </td>
 			                        </tr>
-			                        <div class="user-memo-content hide">
-							            <div class="memo-top">
-							                <p>구매자 배송메세지</p>
-							            </div>
-							            <div class="memo-bottom">
-							                <p>${ o.deliveryMsg }</p>
-							            </div>
-							        </div>
-							    
-							        <div class="admin-memo-content hide">
-							        	<div class="memo-top">
-							            	<p>관리자 메모</p>
-							            </div>
-							            <div class="memo-bottom">
-							                <p><input type="text" value="${ adminMemo }"></p>
-							            </div>
-							            <div class="memo-btn-area">
-							                <!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
-							                <button type="button" class="memo-delete-btn">삭제</button>
-							                <button type="button" class="memo-upgrade-btn">저장</button>
-							            </div>
-							        </div>
 		                        </c:forEach>
 		                	</c:when>
 		                	<c:otherwise>
@@ -428,6 +524,8 @@
                     </tbody>
                 </table>
             </div>
+           	
+													
             <br>
             <div id="paging-wrap">
 	            <ul class="pagination">

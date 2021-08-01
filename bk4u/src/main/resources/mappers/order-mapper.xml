@@ -30,6 +30,18 @@
 		<result column="shipping_date" property="shippingDate"/>
 		<result column="delivery_status" property="deliveryStatus"/>
 		<result column="coupon_issue_num" property="couponIssueNum"/>
+		<result column="detail_price" property="detailPrice"/>
+		<result column="coupon_price" property="couponPrice"/>
+		<result column="coupon_pricerate" property="couponPriceRate"/>
+	</resultMap>
+	
+	<resultMap type="OrderDetail" id="orderDetailResult">
+		<result column="order_no" property="orderNo"/>
+		<result column="bk_no" property="bkNo"/>
+		<result column="quantity" property="quantity"/>
+		<result column="detail_price" property="detailPrice"/>
+		<result column="detail_status" property="detailStatus"/>
+		<result column="writer_name" property="writerName"/>
 	</resultMap>
 	
 	<!-- [관리자] 전체 주문 개수 조회 (한진) -->
@@ -37,16 +49,87 @@
 		select 
 			   count(*)
 		  from orders
+		 where not order_status in ('반품', '주문취소', '환불')
 	</select>
 	
 	<!-- [관리자] 전체 주문 목록 조회 (한진) -->
 	<select id="selectAdminOrderList" resultMap="orderResult">
-		select 
-			   order_no,
-			   mem_name,
-               mem_id,
-               bk_title,
-			   pay_way,
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by order_no order by order_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+		                         order_no,
+		                         mem_name,
+		                         mem_id,
+		                         bk_title,
+		                         pay_way,
+		                         status,
+		                         order_date,
+		                         order_receiver,
+		                         order_post,
+		                         order_address,
+		                         address_detail,
+		                         address_ref,
+		                         order_phone,
+		                         delivery_msg,
+		                         order_price,
+		                         add_price,
+		                         used_points,
+		                         order_status,
+		                         pay_status,
+		                         cs_status,
+		                         admin_memo,
+		                         delivery_company,
+		                         shipping_number,
+		                         shipping_date,
+		                         delivery_status,
+		                         coupon_issue_num
+		                    from orders
+		                    join members using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+		    and not order_status in ('반품', '주문취소', '환불')
+		 <choose>
+		 	<when test="orStatus == 1">
+		 		and order_status = '주문확인'
+		 	</when> 
+		 	<when test="orStatus == 2">
+		 		and order_status = '상품준비중'
+		 	</when>	
+		 	<when test="orStatus == 3">
+		 		and order_status = '배송준비중'
+		 	</when>
+		 	<when test="orStatus == 4">
+		 		and order_status = '배송중'
+		 	</when>
+		 	<when test="orStatus == 5">
+		 		and order_status = '배송완료'
+		 	</when>
+		 </choose>
+		 order
+		    by 
+		 <choose>
+		 	<when test="array == 0">
+		 		order_date desc
+		 	</when> 
+		 	<when test="array == 1">
+		 		order_date asc
+		 	</when>	
+		 </choose> 
+	</select>
+	
+	<!-- [사용자] 도서 주문 조회 (연지) -->
+	<select id="selectOrder" resultMap="orderResult">
+		select order_no,
+			   mem_no,
+			   pay_no,
 			   order_date,
 			   order_receiver,
 			   order_post,
@@ -66,24 +149,205 @@
 			   shipping_number,
 			   shipping_date,
 			   delivery_status,
-			   coupon_issue_num
+			   coupon_issue_num,
+			   detail_price
+		  from orders
+		  join (select sum(detail_price) detail_price
+				from order_detail
+				where order_no = 2)
+		 where order_no = #{orderNo}
+	</select>
+	
+	<!-- [사용자] 도서 주문 조회 (연지) -->
+	<!-- 
+	<select id="selectOrder" resultMap="orderResult">
+		select o.*, c.coupon_price, c.coupon_pricerate
+		from select (order_no,
+				   mem_no,
+				   pay_no,
+				   order_date,
+				   order_receiver,
+				   order_post,
+				   order_address,
+				   address_detail,
+				   address_ref,
+				   order_phone,
+				   delivery_msg,
+				   order_price,
+				   add_price,
+				   used_points,
+				   order_status,
+				   pay_status,
+				   cs_status,
+				   admin_memo,
+				   delivery_company,
+				   shipping_number,
+				   shipping_date,
+				   delivery_status,
+				   coupon_issue_num,
+				   detail_price
+			  from orders
+			  join (select sum(detail_price) detail_price
+					from order_detail
+					where order_no = 2)
+			 where order_no = #{orderNo}) o
+		join (select coupon_price, coupon_pricerate
+			  from coupon
+			  where coupon_no = (select coupon_no
+				                 from mem_cupon
+				                 where coupon_issue_num = 1)) c using (coupon_issue_num)
+	 -->
+	 
+	<!-- [사용자] 도서 상세 주문 리스트 조회 (연지) -->
+	<select id="selectOrderList" resultMap="orderDetailResult">
+		select order_no,
+			   o.bk_no,
+			   quantity,
+			   detail_price,
+			   detail_status,
+			   writer_name
+		  from order_detail o
+		  join book b on (o.bk_no = b.bk_no)
+		 where order_no = #{orderNo}
+	</select>
+	
+	<!-- [관리자] '주문확인'인 주문 개수 조회 (한진) -->
+	<select id="selectConfirmCnt" resultType="_int">
+		select count(*)
+		  from orders
+		 where order_status = '주문확인'
+	</select>
+	
+	<!-- [관리자] '상품준비중'인 주문 개수 조회 (한진) -->
+	<select id="selectProductReadyCnt" resultType="_int">
+		select count(*)
+		  from orders
+		 where order_status = '상품준비중'
+	</select>
+	
+	<!-- [관리자] '배송준비중'인 주문 개수 조회 (한진) -->
+	<select id="selectDeliveryReadyCnt" resultType="_int">
+		select count(*)
+		  from orders
+		 where order_status = '배송준비중'
+	</select>
+	
+	<!-- [관리자] '배송중'인 주문 개수 조회 (한진) -->
+	<select id="selectDeliveryCnt" resultType="_int">
+		select count(*)
+		  from orders
+		 where order_status = '배송중'
+	</select>
+	
+	<!-- [관리자] '배송완료'인 주문 개수 조회 (한진) -->
+	<select id="selectFinishCnt" resultType="_int">
+		select count(*)
+		  from orders
+		 where order_status = '배송완료'
+	</select>
+	
+	<!-- [관리자] 검색조건에 일치하는 주문 개수 조회 (한진) -->
+	<select id="selectAdminOListSearchCount" resultType="_int">
+		select
+			   count(*)
 		  from orders
 		  join members using(mem_no)
-          join payment using(pay_no)
-          join order_detail using(order_no)
-          join book using(bk_no)
+		  where not order_status in ('반품', '주문취소', '환불')
+		<choose>
+			<when test="condition == 'searchAll'">
+				and order_no like '%' || #{keyword} || '%'
+				   or mem_name like '%' || #{keyword} || '%'
+				   or mem_id
+			</when>
+			<when test="condition == 'orderNo'">
+				  and order_no
+			</when>		
+			<when test="condition == 'memName'">
+				  and mem_name
+			</when>
+			<when test="condition == 'memId'">
+				  and mem_id
+			</when>
+		</choose>
+		like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- [관리자] 검색 조건에 일치하는 주문 목록 조회 (한진) -->
+	<select id="selectAdminOrderSearchList" resultMap="orderResult">
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by order_no order by order_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+		                         order_no,
+		                         mem_name,
+		                         mem_id,
+		                         bk_title,
+		                         pay_way,
+		                         status,
+		                         order_date,
+		                         order_receiver,
+		                         order_post,
+		                         order_address,
+		                         address_detail,
+		                         address_ref,
+		                         order_phone,
+		                         delivery_msg,
+		                         order_price,
+		                         add_price,
+		                         used_points,
+		                         order_status,
+		                         pay_status,
+		                         cs_status,
+		                         admin_memo,
+		                         delivery_company,
+		                         shipping_number,
+		                         shipping_date,
+		                         delivery_status,
+		                         coupon_issue_num
+		                    from orders
+		                    join members using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+		    and not order_status in ('반품', '주문취소', '환불')
 		 <choose>
-		 	<when test="bkStatus == 1">
-		 		where bk_status = '판매중'
+			<when test="condition == 'searchAll'">
+				and order_no like '%' || #{keyword} || '%'
+				   or mem_name like '%' || #{keyword} || '%'
+				   or mem_id
+			</when>
+			<when test="condition == 'orderNo'">
+				  and order_no
+			</when>		
+			<when test="condition == 'memName'">
+				  and mem_name
+			</when>
+			<when test="condition == 'memId'">
+				  and mem_id
+			</when>
+		</choose>
+		like '%' || #{keyword} || '%'
+		<choose>
+		 	<when test="orStatus == 1">
+		 		and order_status = '주문확인'
 		 	</when> 
-		 	<when test="bkStatus == 2">
-		 		where bk_status = '품절'
+		 	<when test="orStatus == 2">
+		 		and order_status = '상품준비중'
 		 	</when>	
-		 	<when test="bkStatus == 3">
-		 		where bk_selstatus = 'Y'
+		 	<when test="orStatus == 3">
+		 		and order_status = '배송준비중'
 		 	</when>
-		 	<when test="bkStatus == 4">
-		 		where bk_selstatus = 'N'
+		 	<when test="orStatus == 4">
+		 		and order_status = '배송중'
+		 	</when>
+		 	<when test="orStatus == 5">
+		 		and order_status = '배송완료'
 		 	</when>
 		 </choose>
 		 order
