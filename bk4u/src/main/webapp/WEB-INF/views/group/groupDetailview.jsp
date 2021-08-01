@@ -110,7 +110,7 @@
                 <br>
                 <h6 align="left"><b>프로필사진 주최자닉네임</b></h6>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
-                <button type="submit" class="" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;"">가입하기</button>
+                <button type="submit" class="" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
                 <button type="submit" class="" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
                 <!--탈퇴여부 묻는 알람창-->
                 <button type="submit" class="">신고하기</button>
