@@ -70,6 +70,13 @@ public class OrderDao {
 	public int selectDeliveryCnt(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("orderMapper.selectDeliveryCnt");
 	}
+	
+	/**
+	 * [관리자] '배송완료'인 주문 개수 조회 (한진) 
+	 */
+	public int selectFinishCnt(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("orderMapper.selectFinishCnt");
+	}
 
 	/**
 	 * [관리자] 검색 조건에 일치하는 주문 개수 조회 (한진)
@@ -86,4 +93,6 @@ public class OrderDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("orderMapper.selectAdminOrderSearchList", map, rowBounds);
 	}
+
+	
 }

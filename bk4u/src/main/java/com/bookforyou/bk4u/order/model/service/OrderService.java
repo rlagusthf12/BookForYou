@@ -47,6 +47,11 @@ public interface OrderService {
 	 * [관리자] '배송중'인 주문 개수 조회 (한진)
 	 */
 	int selectDeliveryCnt();
+	
+	/**
+	 * [관리자] '배송완료'인 주문 개수 조회 (한진)
+	 */
+	int selectFinishCnt();
 
 	/**
 	 * [관리자] 검색 조건에 일치하는 주문 개수 조회 (한진)
@@ -57,4 +62,6 @@ public interface OrderService {
 	 * [관리자] 검색 조건에 일치하는 주문 목록 조회 (한진)
 	 */
 	ArrayList<Order> selectAdminOrderSearchList(PageInfo pi, HashMap<String, String> map);
+
+	
 }

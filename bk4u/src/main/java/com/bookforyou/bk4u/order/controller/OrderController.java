@@ -40,7 +40,7 @@ public class OrderController {
 		int selectProductReadyCnt = oService.selectProductReadyCnt();
 		int selectDeliveryReadyCnt = oService.selectDeliveryReadyCnt();
 		int selectDeliveryCnt = oService.selectDeliveryCnt();
-		int selectFinish = listCount - selectConfirmCnt - selectProductReadyCnt - selectDeliveryReadyCnt - selectDeliveryCnt;
+		int selectFinish = oService.selectFinishCnt();
 		
 		
 		
@@ -120,7 +120,7 @@ public class OrderController {
 		int selectProductReadyCnt = oService.selectProductReadyCnt();
 		int selectDeliveryReadyCnt = oService.selectDeliveryReadyCnt();
 		int selectDeliveryCnt = oService.selectDeliveryCnt();
-		int selectFinish = listCount - selectConfirmCnt - selectProductReadyCnt - selectDeliveryReadyCnt - selectDeliveryCnt;
+		int selectFinish = oService.selectFinishCnt();
 		
 		mv.addObject("pi", pi)
 		  .addObject("oList", oList)

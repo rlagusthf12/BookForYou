@@ -49,6 +49,7 @@
 		select 
 			   count(*)
 		  from orders
+		 where not order_status in ('반품', '주문취소', '환불')
 	</select>
 	
 	<!-- [관리자] 전체 주문 목록 조회 (한진) -->
@@ -94,6 +95,7 @@
 		                ) t1            
 		        ) s1
 		  where s1.rnum = 1
+		    and not order_status in ('반품', '주문취소', '환불')
 		 <choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -237,26 +239,34 @@
 		 where order_status = '배송중'
 	</select>
 	
+	<!-- [관리자] '배송완료'인 주문 개수 조회 (한진) -->
+	<select id="selectFinishCnt" resultType="_int">
+		select count(*)
+		  from orders
+		 where order_status = '배송완료'
+	</select>
+	
 	<!-- [관리자] 검색조건에 일치하는 주문 개수 조회 (한진) -->
 	<select id="selectAdminOListSearchCount" resultType="_int">
 		select
 			   count(*)
 		  from orders
 		  join members using(mem_no)
+		  where not order_status in ('반품', '주문취소', '환불')
 		<choose>
 			<when test="condition == 'searchAll'">
-				where order_no like '%' || #{keyword} || '%'
+				and order_no like '%' || #{keyword} || '%'
 				   or mem_name like '%' || #{keyword} || '%'
 				   or mem_id
 			</when>
 			<when test="condition == 'orderNo'">
-				  where order_no
+				  and order_no
 			</when>		
 			<when test="condition == 'memName'">
-				  where mem_name
+				  and mem_name
 			</when>
 			<when test="condition == 'memId'">
-				  where mem_id
+				  and mem_id
 			</when>
 		</choose>
 		like '%' || #{keyword} || '%'
@@ -305,6 +315,7 @@
 		                ) t1            
 		        ) s1
 		  where s1.rnum = 1
+		    and not order_status in ('반품', '주문취소', '환불')
 		 <choose>
 			<when test="condition == 'searchAll'">
 				and order_no like '%' || #{keyword} || '%'

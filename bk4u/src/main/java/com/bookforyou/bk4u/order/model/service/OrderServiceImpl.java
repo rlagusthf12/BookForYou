@@ -83,6 +83,14 @@ public class OrderServiceImpl implements OrderService {
 	public int selectDeliveryCnt() {
 		return oDao.selectDeliveryCnt(sqlSession);
 	}
+	
+	/**
+	 * [관리자] '배송완료'인 주문 개수 조회 (한진)
+	 */
+	@Override
+	public int selectFinishCnt() {
+		return oDao.selectFinishCnt(sqlSession);
+	}
 
 	/**
 	 * [관리자] 검색 조건에 일치하는 주문 개수 조회 (한진)
@@ -99,4 +107,6 @@ public class OrderServiceImpl implements OrderService {
 	public ArrayList<Order> selectAdminOrderSearchList(PageInfo pi, HashMap<String, String> map) {
 		return oDao.selectAdminOrderSearchList(sqlSession, pi, map);
 	}
+
+	
 }
