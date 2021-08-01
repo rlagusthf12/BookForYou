@@ -41,11 +41,10 @@
 	
 	<!-- [관리자] 전체 주문 목록 조회 (한진) -->
 	<select id="selectAdminOrderList" resultMap="orderResult">
-		select 
+		select distinct
 			   order_no,
 			   mem_name,
                mem_id,
-               bk_title,
 			   pay_way,
 			   order_date,
 			   order_receiver,

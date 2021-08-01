@@ -27,4 +27,16 @@ public class GroupController {
 		
 	}
 	
+	@RequestMapping("createGroup.bo")
+	public String createGroup() {
+		return"group/groupCreate";
+		 
+	}
+	
+	@RequestMapping("insertGroup.bo")
+	public void insertGroup(GroupBoard g) {
+		
+		
+	}
+	
 }
