@@ -41,48 +41,59 @@
 	
 	<!-- [관리자] 전체 주문 목록 조회 (한진) -->
 	<select id="selectAdminOrderList" resultMap="orderResult">
-		select distinct
-			   order_no,
-			   mem_name,
-               mem_id,
-			   pay_way,
-			   order_date,
-			   order_receiver,
-			   order_post,
-			   order_address,
-			   address_detail,
-			   address_ref,
-			   order_phone,
-			   delivery_msg,
-			   order_price,
-			   add_price,
-			   used_points,
-			   order_status,
-			   pay_status,
-			   cs_status,
-			   admin_memo,
-			   delivery_company,
-			   shipping_number,
-			   shipping_date,
-			   delivery_status,
-			   coupon_issue_num
-		  from orders
-		  join members using(mem_no)
-          join payment using(pay_no)
-          join order_detail using(order_no)
-          join book using(bk_no)
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by order_no order by order_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+		                         order_no,
+		                         mem_name,
+		                         mem_id,
+		                         bk_title,
+		                         pay_way,
+		                         status,
+		                         order_date,
+		                         order_receiver,
+		                         order_post,
+		                         order_address,
+		                         address_detail,
+		                         address_ref,
+		                         order_phone,
+		                         delivery_msg,
+		                         order_price,
+		                         add_price,
+		                         used_points,
+		                         order_status,
+		                         pay_status,
+		                         cs_status,
+		                         admin_memo,
+		                         delivery_company,
+		                         shipping_number,
+		                         shipping_date,
+		                         delivery_status,
+		                         coupon_issue_num
+		                    from orders
+		                    join members using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
 		 <choose>
 		 	<when test="bkStatus == 1">
-		 		where bk_status = '판매중'
+		 		and bk_status = '판매중'
 		 	</when> 
 		 	<when test="bkStatus == 2">
-		 		where bk_status = '품절'
+		 		and bk_status = '품절'
 		 	</when>	
 		 	<when test="bkStatus == 3">
-		 		where bk_selstatus = 'Y'
+		 		and bk_selstatus = 'Y'
 		 	</when>
 		 	<when test="bkStatus == 4">
-		 		where bk_selstatus = 'N'
+		 		and bk_selstatus = 'N'
 		 	</when>
 		 </choose>
 		 order
@@ -96,5 +107,6 @@
 		 	</when>	
 		 </choose> 
 	</select>
+	
 	
 </mapper>
