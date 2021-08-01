@@ -321,8 +321,8 @@
                     <div>배송지 정보</div>
                 </div>
                 <div>
-		                    받는 분 : ORDER_RECEIVER<br>
-		                    주소 : ORDER_ADDRESS ADDRESS_DETAIL (ORDER_POST)<br>
+		                    받는 분 : ${ od.orderReceiver }<br>
+		                    주소 : ${ od.orderAddress } ${ od.addressDetail } (${ od.orderPost })<br>
 		                    배송예정일 : 7/8(목) 도착예정
                 </div>
             </div>
@@ -331,21 +331,23 @@
                     <div>주문 상품</div>
                 </div>
                 <div>
+                	<c:forEach var="o" items="${ oList }">
                     <div>
                         <div class="book_img"><img src=""></div>
                         <div class="book_info">
                             <div>
-                                <div>o.BK_NO</div>
-                                <div>o.BK_WRITER</div>
+                                <div>${ o.bkTitle }</div>
+                                <div>${ o.writerName }</div>
                             </div>
                             <div>
-                                <div>o.QUANTITY권</div>
+                                <div>${ o.quantity }권</div>
                             </div>
                             <div>
-                                <div>o.DETAIL_PRICE원</div>
+                                <div>${ o.detailPrice }원</div>
                             </div>
                         </div>
                     </div>
+                    </c:forEach>
                 </div>
             </div>
             <div id="payment_info">
@@ -361,7 +363,7 @@
                         <div class="cal">+</div>
                         <div>
                             <div>총 추가 금액</div>
-                            <div>2500원</div>
+                            <div>${ od.addPrice }원</div>
                         </div>
                         <div class="cal">-</div>
                         <div>
@@ -371,23 +373,25 @@
                         <div class="cal">=</div>
                         <div>
                             <div>최종 결제 금액</div>
-                            <div>ORDER_PRICE</div>
+                            <div>${ od.orderPrice }</div>
                         </div>
                     </div>
                     <div id="line"></div>
                     <div id="payment_detail">
                         <div>
-                            <div>달까지 가자 14000원 2권</div>
-                            <div>천 개의 파랑 17000원 1권</div>
+                        	<c:forEach var="o" items="${ oList }">
+                            <div>${ o.bkTitle } ${ o.detailPrice }원 ${ o.quantity }권</div>
+                            <div>${ o.bkTitle } ${ o.detailPrice }원 ${ o.quantity }권</div>
+                            </c:forEach>
                         </div>
                         <div class="line"></div>
                         <div>
-                            <div>일반택배 배송비 ADD_PRICE원</div>
+                            <div>일반택배 배송비 ${ od.addPrice }원</div>
                         </div>
                         <div class="line"></div>
                         <div>
                             <div>할인쿠폰 2000원</div>
-                            <div>사용 포인트 USED_POINTS원</div>
+                            <div>사용 포인트 ${ od.usedPoints }원</div>
                         </div>
                         <div class="line"></div>
                         <div>
@@ -397,7 +401,7 @@
                             </div>
                             <div>
                                 <div>+ 적립 포인트</div>
-                                <div>ORDER_PRICE*0.01원</div>
+                                <div>${ od.orderPrice * 0.01 }원</div>
                             </div>
                             <div id="point_result">
                                 <div>총 예상 포인트</div>
