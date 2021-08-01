@@ -14,6 +14,7 @@
 		<typeAlias type="com.bookforyou.bk4u.booklist.model.vo.Booklist" alias="Booklist"/>
 		<typeAlias type="com.bookforyou.bk4u.subscription.model.vo.Subscription" alias="Subscription"/>
 		<typeAlias type="com.bookforyou.bk4u.order.model.vo.Order" alias="Order"/>
+		<typeAlias type="com.bookforyou.bk4u.order.model.vo.OrderDetail" alias="OrderDetail"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberCategory" alias="MemberCategory"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberInterest" alias="MemberInterest"/>
 	</typeAliases>

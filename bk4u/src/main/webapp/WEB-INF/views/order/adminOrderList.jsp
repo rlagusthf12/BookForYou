@@ -233,14 +233,12 @@
                 if($(this).parent().is(".no-exist")){
                     $(".admin-memo-content .memo-bottom input").val('');
 
-                    $(".admin-memo-content .memo-delete-btn").hide();
                 }else{
                 	var tr = $(this).parent().parent().parent();
                 	var td = tr.children();
                 	var $memo = td.eq(10).text();
                 	$(".admin-memo-content .memo-bottom input").val($memo);
                 	
-                    $(".admin-memo-content .memo-delete-btn").show();
                 }
 
                 const a = $(this).offset();
@@ -419,6 +417,17 @@
 						                                <div class="admin-memo no-exist">
 						                                    <button type="button">admin</button>
 						                                </div>
+						                                <div class="admin-memo-content hide">
+															<div class="memo-top">
+																<p>관리자 메모</p>
+															</div>
+															<div class="memo-bottom">
+																<p><input type="text"></p>
+															</div>
+															<div class="memo-btn-area">
+																<button type="button" class="memo-upgrade-btn">저장</button>
+															</div>
+														</div>
 						                                
 					                        	</c:when>
 					                        	<c:otherwise>
