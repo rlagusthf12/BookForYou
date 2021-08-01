@@ -90,7 +90,7 @@ public class OrderController {
 		System.out.println(oList);
 		
 		mv.addObject("od", od)
-		  .setViewName("book/bookPaymentResultView");
+		  .setViewName("oreder/orderResultView");
 		
 		return mv;
 	}
