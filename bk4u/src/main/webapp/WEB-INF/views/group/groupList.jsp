@@ -97,6 +97,7 @@
                                 <option value="place">지역</option>
                                 <option value="type">온라인/오프라인</option>  
                             </select>
+                            <hr>
                         </div>
                         <div class="text">
                             <input type="text" class="form-control" name="keyword">
@@ -106,7 +107,7 @@
                 <br><br><br><br>
 
                 <!--로그인한 모든 회원에게 보이는 버튼-->
-                <button type="submit" id="makeBoard">독서모임 만들기</button>
+                <button type="submit" id="makeBoard" onclick="createGroup.bo">독서모임 만들기</button>
                 
                 <br><br>
                 <hr>
