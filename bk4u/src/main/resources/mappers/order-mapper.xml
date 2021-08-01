@@ -30,6 +30,9 @@
 		<result column="shipping_date" property="shippingDate"/>
 		<result column="delivery_status" property="deliveryStatus"/>
 		<result column="coupon_issue_num" property="couponIssueNum"/>
+		<result column="detail_price" property="detailPrice"/>
+		<result column="coupon_price" property="couponPrice"/>
+		<result column="coupon_pricerate" property="couponPriceRate"/>
 	</resultMap>
 	
 	<resultMap type="OrderDetail" id="orderDetailResult">
@@ -141,11 +144,55 @@
 			   shipping_number,
 			   shipping_date,
 			   delivery_status,
-			   coupon_issue_num
+			   coupon_issue_num,
+			   detail_price
 		  from orders
+		  join (select sum(detail_price) detail_price
+				from order_detail
+				where order_no = 2)
 		 where order_no = #{orderNo}
 	</select>
 	
+	<!-- [사용자] 도서 주문 조회 (연지) -->
+	<!-- 
+	<select id="selectOrder" resultMap="orderResult">
+		select o.*, c.coupon_price, c.coupon_pricerate
+		from select (order_no,
+				   mem_no,
+				   pay_no,
+				   order_date,
+				   order_receiver,
+				   order_post,
+				   order_address,
+				   address_detail,
+				   address_ref,
+				   order_phone,
+				   delivery_msg,
+				   order_price,
+				   add_price,
+				   used_points,
+				   order_status,
+				   pay_status,
+				   cs_status,
+				   admin_memo,
+				   delivery_company,
+				   shipping_number,
+				   shipping_date,
+				   delivery_status,
+				   coupon_issue_num,
+				   detail_price
+			  from orders
+			  join (select sum(detail_price) detail_price
+					from order_detail
+					where order_no = 2)
+			 where order_no = #{orderNo}) o
+		join (select coupon_price, coupon_pricerate
+			  from coupon
+			  where coupon_no = (select coupon_no
+				                 from mem_cupon
+				                 where coupon_issue_num = 1)) c using (coupon_issue_num)
+	 -->
+	 
 	<!-- [사용자] 도서 상세 주문 리스트 조회 (연지) -->
 	<select id="selectOrderList" resultMap="orderDetailResult">
 		select order_no,

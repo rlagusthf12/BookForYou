@@ -358,7 +358,7 @@
                     <div id="payment_main">
                         <div>
                             <div>총 상품 금액</div>
-                            <div>45000원</div>
+                            <div>${ od.detailPrice }원</div>
                         </div>
                         <div class="cal">+</div>
                         <div>
@@ -368,7 +368,7 @@
                         <div class="cal">-</div>
                         <div>
                             <div>총 할인 금액</div>
-                            <div>0원</div>
+                            <div>${ od.userPoints }원</div>
                         </div>
                         <div class="cal">=</div>
                         <div>
@@ -380,18 +380,27 @@
                     <div id="payment_detail">
                         <div>
                         	<c:forEach var="o" items="${ oList }">
-                            <div>${ o.bkTitle } ${ o.detailPrice }원 ${ o.quantity }권</div>
-                            <div>${ o.bkTitle } ${ o.detailPrice }원 ${ o.quantity }권</div>
+                            	<div>${ o.bkTitle } ${ o.detailPrice }원 ${ o.quantity }권</div>
                             </c:forEach>
                         </div>
                         <div class="line"></div>
                         <div>
-                            <div>일반택배 배송비 ${ od.addPrice }원</div>
+                        	<c:choose>
+                        		<c:when test="${ od.addPrice ne 0 }">
+                            		<div>배송비 ${ od.addPrice }원</div>
+                            	</c:when>
+                            </c:choose>
                         </div>
                         <div class="line"></div>
                         <div>
-                            <div>할인쿠폰 2000원</div>
-                            <div>사용 포인트 ${ od.usedPoints }원</div>
+                        	<c:choose>
+                        		<c:when test="${ od.usedPoints ne 0 }">
+                            		<div>할인쿠폰 2000원</div>
+                            	</c:when>
+                        		<c:when test="${ od.usedPoints ne 0 }">
+                            		<div>사용 포인트 ${ od.usedPoints }원</div>
+                            	</c:when>
+                            </c:choose>
                         </div>
                         <div class="line"></div>
                         <div>
