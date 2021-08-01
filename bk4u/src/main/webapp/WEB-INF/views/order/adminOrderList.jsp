@@ -225,6 +225,43 @@
 	
 		$(function(){
 			
+			/* 상태 클릭  */
+	        $("#getStatusAll").click(function(){
+		        location.href="adminOrderList.or?";
+		    })
+		    
+		    $("#getStatus1").click(function(){
+		        location.href="adminOrderList.or?orStatus=1";
+		    })
+		    
+		    $("#getStatus2").click(function(){
+		        location.href="adminOrderList.or?orStatus=2";
+		    })
+		    
+		    $("#getStatus3").click(function(){
+		        location.href="adminOrderList.or?orStatus=3";
+		    })
+		    
+		    $("#getStatus4").click(function(){
+		        location.href="adminOrderList.or?orStatus=4";
+		    })
+		    
+		    $("#getStatus5").click(function(){
+		        location.href="adminOrderList.or?orStatus=5";
+		    })
+			
+		    /* 정렬 방법 변경 */
+		    $("#array-condition").change(function(){
+	            let ar = $(this).val();
+
+	            if(${ empty keyword }){            	
+		            location.href=`adminOrderList.or?orStatus=${ orStatus }&array=` + ar;		 
+	            }else {
+	            	location.href=`adminOListSearch.or?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	            }
+	        
+		    })
+		    
 			/* admin-memo 모달 보여주기 */
             $(".admin-memo button").click(function(){
             	
@@ -286,7 +323,7 @@
                     <p>주문확인</p>
                 </div>
                 <div>
-                    <span>${ selectStatusY }</span>
+                    <span>${ confirmCnt }</span>
                 </div>
             </div>
             <div id="getStatus2">
@@ -294,7 +331,7 @@
                     <p>상품준비중</p>
                 </div>
                 <div>
-                    <span>${ selectStatusN }</span>
+                    <span>${ productReadyCnt }</span>
                 </div>
             </div>
             <div id="getStatus3">
@@ -302,7 +339,7 @@
                     <p>배송준비중</p>
                 </div>
                 <div>
-                    <span>${ selectSelStatusY }</span>
+                    <span>${deliveryReadyCnt }</span>
                 </div>
             </div>
             <div id="getStatus4">
@@ -310,7 +347,7 @@
                     <p>배송중</p>
                 </div>
                 <div>
-                    <span>${ selectSelStatusN }</span>
+                    <span>${ deliveryCnt }</span>
                 </div>
             </div>
             <div id="getStatus5">
@@ -318,20 +355,21 @@
                     <p>배송완료</p>
                 </div>
                 <div>
-                    <span>${ selectSelStatusN }</span>
+                    <span>${ finishCnt }</span>
                 </div>
             </div>
         </div>
 
         <div id="search-area">
-            <form action="">
+            <form action="adminOListSearch.or">
+            <input type="hidden" name="array" value="${ ar }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
                             <option value="searchAll">전체</option>
-                            <option value="productCode">주문번호</option>
-                            <option value="bookName">주문자명</option>
-                            <option value="">주문자ID</option>
+                            <option value="orderNo">주문번호</option>
+                            <option value="memName">주문자명</option>
+                            <option value="memId">주문자ID</option>
                         </select>
                     </div>
                     <div id="search-input">
@@ -346,8 +384,30 @@
 
         <div id="result-area">
             <div id="result-title">
-                <p>조회목록</p>
-                <span>[총 10개]</span>
+                <p>조회결과</p>
+                <c:choose>
+	                <c:when test="${ not empty conListCount }">
+	                	<span>[총 ${ conListCount }개]</span>
+	                </c:when>
+	            	<c:when test="${ orStatus eq 1 }">
+			            <span>[총 ${ confirmCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 2 }">
+			            <span>[총 ${ productReadyCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 3 }">
+			            <span>[총 ${ deliveryReadyCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 4 }">
+			            <span>[총 ${ deliveryCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 5 }">
+			            <span>[총 ${ finishCnt }개]</span>
+			        </c:when>
+	                <c:otherwise>
+			            <span>[총 ${ listCount }개]</span>			                
+	                </c:otherwise>
+                </c:choose>
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">

@@ -51,4 +51,52 @@ public class OrderServiceImpl implements OrderService {
 	public ArrayList<Order> selectOrderList(int orderNo){
 		return oDao.selectOrderList(sqlSession, orderNo);
 	}
+
+	/**
+	 * [관리자] '주문확인'인 주문 개수 조회 (한진)
+	 */
+	@Override
+	public int selectConfirmCnt() {
+		return oDao.selectConfirmCnt(sqlSession);
+	}
+
+	/**
+	 * [관리자] '상품준비중'인 주문 개수 조회 (한진)
+	 */
+	@Override
+	public int selectProductReadyCnt() {
+		return oDao.selectProductReadyCnt(sqlSession);
+	}
+
+	/**
+	 * [관리자] '배송준비중'인 주문 개수 조회 (한진)
+	 */
+	@Override
+	public int selectDeliveryReadyCnt() {
+		return oDao.selectDeliveryReadyCnt(sqlSession);
+	}
+
+	/**
+	 * [관리자] '배송중'인 주문 개수 조회 (한진)
+	 */
+	@Override
+	public int selectDeliveryCnt() {
+		return oDao.selectDeliveryCnt(sqlSession);
+	}
+
+	/**
+	 * [관리자] 검색 조건에 일치하는 주문 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminOListSearchCount(HashMap<String, String> map) {
+		return oDao.selectAdminOListSearchCount(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 검색 조건에 일치하는 주문 목록 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Order> selectAdminOrderSearchList(PageInfo pi, HashMap<String, String> map) {
+		return oDao.selectAdminOrderSearchList(sqlSession, pi, map);
+	}
 }
