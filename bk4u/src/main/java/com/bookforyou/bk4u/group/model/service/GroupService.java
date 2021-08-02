@@ -11,6 +11,8 @@ public interface GroupService {
 	// 게시글 리스트
 	ArrayList<GroupBoard> selectList();
 	
+	ArrayList<GroupBoard> selectListMore();
+	
 	// 게시글 작성하기
 	int insertGBoard(GroupBoard g);
 	

@@ -30,6 +30,17 @@ public class GroupController {
 		
 	}
 	
+	@RequestMapping("gListMore.bo")
+	public String selectListMore(Model model) {
+		
+		ArrayList<GroupBoard> groupListMore = gService.selectList();
+		
+		model.addAttribute("groupListMore", groupListMore);
+		
+		return "group/groupList";
+		
+	}
+	
 	@RequestMapping("createGroup.bo")
 	public String createGroup() {
 		return"group/groupCreate";	
