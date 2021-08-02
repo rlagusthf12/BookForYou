@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -372,7 +373,7 @@
                         <div class="cal">-</div>
                         <div>
                             <div>총 할인 금액</div>
-                            <div>${ od.usedPoints }원</div>
+                            <div>${ od.usedPoints + od.couponPrice }원</div>
                         </div>
                         <div class="cal">=</div>
                         <div>
@@ -398,8 +399,11 @@
                         <div class="line"></div>
                         <div>
                         	<c:choose>
-                        		<c:when test="${ od.usedPoints ne 0 }">
-                            		<div>할인쿠폰 2000원</div>
+                        		<c:when test="${ od.couponPrice ne 0 }">
+                            		<div>할인쿠폰 ${ od.couponPrice }원</div>
+                            	</c:when>
+                        		<c:when test="${ od.couponPriceRate ne 0 }">
+                            		<div>할인쿠폰 ${ od.couponPriceRate }원</div>
                             	</c:when>
                         		<c:when test="${ od.usedPoints ne 0 }">
                             		<div>사용 포인트 ${ od.usedPoints }원</div>
@@ -414,11 +418,11 @@
                             </div>
                             <div>
                                 <div>+ 적립 포인트</div>
-                                <div>${ od.orderPrice * 0.01 }원</div>
+                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>원</div>
                             </div>
                             <div id="point_result">
                                 <div>총 예상 포인트</div>
-                                <div>475원</div>
+                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>원</div>
                             </div>
                         </div>
                     </div>
