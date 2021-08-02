@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.rental.model.service.RentalService;
 import com.bookforyou.bk4u.rental.model.vo.Rental;
 
 @Controller
@@ -31,6 +32,7 @@ public class RentalController {
 		ArrayList<Rental> rList = rentalService.selectRentalList(pi, memNo);
 		
 		return mv;
+		
 	}
 
 }
