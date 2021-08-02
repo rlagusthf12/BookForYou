@@ -45,15 +45,11 @@
 
     #header a{text-decoration:none; color:black}
 
-    #search_form{
-            width:80%;
-            height:20%;
-            margin:auto;
-        }
+    /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
-            margin-top:5px;
+            margin-top:40px;
         }
         #search-bar{
             border-radius: 40px;
@@ -61,13 +57,15 @@
             width:600px;
             height: 40px;
             padding:1px;
+            margin:auto;
+            vertical-align: middle;
         }
 
         /* 검색 조건 select */
         #search-condition{
             display: inline-block;
             border-right:2px solid #EC573B;
-            width:150px;
+            width:25%;
             height: 100%;
         }
         #search-condition>select{
@@ -81,21 +79,56 @@
         select:focus, #search-input>input:focus{
             outline:none;
         }
-
+        
         /* 검색어 입력 */
         #search-input{
             display: inline-block;
-            width:400px;
+            width:65%;
             height: 100%;
         }
         #search-input > input{
             border-radius: 40px;
-            width:400px;
+            width:100%;
             height: 100%;
             border:none;
             font-size: 15px;
             text-align-last: center;
             text-align: center;
+        }
+
+        /* 검색 이미지 버튼 */
+        #search-btn{
+            width: 5%;
+            float:right;
+            margin:3px 20px 3px 0;
+        }
+        #search-btn input{
+            width: 30px;
+            height: 30px;
+        }
+        
+        /**/
+        #recommand-condition{padding:15px; text-align: center;}
+        #recommand-condition>div>p {display: inline-block;}
+        #bold{font-weight: 600; font-size: 18px;}
+        
+        #recommand-condition table{width:auto; margin: auto; text-align: left;} 
+        #recommand-condition table th{font-size: 15px; width:130px;}
+        #recommand-condition ul{list-style: none; margin: 0px; padding:0px;}
+        #recommand-condition li{float:left; margin: 0 5px 0 5px;}
+        
+        /* 검색 결과 구역 */
+        #result-area{margin-top:50px;}
+        #result-title p{
+            float:left; 
+            margin:0 15px 0 0;
+            font-size:18px;
+            font-weight: 600;
+        }
+
+        /* 처리 버튼 */
+        .btn{
+            padding:0.1em 0.5em;
         }
 </style>
 </head>
@@ -109,27 +142,26 @@
             <br>
 
             <div id="header_1_center">
-                    <div class="bar-outer" id="search-area">
-                        <form action="search.bk" method="get">
-                            <div id="search-bar">
-                                <div id="search-condition">
-                                    <select name="condition" id="search-condition">
-	                                    <option value="searchAll">전체</option>
-			                            <option value="bookTitle">제목</option>
-			                            <option value="writerName">저자명</option>
-                                    </select>
-                                </div>
-                                <div id="search-input">
-                                    <input type="text" name="keyword" id="search-input">
-                                </div>
-                            </div>
-                           <br>
-                            <div id="search-btn" align="center">
-                                <button type="submit" style="color: #ec573b;">검색</button>
-                                <button type="reset">초기화</button>
-                            </div>                       
-                        </div>
-                    </form>
+                    <div id="search-area">
+			            <form action="search.bk">
+			                <div id="search-bar">
+			                    <div id="search-condition">
+			                        <select name="condition">
+			                            <option value="searchAll">전체</option>
+			                            <option value="bookName">도서명</option>
+			                            <option value="writerName">저자</option>
+			                            <option value="publisher">출판사</option>
+			                        </select>
+			                    </div>
+			                    <div id="search-input">
+			                        <input type="text" name="">
+			                    </div>
+			                    <div id="search-btn">
+			                        <input type="image" src="resources/search.png" name="Submit" value="Submit" align="absmiddle">
+			                    </div>
+			                </div>
+			            </form>
+			        </div>
                 </div>
             <div id="header_1_right">
                 <c:choose>
