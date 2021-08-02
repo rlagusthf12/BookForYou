@@ -453,7 +453,7 @@ hr::after{
 
   <div class="popularbook">
     <div class="username" style="font-size: 25px; font-weight: bold;">user1 님  &nbsp; <a id="enrolldate" style="font-size: 20px; color: black; font-weight: normal;">2021-07-27
-       <p style="font-size: 15px; color: black;">작성</p></a>
+           <a style="font-size: 15px; color: black;">작성</a></a>
     </div>
       <br>
       
