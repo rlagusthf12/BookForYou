@@ -17,5 +17,6 @@ public class OrderDetail {
 	public int detailPrice;
 	public String detailStatus;
 	public String bkTitle;
+	public String bkPublish;
 	public String writerName;
 }

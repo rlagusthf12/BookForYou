@@ -44,6 +44,7 @@
 		<result column="detail_status" property="detailStatus"/>
 		<result column="bk_title" property="bkTitle"/>
 		<result column="writer_name" property="writerName"/>
+		<result column="bk_publish" property="bkPublish"/>
 	</resultMap>
 	
 	<!-- [관리자] 전체 주문 개수 조회 (한진) -->
@@ -413,5 +414,51 @@
   		   set admin_memo = null
 		 where order_no = #{orderNo}
 	</update>
+	
+	<!-- [관리자] 주문 상세 조회 - 주문 내역 조회(한진) -->
+	<select id="selectAdminOrderDetail" resultMap="orderResult">
+		select 
+		       order_no,
+		       mem_no,
+		       pay_no,
+		       order_date,
+		       order_receiver,
+		       order_post,
+		       order_address,
+		       address_detail,
+		       address_ref,
+		       order_phone,
+		       delivery_msg,
+		       order_price,
+		       add_price,
+		       used_points,
+		       order_status,
+		       pay_status,
+		       cs_status,
+		       admin_memo,
+		       product_status,
+		       delivery_company,
+		       shipping_number,
+		       shipping_date,
+		       delivery_status,
+		       coupon_issue_num
+		  from orders
+		 where order_no = #{orderNo}		
+	</select>
+	
+	<select id="selectAdminOrderedBook" resultMap="orderDetailResult">
+		select
+		       order_no,
+		       bk_no,
+		       bk_title,
+		       bk_publish,
+		       writer_name,
+		       quantity,
+		       detail_price
+		  from order_detail
+		  join book using (bk_no)
+	     where order_no = #{orderNo}
+	</select>
+		
 	
 </mapper>

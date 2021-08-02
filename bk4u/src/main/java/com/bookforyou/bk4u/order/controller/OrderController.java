@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 
 @Controller
 public class OrderController {
@@ -194,6 +198,30 @@ public class OrderController {
 		int result = oService.deleteAdminMemo(orderNo);
 		
 		return "redirect:/adminOrderList.or";
+	}
+	
+	/**
+	 * [관리자] 주문 상세 조회 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("adminOrderDetail.or")
+	public ModelAndView selectAdminOrderDetail(ModelAndView mv, int orderNo) {
+		
+		ArrayList<Order> order = oService.selectAdminOrderDetail(orderNo);
+		ArrayList<OrderDetail> oBook = oService.selectAdminOrderedBook(orderNo);
+		Member m = oService.selectAdminOrderedMem(orderNo);
+		Payment p = oService.selectAdminOrderedPayment(orderNo);
+		
+		System.out.println(order);
+		
+		mv.addObject("od", order)
+		  .addObject("oBook", oBook)
+		  .addObject("oMem", m)
+		  .addObject("oPay", p)
+		  .setViewName("order/adminOrderDetail");
+		
+		return mv;
+		
 	}
 	
 	

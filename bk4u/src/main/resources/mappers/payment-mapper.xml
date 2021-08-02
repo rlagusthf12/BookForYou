@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="paymentMapper">
+	<resultMap id="paymentResult" type="Payment">
+		<result column="pay_no" property="payNo"/>
+		<result column="pay_way" property="payWay"/>
+		<result column="price" property="price"/>
+		<result column="status" property="status"/>
+		<result column="pay_date" property="payDate"/>
+		<result column="deposit" property="deposit"/>
+		<result column="deposit_name" property="depositName"/>
+		<result column="deposit_bank" property="depositBank"/>
+	</resultMap>
+	
+	<!-- [관리자] 주문 상세 조회 - 사용된 결제 내역 조회 (한진) -->
+	<select id="selectOrderedPayment" resultMap="paymentResult">
+		select
+		       pay_no,
+		       pay_way,
+		       price,
+		       status,
+		       pay_date,
+		       deposit,
+		       deposit_name,
+		       deposit_bank
+		  from payment
+		  join orders using (pay_no)
+		 where order_no = #{orderNo}
+	</select>
+</mapper>
