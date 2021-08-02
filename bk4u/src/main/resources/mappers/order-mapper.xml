@@ -352,6 +352,24 @@
 		                ) t1            
 		        ) s1
 		  where s1.rnum = 1
+		  <choose>
+		 	<when test="orStatus == 1">
+		 		and order_status = '주문확인'
+		 	</when> 
+		 	<when test="orStatus == 2">
+		 		and order_status = '상품준비중'
+		 	</when>	
+		 	<when test="orStatus == 3">
+		 		and order_status = '배송준비중'
+		 	</when>
+		 	<when test="orStatus == 4">
+		 		and order_status = '배송중'
+		 	</when>
+		 	<when test="orStatus == 5">
+		 		and order_status = '배송완료'
+		 	</when>
+		 </choose>
+		 and not order_status in ('반품', '주문취소', '환불')
 		 <choose>
 			<when test="condition == 'searchAll'">
 				and (order_no like '%' || #{keyword} || '%'
@@ -369,24 +387,6 @@
 			</when>
 		</choose>
 		like '%' || #{keyword} || '%'
-		and not order_status in ('반품', '주문취소', '환불')
-		<choose>
-		 	<when test="orStatus == 1">
-		 		and order_status = '주문확인'
-		 	</when> 
-		 	<when test="orStatus == 2">
-		 		and order_status = '상품준비중'
-		 	</when>	
-		 	<when test="orStatus == 3">
-		 		and order_status = '배송준비중'
-		 	</when>
-		 	<when test="orStatus == 4">
-		 		and order_status = '배송중'
-		 	</when>
-		 	<when test="orStatus == 5">
-		 		and order_status = '배송완료'
-		 	</when>
-		 </choose>
 		 order
 		    by 
 		 <choose>

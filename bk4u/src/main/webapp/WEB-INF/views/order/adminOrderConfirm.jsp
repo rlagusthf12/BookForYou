@@ -452,6 +452,7 @@
         <div id="search-area">
             <form action="adminOListSearch.or">
             <input type="hidden" name="array" value="${ ar }">
+            <input type="hidden" name="orStatus" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >

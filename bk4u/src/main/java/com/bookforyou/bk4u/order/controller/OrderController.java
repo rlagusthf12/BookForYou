@@ -117,15 +117,43 @@ public class OrderController {
 		
 		int conListCount = oService.selectAdminOListSearchCount(map);
 		
-		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
-		ArrayList<Order> oList = oService.selectAdminOrderSearchList(pi, map);
-		
 		int listCount = oService.selectAllListCount();
+
+		PageInfo pi = null;
+
 		int selectConfirmCnt = oService.selectConfirmCnt();
 		int selectProductReadyCnt = oService.selectProductReadyCnt();
 		int selectDeliveryReadyCnt = oService.selectDeliveryReadyCnt();
 		int selectDeliveryCnt = oService.selectDeliveryCnt();
 		int selectFinish = oService.selectFinishCnt();
+		
+		mv.setViewName("order/adminOrderList");
+		
+		if(orStatus.equals("0")) {
+			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			mv.setViewName("order/adminOrderList");
+		}else {
+			if(orStatus.equals("1")) {
+				pi = Pagination.getPageInfo(selectConfirmCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminOrderConfirm");
+			}else if(orStatus.equals("2")) {
+				pi = Pagination.getPageInfo(selectProductReadyCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminProductReady");
+			}else if(orStatus.equals("3")) {
+				pi = Pagination.getPageInfo(selectDeliveryReadyCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminDeliveryReady");
+			}else if(orStatus.equals("4")){
+				pi = Pagination.getPageInfo(selectDeliveryCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminDeliveryIng");
+			}else if(orStatus.equals("5")){
+				pi = Pagination.getPageInfo(selectFinish, currentPage, 10, 5);
+				mv.setViewName("order/adminComplete");
+			}else {
+				mv.setViewName("order/adminOrderList");
+			}
+		}
+		
+		ArrayList<Order> oList = oService.selectAdminOrderSearchList(pi, map);
 		
 		mv.addObject("pi", pi)
 		  .addObject("oList", oList)
@@ -139,8 +167,7 @@ public class OrderController {
 		  .addObject("condition", condition)
 		  .addObject("keyword", keyword)
 		  .addObject("ar", array)
-		  .addObject("orStatus", orStatus)
-		  .setViewName("order/adminOrderList");
+		  .addObject("orStatus", orStatus);
 		
 		return mv;
 	}
@@ -168,5 +195,7 @@ public class OrderController {
 		
 		return "redirect:/adminOrderList.or";
 	}
+	
+	
 	
 }
