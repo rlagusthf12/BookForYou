@@ -56,5 +56,30 @@
 	
 	</select>
 	
+	<insert id="inserGMem">
+		
+		insert 
+		  into groupmember
+		  (
+		  	group_boardno
+		  ,	mem_no
+		  ,	group_enrolldate
+		  ,	mem_email
+		  ,	group_level
+		  ,	group_withdraw
+		  ,	group_reason
+		  )
+		  values
+		  (
+		  	#{groupBoardNo}
+		  , #{memNo}
+		  , #{gorupEnrollDate}
+		  , #{mem_email}
+		  , #{group_level}
+		  , #{group_withdraw}
+		    #{group_reason}
+		  )
+			
+	</insert>
 
 </mapper>

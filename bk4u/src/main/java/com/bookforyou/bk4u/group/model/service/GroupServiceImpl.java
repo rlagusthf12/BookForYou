@@ -48,9 +48,10 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int insertGMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertGMem(Member m) {
+		return gDao.insertGMem(sqlSession, m);
+		
+		
 	}
 
 	@Override

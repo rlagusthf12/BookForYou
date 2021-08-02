@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 
 @Repository
@@ -15,4 +16,7 @@ public class GroupDao {
 		return (ArrayList)sqlSession.selectList("groupMapper.selectList", null);
 	}
 	
+	public int insertGMem(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("boardMapper.insertGMem", m);
+	}
 }

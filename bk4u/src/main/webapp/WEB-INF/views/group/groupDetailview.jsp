@@ -40,7 +40,12 @@
 <!--메뉴바 입력-->
 <jsp:include page=""/>
 
-  
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert("$(alertMsg)");
+		</script>
+		<c:remove var=alertMsg" scope="session"/>
+  	</c:if>
         
     <div class="content">
 
@@ -110,7 +115,7 @@
                 <br>
                 <h6 align="left"><b>프로필사진 주최자닉네임</b></h6>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
-                <c:choose>
+                
                 
                 <button type="submit" class="" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
                 <button type="submit" class="" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>

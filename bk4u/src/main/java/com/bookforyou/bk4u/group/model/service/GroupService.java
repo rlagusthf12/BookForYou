@@ -23,7 +23,7 @@ public interface GroupService {
 	int updateGBoard(GroupBoard g); 
 	
 	// 가입용
-	int insertGMember(Member m);
+	int insertGMem(Member m);
 	
 	// 탈퇴
 	int deleteMember(String userId);
