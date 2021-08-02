@@ -86,11 +86,9 @@ public class OrderController {
 		Order od = oService.selectOrder(orderNo);
 		ArrayList<Order> oList = oService.selectOrderList(orderNo);
 		
-		System.out.println(od);
-		System.out.println(oList);
-		
 		mv.addObject("od", od)
-		  .setViewName("oreder/orderResultView");
+		  .addObject("oList", oList)
+		  .setViewName("order/orderResultView");
 		
 		return mv;
 	}

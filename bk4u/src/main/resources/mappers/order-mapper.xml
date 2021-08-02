@@ -41,6 +41,7 @@
 		<result column="quantity" property="quantity"/>
 		<result column="detail_price" property="detailPrice"/>
 		<result column="detail_status" property="detailStatus"/>
+		<result column="bk_title" property="bkTitle"/>
 		<result column="writer_name" property="writerName"/>
 	</resultMap>
 	
@@ -152,9 +153,10 @@
 			   coupon_issue_num,
 			   detail_price
 		  from orders
-		  join (select sum(detail_price) detail_price
+		  join (select order_no, sum(detail_price) detail_price
 				from order_detail
-				where order_no = 2)
+                group by order_no
+                having order_no = #{orderNo}) using (order_no)
 		 where order_no = #{orderNo}
 	</select>
 	
@@ -205,6 +207,7 @@
 			   quantity,
 			   detail_price,
 			   detail_status,
+			   bk_title,
 			   writer_name
 		  from order_detail o
 		  join book b on (o.bk_no = b.bk_no)
