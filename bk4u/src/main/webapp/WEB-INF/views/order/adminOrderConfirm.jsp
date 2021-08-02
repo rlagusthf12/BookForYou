@@ -285,7 +285,7 @@
 	            if(${ empty keyword }){            	
 		            location.href=`adminOrderList.or?orStatus=${ orStatus }&array=` + ar;		 
 	            }else {
-	            	location.href=`adminOListSearch.or?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	            	location.href=`adminOListSearch.or?orStatus=1&condition=${ condition }&keyword=${ keyword }&array=` + ar;
 	            }
 	        
 		    })
@@ -335,6 +335,46 @@
                 const a = $(this).offset();
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
+            
+            /* Click on select all checkbox */
+	        $("#result-div thead input[type='checkbox']").click(function(){
+	        	
+	        	if($(this).prop("checked")){
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", true);
+	        		})
+	        	}else {
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", false);
+	        		})
+	        	}
+	        })
+	        
+	        /* Click on another checkbox can affect the select all checkbox */
+	        $("#result-div tbody input[type='checkbox']").click(function(){
+	        	if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
+	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+	        	}
+	        })
+	        
+	        /* 주문확인으로 바꾸기 */
+	        $("#alterConfirm").click(function(){
+				var checkArr = new Array();
+				$("input:checkbox[name='oCheck']:checked").each(function(){
+					checkArr.push(this.value);
+				});
+				
+				location.href="adminOrderConfirm.or?selectedOd=" + checkArr;
+	        })
+		        	
+	        /* 테이블 행 선택 */
+	        $(".detailC").click(function(){
+	        	
+	        	var td = $(this);
+	        	var orderNo = td.text();
+	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	        	
+	        })
 
 
         })
@@ -508,7 +548,7 @@
             </div>
 			
             <div id="handling-btn">
-                <button>주문확인</button>
+                <button id="alterConfirm">주문확인</button>
                 <button>주문취소</button>
             </div>
 
@@ -536,7 +576,7 @@
 			                        <tr>
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="oCheck" value="${ o.orderNo }"></td>
-			                            <td>${ o.orderNo }</td>
+			                            <td class="detailC">${ o.orderNo }</td>
 			                            <td>${ o.orderDate }</td>
 			                            <td>${ o.memName } <br> (${ o.memId })</td>
 			                            <td>${ o.bkTitle }</td>

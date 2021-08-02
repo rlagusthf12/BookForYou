@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.dao.OrderDao;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -122,6 +125,38 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int deleteAdminMemo(String orderNo) {
 		return oDao.deleteAdminMemo(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문 내역 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Order> selectAdminOrderDetail(int orderNo) {
+		return oDao.selectAdminOrderDetail(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문된 도서 조회(한진)
+	 */
+	@Override
+	public ArrayList<OrderDetail> selectAdminOrderedBook(int orderNo) {
+		return oDao.selectAdminOrderedBook(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문한 회원 조회 (한진)
+	 */
+	@Override
+	public Member selectAdminOrderedMem(int orderNo) {
+		return oDao.selectAdminOrderedMem(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 사용된 결제 내역 조회 (한진)
+	 */
+	@Override
+	public Payment selectAdminOrderedPayment(int orderNo) {
+		return oDao.selectAdminOrderedPayment(sqlSession, orderNo);
 	}
 
 	

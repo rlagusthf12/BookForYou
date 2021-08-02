@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 
 public interface OrderService {
 
@@ -72,6 +75,26 @@ public interface OrderService {
 	 * [관리자] 관리자 메모 삭제 (한진)
 	 */
 	int deleteAdminMemo(String orderNo);
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문 내역 조회 (한진)
+	 */
+	ArrayList<Order> selectAdminOrderDetail(int orderNo);
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문된 도서 조회 (한진)
+	 */
+	ArrayList<OrderDetail> selectAdminOrderedBook(int orderNo);
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문한 회원 조회 (한진)
+	 */
+	Member selectAdminOrderedMem(int orderNo);
+
+	/**
+	 * [관리자] 주문 상세 조회 - 사용된 결제 내역 조회 (한진)
+	 */
+	Payment selectAdminOrderedPayment(int orderNo);
 
 	
 }

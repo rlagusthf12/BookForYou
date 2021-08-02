@@ -50,6 +50,7 @@ public class RentalController {
 		  .setViewName("rental/mypageRentalDetail");
 		
 		return mv;
+		
 	}
 
 }

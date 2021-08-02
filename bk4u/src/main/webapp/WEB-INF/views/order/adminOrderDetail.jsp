@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,7 +153,6 @@
                     <tr>
                         <th scope="col">주문번호</th>
                         <th scope="col">주문일(결제일)</th>
-                        <th scope="col">도서명</th>
                         <th scope="col">결제상태</th>
                         <th scope="col">주문상태</th>
                         <th scope="col">cs상태</th>
@@ -160,15 +160,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>0001</td>
-                        <td>2021-07-01</td>
-                        <td>완전한 행복 외 2권</td>
-                        <td>결제완료</td>
-                        <td>주문확인</td>
-                        <td>-</td>
-                        <td>배송준비중</td>
-                    </tr>
+					<c:forEach var="o" items="${ od }">
+	                    <tr>
+	                        <td>${ o.orderNo }</td>
+	                        <td>${ o.orderDate }</td>
+	                        <td>${ o.payStatus }</td>
+	                        <td>${ o.orderStatus }</td>
+	                        <td>${ o.csStatus }</td>
+	                        <td>${ o.deliveryStatus }</td>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             <br>
@@ -186,17 +187,30 @@
                                 <th scope="col">저자</th>
                                 <th scope="col">출판사</th>
                                 <th scope="col">정가</th>
+                                <th scope="col">수량</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>0001</td>
-                                <td>완전한행복</td>
-                                <td>정유정</td>
-                                <td>은행나무</td>
-                                <td>15,000</td>
-                            </tr>
+                            <c:choose>
+	                    		<c:when test = "${ oBook.size() != 0}"> 
+			                    	<c:forEach var="ob" items="${ oBook }" varStatus="no">
+				                        <tr>
+				                            <td>${ no.count }</td>
+				                            <td class="detailC">${ ob.bkNo }</td>
+				                            <td>${ ob.bkTitle }</td>
+				                            <td>${ ob.writerName }</td>
+				                            <td>${ ob.bkPublish }</td>
+				                            <td>${ ob.detailPrice }</td>
+				                            <td>${ ob.quantity }</td>
+				                        </tr>
+			                        </c:forEach>
+			                	</c:when>
+			                	<c:otherwise>
+			                		<tr>
+			                			<td colspan="12">조회된 결과가 존재하지 않습니다.</td>
+			                		</tr>
+			                	</c:otherwise>
+                        	</c:choose>
                         </tbody>
                     </table>
                 </div>
@@ -217,10 +231,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>namu32</td>
-                                    <td>김나무</td>
-                                    <td>010-2222-3333</td>
-                                    <td>namu33@naver.com</td>
+                                    <td>${ oMem.memId }</td>
+                                    <td>${ oMem.memName }</td>
+                                    <td>${ oMem.memPhone }</td>
+                                    <td>${ oMem.memEmail }</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -233,22 +247,24 @@
                     </div>
                     <div>
                         <table class="table table-bordered table-sm vertical">
-                            <tr>
-                                <th>수령자 이름</th>
-                                <td>김나무</td>
-                            </tr>
-                            <tr>
-                                <th>수령자 연락처</th>
-                                <td>010-2222-3333</td>
-                            </tr>
-                            <tr>
-                                <th>주소</th>
-                                <td>[07071] 서울특별시 동작구 보라매로5길 15(신대방동) 전문건설회관빌딩</td>
-                            </tr>
-                            <tr>
-                                <th>배송메세지</th>
-                                <td>경비실에 맡겨주세요.</td>
-                            </tr>
+                        	<c:forEach var="o" items="${ od }">
+	                            <tr>
+	                                <th>수령자 이름</th>
+	                                <td>${ o.orderReceiver }</td>
+	                            </tr>
+	                            <tr>
+	                                <th>수령자 연락처</th>
+	                                <td>${ o.orderPhone }</td>
+	                            </tr>
+	                            <tr>
+	                                <th>주소</th>
+	                                <td>[${ o.orderPost }] ${ o.orderAddress } ${ o.addressRef } ${ o.addressDetail }</td>
+	                            </tr>
+	                            <tr>
+	                                <th>배송메세지</th>
+	                                <td>${ o.deliveryMsg }</td>
+	                            </tr>
+                            </c:forEach>
                         </table>
                     </div>
                     <div class="alterInfo-btn">
@@ -282,12 +298,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>2,500</td>
-                                </tr>
+                            	<c:forEach var="o" items="${ od }">
+	                                <tr>
+	                                    <td>${ o.shippingNumber }</td>
+	                                    <td>${ o.deliveryCompany }</td>
+	                                    <td>${ o.deliveryStatus }</td>
+	                                    <td>${ o.addPrice }</td>
+	                                </tr>
+                                </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -300,35 +318,40 @@
                 </div>
                 <div>
                     <table class="table table-bordered table-sm vertical">
+                    	
                         <tr>
                             <th>주문 금액</th>
-                            <td>53,600</td>
+                            <c:forEach var="o" items="${ od }">
+	                            <td>${ o.orderPrice }</td>
+                            </c:forEach>
                             <th>결제 금액</th>
-                            <td>48,240</td>
+                            <td>${ oPay.price }</td>
                         </tr>
                         <tr>
                             <th>추가금</th>
-                            <td>2,500</td>
+                            <c:forEach var="o" items="${ od }">
+                            	<td>${ o.addPrice }</td>
+                            </c:forEach>
                             <th>적립 포인트</th>
-                            <td>480</td>
+                            <td>${ oPay.price * 0.1 }</td>
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
                             <td width="300px;">[0001 - 금요일 쿠폰 (10%)] 5,000</td>
                             <th>결제 수단</th>
-                            <td>무통장(김나무)</td>
+                            <td>${ oPay.payWay } (${ oPay.depositName })</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
                             <td>0</td>
                             <th>결제 상태</th>
-                            <td>미입금</td>
+                            <td>${ oPay.status }</td>
                         </tr>
                         <tr>
                             <th>합계</th>
                             <td>48,240</td>
                             <th>결제일</th>
-                            <td>2021-07-21</td>
+                            <td>${ oPay.payDate }</td>
                         </tr>
 
                     </table>

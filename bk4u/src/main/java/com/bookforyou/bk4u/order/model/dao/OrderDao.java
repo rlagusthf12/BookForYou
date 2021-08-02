@@ -8,7 +8,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 
 @Repository
 public class OrderDao {
@@ -106,6 +109,31 @@ public class OrderDao {
 	 */
 	public int deleteAdminMemo(SqlSessionTemplate sqlSession, String orderNo) {
 		return sqlSession.delete("orderMapper.deleteAdminMemo", orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문 내역 조회 (한진)
+	 */
+	public ArrayList<Order> selectAdminOrderDetail(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectAdminOrderDetail", orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문된 도서 조회 (한진)
+	 */
+	public ArrayList<OrderDetail> selectAdminOrderedBook(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectAdminOrderedBook", orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 주문한 회원 조회 (한진)
+	 */
+	public Member selectAdminOrderedMem(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("memberMapper.selectAdminOrderedMem", orderNo);
+	}
+
+	public Payment selectAdminOrderedPayment(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("paymentMapper.selectOrderedPayment", orderNo);
 	}
 
 	
