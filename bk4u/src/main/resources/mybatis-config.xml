@@ -27,6 +27,7 @@
 		<mapper resource="/mappers/booklist-mapper.xml"/>
 		<mapper resource="/mappers/subscription-mapper.xml"/>
 		<mapper resource="/mappers/order-mapper.xml"/>
+		<mapper resource="/mappers/mypage-mapper.xml"/>
 	</mappers>
 
 </configuration>
