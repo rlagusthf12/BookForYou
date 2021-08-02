@@ -19,6 +19,7 @@
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberInterest" alias="MemberInterest"/>
 		<typeAlias type="com.bookforyou.bk4u.rental.model.vo.Rental" alias="Rental"/>
 		<typeAlias type="com.bookforyou.bk4u.payment.model.vo.Payment" alias="Payment"/>
+		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Coupon" alias="Coupon"/>
 	</typeAliases>
 
 	<mappers>
