@@ -63,5 +63,15 @@ public interface OrderService {
 	 */
 	ArrayList<Order> selectAdminOrderSearchList(PageInfo pi, HashMap<String, String> map);
 
+	/**
+	 * [관리자] 관리자 메모 등록/수정 (한진) 
+	 */
+	int updateAdminMemo(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 관리자 메모 삭제 (한진)
+	 */
+	int deleteAdminMemo(String orderNo);
+
 	
 }

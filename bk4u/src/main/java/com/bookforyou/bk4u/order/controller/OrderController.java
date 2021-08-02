@@ -42,21 +42,29 @@ public class OrderController {
 		int selectDeliveryCnt = oService.selectDeliveryCnt();
 		int selectFinish = oService.selectFinishCnt();
 		
-		
+		mv.setViewName("order/adminOrderList");
 		
 		if(orStatus.equals("0")) {
 			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			mv.setViewName("order/adminOrderList");
 		}else {
 			if(orStatus.equals("1")) {
-				pi = Pagination.getPageInfo(selectConfirmCnt, currentPage, 10, 5);				
+				pi = Pagination.getPageInfo(selectConfirmCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminOrderConfirm");
 			}else if(orStatus.equals("2")) {
 				pi = Pagination.getPageInfo(selectProductReadyCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminProductReady");
 			}else if(orStatus.equals("3")) {
 				pi = Pagination.getPageInfo(selectDeliveryReadyCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminDeliveryReady");
 			}else if(orStatus.equals("4")){
 				pi = Pagination.getPageInfo(selectDeliveryCnt, currentPage, 10, 5);
+				mv.setViewName("order/adminDeliveryIng");
 			}else if(orStatus.equals("5")){
 				pi = Pagination.getPageInfo(selectFinish, currentPage, 10, 5);
+				mv.setViewName("order/adminComplete");
+			}else {
+				mv.setViewName("order/adminOrderList");
 			}
 		}
 		
@@ -71,8 +79,7 @@ public class OrderController {
 		  .addObject("productReadyCnt", selectProductReadyCnt)
 		  .addObject("deliveryReadyCnt", selectDeliveryReadyCnt)
 		  .addObject("deliveryCnt", selectDeliveryCnt)
-		  .addObject("finishCnt", selectFinish)
-		  .setViewName("order/adminOrderList");
+		  .addObject("finishCnt", selectFinish);
 		
 		return mv;
 	}
@@ -136,6 +143,30 @@ public class OrderController {
 		  .setViewName("order/adminOrderList");
 		
 		return mv;
+	}
+	
+	/**
+	 * [관리자] 관리자 메모 등록/수정 (한진) 
+	 */
+	@RequestMapping("updateAdminMemo.or")
+	public String updateAdminMemo(String orderNo, String adminMemoContent) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("orderNo", orderNo);
+		map.put("memoContent", adminMemoContent);
+		
+		int result = oService.updateAdminMemo(map);
+		
+		return "redirect:/adminOrderList.or";
+	}
+	
+	/**
+	 * [관리자] 관리자 메모 삭제 (한진)
+	 */
+	@RequestMapping("deleteAdminMemo.or")
+	public String deleteAdminMemo(String orderNo) {
+		int result = oService.deleteAdminMemo(orderNo);
+		
+		return "redirect:/adminOrderList.or";
 	}
 	
 }
