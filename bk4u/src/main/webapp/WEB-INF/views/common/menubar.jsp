@@ -157,7 +157,7 @@
 			                        <input type="text" name="">
 			                    </div>
 			                    <div id="search-btn">
-			                        <input type="image" src="resources/search.png" name="Submit" value="Submit" align="absmiddle">
+			                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
 			                    </div>
 			                </div>
 			            </form>
