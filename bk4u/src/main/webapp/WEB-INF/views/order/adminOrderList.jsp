@@ -440,8 +440,8 @@
                             <th width="100px">주문자</th>
                             <th width="170px">도서명</th>
                             <th width="70px">결제금액</th>
-                            <th width="80px">결제수단<br>결제상태</th>
-                            <th width="130px">주문/CS상태</th>
+                            <th width="100px">결제수단<br>결제상태</th>
+                            <th width="110px">주문상태</th>
                             <th width="80px">배송상태</th>
                             <th width="70px">메모</th>
                         </tr>

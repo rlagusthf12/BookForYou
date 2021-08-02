@@ -225,7 +225,7 @@
                         <a href="adminOrderList.or">전체 주문 조회</a>
                     </li>
                     <li>
-                        <a href="order/adminOrderConfirm.jsp">주문확인</a>
+                        <a href="adminOrderList.or?status=1">주문확인</a>
                     </li>
                     <li>
                         <a href="order/adminProductReady.jsp">상품준비중</a>

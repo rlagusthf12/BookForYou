@@ -16,7 +16,7 @@
 	#outer{
             display:inline-block;
             position:absolute;
-            margin-top:50px;
+            margin:50px 0 0 250px;
             width: 950px;
         }
         #main-title > p{
