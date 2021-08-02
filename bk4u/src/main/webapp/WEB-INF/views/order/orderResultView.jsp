@@ -22,8 +22,9 @@
 
         .wrap {
             width: 1200px;
-            height: 1200px;
             margin: auto;
+            margin-top: 150px;
+            margin-bottom: 80px;
         }
 
         #content {
@@ -311,6 +312,9 @@
     </style>
 </head>
 <body>
+
+    <jsp:include page="../common/menubar.jsp"/>
+    
     <div class="wrap">
         <div id="content">
             <div id="result_title">
@@ -368,12 +372,12 @@
                         <div class="cal">-</div>
                         <div>
                             <div>총 할인 금액</div>
-                            <div>${ od.userPoints }원</div>
+                            <div>${ od.usedPoints }원</div>
                         </div>
                         <div class="cal">=</div>
                         <div>
                             <div>최종 결제 금액</div>
-                            <div>${ od.orderPrice }</div>
+                            <div>${ od.orderPrice }원</div>
                         </div>
                     </div>
                     <div id="line"></div>
@@ -422,5 +426,8 @@
             </div>
         </div>
     </div>
+    
+    <jsp:include page="../common/footer.jsp"/>
+    
 </body>
 </html>
