@@ -176,4 +176,24 @@
     	where mem_email=#{memEmail}
     	and email_status = #{emailStatus}
   	</select>
+  	
+  	<select id="selectMemberByEmail" resultMap="memberResult">
+  		select mem_id, mem_email
+  		from members
+  		where mem_email = #{memEmail}
+  		and not mem_status = 'N'
+  	</select>
+  	<select id="selectMemberByEmailAndId" resultMap="memberResult">
+  		select mem_id, mem_email, mem_pwd, mem_no
+  		from members
+  		where mem_email = #{memEmail}
+  		and mem_id = #{memId}
+  		and not mem_status = 'N'
+  	</select>
+  	<update id="updatePassword">
+  		update members
+  		set
+  		 mem_pwd = #{memPwd}
+  		where mem_id = #{memId} and mem_email = #{memEmail}
+  	</update>
 </mapper>

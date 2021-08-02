@@ -141,9 +141,7 @@
         </div>
         <div id="find-box">
             <div id="find-inner-box">
-                <a href="">아이디 찾기</a>
-                <span style="color:gainsboro">|</span>
-                <a href="">비밀번호 찾기</a>
+                <a href="id-find.me">아이디 찾기 | 비밀번호 찾기</a>
             </div>
         </div>
         <hr width="480px" style="margin-top: 40px;"/>

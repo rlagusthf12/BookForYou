@@ -37,6 +37,9 @@ public class MemberController {
 	
 	MemberCategory memberCategory;
 	
+	/**
+	 * 로그인 폼으로 이동하는 메서드
+	 */
 	@RequestMapping("login-form.me")
 	public String loginForm() {
 		return "member/login";
@@ -52,12 +55,10 @@ public class MemberController {
 		
 		if(loginUser == null) {
 			model.addAttribute("alertMsg", "일치하지 않는 회원정보입니다.");
-			System.out.println("로그인 실패" + loginUser);
 			return "member/login";
 		}else {
 			session.setAttribute("loginUser", loginUser);
 			// main페이지 업로딩 되면 여기만 수정
-			System.out.println("로그인 성공" + loginUser);
 			return "redirect:/";
 		}
 		
@@ -72,28 +73,45 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	/**
+	 * 회원가입 창으로 이동하는 메서드
+	 * @return
+	 */
 	@RequestMapping("enroll-form.me")
 	public String enrollForm() {
 		
 		return "member/signup";
 	}
 	
+	/**
+	 * 아이디 중복 체크 메서드
+	 * @param checkId
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("id-check.me")
 	public String ajaxIdCheck(String checkId){
 		int count = memberService.idCheck(checkId);
-		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 닉네임 중복 체크 메서드
+	 * @param checkNick
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("nick-check.me")
 	public String ajaxNickCheck(String checkNick) {
 		int count = memberService.nickCheck(checkNick);
-		System.out.println(count);
 		return count > 0 ? "NNNNN" : "NNNNY";
 	}
 	
+	/**
+	 * 이메일 중복 체크 메서드
+	 * @param checkEmail
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("email-check.me")
 	public String emailCheck(String checkEmail) {
@@ -102,7 +120,7 @@ public class MemberController {
 	}
 	
 	/**
-	 * 
+	 * 추천 정보 회원가입 폼으로 이동하는 메서드
 	 */
 	@RequestMapping("second-enroll.me")
 	public String firstEnroll(Member member, Model model) {
@@ -122,12 +140,11 @@ public class MemberController {
 		return "member/signupRecommend";
 	}
 	
+	/**
+	 * 회원가입을 진행하는 메서드, 인증 메일 송신함 
+	 */
 	@RequestMapping("insert.me")
 	public String insertMember(Member member,@RequestParam(value="interestArray")List<String> interestArray,@RequestParam(value="subCategoryArray")List<String> subCategoryArray, Model model) {
-		
-		System.out.println(member);
-		System.out.println(interestArray);
-		System.out.println(subCategoryArray);
 		
 		
 		String encPwd = bcryptPasswordEncoder.encode(member.getMemPwd());
@@ -137,7 +154,6 @@ public class MemberController {
 		member.setEmailStatus("N");
 		
 		int result = memberService.insertMember(member);
-		System.out.println("1차 result : " + result);
 		
 		if(result > 0) {
 			int memNo = memberService.selectByMemId(member);
@@ -145,10 +161,8 @@ public class MemberController {
 			memberInterest.setMemNo(memNo);
 			for(String interest : interestArray) {
 				int interestNo = Integer.parseInt(interest);
-				System.out.println(interest);
 				memberInterest.setInterestNo(interestNo);
 				int interest_result = memberService.insertMemberInterest(memberInterest);
-				System.out.println("2차 result : " + interest_result);
 			}
 			
 			memberCategory = new MemberCategory();
@@ -157,14 +171,12 @@ public class MemberController {
 				int subCategoryNo = Integer.parseInt(subcategory);
 				memberCategory.setSubCategoryNo(subCategoryNo);
 				int category_result = memberService.insertMemberCategory(memberCategory);
-				System.out.println("3차 result : " + category_result);
 			}
 			
 			
 			String authKey = mss.sendAuthMail(member.getMemEmail());
 	        member.setEmailStatus(authKey);
 	        int result2 = memberService.updateEmailStatus(member);
-	        System.out.println("4차 result : " + result2);
 	        if(result2 > 0) {
 	        	return "member/sendMail";
 	        }else {
@@ -177,7 +189,10 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("signUpConfirm.me")
+	/**
+	 * 인증 메일 클릭시 나타나는 메서드
+	 */
+	@RequestMapping("sign-up-confirm.me")
 	public String signUpConfirm(@RequestParam Map<String,String> map,Model model) {
 		// 이메일과 authKey가 일치하면 멤버 상태를 업데이트 해준다.
 		String authKey = map.get("authKey");
@@ -193,7 +208,6 @@ public class MemberController {
 		if(signConfirmMember != null) {
 			member.setEmailStatus("Y");
 			int result = memberService.updateEmailStatus(member);
-			System.out.println(result);
 			return "member/authSuccess";
 		}else {
 			model.addAttribute("alertMsg", "인증에 실패하였습니다.");
@@ -202,4 +216,60 @@ public class MemberController {
 		
 		
 	}
+	
+	/**
+	 * 아이디 찾는 폼으로 이동하는 메서드
+	 * @return
+	 */
+	@RequestMapping("id-find.me")
+	public String idFindForm() {
+		return "member/idFind";
+	}
+	
+	/**
+	 * 아이디 찾기 메일 폼으로 이동하는 메서드
+	 * 1. 해당 메일로 가입한 회원 존재하면, 이메일로 아이디를 보내주고 idFind.jsp로 이동
+	 * 2. 해당 메일로 가입한 회원이 존재하지 않다면, idFindWarn.jsp로 이동
+	 * @return
+	 */
+	@RequestMapping("send-id-find-mail.me")
+	public String sendIdFindMail(Member member) {
+		Member findMember = memberService.findMemberByEmail(member);
+		if(findMember != null) {
+			mss.sendIdFindMail(findMember.getMemId(), findMember.getMemEmail());
+			return "member/idFindMail";
+		}else {
+			return "member/idFindWarn";
+		}
+	}
+	
+	/**
+	 * 비밀번호 찾기 폼으로 이동하는 메서드
+	 * 1. 해당  아이디, 이메일과 일치하는 회원이 있다면, 패스워드 랜덤값으로 변경후 이메일로 해당 패스워드를 보내준다. 
+	 * 2. 해당 아이디, 이메일과 일치하는 회원이 없다면, passwordFindWarn으로 포워딩
+	 */
+	@RequestMapping("send-password-find-mail.me")
+	public String sendPasswordFindMail(Member member) {
+		Member findMember = memberService.findMemberByEmailAndId(member);
+		if(findMember != null) {
+			String tempPassword = memberService.createTempPassword();
+			String encPwd = bcryptPasswordEncoder.encode(tempPassword);
+			member.setMemPwd(encPwd);
+			int result = memberService.updatePassword(member);
+
+			if(result > 0) {
+				mss.sendNewPasswordMail(tempPassword,member.getMemEmail());
+				return "member/passwordFindEmail";
+			}else {
+				//여기 나중에 수정
+				return "member/passwordFindWarn";
+			}
+		}else {
+			return "member/passwordFindWarn";
+		}
+		
+	}
+	
+	
+	
 }

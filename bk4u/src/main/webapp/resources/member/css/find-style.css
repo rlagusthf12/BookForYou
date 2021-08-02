@@ -1,0 +1,42 @@
+*{
+  margin:0; padding:0;
+  line-height:1.3;
+}
+ul{list-style:none;}
+
+.tabmenu{ 
+  max-width:700px; 
+  margin-top: 20px;
+  margin: 0 auto; 
+  position:relative; 
+}
+.tabmenu ul li{
+  display:  inline-block;
+  width:50%; 
+  float:left;  
+  text-align:center; 
+  background :#ccc;
+  line-height:40px;
+}
+.tabmenu label{
+  display:block;
+  width:100%; 
+  height:50px;
+  line-height:50px;
+}
+
+.tabmenu input{display:none;}
+.tabCon{
+  display:none; 
+  text-align:left; 
+  padding: 20px;
+  position:absolute; 
+  left:0; top:40px; 
+  box-sizing: border-box; 
+}
+.tabmenu input:checked ~ label{
+  background:#f9f9f9;
+}
+.tabmenu input:checked ~ .tabCon{
+  display:block;
+}

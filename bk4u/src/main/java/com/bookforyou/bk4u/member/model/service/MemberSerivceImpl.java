@@ -52,26 +52,74 @@ public class MemberSerivceImpl implements MemberService{
 
 	@Override
 	public int selectByMemId(Member member) {
-		// TODO Auto-generated method stub
 		return memberDao.selectByMemId(sqlSession,member);
 	}
 
 	@Override
 	public int insertMemberInterest(MemberInterest memberInterest) {
-		
 		return memberDao.insertMemberInterest(sqlSession, memberInterest);
 	}
 
 	@Override
 	public int insertMemberCategory(MemberCategory memberCategory) {
-		
 		return memberDao.insertMemberCategory(sqlSession, memberCategory);
 	}
 
 	@Override
 	public Member selectEmailAndAuthKey(Member member) {
-		// TODO Auto-generated method stub
 		return memberDao.selectEmailAndAuthKey(sqlSession,member);
+	}
+
+	@Override
+	public Member findMemberByEmail(Member member) {
+		return memberDao.selectMemberByEmail(sqlSession,member);
+	}
+
+	@Override
+	public Member findMemberByEmailAndId(Member member) {
+		return memberDao.selectMemberByEmailAndId(sqlSession,member);
+	}
+	
+	/**
+	 * 임시 비밀번호 생성하는 메서드
+	 */
+	@Override
+	public String createTempPassword() {
+		String pswd = "";
+		StringBuffer sb = new StringBuffer();
+		StringBuffer sc = new StringBuffer("!@#$%^&*-=?~"); 
+
+		// 대문자 4개
+		sb.append((char)((Math.random() * 26)+65));  
+
+		for( int i = 0; i<3; i++) {
+		   sb.append((char)((Math.random() * 26)+65));
+		} 
+
+		// 소문자 4개
+		for( int i = 0; i<4; i++) {
+		    sb.append((char)((Math.random() * 26)+97));
+		}  
+
+
+		// 숫자 2
+		for( int i = 0; i<2; i++) {
+		    sb.append((char)((Math.random() * 10)+48));
+		}
+
+
+		// 특수문자 두개 
+		sb.setCharAt(((int)(Math.random()*3)+1), sc.charAt((int)(Math.random()*sc.length()-1))); //대문자3개중 하나   
+		sb.setCharAt(((int)(Math.random()*4)+4), sc.charAt((int)(Math.random()*sc.length()-1))); //소문자4개중 하나
+
+		pswd = sb.toString();
+
+		return pswd;
+	}
+
+	@Override
+	public int updatePassword(Member member) {
+		return memberDao.updatePassword(sqlSession,member);
 	}
 
 

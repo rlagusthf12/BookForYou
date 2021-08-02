@@ -27,6 +27,14 @@ public interface MemberService {
 
 	Member selectEmailAndAuthKey(Member member);
 
+	Member findMemberByEmail(Member member);
+
+	Member findMemberByEmailAndId(Member member);
+
+	String createTempPassword();
+
+	int updatePassword(Member member);
+
 	
 }
 

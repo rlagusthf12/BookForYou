@@ -34,7 +34,6 @@ public class MemberDao {
 	}
 
 	public int updateEmailStatus(SqlSessionTemplate sqlSession, Member member) {
-		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.updateEmailStatus",member);
 	}
 
@@ -49,15 +48,24 @@ public class MemberDao {
 	}
 
 	public int insertMemberCategory(SqlSessionTemplate sqlSession, MemberCategory memberCategory) {
-		
 		return sqlSession.insert("memberMapper.insertMemberCategory",memberCategory);
 	}
 
 	public Member selectEmailAndAuthKey(SqlSessionTemplate sqlSession, Member member) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.selectEmailAndAuthKey",member);
 	}
 
+	public Member selectMemberByEmail(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.selectMemberByEmail",member);
+	}
+
+	public Member selectMemberByEmailAndId(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.selectMemberByEmailAndId",member);
+	}
+
+	public int updatePassword(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.updatePassword",member);
+	}
 
 	
 	
