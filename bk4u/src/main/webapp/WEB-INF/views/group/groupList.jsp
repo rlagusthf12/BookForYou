@@ -117,14 +117,15 @@
                     <!-- 현재 가입한 모임이 없다면 -->
                     <p>현재 가입한 모임이 없습니다</p>
                 <hr>
-                
+                <br>
+                <h6><b>독서모임 목록</b></h6>
                     <!-- 현재 가입한 모임이 있다면 -->
                     <c:forEach var="g" items="${ groupList }">
                     <table id="boardList" class="table table-borderless" align="center">
                         <tr>
                             <td rowspan="3" width="230" height="200">${ g.groupImg }</td>
-                            <td width="30" height="20" style="font-size: 13px;">${ g.groupType }</td>
-                            <td width="60" height="20" style="font-size: 13px;">${ g.groupDate }</td>
+                            <td width="180" height="20" style="font-size: 13px;">${ g.groupType }</td>
+                            <td height="20">${ g.groupDate }</td>
                         </tr>
                         <tr>
                             <td colspan="3" height="20">${ g.groupTitle }</td>                        
