@@ -18,7 +18,6 @@
 
         .wrap {
             width: 1200px;
-            height: 1350px;
             margin: auto;
             margin-top: 150px;
             margin-bottom: 80px;
