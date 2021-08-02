@@ -23,15 +23,15 @@
 
         .wrap {
             width: 1200px;
-            height: 1200px;
             margin: auto;
+            margin-top: 150px;
+            margin-bottom: 80px;
         }
 
         #content {
             width: 80%;
             height: 100%;
             margin: auto;
-            margin-top: 140px;
             position: relative;
         }
         

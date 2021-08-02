@@ -33,7 +33,7 @@ public class OrderDao {
 	 * [사용자] 도서 주문 조회 (연지)
 	 */
 	public Order selectOrder(SqlSessionTemplate sqlSession, int orderNo) {
-		return sqlSession.selectOne("orderMapper.selectOrder");
+		return sqlSession.selectOne("orderMapper.selectOrder", orderNo);
 	}
 
 	/*
