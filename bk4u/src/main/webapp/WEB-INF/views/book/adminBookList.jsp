@@ -238,12 +238,11 @@
 	        })
 	        
 	        /* 테이블 행 선택 */
-	        $("#result-div table tbody tr").click(function(){
+	        $(".detailC").click(function(){
 	        	
-	        	var tr = $(this);
-	        	var td = tr.children();
+	        	var td = $(this);
 	        	
-	        	var bkNo = td.eq(3).text();
+	        	var bkNo = td.text();
 	        	location.href='adminBookDetail.bk?bkNo=' + bkNo;
 	        	
 	        })
@@ -400,7 +399,7 @@
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="bCheck" value="${ b.bkNo }"></td>
 			                            <td><img src="" alt="" width="65" height="80"></td>
-			                            <td>${ b.bkNo }</td>
+			                            <td class="detailC">${ b.bkNo }</td>
 			                            <td>${ b.bkTitle }</td>
 			                            <td>${ b.writerName }</td>
 			                            <td>${ b.bkPublish }</td>

@@ -108,5 +108,21 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.selectAdminOrderSearchList(sqlSession, pi, map);
 	}
 
+	/**
+	 * [관리자] 관리자 메모 등록/수정 (한진)
+	 */
+	@Override
+	public int updateAdminMemo(HashMap<String, String> map) {
+		return oDao.updateAdminMemo(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 관리자 메모 삭제 (한진)
+	 */
+	@Override
+	public int deleteAdminMemo(String orderNo) {
+		return oDao.deleteAdminMemo(sqlSession, orderNo);
+	}
+
 	
 }
