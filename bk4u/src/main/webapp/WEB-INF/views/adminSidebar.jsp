@@ -145,7 +145,7 @@
         BK4U
     </div>
     <div id="admin-login">
-        adming님 안녕하세요
+        admin님 안녕하세요
         <div id="admin-logout">
             <a href="">로그아웃</a>
         </div>
@@ -153,13 +153,13 @@
     <div id="leftside-navigation" class="nano">
         <ul class="nano-content">
             <li>
-                <a href="index.html"><i class="fa fa-dashboard"></i><span>HOME</span></a>
+                <a href="amain.me"><i class="fa fa-dashboard"></i><span>HOME</span></a>
             </li>
             <li class="sub-menu">
                 <a href="javascript:void(0);"><i class="fa fa-table"></i><span>배너</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="tables-basic.html">배너 관리</a>
+                        <a href="banner.me">배너 관리</a>
                     </li>
 
                 </ul>
@@ -168,19 +168,19 @@
                 <a href="javascript:void(0);"><i class="fa fa-user"></i><span>회원</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="tables-basic.html">회원 조회</a>
+                        <a href="amemSearch.me">회원 조회</a>
                     </li>
                     <li>
-                        <a href="tables-data.html">회원 탈퇴</a>
+                        <a href="amemDelete.me">회원 탈퇴</a>
                     </li>
                     <li>
-                        <a href="tables-data.html">블랙 리스트</a>
+                        <a href="blackList.me">블랙 리스트</a>
                     </li>
                     <li>
-                        <a href="tables-data.html">쿠폰 관리</a>
+                        <a href="coupon.me">쿠폰 관리</a>
                     </li>
                     <li>
-                        <a href="tables-data.html">쿠폰 조회</a>
+                        <a href="couponList.me">쿠폰 조회</a>
                     </li>
                 </ul>
             </li>
