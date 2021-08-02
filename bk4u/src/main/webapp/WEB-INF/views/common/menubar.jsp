@@ -167,16 +167,29 @@
                 <c:choose>
                     <c:when test="${ empty loginUser }">
                 <!-- 로그인 전 -->
-                        <a href="enroll-form.me">회원가입</a> | 
                         <a href="login-form.me">로그인</a>
+                        <a href="enroll-form.me">회원가입</a> 
                     </c:when>
-                    <c:otherwise>
+                    <c:otherwise>        
                 <!-- 로그인 후  -->
-                        <label>Bk4U님 환영합니다</label> &nbsp;&nbsp;
-                        <a href="">마이페이지</a>
-                        <a href="cart.bk?memNo=${ loginUser.memNo }">장바구니</a><br>
-                        <a href="">관리자 전환</a> |
-                        <a href="logout.me">로그아웃</a>
+                		<c:choose>
+                			<c:when test="${loginUser.memStatus eq 'A' }">
+                				<a href="amain.me">관리자 전환</a> |
+                				<a href="logout.me">로그아웃 </a>
+		                    </c:when>
+		     
+		                    <c:otherwise>
+		                        <label>${ loginUser.memName }님 환영합니다</label> &nbsp;&nbsp;
+		                        <a href="logout.me">로그아웃 </a><br>	    
+		                        
+		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                        
+		                        <a href="">마이페이지</a>
+		                        <a href="cart.bk?memNo=${ loginUser.memNo }">장바구니</a>
+		                        
+		                   	</c:otherwise>
+		                   	
+		                </c:choose>
                     </c:otherwise>
                 </c:choose>
             </div>
