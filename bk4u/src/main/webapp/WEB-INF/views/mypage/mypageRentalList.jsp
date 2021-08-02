@@ -22,8 +22,9 @@
 
         .wrap {
             width: 1200px;
-            height: 1200px;
             margin: auto;
+            margin-top: 150px;
+            margin-bottom: 80px;
         }
 
         .wrap>div {
@@ -92,6 +93,9 @@
 </head>
 
 <body>
+
+    <jsp:include page="../common/menubar.jsp"/>
+    
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -198,56 +202,72 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <c:forEach var="r" items="${ rList }">
                         <tr>
-                            <td>87775</td>
-                            <td>강남점</td>
-                            <td>시선으로부터</td>
-                            <td>~ 07/01</td>
-                            <td>21.07.01 - 21.07.31</td>
-                            <td>예약중</td>
+                            <td>${ r.rentalNo }</td>
+                            <td>${ r.storeName }</td>
+                            <td>${ r.bkTitle }</td>
+                            <td>~ ${ r.receiveDate }</td>
+                            <td>${ r.requestDate } ~ ${ r.requestDate }</td>
+                            <td>${ r.rentalStatus }</td>
                         </tr>
-                        <tr>
-                            <td>87775</td>
-                            <td>강남점</td>
-                            <td>시선으로부터</td>
-                            <td>~ 07/01</td>
-                            <td>21.07.01 - 21.07.31</td>
-                            <td>예약중</td>
-                        </tr>
-                        <tr>
-                            <td>87775</td>
-                            <td>강남점</td>
-                            <td>시선으로부터</td>
-                            <td>~ 07/01</td>
-                            <td>21.07.01 - 21.07.31</td>
-                            <td>예약중</td>
-                        </tr>
-                        <tr>
-                            <td>87775</td>
-                            <td>강남점</td>
-                            <td>시선으로부터</td>
-                            <td>~ 07/01</td>
-                            <td>21.07.01 - 21.07.31</td>
-                            <td>예약중</td>
-                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
-
-                <div id="paging-wrap">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">이전</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                        <li class="page-item disabled"><a class="page-link">다음</a></li>
-                    </ul>
-                </div>
+            
+	            <div id="paging-wrap">
+	                <ul class="pagination">
+	                    <c:choose>
+	                		<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link">이전</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<c:choose>
+		                    		<c:when test="${ !empty condition }">
+		                    			<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }&condition=${condition}&keyword=${keyword}">Previous</a></li>
+	                    			</c:when>
+	                    			<c:otherwise>
+	                    				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
+	                    			</c:otherwise>
+	                    		</c:choose>
+	                    	</c:otherwise>
+	                    </c:choose>
+	                    
+	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    	<c:choose>
+	                    		<c:when test="${ !empty condition }">
+	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+	                   			</c:when>
+	                   			<c:otherwise>
+	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
+	                   			</c:otherwise>
+	                    	</c:choose>
+	                    </c:forEach>
+	                    
+	                    <c:choose>
+	                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<c:choose>
+		                    		<c:when test="${ !empty condition }">
+			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
+			                    	</c:when>
+			                    	<c:otherwise>
+			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+			                    	</c:otherwise>
+			                    </c:choose>
+		                    </c:otherwise>
+	                    </c:choose>
+	                </ul>
+	            </div>
 
             </div>  
         </div>
     </div>
+    
+    <jsp:include page="../common/footer.jsp"/>
+    
 </body>
 
 </html>

@@ -12,17 +12,21 @@ import com.bookforyou.bk4u.rental.model.vo.Rental;
 public class RentalDao {
 
 	/*
+	 * [사용자] 대여 내역 개수 조회 (연지)
+	 */
+	public int selectRentalCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("rentalMapper.selectRetalCount", memNo);
+	}
+
+	/*
 	 * [사용자] 대여 내역 조회 (연지)
 	 */
 	public ArrayList<Rental> selectRentalList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
 		return (ArrayList)sqlSession.selectList("rentalMapper.selectRentalList", pi, memNo);
 	}
 
-	/*
-	 * [사용자] 대여 내역 개수 조회 (연지)
-	 */
-	public int selectRentalCount(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("rentalMapper.selectRetalCount", memNo);
+	public Rental selectRental(SqlSessionTemplate sqlSession, int rentalNo) {
+		return sqlSession.selectOne("rentalMapper.selectRental", rentalNo);
 	}
 
 }

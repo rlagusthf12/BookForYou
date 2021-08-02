@@ -18,6 +18,14 @@ public class RentalServiceImpl implements RentalService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+
+	/*
+	 * [사용자] 대여 내역 개수 조회 (연지)
+	 */
+	@Override
+	public int selectRentalCount(int memNo) {
+		return rentalDao.selectRentalCount(sqlSession, memNo);
+	}
 	
 	/*
 	 * [사용자] 대여 내역 조회 (연지)
@@ -26,13 +34,13 @@ public class RentalServiceImpl implements RentalService {
 	public ArrayList<Rental> selectRentalList(PageInfo pi, int memNo) {
 		return rentalDao.selectRentalList(sqlSession, pi, memNo);
 	}
-
+	
 	/*
-	 * [사용자] 대여 내역 개수 조회 (연지)
+	 * [사용자] 대여 내역 상세 조회 (연지)
 	 */
 	@Override
-	public int selectRentalCount(int memNo) {
-		return rentalDao.selectRentalCount(sqlSession, memNo);
+	public Rental selectRental(int rentalNo){
+		return rentalDao.selectRental(sqlSession, rentalNo);
 	}
 
 }
