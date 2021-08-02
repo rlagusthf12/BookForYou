@@ -461,6 +461,7 @@
     		})
             </script>
             
+            <!-- 
             <script>
             $("#check_all").change(function(){
             	if($("#check_all").is(":checked")){
@@ -470,11 +471,12 @@
             	}
             })
             </script>
+             -->
             
             <div id="cart_bottom">
                 <div>
                     <span>소지 쿠폰</span>
-                    <span>0개</span>
+                    <span>${ cpCount }개</span>
                 </div>
                 <div>
                     <span>보유 포인트</span>
@@ -482,7 +484,7 @@
                 </div>
                 <div>
                     <span>총 상품 가격</span>
-                    <span>36000원</span>
+                    <span>0원</span>
                 </div>
             </div>
 
@@ -491,21 +493,20 @@
                     <tr>
                         <th colspan="3">보유쿠폰</th>
                     </tr>
+                    <c:forEach var="c" items="${ cList }">
                     <tr>
-                        <td>7월 바캉스 쿠폰</td>
-                        <td>국내 도서 10% 할인</td>
-                        <td>~ 2021/07/30</td>
+                        <td>${ c.couponName }</td>
+                        <c:choose>
+                        	<c:when test="${ empty c.couponPriceRate }">
+                            	<td>${ c.couponCategory } ${ c.couponPrice }원 할인</td>
+                            </c:when>
+                        	<c:otherwise>
+                        		<td>${ c.couponCategory } ${ c.couponPriceRate } 할인</td>
+                        	</c:otherwise>
+                        </c:choose>
+                        <td>~ ${ c.expireDate }</td>
                     </tr>
-                    <tr>
-                        <td>7월 바캉스 쿠폰</td>
-                        <td>국내 도서 10% 할인</td>
-                        <td>~ 2021/07/30</td>
-                    </tr>
-                    <tr>
-                        <td>7월 바캉스 쿠폰</td>
-                        <td>국내 도서 10% 할인</td>
-                        <td>~ 2021/07/30</td>
-                    </tr>
+                    </c:forEach>
                 </table>
             </div>
 

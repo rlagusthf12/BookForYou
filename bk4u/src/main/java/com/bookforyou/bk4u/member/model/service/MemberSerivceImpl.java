@@ -2,11 +2,14 @@ package com.bookforyou.bk4u.member.model.service;
 
 
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookforyou.bk4u.member.model.dao.MemberDao;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
@@ -122,6 +125,20 @@ public class MemberSerivceImpl implements MemberService{
 		return memberDao.updatePassword(sqlSession,member);
 	}
 
+	/*
+	 * [사용자] 소지 쿠폰 개수 조회 (연지)
+	 */
+	@Override
+	public int selectCouponCount(int memNo) {
+		return memberDao.selectCouponCount(sqlSession, memNo);
+	}
 
-	
+	/*
+	 * [사용자] 소지 쿠폰 조회 (연지)
+	 */
+	@Override
+	public ArrayList<Coupon> selectCouponList(int memNo){
+		return memberDao.selectCouponList(sqlSession, memNo);
+	}
+
 }

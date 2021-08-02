@@ -36,6 +36,21 @@
 		<result column="mem_no" property="memNo"/>
 		<result column="sub_cate_no" property="subCategoryNo"/>
 	</resultMap>
+	
+	<resultMap id="couponResult" type="Coupon">
+		<result column="coupon_issue_num" property="couponIssueNum"/>
+		<result column="coupon_no" property="couponNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="coupon_kind" property="couponKind"/>
+		<result column="create_date" property="createDate"/>
+		<result column="expire_date" property="expireDate"/>
+		<result column="status" property="status"/>
+		<result column="use_date" property="useDate"/>
+		<result column="coupon_name" property="couponName"/>
+		<result column="coupon_category" property="couponCategory"/>
+		<result column="coupon_price" property="couponPrice"/>
+		<result column="coupon_pricerate" property="couponPriceRate"/>
+	</resultMap>
   
   	<select id="loginMember" resultMap="memberResult">
   		select
@@ -207,5 +222,34 @@
   		  from members
   		  join orders using (mem_no)
   		 where order_no = #{orderNo}
+	</select>
+	
+  	<!-- [사용자] 소지 쿠폰 개수 조회 (연지) -->
+  	<select id="selectCouponCount" resultType="_int">
+  		select
+    		   count(*)
+		  from mem_cupon
+		 where mem_no = #{memNo}
+  	</select>
+  	
+  	<!-- [사용자] 소지 쿠폰 조회 (연지) -->
+  	<select id="selectCouponList" resultMap="couponResult">
+  		  		select
+    		   coupon_issue_num,
+    		   coupon_no,
+    		   mem_no,
+    		   mc.coupon_kind,
+    		   create_date,
+    		   expire_date,
+    		   status,
+    		   use_date,
+               coupon_name,
+               c.coupon_kind coupon_category,
+               coupon_price,
+               coupon_pricerate
+		  from mem_cupon mc
+          join coupon c using (coupon_no)
+		 where mem_no = 3
+           and status = 'Y';
   	</select>
 </mapper>

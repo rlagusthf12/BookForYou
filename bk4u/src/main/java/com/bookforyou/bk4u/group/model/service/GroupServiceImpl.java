@@ -1,7 +1,9 @@
 package com.bookforyou.bk4u.group.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,11 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public ArrayList<GroupBoard> selectList() {
 		return gDao.selectList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<GroupBoard> selectListMore() {
+		return gDao.selectListMore(sqlSession);
 	}
 	
 	@Override
@@ -58,6 +65,29 @@ public class GroupServiceImpl implements GroupService{
 	public int deleteMember(String userId) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int selectSearchGListCount(HashMap<String, String> map) {
+		
+		SqlSession sqlSession = getSqlSession();
+		int searchCount = gDao.selectSearchGListCount(sqlSession, map);
+		sqlSession.close();
+		return searchCount;
+		
+	}
+
+	@Override
+	public ArrayList<GroupBoard> selectSearchListOne(HashMap<String, String> map) {
+		SqlSession sqlSession = getSqlSession();
+		ArrayList<GroupBoard> list = gDao.selectSearchList(sqlSession, map);
+		sqlSession.close();
+		return list;
+	}
+
+	private SqlSession getSqlSession() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

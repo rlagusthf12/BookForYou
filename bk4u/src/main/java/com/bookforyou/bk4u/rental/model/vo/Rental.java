@@ -22,5 +22,10 @@ public class Rental {
 	public String receiveDate;
 	public String returnDate;
 	public String rentalStatus;
+	public String bkTitle;
+	public String bkPublish;
+	public String writerName;
+	public String storeName;
+	public String bkLct;
 
 }

@@ -16,8 +16,9 @@
 
         .wrap {
             width: 1200px;
-            height: 1200px;
             margin: auto;
+            margin-top: 150px;
+            margin-bottom: 80px;
         }
 
         .wrap>div {
@@ -114,6 +115,9 @@
 </head>
 
 <body>
+
+    <jsp:include page="../common/menubar.jsp"/>
+    
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -212,27 +216,27 @@
                 <table id="rental_info">
                     <tr>
                         <th>예약번호</th>
-                        <td>33433</td>
+                        <td>${ rt.rentalNo }</td>
                     </tr>
                     <tr>
                         <th>지점명</th>
-                        <td>가로수길점</td>
+                        <td>${ rt.storeName }</td>
                     </tr>
                     <tr>
                         <th>대여도서</th>
-                        <td>시선으로부터</td>
+                        <td>${ rt.bkTitle }</td>
                     </tr>
                     <tr>
                         <th>수령기한</th>
-                        <td>~ 06/28</td>
+                        <td>~ ${ rt.reiceiveDate }</td>
                     </tr>
                     <tr>
                         <th>대여기간</th>
-                        <td>21.06.28 - 21.07.25</td>
+                        <td>${ rt.reiceiveDate } ~ ${ rt.reiceiveDate }</td>
                     </tr>
                     <tr>
                         <th>상태</th>
-                        <td>반납완료</td>
+                        <td>${ rt.rentalStatus }</td>
                     </tr>
                 </table>
 
@@ -241,14 +245,17 @@
                 </div>
 
                 <div id="book_info">
-                    <div style="font-weight: 600; font-size: 25px;">시선으로부터</div>
-                    <div style="font-size: 15px; margin-top: 3px;">정세랑 | 문학동네</div>
-                    <div style="font-weight: 600; font-size: 17px; margin-top: 15px;">도서위치: E4 300098</div>
+                    <div style="font-weight: 600; font-size: 25px;">${ rt.bkTitle }</div>
+                    <div style="font-size: 15px; margin-top: 3px;">${ rt.writerName } | ${ rt.bkPublish }</div>
+                    <div style="font-weight: 600; font-size: 17px; margin-top: 15px;">${ rt.bkLct }</div>
                 </div>
             </div>  
 
         </div>
     </div>
+    
+    <jsp:include page="../common/footer.jsp"/>
+    
 </body>
 
 </html>

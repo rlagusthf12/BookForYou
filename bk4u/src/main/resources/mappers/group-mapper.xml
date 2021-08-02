@@ -81,5 +81,53 @@
 		  )
 			
 	</insert>
+	
+	<select id="selectSearchGListCount" resultType="_int">
+		select
+			   count(*)
+	      from groupBoard b
+	      
+	     where 
+	     <if test="condition == 'group_title'">
+	    	and gorup_title
+	    </if>
+	    <if test="condition == 'group_script'">
+	    	and group_script
+	    </if>
+	    <if test="condition == 'group_place'">
+	    	and group_place
+	    </if>
+	     		like '%' || #{keyword} || '%'
+	
+	</select>
+	
+	<select id="selectSearchList" resultMap="groupResult">
+			SELECT *              
+        FROM (SELECT ROWNUM NUM 
+            , s.group_boardno 
+            , s.group_type
+            , s.group_title
+            , s.group_script
+            , s.group_place
+            , s.group_img
+            
+              FROM 
+                    (SELECT * FROM GROUPBOARD 
+            <choose>
+            <when test="condition == 'groupTitle'">
+            where group_title
+           </when>
+           <when test="condition == 'groupScript'">
+            and group_script
+            </when>
+            <otherwise>
+            and group_place
+            </otherwise>
+           </choose>
+	     		like '%' || #{keyword} || '%'
+             
+             
+                    ORDER BY GROUP_BOARDNO DESC)s) 
+	</select>
 
 </mapper>

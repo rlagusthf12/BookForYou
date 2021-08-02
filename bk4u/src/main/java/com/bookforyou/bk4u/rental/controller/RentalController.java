@@ -31,6 +31,24 @@ public class RentalController {
 
 		ArrayList<Rental> rList = rentalService.selectRentalList(pi, memNo);
 		
+		mv.addObject("pi", pi)
+		  .addObject("rList", rList)
+		  .setViewName("rental/mypageRentalList");
+		
+		return mv;
+	}
+	
+	/*
+	 * [사용자] 대여 내역 조회 (연지)
+	 */
+	@RequestMapping("rentalDetail.mp")
+	public ModelAndView selectRental(ModelAndView mv, int rentalNo) {
+
+		Rental rt = rentalService.selectRental(rentalNo);
+		
+		mv.addObject("rt", rt)
+		  .setViewName("rental/mypageRentalDetail");
+		
 		return mv;
 		
 	}

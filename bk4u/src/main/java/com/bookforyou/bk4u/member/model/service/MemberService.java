@@ -1,6 +1,9 @@
 package com.bookforyou.bk4u.member.model.service;
 
 
+import java.util.ArrayList;
+
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
@@ -34,6 +37,16 @@ public interface MemberService {
 	String createTempPassword();
 
 	int updatePassword(Member member);
+
+	/*
+	 * [사용자] 소지 쿠폰 개수 조회 (연지)
+	 */
+	int selectCouponCount(int memNo);
+
+	/*
+	 * [사용자] 소지 쿠폰 조회 (연지)
+	 */
+	ArrayList<Coupon> selectCouponList(int memNo);
 
 	
 }

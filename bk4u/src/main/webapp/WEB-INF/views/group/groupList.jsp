@@ -89,7 +89,7 @@
                 <br><br>
 
                     <br clear="both"><br>
-                    <form id="searchForm" action="" method="Get" align="center">
+                    <form id="searchForm" action="search.gbo" method="Get" align="center">
                         <div class="select">
                             <select class="custom-select" name="condition">
                                 <option value="all">전체검색</option>
@@ -100,10 +100,18 @@
                             <hr>
                         </div>
                         <div class="text">
-                            <input type="text" class="form-control" name="keyword">
+                            <input type="text" class="form-control" name="keyword" value="${keyword }">
+                            
                         </div>
                             <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                           
                     </form>
+                    <script>
+                    $(function(){
+                    	$("#searchForm option[value=${conditon}]").attr("selected", true);
+                    })
+                    </script>
+                    
                 <br><br><br><br>
 
                 <!--로그인한 모든 회원에게 보이는 버튼-->
