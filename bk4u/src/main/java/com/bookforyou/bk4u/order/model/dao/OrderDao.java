@@ -94,5 +94,19 @@ public class OrderDao {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectAdminOrderSearchList", map, rowBounds);
 	}
 
+	/**
+	 * [관리자] 관리자 메모 등록/수정 (한진) 
+	 */
+	public int updateAdminMemo(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("orderMapper.updateAdminMemo", map);
+	}
+
+	/**
+	 * [관리자] 관리자 메모 삭제 (한진)
+	 */
+	public int deleteAdminMemo(SqlSessionTemplate sqlSession, String orderNo) {
+		return sqlSession.delete("orderMapper.deleteAdminMemo", orderNo);
+	}
+
 	
 }

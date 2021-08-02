@@ -140,4 +140,28 @@ public class OrderController {
 		return mv;
 	}
 	
+	/**
+	 * [관리자] 관리자 메모 등록/수정 (한진) 
+	 */
+	@RequestMapping("updateAdminMemo.or")
+	public String updateAdminMemo(String orderNo, String adminMemoContent) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("orderNo", orderNo);
+		map.put("memoContent", adminMemoContent);
+		
+		int result = oService.updateAdminMemo(map);
+		
+		return "redirect:/adminOrderList.or";
+	}
+	
+	/**
+	 * [관리자] 관리자 메모 삭제 (한진)
+	 */
+	@RequestMapping("deleteAdminMemo.or")
+	public String deleteAdminMemo(String orderNo) {
+		int result = oService.deleteAdminMemo(orderNo);
+		
+		return "redirect:/adminOrderList.or";
+	}
+	
 }

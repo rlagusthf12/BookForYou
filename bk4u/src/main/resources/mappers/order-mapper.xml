@@ -315,11 +315,10 @@
 		                ) t1            
 		        ) s1
 		  where s1.rnum = 1
-		    and not order_status in ('반품', '주문취소', '환불')
 		 <choose>
 			<when test="condition == 'searchAll'">
-				and order_no like '%' || #{keyword} || '%'
-				   or mem_name like '%' || #{keyword} || '%'
+				and (order_no like '%' || #{keyword} || '%'
+				   or mem_name like '%' || #{keyword} || '%')
 				   or mem_id
 			</when>
 			<when test="condition == 'orderNo'">
@@ -333,6 +332,7 @@
 			</when>
 		</choose>
 		like '%' || #{keyword} || '%'
+		and not order_status in ('반품', '주문취소', '환불')
 		<choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -361,5 +361,20 @@
 		 	</when>	
 		 </choose> 
 	</select>
+	
+	<!-- [관리자] 관리자 메모 등록/수정 (한진) -->
+	<update id="updateAdminMemo">
+		update
+		       orders
+		   set admin_memo = #{memoContent}
+		 where order_no = #{orderNo} 
+	</update>
+	
+	<!-- [관리자] 관리자 메모 삭제 (한진) -->
+	<update id="deleteAdminMemo">
+		update orders
+  		   set admin_memo = null
+		 where order_no = #{orderNo}
+	</update>
 	
 </mapper>
