@@ -109,7 +109,7 @@
                                     function cityChange(province){
                                         $.ajax({
                                             type: "POST",
-                                            url: "/tc/placeSelect.do",
+                                            url: "/group/placeSelect.do",
                                             dataType: "json",
                                             data: {param:province},
                                             success: function(result){
@@ -117,7 +117,7 @@
                                                 $("#city").find("option").remove().end().append("<option value=''>시/구/군</option>");
                             
                                                 $.each(result, function(i){
-                                                    $("#city").append("<option value'"+result[i]+"'>"+result[i]+"</option>")
+                                                    $("#city").append("<option value='"+result[i]+"'>"+result[i]+"</option>")
                                                 });
                                             }
                                         })
@@ -155,7 +155,7 @@
                                     <td colspan="2">
                                         <select name="groupInfo">
                                             <option value="onlyMember">회원공개</option>
-                                            <option selected>전체공개</option>
+                                            <option selected value="open">전체공개</option>
                                         </select>
                                     </td>
                                 </tr>

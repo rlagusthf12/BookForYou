@@ -38,7 +38,7 @@
 	</select>
 	
 	<select id="selectListMore" resultMap="groupResult">
-		SELECT *              
+		select *             
         FROM (SELECT ROWNUM NUM 
             , s.group_boardno 
             , s.group_type
@@ -51,7 +51,7 @@
                     (SELECT * FROM GROUPBOARD 
              
                     ORDER BY GROUP_BOARDNO DESC)s) 
-        WHERE NUM BETWEEN 5+(4*3{more}) AND 8+(4*#{MORE})
+        WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
 	
 	
 	</select>

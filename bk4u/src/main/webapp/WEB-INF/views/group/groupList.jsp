@@ -115,7 +115,7 @@
                 <h6>활동중인 독서모임</h6><br>
                 <div class="gb">
                     <!-- 현재 가입한 모임이 없다면 -->
-                    <p>현재 활동중인 모임이 없습니다.</p>
+                    <p>현재 가입한 모임이 없습니다</p>
                 <hr>
                 
                     <!-- 현재 가입한 모임이 있다면 -->
@@ -123,8 +123,8 @@
                     <table id="boardList" class="table table-borderless" align="center">
                         <tr>
                             <td rowspan="3" width="230" height="200">${ g.groupImg }</td>
-                            <td width="180" height="20" style="font-size: 13px;">${ g.groupType }</td>
-                            <td height="20">${ g.groupDate }</td>
+                            <td width="30" height="20" style="font-size: 13px;">${ g.groupType }</td>
+                            <td width="60" height="20" style="font-size: 13px;">${ g.groupDate }</td>
                         </tr>
                         <tr>
                             <td colspan="3" height="20">${ g.groupTitle }</td>                        
@@ -132,7 +132,7 @@
                         <tr>
                             <td colspan="3" height="160">${ g.groupScript }</td>
                         </tr>
-                        
+                        <hr>
                     </table> 
                     </c:forEach>
                        
@@ -144,10 +144,10 @@
                 <button type="button" id="more" style="border-radius: 10px; background: white; ">더보기▼</button>
              
                 <script>
-                    var more = -1;
+                    var more = +1;
                      $(function(){$('#more').on('click',function(){
                          
-                             more = more +1;
+                             more = more -1;
                             
                             $.ajax({
                                 url : "groupBoardList.do",
@@ -157,14 +157,13 @@
                                 success: function(data){
                     
                                     var addListHtml ="";
-                                        addListHtml += "<div class='fixed_img_col' style='height:200px'>";
+                                        addListHtml += "<div style='height:200px'>";
                                     for(var i in data.list){
                                         
                                         addListHtml += "<table>"
                                         addListHtml += "<tr>"
                                         addListHtml += "<td>"+data.list[i].group_img+"</td>";
                                          addListHtml += "<td>"+data.list[i].group_type+"</td>";
-                                           addListHtml += "<td>"+data.list[i].group_date+"</td>";
                                         addListHtml += "</tr>"
                                         addListHtml += "<tr>"
                                            addListHtml += "<td>"+data.list[i].group_title+"</td>";
