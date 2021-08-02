@@ -25,6 +25,7 @@
 		<result column="pay_status" property="payStatus"/>
 		<result column="cs_status" property="csStatus"/>
 		<result column="admin_memo" property="adminMemo"/>
+		<result column="product_status" property="productStatus"/>
 		<result column="delivery_company" property="deliveryCompany"/>
 		<result column="shipping_number" property="shippingNumber"/>
 		<result column="shipping_date" property="shippingDate"/>
@@ -83,6 +84,7 @@
 		                         pay_status,
 		                         cs_status,
 		                         admin_memo,
+		                         product_status,
 		                         delivery_company,
 		                         shipping_number,
 		                         shipping_date,
@@ -336,6 +338,7 @@
 		                         pay_status,
 		                         cs_status,
 		                         admin_memo,
+		                         product_status,
 		                         delivery_company,
 		                         shipping_number,
 		                         shipping_date,

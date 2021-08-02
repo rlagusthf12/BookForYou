@@ -35,6 +35,7 @@ public class Order {
 	public String payStatus;
 	public String csStatus;
 	public String adminMemo;
+	public String productStatus;
 	public String deliveryCompany;
 	public String shippingNumber;
 	public Date shippingDate;

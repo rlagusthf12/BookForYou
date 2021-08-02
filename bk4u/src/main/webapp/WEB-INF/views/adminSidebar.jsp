@@ -43,7 +43,7 @@
         }
         .sidebar {
             width: 200px; 
-            height: 100%;
+            height: auto;
             background: #293949;
             position: absolute;
             -webkit-transition: all 0.3s ease-in-out;
@@ -225,19 +225,19 @@
                         <a href="adminOrderList.or">전체 주문 조회</a>
                     </li>
                     <li>
-                        <a href="adminOrderList.or?status=1">주문확인</a>
+                        <a href="adminOrderList.or?orStatus=1">주문확인</a>
                     </li>
                     <li>
-                        <a href="order/adminProductReady.jsp">상품준비중</a>
+                        <a href="adminOrderList.or?orStatus=2">상품준비중</a>
                     </li>
                     <li>
-                        <a href="order/adminDeliveryReady.jsp">배송준비중</a>
+                        <a href="adminOrderList.or?orStatus=3">배송준비중</a>
                     </li>
                     <li>
-                        <a href="order/adminDeliveryIng.jsp">배송중</a>
+                        <a href="adminOrderList.or?orStatus=4">배송중</a>
                     </li>
                     <li>
-                        <a href="order/adminComplete.jsp">배송완료</a>
+                        <a href="adminOrderList.or?status=5">배송완료</a>
                     </li>
                 </ul>
             </li>
