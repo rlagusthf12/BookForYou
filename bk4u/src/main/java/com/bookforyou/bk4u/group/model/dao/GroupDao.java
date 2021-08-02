@@ -15,7 +15,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 public class GroupDao {
 
 	public ArrayList<GroupBoard> selectList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectOne("groupMapper.selectList");
+		return (ArrayList)sqlSession.selectList("groupMapper.selectList");
 	}
 	
 	public int insertGMem(SqlSessionTemplate sqlSession, Member m) {

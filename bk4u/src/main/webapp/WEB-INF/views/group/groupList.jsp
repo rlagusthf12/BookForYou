@@ -89,31 +89,29 @@
                 <br><br>
 
                     <br clear="both"><br>
-                    <form id="searchForm" action="search.gbo" method="Get" align="center" value="1">
+                    <form id="searchForm" action="search.gbo" method="Get" align="center">
                         <div class="select">
                             <select class="custom-select" name="condition">
-                                <option value="all" >검색</option>
+                                <option value="all">전체검색</option>
                                 <option value="title">모임이름</option>
                                 <option value="place">지역</option>
-                                <option value="type">내용</option>  
-                            </select>                    
+                                <option value="type">온라인/오프라인</option>  
+                            </select>
                             <hr>
                         </div>
-                        
                         <div class="text">
-                            <input type="text" class="form-control" name="keyword">
+                            <input type="text" class="form-control" name="keyword" value="${keyword }">
+                            
                         </div>
                             <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-                            
-                            <div>
-                            <c:foreach var="g" items="${ lsit }">
-                            	
-                            		<td>${ g.groupTitle }</td>
-                            		<td>${ g.groupPlace }</td>
-                            		<td>${ g.groupScript }</td>
- 							</c:foreach> 
- 						    </div> 
+                           
                     </form>
+                    <script>
+                    $(function(){
+                    	$("#searchForm option[value=${conditon}]").attr("selected", true);
+                    })
+                    </script>
+                    
                 <br><br><br><br>
 
                 <!--로그인한 모든 회원에게 보이는 버튼-->
