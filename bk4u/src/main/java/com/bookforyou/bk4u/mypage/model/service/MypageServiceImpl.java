@@ -18,14 +18,5 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
-	/*
-	 * [사용자] 대여 내역 조회 (연지)
-	 */
-	@Override
-	public ArrayList<Book> selectRentalList() {
-		// TODO Auto-generated method stub
-		return mypageDao.selectRentalList(sqlSession);
-	}
 
 }

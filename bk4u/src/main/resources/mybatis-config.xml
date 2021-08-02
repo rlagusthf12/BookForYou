@@ -17,6 +17,7 @@
 		<typeAlias type="com.bookforyou.bk4u.order.model.vo.OrderDetail" alias="OrderDetail"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberCategory" alias="MemberCategory"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberInterest" alias="MemberInterest"/>
+		<typeAlias type="com.bookforyou.bk4u.rental.model.vo.Rental" alias="Rental"/>
 	</typeAliases>
 
 	<mappers>
@@ -28,6 +29,7 @@
 		<mapper resource="/mappers/subscription-mapper.xml"/>
 		<mapper resource="/mappers/order-mapper.xml"/>
 		<mapper resource="/mappers/mypage-mapper.xml"/>
+		<mapper resource="/mappers/rental-mapper.xml"/>
 	</mappers>
 
 </configuration>

@@ -10,11 +10,4 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 @Repository
 public class MypageDao {
 
-	/*
-	 * [사용자] 대여 내역 조회 (연지)
-	 */
-	public ArrayList<Book> selectRentalList(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("mypageMapper.selectRentalList");
-	}
-
 }
