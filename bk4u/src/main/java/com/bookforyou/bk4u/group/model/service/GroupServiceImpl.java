@@ -26,6 +26,11 @@ public class GroupServiceImpl implements GroupService{
 	}
 	
 	@Override
+	public ArrayList<GroupBoard> selectListMore() {
+		return gDao.selectListMore(sqlSession);
+	}
+	
+	@Override
 	public int insertGBoard(GroupBoard g) {
 		// TODO Auto-generated method stub
 		return 0;

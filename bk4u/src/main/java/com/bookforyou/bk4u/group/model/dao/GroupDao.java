@@ -18,6 +18,10 @@ public class GroupDao {
 		return (ArrayList)sqlSession.selectList("groupMapper.selectList");
 	}
 	
+	public ArrayList<GroupBoard> selectListMore(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("gorupMapper.selectListMore");
+	}
+	
 	public int insertGMem(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.insert("boardMapper.insertGMem", m);
 	}
