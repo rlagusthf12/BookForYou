@@ -17,6 +17,8 @@ import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.service.MemberService;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -26,6 +28,9 @@ public class BookController {
 	
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	/**
 	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 도서 개수&목록 조회(한진)
@@ -175,7 +180,11 @@ public class BookController {
 
 		ArrayList<Book> bList = bookService.selectCartList(memNo);
 		
+		int cpCount = memberService.selectCouponCount(memNo);
+		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
+		
 		mv.addObject("bList", bList)
+		  .addObject("cpCount", cpCount)
 		  .setViewName("book/bookCartList");
 		
 		return mv;

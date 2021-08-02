@@ -1,9 +1,12 @@
 package com.bookforyou.bk4u.member.model.dao;
 
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
@@ -65,6 +68,20 @@ public class MemberDao {
 
 	public int updatePassword(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.update("memberMapper.updatePassword",member);
+	}
+
+	/*
+	 * [사용자] 소지 쿠폰 개수 조회 (연지)
+	 */
+	public int selectCouponCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.selectCouponCount", memNo);
+	}
+
+	/*
+	 * [사용자] 소지 쿠폰 조회 (연지)
+	 */
+	public ArrayList<Coupon> selectCouponList(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectCouponList", memNo);
 	}
 
 	
