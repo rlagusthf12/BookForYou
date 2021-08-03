@@ -168,5 +168,13 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.selectAdminOrderUsedCoupon(sqlSession, orderNo);
 	}
 
+	/**
+	 * [관리자] 주문 배송지 변경 (한진)
+	 */
+	@Override
+	public int updateAdminAddress(Order o) {
+		return oDao.updateAdminAddress(sqlSession, o);
+	}
+
 	
 }

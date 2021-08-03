@@ -101,5 +101,10 @@ public interface OrderService {
 	 * [관리자] 주문 상세 조회 - 사용된 쿠폰 조회 (한진)
 	 */
 	Coupon selectAdminOrderedUsedCoupon(int orderNo);
+
+	/**
+	 * [관리자] 주문 배송지 변경 (한진)
+	 */
+	int updateAdminAddress(Order o);
 	
 }

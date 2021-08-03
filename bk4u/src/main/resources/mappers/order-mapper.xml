@@ -461,6 +461,16 @@
 	     where order_no = #{orderNo}
 	</select>
 		
+	<!-- [관리자] 주문 배송지 변경 (한진) -->
+	<update id="updateAdminAddress">
+		update
+		       orders
+		   set order_post = #{orderPost},
+		       order_address = #{orderAddress},
+		       address_detail = #{addressDetail},
+		       address_ref = #{addressRef}
+		 where order_no = #{orderNo} 
+	</update>
 	
 	
 </mapper>

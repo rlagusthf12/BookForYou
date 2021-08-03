@@ -147,5 +147,12 @@ public class OrderDao {
 		return sqlSession.selectOne("couponMapper.selectAdminOrderedUsedCoupon", orderNo);
 	}
 
+	/**
+	 * [관리자] 주문 배송지 변경 (한진)
+	 */
+	public int updateAdminAddress(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("orderMapper.updateAdminAddress", o);
+	}
+
 	
 }
