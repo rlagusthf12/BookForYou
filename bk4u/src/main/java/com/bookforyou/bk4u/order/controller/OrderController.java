@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.service.OrderService;
@@ -217,7 +218,8 @@ public class OrderController {
 		ArrayList<OrderDetail> oBook = oService.selectAdminOrderedBook(orderNo);
 		Member m = oService.selectAdminOrderedMem(orderNo);
 		Payment p = oService.selectAdminOrderedPayment(orderNo);
-		Coupon c = oService.selectAdminOrderedUsedCoupon(orderNo);
+		CouponDetail c = oService.selectAdminOrderedUsedCoupon(orderNo);
+		System.out.println(c);
 		
 		mv.addObject("od", order)
 		  .addObject("oBook", oBook)

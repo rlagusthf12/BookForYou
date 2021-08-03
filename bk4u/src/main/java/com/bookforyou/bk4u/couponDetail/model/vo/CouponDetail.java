@@ -1,4 +1,4 @@
-package com.bookforyou.bk4u.coupon.model.vo;
+package com.bookforyou.bk4u.couponDetail.model.vo;
 
 import java.sql.Date;
 
@@ -12,7 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Setter @Getter
 @ToString
-public class Coupon {
+public class CouponDetail {
 	public String couponNo;
 	public String couponName;
 	public String couponKind;
