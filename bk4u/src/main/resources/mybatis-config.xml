@@ -17,7 +17,6 @@
 		<typeAlias type="com.bookforyou.bk4u.order.model.vo.OrderDetail" alias="OrderDetail"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberCategory" alias="MemberCategory"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberInterest" alias="MemberInterest"/>
-		<typeAlias type="com.bookforyou.bk4u.rental.model.vo.Rental" alias="Rental"/>
 		<typeAlias type="com.bookforyou.bk4u.payment.model.vo.Payment" alias="Payment"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Coupon" alias="Coupon"/>
 	</typeAliases>
@@ -31,7 +30,6 @@
 		<mapper resource="/mappers/subscription-mapper.xml"/>
 		<mapper resource="/mappers/order-mapper.xml"/>
 		<mapper resource="/mappers/mypage-mapper.xml"/>
-		<mapper resource="/mappers/rental-mapper.xml"/>
 		<mapper resource="/mappers/payment-mapper.xml"/>
 	</mappers>
 
