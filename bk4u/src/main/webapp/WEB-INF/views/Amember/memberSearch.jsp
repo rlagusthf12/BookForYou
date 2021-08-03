@@ -186,7 +186,7 @@
         </div>
     </div>
     
-        <table id="phonetable" border="1" width="1000" class="phonebook">
+        <table id="phonetable" border="1" width="1300" class="phonebook">
             <thead>
                 <tr id="theader">
                     <th width="50" height="50">회원 번호</th>
@@ -203,12 +203,11 @@
                 <tr>
                     <td height="80">${ as.memNo }</td>
                     <td>${ as.memId }</td>
-                    <td>${ as.memPwd }</td>
+                    <td width="700">${ as.memPwd }</td>
                     <td>${ as.memName }</td>
                     <td>${ as.memEmail }</td>
                     <td>${ as.memBasicAddress }</td>
-                    <td>${ as.memEnrolldate }</td>
-                    
+                    <td>${ as.memEnrolldate }</td>                   
                 </tr>
        			</c:forEach>
             </tbody>
@@ -218,13 +217,28 @@
 
         <div id="paging-wrap">
             <ul class="pagination">
-                <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+            	<c:choose>
+            		<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                	<li class="page-item"><a class="page-link" href="amemSearch.me?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">            
+                		<li class="page-item disabled"><a class="page-link">다음</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                	</c:otherwise>
+                </c:choose>          
             </ul>
         </div>
     </div>

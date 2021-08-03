@@ -264,15 +264,16 @@
   	<select id="selectAmemSearch" resultMap="memberResult">
   		select
   				mem_no,
+  				mem_id,
   				mem_pwd,
   				mem_name,
   				mem_email,
   				mem_basic_address,
   				mem_enrolldate
   			from members
-  		   where mem_status = 'Y'
+  		   where mem_status = 'M'
   		   order
-  		   		by mem_no desc
+  		   		by mem_no asc
   	</select>
   	
  
