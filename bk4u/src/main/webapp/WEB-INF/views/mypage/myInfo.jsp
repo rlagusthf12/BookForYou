@@ -40,7 +40,7 @@
 
         #content {
             background: #EEE;
-            height: 1200px;
+            height: 1100px;
             position: relative;
             display: inline-flex;
         }
@@ -50,7 +50,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1080px;
+            height: 1000px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -109,7 +109,7 @@
         }
 
         .bottom-td {
-            vertical-align: bottom;
+            vertical-align: bottom !important;
             width: 100px;
         }
 
@@ -141,11 +141,13 @@
                 $('#profile-box1').css('display', 'none');
                 $('#profile-box2').css('display', 'block');
                 $('.wrap').css('height','+=50px');
+                $("#content").css('height','+=50px');
                 $('#main_content').css('height','+=50px');
             } else {
                 $('#profile-box1').css('display', 'block');
                 $('#profile-box2').css('display', 'none');
                 $('.wrap').css('height','-=50px');
+                $("#content").css('height','-=50px');
                 $('#main_content').css('height','-=50px');
             }
         }
@@ -155,11 +157,13 @@
                 $('#pwd-box1').css('display', 'none');
                 $('#pwd-box2').css('display', 'block');
                 $('.wrap').css('height','+=100px');
+                $("#content").css('height','+=100px');
                 $('#main_content').css('height','+=100px');
             } else {
                 $('#pwd-box1').css('display', 'block');
                 $('#pwd-box2').css('display', 'none');
                 $('.wrap').css('height','-=100px');
+                $("#content").css('height','-=100px');
                 $('#main_content').css('height','-=100px');
             }
         }
@@ -169,11 +173,13 @@
                 $('#nick-box1').css('display', 'none');
                 $('#nick-box2').css('display', 'block');
                 $('.wrap').css('height','+=30px');
+                $("#content").css('height','+=30px');
                 $('#main_content').css('height','+=30px');
             } else {
                 $('#nick-box1').css('display', 'block');
                 $('#nick-box2').css('display', 'none');
                 $('.wrap').css('height','-=30px');
+                $("#content").css('height','-=30px');
                 $('#main_content').css('height','-=30px');
             }
         }
@@ -182,13 +188,15 @@
             if ($('#email-box1').css('display') == 'block') {
                 $('#email-box1').css('display', 'none');
                 $('#email-box2').css('display', 'block');
-                $('.wrap').css('height','+=100px');
-                $('#main_content').css('height','+=100px');
+                $('.wrap').css('height','+=120px');
+                $("#content").css('height','+=120px');
+                $('#main_content').css('height','+=120px');
             } else {
                 $('#email-box1').css('display', 'block');
                 $('#email-box2').css('display', 'none');
-                $('.wrap').css('height','-=100px');
-                $('#main_content').css('height','-=100px');
+                $('.wrap').css('height','-=120px');
+                $("#content").css('height','-=120px');
+                $('#main_content').css('height','-=120px');
             }
         }
     </script>
@@ -328,7 +336,7 @@
                             <td class="td-content">
                                 <div id="profile-img-box">
                                     <div class="box" style="background: #BDBDBD;">
-                                        <img class="profile" src="../images/blank-profile.png">
+                                        <img class="profile" src="resources/member/images/blank-profile.png">
                                     </div>
                                 </div>
                                 <div id="profile-text-box">
@@ -460,7 +468,7 @@
                                     <input type="text" class="form-control" placeholder="우편번호">
                                     <button class="btn btn-secondary" type="button" id="button-addon2">우편번호 찾기</button>
                                 </div>
-                                <div class="input-group input-group-sm mb-3" style="width: 90%;">
+                                <div class="input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" placeholder="기본주소">
                                 </div>
                                 <div class="input-group input-group-sm mb-3">
