@@ -1,11 +1,15 @@
 package com.bookforyou.bk4u.group.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.io.File;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
+import com.google.gson.JsonArray;
 
 @Controller
 public class GroupController {
@@ -106,7 +111,43 @@ public class GroupController {
 		
 	}
 	
+	@RequestMapping("/placeSelect.do")
+	public void selectAjax(HttpServletRequest req, HttpServletResponse res, String param) {
+		try {
+			String province = param;
+			
+			List<String> cityList = new ArrayList();
+			
+			if(province.equals('1')) {
+				cityList.add("강남구");
+				cityList.add("강서구");
+				cityList.add("강북구");
+				cityList.add("강동구");
+				cityList.add("노원구");
+			} else if (province.equals('2')){
+				cityList.add("해운대구");
+				cityList.add("경포대구");
+				cityList.add("강북구");
+				cityList.add("강동구");
+				cityList.add("노원구");
+			}
+			
+			JsonArray jsonArray = new JsonArray();
+			for( int i = 0;  i < cityList.size(); i++) {
+				jsonArray.add(cityList.get(i));
+			}
+			
+			PrintWriter pw = res.getWriter();
+			pw.print(jsonArray.toString());
+			pw.flush();
+			pw.close();
+			
+		 
+	} catch (Exception e) {
+		System.out.println("Controller error");
+	}
 	
 	
+	}
 	
 }

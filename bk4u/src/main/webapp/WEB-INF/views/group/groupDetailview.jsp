@@ -102,7 +102,7 @@
                                 
                                 <!-- 강퇴시키는 이유 쓰는 방법 -->
                                 <!-- 작성자가 가입자일 경우 가입되어 있는 사람들 프로필 사진 갖다대면 이름 나오게-->
-                                data-toggle="tooltip" title="회원닉네임" <!--토글튜토리얼 갖다대면 닉네임보이게-->
+                                <!-- data-toggle="tooltip" title="회원닉네임" 토글튜토리얼 갖다대면 닉네임보이게-->
                                 <!-- 비공일 경우 일반 회원은 볼 수 없게 처리-->
                             
                             </td>
@@ -119,7 +119,7 @@
                 <button type="submit" class="" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
                 <button type="submit" class="" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
                 
-                </c:choose>
+                
                 <!--탈퇴여부 묻는 알람창-->
                 <button type="submit" class="">신고하기</button>
                 <br>

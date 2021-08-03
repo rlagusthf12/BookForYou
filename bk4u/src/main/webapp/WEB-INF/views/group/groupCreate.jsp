@@ -100,7 +100,7 @@
                                                 <option value='16'>충북</option>
                                             </select>
                                             <select name="city" id="city">
-                                                <option value=''>시/구/군</option>
+                                                <option value='cityList'>시/구/군</option>
                                             </select>
                                             
                                                 </td>
@@ -113,7 +113,7 @@
                                     function cityChange(province){
                                         $.ajax({
                                             type: "POST",
-                                            url: "/group/placeSelect.do",
+                                            url: "placeSelect.do",
                                             dataType: "json",
                                             data: {param:province},
                                             success: function(result){
