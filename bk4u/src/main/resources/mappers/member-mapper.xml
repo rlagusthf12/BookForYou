@@ -258,7 +258,7 @@
   		select
   				count(*)
   			from members
-  			where mem_status = 'Y'
+  			where mem_status = 'M'
   	</select>
   	
   	<select id="selectAmemSearch" resultMap="memberResult">
