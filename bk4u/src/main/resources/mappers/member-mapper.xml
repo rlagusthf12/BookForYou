@@ -253,7 +253,27 @@
            and status = 'Y';
   	</select>
   	
+  	<!-- 관리자 회원조회 (형우) -->
+  	<select id="selectAmemList" resultType="_int">
+  		select
+  				count(*)
+  			from members
+  			where mem_status = 'Y'
+  	</select>
   	
+  	<select id="selectAmemSearch" resultMap="memberResult">
+  		select
+  				mem_no,
+  				mem_pwd,
+  				mem_name,
+  				mem_email,
+  				mem_basic_address,
+  				mem_enrolldate
+  			from members
+  		   where mem_status = 'Y'
+  		   order
+  		   		by mem_no desc
+  	</select>
   	
  
 </mapper>
