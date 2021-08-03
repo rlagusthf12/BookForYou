@@ -11,8 +11,8 @@
     <title>Document</title>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link rel="stylesheet" href="./side-style.css">
-    <link rel="stylesheet" href="./recommend-style.css">
+    <link rel="stylesheet" href="resources\mypage\css\recommend-style.css">
+    <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
         .wrap {
             width: 1200px;

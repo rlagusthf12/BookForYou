@@ -34,4 +34,9 @@ public class MypageController {
 	public String deleteAccountForm() {
 		return "mypage/deleteAccount";
 	}
+	
+	@RequestMapping("my-recommend.mp")
+	public String updateMyRecommend() {
+		return "mypage/myRecommend";
+	}
 }
