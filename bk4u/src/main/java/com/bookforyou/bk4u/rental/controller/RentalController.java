@@ -33,7 +33,7 @@ public class RentalController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("rList", rList)
-		  .setViewName("rental/mypageRentalList");
+		  .setViewName("mypage/mypageRentalList");
 		
 		return mv;
 	}
@@ -47,7 +47,7 @@ public class RentalController {
 		Rental rt = rentalService.selectRental(rentalNo);
 		
 		mv.addObject("rt", rt)
-		  .setViewName("rental/mypageRentalDetail");
+		  .setViewName("mypage/mypageRentalDetail");
 		
 		return mv;
 		

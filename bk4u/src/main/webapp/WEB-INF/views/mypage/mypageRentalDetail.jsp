@@ -8,7 +8,7 @@
 <title>Insert title here</title>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link rel="stylesheet" href="./side-style.css">
+    <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
 
         div{
@@ -228,11 +228,11 @@
                     </tr>
                     <tr>
                         <th>수령기한</th>
-                        <td>~ ${ rt.reiceiveDate }</td>
+                        <td>~ ${ rt.receiveDate }</td>
                     </tr>
                     <tr>
                         <th>대여기간</th>
-                        <td>${ rt.reiceiveDate } ~ ${ rt.reiceiveDate }</td>
+                        <td>${ rt.receiveDate } ~ ${ rt.receiveDate }</td>
                     </tr>
                     <tr>
                         <th>상태</th>
