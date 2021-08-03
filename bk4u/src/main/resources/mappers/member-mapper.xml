@@ -317,5 +317,18 @@
   		where 
   			mem_no = #{memNo}
   	</update>
- 
+ 	
+ 	<!-- 사용자의 관심사 리스트 가져오기(안세아) -->
+ 	<select id="selectMemberInterestList" parameterType="int" resultMap="memberInterestResult">
+ 		select mem_no, interest_no
+ 		from mem_interest
+ 		where mem_no = #{memNo}
+ 	</select>
+ 	
+ 	<select id="selectSubCategoryList" parameterType="int" resultMap="memberCategoryResult">
+ 		select mem_no, sub_cate_no
+ 		from mem_interest
+ 		where mem_no = #{memNo}
+ 	</select>
+ 	
 </mapper>

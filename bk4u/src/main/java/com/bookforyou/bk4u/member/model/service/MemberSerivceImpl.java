@@ -150,5 +150,7 @@ public class MemberSerivceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberDao.updateMemberWorkAndLevel(sqlSession, member);
 	}
+	
+	
 
 }

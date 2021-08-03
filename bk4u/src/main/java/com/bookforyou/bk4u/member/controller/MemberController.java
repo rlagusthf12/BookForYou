@@ -54,7 +54,7 @@ public class MemberController {
 	@RequestMapping("login.me")
 	public String loginMember(Member member,Model model,HttpSession session) {
 		Member loginUser = memberService.loginMember(member);
-		
+		System.out.println(loginUser);
 		if(loginUser == null) {
 			model.addAttribute("alertMsg", "일치하지 않는 회원정보입니다.");
 			return "member/login";

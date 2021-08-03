@@ -23,6 +23,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.service.MypageService;
+import com.google.gson.Gson;
 
 @Controller
 public class MypageController {
@@ -65,10 +66,6 @@ public class MypageController {
 	@RequestMapping("my-recommend.mp")
 	public String updateMyRecommend(HttpSession session, Model model) {
 		Member loginUser = (Member) session.getAttribute("loginUser");
-		
-		// 현재 loginUser의 관심사 array와 관심 서브카테고리 array 배열들을 각각 model에 담고
-		
-		// 포워딩
 		
 		return "mypage/myRecommend";
 	}
@@ -121,5 +118,36 @@ public class MypageController {
 		
 		
 		
+	}
+	
+	/**
+	 * 멤버의 추천 관심사 리스트를 가져오는 메서드
+	 * @author 안세아
+	 * @param memNo
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="interest.mp",produces="application/json; charset=utf-8")
+	public String selectMyInterestList(String memNum) {
+		
+		int memNo = Integer.parseInt(memNum);
+		ArrayList<MemberInterest> memberInterestList = mypageService.getMemberInterestList(memNo);
+		System.out.println(memberInterestList);
+		return new Gson().toJson(memberInterestList);
+	} 
+	
+	/**
+	 * 멤버의 추천 서브 카테고리를 가져오는 메서드
+	 * @author 안세아
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="subcategory.mp",produces="application/json; charset=utf-8")
+	public String selectMySubCategoryList(String memNum) {
+		
+		int memNo = Integer.parseInt(memNum);
+		ArrayList<MemberCategory> mySubCategoryList = mypageService.getSubCategoryList(memNo);
+	
+		return new Gson().toJson(mySubCategoryList);
 	}
 }

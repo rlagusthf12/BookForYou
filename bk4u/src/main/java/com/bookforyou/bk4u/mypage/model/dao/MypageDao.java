@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.member.model.vo.MemberCategory;
+import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 
 @Repository
 public class MypageDao {
@@ -19,6 +21,17 @@ public class MypageDao {
 		// TODO Auto-generated method stub
 		return sqlSession.delete("memberMapper.deleteAllMemCategory",member);
 	}
+
+	public ArrayList<MemberInterest> selectMemberInterestList(SqlSessionTemplate sqlSession, int memNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberInterestList", memNo);
+	}
+
+	public ArrayList<MemberCategory> selectSubCategoryList(SqlSessionTemplate sqlSession, int memNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("memberMapper.selectSubCategoryList",memNo);
+	}
+
 
 
 

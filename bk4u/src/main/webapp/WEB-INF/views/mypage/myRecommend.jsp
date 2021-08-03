@@ -13,6 +13,7 @@
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\recommend-style.css">
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .wrap {
             width: 1200px;
@@ -83,6 +84,42 @@
             cursor: pointer;
         }
     </style>
+    <script>
+		$(document).ready(function(){
+			var memNo = $("#memNo").val();
+			console.log(memNo);
+				$.ajax({
+					url: "interest.mp",
+					data: {memNum : $("#memNo").val()},
+					success: function(arr){
+						console.log(arr);
+						
+						for(var i in arr){
+							console.log(arr[i].interestNo);
+							var interNo = arr[i].interestNo;
+							$('input:checkbox[name="interestNo"]').each(function() {
+
+							      if(this.value == interNo){//checked 처리된 항목의 값
+
+							            this.checked = true;
+
+							      }
+
+							 });
+
+
+
+							
+							//$('input:radio[name=interestNo]:input[value=arr[i].interestNo]').prop("checked", true);
+							
+						}
+						
+					},error:function(){
+						console.log("ajax통신 실패");
+					}
+				});
+		});
+	</script>
 </head>
 
 <body>
@@ -191,29 +228,7 @@
                 <hr style="text-align: center; width: 95%; margin: auto;">
                 <form id="recommend-update" action="update-recommend.mp" method="post">
                 <div id="recommend-box">
-                	<input type="hidden" name="memNo" value="${loginUser.memNo }">
-                	<input type="hidden" name="memId" value="${loginUser.memId }">
-            		<input type="hidden" name="memPwd" value="${loginUser.memPwd }">
-            		<input type="hidden" name="memName" value="${loginUser.memName }">
-            		<input type="hidden" name="memPost" value="${loginUser.memPost }">
-            		<input type="hidden" name="memBasicAddress" value="${loginUser.memBasicAddress }">
-            		<input type="hidden" name="memDetailAddress" value="${loginUser.memDetailAddress }">
-            		<input type="hidden" name="memAddressRefer" value="${loginUser.memAddressRefer }">
-            		<input type="hidden" name="memGender" value="${loginUser.memGender }">
-            		<input type="hidden" name="memAge" value="${loginUser.memAge }">
-            		<input type="hidden" name="memPhone" value="${loginUser.memPhone }">
-            		<input type="hidden" name="memEmail" value="${loginUser.memEmail }">
-            		<input type="hidden" name="emailStatus" value="${loginUser.emailStatus }">
-            		<input type="hidden" name="memStatus" value="${loginUser.memStatus }">
-            		<input type="hidden" name="memNickname" value="${loginUser.memNickname }">
-            		<input type="hidden" name="memWork" value="${loginUser.memWork }">
-            		<input type="hidden" name="memLevel" value="${loginUser.memLevel }">
-            		<input type="hidden" name="memEnrollDate" value="${loginUser.memEnrollDate }">
-            		<input type="hidden" name="blackReason" value="${loginUser.blackReason }">
-            		<input type="hidden" name="blackDate" value="${loginUser.blackDate }">
-            		<input type="hidden" name="reportCount" value="${loginUser.reportCount }">
-            		<input type="hidden" name="reportCount" value="${loginUser.originImgName }">
-            		<input type="hidden" name="reportCount" value="${loginUser.changImgName }">
+                	<input type="hidden" name="memNo" id="memNo" value="${loginUser.memNo }"/>	
             		<input type="hidden" id="interestArray" name="interestArray"/>
             		<input type="hidden" id="subCategoryArray" name="subCategoryArray"/>
                     <br>
@@ -523,7 +538,7 @@
             			console.log(subCategoryArray);
             			$("#recommend-enroll").submit();
             		}
-            </script>
+            	</script>
                     <button class="orange-button" onClick="recommend_update();">추천 정보 수정하기</button>
         		</form>
                 </div>
