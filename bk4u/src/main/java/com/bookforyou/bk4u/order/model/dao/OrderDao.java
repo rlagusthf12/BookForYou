@@ -154,5 +154,12 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateAdminAddress", o);
 	}
 
+	/**
+	 * [관리자] 주문 상태 변경 (한진)
+	 */
+	public int updateAdminOrderConfirm(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("orderMapper.updateAdminOrderConfirm", map);
+	}
+
 	
 }

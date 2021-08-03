@@ -347,7 +347,8 @@
 			$(".memo-delete-btn").click(function(){
 				
 				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+				var $orStatus = 3;
+				location.href="deleteAdminMemo.or?orStatus=" + $orStatus + "&orderNo=" + $orderNo;
 				
 			})			
 
@@ -363,6 +364,19 @@
                 const a = $(this).offset();
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
+            
+            /* 주문상태 변경 */
+	        $("#handling-btn button").each(function(){
+	        	$(this).click(function(){
+	        		
+					var checkArr = new Array();
+					$("input:checkbox[name='oCheck']:checked").each(function(){
+						checkArr.push(this.value);
+					});
+	        		
+					location.href="adminOrderConfirm.or?selectedOd=" + checkArr + "&odStatus=" + $(this).val() + "&orStatus=3";
+	        	})
+	        })
 
 
         })
@@ -536,9 +550,9 @@
             </div>
 
             <div id="handling-btn">
-                <button>배송중</button>
-                <button>준비완료</button>
-                <button>준비중</button>
+                <button value="4">배송중</button>
+                <button value="4-1">준비완료</button>
+                <button value="4-2">준비중</button>
             </div>
 
             <div id="result-div">
@@ -627,6 +641,7 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="3"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -650,6 +665,7 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="3"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

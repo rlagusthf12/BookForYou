@@ -472,5 +472,41 @@
 		 where order_no = #{orderNo} 
 	</update>
 	
+	<!-- [관리자] 주문 상태 변경 (한진) -->
+	<update id="updateAdminOrderConfirm">
+		update
+		       orders
+		   set
+		   <choose>
+		   		<when test="odStatus == '1'">
+		   			order_status = '상품준비중'
+		   		</when>
+		   		<when test="odStatus == '2'">
+		   			order_status = '주문취소'
+		   		</when>
+		   		<when test="odStatus == '3'">
+		   			order_status = '배송준비중'
+		   		</when>
+		   		<when test="odStatus == '31'">
+		   			product_status = '준비완료'
+		   		</when>
+		   		<when test="odStatus == '32'">
+		   			product_status = '준비중'
+		   		</when>
+		   		<when test="odStatus == '4'">
+		   			order_status = '배송중'
+		   		</when>
+		   		<when test="odStatus == '41'">
+		   			delivery_status = '준비완료'
+		   		</when>
+		   		<when test="odStatus == '42'">
+		   			delivery_status = '준비중'
+		   		</when>
+		   		<when test="odStatus == '5'">
+		   			order_status = '배송완료'
+		   		</when>
+		   </choose>
+		 where order_no = #{odNo}
+	</update>
 	
 </mapper>

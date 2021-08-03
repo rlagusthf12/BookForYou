@@ -106,5 +106,10 @@ public interface OrderService {
 	 * [관리자] 주문 배송지 변경 (한진)
 	 */
 	int updateAdminAddress(Order o);
+
+	/**
+	 * [관리자] 주문 상태 변경 (한진)
+	 */
+	int updateAdminOrderConfirm(HashMap<String, String> map);
 	
 }

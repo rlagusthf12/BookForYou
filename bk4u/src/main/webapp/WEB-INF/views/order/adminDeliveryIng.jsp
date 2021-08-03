@@ -353,6 +353,18 @@
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
 
+            /* 주문상태 변경 */
+	        $("#handling-btn button").each(function(){
+	        	$(this).click(function(){
+	        		
+					var checkArr = new Array();
+					$("input:checkbox[name='oCheck']:checked").each(function(){
+						checkArr.push(this.value);
+					});
+	        		
+					location.href="adminOrderConfirm.or?selectedOd=" + checkArr + "&odStatus=" + $(this).val() + "&orStatus=4";
+	        	})
+	        })
 
         })
 </script>
@@ -524,7 +536,7 @@
             </div>
 
             <div id="handling-btn">
-                <button>배송완료</button>
+                <button value="5">배송완료</button>
             </div>
 
             <div id="result-div">

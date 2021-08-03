@@ -226,7 +226,6 @@
 	        $("#handling-btn button").each(function(){
 	        	$(this).click(function(){
 	        		
-	        		var obj = $("[name=bCheck]");
 		        	var checkArr = new Array();
 		        	$("input:checkbox[name='bCheck']:checked").each(function(){
 		        		checkArr.push(this.value);

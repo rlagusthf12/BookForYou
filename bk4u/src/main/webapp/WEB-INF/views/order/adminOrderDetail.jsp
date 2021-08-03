@@ -127,18 +127,33 @@
 <script>
 	$(function(){
 	    $("#showAddressForm").click(function(){
-	    	console.log('a');
 	        $("#addressForm").toggleClass("hide");
 	    })
 	
 	    var orderNo = $("#odNo").text();
 	    $("#hiddenOdNo").val(orderNo);
+	    
+	    var $price = Number($("#price").text());
+	    var $point = Number($("#point").text());
+	    var $add = Number($("#add").text());
+	    var $total = $price - $point + $add;
+	    $("#total").text($total);
+	    $("#total2").text($total);
+	    
+	    var $gp = $total * 0.01;
+	    $("#givPoint").text($gp);
 	})
 </script>
 </head>
 <body>
 
 	<jsp:include page="../adminSidebar.jsp"/>
+
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+	</c:if>
 	
 	<div id="outer">
         <div id="main-title">
@@ -325,36 +340,43 @@
                         <tr>
                             <th>주문 금액</th>
                             <c:forEach var="o" items="${ od }">
-	                            <td>${ o.orderPrice }</td>
+	                            <td id="price">${ o.orderPrice }</td>
                             </c:forEach>
                             <th>결제 금액</th>
-                            <td>${ oPay.price }</td>
+                            <td id="total2"></td>
                         </tr>
                         <tr>
                             <th>추가금</th>
                             <c:forEach var="o" items="${ od }">
-                            	<td>${ o.addPrice }</td>
+                            	<td id="add">${ o.addPrice }</td>
                             </c:forEach>
                             <th>적립 포인트</th>
-                            <td>${ oPay.price * 0.01 }</td>
+                            <td id="givPoint"></td>
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
-                            <td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName } (${ oCou.couponPrice } ${ oCou.couponPriceRate })]</td>
+                            <c:choose>
+                            	<c:when test="${ !empty oCou.couponIssueNum }">
+		                            <td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName } (${ oCou.couponPrice } ${ oCou.couponPriceRate })]</td>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<td width="300px;">-</td>
+                            	</c:otherwise>
+                            </c:choose>
                             <th>결제 수단</th>
                             <td>${ oPay.payWay } (${ oPay.depositName })</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
-                            <td>0</td>
+                            <td id="point">0</td>
                             <th>결제 상태</th>
                             <td>${ oPay.status }</td>
                         </tr>
                         <tr>
                             <th>합계</th>
-                            <td>48,240</td>
+                            <td id="total"></td>
                             <th>결제일</th>
-                            <td>${ oPay.payDate }</td>
+                            <td></td>
                         </tr>
 
                     </table>
@@ -362,9 +384,19 @@
             </div>
             <br><br>
             <div id="btn-area">
-                <button type="button">입금전 처리</button>
+            	<c:choose>
+            		<c:when test="${ oPay.status eq '입금완료' }">
+		                <button type="button">입금전 처리</button>            			
+            		</c:when>
+            	</c:choose>
                 <button type="button">주문 취소</button>
-                <button type="button">반품</button>
+                <c:forEach var="o" items="${ od }">
+		            <c:choose>
+	                	<c:when test="${ o.orderStatus eq '배송완료' }">
+			                <button type="button">반품</button>	                	
+	                	</c:when>
+                	</c:choose>
+                </c:forEach>
             </div>
             <br><br><br>
         </div>   

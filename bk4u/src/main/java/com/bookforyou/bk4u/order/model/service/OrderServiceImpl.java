@@ -176,5 +176,13 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.updateAdminAddress(sqlSession, o);
 	}
 
+	/**
+	 * [관리자] 주문 상태 변경 (한진)
+	 */
+	@Override
+	public int updateAdminOrderConfirm(HashMap<String, String> map) {
+		return oDao.updateAdminOrderConfirm(sqlSession, map);
+	}
+
 	
 }

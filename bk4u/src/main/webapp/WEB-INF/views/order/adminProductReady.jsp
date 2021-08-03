@@ -308,7 +308,7 @@
 
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(10).text();
+            	var $memo = td.eq(11).text();
             	var $orderNo = td.eq(1).text();
             	$(".admin-memo-content .oNo").val($orderNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
@@ -328,7 +328,8 @@
 			$(".memo-delete-btn").click(function(){
 				
 				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+				var $orStatus = 2;
+				location.href="deleteAdminMemo.or?orStatus=" + $orStatus + "&orderNo=" + $orderNo;
 				
 			})			
 
@@ -337,14 +338,47 @@
             	
             	var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(9).text();
+            	var $memo = td.eq(10).text();
             	$(".user-memo-content .memo-bottom p").text($memo);
             	
                 $(".user-memo-content").toggleClass("hide");
                 const a = $(this).offset();
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
+            
+            /* Click on select all checkbox */
+	        $("#result-div thead input[type='checkbox']").click(function(){
+	        	
+	        	if($(this).prop("checked")){
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", true);
+	        		})
+	        	}else {
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", false);
+	        		})
+	        	}
+	        })
+	        
+	        /* Click on another checkbox can affect the select all checkbox */
+	        $("#result-div tbody input[type='checkbox']").click(function(){
+	        	if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
+	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+	        	}
+	        })
 
+            /* 주문상태 변경 */
+	        $("#handling-btn button").each(function(){
+	        	$(this).click(function(){
+	        		
+					var checkArr = new Array();
+					$("input:checkbox[name='oCheck']:checked").each(function(){
+						checkArr.push(this.value);
+					});
+	        		
+					location.href="adminOrderConfirm.or?selectedOd=" + checkArr + "&odStatus=" + $(this).val() + "&orStatus=2";
+	        	})
+	        })
 
         })
 </script>
@@ -516,9 +550,9 @@
             </div>
 
             <div id="handling-btn">
-                <button>배송준비중</button>
-                <button>준비완료</button>
-                <button>준비중</button>
+                <button value="3">배송준비중</button>
+                <button value="31">준비완료</button>
+                <button value="32">준비중</button>
             </div>
 
             <div id="result-div">
@@ -591,6 +625,7 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="2"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -614,6 +649,7 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="2"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
