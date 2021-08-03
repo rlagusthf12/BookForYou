@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.dao.OrderDao;
 import com.bookforyou.bk4u.order.model.vo.Order;
@@ -157,6 +158,22 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Payment selectAdminOrderedPayment(int orderNo) {
 		return oDao.selectAdminOrderedPayment(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 상세 조회 - 사용된 쿠폰 조회 (한진)
+	 */
+	@Override
+	public Coupon selectAdminOrderedUsedCoupon(int orderNo) {
+		return oDao.selectAdminOrderUsedCoupon(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 배송지 변경 (한진)
+	 */
+	@Override
+	public int updateAdminAddress(Order o) {
+		return oDao.updateAdminAddress(sqlSession, o);
 	}
 
 	

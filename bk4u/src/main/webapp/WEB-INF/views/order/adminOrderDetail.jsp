@@ -55,6 +55,7 @@
         .vertical th{width: 160px;}
 
         /*배송 정보 변경 폼*/
+        .hide{display: none!important;}
         #addressForm{
             display: inline-block;
             margin:40px 0 10px 0;
@@ -125,14 +126,13 @@
 
 <script>
 	$(function(){
-	    $("#addressForm").hide();
 	    $("#showAddressForm").click(function(){
-	        $("#addressForm").slideDown();
+	    	console.log('a');
+	        $("#addressForm").toggleClass("hide");
 	    })
 	
-	    $("#saveAddress").click(function(){
-	        $("#addressForm").slideUp();
-	    })
+	    var orderNo = $("#odNo").text();
+	    $("#hiddenOdNo").val(orderNo);
 	})
 </script>
 </head>
@@ -162,7 +162,7 @@
                 <tbody>
 					<c:forEach var="o" items="${ od }">
 	                    <tr>
-	                        <td>${ o.orderNo }</td>
+	                        <td id="odNo">${ o.orderNo }</td>
 	                        <td>${ o.orderDate }</td>
 	                        <td>${ o.payStatus }</td>
 	                        <td>${ o.orderStatus }</td>
@@ -270,15 +270,18 @@
                     <div class="alterInfo-btn">
                         <button type="button" id="showAddressForm">주소 변경</button>
                     </div>
-                    <div id="addressForm">
-                        <input type="text" id="sample6_postcode" class="d_form mini" placeholder="우편번호">
-                        <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
-                        <input type="text" id="sample6_address" class="d_form large" placeholder="주소"><br>
-                        <input type="text" id="sample6_detailAddress" class="d_form" placeholder="상세주소">
-                        <input type="text" id="sample6_extraAddress" class="d_form" placeholder="참고항목">
-                        <div id="addressForm-btn" class="alterInfo-btn">
-                            <button id="saveAddress">주소 저장</button>
-                        </div>
+                    <div id="addressForm" class="hide">
+                    	<form action="alterAddress.or" method="post">
+                    		<input type="hidden" id="hiddenOdNo" name="orderNo">
+	                        <input type="text" id="sample6_postcode" name="orderPost" class="d_form mini" placeholder="우편번호">
+	                        <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
+	                        <input type="text" id="sample6_address" name="orderAddress" class="d_form large" placeholder="주소"><br>
+	                        <input type="text" id="sample6_detailAddress" name="addressDetail" class="d_form" placeholder="상세주소">
+	                        <input type="text" id="sample6_extraAddress" name="addressRef" class="d_form" placeholder="참고항목">
+	                        <div id="addressForm-btn" class="alterInfo-btn">
+	                            <button type="submit" id="saveAddress">주소 저장</button>
+	                        </div>
+                        </form>
                     </div>
 
                 </div>
@@ -337,7 +340,7 @@
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
-                            <td width="300px;">[0001 - 금요일 쿠폰 (10%)] 5,000</td>
+                            <td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName } (${ oCou.couponPrice } ${ oCou.couponPriceRate })]</td>
                             <th>결제 수단</th>
                             <td>${ oPay.payWay } (${ oPay.depositName })</td>
                         </tr>

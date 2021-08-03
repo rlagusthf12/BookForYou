@@ -252,4 +252,8 @@
 		 where mem_no = 3
            and status = 'Y';
   	</select>
+  	
+  	
+  	
+ 
 </mapper>

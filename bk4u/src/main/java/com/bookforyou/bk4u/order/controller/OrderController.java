@@ -3,15 +3,19 @@ package com.bookforyou.bk4u.order.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
@@ -205,23 +209,41 @@ public class OrderController {
 	 */
 	@ResponseBody
 	@RequestMapping("adminOrderDetail.or")
-	public ModelAndView selectAdminOrderDetail(ModelAndView mv, int orderNo) {
+	public ModelAndView selectAdminOrderDetail(@RequestParam("orderNo") int oNo, ModelAndView mv, int orderNo) {
 		
 		ArrayList<Order> order = oService.selectAdminOrderDetail(orderNo);
 		ArrayList<OrderDetail> oBook = oService.selectAdminOrderedBook(orderNo);
 		Member m = oService.selectAdminOrderedMem(orderNo);
 		Payment p = oService.selectAdminOrderedPayment(orderNo);
-		
-		System.out.println(order);
+		Coupon c = oService.selectAdminOrderedUsedCoupon(orderNo);
 		
 		mv.addObject("od", order)
 		  .addObject("oBook", oBook)
 		  .addObject("oMem", m)
 		  .addObject("oPay", p)
+		  .addObject("oCou", c)
 		  .setViewName("order/adminOrderDetail");
 		
 		return mv;
 		
+	}
+	
+	/**
+	 * [관리자] 주문지 배송 변경 (한진)
+	 */
+	@RequestMapping("alterAddress.or")
+	public String updateAdminAddress(RedirectAttributes redirectAttributes, HttpSession session, Order o) {
+		
+		int result = oService.updateAdminAddress(o);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "배송지가 변경되었습니다.");
+		}else {
+			session.setAttribute("errorMsg", "배송지 변경 실패");
+		}
+
+		redirectAttributes.addAttribute("orderNo", o.orderNo);
+		return "redirect:/adminOrderDetail.or";
 	}
 	
 	

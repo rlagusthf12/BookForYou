@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
@@ -132,8 +133,25 @@ public class OrderDao {
 		return sqlSession.selectOne("memberMapper.selectAdminOrderedMem", orderNo);
 	}
 
+	/**
+	 * [관리자] 주문 상세 조회 - 주문 결제 내역 조회 (한진)
+	 */
 	public Payment selectAdminOrderedPayment(SqlSessionTemplate sqlSession, int orderNo) {
 		return sqlSession.selectOne("paymentMapper.selectOrderedPayment", orderNo);
+	}
+	
+	/**
+	 * [관리자] 주문 상세 조회 - 사용된 쿠폰 조회 (한진)
+	 */
+	public Coupon selectAdminOrderUsedCoupon(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("couponMapper.selectAdminOrderedUsedCoupon", orderNo);
+	}
+
+	/**
+	 * [관리자] 주문 배송지 변경 (한진)
+	 */
+	public int updateAdminAddress(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("orderMapper.updateAdminAddress", o);
 	}
 
 	
