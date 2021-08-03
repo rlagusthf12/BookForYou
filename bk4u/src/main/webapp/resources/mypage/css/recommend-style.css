@@ -24,9 +24,9 @@ body{
 }
 */
 label {
-    position: relative;
-    display: inline-block;
-    text-align: center;
+    position: relative !important;
+    display: inline-block !important;
+    text-align: center !important;
 }
 
 .btn:hover {
@@ -38,115 +38,115 @@ label {
     transform: translateY(2px) !important;
 }
 .btn {
-    margin-left: 15px;
-    margin-right: 15px;
-    font-size: 15px;
-    font-weight: bold;
-    height: 35px;
-    width: 100px;
-    box-shadow: 0 3px #999;
-    text-align: center;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    height: 35px !important;
+    width: 100px !important;
+    box-shadow: 0 3px #999 !important;
+    text-align: center !important;
 }
 .btn-sık {
-    transition: all 0.2s ease;
-    background-color: white ;
+    transition: all 0.2s ease !important;
+    background-color: white !important;
     border: 2px solid #f44336 !important;
     box-shadow: 0 3px #d32f2f !important;
-    min-width: 100px;
-    border-radius: 20px;
+    min-width: 100px !important;
+    border-radius: 20px !important;
 }
 
 
     btn-sık::selection{
-        background: green;
+        background: green !important;
     }
 
 input[type="radio"] {
-     position: absolute;
-  visibility: hidden;
+     position: absolute !important;
+  visibility: hidden !important; 
 }
 input[type="radio"] + div {
-    position: relative;
+    position: relative !important;
 }
 input[type="radio"]:checked + div {
-  background-color: #ef5350;
+  background-color: #ef5350 !important;
 }
 input[type="radio"]:checked + div>span {
-  color: white;
+  color: white !important;
 }
 input[type="radio"] + div>span {
-position: relative;
-top: 25%;}
+position: relative !important;
+top: 25% !important;}
 
 input[type="checkbox"] {
-     position: absolute;
-  visibility: hidden;
+     position: absolute !important;
+  visibility: hidden !important;
 }
 
 input[type="checkbox"] + div {
-    position: relative;
+    position: relative !important;
 }
 input[type="checkbox"]:checked + div {
-  background-color: #ef5350;
+  background-color: #ef5350 !important;
 }
 input[type="checkbox"]:checked + div>span {
-  color: white;
+  color: white !important;
 }
 input[type="checkbox"] + div>span {
-position: relative;
-top: 25%;}
+position: relative !important;
+top: 25% !important;}
 
 input[type="checkbox"]:checked + div::before {
         content:"✔";
-    position: absolute;
-    bottom: 18px;
-    right: 0px;
-    font-size: 21px;
-    color: black;
+    position: absolute !important;
+    bottom: 18px !important;
+    right: 0px !important;
+    font-size: 21px !important;
+    color: black !important;
 }
 
 input[type="radio"]:checked + div::before {
-    font-family: FontAwesome;
-    content: "\f08d";
-    position: absolute;
-    bottom: 31px;
-    font-size: 21px;
-    color: black;
-    right: -5px;
-    -webkit-transform: rotate(30deg);
-    -moz-transform: rotate(30deg);
-    -o-transform: rotate(30deg);
-    -ms-transform: rotate(30deg);
-    transform: rotate(30deg);
-    animation: fall 0.5s forwards;
+    font-family: FontAwesome !important;
+    content: "\f08d" !important;
+    position: absolute !important;
+    bottom: 31px !important;
+    font-size: 21px !important;
+    color: black !important;
+    right: -5px !important;
+    -webkit-transform: rotate(30deg) !important;
+    -moz-transform: rotate(30deg) !important;
+    -o-transform: rotate(30deg) !important;
+    -ms-transform: rotate(30deg) !important;
+    transform: rotate(30deg) !important;
+    animation: fall 0.5s forwards !important;
 }
 
 @keyframes fall {
     100% {
-        -webkit-transform: translate(-5px,5px) rotate(30deg);
-        -moz-transform: translate(-5px,5px) rotate(30deg);
-        -o-transform: translate(-5px,5px) rotate(30deg);
-        -ms-transform: translate(-5px,5px) rotate(30deg);
-        transform: translate(-5px,5px) rotate(30deg);
+        -webkit-transform: translate(-5px,5px) rotate(30deg) !important;
+        -moz-transform: translate(-5px,5px) rotate(30deg) !important;
+        -o-transform: translate(-5px,5px) rotate(30deg) !important;
+        -ms-transform: translate(-5px,5px) rotate(30deg) !important;
+        transform: translate(-5px,5px) rotate(30deg) !important;
     }
 }
 
 @-moz-keyframes fall {
     100% {
-        -webkit-transform: translate(-5px,5px) rotate(30deg);
-        -moz-transform: translate(-5px,5px) rotate(30deg);
-        -o-transform: translate(-5px,5px) rotate(30deg);
-        -ms-transform: translate(-5px,5px) rotate(30deg);
-        transform: translate(-5px,5px) rotate(30deg);
+        -webkit-transform: translate(-5px,5px) rotate(30deg) !important;
+        -moz-transform: translate(-5px,5px) rotate(30deg) !important;
+        -o-transform: translate(-5px,5px) rotate(30deg) !important;
+        -ms-transform: translate(-5px,5px) rotate(30deg) !important;
+        transform: translate(-5px,5px) rotate(30deg) !important;
     }
 }
 
 @-webkit-keyframes fall {
      100% {
-        -webkit-transform: translate(-5px,5px) rotate(30deg);
-        -moz-transform: translate(-5px,5px) rotate(30deg);
-        -o-transform: translate(-5px,5px) rotate(30deg);
-        -ms-transform: translate(-5px,5px) rotate(30deg);
-        transform: translate(-5px,5px) rotate(30deg);
+        -webkit-transform: translate(-5px,5px) rotate(30deg) !important;
+        -moz-transform: translate(-5px,5px) rotate(30deg) !important;
+        -o-transform: translate(-5px,5px) rotate(30deg) !important;
+        -ms-transform: translate(-5px,5px) rotate(30deg) !important;
+        transform: translate(-5px,5px) rotate(30deg) !important;
     }
 }
