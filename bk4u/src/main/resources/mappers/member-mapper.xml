@@ -276,21 +276,22 @@
   		select
   				count(*)
   			from members
-  			where mem_status = 'Y'
+  			where mem_status = 'M'
   	</select>
   	
   	<select id="selectAmemSearch" resultMap="memberResult">
   		select
   				mem_no,
+  				mem_id,
   				mem_pwd,
   				mem_name,
   				mem_email,
   				mem_basic_address,
   				mem_enrolldate
   			from members
-  		   where mem_status = 'Y'
+  		   where mem_status = 'M'
   		   order
-  		   		by mem_no desc
+  		   		by mem_no asc
   	</select>
   	
   	<!-- 사용자 선호 관심사 삭제 (안세아) -->

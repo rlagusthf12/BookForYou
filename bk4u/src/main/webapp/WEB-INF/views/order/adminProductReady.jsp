@@ -379,6 +379,15 @@
 					location.href="adminOrderConfirm.or?selectedOd=" + checkArr + "&odStatus=" + $(this).val() + "&orStatus=2";
 	        	})
 	        })
+	        
+	        /* 주문 상세 보기 */
+	        $(".detailC").click(function(){
+	        	
+	        	var td = $(this);
+	        	var orderNo = td.text();
+	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	        	
+	        })
 
         })
 </script>
@@ -579,7 +588,7 @@
 			                        <tr>
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="oCheck" value="${ o.orderNo }"></td>
-			                            <td>${ o.orderNo }</td>
+			                            <td class="detailC">${ o.orderNo }</td>
 			                            <td>${ o.orderDate }</td>
 			                            <td>${ o.memName } <br> (${ o.memId })</td>
 			                            <td>${ o.bkTitle }</td>

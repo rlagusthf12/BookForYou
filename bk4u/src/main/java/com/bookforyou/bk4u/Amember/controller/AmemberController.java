@@ -41,6 +41,8 @@ public class AmemberController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
+		System.out.println(amemCount);
+		
 		return "Amember/memberSearch";
 	}
 	

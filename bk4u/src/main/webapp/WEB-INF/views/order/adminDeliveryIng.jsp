@@ -365,6 +365,15 @@
 					location.href="adminOrderConfirm.or?selectedOd=" + checkArr + "&odStatus=" + $(this).val() + "&orStatus=4";
 	        	})
 	        })
+	        
+	        /* 주문 상세 보기 */
+	        $(".detailC").click(function(){
+	        	
+	        	var td = $(this);
+	        	var orderNo = td.text();
+	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	        	
+	        })
 
         })
 </script>

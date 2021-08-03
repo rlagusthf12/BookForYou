@@ -371,7 +371,7 @@
 	        	})
 	        })
 	        
-	        /* 테이블 행 선택 */
+	        /* 주문 상세 보기 */
 	        $(".detailC").click(function(){
 	        	
 	        	var td = $(this);

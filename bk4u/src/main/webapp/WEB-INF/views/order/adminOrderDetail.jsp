@@ -126,20 +126,21 @@
 
 <script>
 	$(function(){
+		
+		/* 주소 변경 폼 열기/닫기 */
 	    $("#showAddressForm").click(function(){
 	        $("#addressForm").toggleClass("hide");
 	    })
 	
+	    /* 결제쪽 계산 */
 	    var orderNo = $("#odNo").text();
-	    $("#hiddenOdNo").val(orderNo);
-	    
+	    $("#hiddenOdNo").val(orderNo);	    
 	    var $price = Number($("#price").text());
 	    var $point = Number($("#point").text());
 	    var $add = Number($("#add").text());
 	    var $total = $price - $point + $add;
 	    $("#total").text($total);
 	    $("#total2").text($total);
-	    
 	    var $gp = $total * 0.01;
 	    $("#givPoint").text($gp);
 	})
@@ -356,7 +357,7 @@
                         <tr>
                             <th>사용 쿠폰</th>
                             <c:choose>
-                            	<c:when test="${ !empty oCou.couponIssueNum }">
+                            	<c:when test="${ not empty oCou.couponIssueNum }">
 		                            <td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName } (${ oCou.couponPrice } ${ oCou.couponPriceRate })]</td>
                             	</c:when>
                             	<c:otherwise>
@@ -364,7 +365,7 @@
                             	</c:otherwise>
                             </c:choose>
                             <th>결제 수단</th>
-                            <td>${ oPay.payWay } (${ oPay.depositName })</td>
+                            <td>${ oPay.payWay }</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
@@ -376,7 +377,7 @@
                             <th>합계</th>
                             <td id="total"></td>
                             <th>결제일</th>
-                            <td></td>
+                            <td>${ oPay.payDate }</td>
                         </tr>
 
                     </table>
@@ -389,14 +390,17 @@
 		                <button type="button">입금전 처리</button>            			
             		</c:when>
             	</c:choose>
-                <button type="button">주문 취소</button>
                 <c:forEach var="o" items="${ od }">
 		            <c:choose>
 	                	<c:when test="${ o.orderStatus eq '배송완료' }">
 			                <button type="button">반품</button>	                	
 	                	</c:when>
+	            		<c:when test="${ o.orderStatus eq '주문확인' }">
+			                <button type="button">주문 취소</button>            		
+	            		</c:when>
                 	</c:choose>
                 </c:forEach>
+                <button type="button">닫기</button>     
             </div>
             <br><br><br>
         </div>   

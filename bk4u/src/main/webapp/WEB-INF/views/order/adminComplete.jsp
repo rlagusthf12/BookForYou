@@ -334,6 +334,14 @@
 	        $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
 	    })
 	
+	    /* 주문 상세 보기 */
+	        $(".detailC").click(function(){
+	        	
+	        	var td = $(this);
+	        	var orderNo = td.text();
+	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	        	
+	        })
 	
 	})
 </script>
@@ -525,7 +533,7 @@
 		                    	<c:forEach var="o" items="${ oList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td>${ o.orderNo }</td>
+			                            <td class="detailC">${ o.orderNo }</td>
 			                            <td>${ o.orderDate }</td>
 			                            <td>${ o.memName } <br> (${ o.memId })</td>
 			                            <td>${ o.bkTitle }</td>
