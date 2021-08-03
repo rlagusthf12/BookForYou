@@ -40,11 +40,14 @@
                      
                         <h6 align="left"><b>독서모임게시판</b></h6>
                         <br><br><br>
+                       <form id="createGroup" method="post" action="insertGroup.bo" enctype="multipart/form-data">
+                        
                         <div style="border-radius: 10%; border: solid; width: 600px;">
                         <table>
                             <br>
-                        <form id="createGroup" method="post" action="insertGroup.bo" enctype="multipart/form-data">
                             <h4 align="center">독서모임 만들기</h4>
+                            
+                            
                             <thead>
                                 <tr>
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
@@ -171,7 +174,7 @@
                         <br><br>
                         </div>>
 
-						</form>
+					</form>
 
                         <br>
                        
