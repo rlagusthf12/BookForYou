@@ -16,9 +16,11 @@ import com.bookforyou.bk4u.store.model.service.StoreService;
 @Controller
 public class StoreController {
 	
+	/*
 	@Autowired
 	private StoreService storeService;
-
+	*/
+	
 	/*
 	 * [공통] 오프라인 매장 메인 조회 (연지)
 	 */

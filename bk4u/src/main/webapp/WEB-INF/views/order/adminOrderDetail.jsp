@@ -333,7 +333,7 @@
                             	<td>${ o.addPrice }</td>
                             </c:forEach>
                             <th>적립 포인트</th>
-                            <td>${ oPay.price * 0.1 }</td>
+                            <td>${ oPay.price * 0.01 }</td>
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
