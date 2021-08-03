@@ -27,7 +27,7 @@
 	</select>
 	
 	<!-- [사용자] 대여 내역 개수 조회 -->
-	<select id="selectAllListCount" resultMap="rentalResult">
+	<select id="selectAllListCount1" resultMap="rentalResult">
 		select 
 		       rental_no,
 		       mem_no,
@@ -46,7 +46,7 @@
 	</select>
 	
 	<!-- [사용자] 대여 내역 개수 조회 -->
-	<select id="selectAllListCount" resultMap="rentalResult">
+	<select id="selectAllListCount2" resultMap="rentalResult">
 		select 
 		       r.rental_no,
 		       r.mem_no,
