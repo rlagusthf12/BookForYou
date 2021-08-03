@@ -83,6 +83,20 @@ public class MemberDao {
 	public ArrayList<Coupon> selectCouponList(SqlSessionTemplate sqlSession, int memNo) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectCouponList", memNo);
 	}
+	
+	/**
+	 * [사용자] 멤버의 직업과 책 선호난이도 수정
+	 * @author 안세아
+	 * @param sqlSession
+	 * @param member
+	 * @return
+	 */
+	public int updateMemberWorkAndLevel(SqlSessionTemplate sqlSession, Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateMemberWorkAndLevel",member);
+	}
+
+
 
 	
 	

@@ -182,8 +182,41 @@
                 <div id="head-of-main-content">
                     추천 설정
                 </div>
+                <c:if test="${ !empty alertMsg }">
+					<script>
+						alertify.alert("${alertMsg}");
+					</script>
+					<c:remove var="alertMsg" scope="session"/>
+				</c:if>
                 <hr style="text-align: center; width: 95%; margin: auto;">
+                <form id="recommend-update" action="update-recommend.mp" method="post">
                 <div id="recommend-box">
+                	<input type="hidden" name="memNo" value="${loginUser.memNo }">
+                	<input type="hidden" name="memId" value="${loginUser.memId }">
+            		<input type="hidden" name="memPwd" value="${loginUser.memPwd }">
+            		<input type="hidden" name="memName" value="${loginUser.memName }">
+            		<input type="hidden" name="memPost" value="${loginUser.memPost }">
+            		<input type="hidden" name="memBasicAddress" value="${loginUser.memBasicAddress }">
+            		<input type="hidden" name="memDetailAddress" value="${loginUser.memDetailAddress }">
+            		<input type="hidden" name="memAddressRefer" value="${loginUser.memAddressRefer }">
+            		<input type="hidden" name="memGender" value="${loginUser.memGender }">
+            		<input type="hidden" name="memAge" value="${loginUser.memAge }">
+            		<input type="hidden" name="memPhone" value="${loginUser.memPhone }">
+            		<input type="hidden" name="memEmail" value="${loginUser.memEmail }">
+            		<input type="hidden" name="emailStatus" value="${loginUser.emailStatus }">
+            		<input type="hidden" name="memStatus" value="${loginUser.memStatus }">
+            		<input type="hidden" name="memNickname" value="${loginUser.memNickname }">
+            		<input type="hidden" name="memWork" value="${loginUser.memWork }">
+            		<input type="hidden" name="memLevel" value="${loginUser.memLevel }">
+            		<input type="hidden" name="memEnrollDate" value="${loginUser.memEnrollDate }">
+            		<input type="hidden" name="blackReason" value="${loginUser.blackReason }">
+            		<input type="hidden" name="blackDate" value="${loginUser.blackDate }">
+            		<input type="hidden" name="reportCount" value="${loginUser.reportCount }">
+            		<input type="hidden" name="reportCount" value="${loginUser.originImgName }">
+            		<input type="hidden" name="reportCount" value="${loginUser.changImgName }">
+            		<input type="hidden" id="interestArray" name="interestArray"/>
+            		<input type="hidden" id="subCategoryArray" name="subCategoryArray"/>
+                    <br>
                     <br>
                     <div class="mb-3">
                         <label class="form-label"><b>관심사(다중 선택 가능)</b></label>
@@ -472,8 +505,27 @@
                         </div>
                     </div> 
                     <br>
-                    <p><input type="submit" value="추천 정보 수정하기" class="orange-button" /></p>
-        
+                    <script>
+            		function recommend_update(){
+            			var interestArray = new Array();
+            			$('input:checkbox[name=interestNo]:checked').each(function(){
+            				interestArray.push(this.value);
+            			});
+            		
+            			$("#interestArray").val(interestArray);
+            		
+            			var subCategoryArray = new Array();
+            			$('input:checkbox[name=subCategoryNo]:checked').each(function(){
+            				subCategoryArray.push(this.value);
+            			});
+            			$("#subCategoryArray").val(subCategoryArray);
+            			console.log(interestArray);
+            			console.log(subCategoryArray);
+            			$("#recommend-enroll").submit();
+            		}
+            </script>
+                    <button class="orange-button" onClick="recommend_update();">추천 정보 수정하기</button>
+        		</form>
                 </div>
             </div>  
 

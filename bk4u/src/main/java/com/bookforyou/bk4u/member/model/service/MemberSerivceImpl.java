@@ -141,4 +141,14 @@ public class MemberSerivceImpl implements MemberService{
 		return memberDao.selectCouponList(sqlSession, memNo);
 	}
 
+	/**
+	 * [사용자] 멤버의 직업과 책 선호 난이도 수정
+	 * @author 안세아
+	 */
+	@Override
+	public int updateMemberWorkAndLevel(Member member) {
+		// TODO Auto-generated method stub
+		return memberDao.updateMemberWorkAndLevel(sqlSession, member);
+	}
+
 }

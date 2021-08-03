@@ -48,6 +48,8 @@ public interface MemberService {
 	 */
 	ArrayList<Coupon> selectCouponList(int memNo);
 
+	int updateMemberWorkAndLevel(Member member);
+
 	
 }
 
