@@ -337,7 +337,7 @@
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
-                            <td width="300px;">[0001 - 금요일 쿠폰 (10%)] 5,000</td>
+                            <td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName } (${ oCou.couponPrice } ${ oCou.couponPriceRate })]</td>
                             <th>결제 수단</th>
                             <td>${ oPay.payWay } (${ oPay.depositName })</td>
                         </tr>

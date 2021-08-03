@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
@@ -211,6 +212,7 @@ public class OrderController {
 		ArrayList<OrderDetail> oBook = oService.selectAdminOrderedBook(orderNo);
 		Member m = oService.selectAdminOrderedMem(orderNo);
 		Payment p = oService.selectAdminOrderedPayment(orderNo);
+		Coupon c = oService.selectAdminOrderedUsedCoupon(orderNo);
 		
 		System.out.println(order);
 		
@@ -218,6 +220,7 @@ public class OrderController {
 		  .addObject("oBook", oBook)
 		  .addObject("oMem", m)
 		  .addObject("oPay", p)
+		  .addObject("oCou", c)
 		  .setViewName("order/adminOrderDetail");
 		
 		return mv;
