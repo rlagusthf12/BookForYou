@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
+    <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./side-style.css">
+    <style>
+        .wrap {
+            width: 1200px;
+            height: 1200px;
+            margin: auto;
+        }
+
+        .wrap>div {
+            width: 100%;
+        }
+
+        #content {
+            background: #EEE;
+            height: 100%;
+            position: relative;
+            display: inline-flex;
+        }
+
+        #main_content{
+            margin-left: 60px;
+            margin-top: 50px;
+            margin-right: 60px;
+            width: 100%;
+            height: 800px;
+            background-color: #FFF;
+            box-shadow: 5px 5px 5px 5px #C6C6C6;
+        }
+        
+        nav{
+            width: fit-content;
+            height: fit-content;
+            display: inline-flex;
+        }
+        #head-of-main-content {
+            margin-left: 30px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: larger;
+        }
+        #del-box{
+            width: 80%;
+            text-align: center;
+            margin: auto;
+        }
+        #del-info-box{
+            margin-top: 100px;
+        }
+        .input-middle{
+            width: 50%;
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div id="content">
+            <!-- partial:index.partial.html -->
+            <div class="container">
+                <nav>
+                    <ul class="mcd-menu">
+                        <li>
+                            <a href="">
+                                <i class="fa fa-shopping-cart"></i>
+                                <strong>주문내역</strong>
+                                <small>주문 및 배송 현황을 조회합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-credit-card"></i>
+                                <strong>정기구독 관리</strong>
+                                <small>정기구독 플랜을 조회/수정합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-qrcode"></i>
+                                <strong>대여 내역 조회</strong>
+                                <small>대여 내역을 조회합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-archive"></i>
+                                <strong>보관함</strong>
+                                <small>찜한 내역을 조회합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-home"></i>
+                                <strong>주소록 관리</strong>
+                                <small>주소록을 관리합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-check-square-o"></i>
+                                <strong>추천 설정</strong>
+                                <small>도서 추천 정보를 조회/수정합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-book"></i>
+                                <strong>독서록 관리</strong>
+                                <small>내 독서록과 스크랩한 독서록을 조회합니다.</small>
+                            </a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-book"></i>내 독서록</a></li>
+                                <li><a href="#"><i class="fa fa-bookmark"></i>스크랩한 독서록</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-comments-o"></i>
+                                <strong>활동한 내역</strong>
+                                <small>활동 내역을 조회합니다.</small>
+                            </a>
+                            <ul>
+                                <li><a href="#"><i class="fa fa-users"></i>나의 독서모임</a></li>
+                                <li><a href="#"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
+                                <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
+                                <li><a href="#"><i class="fa fa-comment"></i>댓글</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-ticket"></i>
+                                <strong>쿠폰/포인트</strong>
+                                <small>내 쿠폰과 포인트를 조회합니다.</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="active">
+                                <i class="fa fa-user" class="active"></i>
+                                <strong>개인정보 수정</strong>
+                                <small>개인정보를 수정합니다.</small>
+                            </a>
+                        </li>
+                    </ul>      
+                </nav>
+            </div>
+            <!-- partial -->
+            <div id="main_content">
+                <div id="head-of-main-content">
+                    개인정보 수정 - 탈퇴
+                </div>
+                <hr style="text-align: center; width: 95%; margin: auto; color:black;">
+                <div id="del-box">
+                    <div id="del-info-box">
+                        <img src="../images/my-page-warn.PNG"/>
+                        <br>
+                        <br>
+                        <p>
+                            <b>
+                            탈퇴하시게 되면 이후 로그인이 불가능하며
+                            <br>
+                            각종 회원 혜택을 받으실 수 없습니다.
+                            <br>
+                            <br>
+                            그래도 정말로 탈퇴하시겠습니까?
+                            </b>
+                        </p>
+                        <br>
+                        <input type="password" id="inputPassword5" placeholder="비밀번호 입력" class="form-control input-middle" aria-describedby="passwordHelpBlock">
+                        <br>
+                        <br>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">탈퇴하기</button>
+                            <button class="btn btn-secondary" type="button">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+        </div>
+    </div>
+</body>
+
+</html>

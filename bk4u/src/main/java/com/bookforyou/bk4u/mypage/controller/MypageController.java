@@ -18,11 +18,15 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.mypage.model.service.MypageService;
-import com.bookforyou.bk4u.rental.model.vo.Rental;
 
 @Controller
 public class MypageController {
 	
 	@Autowired
 	private MypageService mypageService;
+	
+	@RequestMapping("info.mp")
+	public String myInfo() {
+		return "mypage/myInfo";
+	}
 }

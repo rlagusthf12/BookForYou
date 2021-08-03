@@ -18,5 +18,7 @@ public class MypageServiceImpl implements MypageService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	
 
 }
