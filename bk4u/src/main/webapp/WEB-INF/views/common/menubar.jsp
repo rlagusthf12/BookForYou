@@ -15,7 +15,7 @@
 <style>
    
     #header{
-        width:80%;
+        width:1200px;
         height:100px;
         padding-top: 20px;
         margin:auto;

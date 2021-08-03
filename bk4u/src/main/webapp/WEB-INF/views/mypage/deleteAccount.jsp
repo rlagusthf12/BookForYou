@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,12 +12,13 @@
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./side-style.css">
+    <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
         .wrap {
             width: 1200px;
-            height: 1200px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -23,7 +27,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 950px;
             position: relative;
             display: inline-flex;
         }
@@ -63,10 +67,17 @@
             text-align: center;
             margin: auto;
         }
+		#pwd-box{
+			width: 300px;
+			text-align: center;
+			margin:auto;
+		}
     </style>
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -164,7 +175,7 @@
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
                 <div id="del-box">
                     <div id="del-info-box">
-                        <img src="../images/my-page-warn.PNG"/>
+                        <img src="resources/mypage/images/my-page-warn.PNG"/>
                         <br>
                         <br>
                         <p>
@@ -178,11 +189,13 @@
                             </b>
                         </p>
                         <br>
-                        <input type="password" id="inputPassword5" placeholder="비밀번호 입력" class="form-control input-middle" aria-describedby="passwordHelpBlock">
+                        <div id="pwd-box" class="input-group input-group-sm mb-3">
+                        	<input type="password" id="inputPassword5" placeholder="비밀번호 입력" class="form-control input-middle" aria-describedby="passwordHelpBlock">
+                        </div>
                         <br>
                         <br>
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">탈퇴하기</button>
+                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="">탈퇴하기</button>
                             <button class="btn btn-secondary" type="button">취소</button>
                         </div>
                     </div>
@@ -191,6 +204,8 @@
 
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
+    
 </body>
 
 </html>

@@ -9,6 +9,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- alertify 관련 라이브러리 -->
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- menubar적용 라이브러리 -->
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
@@ -19,8 +29,9 @@
     <style>
         .wrap {
             width: 1200px;
-            height: 1100px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -29,7 +40,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 1200px;
             position: relative;
             display: inline-flex;
         }
@@ -39,7 +50,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1000px;
+            height: 1080px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -184,6 +195,8 @@
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -273,6 +286,12 @@
                     </ul>
                 </nav>
             </div>
+            <c:if test="${ !empty alertMsg }">
+				<script>
+					alertify.alert("${alertMsg}");
+				</script>
+				<c:remove var="alertMsg" scope="session"/>
+			</c:if>
             <!-- partial -->
             <div id="main_content">
                 <div id="head-of-main-content">
@@ -287,7 +306,7 @@
                             <td class="td-content">
                                 <div id="profile-img-box">
                                     <div class="box" style="background: #BDBDBD;">
-                                        <img class="profile" src="../images/blank-profile.png">
+                                        <img class="profile" src="resources/member/images/blank-profile.png">
                                     </div>
                                 </div>
                                 <div id="profile-text-box">
@@ -338,7 +357,7 @@
                             </td>
                             <td class="bottom-td">
                                 <div class="profile-button-group-box">
-                                    <button type="button" class="btn btn-danger btn-sm">탈퇴</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="location.href='delete-account-form.mp'">탈퇴</button>
                                 </div>
                             </td>
                         </tr>
@@ -518,6 +537,7 @@
 
         </div>
     </div>
+     <jsp:include page="../common/footer.jsp"/>
 </body>
 
 </html>

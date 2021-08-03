@@ -29,4 +29,9 @@ public class MypageController {
 	public String myInfo() {
 		return "mypage/myInfo";
 	}
+	
+	@RequestMapping("delete-account-form.mp")
+	public String deleteAccountForm() {
+		return "mypage/deleteAccount";
+	}
 }
