@@ -228,11 +228,11 @@
                     </tr>
                     <tr>
                         <th>수령기한</th>
-                        <td>~ ${ rt.reiceiveDate }</td>
+                        <td>~ ${ rt.receiveDate }</td>
                     </tr>
                     <tr>
                         <th>대여기간</th>
-                        <td>${ rt.reiceiveDate } ~ ${ rt.reiceiveDate }</td>
+                        <td>${ rt.receiveDate } ~ ${ rt.receiveDate }</td>
                     </tr>
                     <tr>
                         <th>상태</th>

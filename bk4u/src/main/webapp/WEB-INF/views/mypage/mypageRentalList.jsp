@@ -214,6 +214,15 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                
+                <script>
+                	$("table tr").click(function(){
+                		var rentalNo = $(this).children().eq(0).text();
+                		console.log(rentalNo);
+                		
+                		location.href = "rentalDetail.mp?rentalNo=" + rentalNo;
+                	})
+                </script>
             
 	            <div id="paging-wrap">
 	                <ul class="pagination">
