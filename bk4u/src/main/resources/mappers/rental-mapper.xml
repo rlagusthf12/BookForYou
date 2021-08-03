@@ -8,7 +8,7 @@
 		<result column="bk_no" property="bkNo"/>
 		<result column="store_no" property="storeNo"/>
 		<result column="request_date" property="requestDate"/>
-		<result column="receive_date" property="receiceDate"/>
+		<result column="receive_date" property="receiveDate"/>
 		<result column="return_date" property="returnDate"/>
 		<result column="rental_status" property="rentalStatus"/>
 		<result column="bk_title" property="bkTitle"/>
@@ -68,8 +68,8 @@
                   from off_book
                  where bk_no = (select bk_no
                                   from rental
-                                 where rental_no = #{orderNo})) ob on (r.store_no = ob.store_no)
-		 where rental_no = #{orderNo};
+                                 where rental_no = #{rentalNo})) ob on (r.store_no = ob.store_no)
+		 where rental_no = #{rentalNo}
 	</select>
 
 </mapper>
