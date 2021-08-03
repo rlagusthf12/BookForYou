@@ -85,7 +85,7 @@
 
            <div class="innerOuter" style="padding:5% 10%;">
             <br><br><br><br><br><br><br><br>
-                <h6 align="left"><b>독서모임게시판</b></h6>
+                <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                 <br><br>
 
                     <br clear="both"><br>
@@ -113,10 +113,11 @@
                     </script>
                     
                 <br><br><br><br>
-
+			
                 <!--로그인한 모든 회원에게 보이는 버튼-->
-                <button type="submit" id="makeBoard"><a href="createGroup.bo">독서모임 만들기</a></button>
-                
+                <c:if test="${ !empty loginUser }">
+                <button type="submit" id="makeBoard">독서모임 만들기</button>
+                </c:if>
                 <br><br>
                 <hr>
                 
@@ -172,15 +173,15 @@
                                         addListHtml += "<table>"
                                         addListHtml += "<tr>"
                                         addListHtml += "<td>"+data.list[i].group_img+"</td>";
-                                         addListHtml += "<td>"+data.list[i].group_type+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_type+"</td>";
                                         addListHtml += "</tr>"
                                         addListHtml += "<tr>"
-                                           addListHtml += "<td>"+data.list[i].group_title+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_title+"</td>";
                                         addListHtml += "</tr>"
                                         addListHtml += "<tr>"
-                                           addListHtml += "<td>"+data.list[i].group_script+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_script+"</td>";
                                         addListHtml += "</tr>"
-                                           addListHtml += "</table>";	
+                                        addListHtml += "</table>";	
                                     }
                                         addListHtml += "</div>";
                                         

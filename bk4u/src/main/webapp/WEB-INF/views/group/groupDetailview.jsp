@@ -85,22 +85,21 @@
                                 <div class="card" style="width:500px">
                                     <img class="card-img-top" src="img_avatar1.png" alt="Card image">
                                         <div class="card-img-overlay">
-                                        <h4 class="card-title">독서모임이름</h4>
-                                        <p class="card-text">개설날짜</p>
+                                        <h4 class="card-title">${ g.groupTitle }</h4>
+                                        <p class="card-text">${ g.groupDate }</p>
                                 </div>
                               </div>
                             </td>
 
-                            <td align="center"><b>회원목록</b></td>
+                            <td align="center"><b>${ g.groupMember }</b></td>
                         </tr>
                      
                         <tr>
                             <td>                              
                                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                                 
-                                박길동 2021/7/21 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
-                                박독서 2021/6/21 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
-                                박정재 2021/7/21 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
+                                ${ memNo }${ groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
+                                
                                 <!-- 강퇴시키는 이유 쓰는 방법 -->
                                 <!-- 작성자가 가입자일 경우 가입되어 있는 사람들 프로필 사진 갖다대면 이름 나오게-->
                                 data-toggle="tooltip" title="회원닉네임" <!--토글튜토리얼 갖다대면 닉네임보이게-->
@@ -113,7 +112,7 @@
                 </table>
                 
                 <br>
-                <h6 align="left"><b>프로필사진 주최자닉네임</b></h6>
+                <h6 align="left"><b>${ g.groupMember && g.groupType == 'GL' }</b></h6>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
                 
                 

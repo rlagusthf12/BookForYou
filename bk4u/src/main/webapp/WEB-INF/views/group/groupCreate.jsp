@@ -43,24 +43,25 @@
                         <div style="border-radius: 10%; border: solid; width: 600px;">
                         <table>
                             <br>
+                        <form id="createGroup" method="post" action="insertGroup.bo" enctype="multipart/form-data">
                             <h4 align="center">독서모임 만들기</h4>
                             <thead>
                                 <tr>
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
                                     <td colspan="2">  
                                         <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio" name="on" value="groupType">
+                                        <input type="radio" class="custom-control-input" id="customRadio" name="groupType" value="${ g.groupType }">
                                         <label class="custom-control-label" for="customRadio">온라인</label>
                                       </div>
                                       <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio2" name="off" value="groupType">
+                                        <input type="radio" class="custom-control-input" id="customRadio2" name="groupType" value="${ g.groupType }">
                                         <label class="custom-control-label" for="customRadio2">오프라인</label>
                                       </div>
                                     </td>
                                 </tr>
                                 <tr>
                                   
-                                    <td colspan="2" ><input type="text"></td>
+                                    <td colspan="2" ><input type="text" id="groupTitle" class="form-control" name="" required ></td>
                                    
                                 </tr>
 
@@ -135,7 +136,7 @@
                                        
                                         <img src="" id="img">
                                         <br>
-                                        <input type="file" name="groupImg" onchange="miri(this);">
+                                        <input type="file" id="groupImg" name="groupImg" class="form-control-file border" onchange="miri(this);">
 
                                         <script>
                                             function miri(tag){
@@ -154,7 +155,7 @@
                                     <td><label for="">*회원정보</label></td>
                                     <td colspan="2">
                                         <select name="groupInfo">
-                                            <option value="onlyMember">회원공개</option>
+                                            <option value="close">회원공개</option>
                                             <option selected value="open">전체공개</option>
                                         </select>
                                     </td>
@@ -170,6 +171,7 @@
                         <br><br>
                         </div>>
 
+						</form>
 
                         <br>
                        

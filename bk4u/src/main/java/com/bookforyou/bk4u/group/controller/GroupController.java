@@ -1,6 +1,10 @@
 package com.bookforyou.bk4u.group.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.io.File;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
@@ -47,8 +52,24 @@ public class GroupController {
 	}
 	
 	@RequestMapping("insertGroup.bo")
-	public String insertGroup() {
-		return "redirect";
+	public String insertGroup( GroupBoard g , MultipartFile groupImg, HttpSession session) {
+		System.out.println(g);
+		System.out.println(g);
+		
+		if(!groupImg.getOriginalFilename().equals("")) {
+			 String changeName = saveFile(session, groupImg);
+			 g.setGroupImg("resources/groupFiles/" + changeName);
+		}
+		
+		int result = gService.insertGBoard(g);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "독서모임 완성");
+			return "redirect:group.bo";
+		} else {
+			session.setAttribute("errorMsg", "작성 실패");
+			return "redirect:group.bo";
+		}
 	}
 	
 	@RequestMapping("insertGMem.me")
@@ -63,6 +84,28 @@ public class GroupController {
 			
 		} 
 	}
+	
+	public String saveFile(HttpSession session, MultipartFile groupImg) {
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		
+		String originName = groupImg.getOriginalFilename();
+		// 20210702170130 ( 년월일시분초에 랜덤숫자 다섯개를 붙힘) + 21365 + (원본파일의확장자) .jps
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		int ranNum = (int)(Math.random() * 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		String changeName = currentTime + ranNum + ext;
+		
+		try {
+			groupImg.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+		
+	}
+	
 	
 	
 	

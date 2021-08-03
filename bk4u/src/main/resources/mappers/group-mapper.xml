@@ -71,7 +71,7 @@
 		  )
 		  values
 		  (
-		  	#{groupBoardNo}
+		  	seq_gno.nextval
 		  , #{memNo}
 		  , #{gorupEnrollDate}
 		  , #{mem_email}
@@ -130,4 +130,29 @@
                     ORDER BY GROUP_BOARDNO DESC)s) 
 	</select>
 
+
+	<insert id="insertGBoard">
+		insert
+		  into groupBoard
+		  (
+		  group_boardno
+		 ,group_type
+		 ,group_title
+		 ,group_place
+		 ,group_script
+		 ,group_limit
+		 ,group_img
+		  )
+		  values
+		  (
+		  seq_gno.nextval
+		 ,#{groupType}
+		 ,#{groupTitle}
+		 ,#{groupPlace}
+		 ,#{groupScript}
+		 ,#{gorupLimit}
+		 ,#{groupImg}
+		  )
+	
+	</insert>
 </mapper>
