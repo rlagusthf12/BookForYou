@@ -24,5 +24,5 @@ public class OffBook {
 	private String bkTitle;
 	private String bkPublish;
 	private String writerName;
-
+	private String storeName;
 }

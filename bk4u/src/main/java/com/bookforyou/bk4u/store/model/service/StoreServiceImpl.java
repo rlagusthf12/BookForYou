@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.store.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,22 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public ArrayList<OffBook> selectStoreOffBookListRecent(int storeNo){
 		return storeDao.selectStoreOffBookListRecent(sqlSession, storeNo);
+	}
+	
+	/*
+	 * [공통] 오프라인 매장 도서 상세 조회 (연지)
+	 */
+	@Override
+	public OffBook selectOffBook(HashMap<String, Integer> map){
+		return storeDao.selectOffBook(sqlSession, map);
+	}
+
+	/*
+	 * [공통] 도서 보유 오프라인 매장 리스트 조회 (연지)
+	 */
+	@Override
+	public ArrayList<Store> selectOffBookStoreList(int bkNo){
+		return storeDao.selectOffBookStoreList(sqlSession, bkNo);
 	}
 
 }

@@ -305,23 +305,23 @@
                 <div class="book_img"><img src=""></div>
                 <div class="book_info">
                     <div>
-                        <div>달까지 가자</div>
-                        <div>장류진 | 창비 | 2021년 4월</div>
+                        <div>${ bk.bkTitle }</div>
+                        <div>${ bk.writerName } | ${ bk.bkPublish } | ${ bk.bkDate }</div>
                     </div>
                     <div id="line"></div>
                     <div>
                         <table>
                             <tr>
                                 <td>상태</td>
-                                <td>대여가능</td>
+                                <td>${ ob.bkStatus }</td>
                             </tr>
                             <tr>
                                 <td>도서위치</td>
-                                <td>E01 [위에서부터 2번째칸]</td>
+                                <td>${ ob.bkLct }</td>
                             </tr>
                             <tr>
                                 <td>매장</td>
-                                <td>강남점 <button>></button></td>
+                                <td>${ ob.storeName } <button onclick="location.href='storeDetail.st?storeNo=${ ob.storeNo }'">></button></td>
                             </tr>
                             <tr>
                                 <td colspan="2">★★★★☆ 9.3 독서록() 보러가기 ></td>
@@ -332,12 +332,8 @@
                         <button class="btn_order"
                         data-bs-toggle="modal"
                         data-bs-target="#modal_rental">대여예약</button>
-                        <button class="btn_cart"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_cart">장바구니</button>
-                        <button class="btn_list"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_list">리스트</button>
+                        <button class="btn_cart">장바구니</button>
+                        <button class="btn_list">리스트</button>
                     </div>
                 </div>
             </div>
@@ -396,42 +392,74 @@
                     <div class="info_box">
                         <div class="info_title">저자 소개</div>
                         <div class="info_content">
-                            1993년 인천에서 태어나 안양예고 문예창작과를 졸업했고, 단국대학교 문예창작과에서 석사 과정을 수료했다. 동식물이 주류가 되고 인간이 비주류가 되는 지구를 꿈꾼다. 작가적 상상력이 무엇인지에 대해 늘 고민했지만, 언제나 지구의 마지막을 생각했고 우주 어딘가에서 일어나는 일들을 꿈꿨다. 어느 날 문득 그런 일들을 소설로 옮겨놔야겠다고 생각했다. 대부분의 시간 늘 상상하고, 늘 무언가를 쓰고 있다. 2019년 9월 첫 장편소설 『무너진 다리』를 썼고, 2019년 제4회 한국과학문학상에서 『천 개의 파랑』으로 장편소설 부문 대상을 수상했다. 소설집 『어떤 물질의 사랑』 그리고 작가가 뱀파이어 로맨스 『밤에 찾아오는 구원자』를 썼다. 모호한 소설을 쓰고 있다.
-                        </div>
+                            ${ bk.writerIntro }
+						</div>
                     </div>
                 </div>
 
                 <div id="info_box" style="display: none;">
                     <div class="info_table">
                         <table>
-                            <tr>
-                                <th>수유점</th>
-                                <td>대여가능</td>
-                            </tr>
-                            <tr>
-                                <th>가로수길점</th>
-                                <td>대여중</td>
-                            </tr>
-                            <tr>
-                                <th>부산점</th>
-                                <td>대여가능</td>
-                            </tr>
-                            <tr>
-                                <th>동탄점</th>
-                                <td>대여가능</td>
-                            </tr>
-                            <tr>
-                                <th>광주점</th>
-                                <td>대여가능</td>
-                            </tr>
-                            <tr>
-                                <th>일산점</th>
-                                <td>대여가능</td>
-                            </tr>
+                        	<c:forEach var="s" items="${ sList }">
+	                            <tr>
+	                                <th>${ s.storeName }</th>
+	                                <td>${ s.bkStatus }</td>
+	                            </tr>
+                            </c:forEach>
                         </table>
                     </div>
                 </div>
             </div>
+            
+            <script>
+	        	$(".book_info .btn_cart").click(function(){
+	        		
+	        		$.ajax({
+	            		url:"cartUpdate.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:${ bk.bkNo }
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_cart").modal('show');
+	            			}else{
+	            				alert("장바구니 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("장바구니 추가 실패");
+	            		}
+		            })
+	        	})
+            </script>
+            
+            <script>
+	        	$(".book_info .btn_list").click(function(){
+	        		
+	        		$.ajax({
+	            		url:"listInsert.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:${ bk.bkNo }
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_list").modal('show');
+	            			}else if(result == "done"){
+	            				alert("이미 리스트에 존재하는 도서입니다.")
+	            			}
+	            			else{
+	            			}
+	            				alert("리스트 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("리스트 추가 실패");
+	            		}
+		            })
+	        	})
+            </script>
 
             <div id="modal_rental" class="modal fade">
                 <div class="modal-dialog">
