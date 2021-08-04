@@ -52,7 +52,7 @@
 		<result column="coupon_pricerate" property="couponPriceRate"/>
 	</resultMap>
   	
-  	<!-- 비밀번호 암호화 적용 전 로그인 메서드(안세아) -->
+  	<!-- [사용자] 비밀번호 암호화 적용 전 로그인 메서드(안세아) -->
   	<select id="loginMember" resultMap="memberResult">
   		select
     		mem_no,
@@ -81,12 +81,11 @@
 		from members
 		where 
   			mem_id = #{memId}
-    		and mem_pwd = #{memPwd}
     		and email_status = 'Y'
     		and not mem_status = 'N'
   	</select>
   	
-  	<!-- 아이디 중복 확인 메서드(안세아) -->
+  	<!-- [사용자] 아이디 중복 확인 메서드(안세아) -->
   	<select id="idCheck" resultType="_int">
   		select
     		count(*)
@@ -95,7 +94,7 @@
   			mem_id = #{memId}
   	</select>
   	
-  	<!-- 닉네임 중복 확인 메서드(안세아) -->
+  	<!-- [사용자] 닉네임 중복 확인 메서드(안세아) -->
   	<select id="nickCheck" resultType="_int">
   		select
     		count(*)
@@ -104,7 +103,7 @@
   			mem_nickname = #{memNickname}
   	</select>
   	
-  	<!-- 이메일 중복 확인 메서드(안세아) -->
+  	<!-- [사용자] 이메일 중복 확인 메서드(안세아) -->
   	<select id="emailCheck" resultType="_int">
   		select
     		count(*)
@@ -113,7 +112,7 @@
   			mem_email = #{memEmail}
   	</select>
   	
-  	<!-- 가입 메서드(안세아) -->
+  	<!-- [사용자] 가입 메서드(안세아) -->
   	<insert id="insertMember">
   		insert 
   		into members(
@@ -155,7 +154,7 @@
   		)
   	</insert>
   	
-  	<!-- 이메일 확인값 업데이트 메서드(안세아) -->
+  	<!-- [사용자] 이메일 확인값 업데이트 메서드(안세아) -->
   	<update id="updateEmailStatus">
   		update members
 			set
@@ -163,7 +162,7 @@
 		where mem_email = #{memEmail}
   	</update>
   	
-  	<!-- 아이디로 멤버 조회해오는 메서드(안세아) -->
+  	<!-- [사용자] 아이디로 멤버 조회해오는 메서드(안세아) -->
   	<select id="selectMemberById" resultType="_int">
   		select 
   			mem_no
@@ -172,7 +171,7 @@
   			mem_id = #{memId}
   	</select>
   	
-  	<!-- 관심사 추가하는 메서드(안세아) -->
+  	<!-- [사용자] 관심사 추가하는 메서드(안세아) -->
   	<insert id="insertMemberInterest">
   		insert
   		into mem_interest(
@@ -184,7 +183,7 @@
   		)
   	</insert>
   	
-  	<!-- 관심 서브 카테고리 추가하는 메서드(안세아) -->
+  	<!-- [사용자] 관심 서브 카테고리 추가하는 메서드(안세아) -->
   	<insert id="insertMemberCategory">
   		insert
   		into mem_category(
@@ -196,7 +195,7 @@
   		)
   	</insert>
   	
-  	<!-- 이메일과 이메일 상태 가져오는 메서드(안세아) -->
+  	<!-- [사용자] 이메일과 이메일 상태 가져오는 메서드(안세아) -->
   	<select id="selectEmailAndAuthKey" resultMap="memberResult">
   		select mem_email,
     		email_status
@@ -205,7 +204,7 @@
     	and email_status = #{emailStatus}
   	</select>
   	
-  	<!-- 이메일값으로 멤버의 아이디, 메일 가져오는 메서드(안세아) -->
+  	<!-- [사용자] 이메일값으로 멤버의 아이디, 메일 가져오는 메서드(안세아) -->
   	<select id="selectMemberByEmail" resultMap="memberResult">
   		select mem_id, mem_email
   		from members
@@ -213,7 +212,7 @@
   		and not mem_status = 'N'
   	</select>
   	
-  	<!-- 이메일 값과 id로 멤버의 정보 가여오는 메서드(안세아) -->
+  	<!-- [사용자] 이메일 값과 id로 멤버의 정보 가여오는 메서드(안세아) -->
   	<select id="selectMemberByEmailAndId" resultMap="memberResult">
   		select mem_id, mem_email, mem_pwd, mem_no
   		from members
@@ -222,7 +221,7 @@
   		and not mem_status = 'N'
   	</select>
   	
-  	<!-- 멤버의 비밀번호 업데이트하는 메서드 -->
+  	<!-- [사용자] 멤버의 비밀번호 업데이트하는 메서드 -->
   	<update id="updatePassword">
   		update members
   		set
@@ -356,21 +355,21 @@
   	</update>
   	
   	
-  	<!-- 사용자 선호 관심사 삭제 (안세아) -->
+  	<!-- [사용자] 선호 관심사 삭제 (안세아) -->
   	<delete id="deleteAllMemInterest">
   		delete
   		from mem_interest
   		where mem_no = #{memNo}
   	</delete>
   	
-  	<!-- 사용자 선호 카테고리 삭제 (안세아) -->
+  	<!-- [사용자] 선호 카테고리 삭제 (안세아) -->
   	<delete id="deleteAllMemCategory">
   		delete
   		from mem_category
   		where mem_no = #{memNo}
   	</delete>
   	
-  	<!-- 사용자 직업과 책 선호난이도 바꾸기(안세아) -->
+  	<!-- [사용자] 직업과 책 선호난이도 바꾸기(안세아) -->
   	<update id="updateMemberWorkAndLevel">
   		update members
   		set 
@@ -380,21 +379,21 @@
   			mem_no = #{memNo}
   	</update>
  	
- 	<!-- 사용자의 관심사 리스트 가져오기(안세아) -->
+ 	<!-- [사용자] 관심사 리스트 가져오기(안세아) -->
  	<select id="selectMemberInterestList" parameterType="int" resultMap="memberInterestResult">
  		select mem_no, interest_no
  		from mem_interest
  		where mem_no = #{memNo}
  	</select>
  	
- 	<!-- 사용자의 서브 카테고리 가져오기 (안세아) -->
+ 	<!-- [사용자] 서브 카테고리 가져오기 (안세아) -->
  	<select id="selectSubCategoryList" parameterType="int" resultMap="memberCategoryResult">
  		select mem_no, sub_cate_no
  		from mem_category
  		where mem_no = #{memNo}
  	</select>
  	
- 	<!-- 사용자의 프로필 이미지 경로 업데이트 -->
+ 	<!-- [사용자] 프로필 이미지 경로 업데이트(안세아) -->
  	<update id="updateProfileImg">
  		update members
  		set 
@@ -404,6 +403,18 @@
  			mem_no = #{memNo}
  	</update>
  	
+ 	<!-- [사용자] 멤버의 패스워드 가져오기(안세아) -->
+ 	<select id="selectMemberPassword" parameterType="int" resultType="string">
+ 		select mem_pwd
+ 		from members
+ 		where mem_no = #{memNo}
+ 	</select>
  	
- 	
+ 	<!-- [사용자] 멤버의 패스워드 업데이트(안세아) -->
+ 	<update id="updateMemPassword">
+ 		update members
+ 		set mem_pwd = #{memPwd}
+ 		where mem_no = #{memNo}
+ 	</update>
+
 </mapper>

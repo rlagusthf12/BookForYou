@@ -147,8 +147,15 @@ public class MemberSerivceImpl implements MemberService{
 	 */
 	@Override
 	public int updateMemberWorkAndLevel(Member member) {
-		// TODO Auto-generated method stub
 		return memberDao.updateMemberWorkAndLevel(sqlSession, member);
+	}
+	
+	/**
+	 * 멤버의 패스워드를 반환해주는 메서드
+	 */
+	@Override
+	public String selectMemberPassword(int memNo) {
+		return memberDao.selectMemberPassword(sqlSession,memNo);
 	}
 	
 	

@@ -50,6 +50,8 @@ public interface MemberService {
 
 	int updateMemberWorkAndLevel(Member member);
 
+	String selectMemberPassword(int memNo);
+
 	
 }
 

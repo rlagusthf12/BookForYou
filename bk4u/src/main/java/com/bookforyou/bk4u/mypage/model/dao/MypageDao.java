@@ -33,6 +33,11 @@ public class MypageDao {
 		return sqlSession.update("memberMapper.updateProfileImg",member);
 	}
 
+	public int updateMemPassword(SqlSessionTemplate sqlSession, Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateMemPassword",member);
+	}
+
 
 
 

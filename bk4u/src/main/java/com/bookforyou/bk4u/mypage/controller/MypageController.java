@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	MemberInterest memberInterest;
 	
@@ -226,5 +230,44 @@ public class MypageController {
 		return changeName;
 	}
 	
+	/**
+	 * 1번부터 12번 샘플 데이터 비암호화 회원의 패스워드 가져오는 메서드
+	 * @author 안세아
+	 * @param memNum
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="get-pwd.mp")
+	public String getDecodePassword(String memNum){
+		// 1. 1번부터 12번 회원의 패스워드 가져오는 버전
+		int memNo = Integer.parseInt(memNum);
+		String pwd = memberService.selectMemberPassword(memNo);
+		System.out.println(pwd);
+		return pwd;
+		
+	}
+	
+	/**
+	 * 패스워드 암호화해서 업데이트 하는 메서드
+	 * @author 안세아
+	 * @param memNum
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="update-pwd.mp")
+	public String updatePassword(String memNum, String memPwd) {
+		Member member = new Member();
+		int memNo = Integer.parseInt(memNum);
+		String encPwd = bcryptPasswordEncoder.encode(memPwd);
+		member.setMemNo(memNo);
+		member.setMemPwd(encPwd);
+		int result = mypageService.updateMemPassword(member);
+		
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 	
 }

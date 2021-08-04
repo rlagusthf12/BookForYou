@@ -308,6 +308,7 @@
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
                 <br>
                 <div id="table-box">
+                <input type="hidden" name="memNo" id="memNo" value="${loginUser.memNo }"/>	
                     <table class="table">
                         <tr id="profile-box1" style="display: block;">
                             <th class="th-content">사진</th>
@@ -346,72 +347,11 @@
                                         * 등록된 프로필 사진은 회원님의 게시글 혹은 댓글에 쓰입니다.
                                     </p>
                                 </div>
-                                <script>
-                                	function imgFileClick(){
-                                		$("#img-file").click();
-                                	}
-                                	
-                                	function loadImg(inputFile){
-                                        // inputFile : 현재 변화가 생긴 input type="file" 요소객체
-                                        // num : 몇번째 input요소인지 확인 후 해당 그영역에 미리보기하기위해서
-                                    	// 확장자 체크
-                                        if(!/\.(gif|jpg|jpeg|png)$/i.test(inputFile.files[0].name)){
-                                        	alert('gif, jpg, png와 확장자명이 같은 이미지 파일만 선택해 주세요.\n\n현재 파일 : ' + inputFile.files[0].name);
-                                        	return;
-                                        }
-
-                                        //console.log(inputFile.files.length);
-                                    
-                                        if(inputFile.files.length == 1){ 
-                                            // 선택된 파일이 존재할 경우 
-                                            // => 선택된 파일을 읽어들여서 그 영역에 맞는 곳에 미리보기
-                                            
-                                            // 파일을 읽어들일 FileReader 객체 생성
-                                            var reader = new FileReader();
-                                            
-                                            // 파일을 읽어들이는 메소드 => 해당 파일을 읽어들이는 순간 해당 그 파일만의 고유한 url 부여됨
-                                            reader.readAsDataURL(inputFile.files[0]);
-                                            
-                                            // 파일 읽기가 다 완료되었을 때 실행할 함수를 정의
-                                            reader.onload = function(e){
-                                                // 각 영역에 맞춰서 이미지 미리보기
-                                                $("#profile-img").attr("src", e.target.result); 
-                                            }
-                                            
-                                        }
-                                        
-                                    }
-                                	
-                                	function updateProfile(){
-                                		
-                                		var formData = new FormData();
-                                		
-                                		var file = $("#img-file")[0].files[0];
-                                		
-                                		formData.append("file",file);
-                                		
-                                		$.ajax({
-                                			type: "post",
-                        					url: "update-my-profile-img.mp",
-                        					enctype: 'multipart/form-data',
-                        					data: formData,
-                        					processData: false,
-                        					contentType: false,
-                        					success: function(data){
-                        						alert("프로필 수정에 성공했습니다.");
-												document.location.href = document.location.href;
-												
-                        					},error:function(){
-                        						console.log("ajax통신 실패");
-                        					}
-                        				});
-                                	}
-                                </script>
+                               
                                 
                                 <div class="profile-button-group-box">
                                 	<input type="file" id="img-file" style="display:none;" name="originImgName" onchange="loadImg(this);"/> 
                                     <button type="button" class="btn btn-outline-dark btn-sm" onclick="imgFileClick();">사진 선택</button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm">기본 이미지로 변경</button>
                                 </div>
                             </td>
                             <td class="bottom-td">
@@ -451,17 +391,19 @@
                             <th class="th-content">비밀번호</th>
                             <td class="td-content">
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="password" class="form-control" placeholder="기존 비밀번호">
+                                    <input type="password" class="form-control" id="lastPwd" placeholder="기존 비밀번호">
                                 </div>
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="password" class="form-control" placeholder="신규 비밀번호">
+                                    <input type="password" class="form-control" name="memPwd" placeholder="신규 비밀번호(영어,숫자,특수문자 포함 최소 8글자 이상)">
+                                	
                                 </div>
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="password" class="form-control" placeholder="신규 비밀번호 확인">
+                                    <input type="password" class="form-control" id="pwdCheckInput" placeholder="신규 비밀번호 확인">
+                                    
                                 </div>
                                 <button type="button" class="btn btn-secondary btn-sm" style="margin-right: 10px;"
                                     onclick="pwdTdShow();">취소</button>
-                                <button type="button" class="btn btn-dark btn-sm">완료</button>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="pwdSubmit();">완료</button>
                             </td>
                             <td class="bottom-td">
                             </td>
@@ -600,6 +542,149 @@
                             </td>
                         </tr>
                     </table>
+                     <script>
+                                	var $lastPwdInput = $("#pwd-box2 input[id=lastPwd]");
+                                	var $pwdInput = $("#pwd-box2 input[name=memPwd]");
+                        			var $pwdCheckInput = $("#pwd-box2 input[id=pwdCheckInput]");
+                        			
+                                	function imgFileClick(){
+                                		$("#img-file").click();
+                                	}
+                                	
+                                	function loadImg(inputFile){
+                                        // inputFile : 현재 변화가 생긴 input type="file" 요소객체
+                                        // num : 몇번째 input요소인지 확인 후 해당 그영역에 미리보기하기위해서
+                                    	// 확장자 체크
+                                        if(!/\.(gif|jpg|jpeg|png)$/i.test(inputFile.files[0].name)){
+                                        	alert('gif, jpg, png와 확장자명이 같은 이미지 파일만 선택해 주세요.\n\n현재 파일 : ' + inputFile.files[0].name);
+                                        	return;
+                                        }
+
+                                        //console.log(inputFile.files.length);
+                                    
+                                        if(inputFile.files.length == 1){ 
+                                            // 선택된 파일이 존재할 경우 
+                                            // => 선택된 파일을 읽어들여서 그 영역에 맞는 곳에 미리보기
+                                            
+                                            // 파일을 읽어들일 FileReader 객체 생성
+                                            var reader = new FileReader();
+                                            
+                                            // 파일을 읽어들이는 메소드 => 해당 파일을 읽어들이는 순간 해당 그 파일만의 고유한 url 부여됨
+                                            reader.readAsDataURL(inputFile.files[0]);
+                                            
+                                            // 파일 읽기가 다 완료되었을 때 실행할 함수를 정의
+                                            reader.onload = function(e){
+                                                // 각 영역에 맞춰서 이미지 미리보기
+                                                $("#profile-img").attr("src", e.target.result); 
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                	
+                                	function updateProfile(){
+                                		
+                                		
+                                		var formData = new FormData();
+                                		
+                                		var file = $("#img-file")[0].files[0];
+                                		
+                                		console.log(file);
+                                		formData.append("file",file);
+                                		
+                                		if(file != undefined){
+                                			$.ajax({
+                                				type: "post",
+                        						url: "update-my-profile-img.mp",
+                        						enctype: 'multipart/form-data',
+                        						data: formData,
+                        						processData: false,
+                        						contentType: false,
+                        						success: function(data){
+                        							alert("프로필 수정에 성공했습니다.");
+													document.location.href = document.location.href;
+												
+                        						},error:function(){
+                        							console.log("ajax통신 실패");
+                        						}
+                        					});
+                                		}else{
+                                			alert('이미지를 선택해주세요');
+                                		}
+                                	}
+                                	
+                                	let check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/; 
+                                	
+                               
+                                	function pwdSubmit(){
+										var lastDecodePwd;
+                                		// 1번부터 12번 회원을 위한 보안미적용 패스워드 찾기 -> 1번부터 12번 수정후 수정할 예정
+                                		$.ajax({
+                        					url: "get-pwd.mp",
+                        					data: {memNum : $("#memNo").val()},
+                        					async: false,
+                        					success: function(pwd){
+                        						
+												lastDecodePwd = pwd;
+												console.log(lastDecodePwd)
+                        						
+                        					},error:function(){
+                        						console.log("ajax통신 실패");
+                        					}
+                        				});
+                                		
+                                		// 1. 셋 다 입력되었는지 확인
+                                		if($lastPwdInput.val().length == 0 || $pwdInput.val().length == 0 || $pwdCheckInput.val().length == 0){
+                                			alert('기존 비밀번호, 새로운 비밀번호, 비밀번호 확인을 모두 입력해주세요');
+                                			return false;
+                                		}
+                                		if($lastPwdInput.val() != lastDecodePwd){
+                                			// 2. 셋 다 입력되었다면 먼저 기존 비밀번호가 맞는지 확인하기
+                                			alert($lastPwdInput.val());
+                                			alert(lastDecodePwd);
+                                			alert('기존 비밀번호가 일치하지 않습니다.');
+                                			return false;
+                                		}
+                                		// 3. 만약 기존 비밀번호가 맞다면, 비밀번호와 비밀번호 확인값이 일치하는지 확인
+                                		if($pwdCheckInput.val() != $pwdInput.val()){
+                                			alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+                                			return false;
+                                		}
+                                		// 4. 일치한다면,  신규비밀번호 형식 테스트
+                                		if(!check.test($pwdInput.val())){
+                                			alert('신규비밀번호가 형식과 일치하지 않습니다.비밀번호는 영어,숫자,특수문자 포함 최소 8글자 이상입니다.');
+                                			return false;
+                                		}else{
+                                			// 패스워드 수정하는 메서드
+                                			$.ajax({
+                                				type: "post",
+                            					url: "update-pwd.mp",
+                            					data: {memNum : $("#memNo").val(), memPwd : $pwdInput.val()},
+                            					success: function(result){
+    												alert('패스워드가 성공적으로 변경되었습니다.');
+    												document.location.href = document.location.href;
+                            						
+                            					},error:function(){
+                            						console.log("ajax통신 실패");
+                            					}
+                            				});
+                                		}
+                                		
+                                		
+                                		// 5. 기존비밀번호와 신규 비밀번호가 같은지 테스트
+                                		/*
+                                		if($pwdInput.val() == lastDecodePwd){
+                                			alert('기존 비밀번호와 신규 비밀번호가 같습니다.')
+                                			return false;
+                                		}else{
+                                			//비밀번호 변경하는 ajax호출
+                                		}
+                                		*/
+                                		
+                                	}
+                                	
+                                	
+                                </script>
                 </div>
                 <div>
                     <div class="d-grid gap-2 col-6 mx-auto" style="margin-top: 40px;">

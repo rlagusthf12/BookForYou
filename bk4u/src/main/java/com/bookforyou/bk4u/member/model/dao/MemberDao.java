@@ -96,6 +96,11 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMemberWorkAndLevel",member);
 	}
 
+	public String selectMemberPassword(SqlSessionTemplate sqlSession, int memNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectMemberPassword", memNo);
+	}
+
 
 
 	
