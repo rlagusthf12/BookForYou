@@ -19,4 +19,10 @@ public class Cancel {
 	private Date cancelDate;
 	private String status;
 	private String adminMemo;
+	private String memId;
+	private String memName;
+	private String payWay;
+	private int price;
+	private String bkTitle;
+	private String deliveryMsg;
 }
