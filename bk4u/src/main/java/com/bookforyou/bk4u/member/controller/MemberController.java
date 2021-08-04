@@ -48,20 +48,19 @@ public class MemberController {
 	
 	
 	/**
-	 * 암호화 적용 안한 버전의 메서드로, 회원가입 기능 완성, 비밀번호 수정하고 암호화 기능 추가하는 로그인 메서드를 하나 더 만들 예정입니다.
+	 * 패스워드 암호화 적용 로그인 메서드
 	 * @author 안세아
 	 */
 	@RequestMapping("login.me")
 	public String loginMember(Member member,Model model,HttpSession session) {
 		Member loginUser = memberService.loginMember(member);
 		System.out.println(loginUser);
-		if(loginUser == null) {
+		if(loginUser != null && bcryptPasswordEncoder.matches(member.getMemPwd(), loginUser.getMemPwd())) {
+			session.setAttribute("loginUser", loginUser);
+			return "redirect:/";
+		}else {
 			model.addAttribute("alertMsg", "일치하지 않는 회원정보입니다.");
 			return "member/login";
-		}else {
-			session.setAttribute("loginUser", loginUser);
-			// main페이지 업로딩 되면 여기만 수정
-			return "redirect:/";
 		}
 		
 	}

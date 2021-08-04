@@ -19,5 +19,7 @@ public interface MypageService {
 
 	int updateProfileImg(Member member);
 
+	int updateMemPassword(Member member);
+
 
 }

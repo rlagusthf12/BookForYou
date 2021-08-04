@@ -34,20 +34,22 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public ArrayList<MemberInterest> getMemberInterestList(int memNo) {
-		// TODO Auto-generated method stub
 		return mypageDao.selectMemberInterestList(sqlSession,memNo);
 	}
 
 	@Override
 	public ArrayList<MemberCategory> getSubCategoryList(int memNo) {
-		// TODO Auto-generated method stub
 		return mypageDao.selectSubCategoryList(sqlSession,memNo);
 	}
 
 	@Override
 	public int updateProfileImg(Member member) {
-		// TODO Auto-generated method stub
 		return mypageDao.updateProfileImg(sqlSession,member);
+	}
+
+	@Override
+	public int updateMemPassword(Member member) {
+		return mypageDao.updateMemPassword(sqlSession,member);
 	}
 
 
