@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -286,7 +287,7 @@
                             </tr>
                             <tr>
                                 <td>적립포인트</td>
-                                <td>${ bk.bkPrice * 0.01 }p</td>
+                                <td><fmt:formatNumber value="${ bk.bkPrice * 0.01 }" type = "number" minFractionDigits="0"/>p</td>
                             </tr>
                             <tr>
                                 <td>배송비</td>
@@ -468,9 +469,7 @@
 		    	        		$("#modal_list").modal('show');
 	            			}else if(result == "done"){
 	            				alert("이미 리스트에 존재하는 도서입니다.")
-	            			}
-	            			else{
-	            			}
+	            			}else{
 	            				alert("리스트 추가에 실패했습니다.");
 	            			}
 	            		},error:function(){

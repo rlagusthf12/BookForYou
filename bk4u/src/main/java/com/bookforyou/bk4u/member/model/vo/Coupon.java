@@ -16,7 +16,7 @@ import lombok.ToString;
 public class Coupon {
 	
 	public int couponIssueNum;
-	public int couponNo;
+	public String couponNo;
 	public int memNo;
 	public String couponKind;
 	public Date createDate;
