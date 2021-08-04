@@ -418,11 +418,11 @@
                             </div>
                             <div>
                                 <div>+ 적립 포인트</div>
-                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>원</div>
+                                <div><fmt:formatNumber value="<fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>" type = "number" minFractionDigits="0"/>원</div>
                             </div>
                             <div id="point_result">
                                 <div>총 예상 포인트</div>
-                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>원</div>
+                                <div><fmt:formatNumber value="<fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>" type = "number" minFractionDigits="0"/>원</div>
                             </div>
                         </div>
                     </div>
