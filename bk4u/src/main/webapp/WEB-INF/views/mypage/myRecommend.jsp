@@ -108,11 +108,6 @@
 							      }
 
 							 });
-
-
-
-							
-							//$('input:radio[name=interestNo]:input[value=arr[i].interestNo]').prop("checked", true);
 							
 						}
 						

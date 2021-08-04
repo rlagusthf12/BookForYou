@@ -1,17 +1,23 @@
 package com.bookforyou.bk4u.mypage.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
@@ -149,7 +155,7 @@ public class MypageController {
 	
 	/**
 	 * 멤버의 직업과 선호 난이도 가져오는 메서드
-	 * @author ME
+	 * @author 안세아
 	 */
 	@ResponseBody
 	@RequestMapping(value="my-work-level.mp",produces="application/json; charset=utf-8")
@@ -159,5 +165,66 @@ public class MypageController {
 	
 		return new Gson().toJson(loginUser);
 	}
+	
+	/**
+	 * 프로필 이미지 수정하는 메서드
+	 * @author 안세아
+	 * @param file
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value="update-my-profile-img.mp")
+	public String uploadProfileImage(MultipartFile file, HttpSession session) throws Exception{
+		Member loginUser = null;
+		if(!file.getOriginalFilename().equals("")) {
+			String changeName = saveFile(session,file);
+			loginUser = (Member) session.getAttribute("loginUser");
+			loginUser.setOriginImgName(file.getOriginalFilename());
+			loginUser.setChangeImgName("resources/member/uploadFiles/"+changeName);
+			System.out.println(loginUser);
+		}
+		
+		int result = mypageService.updateProfileImg(loginUser);
+		System.out.println(result);
+		if(result > 0) {
+			loginUser = memberService.loginMember(loginUser);
+			System.out.println(loginUser);
+			session.setAttribute("loginUser", loginUser);
+			
+			return "success";
+		}else {
+			
+			return "fail";
+			
+		}
+		
+	}
+	
+	public String saveFile(HttpSession session, MultipartFile file) {
+		String savePath = session.getServletContext().getRealPath("/resources/member/uploadFiles/");
+		
+		String originName = file.getOriginalFilename();
+		// 20210702170130(년월일시분초) + 23152(랜덤값) + .jpg(원본파일확장자)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHMMSS").format(new Date());
+		int ranNum = (int)(Math.random() * + 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		String changeName = currentTime + ranNum + ext;
+		
+		try {
+			file.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
+	
 	
 }

@@ -17,5 +17,7 @@ public interface MypageService {
 
 	ArrayList<MemberCategory> getSubCategoryList(int memNo);
 
+	int updateProfileImg(Member member);
+
 
 }

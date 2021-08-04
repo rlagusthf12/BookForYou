@@ -44,6 +44,12 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.selectSubCategoryList(sqlSession,memNo);
 	}
 
+	@Override
+	public int updateProfileImg(Member member) {
+		// TODO Auto-generated method stub
+		return mypageDao.updateProfileImg(sqlSession,member);
+	}
+
 
 	
 	

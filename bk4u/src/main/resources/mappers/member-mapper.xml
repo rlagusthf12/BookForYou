@@ -379,11 +379,22 @@
  		where mem_no = #{memNo}
  	</select>
  	
+ 	<!-- 사용자의 서브 카테고리 가져오기 (안세아) -->
  	<select id="selectSubCategoryList" parameterType="int" resultMap="memberCategoryResult">
  		select mem_no, sub_cate_no
  		from mem_category
  		where mem_no = #{memNo}
  	</select>
+ 	
+ 	<!-- 사용자의 프로필 이미지 경로 업데이트 -->
+ 	<update id="updateProfileImg">
+ 		update members
+ 		set 
+ 			origin_img_name = #{originImgName},
+ 			change_img_name = #{changeImgName}
+ 		where
+ 			mem_no = #{memNo}
+ 	</update>
  	
  	
  	

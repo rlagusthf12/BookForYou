@@ -18,18 +18,19 @@ public class MypageDao {
 	}
 
 	public int deleteAllMemCategory(SqlSessionTemplate sqlSession, Member member) {
-		// TODO Auto-generated method stub
 		return sqlSession.delete("memberMapper.deleteAllMemCategory",member);
 	}
 
 	public ArrayList<MemberInterest> selectMemberInterestList(SqlSessionTemplate sqlSession, int memNo) {
-		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberInterestList", memNo);
 	}
 
 	public ArrayList<MemberCategory> selectSubCategoryList(SqlSessionTemplate sqlSession, int memNo) {
-		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("memberMapper.selectSubCategoryList",memNo);
+	}
+
+	public int updateProfileImg(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.updateProfileImg",member);
 	}
 
 

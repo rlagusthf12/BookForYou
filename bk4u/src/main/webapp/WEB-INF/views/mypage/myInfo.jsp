@@ -24,8 +24,6 @@
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .wrap {
             width: 1200px;
@@ -136,6 +134,8 @@
         }
     </style>
     <script>
+    	
+    
         function profileTdShow() {
             if ($('#profile-box1').css('display') == 'block') {
                 $('#profile-box1').css('display', 'none');
@@ -294,11 +294,11 @@
                     </ul>
                 </nav>
             </div>
-            <c:if test="${ !empty alertMsg }">
+            <c:if test="${ !empty mpAlertMsg }">
 				<script>
-					alertify.alert("${alertMsg}");
+					alertify.alert("${mpAlertMsg}");
 				</script>
-				<c:remove var="alertMsg" scope="session"/>
+				<c:remove var="mpAlertMsg" scope="session"/>
 			</c:if>
             <!-- partial -->
             <div id="main_content">
@@ -314,7 +314,7 @@
                             <td class="td-content">
                                 <div id="profile-img-box">
                                     <div class="box" style="background: #BDBDBD;">
-                                        <img class="profile" src="resources/member/images/blank-profile.png">
+                                        <img class="profile" src="${loginUser.changeImgName }" onerror="this.src='resources/member/images/blank-profile.png'">
                                     </div>
                                 </div>
                                 <div id="profile-text-box">
@@ -337,7 +337,7 @@
                             <td class="td-content">
                                 <div id="profile-img-box">
                                     <div class="box" style="background: #BDBDBD;">
-                                        <img class="profile" id="profile-img" src="resources/member/images/blank-profile.png">
+                                        <img class="profile" id="profile-img" src="${loginUser.changeImgName }" onerror="this.src='resources/member/images/blank-profile.png'">
                                     </div>
                                 </div>
                                 <div id="profile-text-box">
@@ -384,10 +384,28 @@
                                 	
                                 	function updateProfile(){
                                 		
+                                		var formData = new FormData();
+                                		
+                                		var file = $("#img-file")[0].files[0];
+                                		
+                                		formData.append("file",file);
+                                		
+                                		$.ajax({
+                                			type: "post",
+                        					url: "update-my-profile-img.mp",
+                        					enctype: 'multipart/form-data',
+                        					data: formData,
+                        					processData: false,
+                        					contentType: false,
+                        					success: function(data){
+                        						alert("프로필 수정에 성공했습니다.");
+												document.location.href = document.location.href;
+												
+                        					},error:function(){
+                        						console.log("ajax통신 실패");
+                        					}
+                        				});
                                 	}
-                                	
-                                	
-
                                 </script>
                                 
                                 <div class="profile-button-group-box">
@@ -408,7 +426,7 @@
                         <tr style="display: block;">
                             <th class="th-content">아이디</th>
                             <td class="td-content">
-                                sample
+                                ${loginUser.memId }
                             </td>
                             <td class="bottom-td">
                                 <div class="profile-button-group-box">
@@ -451,7 +469,7 @@
                         <tr id="nick-box1" style="display: block;">
                             <th class="th-content">닉네임</th>
                             <td class="td-content">
-                                샘플닉네임
+                                ${loginUser.memName }
                             </td>
                             <td class="bottom-td">
                                 <div class="profile-button-group-box">
@@ -476,7 +494,7 @@
                         <tr id="email-box1" style="display: block;">
                             <th class="th-content">이메일</th>
                             <td class="td-content">
-                                sample@naver.com
+                                 ${loginUser.memEmail }
                             </td>
                             <td class="bottom-td">
                                 <div class="profile-button-group-box">
@@ -512,15 +530,15 @@
                             <th class="th-content">주소</th>
                             <td class="td-content">
                                 <div class="input-group input-group-sm mb-3" style="width: 50%;">
-                                    <input type="text" class="form-control" placeholder="우편번호">
+                                    <input type="text" class="form-control" placeholder="우편번호" value="${loginUser.memPost}" readonly>
                                     <button class="btn btn-secondary" type="button" id="button-addon2">우편번호 찾기</button>
                                 </div>
                                 <div class="input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control" placeholder="기본주소">
+                                    <input type="text" class="form-control" placeholder="기본주소" value="${loginUser.memBasicAddress}" readonly/>
                                 </div>
                                 <div class="input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control" placeholder="상세주소" style="width: 60%;">
-                                    <input type="text" class="form-control" placeholder="참고사항"
+                                    <input type="text" class="form-control" placeholder="상세주소" style="width: 60%;" value="${loginUser.memDetailAddress }">
+                                    <input type="text" class="form-control" placeholder="참고사항" value="${loginUser.memAddressRefer }"
                                         style="width: 30%; margin-left: 10px;">
                                 </div>
                             </td>
@@ -532,7 +550,7 @@
                             <th class="th-content">실명</th>
                             <td class="td-content">
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="text" class="form-control" placeholder="실명" value="홍길동">
+                                    <input type="text" class="form-control" placeholder="실명" value="${loginUser.memName }">
                                 </div>
                             </td>
                             <td class="bottom-td">
@@ -544,15 +562,15 @@
                             <td class="td-content">
                                 <div id="radio-box">
                                     <div class="form-check" style="margin-right: 10px;">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1" checked>
+                                        <input class="form-check-input" type="radio"
+                                            id="memGender" name="memGender" value="M" <c:if test="${loginUser.memGender == 'M'}">checked</c:if>>
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             남
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="flexRadioDefault1">
+                                        <input class="form-check-input" type="radio" 
+                                            id="memGender" name="memGender" value="F" <c:if test="${loginUser.memGender == 'F'}">checked</c:if>>
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             여
                                         </label>
@@ -568,13 +586,13 @@
                             <td class="td-content">
                                 <select class="form-select form-select-sm" style="width: 40%;"
                                     aria-label="Default select example">
-                                    <option value="10" selected>10대</option>
-                                    <option value="20">20대</option>
-                                    <option value="30">30대</option>
-                                    <option value="40">40대</option>
-                                    <option value="50">50대</option>
-                                    <option value="60">60대</option>
-                                    <option value="70">70대 이상</option>
+                                    <option value="10" <c:if test="${loginUser.memAge == 10}">selected</c:if>>10대</option>
+                                    <option value="20" <c:if test="${loginUser.memAge == 20}">selected</c:if>>20대</option>
+                                    <option value="30" <c:if test="${loginUser.memAge == 30}">selected</c:if>>30대</option>
+                                    <option value="40" <c:if test="${loginUser.memAge == 40}">selected</c:if>>40대</option>
+                                    <option value="50" <c:if test="${loginUser.memAge == 50}">selected</c:if>>50대</option>
+                                    <option value="60" <c:if test="${loginUser.memAge == 60}">selected</c:if>>60대</option>
+                                    <option value="70" <c:if test="${loginUser.memAge == 70}">selected</c:if>>70대 이상</option>
                                 </select>
                             </td>
                             <td class="bottom-td">
