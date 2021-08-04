@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.vo.Order;
@@ -100,11 +101,16 @@ public interface OrderService {
 	/**
 	 * [관리자] 주문 상세 조회 - 사용된 쿠폰 조회 (한진)
 	 */
-	Coupon selectAdminOrderedUsedCoupon(int orderNo);
+	CouponDetail selectAdminOrderedUsedCoupon(int orderNo);
 
 	/**
 	 * [관리자] 주문 배송지 변경 (한진)
 	 */
 	int updateAdminAddress(Order o);
+
+	/**
+	 * [관리자] 주문 상태 변경 (한진)
+	 */
+	int updateAdminOrderConfirm(HashMap<String, String> map);
 	
 }

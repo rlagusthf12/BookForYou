@@ -22,6 +22,12 @@ public class GroupDao {
 		return (ArrayList)sqlSession.selectList("gorupMapper.selectListMore");
 	}
 	
+	public int insertGBoard(SqlSessionTemplate sqlSession, GroupBoard g) {
+		return sqlSession.insert("groupMapper.insertGBoard", g);
+			
+		}
+	
+	
 	public int insertGMem(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.insert("boardMapper.insertGMem", m);
 	}

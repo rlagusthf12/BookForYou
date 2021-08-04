@@ -23,6 +23,7 @@
 		<typeAlias type="com.bookforyou.bk4u.coupon.model.vo.Coupon" alias="AdminCoupon"/>
 		<typeAlias type="com.bookforyou.bk4u.store.model.vo.Store" alias="Store"/>
 		<typeAlias type="com.bookforyou.bk4u.store.model.vo.OffBook" alias="OffBook"/>
+		<typeAlias type="com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail" alias="CouponDetail"/>
 	</typeAliases>
 
 	<mappers>

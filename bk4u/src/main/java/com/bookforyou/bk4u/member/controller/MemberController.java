@@ -39,6 +39,7 @@ public class MemberController {
 	
 	/**
 	 * 로그인 폼으로 이동하는 메서드
+	 * @author 안세아
 	 */
 	@RequestMapping("login-form.me")
 	public String loginForm() {
@@ -48,11 +49,12 @@ public class MemberController {
 	
 	/**
 	 * 암호화 적용 안한 버전의 메서드로, 회원가입 기능 완성하고 암호화 기능 추가하는 로그인 메서드를 하나 더 만들 예정입니다.
+	 * @author 안세아
 	 */
 	@RequestMapping("login.me")
 	public String loginMember(Member member,Model model,HttpSession session) {
 		Member loginUser = memberService.loginMember(member);
-		
+		System.out.println(loginUser);
 		if(loginUser == null) {
 			model.addAttribute("alertMsg", "일치하지 않는 회원정보입니다.");
 			return "member/login";
@@ -66,6 +68,7 @@ public class MemberController {
 	
 	/**
 	 * logout메서드
+	 * @author 안세아
 	 */
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
@@ -75,6 +78,7 @@ public class MemberController {
 	
 	/**
 	 * 회원가입 창으로 이동하는 메서드
+	 * @author 안세아
 	 * @return
 	 */
 	@RequestMapping("enroll-form.me")
@@ -85,6 +89,7 @@ public class MemberController {
 	
 	/**
 	 * 아이디 중복 체크 메서드
+	 * @author 안세아
 	 * @param checkId
 	 * @return
 	 */
@@ -97,6 +102,7 @@ public class MemberController {
 	
 	/**
 	 * 닉네임 중복 체크 메서드
+	 * @author 안세아
 	 * @param checkNick
 	 * @return
 	 */
@@ -109,6 +115,7 @@ public class MemberController {
 	
 	/**
 	 * 이메일 중복 체크 메서드
+	 * @author 안세아
 	 * @param checkEmail
 	 * @return
 	 */
@@ -121,6 +128,7 @@ public class MemberController {
 	
 	/**
 	 * 추천 정보 회원가입 폼으로 이동하는 메서드
+	 * @author 안세아
 	 */
 	@RequestMapping("second-enroll.me")
 	public String firstEnroll(Member member, Model model) {
@@ -142,6 +150,7 @@ public class MemberController {
 	
 	/**
 	 * 회원가입을 진행하는 메서드, 인증 메일 송신함 
+	 * @author 안세아
 	 */
 	@RequestMapping("insert.me")
 	public String insertMember(Member member,@RequestParam(value="interestArray")List<String> interestArray,@RequestParam(value="subCategoryArray")List<String> subCategoryArray, Model model) {
@@ -162,7 +171,7 @@ public class MemberController {
 			for(String interest : interestArray) {
 				int interestNo = Integer.parseInt(interest);
 				memberInterest.setInterestNo(interestNo);
-				int interest_result = memberService.insertMemberInterest(memberInterest);
+				int interestResult = memberService.insertMemberInterest(memberInterest);
 			}
 			
 			memberCategory = new MemberCategory();
@@ -170,7 +179,7 @@ public class MemberController {
 			for(String subcategory : subCategoryArray) {
 				int subCategoryNo = Integer.parseInt(subcategory);
 				memberCategory.setSubCategoryNo(subCategoryNo);
-				int category_result = memberService.insertMemberCategory(memberCategory);
+				int categoryResult = memberService.insertMemberCategory(memberCategory);
 			}
 			
 			
@@ -191,6 +200,7 @@ public class MemberController {
 	
 	/**
 	 * 인증 메일 클릭시 나타나는 메서드
+	 * @author 안세아
 	 */
 	@RequestMapping("sign-up-confirm.me")
 	public String signUpConfirm(@RequestParam Map<String,String> map,Model model) {
@@ -219,6 +229,7 @@ public class MemberController {
 	
 	/**
 	 * 아이디 찾는 폼으로 이동하는 메서드
+	 * @author 안세아
 	 * @return
 	 */
 	@RequestMapping("id-find.me")
@@ -230,6 +241,7 @@ public class MemberController {
 	 * 아이디 찾기 메일 폼으로 이동하는 메서드
 	 * 1. 해당 메일로 가입한 회원 존재하면, 이메일로 아이디를 보내주고 idFind.jsp로 이동
 	 * 2. 해당 메일로 가입한 회원이 존재하지 않다면, idFindWarn.jsp로 이동
+	 * @author 안세아
 	 * @return
 	 */
 	@RequestMapping("send-id-find-mail.me")
@@ -247,6 +259,7 @@ public class MemberController {
 	 * 비밀번호 찾기 폼으로 이동하는 메서드
 	 * 1. 해당  아이디, 이메일과 일치하는 회원이 있다면, 패스워드 랜덤값으로 변경후 이메일로 해당 패스워드를 보내준다. 
 	 * 2. 해당 아이디, 이메일과 일치하는 회원이 없다면, passwordFindWarn으로 포워딩
+	 * @author 안세아
 	 */
 	@RequestMapping("send-password-find-mail.me")
 	public String sendPasswordFindMail(Member member) {

@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.vo.Order;
@@ -143,8 +144,8 @@ public class OrderDao {
 	/**
 	 * [관리자] 주문 상세 조회 - 사용된 쿠폰 조회 (한진)
 	 */
-	public Coupon selectAdminOrderUsedCoupon(SqlSessionTemplate sqlSession, int orderNo) {
-		return sqlSession.selectOne("couponMapper.selectAdminOrderedUsedCoupon", orderNo);
+	public CouponDetail selectAdminOrderUsedCoupon(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("couponDetailMapper.selectAdminOrderedUsedCoupon", orderNo);
 	}
 
 	/**
@@ -152,6 +153,13 @@ public class OrderDao {
 	 */
 	public int updateAdminAddress(SqlSessionTemplate sqlSession, Order o) {
 		return sqlSession.update("orderMapper.updateAdminAddress", o);
+	}
+
+	/**
+	 * [관리자] 주문 상태 변경 (한진)
+	 */
+	public int updateAdminOrderConfirm(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("orderMapper.updateAdminOrderConfirm", map);
 	}
 
 	

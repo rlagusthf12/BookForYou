@@ -40,7 +40,7 @@
 
         #content {
             background: #EEE;
-            height: 1200px;
+            height: 1100px;
             position: relative;
             display: inline-flex;
         }
@@ -50,7 +50,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1080px;
+            height: 1000px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -109,7 +109,7 @@
         }
 
         .bottom-td {
-            vertical-align: bottom;
+            vertical-align: bottom !important;
             width: 100px;
         }
 
@@ -141,11 +141,13 @@
                 $('#profile-box1').css('display', 'none');
                 $('#profile-box2').css('display', 'block');
                 $('.wrap').css('height','+=50px');
+                $("#content").css('height','+=50px');
                 $('#main_content').css('height','+=50px');
             } else {
                 $('#profile-box1').css('display', 'block');
                 $('#profile-box2').css('display', 'none');
                 $('.wrap').css('height','-=50px');
+                $("#content").css('height','-=50px');
                 $('#main_content').css('height','-=50px');
             }
         }
@@ -155,11 +157,13 @@
                 $('#pwd-box1').css('display', 'none');
                 $('#pwd-box2').css('display', 'block');
                 $('.wrap').css('height','+=100px');
+                $("#content").css('height','+=100px');
                 $('#main_content').css('height','+=100px');
             } else {
                 $('#pwd-box1').css('display', 'block');
                 $('#pwd-box2').css('display', 'none');
                 $('.wrap').css('height','-=100px');
+                $("#content").css('height','-=100px');
                 $('#main_content').css('height','-=100px');
             }
         }
@@ -169,11 +173,13 @@
                 $('#nick-box1').css('display', 'none');
                 $('#nick-box2').css('display', 'block');
                 $('.wrap').css('height','+=30px');
+                $("#content").css('height','+=30px');
                 $('#main_content').css('height','+=30px');
             } else {
                 $('#nick-box1').css('display', 'block');
                 $('#nick-box2').css('display', 'none');
                 $('.wrap').css('height','-=30px');
+                $("#content").css('height','-=30px');
                 $('#main_content').css('height','-=30px');
             }
         }
@@ -182,13 +188,15 @@
             if ($('#email-box1').css('display') == 'block') {
                 $('#email-box1').css('display', 'none');
                 $('#email-box2').css('display', 'block');
-                $('.wrap').css('height','+=100px');
-                $('#main_content').css('height','+=100px');
+                $('.wrap').css('height','+=120px');
+                $("#content").css('height','+=120px');
+                $('#main_content').css('height','+=120px');
             } else {
                 $('#email-box1').css('display', 'block');
                 $('#email-box2').css('display', 'none');
-                $('.wrap').css('height','-=100px');
-                $('#main_content').css('height','-=100px');
+                $('.wrap').css('height','-=120px');
+                $("#content").css('height','-=120px');
+                $('#main_content').css('height','-=120px');
             }
         }
     </script>
@@ -325,10 +333,11 @@
                         </tr>
                         <tr id="profile-box2" style="display: none;">
                             <th class="th-content">사진</th>
+                            
                             <td class="td-content">
                                 <div id="profile-img-box">
                                     <div class="box" style="background: #BDBDBD;">
-                                        <img class="profile" src="../images/blank-profile.png">
+                                        <img class="profile" id="profile-img" src="resources/member/images/blank-profile.png">
                                     </div>
                                 </div>
                                 <div id="profile-text-box">
@@ -337,8 +346,53 @@
                                         * 등록된 프로필 사진은 회원님의 게시글 혹은 댓글에 쓰입니다.
                                     </p>
                                 </div>
+                                <script>
+                                	function imgFileClick(){
+                                		$("#img-file").click();
+                                	}
+                                	
+                                	function loadImg(inputFile){
+                                        // inputFile : 현재 변화가 생긴 input type="file" 요소객체
+                                        // num : 몇번째 input요소인지 확인 후 해당 그영역에 미리보기하기위해서
+                                    	// 확장자 체크
+                                        if(!/\.(gif|jpg|jpeg|png)$/i.test(inputFile.files[0].name)){
+                                        	alert('gif, jpg, png와 확장자명이 같은 이미지 파일만 선택해 주세요.\n\n현재 파일 : ' + inputFile.files[0].name);
+                                        	return;
+                                        }
+
+                                        //console.log(inputFile.files.length);
+                                    
+                                        if(inputFile.files.length == 1){ 
+                                            // 선택된 파일이 존재할 경우 
+                                            // => 선택된 파일을 읽어들여서 그 영역에 맞는 곳에 미리보기
+                                            
+                                            // 파일을 읽어들일 FileReader 객체 생성
+                                            var reader = new FileReader();
+                                            
+                                            // 파일을 읽어들이는 메소드 => 해당 파일을 읽어들이는 순간 해당 그 파일만의 고유한 url 부여됨
+                                            reader.readAsDataURL(inputFile.files[0]);
+                                            
+                                            // 파일 읽기가 다 완료되었을 때 실행할 함수를 정의
+                                            reader.onload = function(e){
+                                                // 각 영역에 맞춰서 이미지 미리보기
+                                                $("#profile-img").attr("src", e.target.result); 
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+                                	
+                                	function updateProfile(){
+                                		
+                                	}
+                                	
+                                	
+
+                                </script>
+                                
                                 <div class="profile-button-group-box">
-                                    <button type="button" class="btn btn-outline-dark btn-sm">사진 선택</button>
+                                	<input type="file" id="img-file" style="display:none;" name="originImgName" onchange="loadImg(this);"/> 
+                                    <button type="button" class="btn btn-outline-dark btn-sm" onclick="imgFileClick();">사진 선택</button>
                                     <button type="button" class="btn btn-outline-secondary btn-sm">기본 이미지로 변경</button>
                                 </div>
                             </td>
@@ -346,9 +400,10 @@
                                 <div class="profile-button-group-box">
                                     <button type="button" class="btn btn-secondary btn-sm"
                                         onclick="profileTdShow();">취소</button>
-                                    <button type="button" class="btn btn-dark btn-sm">수정</button>
-                                </div>
+                                    <button type="button" class="btn btn-dark btn-sm" onclick="updateProfile();">수정</button>
+                                </div>   
                             </td>
+                            
                         </tr>
                         <tr style="display: block;">
                             <th class="th-content">아이디</th>
@@ -460,7 +515,7 @@
                                     <input type="text" class="form-control" placeholder="우편번호">
                                     <button class="btn btn-secondary" type="button" id="button-addon2">우편번호 찾기</button>
                                 </div>
-                                <div class="input-group input-group-sm mb-3" style="width: 90%;">
+                                <div class="input-group input-group-sm mb-3">
                                     <input type="text" class="form-control" placeholder="기본주소">
                                 </div>
                                 <div class="input-group input-group-sm mb-3">

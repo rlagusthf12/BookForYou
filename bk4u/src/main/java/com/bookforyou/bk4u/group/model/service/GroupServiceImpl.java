@@ -32,8 +32,7 @@ public class GroupServiceImpl implements GroupService{
 	
 	@Override
 	public int insertGBoard(GroupBoard g) {
-		// TODO Auto-generated method stub
-		return 0;
+		return gDao.insertGBoard(sqlSession, g);
 	}
 
 	@Override

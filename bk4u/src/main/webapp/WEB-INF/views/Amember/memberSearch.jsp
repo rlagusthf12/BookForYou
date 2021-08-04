@@ -58,23 +58,20 @@
     cursor:pointer;
     }
 
-    /* 검색창 스타일*/
-    #search_form{
-            width:80%;
-            height:20%;
-            margin:auto;
-        }
+    /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
-            margin-top:5px;
+            margin-top:40px;
         }
         #search-bar{
-            border-radius: 30px;
+            border-radius: 40px;
             border:2px solid #EC573B;
-            width:400px;
-            height: 30px;
+            width:500px;
+            height: 40px;
             padding:1px;
+            margin:auto;
+            vertical-align: middle;
         }
 
         /* 검색 조건 select */
@@ -85,7 +82,7 @@
             height: 100%;
         }
         #search-condition>select{
-            border-radius: 30%;
+            border-radius: 40%;
             border: none;
             width: 95%;
             height: 100%;
@@ -95,12 +92,12 @@
         select:focus, #search-input>input:focus{
             outline:none;
         }
-
+        
         /* 검색어 입력 */
         #search-input{
             display: inline-block;
-            width:70%;
-            height: 50%;
+            width:65%;
+            height: 100%;
         }
         #search-input > input{
             border-radius: 40px;
@@ -110,6 +107,41 @@
             font-size: 15px;
             text-align-last: center;
             text-align: center;
+        }
+
+        /* 검색 이미지 버튼 */
+        #search-btn{
+            width: 5%;
+            float:right;
+            margin:3px 20px 3px 0;
+        }
+        #search-btn input{
+            width: 30px;
+            height: 30px;
+        }
+
+        /**/
+        #recommand-condition{padding:15px; text-align: center;}
+        #recommand-condition>div>p {display: inline-block;}
+        #bold{font-weight: 600; font-size: 18px;}
+        
+        #recommand-condition table{width:auto; margin: auto; text-align: left;} 
+        #recommand-condition table th{font-size: 15px; width:130px;}
+        #recommand-condition ul{list-style: none; margin: 0px; padding:0px;}
+        #recommand-condition li{float:left; margin: 0 5px 0 5px;}
+
+        /* 검색 결과 구역 */
+        #result-area{margin-top:50px;}
+        #result-title p{
+            float:left; 
+            margin:0 15px 0 0;
+            font-size:18px;
+            font-weight: 600;
+        }
+
+        /* 처리 버튼 */
+        .btn{
+            padding:0.1em 0.5em;
         }
 
 
@@ -132,28 +164,29 @@
 
 <!-- 검색 바 -->
     <div class="a_content">
-        <div class="bar-outer" id="search-area">
-            <form action="">
+        <div id="search-area">
+            <form action="memSearch.sc">
+            	<input type="hidden" name="Page" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
-                        <select name="condition" id="search-condition">
+                        <select name="condition">
                             <option value="searchAll">전체</option>
-                            <option value="memberId">아이디</option>
-                            <option value="memberName">이름</option>
+                            <option value="memID">아이디</option>
+                            <option value="memName">이름</option>                           
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="" id="search-input">    
+                        <input type="text" name="keyword">
                     </div>
-                    <div id="search-btn" style="float: right;"><br>
-                        <button type="submit" style="color: #ec573b;">검색</button>                       
-                    </div>  
-                </div>              
+                    <div id="search-btn">
+                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
+                    </div>
+                </div>
             </form>
         </div>
     </div>
     
-        <table id="phonetable" border="1" width="1000" class="phonebook">
+        <table id="phonetable" border="1" width="1300" class="phonebook">
             <thead>
                 <tr id="theader">
                     <th width="50" height="50">회원 번호</th>
@@ -166,52 +199,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-toggle="modal" data-id="1" data-target="#ptable">
-                    <td height="80">1</td>
-                    <td>user01</td>
-                    <td>암호문</td>
-                    <td>북포유</td>
-                    <td>bk4u@naver.com</td>
-                    <td>서울시 강남구</td>
-                    <td>2021-07-21</td>
-                    
+            	<c:forEach var="as" items="${ list }">
+                <tr>
+                    <td height="80">${ as.memNo }</td>
+                    <td>${ as.memId }</td>
+                    <td width="700">${ as.memPwd }</td>
+                    <td>${ as.memName }</td>
+                    <td>${ as.memEmail }</td>
+                    <td>${ as.memBasicAddress }</td>
+                    <td>${ as.memEnrolldate }</td>                   
                 </tr>
-                <tr data-toggle="modal" data-id="2" data-target="#ptable">
-                    <td height="80">2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr data-toggle="modal" data-id="3" data-target="#ptable">
-                    <td height="80">3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr data-toggle="modal" data-id="4" data-target="#ptable">
-                    <td height="80">4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr data-toggle="modal" data-id="5" data-target="#ptable">
-                    <td height="80">5</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+       			</c:forEach>
             </tbody>
         </table>
 
@@ -219,13 +217,28 @@
 
         <div id="paging-wrap">
             <ul class="pagination">
-                <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+            	<c:choose>
+            		<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                	<li class="page-item"><a class="page-link" href="amemSearch.me?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">            
+                		<li class="page-item disabled"><a class="page-link">다음</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                	</c:otherwise>
+                </c:choose>          
             </ul>
         </div>
     </div>

@@ -59,7 +59,7 @@
 	<insert id="inserGMem">
 		
 		insert 
-		  into groupmember
+		  into groupMember
 		  (
 		  	group_boardno
 		  ,	mem_no
@@ -71,7 +71,7 @@
 		  )
 		  values
 		  (
-		  	#{groupBoardNo}
+		  	seq_gno.nextval
 		  , #{memNo}
 		  , #{gorupEnrollDate}
 		  , #{mem_email}
@@ -87,7 +87,7 @@
 			   count(*)
 	      from groupBoard b
 	      
-	     where 
+	     where group_status='Y'
 	     <if test="condition == 'group_title'">
 	    	and gorup_title
 	    </if>
@@ -130,4 +130,29 @@
                     ORDER BY GROUP_BOARDNO DESC)s) 
 	</select>
 
+
+	<insert id="insertGBoard">
+		insert
+		  into groupBoard
+		  (
+		  group_boardno
+		 ,group_type
+		 ,group_title
+		 ,group_place
+		 ,group_script
+		 ,group_limit
+		 ,group_img
+		  )
+		  values
+		  (
+		  seq_gno.nextval
+		 ,#{groupType}
+		 ,#{groupTitle}
+		 ,#{groupPlace}
+		 ,#{groupScript}
+		 ,#{gorupLimit}
+		 ,#{groupImg}
+		  )
+	
+	</insert>
 </mapper>

@@ -53,7 +53,9 @@
                     <h6 align="left"><b>독서모임 소게시판<b></h6>
                         
                     <button type="submit" style="float: right; margin: auto;">목록보기</button>
-                    <button type="submit" style="float: right; margin: auto;">글쓰기</button>
+                    
+                    
+                    <button type="submit" style="float: right; margin: auto;"><a href="">글쓰기</a></button>
 
 
                   <br><br>

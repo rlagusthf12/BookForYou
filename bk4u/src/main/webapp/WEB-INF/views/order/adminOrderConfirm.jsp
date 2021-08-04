@@ -299,8 +299,8 @@
 
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(10).text();
-            	var $orderNo = td.eq(1).text();
+            	var $memo = td.eq(11).text();
+            	var $orderNo = td.eq(2).text();
             	$(".admin-memo-content .oNo").val($orderNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
             	
@@ -319,7 +319,8 @@
 			$(".memo-delete-btn").click(function(){
 				
 				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+				var $orStatus = 1;
+				location.href="deleteAdminMemo.or?orStatus=" + $orStatus + "&orderNo=" + $orderNo;
 				
 			})			
 
@@ -328,7 +329,7 @@
             	
             	var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(9).text();
+            	var $memo = td.eq(10).text();
             	$(".user-memo-content .memo-bottom p").text($memo);
             	
                 $(".user-memo-content").toggleClass("hide");
@@ -357,17 +358,20 @@
 	        	}
 	        })
 	        
-	        /* 주문확인으로 바꾸기 */
-	        $("#alterConfirm").click(function(){
-				var checkArr = new Array();
-				$("input:checkbox[name='oCheck']:checked").each(function(){
-					checkArr.push(this.value);
-				});
-				
-				location.href="adminOrderConfirm.or?selectedOd=" + checkArr;
+	        /* 주문상태 변경 */
+	        $("#handling-btn button").each(function(){
+	        	$(this).click(function(){
+	        		
+					var checkArr = new Array();
+					$("input:checkbox[name='oCheck']:checked").each(function(){
+						checkArr.push(this.value);
+					});
+	        		
+					location.href="adminOrderConfirm.or?selectedOd=" + checkArr + "&odStatus=" + $(this).val() + "&orStatus=1";
+	        	})
 	        })
-		        	
-	        /* 테이블 행 선택 */
+	        
+	        /* 주문 상세 보기 */
 	        $(".detailC").click(function(){
 	        	
 	        	var td = $(this);
@@ -548,8 +552,8 @@
             </div>
 			
             <div id="handling-btn">
-                <button id="alterConfirm">주문확인</button>
-                <button>주문취소</button>
+                <button value="1">상품준비중</button>
+                <button value="2">주문취소</button>
             </div>
 
             <div id="result-div">
@@ -622,6 +626,7 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="1"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -645,6 +650,7 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="1"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

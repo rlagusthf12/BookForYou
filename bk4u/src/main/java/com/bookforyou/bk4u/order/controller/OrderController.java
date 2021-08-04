@@ -2,11 +2,13 @@ package com.bookforyou.bk4u.order.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.service.OrderService;
@@ -184,24 +187,24 @@ public class OrderController {
 	 * [관리자] 관리자 메모 등록/수정 (한진) 
 	 */
 	@RequestMapping("updateAdminMemo.or")
-	public String updateAdminMemo(String orderNo, String adminMemoContent) {
+	public String updateAdminMemo(String orStatus, String orderNo, String adminMemoContent) {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("orderNo", orderNo);
 		map.put("memoContent", adminMemoContent);
 		
 		int result = oService.updateAdminMemo(map);
 		
-		return "redirect:/adminOrderList.or";
+		return "redirect:/adminOrderList.or?orStatus=" + orStatus;
 	}
 	
 	/**
 	 * [관리자] 관리자 메모 삭제 (한진)
 	 */
 	@RequestMapping("deleteAdminMemo.or")
-	public String deleteAdminMemo(String orderNo) {
+	public String deleteAdminMemo(String orStatus, String orderNo) {
 		int result = oService.deleteAdminMemo(orderNo);
 		
-		return "redirect:/adminOrderList.or";
+		return "redirect:/adminOrderList.or?orStatus=" + orStatus;
 	}
 	
 	/**
@@ -215,7 +218,8 @@ public class OrderController {
 		ArrayList<OrderDetail> oBook = oService.selectAdminOrderedBook(orderNo);
 		Member m = oService.selectAdminOrderedMem(orderNo);
 		Payment p = oService.selectAdminOrderedPayment(orderNo);
-		Coupon c = oService.selectAdminOrderedUsedCoupon(orderNo);
+		CouponDetail c = oService.selectAdminOrderedUsedCoupon(orderNo);
+		System.out.println(c);
 		
 		mv.addObject("od", order)
 		  .addObject("oBook", oBook)
@@ -232,19 +236,52 @@ public class OrderController {
 	 * [관리자] 주문지 배송 변경 (한진)
 	 */
 	@RequestMapping("alterAddress.or")
-	public String updateAdminAddress(RedirectAttributes redirectAttributes, HttpSession session, Order o) {
+	public String updateAdminAddress(RedirectAttributes redirectAttributes, Model model, Order o) {
 		
 		int result = oService.updateAdminAddress(o);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "배송지가 변경되었습니다.");
+			model.addAttribute("alertMsg", "배송지가 변경되었습니다.");
 		}else {
-			session.setAttribute("errorMsg", "배송지 변경 실패");
+			model.addAttribute("errorMsg", "배송지 변경 실패");
 		}
 
 		redirectAttributes.addAttribute("orderNo", o.orderNo);
 		return "redirect:/adminOrderDetail.or";
 	}
+	
+	/**
+	 * [관리자] 주문 상태 변경 (한진)
+	 */
+	@RequestMapping("adminOrderConfirm.or")
+	public String updateAdminOrderConfirm(@RequestParam(value="selectedOd") List<String> odNoArr,
+											String odStatus, String orStatus) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		for(int i=0; i<odNoArr.size(); i++) {
+			String odNo = odNoArr.get(i);
+			map.put("odNo", odNo);
+			map.put("odStatus", odStatus);
+		}
+		
+		int result = oService.updateAdminOrderConfirm(map);
+		
+		if(orStatus.equals("1")) {
+			return "redirect:/adminOrderList.or?orStatus=1";
+		}else if(orStatus.equals("2")) {
+			return "redirect:/adminOrderList.or?orStatus=2";
+		}else if(orStatus.equals("3")) {
+			return "redirect:/adminOrderList.or?orStatus=3";
+		}else if(orStatus.equals("4")) {
+			return "redirect:/adminOrderList.or?orStatus=4";
+		}else if(orStatus.equals("5")) {
+			return "redirect:/adminOrderList.or?orStatus=5";
+		}
+		
+		return "redirect:/adminOrderList.or?orStatus=1";
+	}
+	
 	
 	
 	
