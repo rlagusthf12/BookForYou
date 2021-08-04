@@ -21,6 +21,7 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="bk_publish" property="bkPublish"/>
 		<result column="writer_name" property="writerName"/>
+		<result column="store_name" property="storeName"/>
 	</resultMap>
 	
 	<select id="selectStoreDetail" resultMap="storeResult">
@@ -66,6 +67,33 @@
 		  join book b on (ob.bk_no = b.bk_no)
 		 where store_no = #{storeNo}
 	  order by add_date
+	</select>
+	
+	<select id="selectOffBook" resultMap="offBookResult">
+		select 
+			   ob.bk_no,
+			   ob.store_no,
+			   ob.bk_status,
+			   bk_lct,
+			   add_date,
+			   bk_title,
+			   bk_publish,
+			   writer_name,
+			   store_name
+		  from off_book ob
+		  join book b on (ob.bk_no = b.bk_no)
+		  join store s on (ob.store_no = s.store_no)
+		 where ob.bk_no = #{bkNo}
+		   and ob.store_no = #{storeNo}
+	</select>
+	
+	<select id="selectOffBookStoreList" resultMap="offBookResult">
+		select store_no,
+			   bk_status,
+		       store_name
+		from off_book
+		join store using (store_no)
+		where bk_no = #{bkNo}
 	</select>
 	
 </mapper>
