@@ -86,16 +86,20 @@ public class CsServiceImpl implements CsService{
 		return cDao.selectAdminSearchCancelList(sqlSession, pi, map);
 	}
 
+	/**
+	 * [관리자] 검색조건에 일치하는 '반품'목록 조회 (한진)
+	 */
 	@Override
 	public ArrayList<Return> selectAdminSearchReturnList(PageInfo pi, HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return cDao.selectAdminSearchReturnList(sqlSession, pi, map);
 	}
 
+	/**
+	 * [관리자] 검색조건에 일치하는 '환불'목록 조회 (한진)
+	 */
 	@Override
 	public ArrayList<Refund> selectAdminSearchRefundList(PageInfo pi, HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return cDao.selectAdminSearchRefundList(sqlSession, pi, map);
 	}
 	
 	

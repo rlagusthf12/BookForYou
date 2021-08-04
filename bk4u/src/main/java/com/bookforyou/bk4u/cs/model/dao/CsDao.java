@@ -79,6 +79,24 @@ public class CsDao {
 		return (ArrayList)sqlSession.selectList("csMapper.selectAdminSearchCancelList", map, rowBounds);
 	}
 
+	/**
+	 * [관리자] 검색조건에 일치하는 '반품'목록 조회 (한진)
+	 */
+	public ArrayList<Return> selectAdminSearchReturnList(SqlSessionTemplate sqlSession, PageInfo pi,HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("csMapper.selectAdminSearchReturnList", map, rowBounds);
+	}
+
+	/**
+	 * [관리자] 검색조건에 일치하는 '환불'목록 조회 (한진)
+	 */
+	public ArrayList<Refund> selectAdminSearchRefundList(SqlSessionTemplate sqlSession, PageInfo pi,HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("csMapper.selectAdminSearchRefundList", map, rowBounds);
+	}
+
 	
 
 }

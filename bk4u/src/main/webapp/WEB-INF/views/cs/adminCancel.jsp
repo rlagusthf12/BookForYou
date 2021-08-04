@@ -278,22 +278,14 @@
 	        location.href="adminOrderList.or?orStatus=3";
 	    })
 	    
-	    $("#getStatus4").click(function(){
-	        location.href="adminOrderList.or?orStatus=4";
-	    })
-	    
-	    $("#getStatus5").click(function(){
-	        location.href="adminOrderList.or?orStatus=5";
-	    })
-		
 	    /* 정렬 방법 변경 */
 	    $("#array-condition").change(function(){
 	        let ar = $(this).val();
 	
 	        if(${ empty keyword }){            	
-	            location.href=`adminOrderList.or?orStatus=${ orStatus }&array=` + ar;		 
+	            location.href=`adminCSList.cs?cStatus=1&array=` + ar;		 
 	        }else {
-	        	location.href=`adminOListSearch.or?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	        	location.href=`adminCsListSearch.cs?cStatus=1&condition=${ condition }&keyword=${ keyword }&array=` + ar;
 	        }
 	    
 	    })
@@ -446,8 +438,8 @@
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">
-                    <option value="">주문일 최신순</option>
-                    <option value="">주문일 역순 </option>
+                    <option value="0">취소일 최신순</option>
+                    <option value="1">취소일 역순 </option>
                 </select>
             </div>
 
@@ -585,9 +577,6 @@
                     </tbody>
                 </table>
             </div>
-
-            
-
             <br>
             <div id="paging-wrap">
 	            <ul class="pagination">

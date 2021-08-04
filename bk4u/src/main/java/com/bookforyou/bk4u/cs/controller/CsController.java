@@ -67,7 +67,7 @@ public class CsController {
 	}
 	
 	/**
-	 * 
+	 * [관리자] 검색조건에 일치하는 CS목록 조회 (한진)
 	 */
 	@RequestMapping("adminCsListSearch.cs")
 	public ModelAndView adminCsSearch(ModelAndView mv, String condition, String keyword,
