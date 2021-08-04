@@ -41,8 +41,11 @@ public class StoreController {
 		Store st = storeService.selectStoreDetail(storeNo);
 		
 		ArrayList<OffBook> obList = storeService.selectStoreOffBookList(storeNo);
+		ArrayList<OffBook> obRList = storeService.selectStoreOffBookListRecent(storeNo);
 		
 		mv.addObject("st", st)
+		  .addObject("obList", obList)
+		  .addObject("obRList", obRList)
 		  .setViewName("store/storeDetailView");
 		
 		return mv;

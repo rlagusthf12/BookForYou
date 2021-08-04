@@ -16,6 +16,11 @@ public interface StoreService {
 	 * [공통] 오프라인 매장 도서 조회 (연지)
 	 */
 	ArrayList<OffBook> selectStoreOffBookList(int storeNo);
+
+	/*
+	 * [공통] 오프라인 매장 최근 추가 도서 조회 (연지)
+	 */
+	ArrayList<OffBook> selectStoreOffBookListRecent(int storeNo);
 	
 	
 }
