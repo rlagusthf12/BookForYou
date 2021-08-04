@@ -143,19 +143,19 @@ public class OrderController {
 			mv.setViewName("order/adminOrderList");
 		}else {
 			if(orStatus.equals("1")) {
-				pi = Pagination.getPageInfo(selectConfirmCnt, currentPage, 10, 5);
+				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminOrderConfirm");
 			}else if(orStatus.equals("2")) {
-				pi = Pagination.getPageInfo(selectProductReadyCnt, currentPage, 10, 5);
+				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminProductReady");
 			}else if(orStatus.equals("3")) {
-				pi = Pagination.getPageInfo(selectDeliveryReadyCnt, currentPage, 10, 5);
+				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminDeliveryReady");
 			}else if(orStatus.equals("4")){
-				pi = Pagination.getPageInfo(selectDeliveryCnt, currentPage, 10, 5);
+				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminDeliveryIng");
 			}else if(orStatus.equals("5")){
-				pi = Pagination.getPageInfo(selectFinish, currentPage, 10, 5);
+				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminComplete");
 			}else {
 				mv.setViewName("order/adminOrderList");
