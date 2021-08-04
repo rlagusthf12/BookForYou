@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
-import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
@@ -246,7 +244,7 @@ public class OrderController {
 			model.addAttribute("errorMsg", "배송지 변경 실패");
 		}
 
-		redirectAttributes.addAttribute("orderNo", o.orderNo);
+		redirectAttributes.addAttribute("orderNo", o.getOrderNo());
 		return "redirect:/adminOrderDetail.or";
 	}
 	

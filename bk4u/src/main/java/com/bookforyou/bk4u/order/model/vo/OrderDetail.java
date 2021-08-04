@@ -11,12 +11,12 @@ import lombok.ToString;
 @Setter @Getter
 @ToString
 public class OrderDetail {
-	public int orderNo;
-	public int bkNo;
-	public int quantity;
-	public int detailPrice;
-	public String detailStatus;
-	public String bkTitle;
-	public String bkPublish;
-	public String writerName;
+	private int orderNo;
+	private int bkNo;
+	private int quantity;
+	private int detailPrice;
+	private String detailStatus;
+	private String bkTitle;
+	private String bkPublish;
+	private String writerName;
 }
