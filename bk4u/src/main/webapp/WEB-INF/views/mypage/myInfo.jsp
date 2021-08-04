@@ -618,7 +618,9 @@
                                
                                 	function pwdSubmit(){
 										var lastDecodePwd;
-                                		// 1번부터 12번 회원을 위한 보안미적용 패스워드 찾기 -> 1번부터 12번 수정후 수정할 예정
+										
+										var matchLastPwdResult;
+										
                                 		$.ajax({
                         					url: "get-pwd.mp",
                         					data: {memNum : $("#memNo").val()},
@@ -633,15 +635,30 @@
                         					}
                         				});
                                 		
+                                		
+                                		
                                 		// 1. 셋 다 입력되었는지 확인
                                 		if($lastPwdInput.val().length == 0 || $pwdInput.val().length == 0 || $pwdCheckInput.val().length == 0){
                                 			alert('기존 비밀번호, 새로운 비밀번호, 비밀번호 확인을 모두 입력해주세요');
                                 			return false;
                                 		}
-                                		if($lastPwdInput.val() != lastDecodePwd){
-                                			// 2. 셋 다 입력되었다면 먼저 기존 비밀번호가 맞는지 확인하기
-                                			alert($lastPwdInput.val());
-                                			alert(lastDecodePwd);
+                                		
+                                		$.ajax({
+                        					url: "match-last-pwd.mp",
+                        					data: {memNum : $("#memNo").val(), inputLastPwd : $lastPwdInput.val()},
+                        					async: false,
+                        					success: function(result){
+                        						
+                        						matchLastPwdResult = result;
+												console.log(matchLastPwdResult);
+                        						
+                        					},error:function(){
+                        						console.log("ajax통신 실패");
+                        					}
+                        				});
+                                		
+                                		//2. 기존 비밀번호가 일치하는지 확인
+                                		if(matchLastPwdResult == 'fail'){
                                 			alert('기존 비밀번호가 일치하지 않습니다.');
                                 			return false;
                                 		}
@@ -654,8 +671,13 @@
                                 		if(!check.test($pwdInput.val())){
                                 			alert('신규비밀번호가 형식과 일치하지 않습니다.비밀번호는 영어,숫자,특수문자 포함 최소 8글자 이상입니다.');
                                 			return false;
+                                		}
+                                		// 5. 기존비밀번호와 신규 비밀번호가 같은지 테스트
+                                		if($lastPwdInput.val() == $pwdInput.val()){
+                                			alert('기존 비밀번호와 신규 비밀번호가 같습니다.')
+                                			return false;
                                 		}else{
-                                			// 패스워드 수정하는 메서드
+                                			//비밀번호 변경하는 ajax호출
                                 			$.ajax({
                                 				type: "post",
                             					url: "update-pwd.mp",
@@ -670,16 +692,6 @@
                             				});
                                 		}
                                 		
-                                		
-                                		// 5. 기존비밀번호와 신규 비밀번호가 같은지 테스트
-                                		/*
-                                		if($pwdInput.val() == lastDecodePwd){
-                                			alert('기존 비밀번호와 신규 비밀번호가 같습니다.')
-                                			return false;
-                                		}else{
-                                			//비밀번호 변경하는 ajax호출
-                                		}
-                                		*/
                                 		
                                 	}
                                 	

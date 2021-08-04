@@ -187,14 +187,11 @@ public class MypageController {
 			loginUser = (Member) session.getAttribute("loginUser");
 			loginUser.setOriginImgName(file.getOriginalFilename());
 			loginUser.setChangeImgName("resources/member/uploadFiles/"+changeName);
-			System.out.println(loginUser);
 		}
 		
 		int result = mypageService.updateProfileImg(loginUser);
-		System.out.println(result);
 		if(result > 0) {
 			loginUser = memberService.loginMember(loginUser);
-			System.out.println(loginUser);
 			session.setAttribute("loginUser", loginUser);
 			
 			return "success";
@@ -242,7 +239,6 @@ public class MypageController {
 		// 1. 1번부터 12번 회원의 패스워드 가져오는 버전
 		int memNo = Integer.parseInt(memNum);
 		String pwd = memberService.selectMemberPassword(memNo);
-		System.out.println(pwd);
 		return pwd;
 		
 	}
@@ -269,5 +265,24 @@ public class MypageController {
 			return "fail";
 		}
 	}
+	
+	/**
+	 * 기존 패스워드와 사용자가 입력한 패스워드 확인하는 메서드
+	 * @param memNum
+	 * @param inputLastPwd
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="match-last-pwd.mp")
+	public String matchLastPassword(String memNum, String inputLastPwd) {
+		int memNo = Integer.parseInt(memNum);
+		String encLastPwd = memberService.selectMemberPassword(memNo);
+		if(bcryptPasswordEncoder.matches(inputLastPwd, encLastPwd)) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
 	
 }
