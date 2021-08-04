@@ -137,13 +137,13 @@
 <!-- 검색 바 -->
     <div class="a_content">
         <div class="bar-outer" id="search-area">
-            <form action="">
+            <form action="amDelet.me">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" id="search-condition">
                             <option value="searchAll">전체</option>
-                            <option value="memberId">아이디</option>
-                            <option value="memberName">이름</option>
+                            <option value="memId">아이디</option>
+                            <option value="memName">이름</option>
                         </select>
                     </div>
                     <div id="search-input">
@@ -170,52 +170,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr data-toggle="modal" data-id="1" data-target="#ptable">
-                    <td height="80"><input type="checkbox"></td>
-                    <td>user01</td>
-                    <td>암호문</td>
-                    <td>북포유</td>
-                    <td>bk4u@naver.com</td>
-                    <td>2021-07-21</td>
-                    <td>Y</td>
-                    
+                <c:forEach var="as" items="${ list }">
+                <tr>
+                    <td height="80"><input type="checkbox" name="" value=""></td>
+                    <td>${ as.memId }</td>
+                    <td width="700">${ as.memPwd }</td>
+                    <td>${ as.memName }</td>
+                    <td>${ as.memEmail }</td>
+                    <td>${ as.memEnrollDate }</td>
+                    <td>Y</td>                   
                 </tr>
-                <tr data-toggle="modal" data-id="2" data-target="#ptable">
-                    <td height="80"><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>N</td>
-                </tr>
-                <tr data-toggle="modal" data-id="3" data-target="#ptable">
-                    <td height="80"><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>N</td>
-                </tr>
-                <tr data-toggle="modal" data-id="4" data-target="#ptable">
-                    <td height="80"><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>N</td>
-                </tr>
-                <tr data-toggle="modal" data-id="5" data-target="#ptable">
-                    <td height="80"><input type="checkbox"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>N</td>
-                </tr>
+       			</c:forEach>
+               
             </tbody>
         </table>
         <br>

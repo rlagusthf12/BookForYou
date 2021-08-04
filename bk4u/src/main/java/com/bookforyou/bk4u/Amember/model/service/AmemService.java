@@ -18,7 +18,7 @@ public interface AmemService {
 	public ArrayList<Amem> selectAmemSearchList(PageInfo pi, HashMap<String, String> map);
 	
 	// 회원탈퇴
-	int deleteAmem(int memNo);
+	int amDelete(String memId);
 	
 	
 	// 블랙리스트

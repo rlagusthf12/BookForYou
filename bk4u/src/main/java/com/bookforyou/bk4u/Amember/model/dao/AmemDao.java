@@ -38,4 +38,9 @@ public class AmemDao {
 		
 	}
 	
+	public int amDelete(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.delete("memberMapper.amDelete", memId);
+		
+	}
+	
 }
