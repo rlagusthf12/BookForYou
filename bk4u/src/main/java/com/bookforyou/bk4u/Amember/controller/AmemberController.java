@@ -1,12 +1,14 @@
 package com.bookforyou.bk4u.Amember.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.Amember.model.service.AmemService;
 import com.bookforyou.bk4u.Amember.model.vo.Amem;
@@ -46,6 +48,28 @@ public class AmemberController {
 		return "Amember/memberSearch";
 	}
 	
+	//회원 검색
+	@RequestMapping("amSearch.me")
+	public ModelAndView selectAmemSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+										 String condition, String keyword) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int amemCount = amService.selectAmemSearchListCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(amemCount, currentPage, 10, 5);
+		ArrayList<Amem> list = amService.selectAmemSearchList(pi, map);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("condition", condition)
+		  .addObject("keyword", keyword)
+		  .setViewName("Amember/memberSearch");
+		
+		return mv;
+		
+	}
 	
 // 관리자 회원탈퇴
 	@RequestMapping("amemDelete.me")

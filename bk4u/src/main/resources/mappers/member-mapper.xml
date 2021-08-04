@@ -294,6 +294,60 @@
   		   		by mem_no asc
   	</select>
   	
+  	<!-- 관리자 회원검색 (형우) -->
+  	<select id="selectAmemSearchListCount" resultType="_int">
+		select
+		       count(*)
+		  from members
+		 where mem_status = 'M'
+	 	<choose>
+	 		<when test="condition == 'searchAll'">
+	 			and (mem_no like '%' || #{keyword} || '%'
+				   or mem_name like '%' || #{keyword} || '%')
+				   or mem_id
+	 		</when>
+	 		<when test="condition == 'memName'">
+				  and mem_name
+			</when>
+	 		<when test="condition == 'memId'">
+	 			and mem_id
+	 		</when>		
+	 	</choose>	 	
+	 		like '%' || #{keyword} || '%'	 		 	
+	</select>
+	
+	<select id="selectAmemSearchList" resultMap="memberResult">
+		select	
+				mem_no,
+  				mem_id,
+  				mem_pwd,
+  				mem_name,
+  				mem_email,
+  				mem_basic_address,
+  				mem_enrolldate
+  			from members
+  		   where mem_status = 'M'
+  		   
+		 <choose>
+		 	<when test="condition == 'searchAll'">
+				and (mem_no like '%' || #{keyword} || '%'
+				   or mem_name like '%' || #{keyword} || '%')
+				   or mem_id
+			</when>
+	 		<when test="condition == 'memName'">
+	 			and mem_Name
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			and mem_id
+	 		</when>
+	 		
+	 	</choose>
+	 			like '%' || #{keyword} || '%'
+		 order
+  		   		by mem_no asc
+	</select>
+  	
+  	
   	<!-- 사용자 선호 관심사 삭제 (안세아) -->
   	<delete id="deleteAllMemInterest">
   		delete
@@ -330,5 +384,7 @@
  		from mem_category
  		where mem_no = #{memNo}
  	</select>
+ 	
+ 	
  	
 </mapper>

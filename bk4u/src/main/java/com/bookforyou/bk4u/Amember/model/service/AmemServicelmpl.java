@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.Amember.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,18 @@ public class AmemServicelmpl implements AmemService{
 	public int updateAmem(Amem am) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int selectAmemSearchListCount(HashMap<String, String> map) {
+		return amDao.selectAmemSearchListCount(sqlSession, map);
+		
+	}
+
+	@Override
+	public ArrayList<Amem> selectAmemSearchList(PageInfo pi, HashMap<String, String> map) {
+		return amDao.selectAmemSearchList(sqlSession, pi, map);
+		
 	}
 
 }

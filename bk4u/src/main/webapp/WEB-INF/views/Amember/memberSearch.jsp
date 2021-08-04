@@ -165,13 +165,13 @@
 <!-- 검색 바 -->
     <div class="a_content">
         <div id="search-area">
-            <form action="memSearch.sc">
+            <form action="amSearch.me">
             	<input type="hidden" name="Page" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition">
                             <option value="searchAll">전체</option>
-                            <option value="memID">아이디</option>
+                            <option value="memId">아이디</option>
                             <option value="memName">이름</option>                           
                         </select>
                     </div>
