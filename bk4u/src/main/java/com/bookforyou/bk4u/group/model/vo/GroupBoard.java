@@ -14,7 +14,6 @@ import lombok.ToString;
 public class GroupBoard {
 	
 	private int groupBoardNo;
-	private int memNo;
 	private String groupType;
 	private String groupTitle;
 	private String groupScript;
@@ -24,6 +23,7 @@ public class GroupBoard {
 	private String groupPlace;
 	private String groupOpen;
 	private String groupImg;
+	private String groupWriter;
 	
 	
 

@@ -114,13 +114,6 @@ public class BookController {
 	
 	/**
 	 * [관리자] 검색조건에 일치하는 도서 목록 조회 (한진) 
-	 * @param mv
-	 * @param currentPage
-	 * @param condition
-	 * @param bkStatus
-	 * @param bkSelStatus
-	 * @param keyword
-	 * @return
 	 */
 	@RequestMapping("adminSearch.bk")
 	public ModelAndView adminBookSearch(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 

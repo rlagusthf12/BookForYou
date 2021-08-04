@@ -33,9 +33,9 @@ public class CsController {
 		HashMap<String, String> filter = new HashMap<>();
 		filter.put("array", array);
 		
-		int cancelCount = cService.selectAdminCancelCount(filter);
-		int returnCount = cService.selectAdminReturnCount(filter);
-		int refundCount = cService.selectAdminRefundCount(filter);
+		int cancelCount = cService.selectAdminCancelCount();
+		int returnCount = cService.selectAdminReturnCount();
+		int refundCount = cService.selectAdminRefundCount();
 		
 		PageInfo pi = null;
 		
@@ -58,12 +58,64 @@ public class CsController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("ar", array)
+		  .addObject("cStatus", cStatus)
 		  .addObject("cancelCount", cancelCount)
 		  .addObject("returnCount", returnCount)
 		  .addObject("refundCount", refundCount);
 		
 		return mv;
 		
+	}
+	
+	/**
+	 * [관리자] 검색조건에 일치하는 CS목록 조회 (한진)
+	 */
+	@RequestMapping("adminCsListSearch.cs")
+	public ModelAndView adminCsSearch(ModelAndView mv, String condition, String keyword,
+										@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+										@RequestParam(value="array", defaultValue="0") String array,
+										@RequestParam(value="cStatus") String cStatus) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("cStatus", cStatus);
+		map.put("array", array);
+		
+		int conListCount = cService.selectAdminSearchCount(map);
+		
+		PageInfo pi = null;
+		
+		int cancelCount = cService.selectAdminCancelCount();
+		int returnCount = cService.selectAdminReturnCount();
+		int refundCount = cService.selectAdminRefundCount();
+		
+		if(cStatus.equals("1")) {
+			pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+			ArrayList<Cancel> cList = (ArrayList)cService.selectAdminSearchCancelList(pi, map);
+			mv.addObject("cList", cList)
+			  .setViewName("cs/adminCancel");
+		}else if(cStatus.equals("2")) {
+			pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+			ArrayList<Return> rtList = (ArrayList)cService.selectAdminSearchReturnList(pi, map);
+			mv.addObject("rtList", rtList)
+			  .setViewName("cs/adminReturn");
+		}else if(cStatus.equals("3")) {
+			pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+			ArrayList<Refund> rfList = (ArrayList)cService.selectAdminSearchRefundList(pi, map);
+			mv.addObject("rfList", rfList)
+			  .setViewName("cs/adminRefund");
+		}
+		
+		mv.addObject("pi", pi)
+		  .addObject("ar", array)
+		  .addObject("cStatus", cStatus)
+		  .addObject("conListCount", conListCount)
+		  .addObject("cancelCount", cancelCount)
+		  .addObject("returnCount", returnCount)
+		  .addObject("refundCount", refundCount);
+		
+		return mv;
 	}
 	
 }

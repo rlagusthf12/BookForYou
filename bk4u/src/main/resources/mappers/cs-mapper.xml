@@ -9,6 +9,12 @@
 		<result column="cancel_date" property="cancelDate"/>
 		<result column="status" property="status"/>
 		<result column="admin_memo" property="adminMemo"/>
+		<result column="mem_id" property="memId"/>
+		<result column="mem_name" property="memName"/>
+		<result column="pay_way" property="payWay"/>
+		<result column="price" property="price"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="delivery_msg" property="deliveryMsg"/>
 	</resultMap>
 	
 	<resultMap id="refundResult" type="Refund">
@@ -21,6 +27,12 @@
 		<result column="kind_no" property="kindNo"/>
 		<result column="refund_price" property="refundPrice"/>
 		<result column="refund_point" property="refundPoint"/>
+		<result column="mem_id" property="memId"/>
+		<result column="mem_name" property="memName"/>
+		<result column="pay_way" property="payWay"/>
+		<result column="price" property="price"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="delivery_msg" property="deliveryMsg"/>
 	</resultMap>
 	
 	<resultMap id="returnResult" type="Return">
@@ -30,6 +42,12 @@
 		<result column="return_date" property="returnDate"/>
 		<result column="status" property="status"/>
 		<result column="admin_memo" property="adminMemo"/>
+		<result column="mem_id" property="memId"/>
+		<result column="mem_name" property="memName"/>
+		<result column="pay_way" property="payWay"/>
+		<result column="price" property="price"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="delivery_msg" property="deliveryMsg"/>
 	</resultMap>
 	
 	<!-- [관리자] '주문취소' 목록 개수 조회 (한진) -->
@@ -55,16 +73,36 @@
 	
 	<!-- [관리자] '주문취소' 목록 조회 (한진) -->
 	<select id="selectAdminCancelList" resultMap="cancelResult">
-		select 
-		       cancel_no,
-		       order_no,
-		       cancel_reason,
-		       cancel_date,
-		       status,
-		       admin_memo
-		  from cancel
-		 order
-		    by 
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by cancel_no order by cancel_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+                                 cancel_no,
+                                 order_no,
+                                 cancel_reason,
+                                 cancel_date,
+                                 c.status,
+                                 c.admin_memo,
+                                 delivery_msg,
+                                 m.mem_id,
+                                 mem_name,
+                                 pay_way,
+                                 price,
+                                 bk_title
+		                    from cancel c
+		                    join orders using(order_no)
+                            join members m using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+		  order
+		     by
 		 <choose>
 		 	<when test="array == 0">
 		 		cancel_date desc
@@ -77,14 +115,34 @@
 	
 	<!-- [관리자] '반품' 목록 조회 (한진) -->
 	<select id="selectAdminReturnList" resultMap="returnResult">
-		select
-		       return_no,
-		       order_no,
-		       return_reason,
-		       return_date,
-		       status,
-		       admin_memo
-		  from return
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by return_no order by return_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+                                 return_no,
+                                 order_no,
+                                 mem_name,
+                                 mem_id,
+                                 bk_title,
+                                 pay_way,
+                                 price,
+                                 return_reason,
+                                 return_date,
+                                 r.status,
+                                 r.admin_memo,
+                                 delivery_msg
+		                    from return r
+		                    join orders using(order_no)
+                            join members m using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
 		 order
 		    by 
 		 <choose>
@@ -99,17 +157,37 @@
 	
 	<!-- [관리자] '환불' 목록 조회 (한진) -->
 	<select id="selectAdminRefundList" resultMap="refundResult">
-		select
-		       refund_no,
-		       order_no,
-		       status,
-		       refund_date,
-		       admin_memo,
-		       refund_kind,
-		       kind_no,
-		       refund_price,
-		       refund_point
-		  from refund
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by refund_no order by refund_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+                                   refund_no,
+                                   order_no,
+                                   mem_name,
+                                   mem_id,
+                                   bk_title,
+                                   pay_way,
+                                   price,
+                                   r.status,
+                                   refund_date,
+                                   r.admin_memo,
+                                   refund_kind,
+                                   kind_no,
+                                   refund_price,
+                                   refund_point,
+                                   delivery_msg
+		                    from refund r
+		                    join orders using(order_no)
+                            join members m using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
 		  order
 		    by 
 		 <choose>
@@ -121,4 +199,290 @@
 		 	</when>	
 		 </choose> 
 	</select>
+	
+	<!-- [관리자] 검색조건에 일치하는 CS목록 개수 조회 (한진) -->
+	<select id="selectAdminSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from
+		<choose>
+			<when test="cStatus == 1">
+				cancel	
+			</when>
+			<when test="cStatus == 2">
+				return
+			</when>
+			<when test="cStatus == 3">
+				refund
+			</when>
+		</choose>
+		  join orders using(order_no)
+          join members m using(mem_no)
+		 where
+		<choose>
+			<when test="cStatus == 1">
+				<choose>
+					<when test="condition == 'searchAll'">
+						   order_no like '%' || #{keyword} || '%'
+						or cancel_no like '%' || #{keyword} || '%'
+						or mem_name like '%' || #{keyword} || '%'
+						or mem_id 
+					</when>
+					<when test="condition == 'cancelNo'">
+						   cancel_no 
+					</when>
+					<when test="condition == 'orderNo'">
+						   order_no 
+					</when>
+					
+					<when test="condition == 'memName'">
+						   mem_name 
+					</when>
+					<when test="condition == 'memId'">
+						   mem_id 
+					</when>
+				</choose>
+			</when>
+			<when test="cStatus == 2">
+				<choose>
+					<when test="condition == 'searchAll'">
+						   order_no like '%' || #{keyword} || '%'
+						or return_no like '%' || #{keyword} || '%'
+						or mem_name like '%' || #{keyword} || '%'
+						or mem_id 
+					</when>
+					<when test="condition == 'returnNo'">
+						   return_no 
+					</when>
+					<when test="condition == 'orderNo'">
+						   order_no 
+					</when>
+					
+					<when test="condition == 'memName'">
+						   mem_name 
+					</when>
+					<when test="condition == 'memId'">
+						   mem_id 
+					</when>
+				</choose>
+			</when>
+			<when test="cStatus == 3">
+				<choose>
+					<when test="condition == 'searchAll'">
+						   order_no like '%' || #{keyword} || '%'
+						or refund_no like '%' || #{keyword} || '%'
+						or mem_name like '%' || #{keyword} || '%'
+						or mem_id 
+					</when>
+					<when test="condition == 'refundNo'">
+						   refund_no 
+					</when>
+					<when test="condition == 'orderNo'">
+						   order_no 
+					</when>
+					
+					<when test="condition == 'memName'">
+						   mem_name 
+					</when>
+					<when test="condition == 'memId'">
+						   mem_id 
+					</when>
+				</choose>
+			</when>
+		</choose>
+		like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- [관리자] 검색조건에 일치하는 '주문취소'목록 조회 (한진) -->
+	<select id="selectAdminSearchCancelList" resultMap="cancelResult">
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by cancel_no order by cancel_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+                                 cancel_no,
+                                 order_no,
+                                 cancel_reason,
+                                 cancel_date,
+                                 c.status,
+                                 c.admin_memo,
+                                 delivery_msg,
+                                 m.mem_id,
+                                 mem_name,
+                                 pay_way,
+                                 price,
+                                 bk_title
+		                    from cancel c
+		                    join orders using(order_no)
+                            join members m using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+		  <choose>
+			<when test="condition == 'searchAll'">
+			   and order_no like '%' || #{keyword} || '%'
+				or cancel_no like '%' || #{keyword} || '%'
+				or mem_name like '%' || #{keyword} || '%'
+				or mem_id
+			</when>
+			<when test="condition == 'orderNo'">
+			   and order_no 
+			</when>
+			<when test="condition == 'cancelNo'">
+			   and cancel_no 
+			</when>
+			<when test="condition == 'memName'">
+			   and mem_name 
+			</when>
+			<when test="condition == 'memId'">
+			   and mem_id 
+			</when>
+		</choose>
+				like '%' || #{keyword} || '%'
+		  order
+		     by
+		 <choose>
+		 	<when test="array == 0">
+		 		cancel_date desc
+		 	</when> 
+		 	<when test="array == 1">
+		 		cancel_date asc
+		 	</when>	
+		 </choose> 
+	</select>
+	
+	<!-- [관리자] 검색조건에 일치하는 '반품'목록 조회 (한진) -->
+	<select id="selectAdminSearchReturnList" resultMap="returnResult">
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by return_no order by return_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+                                 return_no,
+                                 order_no,
+                                 mem_name,
+                                 mem_id,
+                                 bk_title,
+                                 pay_way,
+                                 price,
+                                 return_reason,
+                                 return_date,
+                                 r.status,
+                                 r.admin_memo,
+                                 delivery_msg
+		                    from return r
+		                    join orders using(order_no)
+                            join members m using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+		  <choose>
+			<when test="condition == 'searchAll'">
+			   and order_no like '%' || #{keyword} || '%'
+				or return_no like '%' || #{keyword} || '%'
+				or mem_name like '%' || #{keyword} || '%'
+				or mem_id
+			</when>
+			<when test="condition == 'orderNo'">
+			   and order_no 
+			</when>
+			<when test="condition == 'returnNo'">
+			   and return_no 
+			</when>
+			<when test="condition == 'memName'">
+			   and mem_name 
+			</when>
+			<when test="condition == 'memId'">
+			   and mem_id 
+			</when>
+		</choose>
+				like '%' || #{keyword} || '%'
+		 order
+		    by 
+		 <choose>
+		 	<when test="array == 0">
+		 		return_date desc
+		 	</when> 
+		 	<when test="array == 1">
+		 		return_date asc
+		 	</when>	
+		 </choose> 
+	</select>
+	
+	<!-- [관리자] 검색조건에 일치하는 '환불' 목록 조회 (한진) -->
+	<select id="selectAdminSearchRefundList" resultMap="refundResult">
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by refund_no order by refund_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+                                 refund_no,
+                                   order_no,
+                                   mem_name,
+                                   mem_id,
+                                   bk_title,
+                                   pay_way,
+                                   price,
+                                   r.status,
+                                   refund_date,
+                                   r.admin_memo,
+                                   refund_kind,
+                                   kind_no,
+                                   refund_price,
+                                   refund_point,
+                                   delivery_msg
+		                    from refund r
+		                    join orders using(order_no)
+                            join members m using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+		  <choose>
+			<when test="condition == 'searchAll'">
+			   and order_no like '%' || #{keyword} || '%'
+				or refund_no like '%' || #{keyword} || '%'
+				or mem_name like '%' || #{keyword} || '%'
+				or mem_id
+			</when>
+			<when test="condition == 'orderNo'">
+			   and order_no 
+			</when>
+			<when test="condition == 'refundNo'">
+			   and refund_no 
+			</when>
+			<when test="condition == 'memName'">
+			   and mem_name 
+			</when>
+			<when test="condition == 'memId'">
+			   and mem_id 
+			</when>
+		</choose>
+				like '%' || #{keyword} || '%'
+		  order
+		     by
+		<choose>
+		 	<when test="array == 0">
+		 		refund_date desc
+		 	</when> 
+		 	<when test="array == 1">
+		 		refund_date asc
+		 	</when>	
+		 </choose> 
+	</select>
+	
 </mapper>

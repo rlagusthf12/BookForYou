@@ -4,7 +4,6 @@
 	
 	<resultMap type="GroupBoard" id="groupResult">
 			<result column="group_boardno" property="groupBoardNo"/>
-			<result column="mem_no" property="memNo"/>
 			<result column="group_type" property="groupType"/>
 			<result column="group_title" property="groupTitle"/>
 			<result column="group_script" property="groupScript"/>
@@ -14,6 +13,7 @@
 			<result column="group_place" property="groupPlace"/>			
 			<result column="group_open" property="groupOpen"/>		
 			<result column="group_img" property="groupImg"/>
+			<result column="group_writer" property="groupWriter"/>
 						
 	</resultMap>
 	
@@ -62,7 +62,6 @@
 		  into groupMember
 		  (
 		  	group_boardno
-		  ,	mem_no
 		  ,	group_enrolldate
 		  ,	mem_email
 		  ,	group_level
@@ -72,7 +71,6 @@
 		  values
 		  (
 		  	seq_gno.nextval
-		  , #{memNo}
 		  , #{gorupEnrollDate}
 		  , #{mem_email}
 		  , #{group_level}
@@ -87,7 +85,7 @@
 			   count(*)
 	      from groupBoard b
 	      
-	     where group_status='Y'
+	     where b.group_status='Y'
 	     <if test="condition == 'group_title'">
 	    	and gorup_title
 	    </if>
@@ -111,8 +109,7 @@
             , s.group_place
             , s.group_img
             
-              FROM 
-                    (SELECT * FROM GROUPBOARD 
+              FROM GROUPBOARD 
             <choose>
             <when test="condition == 'groupTitle'">
             where group_title
@@ -127,7 +124,7 @@
 	     		like '%' || #{keyword} || '%'
              
              
-                    ORDER BY GROUP_BOARDNO DESC)s) 
+                    ORDER BY GROUP_BOARDNO DESC
 	</select>
 
 
@@ -142,6 +139,7 @@
 		 ,group_script
 		 ,group_limit
 		 ,group_img
+		 ,group_open
 		  )
 		  values
 		  (
@@ -150,8 +148,9 @@
 		 ,#{groupTitle}
 		 ,#{groupPlace}
 		 ,#{groupScript}
-		 ,#{gorupLimit}
+		 ,#{groupLimit}
 		 ,#{groupImg}
+		 ,#{groupOpen}
 		  )
 	
 	</insert>

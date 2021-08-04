@@ -38,7 +38,7 @@
                 <br><br><br><br><br><br><br><br>
                   
                      
-                        <h6 align="left"><b>독서모임게시판</b></h6>
+                		<h6 align="left"><b><a href="insertGroup.bo">독서모임게시판</a></b></h6>
                         <br><br><br>
                        <form id="createGroup" method="post" action="insertGroup.bo" enctype="multipart/form-data">
                         
@@ -53,24 +53,22 @@
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
                                     <td colspan="2">  
                                         <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio" name="groupType" value="${ g.groupType }">
-                                        <label class="custom-control-label" for="customRadio">온라인</label>
-                                      </div>
-                                      <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio2" name="groupType" value="${ g.groupType }">
+                                        <input type="radio" class="custom-control-input" id="customRadio" name="groupType" >
+                            			<label class="custom-control-label" for="customRadio">온라인</label><br>
+                                        <input type="radio" class="custom-control-input" id="customRadio2" name="groupType" >
                                         <label class="custom-control-label" for="customRadio2">오프라인</label>
                                       </div>
                                     </td>
                                 </tr>
                                 <tr>
                                   
-                                    <td colspan="2" ><input type="text" id="groupTitle" class="form-control" name="" required ></td>
+                                    <td colspan="2" ><input type="text" id="groupTitle" class="form-control" name="groupTitle" required ></td>
                                    
                                 </tr>
 
                                 <tr>
                                     <td><label for="">*참여인원</label></td>
-                                    <td colspan="2"><input type="number"></td>
+                                    <td colspan="2"><input type="number" name="groupLimit" required></td>
                                 </tr>
                                
                                                                    
@@ -80,10 +78,10 @@
                                     <tr>
                                         <td><label for="">지역검색</label></td>
                                         <td>
-                                            <select name="province" id="province" onChange="cityChange(this.value)">
+                                            <select name="province" id="province" onChange="cityChange(this.value)" reqired>
                                                 <option>광역시도</option>
-                                                <option value='1'>서울</option>
-                                                <option value='2'>부산</option>
+                                                <option value="seoul">서울</option>
+                                                <option value="busan">부산</option>
                                                 <option value='3'>대구</option>
                                                 <option value='4'>인천</option>
                                                 <option value='5'>광주</option>
@@ -109,7 +107,7 @@
 
                                 </tr>
 
-                                <script type="text/javascript">
+                                <script type="text/javascript" >
                                     function cityChange(province){
                                         $.ajax({
                                             type: "POST",
@@ -130,16 +128,16 @@
                          
                                 <tr>
                                     <td><label for="">모임소개</label></td>
-                                    <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
+                                    <td><textarea name="groupScript" id="" cols="30" rows="10"></textarea></td>
                                 </tr>
 
                                 <tr>
                                     <td><label for="">사진</label></td>
                                     <td height="130">
                                        
-                                        <img src="" id="img">
+                                        <img src="" id="img" name="groupImg">
                                         <br>
-                                        <input type="file" id="groupImg" name="groupImg" class="form-control-file border" onchange="miri(this);">
+                                        <input type="file" id="groupImg" class="form-control-file border" onchange="miri(this);">
 
                                         <script>
                                             function miri(tag){
@@ -157,7 +155,7 @@
                                 <tr>
                                     <td><label for="">*회원정보</label></td>
                                     <td colspan="2">
-                                        <select name="groupInfo">
+                                        <select name="groupOpen" requried>
                                             <option value="close">회원공개</option>
                                             <option selected value="open">전체공개</option>
                                         </select>

@@ -31,9 +31,8 @@ public class AmemServicelmpl implements AmemService{
 	}
 
 	@Override
-	public int deleteAmem(int amemNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int amDelete(String memId) {
+		return amDao.amDelete(sqlSession, memId);
 	}
 
 	@Override

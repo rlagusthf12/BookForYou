@@ -347,6 +347,14 @@
   		   		by mem_no asc
 	</select>
   	
+  	<!-- 관리자 회원탈퇴 처리 (형우) -->
+  	<update id="amDelete">
+  		update
+  			  member
+  		   set mem_status = 'N'
+  		 where mem_id = #{memId}
+  	</update>
+  	
   	
   	<!-- 사용자 선호 관심사 삭제 (안세아) -->
   	<delete id="deleteAllMemInterest">

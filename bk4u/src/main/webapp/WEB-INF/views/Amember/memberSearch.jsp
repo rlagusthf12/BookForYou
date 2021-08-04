@@ -44,16 +44,17 @@
 
     table{
            margin-top: 30px;
+           margin-left: 70px;
            text-align: center;
        }
     
     /* 페이징 스타일 */
-    #paging-wrap, input::placeholder{font-size: 25px; margin-left: 300px; }
+    #paging-wrap, input::placeholder{font-size: 25px; margin-left: 600px; }
 
     #paging-wrap{width:fit-content;}
     .page-link, .page-link:hover{color:rgb(252, 190, 52);
     } 
-    .phonebook>tbody>tr:hover{
+    .amem>tbody>tr:hover{
     background:salmon;
     cursor:pointer;
     }
@@ -149,6 +150,8 @@
 </head>
 <body>
 
+
+
 <jsp:include page="../adminSidebar.jsp"/>
 
 <!-- 내용-->
@@ -186,7 +189,7 @@
         </div>
     </div>
     
-        <table id="phonetable" border="1" width="1300" class="phonebook">
+        <table id="amemtable" border="1" width="1300" class="amem" >
             <thead>
                 <tr id="theader">
                     <th width="50" height="50">회원 번호</th>
@@ -195,19 +198,19 @@
                     <th width="100">이름</th>
                     <th width="250">이메일</th>
                     <th width="150">거주지</th>
-                    <th width="150">가입일</th>
+                    <th width="150">가입일</th>                   
                 </tr>
             </thead>
             <tbody>
             	<c:forEach var="as" items="${ list }">
-                <tr>
+                <tr data-toggle="modal" data-id="1" data-target="#amemDetailModal">
                     <td height="80">${ as.memNo }</td>
                     <td>${ as.memId }</td>
                     <td width="700">${ as.memPwd }</td>
                     <td>${ as.memName }</td>
                     <td>${ as.memEmail }</td>
                     <td>${ as.memBasicAddress }</td>
-                    <td>${ as.memEnrolldate }</td>                   
+                    <td>${ as.memEnrolldate }</td>                           
                 </tr>
        			</c:forEach>
             </tbody>
@@ -241,6 +244,87 @@
                 </c:choose>          
             </ul>
         </div>
+        
+        <!-- 회원 클릭 시 Modal -->
+			<div class="modal" id="amemDetailModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title"><h2>회원정보 상세 보기</h2></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align:left">
+                    <h4>&nbsp;&nbsp;&nbsp;
+                    	아이디 : <input type="text" name="id" value="" readonly>&nbsp;&nbsp; 
+                    	이름: <input type="text" name="name" value="XXX" style="width:80px" readonly></h4>
+                    
+                    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    	나이 : <input type="text" name="age" value="24" style="width:50px" readonly>  성별 : <input type="text" name="gender" value="M" style="width:50px" readonly></h4>
+                    	
+                    	
+                    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    	주소 : <input type="text" name="address" value="" readonly>  <input type="text" name="address2" value="" readonly></h4>
+                    
+                    <h4>&nbsp;&nbsp;&nbsp;
+                    	이메일 : <input type="email" name="email" value="" readonly></h4>
+                    
+                    <h4>전화번호 : <input type="text" name="phone" value="010-2424-2424" maxlength="13" readonly></h4>
+                    
+                    <h4>회원상태 : <input type="text" name="status" value="일반회원" readonly> 
+                    	&nbsp;&nbsp;
+                    	가입일 : <input type="text" name="startDate" value="2021-08-04" style="width:100px" maxlength="10" readonly></h4>
+                    
+                    <h4>보유쿠폰 : <input type="text" name="coupon" value="XX 장" readonly></h4>
+                   
+                    <!-- Modal footer -->
+				      <div class="modal-footer">
+				       <button type="button" class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-id="1" data-target="#amemDeleteModal">회원탈퇴</button>
+				       <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+      				  </div>	
+                    	
+                </div>     
+            </div>
+        </div>
+    </div>
+    
+    <!-- 회원 상세보기 Modal -->
+			<div class="modal" id="amemDeleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title"><h2>회원 탈퇴 처리</h2></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body" align="center">
+                    <h4>정말로 회원탈퇴 처리를 승인하시겠습니까?</h4>
+                    승인 처리된 회원은 다시 정보를 복구 할 수 없습니다. 탈퇴 처리를 하실꺼면 승인버튼을 눌러주십시오.<br><br>
+                    	<form action="amDelete.me" method="post">
+		                    	관리자 비밀번호 :
+		                    <input type="password" name="memPwd" required>
+		                    <input type="hidden" name="" value="${ loginUser.memId }">	                  
+                    		
+                    		<br><br>
+                    		
+                    		<button type="button" class="btn btn-danger" data-dismiss="modal" >탈퇴하기</button>
+                			<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+                    	</form>
+                </div>     
+            </div>
+        </div>
+    </div>
+			
+			    </div>
+			  </div>
+			</div>
+        
     </div>
 
 </body>
