@@ -449,9 +449,7 @@
 		    	        		$("#modal_list").modal('show');
 	            			}else if(result == "done"){
 	            				alert("이미 리스트에 존재하는 도서입니다.")
-	            			}
-	            			else{
-	            			}
+	            			}else{
 	            				alert("리스트 추가에 실패했습니다.");
 	            			}
 	            		},error:function(){

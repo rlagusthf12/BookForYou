@@ -251,7 +251,7 @@
   	
   	<!-- [사용자] 소지 쿠폰 조회 (연지) -->
   	<select id="selectCouponList" resultMap="couponResult">
-  		  		select
+  		select
     		   coupon_issue_num,
     		   coupon_no,
     		   mem_no,
@@ -267,7 +267,7 @@
 		  from mem_cupon mc
           join coupon c using (coupon_no)
 		 where mem_no = 3
-           and status = 'Y';
+           and status = 'Y'
   	</select>
   	
   	<!-- 관리자 회원조회 (형우) -->
