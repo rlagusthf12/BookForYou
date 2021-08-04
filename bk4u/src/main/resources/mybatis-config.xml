@@ -21,6 +21,8 @@
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Coupon" alias="Coupon"/>
 		<typeAlias type="com.bookforyou.bk4u.rental.model.vo.Rental" alias="Rental"/>
 		<typeAlias type="com.bookforyou.bk4u.coupon.model.vo.Coupon" alias="AdminCoupon"/>
+		<typeAlias type="com.bookforyou.bk4u.store.model.vo.Store" alias="Store"/>
+		<typeAlias type="com.bookforyou.bk4u.store.model.vo.OffBook" alias="OffBook"/>
 	</typeAliases>
 
 	<mappers>
@@ -35,6 +37,7 @@
 		<mapper resource="/mappers/payment-mapper.xml"/>
 		<mapper resource="/mappers/rental-mapper.xml"/>
 		<mapper resource="/mappers/coupon-mapper.xml"/>
+		<mapper resource="/mappers/store-mapper.xml"/>
 	</mappers>
 
 </configuration>

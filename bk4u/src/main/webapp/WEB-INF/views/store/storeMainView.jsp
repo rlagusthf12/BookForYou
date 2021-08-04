@@ -19,7 +19,7 @@
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 150px;
+            margin-top: 180px;
             margin-bottom: 80px;
         }
 
@@ -114,26 +114,26 @@
                     <table>
                         <tr>
                             <th rowspan="2">서울</th>
-                            <td><a href="">가로수길점</a></td>
-                            <td><a href="">강남점</a></td>
-                            <td><a href="">강서점</a></td>
-                            <td><a href="">건대점</a></td>
+                            <td><a href="storeDetail.st?storeNo=2">가로수길점</a></td>
+                            <td><a href="storeDetail.st?storeNo=1">강남점</a></td>
+                            <td><a href="storeDetail.st?storeNo=4">대학로점</a></td>
+                            <td><a href="storeDetail.st?storeNo=3">건대점</a></td>
                             <td><a href="">노원점</a></td>
                         </tr>
                         <tr>
                             <td><a href="">서울대점</a></td>
                             <td><a href="">수유점</a></td>
-                            <td><a href="">신촌점</a></td>
-                            <td><a href="">종로점</a></td>
+                            <td><a href="storeDetail.st?storeNo=5">신촌점</a></td>
+                            <td><a href="storeDetail.st?storeNo=6	">종로점</a></td>
                             <td><a href="">영등포점</a></td>
                         </tr>
                         <tr>
                             <th>경기</th>
-                            <td><a href="">동탄점</a></td>
+                            <td><a href="storeDetail.st?storeNo=7">동탄점</a></td>
                             <td><a href="">부천점</a></td>
-                            <td><a href="">수원점</a></td>
+                            <td><a href="storeDetail.st?storeNo=8">수원점</a></td>
                             <td><a href="">분당점</a></td>
-                            <td><a href="">안산점</a></td>
+                            <td><a href="storeDetail.st?storeNo=9">안산점</a></td>
                         </tr>
                         <tr>
                             <th>광역시</th>
@@ -141,7 +141,7 @@
                             <td><a href="">대구점</a></td>
                             <td><a href="">대전점</a></td>
                             <td><a href="">울산점</a></td>
-                            <td><a href="">부산점</a></td>
+                            <td><a href="storeDetail.st?storeNo=10">부산점</a></td>
                         </tr>
                     </table>
                 </div>
