@@ -17,6 +17,7 @@
 		<result column="store_no" property="storeNo"/>
 		<result column="bk_status" property="bkStatus"/>
 		<result column="bk_lct" property="bkLct"/>
+		<result column="add_date" property="addDate"/>
 		<result column="bk_title" property="bkTitle"/>
 		<result column="bk_publish" property="bkPublish"/>
 		<result column="writer_name" property="writerName"/>
@@ -42,12 +43,29 @@
 			   store_no,
 			   ob.bk_status,
 			   bk_lct,
+			   add_date,
 			   bk_title,
 			   bk_publish,
 			   writer_name
 		  from off_book ob
 		  join book b on (ob.bk_no = b.bk_no)
 		 where store_no = #{storeNo}
+	</select>
+	
+	<select id="selectStoreOffBookListRecent" resultMap="offBookResult">
+		select 
+			   ob.bk_no,
+			   store_no,
+			   ob.bk_status,
+			   bk_lct,
+			   add_date,
+			   bk_title,
+			   bk_publish,
+			   writer_name
+		  from off_book ob
+		  join book b on (ob.bk_no = b.bk_no)
+		 where store_no = #{storeNo}
+	  order by add_date
 	</select>
 	
 </mapper>

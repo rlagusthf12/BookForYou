@@ -25,4 +25,11 @@ public class StoreDao {
 		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreOffBookList", storeNo);
 	}
 
+	/*
+	 * [공통] 오프라인 매장 최근 추가 도서 조회 (연지)
+	 */
+	public ArrayList<OffBook> selectStoreOffBookListRecent(SqlSessionTemplate sqlSession, int storeNo) {
+		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreOffBookListRecent", storeNo);
+	}
+
 }

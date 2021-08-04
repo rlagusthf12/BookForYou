@@ -35,4 +35,12 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.selectStoreOffBookList(sqlSession, storeNo);
 	}
 
+	/*
+	 * [공통] 오프라인 매장 최근 추가 도서 조회 (연지)
+	 */
+	@Override
+	public ArrayList<OffBook> selectStoreOffBookListRecent(int storeNo){
+		return storeDao.selectStoreOffBookListRecent(sqlSession, storeNo);
+	}
+
 }

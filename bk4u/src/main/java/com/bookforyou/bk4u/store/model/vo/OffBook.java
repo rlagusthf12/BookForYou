@@ -1,6 +1,8 @@
 package com.bookforyou.bk4u.store.model.vo;
 
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +20,7 @@ public class OffBook {
 	private int storeNo;
 	private String bkStatus;
 	private String bkLct;
+	private Date addDate;
 	private String bkTitle;
 	private String bkPublish;
 	private String writerName;
