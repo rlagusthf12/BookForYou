@@ -12,14 +12,14 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.rental.model.vo.Rental;
 import com.bookforyou.bk4u.store.model.service.StoreService;
+import com.bookforyou.bk4u.store.model.vo.OffBook;
+import com.bookforyou.bk4u.store.model.vo.Store;
 
 @Controller
 public class StoreController {
 	
-	/*
 	@Autowired
 	private StoreService storeService;
-	*/
 	
 	/*
 	 * [공통] 오프라인 매장 메인 조회 (연지)
@@ -28,6 +28,22 @@ public class StoreController {
 	public ModelAndView storeMain(ModelAndView mv) {
 		
 		mv.setViewName("store/storeMainView");
+		
+		return mv;
+	}
+	
+	/*
+	 * [공통] 오프라인 매장 상세 조회 (연지)
+	 */
+	@RequestMapping("storeDetail.st")
+	public ModelAndView selectStoreDetail(ModelAndView mv, int storeNo) {
+		
+		Store st = storeService.selectStoreDetail(storeNo);
+		
+		ArrayList<OffBook> obList = storeService.selectStoreOffBookList(storeNo);
+		
+		mv.addObject("st", st)
+		  .setViewName("store/storeDetailView");
 		
 		return mv;
 	}

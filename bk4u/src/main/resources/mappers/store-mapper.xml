@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="storeMapper">
+
+	<resultMap id="storeResult" type="Store">
+		<result column="store_no" property="storeNo"/>
+		<result column="store_name" property="storeName"/>
+		<result column="store_address" property="storeAddress"/>
+		<result column="store_closed" property="storeClosed"/>
+		<result column="store_open" property="storeOpen"/>
+		<result column="store_phone" property="storePhone"/>
+		<result column="store_status" property="storeStatus"/>
+	</resultMap>
+
+	<resultMap id="offBookResult" type="OffBook">
+		<result column="bk_no" property="bkNo"/>
+		<result column="store_no" property="storeNo"/>
+		<result column="bk_status" property="bkStatus"/>
+		<result column="bk_lct" property="bkLct"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="bk_publish" property="bkPublish"/>
+		<result column="writer_name" property="writerName"/>
+	</resultMap>
+	
+	<select id="selectStoreDetail" resultMap="storeResult">
+		select 
+			   store_no,
+			   store_name,
+			   store_address,
+			   store_closed,
+			   store_open,
+			   store_phone,
+			   store_status
+		  from store
+		 where store_no = #{storeNo}
+		   and store_status = 'Y'
+	</select>
+	
+	<select id="selectStoreOffBookList" resultMap="offBookResult">
+		select 
+			   ob.bk_no,
+			   store_no,
+			   ob.bk_status,
+			   bk_lct,
+			   bk_title,
+			   bk_publish,
+			   writer_name
+		  from off_book ob
+		  join book b on (ob.bk_no = b.bk_no)
+		 where store_no = #{storeNo}
+	</select>
+	
+</mapper>
