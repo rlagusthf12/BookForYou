@@ -560,7 +560,7 @@
                                         	return;
                                         }
 
-                                        //console.log(inputFile.files.length);
+                                        
                                     
                                         if(inputFile.files.length == 1){ 
                                             // 선택된 파일이 존재할 경우 
@@ -589,7 +589,6 @@
                                 		
                                 		var file = $("#img-file")[0].files[0];
                                 		
-                                		console.log(file);
                                 		formData.append("file",file);
                                 		
                                 		if(file != undefined){
@@ -628,7 +627,6 @@
                         					success: function(pwd){
                         						
 												lastDecodePwd = pwd;
-												console.log(lastDecodePwd)
                         						
                         					},error:function(){
                         						console.log("ajax통신 실패");
@@ -650,7 +648,6 @@
                         					success: function(result){
                         						
                         						matchLastPwdResult = result;
-												console.log(matchLastPwdResult);
                         						
                         					},error:function(){
                         						console.log("ajax통신 실패");
