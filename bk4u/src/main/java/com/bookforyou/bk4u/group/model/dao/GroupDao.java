@@ -34,13 +34,13 @@ public class GroupDao {
 	
 		
 	public int selectSearchGListCount(SqlSession sqlSession , HashMap<String, String> map) {
-		return sqlSession.selectOne("groupMapper.selectSearchGListCout", map);
+		return sqlSession.selectOne("groupMapper.selectSearchGListCount", map);
 		
 	}
 	
 	public ArrayList<GroupBoard> selectSearchList(SqlSession sqlSession, HashMap<String, String> map){
 		
-		return (ArrayList)sqlSession.selectList("groupMapper.selectSearchList", map);
+		return (ArrayList)sqlSession.selectOne("groupMapper.selectSearchList", map);
 		
 	}
 

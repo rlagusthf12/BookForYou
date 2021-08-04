@@ -160,7 +160,7 @@
                              more = more -1;
                             
                             $.ajax({
-                                url : "gListMore.bo",
+                                url : "group.bo",
                                 type: 'POST',
                                 data: { more : more},
                                 dataType: "json",

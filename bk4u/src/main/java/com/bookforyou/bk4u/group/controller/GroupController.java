@@ -16,12 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Controller
 public class GroupController {
@@ -29,25 +32,32 @@ public class GroupController {
 	@Autowired
 	private GroupService gService;
 	
-	@RequestMapping("group.bo")
-	public String selectList(Model model) {
+	@RequestMapping(value="group.bo",  method=RequestMethod.GET)
+	public String groupListView(Model model) {
 		
 		ArrayList<GroupBoard> groupList = gService.selectList();
 		
 		model.addAttribute("groupList", groupList);
 		
 		return "group/groupList";
+
 		
 	}
 	
-	@RequestMapping("gListMore.bo")
-	public String selectListMore(Model model) {
+	@ResponseBody
+	@RequestMapping(value="group.bo", method=RequestMethod.POST)
+	public String groupListMore(String more , Model model) throws Exception{
 		
-		ArrayList<GroupBoard> groupListMore = gService.selectList();
 		
-		model.addAttribute("groupListMore", groupListMore);
+		int page = Integer.parseInt(more);
 		
-		return "group/groupList";
+		List<GroupBoard> selectListMore = gService.selectList();
+		
+		JsonObject sendJson = new JsonObject();
+		
+		JsonArray jarr = new JsonArray();
+
+		return sendJson.toString();
 		
 	}
 	
@@ -59,19 +69,23 @@ public class GroupController {
 	@RequestMapping("insertGroup.bo")
 	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session) {
 		
-		if(!upfile.getOriginalFilename().equals("")) {
-			 String groupImg = saveFile(session, upfile);
-			 g.setGroupImg("/resources/groupFiles/");
-		}
+
+			   if(!upfile.getOriginalFilename().equals("")) {
+				 String groupImg = saveFile(session, upfile);
+				 g.setGroupImg("/resources/groupFiles/");
+				}
+				
+				int result = gService.insertGBoard(g);
+				
+				if(result > 0) {
+					session.setAttribute("alertMsg", "독서모임 등록");
+					return "redirect:group.bo";
+				} else {
+					return "redirect:group.bo";
+				}
+	
+	
 		
-		int result = gService.insertGBoard(g);
-		
-		if(result > 0) {
-			session.setAttribute("alertMsg", "독서모임 완성");
-			return "redirect:group.bo";
-		} else {
-			return "redirect:group.bo";
-		}
 	}
 	
 	@RequestMapping("insertGMem.me")
@@ -88,7 +102,7 @@ public class GroupController {
 	}
 	
 	public String saveFile(HttpSession session, MultipartFile upfile) {
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		String savePath = session.getServletContext().getRealPath("/resources/groupFiles/");
 		
 		String originName = upfile.getOriginalFilename();
 		// 20210702170130 ( 년월일시분초에 랜덤숫자 다섯개를 붙힘) + 21365 + (원본파일의확장자) .jps
@@ -96,15 +110,15 @@ public class GroupController {
 		int ranNum = (int)(Math.random() * 90000 + 10000);
 		String ext = originName.substring(originName.lastIndexOf("."));
 		
-		String changeName = currentTime + ranNum + ext;
+		String groupImg = currentTime + ranNum + ext;
 		
 		try {
-			upfile.transferTo(new File(savePath + changeName));
+			upfile.transferTo(new File(savePath + groupImg));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
 		
-		return changeName;
+		return groupImg;
 		
 	}
 	
@@ -115,13 +129,13 @@ public class GroupController {
 			
 			List<String> cityList = new ArrayList();
 			
-			if(province.equals('1')) {
+			if(province.equals("seoul")) {
 				cityList.add("강남구");
 				cityList.add("강서구");
 				cityList.add("강북구");
 				cityList.add("강동구");
 				cityList.add("노원구");
-			} else if (province.equals('2')){
+			} else if (province.equals("busan")){
 				cityList.add("해운대구");
 				cityList.add("경포대구");
 				cityList.add("강북구");

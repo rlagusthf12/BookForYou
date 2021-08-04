@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.group.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.service.GroupServiceImpl;
+import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 
 /**
  * Servlet implementation class GBoardSearchController
@@ -42,9 +44,17 @@ public class GBoardSearchController extends HttpServlet {
 		GroupService gService = new GroupServiceImpl();
 		int searchCount = gService.selectSearchGListCount(map);
 		
-
+		ArrayList<GroupBoard> list = gService.selectSearchListOne(map);
 		
- 	}
+		request.setAttribute("list", list);
+		
+		request.setAttribute("condition", condition);
+		request.setAttribute("keyword", keyword);
+		
+		request.getRequestDispatcher("WEB-INF/views/group/groupList.jsp").forward(request, response);
+	}
+		
+ 	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
