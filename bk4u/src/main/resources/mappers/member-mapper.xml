@@ -327,7 +327,7 @@
  	
  	<select id="selectSubCategoryList" parameterType="int" resultMap="memberCategoryResult">
  		select mem_no, sub_cate_no
- 		from mem_interest
+ 		from mem_category
  		where mem_no = #{memNo}
  	</select>
  	

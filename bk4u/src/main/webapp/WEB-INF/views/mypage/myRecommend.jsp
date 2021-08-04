@@ -13,6 +13,15 @@
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\recommend-style.css">
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
+    <!-- alertify -->
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .wrap {
@@ -28,7 +37,7 @@
 
         #content {
             background: #EEE;
-            height: 1700px;
+            height: 1800px;
             position: relative;
             display: inline-flex;
         }
@@ -38,7 +47,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1600px;
+            height: 1650px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -87,22 +96,15 @@
     <script>
 		$(document).ready(function(){
 			var memNo = $("#memNo").val();
-			console.log(memNo);
 				$.ajax({
 					url: "interest.mp",
 					data: {memNum : $("#memNo").val()},
 					success: function(arr){
-						console.log(arr);
-						
 						for(var i in arr){
-							console.log(arr[i].interestNo);
 							var interNo = arr[i].interestNo;
 							$('input:checkbox[name="interestNo"]').each(function() {
-
 							      if(this.value == interNo){//checked 처리된 항목의 값
-
 							            this.checked = true;
-
 							      }
 
 							 });
@@ -118,6 +120,52 @@
 						console.log("ajax통신 실패");
 					}
 				});
+				
+				$.ajax({
+					url: "subcategory.mp",
+					data: {memNum : $("#memNo").val()},
+					success: function(arr){
+						for(var i in arr){
+							var subNo = arr[i].subCategoryNo;
+							$('input:checkbox[name="subCategoryNo"]').each(function() {
+							      if(this.value == subNo){//checked 처리된 항목의 값
+							            this.checked = true;
+							      }
+
+							 });
+							
+						}
+						
+					},error:function(){
+						console.log("ajax통신 실패");
+					}
+				});
+				
+				$.ajax({
+					url: "my-work-level.mp",
+					success: function(user){
+
+						var memWork = user.memWork;
+						var memLevel = user.memLevel
+						$('input:radio[name="memWork"]').each(function() {
+							if(this.value == memWork){//checked 처리된 항목의 값
+							     this.checked = true;
+							}
+
+						});
+						$('input:radio[name="memLevel"]').each(function() {
+							if(this.value == memLevel){//checked 처리된 항목의 값
+							     this.checked = true;
+							}
+
+						});
+							
+					},error:function(){
+						console.log("ajax통신 실패");
+					}
+				});
+				
+				
 		});
 	</script>
 </head>
@@ -445,7 +493,7 @@
                         <label class="form-label"><b>직업</b></label>
                             <div style="margin-top: 20px; text-align: center;">
                         <label>
-                            <input type="radio" checked name="memWork" value="프로그래머"> 
+                            <input type="radio" name="memWork" value="프로그래머"> 
                             <div  class="btn btn-sık"><span>프로그래머</span></div> </label>
                         <label >
                             <input  type="radio"  name="memWork" value="취준생"> 
@@ -505,7 +553,7 @@
                             <label class="form-label"><b>선호 난이도</b></label>
                             <div style="margin-top: 20px; text-align: center;">
                                 <label>
-                            <input type="radio" checked name="memLevel" value="쉬움"> 
+                            <input type="radio" name="memLevel" value="쉬움"> 
                             <div  class="btn btn-sık"><span>쉬운 책</span></div> </label>
                         <label >
                             <input  type="radio"  name="memLevel" value="보통"> 
@@ -534,8 +582,6 @@
             				subCategoryArray.push(this.value);
             			});
             			$("#subCategoryArray").val(subCategoryArray);
-            			console.log(interestArray);
-            			console.log(subCategoryArray);
             			$("#recommend-enroll").submit();
             		}
             	</script>

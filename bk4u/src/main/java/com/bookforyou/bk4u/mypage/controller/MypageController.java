@@ -81,9 +81,6 @@ public class MypageController {
 		int delInterestResult = mypageService.deleteAllMemInterest(member);
 		int delSubcategoryResult = mypageService.deleteAllMemCategory(member);
 		
-		System.out.println(delInterestResult);
-		System.out.println(delSubcategoryResult);
-		
 		// 기존의 관심사와 subCategory가 삭제되면
 		//interestArray와 subCategoryArray에서 하나씩 꺼내서 테이블에 넣어주기
 		memberInterest = new MemberInterest();
@@ -103,17 +100,16 @@ public class MypageController {
 		}
 		// 멤버 객체 직업, 선호난이도 수정 반영해주기
 		int updateMemberResult = memberService.updateMemberWorkAndLevel(member);
-			
 		if(updateMemberResult > 0) {
 			// 다 성공하면 session에 새로운 loginUser반영
-			Member updateMem = memberService.loginMember(member);
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			Member updateMem = memberService.loginMember(loginUser);
 			session.setAttribute("loginUser", updateMem);
-			
 			session.setAttribute("alertMsg", "성공적으로 반영되었습니다.");
-			return "redirect:update-recommend.mp";
+			return "redirect:my-recommend.mp";
 		}else {
 			session.setAttribute("alertMsg", "반영에 실패하였습니다.");
-			return "redirect:update-recommend.mp";
+			return "redirect:my-recommend.mp";
 		}
 		
 		
@@ -132,7 +128,7 @@ public class MypageController {
 		
 		int memNo = Integer.parseInt(memNum);
 		ArrayList<MemberInterest> memberInterestList = mypageService.getMemberInterestList(memNo);
-		System.out.println(memberInterestList);
+		
 		return new Gson().toJson(memberInterestList);
 	} 
 	
@@ -150,4 +146,18 @@ public class MypageController {
 	
 		return new Gson().toJson(mySubCategoryList);
 	}
+	
+	/**
+	 * 멤버의 직업과 선호 난이도 가져오는 메서드
+	 * @author ME
+	 */
+	@ResponseBody
+	@RequestMapping(value="my-work-level.mp",produces="application/json; charset=utf-8")
+	public String selectMyWorkAndLevel(HttpSession session) {
+		
+		Member loginUser = (Member) session.getAttribute("loginUser");
+	
+		return new Gson().toJson(loginUser);
+	}
+	
 }
