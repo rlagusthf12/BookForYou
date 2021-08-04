@@ -59,7 +59,7 @@
 	<insert id="inserGMem">
 		
 		insert 
-		  into groupmember
+		  into groupMember
 		  (
 		  	group_boardno
 		  ,	mem_no
@@ -87,7 +87,7 @@
 			   count(*)
 	      from groupBoard b
 	      
-	     where 
+	     where group_status='Y'
 	     <if test="condition == 'group_title'">
 	    	and gorup_title
 	    </if>

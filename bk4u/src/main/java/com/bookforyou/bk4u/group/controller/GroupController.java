@@ -57,13 +57,11 @@ public class GroupController {
 	}
 	
 	@RequestMapping("insertGroup.bo")
-	public String insertGroup( GroupBoard g , MultipartFile groupImg, HttpSession session) {
-		System.out.println(g);
-		System.out.println(g);
+	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session) {
 		
-		if(!groupImg.getOriginalFilename().equals("")) {
-			 String changeName = saveFile(session, groupImg);
-			 g.setGroupImg("resources/groupFiles/" + changeName);
+		if(!upfile.getOriginalFilename().equals("")) {
+			 String groupImg = saveFile(session, upfile);
+			 g.setGroupImg("/resources/groupFiles/");
 		}
 		
 		int result = gService.insertGBoard(g);
@@ -72,7 +70,6 @@ public class GroupController {
 			session.setAttribute("alertMsg", "독서모임 완성");
 			return "redirect:group.bo";
 		} else {
-			session.setAttribute("errorMsg", "작성 실패");
 			return "redirect:group.bo";
 		}
 	}
@@ -90,10 +87,10 @@ public class GroupController {
 		} 
 	}
 	
-	public String saveFile(HttpSession session, MultipartFile groupImg) {
+	public String saveFile(HttpSession session, MultipartFile upfile) {
 		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
 		
-		String originName = groupImg.getOriginalFilename();
+		String originName = upfile.getOriginalFilename();
 		// 20210702170130 ( 년월일시분초에 랜덤숫자 다섯개를 붙힘) + 21365 + (원본파일의확장자) .jps
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		int ranNum = (int)(Math.random() * 90000 + 10000);
@@ -102,7 +99,7 @@ public class GroupController {
 		String changeName = currentTime + ranNum + ext;
 		
 		try {
-			groupImg.transferTo(new File(savePath + changeName));
+			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
@@ -111,7 +108,7 @@ public class GroupController {
 		
 	}
 	
-	@RequestMapping("/placeSelect.do")
+	@RequestMapping("placeSelect.do")
 	public void selectAjax(HttpServletRequest req, HttpServletResponse res, String param) {
 		try {
 			String province = param;

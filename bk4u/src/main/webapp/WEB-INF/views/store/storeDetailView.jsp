@@ -12,14 +12,14 @@
     <!--bootstrap end-->
     <style>
         div{
-            border: 1px solid red;
+            border: 1px solid white;
             box-sizing: border-box;
         }
 
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 150px;
+            margin-top: 120px;
             margin-bottom: 80px;
         }
 
@@ -35,6 +35,7 @@
             margin: auto;
             margin-top: 60px;
             background-image: url("http://www.bwyb.net/wp-content/uploads/%EC%95%8C%EB%9D%BC%EB%94%98%EC%A4%91%EA%B3%A0%EC%84%9C%EC%A0%90-%EA%B0%95%EB%82%A8%EC%A0%90-01.jpg");
+            border: none;
         }
 
         #store_info>div{
@@ -127,6 +128,11 @@
             margin-top: 10px;
         }
 
+        .book_detail>div>a{
+        	color: black;
+            text-decoration: none;
+        }
+
         .book_detail>div:nth-child(3){
             margin-top: 3px;
         }
@@ -140,11 +146,11 @@
         <div id="content">
             <div id="store_info">
                 <div>
-                    <div>강남점</div>
+                    <div>${ st.storeName }</div>
                     <div>
-                        영업시간 : 09:30~22:00<br>
-                        정기휴일 : 설날(음력), 추석 당일 휴무)<br>
-                        주소 : 서울특별시 강남구 강남대로 438, 지하 1층 (역삼동 스타플렉스)
+                        영업시간 : ${ st.storeOpen }<br>
+                        정기휴일 : ${ st.storeClosed }<br>
+                        주소 : ${ st.storeAddress }
                     </div>
                 </div>
             </div>
@@ -162,31 +168,13 @@
                     <span>더보기 ></span>
                 </div>
                 <div class="book_list">
+                <c:forEach var="ob" items="${ obList }" begin="0" end="4" step="1">
                     <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
+                        <div class="book_img"><a href="detail.bk?bkNo=${ ob.bkNo }"><img src=""></a></div>
+                        <div><a href="detail.bk?bkNo=${ ob.bkNo }">${ ob.bkTitle }</a></div>
+                        <div>${ ob.writerName } | ${ ob.bkPublish }</div>
                     </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
+                </c:forEach>
                 </div>
             </div>
 
@@ -196,31 +184,13 @@
                     <span>더보기 ></span>
                 </div>
                 <div class="book_list">
+                <c:forEach var="ob" items="${ obRList }" begin="0" end="4" step="1">
                     <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
+                        <div class="book_img"><a href="detail.bk?bkNo=${ ob.bkNo }"><img src=""></a></div>
+                        <div><a href="detail.bk?bkNo=${ ob.bkNo }">${ ob.bkTitle }</a></div>
+                        <div>${ ob.writerName } | ${ ob.bkPublish }</div>
                     </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
-                    <div class="book_detail">
-                        <div class="book_img"><img src=""></div>
-                        <div>완전한 행복</div>
-                        <div>정유정 | 은행나무</div>
-                    </div>
+                </c:forEach>
                 </div>
             </div>
         </div>

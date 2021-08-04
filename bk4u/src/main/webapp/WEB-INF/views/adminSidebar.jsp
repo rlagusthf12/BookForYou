@@ -237,7 +237,7 @@
                         <a href="adminOrderList.or?orStatus=4">배송중</a>
                     </li>
                     <li>
-                        <a href="adminOrderList.or?status=5">배송완료</a>
+                        <a href="adminOrderList.or?orStatus=5">배송완료</a>
                     </li>
                 </ul>
             </li>
@@ -245,13 +245,13 @@
                 <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>CS</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li class="active">
-                        <a href="cs/adminCancel.jsp">주문취소</a>
+                        <a href="adminCSList.cs?cStatus=1">주문취소</a>
                     </li>
                     <li>
-                        <a href="cs/adminReturn.jsp">반품</a>
+                        <a href="adminCSList.cs?cStatus=2">반품</a>
                     </li>
                     <li>
-                        <a href="cs/adminRefund.jsp">환불</a>
+                        <a href="adminCSList.cs?cStatus=3">환불</a>
                     </li>
                 </ul>
             </li>

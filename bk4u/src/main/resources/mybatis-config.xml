@@ -20,7 +20,12 @@
 		<typeAlias type="com.bookforyou.bk4u.payment.model.vo.Payment" alias="Payment"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Coupon" alias="Coupon"/>
 		<typeAlias type="com.bookforyou.bk4u.rental.model.vo.Rental" alias="Rental"/>
+		<typeAlias type="com.bookforyou.bk4u.store.model.vo.Store" alias="Store"/>
+		<typeAlias type="com.bookforyou.bk4u.store.model.vo.OffBook" alias="OffBook"/>
 		<typeAlias type="com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail" alias="CouponDetail"/>
+		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Cancel" alias="Cancel"/>
+		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Refund" alias="Refund"/>
+		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Return" alias="Return"/>
 	</typeAliases>
 
 	<mappers>
@@ -35,6 +40,8 @@
 		<mapper resource="/mappers/payment-mapper.xml"/>
 		<mapper resource="/mappers/rental-mapper.xml"/>
 		<mapper resource="/mappers/coupon-mapper.xml"/>
+		<mapper resource="/mappers/cs-mapper.xml"/>
+		<mapper resource="/mappers/store-mapper.xml"/>
 	</mappers>
 
 </configuration>

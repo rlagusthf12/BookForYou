@@ -86,6 +86,11 @@
         .processing-next > img{
             width:100%; height: 100%; 
         }
+        
+        .processing-box:hover{
+        	cursor:pointer;
+			box-shadow: 0px 0px 10px grey;
+        }
 
         /* 공통 테두리 */
         .bar-outer{
