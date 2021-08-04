@@ -83,6 +83,11 @@
             width: 100px;
             text-align: center;
         }
+        
+        .processing-box:hover{
+        	cursor:pointer;
+			box-shadow: 0px 0px 10px grey;
+        }
 
         /* 공통 테두리 */
         .bar-outer{
@@ -267,15 +272,15 @@
 	
 		/* 상태 클릭  */
 	    $("#getStatus1").click(function(){
-	        location.href="adminOrderList.or?orStatus=1";
+	        location.href="adminCSList.cs?cStatus=1";
 	    })
 	    
 	    $("#getStatus2").click(function(){
-	        location.href="adminOrderList.or?orStatus=2";
+	        location.href="adminCSList.cs?cStatus=2";
 	    })
 	    
 	    $("#getStatus3").click(function(){
-	        location.href="adminOrderList.or?orStatus=3";
+	        location.href="adminCSList.cs?cStatus=3";
 	    })
 	    
 	    /* 정렬 방법 변경 */
@@ -283,9 +288,9 @@
 	        let ar = $(this).val();
 	
 	        if(${ empty keyword }){            	
-	            location.href=`adminCSList.cs?cStatus=1&array=` + ar;		 
+	            location.href=`adminCSList.cs?cStatus=3&array=` + ar;		 
 	        }else {
-	        	location.href=`adminCsListSearch.cs?cStatus=1&condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	        	location.href=`adminCsListSearch.cs?cStatus=3&condition=${ condition }&keyword=${ keyword }&array=` + ar;
 	        }
 	    
 	    })
@@ -360,7 +365,7 @@
         <br>
         <div id="processing-area">
             <div>
-                <div class="processing-box">
+                <div class="processing-box" id="getStatus1">
                     <div class="img-area">
                         <img class="img-content" src="resources/adminCommon/images/cancel .png" alt="">
                     </div>
@@ -370,14 +375,14 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ cancelCount }</p>
                     </div>
                 </div>
             </div>
 
             
             <div>
-                <div class="processing-box">
+                <div class="processing-box" id="getStatus2">
                     <div class="img-area">
                         <img class="img-content" src="resources/adminCommon/images/return.png" alt="">
                     </div>
@@ -387,13 +392,13 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ returnCount }</p>
                     </div>
                 </div>
             </div>
 
             <div>
-                <div class="processing-box selected">
+                <div class="processing-box selected" id="getStatus3">
                     <div class="img-area selected">
                         <img class="img-content" src="resources/adminCommon/images/refund selected.png" alt="">
                     </div>
@@ -403,7 +408,7 @@
                     </div>
     
                     <div class="number-area selected">
-                        <p>10</p>
+                        <p>${ refundCount }</p>
                     </div>
                 </div>
             </div>
@@ -412,7 +417,7 @@
         <div id="search-area">
             <form action="adminCsListSearch.cs">
             <input type="hidden" name="array" value="${ ar }">
-            <input type="hidden" name="cStatus" value="1">
+            <input type="hidden" name="cStatus" value="3">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
@@ -436,7 +441,14 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+                	<c:when test="${ not empty conListCount }">
+                		<span>[총 ${ conListCount }개]</span>
+                	</c:when>
+                	<c:when test="${ cStatus eq 3 }">
+                		<span>[총 ${ refundCount }개]</span>
+                	</c:when>
+                </c:choose>
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">

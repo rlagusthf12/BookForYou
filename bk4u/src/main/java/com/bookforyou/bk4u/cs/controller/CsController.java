@@ -58,6 +58,7 @@ public class CsController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("ar", array)
+		  .addObject("cStatus", cStatus)
 		  .addObject("cancelCount", cancelCount)
 		  .addObject("returnCount", returnCount)
 		  .addObject("refundCount", refundCount);
@@ -108,6 +109,8 @@ public class CsController {
 		
 		mv.addObject("pi", pi)
 		  .addObject("ar", array)
+		  .addObject("cStatus", cStatus)
+		  .addObject("conListCount", conListCount)
 		  .addObject("cancelCount", cancelCount)
 		  .addObject("returnCount", returnCount)
 		  .addObject("refundCount", refundCount);

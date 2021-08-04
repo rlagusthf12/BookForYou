@@ -85,6 +85,11 @@
             width: 100px;
             text-align: center;
         }
+        
+        .processing-box:hover{
+        	cursor:pointer;
+			box-shadow: 0px 0px 10px grey;
+        }
 
         /* 공통 테두리 */
         .bar-outer{
@@ -267,15 +272,15 @@
 	$(function(){
 		/* 상태 클릭  */
 	    $("#getStatus1").click(function(){
-	        location.href="adminOrderList.or?orStatus=1";
+	        location.href="adminCSList.cs?cStatus=1";
 	    })
 	    
 	    $("#getStatus2").click(function(){
-	        location.href="adminOrderList.or?orStatus=2";
+	        location.href="adminCSList.cs?cStatus=2";
 	    })
 	    
 	    $("#getStatus3").click(function(){
-	        location.href="adminOrderList.or?orStatus=3";
+	        location.href="adminCSList.cs?cStatus=3";
 	    })
 	    
 	    /* 정렬 방법 변경 */
@@ -359,7 +364,7 @@
         <br>
         <div id="processing-area">
             <div>
-                <div class="processing-box selected">
+                <div class="processing-box selected" id="getStatus1">
                     <div class="img-area selected">
                         <img class="selected img-content" src="resources/adminCommon/images/cancel selected.png" alt="">
                     </div>
@@ -369,13 +374,13 @@
                     </div>
     
                     <div class="number-area selected">
-                        <p>10</p>
+                        <p>${ cancelCount }</p>
                     </div>
                 </div>
             </div>
 
             <div>
-                <div class="processing-box">
+                <div class="processing-box" id="getStatus2">
                     <div class="img-area">
                         <img class="img-content" src="resources/adminCommon/images/return.png" alt="">
                     </div>
@@ -385,13 +390,13 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ returnCount }</p>
                     </div>
                 </div>
             </div>
 
             <div>
-                <div class="processing-box">
+                <div class="processing-box" id="getStatus3">
                     <div class="img-area">
                         <img class="img-content" src="resources/adminCommon/images/refund.png" alt="">
                     </div>
@@ -401,7 +406,7 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ refundCount }</p>
                     </div>
                 </div>
             </div>
@@ -434,7 +439,15 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+                	<c:when test="${ not empty conListCount }">
+                		<span>[총 ${ conListCount }개]</span>
+                	</c:when>
+                	<c:when test="${ cStatus eq 1 }">
+                		<span>[총 ${ cancelCount }개]</span>
+                	</c:when>
+                </c:choose>
+                
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">
@@ -447,16 +460,16 @@
                 <table  class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>취소번호</th>
-                            <th>취소신청일<br>(취소접수일)</th>
-                            <th>주문번호</th>
-                            <th>주문자</th>
-                            <th>도서명</th>
-                            <th>취소금액</th>
-                            <th>결제수단</th>
-                            <th>취소상태</th>
-                            <th>취소처리</th>
+                            <th width="45px">NO</th>
+                            <th width="75px">취소번호</th>
+                            <th width="100px">취소신청일<br>(취소접수일)</th>
+                            <th width="75px">주문번호</th>
+                            <th width="85px">주문자</th>
+                            <th width="165px">도서명</th>
+                            <th width="75px">취소금액</th>
+                            <th width="75px">결제수단</th>
+                            <th width="90px">취소상태</th>
+                            <th width="80px">취소처리</th>
                             <th width="70px">메모</th>
                         </tr>
                     </thead>

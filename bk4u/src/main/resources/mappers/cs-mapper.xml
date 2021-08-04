@@ -473,6 +473,8 @@
 			</when>
 		</choose>
 				like '%' || #{keyword} || '%'
+		  order
+		     by
 		<choose>
 		 	<when test="array == 0">
 		 		refund_date desc
