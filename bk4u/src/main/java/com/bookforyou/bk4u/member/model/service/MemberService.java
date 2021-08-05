@@ -52,6 +52,7 @@ public interface MemberService {
 
 	String selectMemberPassword(int memNo);
 
+
 	
 }
 

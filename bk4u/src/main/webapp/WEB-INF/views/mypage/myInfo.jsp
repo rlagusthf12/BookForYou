@@ -424,11 +424,11 @@
                             <th class="th-content">닉네임</th>
                             <td class="td-content">
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="text" class="form-control" placeholder="변경할 닉네임을 입력해주세요.">
+                                    <input type="text" class="form-control" placeholder="변경할 닉네임을 입력해주세요.(최대 8자)" id="nickInput" maxlength='8'>
                                 </div>
                                 <button type="button" class="btn btn-secondary btn-sm" style="margin-right: 10px;"
                                     onclick="nickTdShow();">취소</button>
-                                <button type="button" class="btn btn-dark btn-sm">완료</button>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="nickSubmit();">완료</button>
                             </td>
                             <td class="bottom-td">
                             </td>
@@ -546,6 +546,8 @@
                                 	var $lastPwdInput = $("#pwd-box2 input[id=lastPwd]");
                                 	var $pwdInput = $("#pwd-box2 input[name=memPwd]");
                         			var $pwdCheckInput = $("#pwd-box2 input[id=pwdCheckInput]");
+                        			var $nickInput = $("#nick-box2 input[id=nickInput]");
+                        			
                         			
                                 	function imgFileClick(){
                                 		$("#img-file").click();
@@ -692,7 +694,45 @@
                                 		
                                 	}
                                 	
-                                	
+                                	function nickSubmit(){
+                                		var nickCheck;
+                                		
+                                		$.ajax({
+                    						url: "nick-check.me",
+                    						data: {checkNick : $nickInput.val()},
+                    						async: false,
+                    						success: function(result){
+                    							nickCheck = result;
+                    							console.log(result);
+                    					},error:function(){
+                    						console.log("ajax통신 실패");
+                    					}
+                            			});
+                                		
+                                		if($nickInput.val().length == 0){
+                                			alert("닉네임을 입력해주세요");
+                                			return false;
+                                		}
+                                		
+                                		if(nickCheck == "NNNNN"){
+                                			console.log(nickCheck);
+                                			alert("중복된 닉네임입니다.")
+                                			return false;
+                                		}
+                           				if(nickCheck == "NNNNY"){
+                                			$.ajax({
+                        						url: "nick-change.mp",
+                        						data: {memNum : $("#memNo").val(), inputNick : $nickInput.val()},
+                        						async: false,
+                        						success: function(result){
+                        							alert("닉네임이 수정되었습니다.");
+                        							document.location.href = document.location.href;
+                        					},error:function(){
+                        						console.log("ajax통신 실패");
+                        					}
+                                			});
+                                		}
+                                	}     	
                                 </script>
                 </div>
                 <div>

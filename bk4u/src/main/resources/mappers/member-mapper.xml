@@ -411,9 +411,16 @@
  	</select>
  	
  	<!-- [사용자] 멤버의 패스워드 업데이트(안세아) -->
- 	<update id="updateMemPassword">
+ 	<update id="updateMemberPassword">
  		update members
  		set mem_pwd = #{memPwd}
+ 		where mem_no = #{memNo}
+ 	</update>
+ 	
+ 	<!-- [사용자] 멤버의 닉네임 업데이트(안세아) -->
+ 	<update id="updateMemberNickname">
+ 		update members
+ 		set mem_nickname = #{memNickname}
  		where mem_no = #{memNo}
  	</update>
 

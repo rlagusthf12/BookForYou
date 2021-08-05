@@ -48,6 +48,8 @@ public class MypageController {
 	
 	MemberCategory memberCategory;
 	
+	Member member;
+	
 	/**
 	 * 내 정보 페이지로 이동하는 메서드
 	 * @author 안세아
@@ -252,7 +254,7 @@ public class MypageController {
 	@ResponseBody
 	@RequestMapping(value="update-pwd.mp")
 	public String updatePassword(String memNum, String memPwd) {
-		Member member = new Member();
+		member = new Member();
 		int memNo = Integer.parseInt(memNum);
 		String encPwd = bcryptPasswordEncoder.encode(memPwd);
 		member.setMemNo(memNo);
@@ -283,6 +285,30 @@ public class MypageController {
 			return "fail";
 		}
 	}
+	
+	/**
+	 * 마이페이지 닉네임 업데이트하는 메서드
+	 * @author 안세아
+	 * @param memNum
+	 * @param inputNick
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="nick-change.mp")
+	public String updateMemNickname(String memNum, String inputNick) {
+		member = new Member();
+		int memNo =  Integer.parseInt(memNum);
+		member.setMemNo(memNo);
+		member.setMemNickname(inputNick);
+		int result = mypageService.updateMemberNickname(member);
+		if(result > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	
 	
 	
 }
