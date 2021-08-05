@@ -80,10 +80,16 @@
         /*독서록내용*/
         .booklist_container{display:flex;}
         .booklist_book_wrap{margin-left: auto; margin-right:30px; width:400px;}
+        .booklist_content{margin:10px 0; padding-left:10px; font-size:14px; color:#5c5c5c;}
         a.book_info-area{text-decoration:none;}
         .booklist_title{color: #000;}
-        .booklist_content{width:690px; height:70px; margin:5px 0; padding-left:10px; font-size:14px; color:#5c5c5c;}
-        .booklist_writer{font-size:14px; color:#5c5c5c;}
+        .booklist_rcontent{
+        width:690px; height:70px; margin:10px 0; font-size:14px; color:#5c5c5c;
+        text-overflow:ellipsis; overflow:hidden; white-space:nowrap; line-height:10px;
+        display: -webkit-box; -webkit-line-clamp:2; /* 라인수 */
+        -webkit-box-orient: vertical; word-wrap:break-word; line-height: 1.2em; height: 3.6em;
+        }
+        .booklist_writer{width:690px; height:50px; font-size:14px; color:#5c5c5c;}
         /*독서록리스트_책정보*/
         .booklist_book_wrap .book_title{color:#000; font-weight:400;}
         
@@ -217,7 +223,7 @@
 	                                        <div class="booklist_title">
 	                                            <span class="title_point">${ bl.blTitle }</span>
 	                                        </div>
-	                                        <div class="booklist_content">
+	                                        <div class="booklist_rcontent">
 	                                            ${ bl.blContent }
 	                                        </div>
 	                                        <div class="booklist_writer_box">
