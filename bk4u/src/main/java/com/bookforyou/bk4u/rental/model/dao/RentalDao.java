@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.rental.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,6 +34,13 @@ public class RentalDao {
 	 */
 	public Rental selectRental(SqlSessionTemplate sqlSession, int rentalNo) {
 		return sqlSession.selectOne("rentalMapper.selectRental", rentalNo);
+	}
+
+	/*
+	 * [사용자] 도서 대여 신청 (연지)
+	 */
+	public int insertRental(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.insert("rentalMapper.insertRental", map);
 	}
 
 }

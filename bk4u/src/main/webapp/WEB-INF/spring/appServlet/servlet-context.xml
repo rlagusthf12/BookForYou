@@ -23,6 +23,10 @@
 	
 	<context:component-scan base-package="com.bookforyou.bk4u" />
 	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="100000000"/>
+	</beans:bean>
+	
 	
 	
 </beans:beans>

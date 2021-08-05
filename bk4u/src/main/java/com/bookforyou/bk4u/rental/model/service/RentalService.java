@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.rental.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.rental.model.vo.Rental;
@@ -21,5 +22,10 @@ public interface RentalService {
 	 * [사용자] 대여 내역 상세 조회 (연지)
 	 */
 	Rental selectRental(int rentalNo);
+
+	/*
+	 * [사용자] 도서 대여 신청 (연지)
+	 */
+	int insertRental(HashMap<String, Integer> map);
 
 }

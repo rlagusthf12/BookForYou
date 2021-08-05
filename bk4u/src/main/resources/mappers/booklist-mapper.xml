@@ -6,7 +6,6 @@
 		<result column="bl_no" property="blNo"/>
 		<result column="mem_no" property="memNo"/>
 		<result column="mem_nickname" property="blWriter"/>
-		<result column="bk_no" property="bkNo"/>
 		<result column="bl_title" property="blTitle"/>
 		<result column="bl_content" property="blContent"/>
 		<result column="bl_count" property="blCount"/>
@@ -15,12 +14,30 @@
 		<result column="bl_mdate" property="blMdate"/>
 		<result column="bl_like" property="blLike"/>
 		<result column="bl_scrap" property="blScrap"/>
+		<result column="bk_no" property="bkNo"/>
 	</resultMap>
 	
 	<resultMap id="bookResult" type="Book">
 		<result column="bk_no" property="bkNo"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="writer_name" property="writerName"/>
+		<result column="intro_originname" property="introOriginName"/>
+		<result column="bk_introduce" property="bkIntroduce"/>
 	</resultMap>
 	
+	<resultMap id="replyResult" type="Reply">
+		<result column="reply_no" property="replyNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="reply_type" property="replyType"/>
+		<result column="ref_post" property="refPost"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="reply_cdate" property="replyCdate"/>
+		<result column="reply_mdate" property="replyMdate"/>
+		<result column="delete_status" property="deleteStatus"/>
+		<result column="reply_refNo" property="replyRefNo"/>
+		<result column="depth" property="depth"/>
+	</resultMap>
+
 	<!-- 독서록 게시글 갯수 조회용 -->
 	<!-- @author daeunlee -->
 	<select id="selectListCount" resultType="_int">
@@ -75,6 +92,8 @@
 		     )
 	</insert>
 	
+	<!-- 도서 검색 모달창(1) : 도서 갯수 조회용 -->
+	<!-- @author daeunlee -->
 	<select id="selectSearchListCount" resultType="_int">
 		select
 		       count(*)
@@ -84,11 +103,137 @@
 	 		<when test="condition == 'bkTitle'">
 	 			and bk_title
 	 		</when>
-	 		<when test="condition == 'writer'">
-	 			and bk_writer
-	 		</when>
+	 		<otherwise>
+	 			and writer_name
+	 		</otherwise>
 	 	</choose>
-	 	like '%' || #{keyword} || '%'	
+	 	       like '%' || #{keyword} || '%'	
 	</select>
+	
+	<!-- 도서 검색 모달창(2) : 도서 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectBookSearchList" resultMap="bookResult">
+		select
+		       bk_no
+             , bk_title
+             , writer_name
+             , intro_originname
+             , bk_introduce
+		  from book
+		 where bk_selstatus = 'Y'
+	 	<choose>
+	 		<when test="condition == 'bkTitle'">
+	 			and bk_title
+	 		</when>
+	 		<otherwise>
+	 			and writer_name
+	 		</otherwise>
+	 	</choose>
+	 	       like '%' || #{keyword} || '%'	
+	</select>
+	
+	<!-- 독서록 상세조회용 : 조회수 증가 -->
+	<!-- @author daeunlee -->
+	<update id="increaseCount">
+		update 
+		       booklist
+		   set bl_count = bl_count+1
+		 where bl_no = #{blNo}
+		   and bl_status='Y'
+	</update>
+	
+	<!-- 독서록 상세조회용 : 해당게시글 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectBooklist" resultMap="booklistResult">
+		select 
+		       bl_no
+		     , mem_nickname
+		     , bl_title
+		     , bl_content
+		     , bl_count
+		     , bl_rate
+		     , bl_cdate
+		     , bl_mdate
+		     , bl_like
+		     , bl_scrap
+		     , bk_no
+		  from booklist
+		  join members using(mem_no)
+		 where bl_no = #{blNo}
+		   and bl_status='Y'
+	</select>
+	
+	<!-- 독서록 상세조회용 : 해당 게시글의 책정보 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectBook" resultMap="bookResult">
+		select 
+		       bk_no
+		     , bk_title
+		     , writer_name
+		     , bk_introduce
+		  from booklist
+		  join book using(bk_no)		  
+		 where bl_no = #{blNo}
+		   and bl_status='Y'
+	</select>
+	
+	<!-- 댓글 리스트 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectReplyList" resultMap="replyResult">
+		select 
+		       reply_no
+		     , mem_no
+		     , reply_type
+		     , ref_post
+		     , reply_content
+		     , reply_cdate
+		     , reply_mdate
+		     , delete_status
+		     , reply_refNo
+		     , depth
+		  from reply
+		 where reply_type = 2
+		   and ref_post = #{blNo}
+		 start with reply_refno = 0
+		connect by prior reply_no = reply_refno
+		order siblings by reply_cdate desc
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<!-- @author daeunlee -->
+	<insert id="insertReply">
+		insert 
+		  into reply
+		     ( 
+		       reply_no
+		     , mem_no
+		     , reply_type
+		     , ref_post
+		     , reply_content
+		     , reply_refno
+		     , depth
+		     )
+		values
+		     ( 
+		       seq_rno.nextval
+		     , #{memNo}
+		     , 2
+		     , #{refPost}
+		     , #{replyContent}
+		     , #{replyRefNo}
+		     , #{depth}
+		     )
+	</insert>
+	
+	<update id="updateBooklist">
+		update
+		       booklist
+		   set 
+		       bl_title = #{blTitle}
+		     , bl_content = #{blContent}
+		     , bk_no = #{bkNo}
+		     , bl_rate = #{blRate}
+		 where bl_no = #{blNo}
+	</update>
 
 </mapper>

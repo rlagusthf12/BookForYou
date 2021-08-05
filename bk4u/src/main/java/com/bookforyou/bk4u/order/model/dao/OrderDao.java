@@ -115,8 +115,8 @@ public class OrderDao {
 	/**
 	 * [관리자] 주문 상세 조회 - 주문 내역 조회 (한진)
 	 */
-	public ArrayList<Order> selectAdminOrderDetail(SqlSessionTemplate sqlSession, int orderNo) {
-		return (ArrayList)sqlSession.selectList("orderMapper.selectAdminOrderDetail", orderNo);
+	public Order selectAdminOrderDetail(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("orderMapper.selectAdminOrderDetail", orderNo);
 	}
 
 	/**

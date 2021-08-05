@@ -199,6 +199,7 @@
             background-color: #EC573B;
         }
         .handling>a{color: white;}
+        .showDetail:hover{cursor:pointer;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -342,13 +343,30 @@
 	    })
 	
 	    /* 주문 상세 보기 */
-	    $(".detailC").click(function(){
-	        	
+	    $(".detailO").click(function(){
 	    	var td = $(this);
 	        var orderNo = td.text();
 	        location.href='adminOrderDetail.or?orderNo=' + orderNo;
-	        	
 	    })
+	    
+	    /* 취소 상세 보기 
+	    $(".detailC").click(function(){
+	    	var tr = $(this).parent();
+	    	var td = $(this);
+	    	var cancelNo = td.text();
+	    	var orderNo = tr.children().eq(3).text();
+	    	location.href='adminCancelDatail.cs?cancelNo=' + cancelNo + '&orderNo=' + orderNo;
+	    })
+	    */
+	    
+	 	$(".showDetail").click(function(){
+	 		var tr = $(this).parent().parent().parent();
+	 		var orderNo = tr.children().eq(3).text();
+	 		var cancelNo = tr.children().eq(1).text();
+	 		console.log(orderNo);
+	 		console.log(cancelNo);
+		    $(".showDetail").attr("href", 'adminCancelDatail.cs?cancelNo=' + cancelNo + '&orderNo=' + orderNo);	 		
+	 	})
 	})
 </script>
 </head>
@@ -481,7 +499,7 @@
 			                            <td>${ no.count }</td>
 			                            <td class="detailC">${ c.cancelNo }</td>
 			                            <td>${ c.cancelDate }</td>
-			                            <td>${ c.orderNo }</td>
+			                            <td class="detailO">${ c.orderNo }</td>
 			                            <td>${ c.memName } <br> (${ c.memId })</td>
 			                            <td>${ c.bkTitle }</td>
 			                            <td>${ c.price }</td>
@@ -498,7 +516,9 @@
 			                            		</c:when>
 			                            		<c:otherwise>
 			                            			<div class="handling detail">
-					                                    <a href="cancelDetail.html">상세</a>
+					                                    <a class="showDetail">상세</a>
+					                                    <input type="hidden" name="sdCancelNo" value="${ c.cancelNo }">
+					                                    <input type="hidden" name="sdOrderNo" value="${ c.orderNo }">
 					                                </div>
 			                            		</c:otherwise>
 			                            	</c:choose>

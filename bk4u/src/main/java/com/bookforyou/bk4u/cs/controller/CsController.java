@@ -11,16 +11,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.cs.model.service.CsService;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Refund;
 import com.bookforyou.bk4u.cs.model.vo.Return;
+import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.order.model.service.OrderService;
+import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 
 @Controller
 public class CsController {
 
 	@Autowired
 	private CsService cService;
+	
+	@Autowired
+	private OrderService odService;
 	
 	/**
 	 * [관리자] '주문취소', '반품', '환불' 목록 조회 (한진)
@@ -116,6 +125,32 @@ public class CsController {
 		  .addObject("refundCount", refundCount);
 		
 		return mv;
+	}
+	
+	/**
+	 * [관리자] 주문취소 상세 조회 (한진)
+	 */
+	@RequestMapping("adminCancelDatail.cs")
+	public ModelAndView selectAdminCancelDetail(ModelAndView mv, int cancelNo, int orderNo) {
+		
+		
+		Cancel c = cService.selectAdminCancelDetail(cancelNo);
+		Order o = odService.selectAdminOrderDetail(orderNo);
+		ArrayList<OrderDetail> od = odService.selectAdminOrderedBook(orderNo);
+		Payment p = odService.selectAdminOrderedPayment(orderNo);
+		Member m = odService.selectAdminOrderedMem(orderNo);
+		CouponDetail cd = odService.selectAdminOrderedUsedCoupon(orderNo);
+		
+		mv.addObject("c", c)
+		  .addObject("o", o)
+		  .addObject("od", od)
+		  .addObject("p", p)
+		  .addObject("m", m)
+		  .addObject("cd", cd)
+	      .setViewName("cs/adminCancelDetail");
+		
+		return mv;
+		
 	}
 	
 }

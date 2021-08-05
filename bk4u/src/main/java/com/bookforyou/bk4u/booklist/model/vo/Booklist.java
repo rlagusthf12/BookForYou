@@ -26,6 +26,8 @@ public class Booklist {
 	public int blLike;
 	public int blScrap;
 	public String blStatus;
+	public String originName;
+	public String changeName;
 	
 	public ArrayList<Booklist> booklistList;
 }

@@ -81,7 +81,7 @@
 <body>
     <div class="wrap">
     
-		<form id="enrollForm" method="post" action="insert.bl" onsubmit="postForm();">
+		<form id="enrollForm" method="post" action="update.bl" onsubmit="postForm();">
 		
 	        <div class="header">
 	            <div class="container">
@@ -91,7 +91,7 @@
 	                <!--별점-->
 	                <div class="choose_star">
 	                    <div class="make_star">
-	                    	<input type="hidden" id="blRate" name="blRate">
+	                    	<input type="hidden" id="blRate" name="blRate" value="${ bl.blRate }">
 					        <div class="rating" data-rate="#" id="starRating">
 					            <i class="fas fa-star"></i>
 					            <i class="fas fa-star"></i>
@@ -105,7 +105,7 @@
 	                
 	                <!--작성버튼-->
 	                <div class="btn_area">
-	                    <button type="submit" class="btn btn_submit">작성하기</button>
+	                    <button type="submit" class="btn btn_submit">수정하기</button>
 	                </div>
 	                
 	            </div>
@@ -117,14 +117,14 @@
 	            <!--제목-->
 	            <div class="title_area">
 	                <div class="title">
-	                    <input type="text" placeholder="제목을 입력해주세요." class="title_input" id="title" name="blTitle">
+	                    <input type="text" placeholder="제목을 입력해주세요." class="title_input" id="title" name="blTitle" value="${ bl.blTitle }">
 	                </div>
 	            </div>
 	            <!--에디터-->
 	            <div class="editor_area">
 	                <div class="editor">
 	                    <div class="editor_content">
-							<textarea class="summernote" id="blContent" name="blContent"></textarea>  
+							<textarea class="summernote" id="blContent" name="blContent" value="${ bl.blContent }"></textarea>  
 	                    </div>
 	                </div>
 	            </div>
@@ -134,7 +134,7 @@
 	                <div class="dz-message needsclick">    
 	                	<!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div가 보이는 거임 -->
 	                    <a data-toggle="modal" href="#myModal" id="point_txt">독서록을 작성할 책을 선택해주세요!</a>
-	                    <input type="hidden" id="bkNo" name="bkNo">
+	                    <input type="hidden" id="bkNo" name="bkNo" value="${ bl.bkNo }">
 	                </div>
 	            </div>
 	        </div>
@@ -193,7 +193,7 @@
        </form>
 		
 		<script>
-			// *별점
+			// 별점
 			$(function(){
 				//별 아이콘을 클릭하면 할 일
 	            $(' .make_star i ').click(function(){
@@ -211,56 +211,15 @@
 	            })
 			})
 		
-			// *summernote 에디터
+			// summernote 에디터
 			$(document).ready(function() {
-				
-				// 기본세팅
 	        	$('.summernote').summernote({
 	        		height: 750,
 	        		minHeight: null,
 	                maxHeight: null,
-	        		lang: "ko-KR",
-	        		callbacks: { 
-	        			// onImageUpload 함수: '이미지를 업로드했을 때' 동작하는 함수
-	        			onImageUpload: function(files, editor, welEditable){
-	        				// 파일 업로드 (다중업로드를 위해 for문 사용)
-	        				for(var i=files.length-1; i>=0; i--){
-	        					uploadSummernoteImage(files[i], this);
-	        				}
-	        			}
-	        		}
+	        		lang: "ko-KR"
 	        	});
-				
-				// 파일 업로드용 callbacks함수 실행
-				function uploadSummernoteImage(file, el){
-					var formData = new FormData();
-					data.append('file', file); 
-					// callbacks함수에서 받아온 file들을 data에 추가해서 => ajax로 서버에 파일업로드함
-					$.ajax({
-						url: "uploadSummernoteImageAjax",
-						data: formData,
-						type: "post",
-						enctype: 'multipart/form-data',
-						processData: false,
-						contentType: false,
-						
-						//*processData: false
-						//일반적으로 서버에 전달되는 데이터는 "query string" 형태로 전달된다.
-						//ex) http://example.com/over/there?"title=Main_page&action=raw"
-						//data 파라미터로 전달된 데이터를 jQuery 내부적으로 query string 으로 만드는데, 
-						//파일 전송의 경우 이를 하지 않아야 하고 이를 설정하는 것이 processData: false 이다.
-
-						//*contentType 
-						//default 값이 "application/x-www-form-urlencoded; charset=UTF-8" 인데, 
-						//"multipart/form-data" 로 전송이 되게 false 로 넣어준다.
-						
-						success: function(list){
-							$(editor).summernote('insertImage', list.url);
-						}
-					});
-				}
 	        	
-				// 툴바세팅
 	        	$('.summernote').summernote({
 	      		  toolbar: [
 	      			    // [groupName, [list of button]]
@@ -284,9 +243,9 @@
 	        }
 	        
 	        
-	        // *모달창:도서검색 ajax/json
+	        // 모달창:도서검색 ajax/json
+	        
 	        function searchBk(){
-	        	// 검색ajax
 	        	if($("#condition").val() != ""){
 	        		
 	        		var condition = $("#condition option:selected").val();
@@ -336,7 +295,6 @@
 	        	}
 	        }
 	        
-	        // 선택한 결과 뿌려주기
 	        function selectBk(){
 	        	var bkno = $("#dataBk").data("bkno");
 	        	var bktitle = $("#dataBk").data("bktitle");

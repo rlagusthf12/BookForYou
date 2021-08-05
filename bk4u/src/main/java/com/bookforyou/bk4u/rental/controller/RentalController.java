@@ -1,11 +1,13 @@
 package com.bookforyou.bk4u.rental.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -50,6 +52,26 @@ public class RentalController {
 		  .setViewName("mypage/mypageRentalDetail");
 		
 		return mv;
+		
+	}
+	
+	/*
+	 * [사용자] 대여 내역 조회 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="rentalInsert.rt", produces="text/html; charset=utf-8")
+	public String insertRental(int memNo, int bkNo, int storeNo) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memNo", memNo);
+		map.put("bkNo", bkNo);
+		map.put("storeNo", storeNo);
+
+		int result = rentalService.insertRental(map);
+		
+		System.out.println(result);
+		
+		return result> 0 ? "success" : "fail";
 		
 	}
 

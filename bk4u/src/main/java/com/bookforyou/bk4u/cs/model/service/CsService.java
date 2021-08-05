@@ -60,6 +60,11 @@ public interface CsService {
 	 */
 	ArrayList<Refund> selectAdminSearchRefundList(PageInfo pi, HashMap<String, String> map);
 
+	/**
+	 * [관리자] 주문취소 상세 조회 (한진)
+	 */
+	Cancel selectAdminCancelDetail(int cancelNo);
+
 	
 	
 }
