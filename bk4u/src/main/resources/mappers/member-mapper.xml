@@ -425,12 +425,14 @@
  		where mem_no = #{memNo}
  	</update>
  	
+ 	<!-- [사용자] 멤버 이메일 업데이트(안세아) -->
  	<update id="updateMemberEmail">
  		update members
  		set mem_email = #{memEmail}
  		where mem_no = #{memNo}
  	</update>
  	
+ 	<!-- [사용자] 멤버의 부가정보 업데이트(안세아) -->
  	<update id="updateMemberDetail">
  		update members
  		set mem_post = #{memPost},
@@ -441,6 +443,12 @@
  			mem_phone = #{memPhone},
  			mem_gender = #{memGender},
  			mem_age = #{memAge}
+ 		where mem_no = #{memNo}
+ 	</update>
+ 	
+ 	<update id="updateMemberStatusDisable">
+ 		update members
+ 		set mem_status = 'N'
  		where mem_no = #{memNo}
  	</update>
 

@@ -9,9 +9,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+     <!-- alertify 관련 라이브러리 -->
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+	<!-- 사이드바 적용 테마 -->
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
         .wrap {
@@ -167,6 +176,42 @@
                     </ul>      
                 </nav>
             </div>
+             <script>
+             
+            	function disableMember(){
+            		// 비밀번호 입력했는지 확인
+            		var matchLastPwdResult;
+            		if($("#pwd-box input[id=memPwd]").val().length == 0){
+            			alertify.alert("패스워드를 입력해주세요");
+            			return false;
+            		}
+            		
+            		
+            		$.ajax({
+                        url: "match-last-pwd.mp",
+                        data: {memNum : $("#memNo").val(), inputLastPwd : $("#pwd-box input[id=memPwd]").val()},
+                        async: false,
+                       	success: function(result){
+                            	
+                        	matchLastPwdResult = result;
+                            						
+                        },error:function(){
+                            console.log("match ajax통신 실패");
+                        }
+                    });
+            		
+            		// 일치하면, 해당 멤버를 비활성화한다. 
+            		if(matchLastPwdResult == "success"){
+            			$("#deleteMember").submit();
+            		}else{
+            			alertify.alert("비밀번호가 일치하지 않습니다");
+            			return false;
+            		}
+            		
+            		
+            		
+            	}
+            </script>
             <!-- partial -->
             <div id="main_content">
                 <div id="head-of-main-content">
@@ -185,22 +230,27 @@
                             각종 회원 혜택을 받으실 수 없습니다.
                             <br>
                             <br>
-                            그래도 정말로 탈퇴하시겠습니까?
+                            그래도 탈퇴하시겠습니까?
                             </b>
                         </p>
                         <br>
+                        <form action="disable-member.mp" method="post" name="deleteMember" id="deleteMember">
                         <div id="pwd-box" class="input-group input-group-sm mb-3">
-                        	<input type="password" id="inputPassword5" placeholder="비밀번호 입력" class="form-control input-middle" aria-describedby="passwordHelpBlock">
+                        	<input type="hidden" id="memNo" name="memNo" value="${loginUser.memNo }"/>
+                        	<input type="password" id="memPwd" name="memPwd" placeholder="비밀번호 입력" class="form-control input-middle" aria-describedby="passwordHelpBlock">
                         </div>
                         <br>
                         <br>
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="">탈퇴하기</button>
+                            <button class="btn btn-danger" type="button" onclick="disableMember();">탈퇴하기</button>
                             <button class="btn btn-secondary" type="button">취소</button>
                         </div>
+                        </form> 
                     </div>
                 </div>
             </div>  
+            
+           
 
         </div>
     </div>

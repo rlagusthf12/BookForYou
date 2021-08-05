@@ -27,5 +27,7 @@ public interface MypageService {
 
 	int updateMemberDetail(Member member);
 
+	int updateMemberStatusDisable(Member member);
+
 
 }

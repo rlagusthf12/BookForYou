@@ -409,6 +409,21 @@ public class MypageController {
 		}
 	}
 	
+	@RequestMapping("disable-member.mp")
+	public String disableMember(Member member, HttpSession session, Model model) {
+		int result = mypageService.updateMemberStatusDisable(member);
+		if(result > 0) {
+			session.removeAttribute("loginUser");
+			session.setAttribute("byeMsg", "탈퇴가 처리되었습니다. 그동안 이용해주셔서 감사합니다.");
+			return "redirect:/";
+		}else {
+			model.addAttribute("errorMsg","유효하지 않은 접근입니다.");
+			return "common/errorPage";
+		}
+	}
+	
+	
+	
 	
 	
 	

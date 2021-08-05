@@ -49,6 +49,11 @@ public class MypageDao {
 		return sqlSession.update("memberMapper.updateMemberDetail",member);
 	}
 
+	public int updateMemberStatusDisable(SqlSessionTemplate sqlSession, Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateMemberStatusDisable",member);
+	}
+
 
 
 

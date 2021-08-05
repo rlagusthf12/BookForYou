@@ -13,10 +13,18 @@
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
  <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
- 
+ <!-- alertify -->
+ <!-- JavaScript -->
+ <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+ <!-- CSS -->
+ <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+ <!-- Default theme -->
+ <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+ <!-- Semantic UI theme -->
+ <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+ <!-- bootstrap -->
  <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
  <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
- <link rel="stylesheet" href="./side-style.css">
 <style>
         
         .wrap{width:1200px; height:1200px; margin:auto;}
@@ -201,6 +209,12 @@ hr::after{
     <jsp:include page="common/menubar.jsp"/>
 	
     <body>
+    	<c:if test="${ !empty byeMsg }">
+		<script>
+			alertify.alert("${byeMsg}");
+		</script>
+		<c:remove var="byeMsg" scope="session"/>
+		</c:if>
         
         <div class="wrap">
             <br><br><br><br><br>

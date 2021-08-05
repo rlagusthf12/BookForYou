@@ -64,8 +64,12 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public int updateMemberDetail(Member member) {
-		// TODO Auto-generated method stub
 		return mypageDao.updateMemberDetail(sqlSession,member);
+	}
+
+	@Override
+	public int updateMemberStatusDisable(Member member) {
+		return mypageDao.updateMemberStatusDisable(sqlSession,member);
 	}
 
 
