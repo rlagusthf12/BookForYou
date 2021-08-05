@@ -18,9 +18,9 @@ public class Rental {
 	public int memNo;
 	public int bkNo;
 	public int storeNo;
-	public String requestDate;
-	public String receiveDate;
-	public String returnDate;
+	public Date requestDate;
+	public Date receiveDate;
+	public Date returnDate;
 	public String rentalStatus;
 	public String bkTitle;
 	public String bkPublish;
