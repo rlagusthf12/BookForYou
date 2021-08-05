@@ -253,15 +253,17 @@ public class MypageController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="update-pwd.mp")
-	public String updatePassword(String memNum, String memPwd) {
-		member = new Member();
+	public String updatePassword(String memNum, String memPwd,HttpSession session) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
 		int memNo = Integer.parseInt(memNum);
 		String encPwd = bcryptPasswordEncoder.encode(memPwd);
-		member.setMemNo(memNo);
-		member.setMemPwd(encPwd);
-		int result = mypageService.updateMemPassword(member);
+		loginUser.setMemNo(memNo);
+		loginUser.setMemPwd(encPwd);
+		int result = mypageService.updateMemPassword(loginUser);
 		
 		if(result > 0) {
+			loginUser = memberService.loginMember(loginUser);
+			session.setAttribute("loginUser", loginUser);
 			return "success";
 		}else {
 			return "fail";
@@ -295,13 +297,16 @@ public class MypageController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="nick-change.mp")
-	public String updateMemNickname(String memNum, String inputNick) {
+	public String updateMemNickname(String memNum, String inputNick,HttpSession session) {
 		member = new Member();
 		int memNo =  Integer.parseInt(memNum);
 		member.setMemNo(memNo);
 		member.setMemNickname(inputNick);
 		int result = mypageService.updateMemberNickname(member);
 		if(result > 0) {
+			Member loginUser = (Member) session.getAttribute("loginUser");
+			member = memberService.loginMember(loginUser);
+			session.setAttribute("loginUser", member);
 			return "success";
 		}else {
 			return "fail";

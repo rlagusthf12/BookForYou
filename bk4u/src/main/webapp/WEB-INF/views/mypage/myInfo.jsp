@@ -411,7 +411,7 @@
                         <tr id="nick-box1" style="display: block;">
                             <th class="th-content">닉네임</th>
                             <td class="td-content">
-                                ${loginUser.memName }
+                                ${loginUser.memNickname }
                             </td>
                             <td class="bottom-td">
                                 <div class="profile-button-group-box">
