@@ -12,19 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+
 
 @Controller
 public class GroupController {
@@ -33,11 +36,12 @@ public class GroupController {
 	private GroupService gService;
 	
 	@RequestMapping(value="group.bo",  method=RequestMethod.GET)
-	public String groupListView(Model model) {
+	public String groupListView(Model model) throws Exception {
 		
 		ArrayList<GroupBoard> groupList = gService.selectList();
 		
 		model.addAttribute("groupList", groupList);
+		model.addAttribute("center", "../group/groupList.jsp");
 		
 		return "group/groupList";
 
@@ -46,18 +50,35 @@ public class GroupController {
 	
 	@ResponseBody
 	@RequestMapping(value="group.bo", method=RequestMethod.POST)
-	public String groupListMore(String more , Model model) throws Exception{
+	public String groupListMore(String more, Model model) throws Exception{
 		
 		
 		int page = Integer.parseInt(more);
 		
-		List<GroupBoard> selectListMore = gService.selectList();
+		List<GroupBoard> selectListMore = gService.selectListMore(page);
 		
-		JsonObject sendJson = new JsonObject();
+		JSONObject sendJson = new JSONObject();
 		
-		JsonArray jarr = new JsonArray();
+		JSONArray jarr = new JSONArray();
+		
+		
+		for (GroupBoard groupBoard :selectListMore) {
+			JSONObject jboard = new JSONObject();
+			
+			jboard.put("groupBoardNo", groupBoard.getGroupBoardNo());
+			jboard.put("groupType", groupBoard.getGroupType());
+			jboard.put("groupDate", groupBoard.getGroupDate());	
+			jboard.put("groupTitle", groupBoard.getGroupTitle());
+			jboard.put("groupScript", groupBoard.getGroupScript());
+			jboard.put("groupPlace", groupBoard.getGroupPlace());
+			jboard.put("groupImg", groupBoard.getGroupImg());
 
-		return sendJson.toString();
+			jarr.add(jboard);
+
+		}
+		
+		sendJson.put("list", jarr);
+		return sendJson.toJSONString();
 		
 	}
 	
@@ -69,11 +90,6 @@ public class GroupController {
 	@RequestMapping("insertGroup.bo")
 	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session) {
 		
-
-			   if(!upfile.getOriginalFilename().equals("")) {
-				 String groupImg = saveFile(session, upfile);
-				 g.setGroupImg("/resources/groupFiles/");
-				}
 				
 				int result = gService.insertGBoard(g);
 				
@@ -143,7 +159,7 @@ public class GroupController {
 				cityList.add("노원구");
 			}
 			
-			JsonArray jsonArray = new JsonArray();
+			JSONArray jsonArray = new JSONArray();
 			for( int i = 0;  i < cityList.size(); i++) {
 				jsonArray.add(cityList.get(i));
 			}
@@ -159,6 +175,16 @@ public class GroupController {
 	}
 	
 	
+	}
+	
+	@RequestMapping("detail.gbo")
+	public ModelAndView selectGBoard(int gno, ModelAndView mv) {
+		
+		GroupBoard g = gService.selectGBoard(gno);
+		mv.addObject("g", g).setViewName("group/groupDetailView");
+		
+		return mv;
+		
 	}
 	
 }

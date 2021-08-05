@@ -156,8 +156,8 @@
                                     <td><label for="">*회원정보</label></td>
                                     <td colspan="2">
                                         <select name="groupOpen" requried>
-                                            <option value="close">회원공개</option>
-                                            <option selected value="open">전체공개</option>
+                                            <option value="N">회원공개</option>
+                                            <option selected value="Y">전체공개</option>
                                         </select>
                                     </td>
                                 </tr>

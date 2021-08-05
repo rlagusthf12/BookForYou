@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.service.GroupServiceImpl;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
@@ -43,9 +45,12 @@ public class GBoardSearchController extends HttpServlet {
 		
 		GroupService gService = new GroupServiceImpl();
 		int searchCount = gService.selectSearchGListCount(map);
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
-		ArrayList<GroupBoard> list = gService.selectSearchListOne(map);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 1 , 4);
+		ArrayList<GroupBoard> list = gService.selectSearchList(map, pi);
 		
+		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
 		request.setAttribute("condition", condition);
