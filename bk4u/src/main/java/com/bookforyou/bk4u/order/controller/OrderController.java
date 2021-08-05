@@ -212,14 +212,14 @@ public class OrderController {
 	@RequestMapping("adminOrderDetail.or")
 	public ModelAndView selectAdminOrderDetail(@RequestParam("orderNo") int oNo, ModelAndView mv, int orderNo) {
 		
-		ArrayList<Order> order = oService.selectAdminOrderDetail(orderNo);
+		Order o = oService.selectAdminOrderDetail(orderNo);
 		ArrayList<OrderDetail> oBook = oService.selectAdminOrderedBook(orderNo);
 		Member m = oService.selectAdminOrderedMem(orderNo);
 		Payment p = oService.selectAdminOrderedPayment(orderNo);
 		CouponDetail c = oService.selectAdminOrderedUsedCoupon(orderNo);
 		System.out.println(c);
 		
-		mv.addObject("od", order)
+		mv.addObject("od", o)
 		  .addObject("oBook", oBook)
 		  .addObject("oMem", m)
 		  .addObject("oPay", p)

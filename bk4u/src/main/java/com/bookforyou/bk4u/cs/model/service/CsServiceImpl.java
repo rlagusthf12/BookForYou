@@ -101,6 +101,14 @@ public class CsServiceImpl implements CsService{
 	public ArrayList<Refund> selectAdminSearchRefundList(PageInfo pi, HashMap<String, String> map) {
 		return cDao.selectAdminSearchRefundList(sqlSession, pi, map);
 	}
+
+	/**
+	 * [관리자] 주문취소 상세 조회 (한진)
+	 */
+	@Override
+	public Cancel selectAdminCancelDetail(int cancelNo) {
+		return cDao.selectAdminCancelDetail(sqlSession, cancelNo);
+	}
 	
 	
 

@@ -80,7 +80,7 @@ public interface OrderService {
 	/**
 	 * [관리자] 주문 상세 조회 - 주문 내역 조회 (한진)
 	 */
-	ArrayList<Order> selectAdminOrderDetail(int orderNo);
+	Order selectAdminOrderDetail(int orderNo);
 
 	/**
 	 * [관리자] 주문 상세 조회 - 주문된 도서 조회 (한진)

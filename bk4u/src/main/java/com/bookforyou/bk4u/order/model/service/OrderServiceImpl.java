@@ -132,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 	 * [관리자] 주문 상세 조회 - 주문 내역 조회 (한진)
 	 */
 	@Override
-	public ArrayList<Order> selectAdminOrderDetail(int orderNo) {
+	public Order selectAdminOrderDetail(int orderNo) {
 		return oDao.selectAdminOrderDetail(sqlSession, orderNo);
 	}
 

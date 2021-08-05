@@ -97,6 +97,13 @@ public class CsDao {
 		return (ArrayList)sqlSession.selectList("csMapper.selectAdminSearchRefundList", map, rowBounds);
 	}
 
+	/**
+	 * [관리자] 주문취소 상세 조회 (한진)
+	 */
+	public Cancel selectAdminCancelDetail(SqlSessionTemplate sqlSession, int cancelNo) {
+		return sqlSession.selectOne("csMapper.selectAdminCancelDetail", cancelNo);
+	}
+
 	
 
 }

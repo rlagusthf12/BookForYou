@@ -143,6 +143,11 @@
 	    $("#total2").text($total);
 	    var $gp = $total * 0.01;
 	    $("#givPoint").text($gp);
+	    
+	    /* 닫기 버튼 */
+		$("#back").click(function(){
+			history.back();
+		})
 	})
 </script>
 </head>
@@ -176,16 +181,16 @@
                     </tr>
                 </thead>
                 <tbody>
-					<c:forEach var="o" items="${ od }">
+					
 	                    <tr>
-	                        <td id="odNo">${ o.orderNo }</td>
-	                        <td>${ o.orderDate }</td>
-	                        <td>${ o.payStatus }</td>
-	                        <td>${ o.orderStatus }</td>
-	                        <td>${ o.csStatus }</td>
-	                        <td>${ o.deliveryStatus }</td>
+	                        <td id="odNo">${ od.orderNo }</td>
+	                        <td>${ od.orderDate }</td>
+	                        <td>${ od.payStatus }</td>
+	                        <td>${ od.orderStatus }</td>
+	                        <td>${ od.csStatus }</td>
+	                        <td>${ od.deliveryStatus }</td>
 	                    </tr>
-                    </c:forEach>
+                   
                 </tbody>
             </table>
             <br>
@@ -263,24 +268,24 @@
                     </div>
                     <div>
                         <table class="table table-bordered table-sm vertical">
-                        	<c:forEach var="o" items="${ od }">
+                        	
 	                            <tr>
 	                                <th>수령자 이름</th>
-	                                <td>${ o.orderReceiver }</td>
+	                                <td>${ od.orderReceiver }</td>
 	                            </tr>
 	                            <tr>
 	                                <th>수령자 연락처</th>
-	                                <td>${ o.orderPhone }</td>
+	                                <td>${ od.orderPhone }</td>
 	                            </tr>
 	                            <tr>
 	                                <th>주소</th>
-	                                <td>[${ o.orderPost }] ${ o.orderAddress } ${ o.addressRef } ${ o.addressDetail }</td>
+	                                <td>[${ od.orderPost }] ${ od.orderAddress } ${ od.addressRef } ${ od.addressDetail }</td>
 	                            </tr>
 	                            <tr>
 	                                <th>배송메세지</th>
-	                                <td>${ o.deliveryMsg }</td>
+	                                <td>${ od.deliveryMsg }</td>
 	                            </tr>
-                            </c:forEach>
+                            
                         </table>
                     </div>
                     <div class="alterInfo-btn">
@@ -317,14 +322,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="o" items="${ od }">
+                            	
 	                                <tr>
-	                                    <td>${ o.shippingNumber }</td>
-	                                    <td>${ o.deliveryCompany }</td>
-	                                    <td>${ o.deliveryStatus }</td>
-	                                    <td>${ o.addPrice }</td>
+	                                    <td>${ od.shippingNumber }</td>
+	                                    <td>${ od.deliveryCompany }</td>
+	                                    <td>${ od.deliveryStatus }</td>
+	                                    <td>${ od.addPrice }</td>
 	                                </tr>
-                                </c:forEach>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -337,20 +342,15 @@
                 </div>
                 <div>
                     <table class="table table-bordered table-sm vertical">
-                    	
                         <tr>
                             <th>주문 금액</th>
-                            <c:forEach var="o" items="${ od }">
-	                            <td id="price">${ o.orderPrice }</td>
-                            </c:forEach>
+	                            <td id="price">${ od.orderPrice }</td>
                             <th>결제 금액</th>
                             <td id="total2"></td>
                         </tr>
                         <tr>
                             <th>추가금</th>
-                            <c:forEach var="o" items="${ od }">
-                            	<td id="add">${ o.addPrice }</td>
-                            </c:forEach>
+                            	<td id="add">${ od.addPrice }</td>
                             <th>적립 포인트</th>
                             <td id="givPoint"></td>
                         </tr>
@@ -390,17 +390,17 @@
 		                <button type="button">입금전 처리</button>            			
             		</c:when>
             	</c:choose>
-                <c:forEach var="o" items="${ od }">
+                
 		            <c:choose>
-	                	<c:when test="${ o.orderStatus eq '배송완료' }">
+	                	<c:when test="${ od.orderStatus eq '배송완료' }">
 			                <button type="button">반품</button>	                	
 	                	</c:when>
-	            		<c:when test="${ o.orderStatus eq '주문확인' }">
+	            		<c:when test="${ od.orderStatus eq '주문확인' }">
 			                <button type="button">주문 취소</button>            		
 	            		</c:when>
                 	</c:choose>
-                </c:forEach>
-                <button type="button">닫기</button>     
+                
+                <button type="button" id="back">닫기</button>     
             </div>
             <br><br><br>
         </div>   
