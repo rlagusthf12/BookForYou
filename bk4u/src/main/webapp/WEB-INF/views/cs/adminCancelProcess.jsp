@@ -98,7 +98,7 @@
 		
 		/* 주문 취소 */
 		document.getElementById("cancel-btn").onclick(function(){
-			location.href=`adminCancel.cs?cancelNo=${ c.cancelNo }&orderNo=${ o.orderNo }`;
+			location.href=`adminCancel.cs?cancelNo=${ c.cancelNo }&orderNo=${ o.orderNo }$no=1`;
 		})
 		
 		/* 닫기 버튼 */

@@ -114,8 +114,8 @@ public class CsServiceImpl implements CsService{
 	 * [관리자] 주문 취소 - orders테이블 상태 변경 (한빈)
 	 */
 	@Override
-	public int updateAdminCsOrderStatus(int orderNo) {
-		return cDao.updateAdminCsOrderStatus(sqlSession, orderNo);
+	public int updateAdminCsOrderStatus(HashMap<String, Integer> map) {
+		return cDao.updateAdminCsOrderStatus(sqlSession, map);
 	}
 
 	/**
@@ -124,6 +124,19 @@ public class CsServiceImpl implements CsService{
 	@Override
 	public int updateAdminCancelStatus(int cancelNo) {
 		return cDao.updateAdminCancelStatus(sqlSession, cancelNo);
+	}
+
+	/**
+	 * [관리자] 반품 상세 조회 (한진)
+	 */
+	@Override
+	public Return selectAdminReturnDetail(int returnNo) {
+		return cDao.selectAdminReturnDetail(sqlSession, returnNo);
+	}
+
+	@Override
+	public int updateAdminReturnStatus(HashMap<String, Integer> map2) {
+		return cDao.updateAdminReturnStatus(sqlSession, map2);
 	}
 	
 	

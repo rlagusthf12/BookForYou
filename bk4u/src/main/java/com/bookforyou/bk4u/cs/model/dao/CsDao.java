@@ -107,8 +107,8 @@ public class CsDao {
 	/**
 	 * [관리자] 주문취소 - orders테이블 상태 변경 (한진)
 	 */
-	public int updateAdminCsOrderStatus(SqlSessionTemplate sqlSession, int orderNo) {
-		return sqlSession.update("csMapper.updateAdminCsOrderStatus", orderNo);
+	public int updateAdminCsOrderStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.update("csMapper.updateAdminCsOrderStatus", map);
 	}
 
 	/**
@@ -116,6 +116,20 @@ public class CsDao {
 	 */
 	public int updateAdminCancelStatus(SqlSessionTemplate sqlSession, int cancelNo) {
 		return sqlSession.update("csMapper.updateAdminCancelStatus", cancelNo);
+	}
+
+	/**
+	 * [관리자] 반품 상세 조회 (한진)
+	 */
+	public Return selectAdminReturnDetail(SqlSessionTemplate sqlSession, int returnNo) {
+		return sqlSession.selectOne("csMapper.selectAdminReturnDetail", returnNo);
+	}
+
+	/**
+	 * [관리자] 반품 상태 변경 (한진)
+	 */
+	public int updateAdminReturnStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map2) {
+		return sqlSession.update("csMapper.updateAdminReturnStatus", map2);
 	}
 
 	

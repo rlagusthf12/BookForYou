@@ -68,12 +68,22 @@ public interface CsService {
 	/**
 	 * [관리자] 주문취소  - orders테이블 상태 변경 (한진)
 	 */
-	int updateAdminCsOrderStatus(int orderNo);
+	int updateAdminCsOrderStatus(HashMap<String, Integer> map);
 
 	/**
 	 * [관리자] 주문취소 - cancel테이블 상태 변경 (한진)
 	 */
 	int updateAdminCancelStatus(int cancelNo);
+
+	/**
+	 * [관리자] 반품 상세 조회 (한진)
+	 */
+	Return selectAdminReturnDetail(int returnNo);
+
+	/**
+	 * [관리자] 반품 처리 (한진)
+	 */
+	int updateAdminReturnStatus(HashMap<String, Integer> map2);
 
 	
 	

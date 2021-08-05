@@ -502,8 +502,21 @@
 	<update id="updateAdminCsOrderStatus">
 		update
 		       orders
-		   set order_status = '주문취소',
-		       cs_status = '주문취소'
+		   set 
+		   <choose>
+		   		<when test="no == 1">
+		   			order_status = '주문취소',
+		       		cs_status = '주문취소'
+		   		</when>
+		   		<when test="rtStatus == 1">
+		   			order_status = '반품',
+		   			cs_status = '반품처리중'
+		   		</when>
+		   		<when test="rtStatus == 2">
+		   			order_status = '반품',
+		   			cs_status = '반품완료'
+		   		</when>
+		   </choose>
 		 where order_no = #{orderNo}
 	</update>
 	
@@ -513,6 +526,34 @@
 		       cancel
 		   set status = '취소완료'
 		 where cancel_no = #{cancelNo}
+	</update>
+	
+	<!-- [관리자] 반품 상세 조회 (한진) -->
+	<select id="selectAdminReturnDetail" resultMap="returnResult">
+		select
+		       return_no,
+		       order_no,
+		       return_reason,
+		       return_date,
+		       status,
+		       admin_memo
+		  from return
+		 where return_no = #{returnNo}
+	</select>
+	
+	<!-- [관리자] 반품 상태 변경(한진) -->
+	<update id="updateAdminReturnStatus">
+		update
+		       return
+		   set
+		   <choose>
+		   		<when test="rtStatus == 1">
+		   			status = '반품처리중'
+		   		</when>
+		   		<when test="rtStatus == 2">
+		   			status = '반품완료'
+		   		</when>
+		   </choose>
 	</update>
 	
 </mapper>
