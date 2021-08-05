@@ -236,7 +236,7 @@
 		                    document.getElementById("memAddressRefer").value = extraAddr;
 		                
 		                } else {
-		                    document.getElementById("sample6_extraAddress").value = '';
+		                    document.getElementById("memAddressRefer").value = '';
 		                }
 		
 		                // 우편번호와 주소 정보를 해당 필드에 넣는다.

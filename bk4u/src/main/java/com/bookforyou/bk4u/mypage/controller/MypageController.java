@@ -345,6 +345,7 @@ public class MypageController {
 	
 	/**
 	 * 마이페이지 이메일 수정하는 메서드
+	 * @author 안세아
 	 * @param email
 	 * @param session
 	 * @return
