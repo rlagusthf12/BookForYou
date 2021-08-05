@@ -1,4 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="subscriptionMapper">
+
+	<resultMap type="Subscription" id="SubscResult">
+		<result column="subsc_no" property="subscNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="pay_no" property="payNo"/>
+		<result column="coupon_issue_no" property="couponIssueNo"/>
+		<result column="subsc_name" property="subscName"/>
+		<result column="subsc_period" property="subscPeriod"/>
+		<result column="subsc_price" property="subscPrice"/>
+		<result column="subsc_sdate" property="subscSdate"/>
+		<result column="subsc_enddate" property="subscEndDate"/>
+		<result column="subsc_deldate" property="subscDelDate"/>
+		<result column="subsc_status" property="subscStatus"/>
+		<result column="subsc_receiver" property="subscReceiver"/>
+		<result column="subsc_post" property="subscPost"/>
+		<result column="subsc_address" property="subscAddress"/>
+		<result column="address_detail" property="addressDetail"/>
+		<result column="address_ref" property="address_ref"/>
+		<result column="subsc_phone" property="subsc_phone"/>
+		<result column="deliveryrequest" property="deliveryRequest"/>
+		<result column="mem_name" property="memName"/>
+		<result column="status" property="payStatus"/>
+	</resultMap>
+
+	<!-- [관리자] 정기구독 목록 개수 조회 (한진) -->
+	<select id="selectAllListCount" resultType="_int">
+		select 
+		       count(*)
+		  from subscription
+	</select>
+
+	<!-- [관리자] 정기구독 목록 조회 (한진) -->
+	<select id="selectAdminSubscList" resultMap="SubscResult">
+		select
+		       subsc_no,
+		       mem_name,
+		       p.status,
+		       subsc_sdate,
+		       subsc_enddate,
+		       subsc_name,
+		       subsc_period,
+		       subsc_price,
+		       subsc_deldate,
+		       subsc_status,
+		       subsc_receiver,
+		       deliveryrequest
+		  from subscription
+		  join members using (mem_no)
+		  join payment p using (pay_no)
+	</select>
+	
 </mapper>
