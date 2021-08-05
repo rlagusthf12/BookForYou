@@ -203,7 +203,7 @@
             <ul>
                 <li><a href="">정기구독</a></li>
                 <li><a href="">도서구매</a></li>
-                <li><a href="">커뮤니티</a></li>
+                <li><a href="list.bl">커뮤니티</a></li>
                 <li><a href="">이벤트</a></li>
                 <li><a href="">고객센터</a></li>
             </ul>
