@@ -98,7 +98,7 @@
                             <td>                              
                                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                                 
-                                ${ memNo }${ groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
+                                ${ groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
                                 
                                 <!-- 강퇴시키는 이유 쓰는 방법 -->
                                 <!-- 작성자가 가입자일 경우 가입되어 있는 사람들 프로필 사진 갖다대면 이름 나오게-->

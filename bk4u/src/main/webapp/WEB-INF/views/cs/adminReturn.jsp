@@ -196,6 +196,7 @@
             background-color: #EC573B;
         }
         .handling>a{color: white;}
+        .showDetail:hover, .returnPcs:hover{cursor:pointer;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -340,13 +341,27 @@
 	    })
 	
 	    /* 주문 상세 보기 */
-	        $(".detailC").click(function(){
-	        	
-	        	var td = $(this);
-	        	var orderNo = td.text();
-	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
-	        	
-	        })
+	    $(".detailC").click(function(){
+	    	var td = $(this);
+	        var orderNo = td.text();
+	        location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	    })
+	    
+	    /* 반품 상세 보기 */
+	    $(".showDetail").click(function(){
+	    	var tr = $(this).parent().parent().parent();
+	 		var orderNo = tr.children().eq(3).text();
+	 		var returnNo = tr.children().eq(1).text();
+		    $(".showDetail").attr("href", 'adminReturnDetail.cs?returnNo=' + returnNo + '&orderNo=' + orderNo + "&no=1");
+	    })
+	    
+	    /* 반품 처리 */
+	    $(".returnPcs").click(function(){
+	 		var tr = $(this).parent().parent().parent();
+	 		var orderNo = tr.children().eq(3).text();
+	 		var returnNo = tr.children().eq(1).text();
+	 		$(".cancelPcs").attr("href", 'adminReturnDetail.cs?returnNo=' + returnNo + '&orderNo=' + orderNo + "&no=2");
+	 	})
 	
 	})
 </script>
@@ -477,9 +492,9 @@
 		                    	<c:forEach var="rt" items="${ rtList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td class="detailC">${ rt.returnNo }</td>
+			                            <td class="detailRt">${ rt.returnNo }</td>
 			                            <td>${ rt.returnDate }</td>
-			                            <td>${ rt.orderNo }</td>
+			                            <td class="detailC">${ rt.orderNo }</td>
 			                            <td>${ rt.memName } <br> (${ rt.memId })</td>
 			                            <td>${ rt.bkTitle }</td>
 			                            <td>${ rt.payWay }</td>
@@ -488,12 +503,12 @@
 			                            	<c:choose>
 			                            		<c:when test="${ rt.status eq '반품신청' }">
 			                            			<div class="handling">
-					                                    <a href="">처리</a>
+					                                    <a class="returnPcs">처리</a>
 					                                </div>
 			                            		</c:when>
 			                            		<c:otherwise>
 			                            			<div class="handling detail">
-					                                    <a href="">상세</a>
+					                                    <a class="showDetail">상세</a>
 					                                </div>
 			                            		</c:otherwise>
 			                            	</c:choose>

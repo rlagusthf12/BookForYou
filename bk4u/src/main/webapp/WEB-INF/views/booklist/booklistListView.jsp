@@ -17,10 +17,11 @@
         div{box-sizing: border-box;}
         .wrap {width: 1200px; margin: auto;}
         input:focus {outline:none;}
-        a{color: #000;}
+        a{color: #000; text-decoration:none;}
         a:hover{color: #000; text-decoration:none;}
         li{list-style-type:none;}
-
+        
+        /**헤더*/
         .head-title{
             display:flex; margin-top:150px;
             width:100%; height:100px; padding: 20px; 
@@ -32,22 +33,22 @@
         .enroll_booklist-wrap{margin-left:auto; margin-top: 13px;}
 
         /**작성하기버튼*/
-        .btn_booklist{display:inline-block; padding:6px 15px; color:rgb(165, 125, 125); background:#fff; border-radius:6px;}
+        .btn_booklist{display:inline-block; padding:6px 15px; color:rgb(165, 125, 125); background:#fff; border-radius:6px; text-decoration:none;}
         .btn_booklist:hover{text-decoration:none; color:#000; background:#ffecd2;}
         
         /**독서록서재*/
         .mylist_area{width:100%; height:100px; margin:60px 0; border:1px solid #dedede; border-radius:6px;}
-        .mylist-item{width:100%; height:100px; color:#000; padding:23px 25px; display:flex; }
-        .mylist-item:hover{text-decoration:none; color:#000;}
-        .mylist_txt{margin-left:20px;}
+        a.mylist-item{width:100%; height:100px; color:#000; padding:23px 25px; display:flex; text-decoration:none;}
+        a.mylist-item:hover{text-decoration:none; color:#000;}
+        .mylist_txt{margin-left:20px; text-decoration:none;}
         .mylist_title{font-size:20px;}
         .mylist_info{font-size:15px;}
 
         /*북포유인기독서록*/
         .top_list_head{font-size:20px; margin:40px 0;}
         .top_list_item{display:flex; width:100;}
-        .list-item, .list-item_{width:50%; height:400px; padding:25px; background:#fff9f1; border-radius:10px; color:#000;} 
-        .list-item:hover, .list-item_:hover{color:#000; text-decoration:none;}
+        a.list-item, a.list-item_{width:50%; height:400px; padding:25px; background:#fff9f1; border-radius:10px; color:#000; text-decoration:none;} 
+        a.list-item:hover, .list-item_:hover{color:#000;}
         /*타이틀*/
         .list_title{font-size:18px; text-align:center; margin-bottom:30px;}
         .title_point{position: relative;}
@@ -72,12 +73,14 @@
         
         /**독서록리스트*/
         .booklist_outer{margin-top:150px;}
-        .booklist-wrap{margin:0; padding:0; }
-        .booklist_item{margin:30px 0; height:180px; padding:10px; border:1px solid #ebebeb;}
+        .booklist-wrap{margin:0; padding:0;}
+        li.booklist_item{margin:30px 0; height:180px; padding:10px; border:1px solid #ebebeb; text-decoration:none;}
+        a.booklist-item{text-decoration:none;}
         .booklist_item a:hover{text-decoration:none;}
         /*독서록내용*/
         .booklist_container{display:flex;}
         .booklist_book_wrap{margin-left: auto; margin-right:30px; width:400px;}
+        a.book_info-area{text-decoration:none;}
         .booklist_title{color: #000;}
         .booklist_content{width:690px; height:70px; margin:5px 0; padding-left:10px; font-size:14px; color:#5c5c5c;}
         .booklist_writer{font-size:14px; color:#5c5c5c;}

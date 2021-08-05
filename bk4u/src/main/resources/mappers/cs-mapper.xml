@@ -498,4 +498,88 @@
 		 where cancel_no = #{cancelNo}
 	</select>
 	
+	<!-- [관리자] 주문취소 - orders테이블 상태 변경 (한진) -->
+	<update id="updateAdminCsOrderStatus">
+		update
+		       orders
+		   set 
+		   <choose>
+		   		<when test="no == 1">
+		   			order_status = '주문취소',
+		       		cs_status = '주문취소'
+		   		</when>
+		   		<when test="rtStatus == 1">
+		   			order_status = '반품',
+		   			cs_status = '반품처리중'
+		   		</when>
+		   		<when test="rtStatus == 2">
+		   			order_status = '반품',
+		   			cs_status = '반품완료'
+		   		</when>
+		   		<when test="no == 3">
+		   			cs_status = '환불완료'
+		   		</when>
+		   </choose>
+		 where order_no = #{orderNo}
+	</update>
+	
+	<!-- [관리자] 주문취소 - cancel테이블 상태 변경 (한진) -->
+	<update id="insertAdminCancelStatus">
+		update
+		       cancel
+		   set status = '취소완료'
+		 where cancel_no = #{cancelNo}
+	</update>
+	
+	<!-- [관리자] 반품 상세 조회 (한진) -->
+	<select id="selectAdminReturnDetail" resultMap="returnResult">
+		select
+		       return_no,
+		       order_no,
+		       return_reason,
+		       return_date,
+		       status,
+		       admin_memo
+		  from return
+		 where return_no = #{returnNo}
+	</select>
+	
+	<!-- [관리자] 반품 상태 변경(한진) -->
+	<update id="updateAdminReturnStatus">
+		update
+		       return
+		   set
+		   <choose>
+		   		<when test="rtStatus == 1">
+		   			status = '반품처리중'
+		   		</when>
+		   		<when test="rtStatus == 2">
+		   			status = '반품완료'
+		   		</when>
+		   </choose>
+	</update>
+	
+	<!-- [관리자] 환불 상세 조회 -->
+	<select id="selectAdminRefundDetail" resultMap="refundResult">
+		select
+		       refund_no,
+		       order_no,
+		       status,
+		       refund_date,
+		       admin_memo,
+		       refund_kind,
+		       kind_no,
+		       refund_price,
+		       refund_point
+		  from refund
+		 where refund_no = #{refundNo}
+	</select>
+	
+	<!-- [관리자] 환불 처리  -->
+	<update id="updateAdminRefund">
+		update
+		       refund
+		   set status = '환불완료'
+		 where refund_no = #{refundNo}  
+	</update>
 </mapper>

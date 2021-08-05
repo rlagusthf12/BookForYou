@@ -199,7 +199,7 @@
             background-color: #EC573B;
         }
         .handling>a{color: white;}
-        .showDetail:hover{cursor:pointer;}
+        .showDetail:hover, .cancelPcs:hover{cursor:pointer;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -359,13 +359,20 @@
 	    })
 	    */
 	    
+	    /* 취소 상세 보기 */
 	 	$(".showDetail").click(function(){
 	 		var tr = $(this).parent().parent().parent();
 	 		var orderNo = tr.children().eq(3).text();
 	 		var cancelNo = tr.children().eq(1).text();
-	 		console.log(orderNo);
-	 		console.log(cancelNo);
-		    $(".showDetail").attr("href", 'adminCancelDatail.cs?cancelNo=' + cancelNo + '&orderNo=' + orderNo);	 		
+		    $(".showDetail").attr("href", 'adminCancelDatail.cs?cancelNo=' + cancelNo + '&orderNo=' + orderNo + "&no=1");	 		
+	 	})
+	 	
+	 	/* 취소 처리 */
+	 	$(".cancelPcs").click(function(){
+	 		var tr = $(this).parent().parent().parent();
+	 		var orderNo = tr.children().eq(3).text();
+	 		var cancelNo = tr.children().eq(1).text();
+	 		$(".cancelPcs").attr("href", 'adminCancelDatail.cs?cancelNo=' + cancelNo + '&orderNo=' + orderNo + "&no=2");
 	 	})
 	})
 </script>
@@ -511,14 +518,12 @@
 			                            	<c:choose>
 			                            		<c:when test="${ c.status eq '취소신청' }">
 			                            			<div class="handling">
-					                                    <a href="">처리</a>
+					                                    <a class="cancelPcs">처리</a>
 					                                </div>
 			                            		</c:when>
 			                            		<c:otherwise>
 			                            			<div class="handling detail">
 					                                    <a class="showDetail">상세</a>
-					                                    <input type="hidden" name="sdCancelNo" value="${ c.cancelNo }">
-					                                    <input type="hidden" name="sdOrderNo" value="${ c.orderNo }">
 					                                </div>
 			                            		</c:otherwise>
 			                            	</c:choose>

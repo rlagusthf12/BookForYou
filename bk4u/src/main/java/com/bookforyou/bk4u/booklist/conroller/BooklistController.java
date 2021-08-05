@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.booklist.conroller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,8 +10,9 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.service.BooklistService;
@@ -42,7 +47,7 @@ public class BooklistController {
 		
 		int listCount = blService.selectListCount(); // 독서록 총 게시글 갯수 조회
 		
-		PageInfo pi = Pagination.getpageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		ArrayList<Booklist> list = blService.selectList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -76,13 +81,16 @@ public class BooklistController {
 		}
 	}
 	
+	/** summernote 사진첨부용
+	 * @author daeunlee
+	 */
 	@ResponseBody
 	@RequestMapping(value="uploadSummernoteImageAjax", produces = "application/json; charset=utf-8")
 	public String uploadSummernoteImage(@RequestParam("file") MultipartFile upfile, HttpSession session){
 		
 		JsonObject jsonObject = new JsonObject();
 		
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles");
+		String savePath = session.getServletContext().getRealPath("/resources/summernoteImage/");
 		// 첨부파일 원본명
 		String originName = upfile.getOriginalFilename(); 
 		// 수정명 20210805104300(년월시분초) + 23445(랜덤값) + .png(원본파일확장자)
@@ -96,15 +104,16 @@ public class BooklistController {
 		try {
 			//받아온 객체를 업로드 처리하지 않으면 임시파일에 저장된 파일이 자동적으로 삭제되기 때문에 MultipartFile객체의 transferTo메서드를 이용해서 업로드처리
 			upfile.transferTo(file);
-			jsonObject.addProperty("url", "resources/summernoteImage"+changeName);
+			jsonObject.addProperty("url", "resources/summernoteImage/"+changeName);
 			jsonObject.addProperty("responseCode", "success");
 		} catch (IllegalStateException | IOException e) {
 			jsonObject.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
-		String list = jsonObject.toString();
-		return list;
+		String imageUrl = jsonObject.toString();
+		return imageUrl;
 	}
+	
 	
 	/*
 	@RequestMapping("searchBk.bl")

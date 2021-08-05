@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,6 +75,32 @@
             background-color: #EC573B;
         }
 </style>
+
+<script>
+	$(function(){
+		
+		/* 결제쪽 계산 */
+		var $price = Number($("#price").text());
+		var $point = Number($("#point").text());
+		var $add = Number($("#add").text());
+		var $total = $price - $point + $add;
+		$("#total").text($total);
+		$("#total2").text($total);
+		var $gp = $total * 0.01;
+		$("#givPoint").text($gp);	
+		
+		/* 닫기 버튼 */
+		$("#back").click(function(){
+			history.back();
+		})
+		
+		
+		/* 반품완료 버튼 */
+		$("#complete-btn").click(function(){
+			location.href="adminReturn.cs?returnNo=" + ${ r.returnNo } + "&orderNo=" + ${ o.orderNo } + "&no=2&rtStatus=2"
+		})
+	})
+</script>
 </head>
 <body>
 
@@ -87,33 +114,30 @@
         <br>
         <div>
             <div class="caption">
-                <p>-- 주문내역 --</p>
+                <p>-- 반품내역 --</p>
             </div>
             <table class="table table-hover table-sm">
                 <thead>
                     <tr>
-                        <th scope="col">주문번호</th>
-                        <th scope="col">주문일(결제일)</th>
-                        <th scope="col">도서명</th>
-                        <th scope="col">결제상태</th>
-                        <th scope="col">주문상태</th>
+                        <th scope="col">반품번호</th>
+                        <th scope="col">반품일</th>
+                        <th scope="col">반품상태</th>
                         <th scope="col">cs상태</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>0001</td>
-                        <td>2021-07-01</td>
-                        <td>완전한행복 외 2권</td>
-                        <td>결제완료</td>
-                        <td>취소</td>
-                        <td>취소완료</td>
+                        <td>${ r.returnNo }</td>
+                        <td>${ r.returnDate }</td>
+                        <td>${ r.status }</td>
+                        <td>${ o.csStatus }</td>
                     </tr>
                 </tbody>
             </table>
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr>
+                    	<th scope="col">회원번호</th>
                         <th scope="col">주문자ID</th>
                         <th scope="col">주문자 이름</th>
                         <th scope="col">전화번호</th>
@@ -122,10 +146,11 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>namu32</td>
-                        <td>김나무</td>
-                        <td>010-2222-3333</td>
-                        <td>namu33@naver.com</td>
+                    	<td>${ m.memNo }</td>
+                        <td>${ m.memId }</td>
+                        <td>${ m.memName }</td>
+                        <td>${ m.memPhone }</td>
+                        <td>${ m.memEmail }</td>
                     </tr>
                 </tbody>
             </table>
@@ -144,17 +169,21 @@
                         <th scope="col">저자</th>
                         <th scope="col">출판사</th>
                         <th scope="col">정가</th>
+                        <th scope="col">수량</th>
                     </tr>
                 </thead>
                 <tbody>
+                	<c:forEach var="b" items="${ od }" varStatus="no">
                     <tr>
-                        <td>1</td>
-                        <td>0001</td>
-                        <td>완전한행복</td>
-                        <td>정유정</td>
-                        <td>은행나무</td>
-                        <td>15,000</td>
+                        <td>${ no.count }</td>
+                        <td>${ b.bkNo }</td>
+                        <td>${ b.bkTitle }</td>
+                        <td>${ b.writerName }</td>
+                        <td>${ b.bkPublish }</td>
+                        <td>${ b.detailPrice }</td>
+                        <td>${ b.quantity }</td>
                     </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -166,33 +195,40 @@
             <table class="table table-bordered table-sm vertical">
                 <tr>
                     <th>주문 금액</th>
-                    <td>53,600</td>
+                    <td id="price">${ o.orderPrice }</td>
                     <th>결제 금액</th>
-                    <td>48,240</td>
+                    <td id="total2"></td>
                 </tr>
                 <tr>
                     <th>추가금</th>
-                    <td>2,500</td>
+                    <td id="add">${ o.addPrice }</td>
                     <th>적립 포인트</th>
-                    <td>480</td>
+                    <td id="givPoint"></td>
                 </tr>
                 <tr>
                     <th>사용 쿠폰</th>
-                    <td width="300px;">[0001 - 금요일 쿠폰 (10%)] 5,000</td>
+                    <c:choose>
+                     	<c:when test="${ not empty cd.couponIssueNum }">
+		                	<td width="300px;">[${ cd.couponIssueNum } - ${ cd.couponName } (${ cd.couponPrice } ${ cd.couponPriceRate })]</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td width="300px;">-</td>
+                        </c:otherwise>
+                    </c:choose>
                     <th>결제 수단</th>
-                    <td>무통장(김나무)</td>
+                    <td>${ p.payWay }</td>
                 </tr>
                 <tr>
                     <th>사용 포인트</th>
-                    <td>0</td>
+                    <td id="point">${ o.usedPoints }</td>
                     <th>결제 상태</th>
-                    <td>미입금</td>
+                    <td>${ p.status }</td>
                 </tr>
                 <tr>
                     <th>합계</th>
-                    <td>48,240</td>
+                    <td id="total"></td>
                     <th>결제일</th>
-                    <td>2021-07-21</td>
+                    <td>${ p.payDate }</td>
                 </tr>
             </table>
         </div>
@@ -209,10 +245,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <td>기타</td>
-                    <td>
-                        <textarea name="" id="" class="textarea" style="resize: none;" readonly></textarea>
-                    </td>
+                	<tr>
+	                    <td>기타</td>
+	                    <td>
+	                        <textarea name="" id="" class="textarea" style="resize: none;" readonly>${ r.returnReason }</textarea>
+	                    </td>
+                	</tr>
                 </tbody>
             </table>
         </div>
@@ -224,23 +262,29 @@
             <table class="table table-hover vertical table-sm">
                 <tr>
                     <th scope="col" style="width:300px;">현금/카드환불액</th>
-                    <td>48,240</td>
+                    <td>${ p.price }</td>
                 </tr>
                 <tr>
                     <th scope="col">사용된 포인트 반환</th>
-                    <td>0</td>
+                    <td>${ o.usedPoints }</td>
                 </tr>
                 <tr>
                     <th scope="col">총환불액</th>
-                    <td>48,240</td>
+                    <td>${ p.price + o.usedPoints }</td>
                 </tr>
             </table>
         </div>
         <br><br>
         <div id="btn-area">
-            <!-- 주문상태가 반품처리중[수거전]일 경우에만 보여짐 -->
-            <button type="button">수거완료</button>
-            <button type="button">닫기</button>
+        	<c:choose>
+        		<c:when test="${ r.status eq '반품처리중' }">
+        			<button type="button" id="complete-btn">반품완료</button>
+        		</c:when>
+        		<c:when test="${ r.status eq '반품완료' }">
+        			
+        		</c:when>
+        	</c:choose>
+            <button type="button" id="back">닫기</button>
         </div>
         <br><br><br>
     </div> 

@@ -234,7 +234,7 @@
 				// 파일 업로드용 callbacks함수 실행
 				function uploadSummernoteImage(file, el){
 					var formData = new FormData();
-					data.append('file', file); 
+					formData.append('file', file); 
 					// callbacks함수에서 받아온 file들을 data에 추가해서 => ajax로 서버에 파일업로드함
 					$.ajax({
 						url: "uploadSummernoteImageAjax",
@@ -254,8 +254,9 @@
 						//default 값이 "application/x-www-form-urlencoded; charset=UTF-8" 인데, 
 						//"multipart/form-data" 로 전송이 되게 false 로 넣어준다.
 						
-						success: function(list){
-							$(editor).summernote('insertImage', list.url);
+						success: function(imageUrl){
+							$('#blContent').summernote("insertImage", imageUrl.url);
+							//$('#blContent').summernote('editor.insertImage',url);
 						}
 					});
 				}

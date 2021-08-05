@@ -131,7 +131,7 @@ public class CsController {
 	 * [관리자] 주문취소 상세 조회 (한진)
 	 */
 	@RequestMapping("adminCancelDatail.cs")
-	public ModelAndView selectAdminCancelDetail(ModelAndView mv, int cancelNo, int orderNo) {
+	public ModelAndView selectAdminCancelDetail(ModelAndView mv, int cancelNo, int orderNo, int no) {
 		
 		
 		Cancel c = cService.selectAdminCancelDetail(cancelNo);
@@ -146,11 +146,144 @@ public class CsController {
 		  .addObject("od", od)
 		  .addObject("p", p)
 		  .addObject("m", m)
-		  .addObject("cd", cd)
-	      .setViewName("cs/adminCancelDetail");
+		  .addObject("cd", cd);
+		
+		if(no == 1) {
+			mv.setViewName("cs/adminCancelDetail");
+		}else if(no == 2) {
+			mv.setViewName("cs/adminCancelProcess");
+		}
 		
 		return mv;
 		
 	}
 	
+	/**
+	 * [관리자] 주문 취소 처리 (한진)
+	*/
+	@RequestMapping("adminCancel.cs")
+	public String updateAdminCancel(ModelAndView mv, int cancelNo, int orderNo, int no) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("orderNo", orderNo);
+		map.put("no", 1);
+		int orderResult = cService.updateAdminCsOrderStatus(map);
+		int cancelResult = cService.updateAdminCancelStatus(cancelNo);
+		
+		if(cancelResult > 0) {
+			mv.addObject("alertMsg", "주문이 취소되었습니다.");
+			return "redirect:/adminCancelDetail.cs?calcelNo=" + cancelNo + "&orderNo=" + orderNo + "&no=1";
+		}else {
+			mv.addObject("errorMsg", "주문 취소 처리 실패");
+			return "redirect:/adminCancelDetail.cs?cancelNo=" + cancelNo + "&orderNo=" + orderNo + "&no=2";
+		}
+	}
+	 
+	/**
+	 * [관리자] 반품 상세 조회 (한진)
+	 */
+	@RequestMapping("adminReturnDetail.cs")
+	public ModelAndView selectAdminReturnDetail(ModelAndView mv, int returnNo, int orderNo, int no) {
+		
+		Return r = cService.selectAdminReturnDetail(returnNo);
+		Order o = odService.selectAdminOrderDetail(orderNo);
+		ArrayList<OrderDetail> od = odService.selectAdminOrderedBook(orderNo);
+		Payment p = odService.selectAdminOrderedPayment(orderNo);
+		Member m = odService.selectAdminOrderedMem(orderNo);
+		CouponDetail cd = odService.selectAdminOrderedUsedCoupon(orderNo);
+		
+		mv.addObject("r", r)
+		  .addObject("o", o)
+		  .addObject("od", od)
+		  .addObject("p", p)
+		  .addObject("m", m)
+		  .addObject("cd", cd);
+		
+		if(no == 1) {
+			mv.setViewName("cs/adminReturnDetail");
+		}else if(no == 2) {
+			mv.setViewName("cs/adminReturnProcess");
+		}
+		
+		return mv;
+	}
+	
+	/**
+	 * [관리자] 반품 처리 (한진)
+	 */
+	@RequestMapping("adminReturn.cs")
+	public String updateAdminReturn(ModelAndView mv, int returnNo, int orderNo, int no, int rtStatus) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("orderNo", orderNo);
+		map.put("no", 2);
+		map.put("rtStatus", rtStatus);
+		
+		HashMap<String, Integer> map2 = new HashMap<>();
+		map2.put("returnNo", returnNo);
+		map2.put("rtStatus", rtStatus);
+		
+		int orderResult = cService.updateAdminCsOrderStatus(map);
+		int returnResult = cService.updateAdminReturnStatus(map2);
+		
+		if(returnResult > 0) {
+			mv.addObject("alertMsg", "'반품처리중'으로 변경되었습니다.");
+			return "redirect:/adminReturnDetail.cs?returnNo=" + returnNo + "&orderNo=" + orderNo + "&no=1";
+		}else {
+			mv.addObject("errorMsg", "'반품처리중'변경 실패");
+			return "redirect:/adminReturnDetail.cs?returnNo=" + returnNo + "&orderNo=" + orderNo + "&no=1";
+		}
+		
+	}
+	
+	/**
+	 * [관리자] 환불 상세 조회 (한진)
+	 */
+	@RequestMapping("adminRefundDetail.cs")
+	public ModelAndView selectAdminRefundDetail(ModelAndView mv, int refundNo, int orderNo, int no) {
+		
+		Refund r = cService.selectAdminRefundDetail(refundNo);
+		Order o = odService.selectAdminOrderDetail(orderNo);
+		ArrayList<OrderDetail> od = odService.selectAdminOrderedBook(orderNo);
+		Payment p = odService.selectAdminOrderedPayment(orderNo);
+		Member m = odService.selectAdminOrderedMem(orderNo);
+		CouponDetail cd = odService.selectAdminOrderedUsedCoupon(orderNo);
+		
+		mv.addObject("r", r)
+		  .addObject("o", o)
+		  .addObject("od", od)
+		  .addObject("p", p)
+		  .addObject("m", m)
+		  .addObject("cd", cd);
+		
+		if(no == 1) {
+			mv.setViewName("cs/adminRefundDetail");
+		}else if(no == 2) {
+			mv.setViewName("cs/adminRefundProcess");
+		}
+		
+		return mv;
+	}
+	
+	/**
+	 * [관리자] 환불 처리 (한진)
+	 */
+	@RequestMapping("adminRefund.cs")
+	public String updateAdminRefund(ModelAndView mv, int refundNo, int orderNo, int no) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("orderNo", orderNo);
+		map.put("no", 3);
+		int orderResult = cService.updateAdminCsOrderStatus(map);
+		int refundResult = cService.updateAdminRefundStatus(refundNo);
+		
+		if(refundResult > 0) {
+			mv.addObject("alertMsg", "환불이 완료되었습니다.");
+			return "redirect:/adminRefundDetail.cs?refundNo=" + refundNo + "&orderNo=" + orderNo + "&no=1";
+		}else {
+			mv.addObject("errorMsg", "환불 처리 실패");
+			return "redirect:/adminRefundDetail.cs?refundNo=" + refundNo + "&orderNo=" + orderNo + "&no=2";
+		}
+		
+	}
 }

@@ -51,7 +51,7 @@
     
          #editbtn {float: right;}
         
-        
+       
 </style>
 </head>
 <body>
@@ -129,12 +129,15 @@
                 <br>
                 <h6><b>독서모임 목록</b></h6>
                     <!-- 현재 가입한 모임이 있다면 -->
+                    
+                    <table id="groupList" class="table table-borderless" align="center">
+                    <tbody>
                     <c:forEach var="g" items="${ groupList }">
-                    <table id="boardList" class="table table-borderless" align="center">
                         <tr>
                             <td rowspan="3" width="230" height="200">${ g.groupImg }</td>
                             <td width="180" height="20" style="font-size: 13px;">${ g.groupType }</td>
                             <td height="20">${ g.groupDate }</td>
+                            <td height="20">${ g.groupPlace }</td>
                         </tr>
                         <tr>
                             <td colspan="3" height="20">${ g.groupTitle }</td>                        
@@ -142,11 +145,26 @@
                         <tr>
                             <td colspan="3" height="160">${ g.groupScript }</td>
                         </tr>
-                        <hr>
+                        
+                   
+                         </c:forEach>
+                <hr>
+                
+                
+                        </tbody>
                     </table> 
-                    </c:forEach>
+                    <script>
+                    	$(function(){
+                    		$("#groupList>tbody>tr").click(function(){
+                    			location.href="detail.gbo?gno=" + $(this).children(".gno").text();
+                    		})
+                    	})
+                    </script>
+                   
+   
                        
             </div>
+            
                               
                <hr>
             
@@ -174,6 +192,8 @@
                                         addListHtml += "<tr>"
                                         addListHtml += "<td>"+data.list[i].group_img+"</td>";
                                         addListHtml += "<td>"+data.list[i].group_type+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_date+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_place+"</td>";
                                         addListHtml += "</tr>"
                                         addListHtml += "<tr>"
                                         addListHtml += "<td>"+data.list[i].group_title+"</td>";
@@ -200,6 +220,8 @@
                         }); 
                      }); 
                     </script>
+                    
+                    
           
                 </div>
 

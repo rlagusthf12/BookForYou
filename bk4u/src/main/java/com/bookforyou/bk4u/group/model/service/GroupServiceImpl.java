@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -25,9 +26,10 @@ public class GroupServiceImpl implements GroupService{
 		return gDao.selectList(sqlSession);
 	}
 	
+	
 	@Override
-	public ArrayList<GroupBoard> selectListMore() {
-		return gDao.selectListMore(sqlSession);
+	public ArrayList<GroupBoard> selectListMore(int page) {
+		return gDao.selectListMore(sqlSession, page);
 	}
 	
 	@Override
@@ -36,9 +38,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public GroupBoard selectGBoard(int GroupBoardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public GroupBoard selectGBoard(int groupBoardNo) {
+		return gDao.selectGBoard(sqlSession, groupBoardNo);
 	}
 
 	@Override
@@ -77,11 +78,12 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public ArrayList<GroupBoard> selectSearchListOne(HashMap<String, String> map) {
+	public ArrayList<GroupBoard> selectSearchList(HashMap<String, String> map, PageInfo pi) {
 		SqlSession sqlSession = getSqlSession();
-		ArrayList<GroupBoard> list = gDao.selectSearchList(sqlSession, map);
+		ArrayList<GroupBoard> list = gDao.selectSearchList(sqlSession, map, pi);
 		sqlSession.close();
 		return list;
+		
 	}
 
 	private SqlSession getSqlSession() {

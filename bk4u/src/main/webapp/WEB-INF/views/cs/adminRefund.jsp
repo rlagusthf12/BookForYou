@@ -349,6 +349,22 @@
 	        location.href='adminOrderDetail.or?orderNo=' + orderNo;
 	        	
 	    })
+	    
+	    /* 환불 상세 보기 */
+	    $(".showDetail").click(function(){
+	    	var tr = $(this).parent().parent().parent();
+	 		var orderNo = tr.children().eq(3).text();
+	 		var refundNo = tr.children().eq(1).text();
+		    $(".showDetail").attr("href", 'adminRefundDetail.cs?refundNo=' + refundNo + '&orderNo=' + orderNo + "&no=1");
+	    })
+	    
+	    /* 환불 처리 */
+	    $(".refundPcs").click(function(){
+	 		var tr = $(this).parent().parent().parent();
+	 		var orderNo = tr.children().eq(3).text();
+	 		var refundNo = tr.children().eq(1).text();
+	 		$(".refundPcs").attr("href", 'adminRefundDetail.cs?refundNo=' + refundNo + '&orderNo=' + orderNo + "&no=2");
+	 	})
 	
 	})
 </script>
@@ -494,12 +510,12 @@
 			                            	<c:choose>
 			                            		<c:when test="${ rf.status eq '환불전' }">
 			                            			<div class="handling">
-					                                    <a href="refundProcess.html">처리</a>
+					                                    <a class="refundPcs">처리</a>
 					                                </div>
 			                            		</c:when>
 			                            		<c:otherwise>
 			                            			<div class="handling detail">
-					                                    <a href="refundDetail.html">상세</a>
+					                                    <a class="showDetail">상세</a>
 					                                </div>
 			                            		</c:otherwise>
 			                            	</c:choose>

@@ -104,6 +104,48 @@ public class CsDao {
 		return sqlSession.selectOne("csMapper.selectAdminCancelDetail", cancelNo);
 	}
 
+	/**
+	 * [관리자] 주문취소 - orders테이블 상태 변경 (한진)
+	 */
+	public int updateAdminCsOrderStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.update("csMapper.updateAdminCsOrderStatus", map);
+	}
+
+	/**
+	 * [관리자] 주문취소 - cancel테이블 상태 변경 (한진)
+	 */
+	public int updateAdminCancelStatus(SqlSessionTemplate sqlSession, int cancelNo) {
+		return sqlSession.update("csMapper.updateAdminCancelStatus", cancelNo);
+	}
+
+	/**
+	 * [관리자] 반품 상세 조회 (한진)
+	 */
+	public Return selectAdminReturnDetail(SqlSessionTemplate sqlSession, int returnNo) {
+		return sqlSession.selectOne("csMapper.selectAdminReturnDetail", returnNo);
+	}
+
+	/**
+	 * [관리자] 반품 상태 변경 (한진)
+	 */
+	public int updateAdminReturnStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map2) {
+		return sqlSession.update("csMapper.updateAdminReturnStatus", map2);
+	}
+
+	/**
+	 * [관리자] 환불 상세 조회 (한진)
+	 */
+	public Refund selectAdminRefundDetail(SqlSessionTemplate sqlSession, int refundNo) {
+		return sqlSession.selectOne("csMapper.selectAdminRefundDetail", refundNo);
+	}
+
+	/**
+	 * [관리자] 환불 처리 (한진)
+	 */
+	public int updateAdminRefundStatus(SqlSessionTemplate sqlSession, int refundNo) {
+		return sqlSession.update("csMapper.updateAdminRefund", refundNo);
+	}
+
 	
 
 }
