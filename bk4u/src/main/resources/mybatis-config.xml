@@ -26,6 +26,7 @@
 		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Cancel" alias="Cancel"/>
 		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Refund" alias="Refund"/>
 		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Return" alias="Return"/>
+		<typeAlias type="com.bookforyou.bk4u.reply.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
 
 	<mappers>
