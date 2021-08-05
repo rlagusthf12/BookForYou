@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,6 +78,35 @@
             background-color: #EC573B;
         }
 </style>
+
+<script>
+	$(function(){
+		
+		/* 결제쪽 계산 */
+		var $price = Number($("#price").text());
+		var $point = Number($("#point").text());
+		var $add = Number($("#add").text());
+		let $total = $price - $point + $add;
+		$("#total").text($total);
+		$("#total2").text($total);
+		var $gp = $total * 0.01;
+		$("#givPoint").text($gp);	
+		
+		document.getElementById("refundPrice").innerText += `(최대 환불 가능 금액: ` + $total + `)`;
+		document.getElementById("refundPoint").innerText += `(최대 반환 가능 금액: ` + $point + `)`;
+		document.getElementById("totalRefund").innerText += $total + $point;
+		
+		/* 주문 취소 */
+		document.getElementById("cancel-btn").onclick(function(){
+			location.href=`adminCancel.cs?cancelNo=${ c.cancelNo }&orderNo=${ o.orderNo }`;
+		})
+		
+		/* 닫기 버튼 */
+		$("#back").click(function(){
+			history.back();
+		})
+	})
+</script>
 </head>
 <body>
 
@@ -97,7 +127,6 @@
                     <tr>
                         <th scope="col">주문번호</th>
                         <th scope="col">주문일(결제일)</th>
-                        <th scope="col">도서명</th>
                         <th scope="col">결제상태</th>
                         <th scope="col">주문상태</th>
                         <th scope="col">cs상태</th>
@@ -105,18 +134,18 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>0001</td>
-                        <td>2021-07-01</td>
-                        <td>완전한행복 외 2권</td>
-                        <td>결제완료</td>
-                        <td>취소</td>
-                        <td>취소신청</td>
+                        <td id="oNo">${ o.orderNo }</td>
+                        <td>${ o.orderDate }</td>
+                        <td>${ o.payStatus }</td>
+                        <td>${ o.orderStatus }</td>
+                        <td>${ o.csStatus }</td>
                     </tr>
                 </tbody>
             </table>
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr>
+                    	<th scope="col">회원번호</th>
                         <th scope="col">주문자ID</th>
                         <th scope="col">주문자 이름</th>
                         <th scope="col">전화번호</th>
@@ -125,10 +154,11 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>namu32</td>
-                        <td>김나무</td>
-                        <td>010-2222-3333</td>
-                        <td>namu33@naver.com</td>
+                    	<td>${ m.memNo }</td>
+                        <td>${ m.memId  }</td>
+                        <td>${ m.memName }</td>
+                        <td>${ m.memPhone }</td>
+                        <td>${ m.memEmail }</td>
                     </tr>
                 </tbody>
             </table>
@@ -146,52 +176,63 @@
                     <th scope="col">저자</th>
                     <th scope="col">출판사</th>
                     <th scope="col">정가</th>
+                    <th scope="col">수량</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0001</td>
-                    <td>완전한행복</td>
-                    <td>정유정</td>
-                    <td>은행나무</td>
-                    <td>15,000</td>
-                </tr>
+                <c:forEach var="b" items="${ od }" varStatus="no">
+	                <tr>
+	                    <td>${ no.count }</td>
+	                    <td>${ b.bkNo }</td>
+	                    <td>${ b.bkTitle }</td>
+	                    <td>${ b.writerName }</td>
+	                    <td>${ b.bkPublish }</td>
+	                    <td>${ b.detailPrice }</td>
+	                    <td>${ b.quantity }</td>
+	                </tr>
+                </c:forEach>
             </table>
         </div>
         <br>
         <div>
-            <div>
+            <div class="caption">
                 <p>-- 결제정보 --</p>
             </div>
             <table class="table table-bordered table-sm vertical">
                 <tr>
                     <th>주문 금액</th>
-                    <td>53,600</td>
+                    <td id="price">${ o.orderPrice }</td>
                     <th>결제 금액</th>
-                    <td>48,240</td>
+                    <td id="total2"></td>
                 </tr>
                 <tr>
                     <th>추가금</th>
-                    <td>2,500</td>
+                    <td id="add">${ o.addPrice }</td>
                     <th>적립 포인트</th>
-                    <td>480</td>
+                    <td id="givPoint"></td>
                 </tr>
                 <tr>
                     <th>사용 쿠폰</th>
-                    <td width="300px;">[0001 - 금요일 쿠폰 (10%)] 5,000</td>
+                    <c:choose>
+                     	<c:when test="${ not empty cd.couponIssueNum }">
+		                	<td width="300px;">[${ cd.couponIssueNum } - ${ cd.couponName } (${ cd.couponPrice } ${ cd.couponPriceRate })]</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td width="300px;">-</td>
+                        </c:otherwise>
+                    </c:choose>
                     <th>결제 수단</th>
-                    <td>무통장(김나무)</td>
+                    <td>${ p.payWay }</td>
                 </tr>
                 <tr>
                     <th>사용 포인트</th>
-                    <td>0</td>
+                    <td id="point">${ o.usedPoints }</td>
                     <th>결제 상태</th>
-                    <td>미입금</td>
+                    <td>${ p.status }</td>
                 </tr>
                 <tr>
                     <th>합계</th>
-                    <td>48,240</td>
+                    <td id="total"></td>
                     <th>결제일</th>
-                    <td>2021-07-21</td>
+                    <td>${ p.payDate }</td>
                 </tr>
             </table>
         </div>
@@ -211,7 +252,7 @@
                     <tr>
                         <td>기타</td>
                         <td>
-                            <textarea name="" id="" class="textarea" style="resize: none;"></textarea>
+                            <textarea name="" id="" class="textarea" style="resize: none;">${ c.cancelReason }</textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -228,29 +269,27 @@
                     <th scope="col" style="width:300px;">현금/카드환불액</th>
                     <td>
                         <input type="text">
-                        <p>(최대 환불 가능 금액: 48,240)</p>
+                        <p id="refundPrice"></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col">사용된 포인트 반환</th>
                     <td>
                         <input type="text">
-                        <p>(최대 반환 가능 금액 : 0)</p>
+                        <p id="refundPoint"></p>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col">총환불액</th>
-                    <td>
-                        48,240
-                    </td>
+                    <td id="totalRefund"></td>
                 </tr>
             </table>
         </div>
         <br><br>
         <div id="btn-area">
             <button type="button">취소 철회</button>
-            <button type="button">취소 완료</button>
-            <button type="button">닫기</button>
+            <button type="button" id="cancel-btn">취소 완료</button>
+            <button type="button" id="back">닫기</button>
         </div>
         <br><br><br>
     </div>    

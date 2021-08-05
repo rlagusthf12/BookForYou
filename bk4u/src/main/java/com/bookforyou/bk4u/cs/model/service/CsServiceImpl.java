@@ -109,6 +109,22 @@ public class CsServiceImpl implements CsService{
 	public Cancel selectAdminCancelDetail(int cancelNo) {
 		return cDao.selectAdminCancelDetail(sqlSession, cancelNo);
 	}
+
+	/**
+	 * [관리자] 주문 취소 - orders테이블 상태 변경 (한빈)
+	 */
+	@Override
+	public int updateAdminCsOrderStatus(int orderNo) {
+		return cDao.updateAdminCsOrderStatus(sqlSession, orderNo);
+	}
+
+	/**
+	 * [관리자] 주문취소 - cancel테이블 상태 변경 (한진)
+	 */
+	@Override
+	public int updateAdminCancelStatus(int cancelNo) {
+		return cDao.updateAdminCancelStatus(sqlSession, cancelNo);
+	}
 	
 	
 

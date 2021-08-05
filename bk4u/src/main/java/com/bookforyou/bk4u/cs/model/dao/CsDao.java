@@ -104,6 +104,20 @@ public class CsDao {
 		return sqlSession.selectOne("csMapper.selectAdminCancelDetail", cancelNo);
 	}
 
+	/**
+	 * [관리자] 주문취소 - orders테이블 상태 변경 (한진)
+	 */
+	public int updateAdminCsOrderStatus(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.update("csMapper.updateAdminCsOrderStatus", orderNo);
+	}
+
+	/**
+	 * [관리자] 주문취소 - cancel테이블 상태 변경 (한진)
+	 */
+	public int updateAdminCancelStatus(SqlSessionTemplate sqlSession, int cancelNo) {
+		return sqlSession.update("csMapper.updateAdminCancelStatus", cancelNo);
+	}
+
 	
 
 }

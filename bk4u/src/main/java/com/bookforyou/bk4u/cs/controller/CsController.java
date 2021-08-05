@@ -131,7 +131,7 @@ public class CsController {
 	 * [관리자] 주문취소 상세 조회 (한진)
 	 */
 	@RequestMapping("adminCancelDatail.cs")
-	public ModelAndView selectAdminCancelDetail(ModelAndView mv, int cancelNo, int orderNo) {
+	public ModelAndView selectAdminCancelDetail(ModelAndView mv, int cancelNo, int orderNo, int no) {
 		
 		
 		Cancel c = cService.selectAdminCancelDetail(cancelNo);
@@ -146,11 +146,35 @@ public class CsController {
 		  .addObject("od", od)
 		  .addObject("p", p)
 		  .addObject("m", m)
-		  .addObject("cd", cd)
-	      .setViewName("cs/adminCancelDetail");
+		  .addObject("cd", cd);
+		
+		if(no == 1) {
+			mv.setViewName("cs/adminCancelDetail");
+		}else if(no == 2) {
+			mv.setViewName("cs/adminCancelProcess");
+		}
 		
 		return mv;
 		
 	}
+	
+	/**
+	 * [관리자] 주문 취소 처리 (한진)
+	*/
+	@RequestMapping("adminCancel.cs")
+	public String updateAdminCancel(ModelAndView mv, int cancelNo, int orderNo) {
+		
+		int orderResult = cService.updateAdminCsOrderStatus(cancelNo);
+		int cancelResult = cService.updateAdminCancelStatus(cancelNo);
+		
+		if(cancelResult > 0) {
+			mv.addObject("alertMsg", "주문이 취소되었습니다.");
+			return "redirect:/adminCancelDetail.cs?calcelNo=" + cancelNo + "&orderNo=" + orderNo + "&no=1";
+		}else {
+			mv.addObject("errorMsg", "주문 취소 처리 실패");
+			return "redirect:/adminCancelDetail.cs?cancelNo=" + cancelNo + "&orderNo=" + orderNo + "&no=2";
+		}
+	}
+	 
 	
 }

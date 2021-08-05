@@ -498,4 +498,21 @@
 		 where cancel_no = #{cancelNo}
 	</select>
 	
+	<!-- [관리자] 주문취소 - orders테이블 상태 변경 (한진) -->
+	<update id="updateAdminCsOrderStatus">
+		update
+		       orders
+		   set order_status = '주문취소',
+		       cs_status = '주문취소'
+		 where order_no = #{orderNo}
+	</update>
+	
+	<!-- [관리자] 주문취소 - cancel테이블 상태 변경 (한진) -->
+	<update id="insertAdminCancelStatus">
+		update
+		       cancel
+		   set status = '취소완료'
+		 where cancel_no = #{cancelNo}
+	</update>
+	
 </mapper>
