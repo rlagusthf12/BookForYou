@@ -72,4 +72,27 @@
 		 where rental_no = #{rentalNo}
 	</select>
 
+	<!-- [사용자] 도서 대여 신청 (연지) -->
+	<insert id="insertRental">
+		insert
+			  	into rental
+			  (
+			  	rental_no
+			  , mem_no
+			  , bk_no
+			  , store_no
+			  , request_date
+			  , rental_status
+			  )
+			  values
+			  (
+			    seq_rtno.nextval
+			  , #{memNo}
+			  , #{bkNo}
+			  , #{storeNo}
+			  , sysdate
+			  , '예약중'
+			  )
+	</insert>
+
 </mapper>

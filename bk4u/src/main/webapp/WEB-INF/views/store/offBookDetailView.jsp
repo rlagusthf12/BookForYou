@@ -414,48 +414,62 @@
             <script>
 	        	$(".book_info .btn_cart").click(function(){
 	        		
-	        		$.ajax({
-	            		url:"cartUpdate.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:${ bk.bkNo }
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_cart").modal('show');
-	            			}else{
-	            				alert("장바구니 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("장바구니 추가 실패");
-	            		}
-		            })
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"cartUpdate.bk",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		$("#modal_cart").modal('show');
+			            			}else{
+			            				alert("장바구니 추가에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("장바구니 추가 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
 	        	})
             </script>
             
             <script>
 	        	$(".book_info .btn_list").click(function(){
 	        		
-	        		$.ajax({
-	            		url:"listInsert.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:${ bk.bkNo }
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_list").modal('show');
-	            			}else if(result == "done"){
-	            				alert("이미 리스트에 존재하는 도서입니다.")
-	            			}else{
-	            				alert("리스트 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("리스트 추가 실패");
-	            		}
-		            })
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"listInsert.bk",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		$("#modal_list").modal('show');
+			            			}else if(result == "done"){
+			            				alert("이미 리스트에 존재하는 도서입니다.")
+			            			}else{
+			            				alert("리스트 추가에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("리스트 추가 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
 	        	})
             </script>
 
@@ -467,7 +481,7 @@
                             <div>예약 신청을 하시겠습니까?</div>
                             <div>2일 내 미수령시 예약 신청은 취소됩니다.</div>
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="openWindow();">예약신청</button>
+                                <button type="button" class="btn btn-primary btn_rental">예약신청</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             </div>
                         </div>
@@ -503,6 +517,38 @@
                 </div>
             </div>
 
+            <script>
+	        	$("#modal_rental .btn_rental").click(function(){
+	        		
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"rentalInsert.rt",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo },
+			            			storeNo:${ ob.storeNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		alert("예약 신청되었습니다.");
+			            			}else{
+			            				alert("예약 신청에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("예약 신청 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
+	        		
+	        	})
+            </script>
+            
         </div>
     </div>
     
