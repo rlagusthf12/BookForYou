@@ -30,5 +30,6 @@ public class Subscription {
 	public String addressRef;
 	public int subscPhone;
 	public String deliveryRequest;
-
+	public String memName;
+	public String payStatus;
 }

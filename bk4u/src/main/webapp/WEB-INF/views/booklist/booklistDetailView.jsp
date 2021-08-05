@@ -136,6 +136,8 @@
                     <div class="title-wrap">
                         <span class="title_item">${ bl.blTitle }</span>
                         <span class="title_tool">
+                        
+                        <c:if test="${ loginUser.memNickname eq bl.blWriter }">
                             <a onclick="postFormSubmit(1);">수정</a>
                             <span>|</span>
                             <a onclick="postFormSubmit(2);">삭제</a>
@@ -143,10 +145,11 @@
                     </div>
                 </div>
                 
-                <form id="postForm" action="" method="post">
-                	<!--글번호-->
-                	<input type="hidden" id="blNo" name="blNo" value="${ bl.blNo }">
-                </form>
+	                <form id="postForm" action="" method="post">
+	                	<!--글번호-->
+	                	<input type="hidden" id="blNo" name="blNo" value="${ bl.blNo }">
+	                </form>
+                </c:if>
                 
                 <script>
                 	// 수정,삭제 스크립트

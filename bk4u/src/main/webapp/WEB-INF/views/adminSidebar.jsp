@@ -259,7 +259,7 @@
                 <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>정기구독</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li class="active">
-                        <a href="subscription/adminSubscriptionList.jsp">정기구독 리스트</a>
+                        <a href="adminSubscList.su">정기구독 리스트</a>
                     </li>
                     <li>
                         <a href="subscription/adminDelivery">정기구독 발송</a>

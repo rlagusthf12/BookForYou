@@ -218,6 +218,7 @@ public class BooklistController {
 	@RequestMapping("update.bl")
 	public String updateBooklist(Booklist bl, Model model, HttpSession session) {
 		int result = blService.updateBooklist(bl);
+		System.out.println(bl);
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "독서록을 수정했습니다.");

@@ -80,6 +80,7 @@
 		     , bl_title
 		     , bl_content
 		     , bl_rate
+		     , bl_cdate
 		     )
 		values
 		     (
@@ -89,6 +90,7 @@
 		     , #{blTitle}
 		     , #{blContent}
 		     , #{blRate}
+		     , SYSDATE
 		     )
 	</insert>
 	
@@ -233,6 +235,7 @@
 		     , bl_content = #{blContent}
 		     , bk_no = #{bkNo}
 		     , bl_rate = #{blRate}
+		     , bl_mdate = SYSDATE
 		 where bl_no = #{blNo}
 	</update>
 
