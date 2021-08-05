@@ -57,6 +57,11 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.updateMemberNickname(sqlSession,member);
 	}
 
+	@Override
+	public int updateMemberEmail(Member member) {
+		return mypageDao.updateMemberEmail(sqlSession,member);
+	}
+
 
 	
 	

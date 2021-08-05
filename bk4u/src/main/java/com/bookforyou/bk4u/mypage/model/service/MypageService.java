@@ -23,5 +23,7 @@ public interface MypageService {
 
 	int updateMemberNickname(Member member);
 
+	int updateMemberEmail(Member member);
+
 
 }

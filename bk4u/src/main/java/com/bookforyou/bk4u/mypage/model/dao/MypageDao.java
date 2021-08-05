@@ -34,13 +34,15 @@ public class MypageDao {
 	}
 
 	public int updateMemPassword(SqlSessionTemplate sqlSession, Member member) {
-		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.updateMemberPassword",member);
 	}
 
 	public int updateMemberNickname(SqlSessionTemplate sqlSession, Member member) {
-		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.updateMemberNickname",member);
+	}
+
+	public int updateMemberEmail(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.updateMemberEmail",member);
 	}
 
 

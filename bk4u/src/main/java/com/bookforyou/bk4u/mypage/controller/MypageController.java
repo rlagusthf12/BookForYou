@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.common.model.service.MailSendService;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.service.MemberService;
@@ -40,6 +44,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private MailSendService mss;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -47,6 +54,10 @@ public class MypageController {
 	MemberInterest memberInterest;
 	
 	MemberCategory memberCategory;
+	
+	private Logger log = LoggerFactory.getLogger(MypageController.class);
+	
+
 	
 	Member member;
 	
@@ -311,6 +322,49 @@ public class MypageController {
 		}else {
 			return "fail";
 		}
+	}
+	
+	/**
+	 * 마이페이지 이메일 인증번호 보내기
+	 * @author 안세아
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="certificate-send.mp")
+	public String sendCertificateNumberByEmail(String email) {
+		Random random = new Random();
+		String certificateNumber = Integer.toString(random.nextInt(888888) + 111111);
+		
+		mss.sendCertificateNumber(certificateNumber, email);
+		log.info("certificateNum: " + certificateNumber);
+		
+		return certificateNumber;
+		
+		
+	}
+	
+	/**
+	 * 마이페이지 이메일 수정하는 메서드
+	 * @param email
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="update-email.mp")
+	public String updateMemberEmail(String email,HttpSession session) {
+		log.info("email: " + email);
+		Member member = (Member) session.getAttribute("loginUser");
+		member.setMemEmail(email);
+		int result = mypageService.updateMemberEmail(member);
+		log.info("result: " + result);
+		if(result>0) {
+			Member loginUser = memberService.loginMember(member);
+			session.setAttribute("loginUser", loginUser);
+			return "success";
+		}else {
+			return "fail";
+		}
+		
 	}
 	
 	

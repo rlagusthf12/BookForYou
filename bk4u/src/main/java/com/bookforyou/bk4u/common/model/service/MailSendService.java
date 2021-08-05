@@ -19,13 +19,22 @@ public class MailSendService {
 	
 	private int size;
 
-    //인증키 생성
+    /**
+     * 인증 키 생성
+     * @author 안세아
+     * @param size
+     * @return
+     */
     private String getKey(int size) {
         this.size = size;
         return getAuthCode();
     }
 
-    //인증코드 난수 발생
+    /**
+     * 인증코드 난수 발생
+     * @author 안세아
+     * @return
+     */
     private String getAuthCode() {
         Random random = new Random();
         StringBuffer buffer = new StringBuffer();
@@ -39,7 +48,12 @@ public class MailSendService {
         return buffer.toString();
     }
 
-    //인증메일 보내기
+    /**
+     * 이메일로 인증 메일 보내기
+     * @author 안세아
+     * @param email
+     * @return
+     */
     public String sendAuthMail(String email) {
         //6자리 난수 인증번호 생성
         String authKey = getKey(6);
@@ -68,7 +82,12 @@ public class MailSendService {
           return authKey;
     }
     
-    // 이메일로 아이디 보내기
+    /**
+     * 이메일로 아이디 보내기
+     * @author 안세아
+     * @param id
+     * @param email
+     */
     public void sendIdFindMail(String id,String email) {
 
         //인증메일 보내기
@@ -93,7 +112,12 @@ public class MailSendService {
 
     }
     
-    //이메일로 임시 비밀번호 보내기
+    /**
+     * 이메일로 임시 비밀번호 보내기
+     * @author 안세아
+     * @param tempPassword
+     * @param email
+     */
     public void sendNewPasswordMail(String tempPassword, String email) {
     	//인증메일 보내기
         try {
@@ -103,6 +127,33 @@ public class MailSendService {
             .append("<p>회원님의 임시비밀번호는 다음과 같습니다.</p>")
             .append("<p><b>")
             .append(tempPassword)
+            .append("</b></p>")
+            .append("<br>")
+            .toString());
+            sendMail.setFrom("officialbookforyou@gmail.com", "BK4U");
+            sendMail.setTo(email);
+            sendMail.send();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * 이메일로 인증번호 보내기
+     * @author 안세아
+     * @param certificateNum
+     * @param email
+     */
+    public void sendCertificateNumber(String certificateNum, String email) {
+    	try {
+            MailUtils sendMail = new MailUtils(mailSender);
+            sendMail.setSubject("BK4U 메일 변경 인증번호");
+            sendMail.setText(new StringBuffer().append("<h1>[BK4U 인증번호 확인 메일]</h1>")
+            .append("<p>회원님의 인증번호는 다음과 같습니다.</p>")
+            .append("<p><b>")
+            .append(certificateNum)
             .append("</b></p>")
             .append("<br>")
             .toString());

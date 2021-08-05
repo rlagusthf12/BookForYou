@@ -455,15 +455,15 @@
                                     </p>
                                 </div>
                                 <div class="input-group input-group-sm mb-3" style="width: 59%;">
-                                    <input type="email" class="form-control" placeholder="변경할 이메일 주소">
-                                    <button class="btn btn-secondary" type="button" id="button-addon2">전송</button>
+                                    <input type="email" id="emailInput" class="form-control" placeholder="변경할 이메일 주소">
+                                    <button class="btn btn-secondary" type="button" id="button-addon2" onclick="emailSend();">전송</button>
                                 </div>
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="email" class="form-control" placeholder="인증번호 입력">
+                                    <input type="text" id="certificateNumberInput" class="form-control" placeholder="인증번호 입력" disabled>
                                 </div>
                                 <button type="button" class="btn btn-secondary btn-sm" style="margin-right: 10px;"
                                     onclick="emailTdShow();">취소</button>
-                                <button type="button" class="btn btn-dark btn-sm">완료</button>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="emailSubmit();">완료</button>
                             </td>
                             <td class="bottom-td">
                             </td>
@@ -547,7 +547,11 @@
                                 	var $pwdInput = $("#pwd-box2 input[name=memPwd]");
                         			var $pwdCheckInput = $("#pwd-box2 input[id=pwdCheckInput]");
                         			var $nickInput = $("#nick-box2 input[id=nickInput]");
-                        			
+                        			var $emailInput = $("#email-box2 input[id=emailInput]");
+                        			var $certificateNumberInput = $("#email-box2 input[id=certificateNumberInput]")
+                        			var emailCheck;
+                        			var certificateNumber;
+                        			var emailUpdateResult;
                         			
                                 	function imgFileClick(){
                                 		$("#img-file").click();
@@ -703,7 +707,6 @@
                     						async: false,
                     						success: function(result){
                     							nickCheck = result;
-                    							console.log(result);
                     					},error:function(){
                     						console.log("ajax통신 실패");
                     					}
@@ -715,7 +718,6 @@
                                 		}
                                 		
                                 		if(nickCheck == "NNNNN"){
-                                			console.log(nickCheck);
                                 			alert("중복된 닉네임입니다.")
                                 			return false;
                                 		}
@@ -732,7 +734,79 @@
                         					}
                                 			});
                                 		}
-                                	}     	
+                                	}
+                                	
+                                	function emailSend(){
+                                		
+                                		// 1. 먼저 중복된 이메일인지 확인
+                                		$.ajax({
+                    						url: "email-check.me",
+                    						data: {checkEmail : $emailInput.val()},
+                    						async: false,
+                    						success: function(result){
+                    							emailCheck = result;
+                    							
+                    					},error:function(){
+                    						console.log("ajax통신 실패");
+                    					}
+                            			});
+                                		
+                                		if(emailCheck == "NNNNN"){
+                                			console.log("결과 : "+emailCheck);
+                                			alert("중복된 이메일입니다!");
+                                			return false;
+                                		}
+                                		
+                                		if(emailCheck == "NNNNY"){
+                                			// 2. 중복된 이메일이 아니라면 인증번호 보내주기
+                                			$.ajax({
+                                				type:"GET",
+                                				url : "certificate-send.mp",
+                                				data : {email : $emailInput.val()},
+                                				success : function(data){ //인증번호를 가져옴
+                                					$certificateNumberInput.attr("disabled",false); //인증번호 입력 가능
+                                					$certificateNumberInput.val(''); // 기존에 값이 있었으면 지워줌
+                                				
+                                					code = data; 
+                                					
+                                					alert("이메일을 전송했습니다. 메일을 확인해주세요.")
+                                				},error:function(){
+                            						console.log("ajax통신 실패");
+                            					}
+                                			});
+                                		}
+                                	}
+                                	
+                                	function emailSubmit(){
+                                		// 1. 인증번호 일치하는지 확인하기
+                                		if(code == "" || $certificateNumberInput.val() == ""){
+                                			alert("다시 입력해주세요");
+                                			return false;
+                                		}else if($certificateNumberInput.val() == code){
+                                			// 2. 인증번호 일치하면 수정해주기
+                                    		$.ajax({
+                                				type:"POST",
+                                				url : "update-email.mp",
+                                				async : false,
+                                				data : {email : $emailInput.val()},
+                                				success : function(result){ //인증번호를 가져옴
+                                					emailUpdateResult = result;
+                                				},error:function(){
+                            						console.log("ajax통신 실패");
+                            					}
+                                			});
+                                			
+                                		}
+                                		
+                                		if(emailUpdateResult == "success"){
+                                			alert("이메일 변경에 성공했습니다.");
+                                			document.location.href = document.location.href;
+                                		}else{
+                                			alert("이메일 변경에 실패했습니다.");
+                                		}
+                                		
+                                		
+                                	}
                                 </script>
                 </div>
                 <div>

@@ -424,5 +424,11 @@
  		set mem_nickname = #{memNickname}
  		where mem_no = #{memNo}
  	</update>
+ 	
+ 	<update id="updateMemberEmail">
+ 		update members
+ 		set mem_email = #{memEmail}
+ 		where mem_no = #{memNo}
+ 	</update>
 
 </mapper>
