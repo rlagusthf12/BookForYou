@@ -223,6 +223,13 @@
 		 where bl_no = #{blNo}
 	</update>
 	
+	<update id="deleteBooklist">
+		update
+		       booklist
+		   set bl_status = 'N'
+		 where bl_no = #{blNo}	
+	</update>
+	
 	<!-- 독서록 검색 : 갯수 조회용 -->
 	<!-- @author daeunlee -->
 	<select id="selectSearchListCount" resultType="_int">

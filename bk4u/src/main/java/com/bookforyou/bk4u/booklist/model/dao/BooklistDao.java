@@ -87,6 +87,13 @@ public class BooklistDao {
 		return sqlSession.update("booklistMapper.updateBooklist", bl);
 	}
 	
+	/** 독서록 삭제용
+	 * @author daeunlee
+	 */
+	public int deleteBooklist(SqlSessionTemplate sqlSession, int blNo) {
+		return sqlSession.update("booklistMapper.deleteBooklist", blNo);
+	}
+	
 	/** 독서록 검색 : 갯수 조회용
 	 * @author daeunlee
 	 */

@@ -229,6 +229,27 @@ public class BooklistController {
 		}
 	}
 	
+	/** 독서록 삭제용
+	 * @author daeunlee
+	 */
+	@RequestMapping("delete.bl")
+	public String deleteBooklist(int blNo, String file, Model model, HttpSession session) {
+		int result = blService.deleteBooklist(blNo);
+		if(result > 0) {
+			/*
+			if(!file.equals("")) { // 첨부파일 있으면 파일삭제
+				String removeFilePath = session.getServletContext().getRealPath(file);
+				new File(removeFilePath).delete();
+			}
+			*/
+			session.setAttribute("alertMsg", "독서록이 삭제되었습니다!");
+			return "redirect:list.bl";
+		}else {
+			model.addAttribute("errorMsg", "독서록 삭제를 실패했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
 	/** 독서록 검색용
 	 * @author daeunlee
 	 */

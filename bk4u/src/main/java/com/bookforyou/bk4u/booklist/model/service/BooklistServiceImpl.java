@@ -76,12 +76,6 @@ public class BooklistServiceImpl implements BooklistService{
 	public Book selectBook(int blNo) {
 		return blDao.selectBook(sqlSession, blNo);
 	}
-
-	@Override
-	public int deleteBooklist(int blNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	/** 독서록 수정용
 	 * @author daeunlee
@@ -89,6 +83,13 @@ public class BooklistServiceImpl implements BooklistService{
 	@Override
 	public int updateBooklist(Booklist bl) {
 		return blDao.updateBooklist(sqlSession, bl);
+	}
+	
+	/** 독서록 삭제용
+	 * @author daeunlee
+	 */
+	public int deleteBooklist(int blNo) {
+		return blDao.deleteBooklist(sqlSession, blNo);
 	}
 	
 	/** 댓글 리스트 조회
