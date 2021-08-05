@@ -192,7 +192,7 @@
         <table id="amemtable" border="1" width="1300" class="amem" >
             <thead>
                 <tr id="theader">
-                    <th width="50" height="50">회원 번호</th>
+                    <th width="100" height="50">회원 번호</th>
                     <th width="150">아이디</th>
                     <th width="200">비밀번호</th>
                     <th width="100">이름</th>
@@ -309,7 +309,7 @@
                     	<form action="amDelete.me" method="post">
 		                    	관리자 비밀번호 :
 		                    <input type="password" name="memPwd" required>
-		                    <input type="hidden" name="" value="${ loginUser.memId }">	                  
+		                    <input type="hidden" name="memId" value="${ loginUser.memId }">	                  
                     		
                     		<br><br>
                     		
