@@ -25,5 +25,7 @@ public interface MypageService {
 
 	int updateMemberEmail(Member member);
 
+	int updateMemberDetail(Member member);
+
 
 }

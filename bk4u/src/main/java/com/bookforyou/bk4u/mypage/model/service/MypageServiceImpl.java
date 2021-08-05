@@ -62,6 +62,12 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.updateMemberEmail(sqlSession,member);
 	}
 
+	@Override
+	public int updateMemberDetail(Member member) {
+		// TODO Auto-generated method stub
+		return mypageDao.updateMemberDetail(sqlSession,member);
+	}
+
 
 	
 	

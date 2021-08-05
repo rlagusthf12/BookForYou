@@ -45,6 +45,10 @@ public class MypageDao {
 		return sqlSession.update("memberMapper.updateMemberEmail",member);
 	}
 
+	public int updateMemberDetail(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.update("memberMapper.updateMemberDetail",member);
+	}
+
 
 
 

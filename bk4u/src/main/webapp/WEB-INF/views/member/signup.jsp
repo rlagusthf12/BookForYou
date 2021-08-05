@@ -291,7 +291,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label"><b>연락처</b></label>
-                <input type="text" class="custom-input custom-input-basic" id="phoneInput" name="memPhone" placeholder="연락처" required/>
+                <input type="text" class="custom-input custom-input-basic" id="phoneInput" name="memPhone" placeholder="연락처" maxlength="15" required/>
                 <div id="phoneInfo" class="form-text"></div>
             </div>
             <br>

@@ -368,6 +368,47 @@ public class MypageController {
 		
 	}
 	
+	/**
+	 * 마이페이지 중복확인 필요없는 부가 정보 수정해주는 메서드
+	 * @author 안세아
+	 * @param memNum
+	 * @param memPostInput
+	 * @param memBasicAddressInput
+	 * @param memDetailAddressInput
+	 * @param memAddressReferInput
+	 * @param memNameInput
+	 * @param memPhoneInput
+	 * @param memGenderInput
+	 * @param memAgeInput
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="update-detail-info.mp")
+	public String updateMemberDetail(String memNum, String memPostInput, String memBasicAddressInput, String memDetailAddressInput, String memAddressReferInput, String memNameInput, String memPhoneInput, String memGenderInput, String memAgeInput, HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		int memNo = Integer.parseInt(memNum);
+		member.setMemNo(memNo);
+		member.setMemPost(memPostInput);
+		member.setMemBasicAddress(memBasicAddressInput);
+		member.setMemDetailAddress(memDetailAddressInput);
+		member.setMemAddressRefer(memAddressReferInput);
+		member.setMemName(memNameInput);
+		member.setMemPhone(memPhoneInput);
+		member.setMemGender(memGenderInput);
+		member.setMemAge(memAgeInput);
+		log.info("수정된 멤버: " + member);
+		
+		int result = mypageService.updateMemberDetail(member);
+		log.info("result값: " +result);
+		if(result > 0) {
+			Member loginUser = memberService.loginMember(member);
+			session.setAttribute("loginUser", loginUser);
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
 	
 	
 	

@@ -479,7 +479,7 @@
                                     <input type="text" class="form-control" placeholder="기본주소" id="memBasicAddress" value="${loginUser.memBasicAddress}" readonly/>
                                 </div>
                                 <div class="input-group input-group-sm mb-3">
-                                    <input type="text" class="form-control" placeholder="상세주소" style="width: 60%;" value="${loginUser.memDetailAddress }">
+                                    <input type="text" class="form-control" placeholder="상세주소" id="memDetailAddress" style="width: 60%;" value="${loginUser.memDetailAddress }">
                                     <input type="text" class="form-control" placeholder="참고사항" id="memAddressRefer" value="${loginUser.memAddressRefer }"
                                         style="width: 30%; margin-left: 10px;">
                                 </div>
@@ -492,7 +492,18 @@
                             <th class="th-content">실명</th>
                             <td class="td-content">
                                 <div class="input-group input-group-sm mb-3 input-middle">
-                                    <input type="text" class="form-control" placeholder="실명" value="${loginUser.memName }">
+                                    <input type="text" class="form-control" placeholder="실명" id="memName" value="${loginUser.memName }" maxlength="6"/>
+                                </div>
+                            </td>
+                            <td class="bottom-td">
+
+                            </td>
+                        </tr>
+                        <tr style="display: block;">
+                            <th class="th-content">연락처</th>
+                            <td class="td-content">
+                                <div class="input-group input-group-sm mb-3 input-middle" style="width: 200px;">
+                                    <input type="text" class="form-control" placeholder="연락처" id="memPhone" value="${loginUser.memPhone }" maxlength="15"/>
                                 </div>
                             </td>
                             <td class="bottom-td">
@@ -526,7 +537,7 @@
                         <tr style="display: block;">
                             <th class="th-content">연령대</th>
                             <td class="td-content">
-                                <select class="form-select form-select-sm" style="width: 40%;"
+                                <select class="form-select form-select-sm" name="memAge" id="memAge" style="width: 40%;"
                                     aria-label="Default select example">
                                     <option value="10" <c:if test="${loginUser.memAge == 10}">selected</c:if>>10대</option>
                                     <option value="20" <c:if test="${loginUser.memAge == 20}">selected</c:if>>20대</option>
@@ -602,10 +613,80 @@
                         			var $pwdCheckInput = $("#pwd-box2 input[id=pwdCheckInput]");
                         			var $nickInput = $("#nick-box2 input[id=nickInput]");
                         			var $emailInput = $("#email-box2 input[id=emailInput]");
-                        			var $certificateNumberInput = $("#email-box2 input[id=certificateNumberInput]")
+                        			var $certificateNumberInput = $("#email-box2 input[id=certificateNumberInput]");
+                        			var $postInput = $("#address-box input[id=memPost]");
+                        			var $memBasicAddressInput = $("#address-box input[id=memBasicAddress]");
+                        			var $memDetailAddressInput = $("#address-box input[id=memDetailAddress]");
+                        			var $memAddressReferInput = $("#address-box input[id=memAddressRefer]");
+                        			var $memNameInput = $("input[id=memName]");
+                        			var $memPhoneInput = $("input[id=memPhone]");
+                        			var $memGenderInput = $("input:radio[name=memGender]:checked");
+                        			var $memAgeInput = $("select[name='memAge'] option:selected");
+                        			
+                        			
                         			var emailCheck;
                         			var certificateNumber;
                         			var emailUpdateResult;
+                        			var detailUpdateResult;
+                        			
+									function submitOtherInfo(){
+										
+                                		// 1. 주소 입력되어있는지 확인
+                                		if($postInput.val().length == 0 || $memBasicAddressInput.val().length == 0){
+                                			alert("우편번호와 주소를 입력해주세요.");
+                                			return false;
+                                		}
+                                		// 2. 실명 입력되어있는지 확인
+                                		if($memNameInput.val().length == 0 ){
+                                			alert("실명을 한 글자 이상 입력해주세요.");
+                                			return false;
+                                		}
+                                		// 3. 연락처 입력되어있는지 확인
+                                		if($memPhoneInput.val().length == 0 ){
+                                			alert("연락처를 입력해주세요.");
+                                			return false;
+                                		}
+                                		// 4. 성별 체크되어있는지 확인
+                                		if($memGenderInput.val().length == 0){
+                                			alert("알맞은 성별에 체크해주세요");
+                                			return false;
+                                		}
+                                		// 5. 나이 체크되어있는지 확인
+                                		if($memAgeInput.val().length == 0){
+                                			alert("알맞은 나이에 체크해주세요");
+                                			return false;
+                                		}
+                                		// 6. 다 입력되어있다면 수정 ajax 날림
+                                		$.ajax({
+                                			type: "post",
+                    						url: "update-detail-info.mp",
+                    						data: {memNum : $("#memNo").val(),
+                    							   memPostInput : $postInput.val(),
+                    							   memBasicAddressInput : $memBasicAddressInput.val(),
+                    							   memDetailAddressInput : $memDetailAddressInput.val(),
+                    							   memAddressReferInput : $memAddressReferInput.val(),
+                    							   memNameInput : $memNameInput.val(),
+                    							   memPhoneInput : $memPhoneInput.val(),
+                    							   memGenderInput : $("input:radio[name=memGender]:checked").val(),
+                    							   memAgeInput :$("select[name='memAge'] option:selected").val()
+                    						},
+                    						async: false,
+                    						success: function(result){
+                    							detailUpdateResult = result;
+                    						},error:function(){
+                    						console.log("ajax통신 실패");
+                    						}
+                            			});
+                                		
+                                		if(detailUpdateResult == "success"){
+                                			alert("수정이 반영되었습니다!");
+                                			document.location.href = document.location.href;
+                                		}else{
+                                			alert("반영 실패");
+                                			document.location.href = document.location.href;
+                                		}
+                                	
+                                	}
                         			
                                 	function imgFileClick(){
                                 		$("#img-file").click();
@@ -806,7 +887,7 @@
                             			});
                                 		
                                 		if(emailCheck == "NNNNN"){
-                                			console.log("결과 : "+emailCheck);
+                                			
                                 			alert("중복된 이메일입니다!");
                                 			return false;
                                 		}
@@ -861,11 +942,13 @@
                                 		
                                 		
                                 	}
+                                	
+                                	
                                 </script>
                 </div>
                 <div>
                     <div class="d-grid gap-2 col-6 mx-auto" style="margin-top: 40px;">
-                        <button class="btn btn-dark" type="button">수정사항 반영</button>
+                        <button class="btn btn-dark" type="button" onclick="submitOtherInfo();">수정사항 반영</button>
                       </div>
                 </div>
             </div>

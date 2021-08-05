@@ -430,5 +430,18 @@
  		set mem_email = #{memEmail}
  		where mem_no = #{memNo}
  	</update>
+ 	
+ 	<update id="updateMemberDetail">
+ 		update members
+ 		set mem_post = #{memPost},
+ 			mem_basic_address = #{memBasicAddress},
+ 			mem_detail_address = #{memDetailAddress},
+ 			mem_address_refer = #{memAddressRefer},
+ 			mem_name = #{memName},
+ 			mem_phone = #{memPhone},
+ 			mem_gender = #{memGender},
+ 			mem_age = #{memAge}
+ 		where mem_no = #{memNo}
+ 	</update>
 
 </mapper>
