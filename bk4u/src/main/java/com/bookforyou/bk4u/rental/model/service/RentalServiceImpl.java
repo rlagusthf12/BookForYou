@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.rental.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,14 @@ public class RentalServiceImpl implements RentalService {
 	@Override
 	public Rental selectRental(int rentalNo){
 		return rentalDao.selectRental(sqlSession, rentalNo);
+	}
+
+	/*
+	 * [사용자] 도서 대여 신청 (연지)
+	 */
+	@Override
+	public int insertRental(HashMap<String, Integer> map) {
+		return rentalDao.insertRental(sqlSession, map);
 	}
 
 }

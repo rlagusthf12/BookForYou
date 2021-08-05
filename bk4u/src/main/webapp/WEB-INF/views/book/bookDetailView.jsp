@@ -434,48 +434,64 @@
             <script>
 	        	$(".book_info .btn_cart").click(function(){
 	        		
-	        		$.ajax({
-	            		url:"cartUpdate.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:${ bk.bkNo }
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_cart").modal('show');
-	            			}else{
-	            				alert("장바구니 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("장바구니 추가 실패");
-	            		}
-		            })
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"cartUpdate.bk",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		$("#modal_cart").modal('show');
+			            			}else{
+			            				alert("장바구니 추가에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("장바구니 추가 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
+	        		
 	        	})
             </script>
             
             <script>
 	        	$(".book_info .btn_list").click(function(){
 	        		
-	        		$.ajax({
-	            		url:"listInsert.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:${ bk.bkNo }
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_list").modal('show');
-	            			}else if(result == "done"){
-	            				alert("이미 리스트에 존재하는 도서입니다.")
-	            			}else{
-	            				alert("리스트 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("리스트 추가 실패");
-	            		}
-		            })
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"listInsert.bk",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		$("#modal_list").modal('show');
+			            			}else if(result == "done"){
+			            				alert("이미 리스트에 존재하는 도서입니다.")
+			            			}else{
+			            				alert("리스트 추가에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("리스트 추가 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
+	        		
 	        	})
             </script>
 
