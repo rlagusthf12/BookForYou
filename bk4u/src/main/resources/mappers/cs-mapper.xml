@@ -516,6 +516,9 @@
 		   			order_status = '반품',
 		   			cs_status = '반품완료'
 		   		</when>
+		   		<when test="no == 3">
+		   			cs_status = '환불완료'
+		   		</when>
 		   </choose>
 		 where order_no = #{orderNo}
 	</update>
@@ -556,4 +559,27 @@
 		   </choose>
 	</update>
 	
+	<!-- [관리자] 환불 상세 조회 -->
+	<select id="selectAdminRefundDetail" resultMap="refundResult">
+		select
+		       refund_no,
+		       order_no,
+		       status,
+		       refund_date,
+		       admin_memo,
+		       refund_kind,
+		       kind_no,
+		       refund_price,
+		       refund_point
+		  from refund
+		 where refund_no = #{refundNo}
+	</select>
+	
+	<!-- [관리자] 환불 처리  -->
+	<update id="updateAdminRefund">
+		update
+		       refund
+		   set status = '환불완료'
+		 where refund_no = #{refundNo}  
+	</update>
 </mapper>

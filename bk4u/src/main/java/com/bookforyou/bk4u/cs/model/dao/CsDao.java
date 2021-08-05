@@ -132,6 +132,20 @@ public class CsDao {
 		return sqlSession.update("csMapper.updateAdminReturnStatus", map2);
 	}
 
+	/**
+	 * [관리자] 환불 상세 조회 (한진)
+	 */
+	public Refund selectAdminRefundDetail(SqlSessionTemplate sqlSession, int refundNo) {
+		return sqlSession.selectOne("csMapper.selectAdminRefundDetail", refundNo);
+	}
+
+	/**
+	 * [관리자] 환불 처리 (한진)
+	 */
+	public int updateAdminRefundStatus(SqlSessionTemplate sqlSession, int refundNo) {
+		return sqlSession.update("csMapper.updateAdminRefund", refundNo);
+	}
+
 	
 
 }

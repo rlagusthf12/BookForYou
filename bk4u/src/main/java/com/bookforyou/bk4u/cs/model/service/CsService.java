@@ -85,6 +85,16 @@ public interface CsService {
 	 */
 	int updateAdminReturnStatus(HashMap<String, Integer> map2);
 
+	/**
+	 * [관리자] 환불 상세 조회 (한진)
+	 */
+	Refund selectAdminRefundDetail(int refundNo);
+
+	/**
+	 * [관리자] 환불 처리 (한진)
+	 */
+	int updateAdminRefundStatus(int refundNo);
+
 	
 	
 }
