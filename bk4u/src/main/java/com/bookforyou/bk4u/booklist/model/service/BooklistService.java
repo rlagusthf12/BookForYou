@@ -48,14 +48,22 @@ public interface BooklistService {
 	 */
 	int insertReply(Reply r);
 	
-	/** 8. 도서 검색 모달창(1) : 도서 갯수 조회용
-	 * 	      도서 검색 모달창(2) : 도서 조회용
+	/** 8. 도서 검색 모달창 : 도서 조회용
 	 * @author daeunlee
 	 */
-	//public int selectSearchListCount(HashMap<String, String> map);
 	public ArrayList<Book> selectBookSearchList(HashMap<String, String> map);
 	
-	/** 9. 인기 독서록 정렬
+	/** 9. 독서록 검색 : 갯수 조회용
+	 * @author daeunlee
+	 */
+	public int selectSearchListCount(HashMap<String, String> map);
+	
+	/** 10. 독서록 검색 : 게시글 조회용
+	 * @author daeunlee
+	 */
+	public ArrayList<Booklist> selectBooklistSearchList(HashMap<String, String> map, PageInfo pi);
+	
+	/** 11. 인기 독서록 정렬
 	 * @author daeunlee
 	 */
 	public ArrayList<Booklist> selectTopBooklistList();

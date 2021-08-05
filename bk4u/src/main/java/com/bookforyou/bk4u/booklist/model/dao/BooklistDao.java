@@ -38,14 +38,6 @@ public class BooklistDao {
 		return sqlSession.insert("booklistMapper.insertBooklist", bl);
 	}
 	
-	/** 도서 검색 모달창(1) : 도서 갯수 조회용
-	 * @author daeunlee
-	 */
-	/*
-	public int selectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		return sqlSession.selectOne("booklistMapper.selectSearchListCount", map);
-	}*/
-	
 	/** 도서 검색 모달창(2) : 도서 조회용
 	 * @author daeunlee
 	 */
@@ -94,4 +86,21 @@ public class BooklistDao {
 	public int updateBooklist(SqlSessionTemplate sqlSession, Booklist bl) {
 		return sqlSession.update("booklistMapper.updateBooklist", bl);
 	}
+	
+	/** 독서록 검색 : 갯수 조회용
+	 * @author daeunlee
+	 */
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("booklistMapper.selectSearchListCount", map);
+	}
+	
+	/** 독서록 검색 : 게시글 조회용
+	 * @author daeunlee
+	 */
+	public ArrayList<Booklist> selectBooklistSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("booklistMapper.selectBooklistSearchList", map, rowBounds);
+	}
+	
 }

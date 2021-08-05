@@ -94,25 +94,7 @@
 		     )
 	</insert>
 	
-	<!-- 도서 검색 모달창(1) : 도서 갯수 조회용 -->
-	<!-- @author daeunlee -->
-	<select id="selectSearchListCount" resultType="_int">
-		select
-		       count(*)
-		  from book
-		 where bk_selstatus = 'Y'
-	 	<choose>
-	 		<when test="condition == 'bkTitle'">
-	 			and bk_title
-	 		</when>
-	 		<otherwise>
-	 			and writer_name
-	 		</otherwise>
-	 	</choose>
-	 	       like '%' || #{keyword} || '%'	
-	</select>
-	
-	<!-- 도서 검색 모달창(2) : 도서 조회용 -->
+	<!-- 도서 검색 모달창: 도서 조회용 -->
 	<!-- @author daeunlee -->
 	<select id="selectBookSearchList" resultMap="bookResult">
 		select
@@ -227,6 +209,8 @@
 		     )
 	</insert>
 	
+	<!-- 독서록 수정 -->
+	<!-- @author daeunlee -->
 	<update id="updateBooklist">
 		update
 		       booklist
@@ -238,5 +222,59 @@
 		     , bl_mdate = SYSDATE
 		 where bl_no = #{blNo}
 	</update>
+	
+	<!-- 독서록 검색 : 갯수 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectSearchListCount" resultType="_int">
+		select
+		       count(*)
+		  from booklist
+		  join members using (mem_no)
+		 where bl_status = 'Y'
+	 	<choose>
+	 		<when test="condition == 'blTitle'">
+	 			and bl_title
+	 		</when>
+	 		<when test="condition == 'writer'"> 
+	 			and mem_nickname	 		
+	 		</when>
+	 		<otherwise>
+	 			and bl_content
+	 		</otherwise>
+	 	</choose>
+	 	       like '%' || #{keyword} || '%'	
+	</select>
+	
+	<!-- 독서록 검색 : 게시글 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectBooklistSearchList" resultMap="booklistResult">
+		select 
+		       bl_no
+		     , mem_nickname
+		     , bk_no
+		     , bl_title
+		     , bl_content
+		     , bl_count
+		     , bl_rate
+		     , bl_cdate
+		     , bl_mdate
+		     , bl_like
+		     , bl_scrap
+		  from booklist
+		  join members using(mem_no)
+		 where bl_status = 'Y'
+	 	<choose>
+	 		<when test="condition == 'blTitle'">
+	 			and bl_title
+	 		</when>
+	 		<when test="condition == 'writer'"> 
+	 			and mem_nickname	 		
+	 		</when>
+	 		<otherwise>
+	 			and bl_content
+	 		</otherwise>
+	 	</choose>
+	 	       like '%' || #{keyword} || '%'	
+	</select>
 
 </mapper>

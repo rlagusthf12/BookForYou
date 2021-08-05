@@ -45,15 +45,6 @@ public class BooklistServiceImpl implements BooklistService{
 		return blDao.insertBooklist(sqlSession, bl);
 	}
 	
-	/** 도서 검색 모달창(1) : 도서 갯수 조회용
-	 * @author daeunlee
-	 */
-	/*
-	@Override
-	public int selectSearchListCount(HashMap<String, String> map) {
-		return blDao.selectSearchListCount(sqlSession, map);
-	}*/
-	
 	/** 도서 검색 모달창(2) : 도서 조회용
 	 * @author daeunlee
 	 */
@@ -114,6 +105,22 @@ public class BooklistServiceImpl implements BooklistService{
 	@Override
 	public int insertReply(Reply r) {
 		return blDao.insertReply(sqlSession, r);
+	}
+	
+	/** 독서록 검색 : 갯수 조회용
+	 * @author daeunlee
+	 */
+	@Override
+	public int selectSearchListCount(HashMap<String, String> map) {
+		return blDao.selectSearchListCount(sqlSession, map);
+	}
+	
+	/** 독서록 검색 : 게시글 조회용
+	 * @author daeunlee
+	 */
+	@Override
+	public ArrayList<Booklist> selectBooklistSearchList(HashMap<String, String> map, PageInfo pi){
+		return blDao.selectBooklistSearchList(sqlSession, map, pi);
 	}
 
 

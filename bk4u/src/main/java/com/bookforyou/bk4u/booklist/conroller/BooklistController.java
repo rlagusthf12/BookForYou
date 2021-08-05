@@ -229,8 +229,29 @@ public class BooklistController {
 		}
 	}
 	
-	
-	
+	/** 독서록 검색용
+	 * @author daeunlee
+	 */
+	@RequestMapping("search.bl")
+	public ModelAndView selectBooklistSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+			                                     String condition, String keyword) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int listCount = blService.selectSearchListCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Booklist> list = blService.selectBooklistSearchList(map, pi);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("condition", condition)
+		  .addObject("keyword", keyword)
+		  .setViewName("booklist/booklistListView");
+		
+		return mv;
+	}
 	
 	
 	// 파일명 수정용 메소드 공동모듈화

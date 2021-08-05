@@ -258,42 +258,6 @@
 
                     </ul>
                     
-                    <script>
-                    // 독서록상세조회 스크립트
-                    $(function(){
-                    	$(".booklist_outer>ul>li").click(function(){
-	                    	//var blNo = $(this).children("#blNo").val();
-	                    	//후손선택 find() input요소선택 input[] ㅠㅠ
-	                    	var blNo = $(this).find("input[name=blNo]").val();
-	                    	//console.log(blNo);
-	                    	location.href = "detail.bl?blNo=" + blNo;
-                    		
-                    	})
-                    })
-                    
-                    // 독서록 작성 로그인한 회원만 가능
-                    function enrollClick(){
-                    	
-                    	var loginUser = "<c:out value='${loginUser}'/>";
-                    	//console.log(loginUser);
-                    	if(!loginUser){
-                    		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
-                    		if(conf == true){ // 로그인창
-                    			location.href = "loginForm.me"
-                    		}else{ // 화면
-                    			return;
-                    		}
-                    	}else{
-                    		location.href = "enrollForm.bl"
-                    	};
-                    }
-                    
-                 	// 도서조회 스크립트
-                    function clickBk() {
-                    	location.href = "detail.bk?bkno=" + $(this).children("#bkNo").text();
-                    }
-                    
-                    </script>
 
                     <div id="paging-wrap">
                         <ul class="pagination">
@@ -320,7 +284,7 @@
                     </div>
             
                     <div id="search-wrap">
-                        <form id="searchForm" action="" method="Get" align="center">
+                        <form id="searchForm" action="search.bl" method="Get" align="center">
                             <div class="select">
                                 <select class="custom-select" name="condition">
                                     <option value="writer">작성자</option>
@@ -329,19 +293,65 @@
                                 </select>
                             </div>
                             <div class="text-input">
-                                <input type="text" class="form-control" name="keyword" placeholder="검색어를 입력해주세요">
+                                <input type="text" class="form-control" name="keyword" value="${ keyword }" placeholder="검색어를 입력해주세요">
                             </div>
                             <button type="submit" class="searchBtn">검색</button>
                         </form>
                     </div>
 
                 </div>
-                
-
             </div>
         </div>
         
     </div>
+    
+    <script>
+ 		// 독서록 검색 
+ 		$(function(){
+ 			if("${condition}" != ""){
+ 				$("option[value=${condition}]").attr("selected", true);
+ 			}
+ 		})
+    	
+        // 독서록상세조회 스크립트
+        $(function(){
+        	$(".booklist_outer>ul>li").click(function(){
+         	//var blNo = $(this).children("#blNo").val();
+         	//후손선택 find() input요소선택 input[] ㅠㅠ
+         	var blNo = $(this).find("input[name=blNo]").val();
+         	//console.log(blNo);
+         	location.href = "detail.bl?blNo=" + blNo;
+        		
+        	})
+        })
+        
+        // 독서록 작성 로그인한 회원만 가능
+        function enrollClick(){
+        	
+        	var loginUser = "<c:out value='${loginUser}'/>";
+        	//console.log(loginUser);
+        	if(!loginUser){
+        		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+        		if(conf == true){ // 로그인창
+        			location.href = "loginForm.me"
+        		}else{ // 화면
+        			return;
+        		}
+        	}else{
+        		location.href = "enrollForm.bl"
+        	};
+        }
+        
+     	// 도서조회 스크립트
+        function clickBk() {
+        	location.href = "detail.bk?bkno=" + $(this).children("#bkNo").text();
+        }
+     	
+     	
+     	
+        
+        </script>
+                    
     <jsp:include page="../common/footer.jsp"/>
 
 </body>
