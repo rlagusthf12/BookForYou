@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.dao.BooklistDao;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -43,17 +44,46 @@ public class BooklistServiceImpl implements BooklistService{
 	public int insertBooklist(Booklist bl) {
 		return blDao.insertBooklist(sqlSession, bl);
 	}
-
+	
+	/** 도서 검색 모달창(1) : 도서 갯수 조회용
+	 * @author daeunlee
+	 */
+	/*
+	@Override
+	public int selectSearchListCount(HashMap<String, String> map) {
+		return blDao.selectSearchListCount(sqlSession, map);
+	}*/
+	
+	/** 도서 검색 모달창(2) : 도서 조회용
+	 * @author daeunlee
+	 */
+	@Override
+	public ArrayList<Book> selectBookSearchList(HashMap<String, String> map) {
+		return blDao.selectBookSearchList(sqlSession, map);
+	}
+	
+	/** 독서록 상세조회용 : 조회수 증가
+	 * @author daeunlee
+	 */
 	@Override
 	public int increaseCount(int blNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return blDao.increaseCount(sqlSession, blNo);
 	}
-
+	
+	/** 독서록 상세조회용 : 해당게시글 조회
+	 * @author daeunlee
+	 */
 	@Override
 	public Booklist selectBooklist(int blNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return blDao.selectBooklist(sqlSession, blNo);
+	}
+	
+	/** 독서록 상세조회용 : 해당 게시글의 책정보 조회
+	 * @author daeunlee
+	 */
+	@Override
+	public Book selectBook(int blNo) {
+		return blDao.selectBook(sqlSession, blNo);
 	}
 
 	@Override
@@ -61,36 +91,31 @@ public class BooklistServiceImpl implements BooklistService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	/** 독서록 수정용
+	 * @author daeunlee
+	 */
 	@Override
 	public int updateBooklist(Booklist bl) {
-		// TODO Auto-generated method stub
-		return 0;
+		return blDao.updateBooklist(sqlSession, bl);
 	}
-
+	
+	/** 댓글 리스트 조회
+	 * @author daeunlee
+	 */
 	@Override
 	public ArrayList<Reply> selectReplyList(int blNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return blDao.selectReplyList(sqlSession, blNo);
 	}
-
+	
+	/** 댓글 작성
+	 * @author daeunlee
+	 */
 	@Override
 	public int insertReply(Reply r) {
-		// TODO Auto-generated method stub
-		return 0;
+		return blDao.insertReply(sqlSession, r);
 	}
 
-	@Override
-	public int selectSerchListCount(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ArrayList<Booklist> selectSearchList(PageInfo pi, HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public ArrayList<Booklist> selectTopBooklistList() {
