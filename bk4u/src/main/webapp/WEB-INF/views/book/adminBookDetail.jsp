@@ -1,22 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- 부트스트랩  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!-- summernote -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.9/dist/summernote-lite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.9/dist/summernote-lite.min.js"></script>
-<script src="/js/summernote-ko-KR.js"></script>
-<!-- jQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet"> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
 
 <style>
 	    #outer{
@@ -272,30 +270,81 @@
         		})
         	}
         	
-        		
-        	
-        		
-        	
         })
         
         
-</script>
-<script>
-$(document).ready(function() {
-	  $('#summernote').summernote({
- 	    	placeholder: 'content',
-	        minHeight: 370,
+        /* summernote */
+		$(document).ready(function() {
+	
+		$('.summernote').summernote({
+			height: 500,
+			minHeight: null,
 	        maxHeight: null,
-	        focus: true, 
-	        lang : 'ko-KR'
+			lang: "ko-KR",
+			callbacks: { 
+							// onImageUpload 함수: '이미지를 업로드했을 때' 동작하는 함수
+							onImageUpload: function(files, editor, welEditable){
+								// 파일 업로드 (다중업로드를 위해 for문 사용)
+								for(var i=files.length-1; i>=0; i--){
+									uploadSummernoteImage(files[i], this);
+								}
+							}
+						}
+		});
+	
+		// 파일 업로드용 callbacks함수 실행
+		function uploadSummernoteImage(file, el){
+			var formData = new FormData();
+			formData.append('file', file); 
+			// callbacks함수에서 받아온 file들을 data에 추가해서 => ajax로 서버에 파일업로드함
+			$.ajax({
+				url: "uploadAdminSummernoteImageAjax",
+				data: formData,
+				type: "post",
+				enctype: 'multipart/form-data',
+				processData: false,
+				contentType: false,
+				
+				//*processData: false
+				//일반적으로 서버에 전달되는 데이터는 "query string" 형태로 전달된다.
+				//ex) http://example.com/over/there?"title=Main_page&action=raw"
+				//data 파라미터로 전달된 데이터를 jQuery 내부적으로 query string 으로 만드는데, 
+				//파일 전송의 경우 이를 하지 않아야 하고 이를 설정하는 것이 processData: false 이다.
+	
+				//*contentType 
+				//default 값이 "application/x-www-form-urlencoded; charset=UTF-8" 인데, 
+				//"multipart/form-data" 로 전송이 되게 false 로 넣어준다.
+				
+				success: function(imageUrl){
+					$('#blContent').summernote("insertImage", imageUrl.url);
+					//$('#blContent').summernote('editor.insertImage',url);
+				}
+			});
+	}
+	
+	// 툴바세팅
+	$('.summernote').summernote({
+		  toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 	  });
 	});
 </script>
-
 </head>
 <body>
 
-	<jsp:include page="../adminSidebar.jsp"/>
+	<%@ include file="../adminSidebar.jsp" %>
 
 	<div id="outer">
         
@@ -383,7 +432,7 @@ $(document).ready(function() {
     
                     </div>
                 </div>
-
+				
                 <div id="book-content">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -397,7 +446,7 @@ $(document).ready(function() {
                             <a class="nav-link" data-bs-toggle="tab" href="#bookInfo">책소개</a>
                         </li>
                     </ul>
-        
+        			
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div id="keyword" class="container tab-pane active"><br>
@@ -529,31 +578,16 @@ $(document).ready(function() {
                             <div>
                                 <p>출판사 서평 / 목차</p>
                             </div>
-
-                            <div id="summernote"></div>
-                            <script>
-						      $('#summernote').summernote({
-						        placeholder: 'Hello stand alone ui',
-						        tabsize: 2,
-						        height: 120,
-						        toolbar: [
-						          ['style', ['style']],
-						          ['font', ['bold', 'underline', 'clear']],
-						          ['color', ['color']],
-						          ['para', ['ul', 'ol', 'paragraph']],
-						          ['table', ['table']],
-						          ['insert', ['link', 'picture', 'video']],
-						          ['view', ['fullscreen', 'codeview', 'help']]
-						        ]
-						      });
-						    </script>
-
+                            <div class="container">
+							  <textarea class="summernote" name="editordata"></textarea>    
+							</div>
                         </div>
                     </div>
                     <br>
                     <div id="btn-submit">
                         <button type="submit">저장</button>
                     </div>
+                    
                 </div>
             </form>
         </div>

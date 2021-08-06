@@ -628,5 +628,17 @@
   					group by bk_no) using(bk_no)
 		where mem_no = #{memNo}
 	</select>
+	<!-- [관리자] 정기구독 상세 조회 - 도서 조회 (한진) -->
+	<select id="selectAdminSubscDetailBook" resultMap="bookResult">
+		select 
+		       bk_no,
+		       bk_title,
+		       writer_name,
+		       bk_publish,
+		       bk_price
+		  from book
+		  join subsc_bookorder using (bk_no)
+		 where subsc_no = #{subscNo}
+	</select>
 	
 </mapper>
