@@ -18,13 +18,19 @@
 		<result column="subsc_post" property="subscPost"/>
 		<result column="subsc_address" property="subscAddress"/>
 		<result column="address_detail" property="addressDetail"/>
-		<result column="address_ref" property="address_ref"/>
-		<result column="subsc_phone" property="subsc_phone"/>
+		<result column="address_ref" property="addressRef"/>
+		<result column="subsc_phone" property="subscPhone"/>
 		<result column="deliveryrequest" property="deliveryRequest"/>
 		<result column="admin_memo" property="adminMemo"/>
 		<result column="mem_name" property="memName"/>
 		<result column="mem_id" property="memId"/>
+		<result column="mem_phone" property="memPhone"/>
+		<result column="mem_email" property="memEmail"/>
 		<result column="status" property="payStatus"/>
+		<result column="shipping_date" property="shippingDate"/>
+		<result column="shipping_company" property="shippingCompany"/>
+		<result column="shipping_number" property="shippingNumber"/>
+		<result column="shipping_status" property="shippingStatus"/>
 	</resultMap>
 
 	<!-- [관리자] 정기구독 목록 개수 조회 (한진) -->
@@ -215,5 +221,65 @@
 		  		</when>
 		  </choose>
 	</select>
+	
+	<!-- [관리자] 정기구독 상세 조회 (한진) -->
+	<select id="selectAdminSubscDetail" resultMap="SubscResult">
+		select
+			   subsc_no,
+               mem_no,
+               mem_id,
+               mem_name,
+               mem_phone,
+               mem_email,
+		       subsc_sdate,
+		       subsc_enddate,
+		       subsc_name,
+		       subsc_period,
+		       subsc_price,
+		       subsc_deldate,
+		       subsc_status,
+		       subsc_receiver,
+               subsc_post,
+               subsc_address,
+               address_detail,
+               address_ref,
+               subsc_phone,
+		       deliveryrequest
+		  from subscription
+          join members using (mem_no)
+		 where subsc_no = #{subscNo}
+	</select>
+	
+	<!-- [관리자] 정기구독 상세 조회 - 배송 (한진) -->
+	<select id="selectAdminSubscDetailDel" resultMap="SubscResult">
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by subsc_no order by shipping_date desc) rnum,
+		                t1.*
+		          from (
+		                select
+		                        subsc_no,
+		                        shipping_date,
+		                        shipping_company,
+		                        shipping_number,
+		                        shipping_status
+		                  from subsc_bookorder
+		                 where subsc_no = #{subscNo}
+		                ) t1
+		        ) s1
+		  where s1.rnum = 1
+	</select>
+	
+	<!-- [관리자] 배송지 변경 (한진) -->
+	<update id="updateAdminAddress">
+		update
+		       subscription
+		   set subsc_post = #{subscPost},
+		       subsc_address = #{subscAddress},
+		       address_detail = #{addressDetail},
+		       address_ref = #{addressRef}
+		 where subsc_no = #{subscNo}
+	</update>
 	
 </mapper>

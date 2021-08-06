@@ -1,9 +1,12 @@
 package com.bookforyou.bk4u.subscription.model.service;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.HashMap;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 
 public interface SubscriptionService {
@@ -48,5 +51,35 @@ public interface SubscriptionService {
 	 * [관리자] 검색조건에 일치하는 목록 조회 (한진)
 	 */
 	ArrayList<Subscription> selectAdminSubscSearchList(PageInfo pi, HashMap<String, String> map);
+
+	/**
+	 * [관리자] 정기구독 상세 조회 (한진)
+	 */
+	Subscription selectAdminSubscDetail(HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 도서 (한진)
+	 */
+	ArrayList<Book> selectAdminSubscDetailBook(HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 배송 (한진)
+	 */
+	Subscription selectAdminSubscDetailDel(HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 결제 (한진)
+	 */
+	Payment selectAdminSubscDetailPay(HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 쿠폰 (한진)
+	 */
+	Coupon selectAdminSubscDetailCoupon(HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 배송지 변경 (한진)
+	 */
+	int updateAdminAddress(Subscription s);
 
 }

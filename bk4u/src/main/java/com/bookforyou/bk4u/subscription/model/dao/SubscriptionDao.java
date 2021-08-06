@@ -7,7 +7,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 
 @Repository
@@ -69,6 +72,48 @@ public class SubscriptionDao {
 	 */
 	public ArrayList<Subscription> selectAdminSubscSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectAdminSubscSearchList", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 상세 조회 (한진)
+	 */
+	public Subscription selectAdminSubscDetail(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("subscriptionMapper.selectAdminSubscDetail", map);
+	}
+
+	/*
+	 * [관리자] 정기구독 상세 조회 - 도서 조회 (한진)
+	 */
+	public ArrayList<Book> selectAdminSubscDetailBook(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSubscDetailBook", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 배송 (한진)
+	 */
+	public Subscription selectAdminSubscDetailDel(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("subscriptionMapper.selectAdminSubscDetailDel", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 결제 (한진)
+	 */
+	public Payment selectAdminSubscDetailPay(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("paymentMapper.selectAdminSubscDetailPay", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 상세 조회 - 쿠폰 (한진)
+	 */
+	public Coupon selectAdminSubscDetailCoupon(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("couponDetailMapper.selectAdminSubscDetailCoupon", map);
+	}
+
+	/*
+	 * [관리자] 배송지 변경 (한진)
+	 */
+	public int updateAdminAddress(SqlSessionTemplate sqlSession, Subscription s) {
+		return sqlSession.update("subscriptionMapper.updateAdminAddress", s);
 	}
 
 }

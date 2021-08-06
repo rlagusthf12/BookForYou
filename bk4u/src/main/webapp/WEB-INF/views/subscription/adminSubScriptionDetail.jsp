@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +55,7 @@
         .vertical th{width: 160px;}
 
         /*배송 정보 변경 폼*/
+        .hide{display: none!important;}
         #addressForm{
             display: inline-block;
             margin:40px 0 10px 0;
@@ -124,24 +126,45 @@
 
 <script>
 	$(function(){
-	    $("#addressForm").hide();
+		/* 주소 변경 폼 열기/닫기 */
 	    $("#showAddressForm").click(function(){
-	        $("#addressForm").slideDown();
+	        $("#addressForm").toggleClass("hide");
 	    })
 	
-	    $("#saveAddress").click(function(){
-	        $("#addressForm").slideUp();
-	    })
+	    /* 배송지 변경 */
+	    var sNo = $("#sNo").text();
+	    $("#hiddenSubscNo").val(sNo);	    
+
+	    /* 결제쪽 계산 */
+	    var $price = Number($("#price").text());
+	    var $point = Number($("#point").text());
+	    var $add = Number($("#add").text());
+	    var $total = $price - $point + $add;
+	    $("#total").text($total);
+	    $("#total2").text($total);
+	    var $gp = $total * 0.01;
+	    $("#givPoint").text($gp);
+	    
+	    /* 닫기 버튼 */
+		$("#back").click(function(){
+			history.back();
+		})
 	})
 </script>
 </head>
 <body>
 
 	<jsp:include page="../adminSidebar.jsp"/>
+	
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+	</c:if>
 
 	<div id="outer">
         <div id="main-title">
-            <img src="resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>정기구독권 상세 정보</p>
         </div>
         <br>
@@ -157,19 +180,19 @@
                         <th scope="col">가격</th>
                         <th scope="col">구독시작일/종료일</th>
                         <th scope="col">구독종료일</th>
-                        <th scop="col">구독상태</th>
+                        <th scope="col">구독상태</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>0001</td>
-                        <td>프리미엄</td>
-                        <td>3개월</td>
-                        <td>10일</td>
-                        <td>15,000</td>
-                        <td>2021-07-01</td>
-                        <td>2021-10-01</td>
-                        <td>구독중</td>
+                        <td id="sNo">${ s.subscNo }</td>
+                        <td>${ s.subscName }</td>
+                        <td>${ s.subscPeriod }</td>
+                        <td>${ s.subscDelDate }</td>
+                        <td>${ s.subscPrice }</td>
+                        <td>${ s.subscSdate }</td>
+                        <td>${ s.subscEndDate }</td>
+                        <td>${ s.subscStatus }</td>
                     </tr>
                 </tbody>
             </table>
@@ -191,11 +214,11 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>0011</td>
-                                <td>kim002</td>
-                                <td>김바람</td>
-                                <td>010-1111-2222</td>
-                                <td>kim00@naver.com</td>
+                                <td>${ s.memNo }</td>
+                                <td>${ s.memId }</td>
+                                <td>${ s.memName }</td>
+                                <td>${ s.memPhone }</td>
+                                <td>${ s.memEmail }</td>
                             </tr>
                         </tbody>
                     </table>
@@ -209,34 +232,37 @@
                         <table class="table table-bordered table-sm vertical">
                             <tr>
                                 <th>수령자 이름</th>
-                                <td>김나무</td>
+                                <td>${ s.subscReceiver }</td>
                             </tr>
                             <tr>
                                 <th>수령자 연락처</th>
-                                <td>010-2222-3333</td>
+                                <td>${ s.subscPhone }</td>
                             </tr>
                             <tr>
                                 <th>주소</th>
-                                <td>[07071] 서울특별시 동작구 보라매로5길 15(신대방동) 전문건설회관빌딩</td>
+                                <td>[${ s.subscPost }] ${ s.subscAddress } ${ s.addressRef } ${ s.addressDetail }</td>
                             </tr>
                             <tr>
                                 <th>배송메세지</th>
-                                <td>경비실에 맡겨주세요.</td>
+                                <td>${ s.deliveryRequest }</td>
                             </tr>
                         </table>
                     </div>
                     <div class="alterInfo-btn">
                         <button type="button" id="showAddressForm">주소 변경</button>
                     </div>
-                    <div id="addressForm">
-                        <input type="text" id="sample6_postcode" class="d_form mini" placeholder="우편번호">
-                        <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
-                        <input type="text" id="sample6_address" class="d_form large" placeholder="주소"><br>
-                        <input type="text" id="sample6_detailAddress" class="d_form" placeholder="상세주소">
-                        <input type="text" id="sample6_extraAddress" class="d_form" placeholder="참고항목">
-                        <div id="addressForm-btn" class="alterInfo-btn">
-                            <button id="saveAddress">주소 저장</button>
-                        </div>
+                    <div id="addressForm" class="hide">
+                        <form action="alterAddress.su" method="post">
+                    		<input type="hidden" id="hiddenSubscNo" name="subscNo">
+	                        <input type="text" id="sample6_postcode" name="subscPost" class="d_form mini" placeholder="우편번호">
+	                        <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
+	                        <input type="text" id="sample6_address" name="subscAddress" class="d_form large" placeholder="주소"><br>
+	                        <input type="text" id="sample6_detailAddress" name="addressDetail" class="d_form" placeholder="상세주소">
+	                        <input type="text" id="sample6_extraAddress" name="addressRef" class="d_form" placeholder="참고항목">
+	                        <div id="addressForm-btn" class="alterInfo-btn">
+	                            <button type="submit" id="saveAddress">주소 저장</button>
+	                        </div>
+                        </form>
                     </div>
 
                 </div>
@@ -257,10 +283,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>2021-07-02</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td>${ d.shippingDate }</td>
+                                    <td>${ d.shippingNumber }</td>
+                                    <td>${ d.shippingCompany }</td>
+                                    <td>${ d.shippingStatus }</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -273,42 +299,43 @@
                     <p>-- 결제정보 --</p>
                 </div>
                 <div>
-                    <table class="table table-bordered table-sm vertical" style="width:300px;">
-                        <tr>
-                            <th>결제번호</th>
-                            <td>001</td>
-                        </tr>
-                    </table>
                     <table class="table table-bordered table-sm vertical">
                         <tr>
-                            <th>구독권 금액</th>
-                            <td>53,600</td>
+                            <th>주문 금액</th>
+	                            <td id="price">${ s.subscPrice }</td>
                             <th>결제 금액</th>
-                            <td>48,240</td>
+                            <td id="total2"></td>
                         </tr>
                         <tr>
                             <th>추가금</th>
-                            <td>2,500</td>
+                            <td id="add"></td>
                             <th>적립 포인트</th>
-                            <td>480</td>
+                            <td id="givPoint"></td>
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
-                            <td width="300px;">[0001 - 금요일 쿠폰 (10%)] 5,000</td>
+                            <c:choose>
+                            	<c:when test="${ not empty cp.couponIssueNum }">
+		                            <td width="300px;">[${ cp.couponIssueNum } - ${ cp.couponName } (${ cp.couponPrice } ${ cp.couponPriceRate })]</td>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<td width="300px;">-</td>
+                            	</c:otherwise>
+                            </c:choose>
                             <th>결제 수단</th>
-                            <td>무통장(김나무)</td>
+                            <td>${ p.payWay }</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
-                            <td>0</td>
+                            <td id="point"></td>
                             <th>결제 상태</th>
-                            <td>미입금</td>
+                            <td>${ p.status }</td>
                         </tr>
                         <tr>
                             <th>합계</th>
-                            <td>48,240</td>
+                            <td id="total"></td>
                             <th>결제일</th>
-                            <td>2021-07-21</td>
+                            <td>${ p.payDate }</td>
                         </tr>
 
                     </table>
@@ -316,7 +343,7 @@
             </div>
             <br><br>
             <div id="btn-area">
-                <button type="button">닫기</button>
+                <button type="button" id="back">닫기</button>
             </div>
             <br><br><br>
         </div>   

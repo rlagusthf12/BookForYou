@@ -302,6 +302,11 @@
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
 
+            /* 상세 보기 */
+            $(".sNo").click(function(){
+            	var $sNo = $(this).text();
+            	location.href=`adminSubscDetail.su?subscNo=` + $sNo + `&distinctionNo=1`;
+            })
 
         })
 
@@ -439,7 +444,7 @@
 		                    	<c:forEach var="s" items="${ subsc }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td>${ s.subscNo }</td>
+			                            <td class="sNo">${ s.subscNo }</td>
 			                            <td>${ s.subscSdate } <br> ${ s.subscEndDate }</td>
 			                            <td>${ s.memName } <br> (${ s.memId })</td>
 			                            <td>${ s.subscName }</td>

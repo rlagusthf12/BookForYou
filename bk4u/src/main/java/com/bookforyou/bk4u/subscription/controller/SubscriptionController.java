@@ -1,6 +1,6 @@
 package com.bookforyou.bk4u.subscription.controller;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.subscription.model.service.SubscriptionService;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 
@@ -125,5 +129,56 @@ public class SubscriptionController {
 		
 		return mv;
 	
+	}
+	
+	/*
+	 * [관리자] 정기구독 상세 조회 (한진)
+	 */
+	@RequestMapping("adminSubscDetail.su")
+	public ModelAndView selectAdminSubscDetail(ModelAndView mv, int subscNo, int distinctionNo) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("subscNo", subscNo);
+		map.put("distinctionNo", distinctionNo);
+		
+		Subscription s = sService.selectAdminSubscDetail(map);
+		Subscription d = sService.selectAdminSubscDetailDel(map);
+		ArrayList<Book> b = sService.selectAdminSubscDetailBook(map);
+		Payment p = sService.selectAdminSubscDetailPay(map);
+		Coupon cp = sService.selectAdminSubscDetailCoupon(map);
+		
+		mv.addObject("s", s)
+		  .addObject("d", d)
+		  .addObject("b", b)
+		  .addObject("p", p)
+		  .addObject("cp", cp);
+		
+		if(distinctionNo == 1) {
+			mv.setViewName("subscription/adminSubScriptionDetail");
+		}else {
+			mv.setViewName("subscription/adminDeliveryDetail");
+		}
+		
+		return mv;
+	}
+	
+	/**
+	 * [관리자] 정기구독 배송지 변경 (한진)
+	 */
+	@RequestMapping("alterAddress.su")
+	public String updateAdminAdderss(ModelAndView mv, Subscription s) {
+		
+		int result = sService.updateAdminAddress(s);
+		
+		if(result > 0) {
+			mv.addObject("alertMsg", "배송지가 변경되었습니다.");
+		}else {
+			mv.addObject("errorMsg", "배송지 변경 실패");
+		}
+
+		int subscNo = s.getSubscNo();
+		int distinctionNo = 1;
+		
+		return "redirect:/adminSubscDetail.su?subscNo=" + subscNo + "&distinctionNo=" + distinctionNo;
 	}
 }

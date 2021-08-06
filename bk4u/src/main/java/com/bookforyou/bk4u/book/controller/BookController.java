@@ -1,6 +1,10 @@
 package com.bookforyou.bk4u.book.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
@@ -19,7 +24,6 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
-import com.bookforyou.bk4u.order.model.vo.Order;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -338,6 +342,37 @@ public class BookController {
 		
 		return "redirect:/adminBookDetail.bk?bkNo=" + b.bkNo;
 	}
+	
+	/**
+	 * [관리자] summernote 사진첨부 ajax(한진)
+	 */
+	@ResponseBody
+	@RequestMapping(value="uploadAdminSummernoteImageAjax", produces="application/json; charset=utf-8")
+	public String uploadAdminSummernoteImage(@RequestParam("file") MultipartFile upfile, HttpSession session) {
+		
+		JsonObject jObj = new JsonObject();
+		
+		String savePath = session.getServletContext().getRealPath("/resources/summernoteImage/");
+		String originName = upfile.getOriginalFilename();
+		String currentTime = new SimpleDateFormat("yyyymmdd").format(new Date());
+		int ranNum = (int)(Math.random() * 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));
+		String changeName = currentTime + ranNum + ext;
+		
+		File file = new File(savePath + changeName);
+		
+		try {
+			upfile.transferTo(file);
+			jObj.addProperty("url", "resources/summernoteImage/" + changeName);
+			jObj.addProperty("responseCode", "success");
+		} catch (IllegalStateException | IOException e) {
+			jObj.addProperty("responseCode", "error");
+			e.printStackTrace();
+		}
+		String imageUrl = jObj.toString();
+		return imageUrl;
+	}
+	
 	
 	/**
 	 * [관리자] 도서 등록 폼으로 이동 (한진)

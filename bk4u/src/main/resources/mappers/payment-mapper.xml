@@ -27,4 +27,21 @@
 		  join orders using (pay_no)
 		 where order_no = #{orderNo}
 	</select>
+	
+	<!-- [관리자] 정기구독 상세 조회 - 결제 (한진) -->
+	<select id="selectAdminSubscDetailPay" resultMap="paymentResult">
+		select
+		       pay_no,
+		       pay_way,
+		       price,
+		       status,
+		       pay_date,
+		       deposit,
+		       deposit_name,
+		       deposit_bank
+		  from payment
+		  join subscription using (pay_no)
+		 where subsc_no = #{subscNo}
+	</select>
+	
 </mapper>

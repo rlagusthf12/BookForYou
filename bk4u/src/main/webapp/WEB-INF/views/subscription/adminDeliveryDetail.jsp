@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +55,7 @@
         .vertical th{width: 160px;}
 
         /*배송 정보 변경 폼*/
+        .hide{display: none!important;}
         #addressForm{
             display: inline-block;
             margin:40px 0 10px 0;
@@ -124,14 +126,29 @@
 
 <script>
 	$(function(){
-	    $("#addressForm").hide();
+		/* 주소 변경 폼 열기/닫기 */
 	    $("#showAddressForm").click(function(){
-	        $("#addressForm").slideDown();
+	        $("#addressForm").toggleClass("hide");
 	    })
 	
-	    $("#saveAddress").click(function(){
-	        $("#addressForm").slideUp();
-	    })
+	    /* 배송지 변경 */
+	    var sNo = $("#sNo").text();
+	    $("#hiddenSubscNo").val(sNo);	
+	    
+	    /* 결제쪽 계산 */
+	    var $price = Number($("#price").text());
+	    var $point = Number($("#point").text());
+	    var $add = Number($("#add").text());
+	    var $total = $price - $point + $add;
+	    $("#total").text($total);
+	    $("#total2").text($total);
+	    var $gp = $total * 0.01;
+	    $("#givPoint").text($gp);
+	    
+	    /* 닫기 버튼 */
+		$("#back").click(function(){
+			history.back();
+		})
 	})
 </script>
 </head>
@@ -162,7 +179,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>0001</td>
+                        <td id="sNo">0001</td>
                         <td>프리미엄</td>
                         <td>3개월</td>
                         <td>10일</td>
@@ -261,15 +278,18 @@
         		<div class="alterInfo-btn">
                 	<button type="button" id="showAddressForm">주소 변경</button>
             	</div>
-                <div id="addressForm">
-                    <input type="text" id="sample6_postcode" class="d_form mini" placeholder="우편번호">
-                    <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
-                    <input type="text" id="sample6_address" class="d_form large" placeholder="주소"><br>
-                    <input type="text" id="sample6_detailAddress" class="d_form" placeholder="상세주소">
-                    <input type="text" id="sample6_extraAddress" class="d_form" placeholder="참고항목">
-                    <div id="addressForm-btn" class="alterInfo-btn">
-                        <button id="saveAddress">주소 저장</button>
-                    </div>
+                <div id="addressForm" class="hide">
+                    <form action="alterAddress.su" method="post">
+                    		<input type="hidden" id="hiddenSubscNo" name="subscNo">
+	                        <input type="text" id="sample6_postcode" name="orderPost" class="d_form mini" placeholder="우편번호">
+	                        <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
+	                        <input type="text" id="sample6_address" name="orderAddress" class="d_form large" placeholder="주소"><br>
+	                        <input type="text" id="sample6_detailAddress" name="addressDetail" class="d_form" placeholder="상세주소">
+	                        <input type="text" id="sample6_extraAddress" name="addressRef" class="d_form" placeholder="참고항목">
+	                        <div id="addressForm-btn" class="alterInfo-btn">
+	                            <button type="submit" id="saveAddress">주소 저장</button>
+	                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -302,7 +322,7 @@
         <br><br>
         <div id="btn-area">
             <button type="button">배송보내기</button>
-           <button type="button">닫기</button>
+           <button type="button" id="back">닫기</button>
         </div>
         <br><br><br>
     </div>   

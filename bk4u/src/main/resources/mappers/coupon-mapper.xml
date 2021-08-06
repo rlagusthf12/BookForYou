@@ -35,4 +35,24 @@
 		   and o.coupon_issue_num = m.coupon_issue_num
 	</select>
 	
+	<!-- [관리자] 정기구독 상세 조회 - 쿠폰 (한진) -->
+	<select id="selectAdminSubscDetailCoupon" resultMap="couponDetailResult">
+		select 
+		       m.coupon_issue_num,
+		       c.coupon_no,
+		       coupon_name,
+		       c.coupon_kind,
+		       coupon_content,
+		       coupon_price,
+		       coupon_pricerate,
+		       coupon_startdate,
+		       coupon_enddate,
+		       use_date
+		  from coupon c
+		  join mem_cupon m on (c.coupon_no = m.coupon_no)
+		  join subscription s on (s.mem_no = s.mem_no)
+		 where subsc_no = #{subscNo}
+		   and s.coupon_issue_no = m.coupon_issue_num
+	</select>
+	
 </mapper>
