@@ -32,7 +32,11 @@
 		<result column="cart_qty" property="bkQty"/>
 	</resultMap>
 	
-	
+	<resultMap id="listResult" type="List">
+		<result column="bk_no" property="bkNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="list_date" property="listDate"/>
+	</resultMap>
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
 	<select id="selectAllListCount" resultType="_int">
@@ -601,5 +605,28 @@
 		  , sysdate
 		  )
 	</insert>
+	
+	<!-- [사용자] 마이페이지 나의 도서 리스트(찜한 목록) 갯수 조회 (세아)-->
+	<select id="selectMyListCount" resultType="_int">
+		select
+			count(*)
+		from list
+		where mem_no = #{memNo}	
+	</select>
+	
+	<!-- [사용자] 마이페이지 나의 도서 리스트 조회(세아) -->
+	<select id="selectMyList" resultMap="bookResult">
+		select bk_no,
+			    bk_title,
+			    bk_publish,
+			    bk_price, 
+			    grade_star
+		from list
+		inner join book b using(bk_no)
+		inner join (select nvl(round(avg(nvl(grade_star, 0)),1),0) as grade_star, bk_no
+  					from grade
+  					group by bk_no) using(bk_no)
+		where mem_no = #{memNo}
+	</select>
 	
 </mapper>

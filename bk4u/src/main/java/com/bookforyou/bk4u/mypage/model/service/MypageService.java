@@ -1,6 +1,8 @@
 package com.bookforyou.bk4u.mypage.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -28,6 +30,10 @@ public interface MypageService {
 	int updateMemberDetail(Member member);
 
 	int updateMemberStatusDisable(Member member);
+
+	int selectMyListCount(Member member);
+
+	ArrayList<Book> selectMyList(HashMap<String, Object> listParam);
 
 
 }

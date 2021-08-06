@@ -12,12 +12,12 @@
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .wrap {
             width: 1200px;
-            height: 1200px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -26,7 +26,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 900px;
             position: relative;
             display: inline-flex;
         }
@@ -56,6 +56,7 @@
         #table-box{
             margin-top: 50px;
             width: 90%;
+            height: 500px;
             margin:auto;
         }
 
@@ -77,6 +78,8 @@
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -182,80 +185,20 @@
                               <th scope="col">출판사</th>
                               <th scope="col">가격</th>
                               <th scope="col">평점</th>
+                              <th style="visibility:hidden;position:absolute;"></th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
+                          <c:forEach var="book" items="${list }">
+                          	<tr>
                               <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                              <td>미드나잇 라이브러리</td>
-                              <td>인플루엔셜</td>
-                              <td>15800원</td>
-                              <td>4.3</td>
+                              <td>${book.bkTitle }</td>
+                              <td>${book.bkPublish }</td>
+                              <td>${book.bkPrice }원</td>
+                              <td>${book.bkGrade}</td>
+                              <td style="visibility:hidden;position:absolute;">${book.bkNo }</td>
                             </tr>
-                            <tr>
-                              <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                              <td>미드나잇 라이브러리</td>
-                              <td>인플루엔셜</td>
-                              <td>15800원</td>
-                              <td>4.3</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-                              <tr>
-                                <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                                <td>미드나잇 라이브러리</td>
-                                <td>인플루엔셜</td>
-                                <td>15800원</td>
-                                <td>4.3</td>
-                              </tr>
-
+                          </c:forEach>  
                           </tbody>
                     </table>
                 </div>
@@ -264,19 +207,34 @@
                 </div>
                 <div id="paging-wrap">
                     <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">이전</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                        <li class="page-item disabled"><a class="page-link">다음</a></li>
-                    </ul>
+                	<c:choose>
+                    	<c:when test="${ pi.currentPage eq 1 }">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage}">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                </ul>
                 </div>
             </div>  
 
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 
 </html>

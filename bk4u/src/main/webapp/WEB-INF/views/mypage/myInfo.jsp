@@ -38,7 +38,7 @@
 
         #content {
             background: #EEE;
-            height: 1100px;
+            height: 1180px;
             position: relative;
             display: inline-flex;
         }
@@ -48,7 +48,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1000px;
+            height: 1080px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }

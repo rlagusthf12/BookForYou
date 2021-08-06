@@ -1,11 +1,15 @@
 package com.bookforyou.bk4u.mypage.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
@@ -52,6 +56,23 @@ public class MypageDao {
 	public int updateMemberStatusDisable(SqlSessionTemplate sqlSession, Member member) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("memberMapper.updateMemberStatusDisable",member);
+	}
+
+	public int selectMyListCount(SqlSessionTemplate sqlSession, Member member) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("bookMapper.selectMyListCount",member);
+	}
+
+	public ArrayList<Book> selectMyList(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam) {
+		// TODO Auto-generated method stub
+		PageInfo pi = (PageInfo) listParam.get("pi");
+		Member member = (Member) listParam.get("member");
+		
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("bookMapper.selectMyList",member, rowBounds);
 	}
 
 

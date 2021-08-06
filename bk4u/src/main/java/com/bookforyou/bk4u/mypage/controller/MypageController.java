@@ -409,6 +409,14 @@ public class MypageController {
 		}
 	}
 	
+	/**
+	 * 회원 탈퇴 처리하는 메서드
+	 * @author 안세아 
+	 * @param member
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("disable-member.mp")
 	public String disableMember(Member member, HttpSession session, Model model) {
 		int result = mypageService.updateMemberStatusDisable(member);
@@ -420,6 +428,33 @@ public class MypageController {
 			model.addAttribute("errorMsg","유효하지 않은 접근입니다.");
 			return "common/errorPage";
 		}
+	}
+	
+	/**
+	 *  보관함 리스트 조회하는 메서드
+	 * @param currentPage
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("my-list.mp")
+	public String selectMyList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		
+		int listCount = mypageService.selectMyListCount(loginUser);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		HashMap<String,Object> listParam = new HashMap<String,Object>();
+		listParam.put("pi", pi);
+		listParam.put("member", loginUser);
+		
+		ArrayList<Book> myList = mypageService.selectMyList(listParam);
+		log.info("myList : "+ myList);
+		model.addAttribute("pi", pi);
+		model.addAttribute("list",myList);
+		
+		return "mypage/myList";
 	}
 	
 	

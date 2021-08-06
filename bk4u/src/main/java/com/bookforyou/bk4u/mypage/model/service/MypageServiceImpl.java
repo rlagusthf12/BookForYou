@@ -1,6 +1,8 @@
 package com.bookforyou.bk4u.mypage.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,19 @@ public class MypageServiceImpl implements MypageService {
 	public int updateMemberStatusDisable(Member member) {
 		return mypageDao.updateMemberStatusDisable(sqlSession,member);
 	}
+
+	@Override
+	public int selectMyListCount(Member member) {
+		return mypageDao.selectMyListCount(sqlSession,member);
+	}
+
+	@Override
+	public ArrayList<Book> selectMyList(HashMap<String, Object> listParam) {
+		
+		return mypageDao.selectMyList(sqlSession,listParam);
+	}
+
+
 
 
 	
