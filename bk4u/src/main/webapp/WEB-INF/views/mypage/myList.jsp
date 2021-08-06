@@ -9,6 +9,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+     <!-- alertify 관련 라이브러리 -->
+    <!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
@@ -171,12 +180,20 @@
             </div>
             <!-- partial -->
             <div id="main_content">
+            	<c:if test="${ !empty delListResultMsg }">
+				<script>
+					alertify.alert("${delListResultMsg}");
+				</script>
+				<c:remove var="delListResultMsg" scope="session"/>
+				</c:if>
                 <div id="head-of-main-content">
                     보관함
                 </div>
                 <hr style="text-align: center; width: 95%; margin: auto;">
                 <br>
                 <div id="table-box">
+                	<form action="delete-my-list.mp" method="post" id="delMyList">
+                	<input type="hidden" id="bookArray" name="bookArray"/>
                     <table class="table table-hover" id="list-of-books">
                         <thead class="table-light">
                             <tr>
@@ -189,9 +206,12 @@
                             </tr>
                           </thead>
                           <tbody>
+                          <c:if test="${ empty list }">
+                        	  <td colspan="6" style="text-align:center; cursor: default"><b>보관함에 담긴 책이 없습니다.</b></td>
+                          </c:if>
                           <c:forEach var="book" items="${list }">
                           	<tr>
-                              <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
+                              <th scope="row"> <input class="form-check-input" type="checkbox" name="bkNo" value="${book.bkNo }" id="bkNo"></th>
                               <td><a href="detail.bk?bkNo=${ book.bkNo }">${book.bkTitle }</a></td>
                               <td>${book.bkPublish }</td>
                               <td>${book.bkPrice }원</td>
@@ -201,10 +221,25 @@
                           </c:forEach>  
                           </tbody>
                     </table>
+                    </form>
                 </div>
+                <script>
+                	function deleteMyList(){
+                		var bookArray = new Array();
+            			$('input:checkbox[name=bkNo]:checked').each(function(){
+            				bookArray.push(this.value);
+            			});
+            		
+            			$("#bookArray").val(bookArray);
+            			
+            			$("#delMyList").submit();
+                	}
+                </script>
                 <div id="button-box">
-                    <button type="button" class="btn btn-outline-danger">삭제</button>
+                    <button type="button" class="btn btn-outline-danger" onclick="deleteMyList();">삭제</button>
                 </div>
+                <c:choose>
+                <c:when test="${ !empty list }">
                 <div id="paging-wrap">
                     <ul class="pagination">
                 	<c:choose>
@@ -230,6 +265,8 @@
                 	</c:choose>
                 </ul>
                 </div>
+                </c:when>
+                </c:choose>
             </div>  
 
         </div>

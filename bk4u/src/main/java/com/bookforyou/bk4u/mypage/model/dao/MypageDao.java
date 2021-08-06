@@ -13,6 +13,7 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
+import com.bookforyou.bk4u.mypage.model.vo.MyList;
 
 @Repository
 public class MypageDao {
@@ -74,6 +75,13 @@ public class MypageDao {
 		
 		return (ArrayList)sqlSession.selectList("bookMapper.selectMyList",member, rowBounds);
 	}
+
+	public int deleteMyList(SqlSessionTemplate sqlSession, MyList list) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("bookMapper.deleteMyList",list);
+	}
+
+
 
 
 

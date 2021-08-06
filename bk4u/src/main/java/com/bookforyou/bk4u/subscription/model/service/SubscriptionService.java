@@ -82,4 +82,15 @@ public interface SubscriptionService {
 	 */
 	int updateAdminAddress(Subscription s);
 
+	/**
+	 * [관리자] 오늘 날짜의 정기배송 목록 개수 조회 (한진)
+	 */
+	int selectTodaySubscCount();
+
+	/**
+	 * [관리자] 오늘 날짜의 정기배송 목록 조회 (한진)
+	 */
+	ArrayList<Subscription> selectTodaySubscList(PageInfo pi);
+
+
 }

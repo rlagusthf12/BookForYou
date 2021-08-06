@@ -14,6 +14,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.dao.MypageDao;
+import com.bookforyou.bk4u.mypage.model.vo.MyList;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -83,6 +84,11 @@ public class MypageServiceImpl implements MypageService {
 	public ArrayList<Book> selectMyList(HashMap<String, Object> listParam) {
 		
 		return mypageDao.selectMyList(sqlSession,listParam);
+	}
+
+	@Override
+	public int deleteMyList(MyList list) {
+		return mypageDao.deleteMyList(sqlSession,list);
 	}
 
 

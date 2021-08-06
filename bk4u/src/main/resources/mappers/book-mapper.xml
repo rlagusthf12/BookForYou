@@ -32,12 +32,6 @@
 		<result column="cart_qty" property="bkQty"/>
 	</resultMap>
 	
-	<resultMap id="listResult" type="List">
-		<result column="bk_no" property="bkNo"/>
-		<result column="mem_no" property="memNo"/>
-		<result column="list_date" property="listDate"/>
-	</resultMap>
-	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
 	<select id="selectAllListCount" resultType="_int">
 		select 
@@ -640,5 +634,12 @@
 		  join subsc_bookorder using (bk_no)
 		 where subsc_no = #{subscNo}
 	</select>
+	
+	<!-- [사용자] 내 보관함에서 삭제하기(세아) -->
+	<delete id="deleteMyList">
+		delete
+		from list
+		where mem_no = #{memNo} and bk_no=#{bkNo}
+	</delete>
 	
 </mapper>
