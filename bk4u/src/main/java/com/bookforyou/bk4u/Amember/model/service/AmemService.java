@@ -17,6 +17,10 @@ public interface AmemService {
 	public int selectAmemSearchListCount(HashMap<String, String> map);
 	public ArrayList<Amem> selectAmemSearchList(PageInfo pi, HashMap<String, String> map);
 	
+	// 회원상세조회
+	int increaseCount(int memNo);
+	Amem selectAmemDetail(int memNo);
+	
 	// 회원탈퇴
 	int amDelete(String memId);
 	

@@ -346,6 +346,27 @@
 		 order
   		   		by mem_no asc
 	</select>
+	
+	
+	<!-- 관리자 회원상세조회 (형우)-->
+		
+	<select id="selectAmemDetail" resultMap="memberResult">
+		select
+		       mem_no
+		     , mem_id
+		     , mem_name
+		     , mem_age
+		     , mem_gender
+		     , mem_basic_address
+		     , mem_detail_address
+		     , mem_email
+		     , mem_phone
+		     , mem_status
+		     , mem_enrolldate		     
+		  from members
+		 where mem_no = #{memNo}
+	</select>
+	
   	
   	<!-- 관리자 회원탈퇴 처리 (형우) -->
   	<update id="amDelete">

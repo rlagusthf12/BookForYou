@@ -43,4 +43,10 @@ public class AmemDao {
 		
 	}
 	
+	//회원 상세조회
+	
+	public Amem selectAmemDetail(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.selectAmemDetail", memNo);
+	}
+	
 }

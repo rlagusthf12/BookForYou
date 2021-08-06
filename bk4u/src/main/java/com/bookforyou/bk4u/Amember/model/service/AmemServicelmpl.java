@@ -53,4 +53,16 @@ public class AmemServicelmpl implements AmemService{
 		
 	}
 
+	@Override
+	public int increaseCount(int memNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public Amem selectAmemDetail(int memNo) {
+		return amDao.selectAmemDetail(sqlSession, memNo);
+	}
+
+
 }

@@ -3,22 +3,27 @@ package com.bookforyou.bk4u.Amember.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.Amember.model.service.AmemService;
 import com.bookforyou.bk4u.Amember.model.vo.Amem;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
 
 
 // 관리자 메인
@@ -55,6 +60,28 @@ public class AmemberController {
 		
 		return "Amember/memberSearch";
 	}
+	
+	// 회원 상세조회
+	
+	@RequestMapping("amemDetail.me")
+	public ModelAndView selectAmemDetail(int ano, ModelAndView mv) {
+		int result = amService.increaseCount(ano);
+		
+		if(result > 0) {
+			Amem a = amService.selectAmemDetail(ano);
+			//mv.addObject("b", b);
+			//mv.setViewName("board/boardDetailView");
+			mv.addObject("a", a).setViewName("Amember/amemberDetail");
+			
+		}else {
+			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+		
+	}
+		
+	
 	
 	//회원 검색
 	@RequestMapping("amSearch.me")
