@@ -282,4 +282,38 @@
 		 where subsc_no = #{subscNo}
 	</update>
 	
+	<!-- [관리자] 오늘 날짜의 정기배송 개수 조회 (한진) -->
+	<select id="selectTodaySubscCount" resultType="_int">
+		select 
+		       count(*)
+		  from subscription
+		  join members using (mem_no)
+		 where subsc_deldate = (
+				                 select
+				                        extract(day from sysdate) day
+				                   from dual
+				                )
+	</select>
+	
+	<!-- [관리자] 오늘 날짜의 정기배송 목록 조회 (한진) -->
+	<select id="selectTodaySubscList" resultMap="SubscResult">
+		select 
+		       subsc_no,
+		       subsc_sdate,
+		       subsc_enddate,
+		       subsc_deldate,
+		       subsc_name,
+		       subsc_period,
+		       mem_name,
+		       deliveryrequest,
+		       admin_memo
+		  from subscription
+		  join members using (mem_no)
+		 where subsc_deldate = (
+		                        select
+		                               extract(day from sysdate) day
+		                          from dual
+		                        )
+	</select>
+	
 </mapper>

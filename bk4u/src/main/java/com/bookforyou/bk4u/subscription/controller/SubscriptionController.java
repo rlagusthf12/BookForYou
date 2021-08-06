@@ -181,4 +181,23 @@ public class SubscriptionController {
 		
 		return "redirect:/adminSubscDetail.su?subscNo=" + subscNo + "&distinctionNo=" + distinctionNo;
 	}
+	
+	/**
+	 * [관리자] 정기구독 배송 목록 조회 (한진)
+	 */
+	@RequestMapping("adminSubscDeliveryList.su")
+	public ModelAndView selectAdminSubscDeliveryList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int listCount = sService.selectTodaySubscCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);;
+		
+		ArrayList<Subscription> s = sService.selectTodaySubscList(pi);
+		
+		mv.addObject("s", s)
+		  .addObject("pi", pi)
+		  .setViewName("subscription/adminDelivery");
+		
+		return mv;
+	}
 }

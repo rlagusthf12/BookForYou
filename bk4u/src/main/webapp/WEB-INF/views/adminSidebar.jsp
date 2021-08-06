@@ -260,7 +260,7 @@
                         <a href="adminSubscList.su">정기구독 리스트</a>
                     </li>
                     <li>
-                        <a href="subscription/adminDelivery">정기구독 발송</a>
+                        <a href="adminSubscDeliveryList.su">정기구독 발송</a>
                     </li>
                 </ul>
             </li>
