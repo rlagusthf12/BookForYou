@@ -134,6 +134,23 @@ public class SubscriptionImpl implements SubscriptionService{
 	public int updateAdminAddress(Subscription s) {
 		return sDao.updateAdminAddress(sqlSession, s);
 	}
+
+	/**
+	 * [관리자] 오늘 날짜의 정기배송 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectTodaySubscCount() {
+		return sDao.selectTodaySubscCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] 오늘 날짜의 정기배송 목록 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Subscription> selectTodaySubscList(PageInfo pi) {
+		return sDao.selectTodaySubscList(sqlSession, pi);
+	}
+
 	
 	
 }

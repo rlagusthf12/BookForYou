@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,11 @@
 <!-- 부트스트랩  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- fullcalendar -->
+<link href="resources/fullcalendar/lib/main.css" rel="stylesheet"/>
+<script src="resources/fullcalendar/lib/main.js"></script>
+
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
@@ -145,34 +151,12 @@
         }
         .memo-delete-btn{color:rgb(255, 150, 59);}
         .memo-upgrade-btn{color:black;}
-
-        
         
         /* 페이징 */
-        #paging-area{
-            width:fit-content;
-            margin:auto;
-        }
-        #pagination{
-            padding:0;
-            list-style: none;
-        }
-        #pagination li{
-            display:inline-block;
-            width:35px;
-            height: 30px;
-            text-align: center;
-            line-height: 18px;
-            font-size:16px;
-            padding:5px;
-            border: 1px solid black;
-            border-radius: 5px;
-        }
-        #pagination li:hover{
-            cursor: pointer;
-            font-weight: 600;
-            color: #EC573B;
-        }
+       	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
+
+        #paging-wrap{width:fit-content; margin:auto;}
+        .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 </style>
 
 <script>
@@ -217,7 +201,7 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>정기배송 보내기</p>
         </div> 
         <br>
@@ -255,71 +239,141 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>rd0001</td>
-                            <td>2021-07-01<br>2021-10-01</td>
-                            <td>최하늘<br>(on001)</td>
-                            <td>베이직</td>
-                            <td>3개월권</td>
-                            <td>
-                                <div class="select-book">
-                                    <a href="">선택하기</a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="delivery">
-                                    <a href="subscriptionDeliveryDetail.html">보내기</a>
-                                </div>
-                            </td>
-                            <td>
-                                <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재하지 않을(NULL) 경우 -->
-                                <div class="user-memo no-exist">
-                                    <button type="button">user</button>
-                                </div>
-                                <!-- 관리자 메모(ADMIN_MEMO)가 존재하지 않을(NULL) 경우 -->
-                                <div class="admin-memo no-exist">
-                                    <button type="button">admin</button>
-                                </div>
-                            </td>
-                        </tr>
+                    	<c:choose>
+                    		<c:when test = "${ s.size() != 0}"> 
+		                    	<c:forEach var="o" items="${ s }" varStatus="no">
+			                        <tr>
+			                            <td>${ no.count }</td>
+			                            <td>${ s.subscNo }</td>
+			                            <td>${ s.subscSdate } <br> ${ s.subscEndDate }</td>
+			                            <td>${ s.memName } <br> (${ s.memId })</td>
+			                            <td>${ s.subscName }</td>
+			                            <td>${ s.subscPeriod }</td>
+			                            <td>
+			                            	<div class="select-book">
+			                                    <a href="">선택하기</a>
+			                                </div>
+			                            </td>
+			                            <td>
+			                            	<div class="delivery">
+			                                    <a href="subscriptionDeliveryDetail.html">보내기</a>
+			                                </div>
+			                            </td>
+			                            <td style="display:none">${ s.deliveryRequest }</td>
+			                            <td style="display:none">${ s.adminMemo }</td>
+					                    <td>
+				                            <c:choose>
+				                            	<c:when test="${ empty s.deliveryRequest }">
+						                             	<!-- 사용자 배송메세지(DELIVERY_MSG)가 존재하지 않을(NULL) 경우 -->
+						                                <div class="user-memo no-exist">
+						                                    <button type="button">user</button>
+						                                </div>
+					                            </c:when>
+					                            <c:otherwise>
+						                         	 <!-- 사용자 배송메세지(DELIVERY_MSG)가 존재할 (not NULL) 경우 -->
+							                                <div class="user-memo exist">
+							                                    <button type="button">user</button>
+							                                </div>
+							                                <div class="user-memo-content hide">
+																<div class="memo-top">
+																	<p>구매자 배송메세지</p>
+																</div>
+																<div class="memo-bottom">
+																	<p></p>
+																</div>
+															</div>      
+					                            </c:otherwise>
+					                        </c:choose>
+					                        <c:choose>
+					                        	<c:when test="${ empty s.adminMemo }">
+						                                <!-- 관리자 메모(ADMIN_MEMO)가 존재하지 않을(NULL) 경우 -->
+						                                <div class="admin-memo no-exist">
+						                                    <button type="button">admin</button>
+						                                </div>
+						                                
+						                                <div class="admin-memo-content hide">
+															<div class="memo-top">
+																<p>관리자 메모</p>
+															</div>
+															<form action="updateAdminMemo.or">
+																<input type="hidden" name="orderNo" class="oNo"/>
+																<div class="memo-bottom">
+																	<p><input type="text" name="adminMemoContent"></p>
+																</div>
+																<div class="memo-btn-area">
+																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
+																	<button type="button" class="memo-delete-btn">삭제</button>
+																	<button type="submit" class="memo-upgrade-btn">저장</button>
+																</div>
+															</form>
+														</div>				
+					                        	</c:when>
+					                        	<c:otherwise>
+						                                <!-- 관리자 메모(ADMIN_MEMO)가 존재할 (not NULL) 경우 -->
+						                                <div class="admin-memo exist">
+						                                    <button type="button">admin</button>
+						                                </div>
+						                                
+						                                <div class="admin-memo-content hide">
+															<div class="memo-top">
+																<p>관리자 메모</p>
+															</div>
+															<form action="updateAdminMemo.or">
+																<input type="hidden" name="orderNo" class="oNo"/>
+																<div class="memo-bottom">
+																	<p><input type="text" name="adminMemoContent"></p>
+																</div>
+																<div class="memo-btn-area">
+																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
+																	<button type="button" class="memo-delete-btn">삭제</button>
+																	<button type="submit" class="memo-upgrade-btn">저장</button>
+																</div>
+															</form>
+														</div>					
+					                        	</c:otherwise>
+					                        </c:choose>
+					                        
+					                    </td>
+			                        </tr>
+		                        </c:forEach>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<tr>
+		                			<td colspan="12">오늘 보낼 정기구독 주문이 존재하지 않습니다.</td>
+		                		</tr>
+		                	</c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
             </div>
-            <div class="user-memo-content hide">
-                <div class="memo-top">
-                    <p>구매자 배송메세지</p>
-                </div>
-                <div class="memo-bottom">
-                    <p>경비실에 맡겨주세요.</p>
-                </div>
-            </div>
-    
-            <div class="admin-memo-content hide">
-                <div class="memo-top">
-                    <p>관리자 메모</p>
-                </div>
-                <div class="memo-bottom">
-                    <p><input type="text" value="엄청 빠른 배송"></p>
-                </div>
-                <div class="memo-btn-area">
-                    <!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
-                    <button type="button" class="memo-delete-btn">삭제</button>
-                    <button type="button" class="memo-upgrade-btn">저장</button>
-                </div>
-            </div>
+            
             <br>
-            <div id="paging-area">
-                <ul id="pagination">
-                    <li><a>&lt;</a></li>
-                    <li><a>1</a></li>
-                    <li><a>2</a></li>
-                    <li><a>3</a></li>
-                    <li><a>4</a></li>
-                    <li><a>5</a></li>
-                    <li><a>&gt;</a></li>
-                </ul>
-            </div>
+            <div id="paging-wrap">
+	            <ul class="pagination">
+	            	<c:choose>
+	            		<c:when test="${ pi.currentPage eq 1 }">
+	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+	                	</c:when>
+	                	<c:otherwise>
+			                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+	    				</c:otherwise>
+	    			</c:choose>            	
+	                
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
+	                </c:forEach>
+	                
+	                
+	                <c:choose>
+	                	<c:when test="${ pi.currentPage ge pi.maxPage }">
+			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                	</c:otherwise>
+	                </c:choose>
+	            </ul>
+	        </div>
         </div>
     </div>
 </body>

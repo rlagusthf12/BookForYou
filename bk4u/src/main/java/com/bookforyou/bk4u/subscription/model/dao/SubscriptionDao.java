@@ -116,4 +116,23 @@ public class SubscriptionDao {
 		return sqlSession.update("subscriptionMapper.updateAdminAddress", s);
 	}
 
+	/**
+	 * [관리자] 오늘 날짜의 정기배송 목록 개수 조회 (한진)
+	 */
+	public int selectTodaySubscCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("subscriptionMapper.selectTodaySubscCount");
+	}
+
+	/**
+	 * [관리자] 오늘 날짜의 정기배송 목록 조회 (한진)
+	 */
+	public ArrayList<Subscription> selectTodaySubscList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectTodaySubscList", null, rowBounds);
+	}
+
+
 }
