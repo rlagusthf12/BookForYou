@@ -7,16 +7,84 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- fullcalendar -->
+<link href="resources/fullcalendar/lib/main.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.9.0/main.min.js"></script>
+
 <!-- 부트스트랩  -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<!-- fullcalendar -->
-<link href="resources/fullcalendar/lib/main.css" rel="stylesheet"/>
-<script src="resources/fullcalendar/lib/main.js"></script>
 
-<!-- jQuery 라이브러리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		  var calendarEl = document.getElementById('calendar');
+
+		  var calendar = new FullCalendar.Calendar(calendarEl, {
+		    initialView: 'dayGridMonth',
+		    
+		    dateClick:function(info){
+		  		var $date = info.dateStr.substring(8);
+		    	console.log($date);
+		    	
+		    	/*
+			    $.ajax({
+					url: 'getSubscDeliveryList.su',
+					data:{date: $date},
+					type: 'GET',
+					success: function(result) {
+						
+						console.log(result);
+						
+					},
+					error:function(){
+						console.log("ajax통신실패");
+					}
+				});
+		    	*/
+		    	
+		    	location.href="adminSubscDeliveryList.su?date=" + $date;
+				
+		    	
+		    },
+		    events:function(info, successCallback, failureCallback){
+		    	$.ajax({
+		    		url:"getSubscDeliveryList.su",
+		    		async:false,
+		    		success:function(list){
+		    			events = [];
+		    			var d = "";
+		    			var f = "";
+		    			
+		    			for(i=0; i<list.length; i++) {
+		    				d='2021-08-' + list[i].subscDelDate
+		    				var event = {
+		    						title:list[i].memName,
+		    						start:d,
+		    						end:d,
+		    						display:'block',
+		    						allDay:false
+		    				};
+		    				events.push(event);
+		    			}
+		    			successCallback(events);
+		    		},
+		    		error:function(){
+		    			console.log("ajax통신실패");
+		    		}
+		    	})
+		    }
+			
+		  });
+
+		  calendar.render();
+	});
+	
+</script>
+
 
 <style>
 		#outer{
@@ -160,40 +228,56 @@
 </style>
 
 <script>
+
 	$(function(){
 	
-	    $(".admin-memo button").click(function(){
-	        $(".admin-memo-content").toggleClass("hide");
-	
-	        if($(this).parent().is(".no-exist")){
-	            $(".admin-memo-content .memo-delete-btn").hide();
-	        }else{
-	            $(".admin-memo-content .memo-delete-btn").show();
-	        }
-	
-	        const a = $(this).offset();
-	        $(".admin-memo-content").offset({top: a.top , left: a.left-320});
-	    })
-	
-	    $(".user-memo.exist button").click(function(){
-	        $(".user-memo-content").toggleClass("hide");
-	        const a = $(this).offset();
-	        $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
-	    })
+		/* admin-memo 모달 보여주기 */
+		$(".admin-memo button").click(function(){
+			$(".admin-memo-content").toggleClass("hide");
+
+			var tr = $(this).parent().parent().parent();
+        	var td = tr.children();
+        	var $memo = td.eq(10).text();
+        	var $orderNo = td.eq(1).text();
+        	$(".admin-memo-content .oNo").val($orderNo);
+        	$(".admin-memo-content .memo-bottom input").val($memo);
+        	
+        	if($(this).parent().is(".no-exist")){
+                $(".admin-memo-content .memo-delete-btn").hide();
+            }else{
+                $(".admin-memo-content .memo-delete-btn").show();
+            }
+        	
+			const a = $(this).offset();
+            $(".admin-memo-content").offset({top: a.top , left: a.left-320});
+            
+		})
+		
+		/* 관리자 메모 삭제 */
+		$(".memo-delete-btn").click(function(){
+			
+			var $orderNo = $(".oNo").val();
+			location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+			
+		})			
+
+        /* user-memo 모달 보여주기 */
+        $(".user-memo.exist button").click(function(){
+        	
+        	var tr = $(this).parent().parent().parent();
+        	var td = tr.children();
+        	var $memo = td.eq(9).text();
+        	$(".user-memo-content .memo-bottom p").text($memo);
+        	
+            $(".user-memo-content").toggleClass("hide");
+            const a = $(this).offset();
+            $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
+        })
 	
 	})
 </script>
 
-<!-- fullcalendar -->
-<script>
-	document.addEventListener('DOMContentLoaded', function() {
-	    var calendarEl = document.getElementById('calendar');
-	    var calendar = new FullCalendar.Calendar(calendarEl, {
-	        initialView: 'dayGridMonth'
-	    });
-	    calendar.render();
-	});
-</script>
+		 
 </head>
 <body>
 
@@ -241,7 +325,7 @@
                     <tbody>
                     	<c:choose>
                     		<c:when test = "${ s.size() != 0}"> 
-		                    	<c:forEach var="o" items="${ s }" varStatus="no">
+		                    	<c:forEach var="s" items="${ s }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
 			                            <td>${ s.subscNo }</td>

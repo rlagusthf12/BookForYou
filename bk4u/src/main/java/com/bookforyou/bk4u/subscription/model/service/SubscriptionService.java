@@ -92,5 +92,20 @@ public interface SubscriptionService {
 	 */
 	ArrayList<Subscription> selectTodaySubscList(PageInfo pi);
 
+	/**
+	 * [관리자] 선택된 날짜의 정기배송 목록 개수 조회 (한진)
+	 */
+	int selectDaySubscCount(int date);
+
+	/**
+	 * [관리자] 선택된 날짜의 정기배송 목록 조회 (한진)
+	 */
+	ArrayList<Subscription> selectDaySubscDeliveryList(PageInfo pi, int date);
+
+	/**
+	 * [관리자] 풀캘린더에 표시할 리스트 조회 (한진)
+	 */
+	ArrayList<Subscription> selectListForCalendarEvents();
+
 
 }

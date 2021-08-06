@@ -1,14 +1,14 @@
 package com.bookforyou.bk4u.subscription.controller;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -17,6 +17,9 @@ import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.subscription.model.service.SubscriptionService;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Controller
 public class SubscriptionController {
@@ -186,18 +189,59 @@ public class SubscriptionController {
 	 * [관리자] 정기구독 배송 목록 조회 (한진)
 	 */
 	@RequestMapping("adminSubscDeliveryList.su")
-	public ModelAndView selectAdminSubscDeliveryList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public ModelAndView selectAdminSubscDeliveryList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+													@RequestParam(value="date", defaultValue="0") int date) {
 		
-		int listCount = sService.selectTodaySubscCount();
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);;
-		
-		ArrayList<Subscription> s = sService.selectTodaySubscList(pi);
-		
+		PageInfo pi = null;
+		ArrayList<Subscription> s = null;
+
+		if(date == 0) {
+			int listCount = sService.selectTodaySubscCount();
+			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			s = sService.selectTodaySubscList(pi);
+		}else {
+			int listCount = sService.selectDaySubscCount(date);
+			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			s = sService.selectDaySubscDeliveryList(pi, date);
+		}
 		mv.addObject("s", s)
 		  .addObject("pi", pi)
 		  .setViewName("subscription/adminDelivery");
 		
 		return mv;
+	}
+
+	/**
+	 * [관리자] 캘린터 클릭 시 해당 날짜의 정기구독 배송 목록 조회 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("getSubscDeliveryList.su")
+	public ArrayList selectDaySubscDeliveryList() {
+		
+		ArrayList<Subscription> s = sService.selectListForCalendarEvents();
+		
+		/*
+		JsonArray jsonList = new JsonArray();
+		
+		for(Subscription sr : s) {
+			
+			JsonObject jObj = new JsonObject();
+			jObj.addProperty("subscNo", sr.getSubscNo());
+			jObj.addProperty("subscsSdate", sr.getSubscSdate());
+			jObj.addProperty("subscEndDate", sr.getSubscEndDate());
+			jObj.addProperty("subscDelDate", sr.getSubscDelDate());
+			jObj.addProperty("subscName", sr.getSubscName());
+			jObj.addProperty("subscPeriod", sr.getSubscPeriod());
+			jObj.addProperty("memName", sr.getMemName());
+			jObj.addProperty("deliveryRequest", sr.getDeliveryRequest());
+			jObj.addProperty("adminMemo", sr.getAdminMemo());
+			
+			jsonList.add(jObj);
+					
+		}
+		*/
+
+		return s;
+
 	}
 }

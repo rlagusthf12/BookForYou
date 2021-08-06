@@ -151,6 +151,30 @@ public class SubscriptionImpl implements SubscriptionService{
 		return sDao.selectTodaySubscList(sqlSession, pi);
 	}
 
+	/**
+	 * [관리자] 선택된 날짜의 정기배송 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectDaySubscCount(int date) {
+		return sDao.selectDaySubscCount(sqlSession, date);
+	}
+
+	/**
+	 * [관리자] 선택된 날짜의 정기배송 목록 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Subscription> selectDaySubscDeliveryList(PageInfo pi, int date) {
+		return sDao.selectDaySubscDeliveryList(sqlSession, pi, date);
+	}
+
+	/**
+	 * [관리자] 풀캘린더에 표시할 리스트 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Subscription> selectListForCalendarEvents() {
+		return sDao.selectListForCalendarEvents(sqlSession);
+	}
+
 	
 	
 }

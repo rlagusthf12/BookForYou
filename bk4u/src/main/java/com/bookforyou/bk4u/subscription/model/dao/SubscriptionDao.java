@@ -134,5 +134,28 @@ public class SubscriptionDao {
 		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectTodaySubscList", null, rowBounds);
 	}
 
+	/**
+	 * [관리자] 선택된 날짜의 정기배송 목록 개수 조회 (한진)
+	 */
+	public int selectDaySubscCount(SqlSessionTemplate sqlSession, int date) {
+		return sqlSession.selectOne("subscriptionMapper.selectDaySubscCount", date);
+	}
+
+	/**
+	 * [관리자] 선택된 날짜의 정기배송 목록 조회 (한진)
+	 */
+	public ArrayList<Subscription> selectDaySubscDeliveryList(SqlSessionTemplate sqlSession, PageInfo pi, int date) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectDaySubscDeliveryList", date, rowBounds);
+	}
+
+	/**
+	 * [관리자] 풀캘린더에 표시할 리스트 조회 (한진)
+	 */
+	public ArrayList<Subscription> selectListForCalendarEvents(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectListForCalendarEvents");
+	}
+
 
 }
