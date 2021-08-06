@@ -180,7 +180,7 @@
                     <table class="table table-hover" id="list-of-books">
                         <thead class="table-light">
                             <tr>
-                              <th scope="col"></th>
+                              <th scope="col">선택</th>
                               <th scope="col">도서명</th>
                               <th scope="col">출판사</th>
                               <th scope="col">가격</th>
@@ -192,7 +192,7 @@
                           <c:forEach var="book" items="${list }">
                           	<tr>
                               <th scope="row"> <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></th>
-                              <td>${book.bkTitle }</td>
+                              <td><a href="detail.bk?bkNo=${ book.bkNo }">${book.bkTitle }</a></td>
                               <td>${book.bkPublish }</td>
                               <td>${book.bkPrice }원</td>
                               <td>${book.bkGrade}</td>
