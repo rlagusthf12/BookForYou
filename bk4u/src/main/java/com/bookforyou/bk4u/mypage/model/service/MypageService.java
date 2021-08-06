@@ -8,6 +8,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
+import com.bookforyou.bk4u.mypage.model.vo.MyList;
 
 public interface MypageService {
 
@@ -34,6 +35,8 @@ public interface MypageService {
 	int selectMyListCount(Member member);
 
 	ArrayList<Book> selectMyList(HashMap<String, Object> listParam);
+
+	int deleteMyList(MyList myList);
 
 
 }

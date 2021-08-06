@@ -34,6 +34,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.service.MypageService;
+import com.bookforyou.bk4u.mypage.model.vo.MyList;
 import com.google.gson.Gson;
 
 @Controller
@@ -57,9 +58,7 @@ public class MypageController {
 	
 	private Logger log = LoggerFactory.getLogger(MypageController.class);
 	
-
 	
-	Member member;
 	
 	/**
 	 * 내 정보 페이지로 이동하는 메서드
@@ -309,7 +308,7 @@ public class MypageController {
 	@ResponseBody
 	@RequestMapping(value="nick-change.mp")
 	public String updateMemNickname(String memNum, String inputNick,HttpSession session) {
-		member = new Member();
+		Member member = new Member();
 		int memNo =  Integer.parseInt(memNum);
 		member.setMemNo(memNo);
 		member.setMemNickname(inputNick);
@@ -457,10 +456,34 @@ public class MypageController {
 		return "mypage/myList";
 	}
 	
+	/**
+	 * 리스트 삭제하는 메서드
+	 * @author 안세아
+	 * @param session
+	 * @param bookArray
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("delete-my-list.mp")
+	public String deleteMyList(HttpSession session, @RequestParam(value="bookArray")List<String> bookArray, Model model ) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		MyList myList = new MyList();
+		myList.setMemNo(loginUser.getMemNo());
+		int result = 0;
+		for(String bookNo : bookArray) {
+			int bkNo = Integer.parseInt(bookNo);
+			myList.setBkNo(bkNo);
+			result = mypageService.deleteMyList(myList);
+		}
+		if(result > 0) {
+			session.setAttribute("delListResultMsg","선택하신 책들이 보관함에서 삭제되었습니다.");
+			return "redirect:my-list.mp";
+		}else {
+			model.addAttribute("errorMsg", "잘못된 요청입니다.");
+			return "common/errorPage";
+		}
 	
-	
-	
-	
+	}
 	
 	
 	
