@@ -65,15 +65,26 @@ public class AmemberController {
 	// 회원 상세조회
 		
 	@ResponseBody
-	@RequestMapping(value="amDetail.me", produces="application/json; charset=utf-8")
-	public Member selectAmemDetail(int memNo) {
+	@RequestMapping("amDetail.me")
+	public String selectAmemDetail(int memNo) {
 		
 		Member m = amService.selectAmemDetail(memNo);
 		
-		System.out.println(memNo);
-		System.out.println(m);
+		JSONObject jObj = new JSONObject();
+		jObj.put("memId", m.getMemId());
+		jObj.put("memName", m.getMemName());
+		jObj.put("memAge", m.getMemId());
+		jObj.put("memBasicAddress", m.getMemBasicAddress());
+		jObj.put("memDetailAddress", m.getMemDetailAddress());
+		jObj.put("memEmail", m.getMemEmail());
+		jObj.put("memPhone", m.getMemPhone());
+		jObj.put("memStatus", m.getMemStatus());
+		jObj.put("memEnrolldate", m.getMemEnrolldate());
 		
-		return m;
+		
+		
+		
+		return jObj.toString();
 		
 	}
 		
