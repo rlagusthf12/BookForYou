@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.group.model.vo.GroupMember;
 import com.bookforyou.bk4u.member.model.vo.Member;
 
 @Service
@@ -22,15 +23,18 @@ public class GroupServiceImpl implements GroupService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<GroupBoard> selectList() {
-		return gDao.selectList(sqlSession);
+	public int selectListCount() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
-	
-	
+
 	@Override
-	public ArrayList<GroupBoard> selectListMore(int page) {
-		return gDao.selectListMore(sqlSession, page);
+	public ArrayList<GroupBoard> selectList(PageInfo pi) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+
 	
 	@Override
 	public int insertGBoard(GroupBoard g) {
@@ -38,8 +42,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public GroupBoard selectGBoard(int groupBoardNo) {
-		return gDao.selectGBoard(sqlSession, groupBoardNo);
+	public GroupBoard selectGroup(int groupBoard) {
+		return gDao.selectGroup(sqlSession, groupBoard);
 	}
 
 	@Override
@@ -59,6 +63,11 @@ public class GroupServiceImpl implements GroupService{
 		return gDao.insertGMem(sqlSession, m);
 		
 		
+	}
+	
+	@Override
+	public ArrayList<GroupMember> groupMemberList() {
+		return gDao.groupMemberList(sqlSession);
 	}
 
 	@Override
@@ -86,10 +95,17 @@ public class GroupServiceImpl implements GroupService{
 		
 	}
 
+
 	private SqlSession getSqlSession() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+
+	
+
+	
 
 	
 

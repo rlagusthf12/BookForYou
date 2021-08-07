@@ -12,49 +12,54 @@
 			<result column="group_notice" property="groupNotice"/>			
 			<result column="group_place" property="groupPlace"/>			
 			<result column="group_open" property="groupOpen"/>		
-			<result column="group_img" property="groupImg"/>
+			<result column="origin_name" property="originName"/>
+			<result column="change_name" property="changeName"/>
 			<result column="group_writer" property="groupWriter"/>
 						
 	</resultMap>
 	
+	<resultMap type="GroupMember" id="gorupMemberResult">
+		
+			<result column="group_boardno" property="groupBoardNo"/>
+			<result column="group_enrolldate" property="groupEnrollDate"/>
+			<result column="mem_email" property="memEmail"/>
+			<result column="group_level" property="groupLevel"/>
+			<result column="group_withdraw" property="groupWithdraw"/>
+			<result column="group_reason" property="groupReason"/>
+
+		
+			
+			
+	
+	</resultMap>
+	
 	
 	<select id="selectList" resultMap="groupResult" >
-		SELECT *              
-        FROM (SELECT ROWNUM NUM 
-            , s.group_boardno 
-            , s.group_type
-            , s.group_date
-            , s.group_title
-            , s.group_script
-            , s.group_place
-            , s.group_img
+		SELECT 
+            , group_boardno 
+            , group_type
+            , group_date
+            , group_title
+            , group_script
+            , group_place
+            , change_name
             
-              FROM 
-                    (SELECT * FROM GROUPBOARD 
+       from gorupBoard
+      where group_status = 'Y'
              
-                    ORDER BY GROUP_BOARDNO DESC)s) 
-        WHERE NUM BETWEEN 1 AND 4
+       ORDER 
+       	  BY GROUP_BOARDNO DESC
 	
 	
 	</select>
 	
-	<select id="selectListMore" resultMap="groupResult">
-		select *             
-        FROM (SELECT ROWNUM NUM 
-            , s.group_boardno 
-            , s.group_type
-            , s.group_title
-            , s.group_script
-            , s.group_place
-            , s.group_img
-            
-              FROM 
-                    (SELECT * FROM GROUPBOARD 
-             
-                    ORDER BY GROUP_BOARDNO DESC)s) 
-        WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
+	<select id="selectListCount" resultType="_int">
 	
-	
+		select
+				count(*)
+		  from  board
+		 where  status = 'Y'
+		 	
 	</select>
 	
 	<insert id="inserGMem">
@@ -66,8 +71,6 @@
 		  ,	group_enrolldate
 		  ,	mem_email
 		  ,	group_level
-		  ,	group_withdraw
-		  ,	group_reason
 		  )
 		  values
 		  (
@@ -75,28 +78,29 @@
 		  , #{gorupEnrollDate}
 		  , #{mem_email}
 		  , #{group_level}
-		  , #{group_withdraw}
-		    #{group_reason}
 		  )
 			
 	</insert>
 	
+	<select id="groupMemberList" resultType="groupMemberResult">
+		select
+		       group_boardno
+		      ,group_enrolldate
+		      ,group_email
+		      ,group_level
+		  from groupBoard
+		  order
+		  	 by group_enrolldate desc
+				
+	</select>
+	
 	<select id="selectSearchGListCount" resultType="_int">
 		select
 			   count(*)
-	      from groupBoard g
+	      from groupBoard
 	     where 
-	     <if test="condition == 'group_title'">
-	    	and gorup_title
-	    </if>
-	    <if test="condition == 'group_script'">
-	    	and group_script
-	    </if>
-	    <if test="condition == 'group_place'">
-	    	and group_place
-	    </if>
-	     		like '%' || #{keyword} || '%'
-	
+	     		group_status='Y'
+
 	</select>
 	
 	<select id="selectSearchList" resultMap="groupResult">
@@ -107,7 +111,7 @@
             , s.group_title
             , s.group_script
             , s.group_place
-            , s.group_img
+            , s.change_name
             
               FROM GROUPBOARD 
             <choose>
@@ -124,7 +128,8 @@
 	     		like '%' || #{keyword} || '%'
              
              
-                    ORDER BY GROUP_BOARDNO DESC
+                    ORDER BY GROUP_BOARDNO DESC)s)
+                    where NUM between 1 and 4
 	</select>
 
 
@@ -138,7 +143,7 @@
 		 ,group_place
 		 ,group_script
 		 ,group_limit
-		 ,group_img
+		 ,change_name
 		 ,group_open
 		  )
 		  values
@@ -149,7 +154,7 @@
 		 ,#{groupPlace}
 		 ,#{groupScript}
 		 ,#{groupLimit}
-		 ,#{groupImg}
+		 ,#{changeName}
 		 ,#{groupOpen}
 		  )
 	
@@ -161,28 +166,13 @@
 		 	 ,  group_title
 		 	 ,  group_writer
 		 	 , 	group_date
-			 ,  group_img
+		 	 ,  group_enrolldate
+			 ,  change_name
 			 ,  group_script
 			 ,  group_notice
 	     from  groupBoard
 	    where  group_boardNo = #{groupBoardNo}
 	</select>
-	
-	<select id="selectBoard" resultMap ="groupResult">
-	
-		select
-				group_boardno
-			  , group_title
-			  , group_date
-			  , group_notice
-			  , group_img
-			  , group_writer
-		  from groupBoard
-		 where group_boardNo = #{groupBoardNo} 
-			 
-			  
-			   
- 	</select>
 	
 	
 </mapper>

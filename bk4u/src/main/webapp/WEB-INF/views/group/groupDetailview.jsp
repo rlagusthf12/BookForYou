@@ -91,15 +91,18 @@
                               </div>
                             </td>
 
-                            <td align="center"><b>${ g.groupMember }</b></td>
+                            <td align="center"><b>회원목록</b></td>
                         </tr>
                      
                         <tr>
                             <td>                              
                                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                                 
-                                ${ groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
-                                
+                                <c:forEach var="groupMemberList" items="${groupMemberList}">
+                                <td>${ groupMemberList.getgroup_enrolldate}</td>
+                                <td>${ groupMemberList.getmem_no }</td>
+                                 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
+                                </c:forEach>
                                 <!-- 강퇴시키는 이유 쓰는 방법 -->
                                 <!-- 작성자가 가입자일 경우 가입되어 있는 사람들 프로필 사진 갖다대면 이름 나오게-->
                                 <!-- data-toggle="tooltip" title="회원닉네임" 토글튜토리얼 갖다대면 닉네임보이게-->
@@ -112,7 +115,7 @@
                 </table>
                 
                 <br>
-                <h6 align="left"><b>${ g.groupMember && g.groupType == 'GL' }</b></h6>
+                <h6 align="left"><b>모임장아이디</b></h6>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
                 
                 
@@ -132,8 +135,10 @@
                             <td>
                                 <p>
                                 ${ g.groupScript }
+                                   <!--  
                                     <details><summary>더보기</summary>
                                     </details>
+                                    -->
                                 </p>
                             </td>
                         </tr>
@@ -179,8 +184,8 @@
 
 
             </table>
-
-                  
+		
+                 
         </div>
     </div>
         </body>

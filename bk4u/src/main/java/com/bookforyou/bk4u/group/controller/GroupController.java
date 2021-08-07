@@ -24,8 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.group.model.vo.GroupMember;
 import com.bookforyou.bk4u.member.model.vo.Member;
 
 
@@ -36,51 +39,21 @@ public class GroupController {
 	private GroupService gService;
 	
 	@RequestMapping(value="group.bo",  method=RequestMethod.GET)
-	public String groupListView(Model model) throws Exception {
+	public String selectList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		ArrayList<GroupBoard> groupList = gService.selectList();
+		//System.out.println(currentPage);
+		int listCount = gService.selectListCount();
 		
-		model.addAttribute("groupList", groupList);
-		model.addAttribute("center", "../group/groupList.jsp");
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<GroupBoard> list = gService.selectList(pi);
 		
+		model.addAttribute("pi" , pi);
+		model.addAttribute("list", list);
+				
 		return "group/groupList";
-
-		
 	}
+
 	
-	@ResponseBody
-	@RequestMapping(value="group.bo", method=RequestMethod.POST)
-	public String groupListMore(String more, Model model) throws Exception{
-		
-		
-		int page = Integer.parseInt(more);
-		
-		List<GroupBoard> selectListMore = gService.selectListMore(page);
-		
-		JSONObject sendJson = new JSONObject();
-		
-		JSONArray jarr = new JSONArray();
-		
-		
-		for (GroupBoard groupBoard :selectListMore) {
-			JSONObject jboard = new JSONObject();
-			
-			jboard.put("groupBoardNo", groupBoard.getGroupBoardNo());
-			jboard.put("groupType", groupBoard.getGroupType());
-			jboard.put("groupDate", groupBoard.getGroupDate());	
-			jboard.put("groupTitle", groupBoard.getGroupTitle());
-			jboard.put("groupScript", groupBoard.getGroupScript());
-			jboard.put("groupPlace", groupBoard.getGroupPlace());
-			jboard.put("groupImg", groupBoard.getGroupImg());
-
-			jarr.add(jboard);
-
-		}
-		
-		sendJson.put("list", jarr);
-		return sendJson.toJSONString();
-		
-	}
 	
 	@RequestMapping("createGroup.bo")
 	public String createGroup() {
@@ -116,6 +89,23 @@ public class GroupController {
 			
 		} 
 	}
+	
+	@RequestMapping("gorupMemberList")
+	public ModelAndView home(Model model) throws Exception {
+		
+		GroupMember gm = new GroupMember();
+		
+		ModelAndView mv = new ModelAndView();
+		
+		ArrayList<GroupMember> groupMemberList = gService.groupMemberList();
+		
+		mv.setViewName("groupMemberList");
+		mv.addObject("groupMemberList", groupMemberList);
+		
+		return mv;
+		
+	}
+	
 	
 	public String saveFile(HttpSession session, MultipartFile upfile) {
 		String savePath = session.getServletContext().getRealPath("/resources/groupFiles/");
@@ -178,10 +168,11 @@ public class GroupController {
 	}
 	
 	@RequestMapping("detail.gbo")
-	public ModelAndView selectGBoard(int gno, ModelAndView mv) {
+	public ModelAndView selectGroup(@RequestParam("gno") int gno, ModelAndView mv) {
 		
-		GroupBoard g = gService.selectGBoard(gno);
-		mv.addObject("g", g).setViewName("group/groupDetailView");
+		
+		GroupBoard g = gService.selectGroup(gno);
+		mv.addObject("g", g).setViewName("group/groupDetailview");
 		
 		return mv;
 		

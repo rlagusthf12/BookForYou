@@ -52,11 +52,9 @@
                                 <tr>
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
                                     <td colspan="2">  
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" id="customRadio" name="groupType" >
-                            			<label class="custom-control-label" for="customRadio">온라인</label><br>
-                                        <input type="radio" class="custom-control-input" id="customRadio2" name="groupType" >
-                                        <label class="custom-control-label" for="customRadio2">오프라인</label>
+										<div>
+                                        <input type="radio" id="customRadio" name="groupType" value="오프라인" > 오프라인
+                                        <input type="radio" id="customRadio2" name="groupType" value="온라인" > 온라인
                                       </div>
                                     </td>
                                 </tr>
@@ -137,7 +135,7 @@
                                        
                                         <img src="" id="img" name="groupImg">
                                         <br>
-                                        <input type="file" id="groupImg" class="form-control-file border" onchange="miri(this);">
+                                        <input type="file" id="changeName" class="form-control-file border" onchange="miri(this);">
 
                                         <script>
                                             function miri(tag){
