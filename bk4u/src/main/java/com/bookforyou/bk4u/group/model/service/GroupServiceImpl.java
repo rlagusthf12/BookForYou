@@ -103,9 +103,9 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int increaseCount(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int increaseCount(int groupBoardNo) {
+		return gDao.increaseCount(sqlSession, groupBoardNo);
+
 	}
 
 	@Override
