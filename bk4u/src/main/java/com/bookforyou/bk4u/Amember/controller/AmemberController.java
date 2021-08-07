@@ -66,14 +66,25 @@ public class AmemberController {
 		
 	@ResponseBody
 	@RequestMapping("amDetail.me")
-	public Member selectAmemDetail(int memNo) {
+	public String selectAmemDetail(int memNo) {
 		
 		Member m = amService.selectAmemDetail(memNo);
 		
-		System.out.println(memNo);
-		System.out.println(m);
+		JSONObject jObj = new JSONObject();
+		jObj.put("memId", m.getMemId());
+		jObj.put("memName", m.getMemName());
+		jObj.put("memAge", m.getMemId());
+		jObj.put("memBasicAddress", m.getMemBasicAddress());
+		jObj.put("memDetailAddress", m.getMemDetailAddress());
+		jObj.put("memEmail", m.getMemEmail());
+		jObj.put("memPhone", m.getMemPhone());
+		jObj.put("memStatus", m.getMemStatus());
+		jObj.put("memEnrolldate", m.getMemEnrolldate());
 		
-		return m;
+		
+		
+		
+		return jObj.toString();
 		
 	}
 		
