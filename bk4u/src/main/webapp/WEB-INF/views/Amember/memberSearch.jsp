@@ -203,7 +203,7 @@
             </thead>
             <tbody>
             	<c:forEach var="as" items="${ list }">
-                <tr onclick="">
+                <tr onclick="detail(${as.memNo});" data-toggle="modal" data-id="1" data-target="#amemDetailModal">
                     <td class="ano" height="80">${ as.memNo }</td>
                     <td>${ as.memId }</td>
                     <td width="700">${ as.memPwd }</td>
@@ -216,13 +216,7 @@
             </tbody>
         </table>
 
-		<script>
-            	$(function(){
-            		$("#amemtable>tbody>tr").click(function(){
-            			location.href="amemDetail.me?ano=" + $(this).children(".ano").text();
-            		})
-            	})
-            </script>
+		
 
         <br><br>
 
@@ -253,7 +247,7 @@
             </ul>
         </div>
         
-        <!-- 회원 클릭 시 Modal -->
+        <!-- 회원 클릭 시 상세보기 Modal -->
 			<div class="modal" id="amemDetailModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -300,7 +294,7 @@
     </div>
     
     <script>
-         function amdetail(no){
+         function detail(no){
 
             console.log(no)
             $.ajax({
@@ -320,7 +314,7 @@
       </script>
     
     
-    <!-- 회원 상세보기 Modal -->
+    <!-- 회원 탈퇴하기 Modal -->
 			<div class="modal" id="amemDeleteModal">
         <div class="modal-dialog">
             <div class="modal-content">

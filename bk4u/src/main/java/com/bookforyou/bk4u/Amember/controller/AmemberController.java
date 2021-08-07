@@ -24,6 +24,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.google.gson.Gson;
 
 
 // 관리자 메인
@@ -62,24 +63,20 @@ public class AmemberController {
 	}
 	
 	// 회원 상세조회
-	
-	@RequestMapping("amemDetail.me")
-	public ModelAndView selectAmemDetail(int ano, ModelAndView mv) {
-		int result = amService.increaseCount(ano);
 		
-		if(result > 0) {
-			Amem a = amService.selectAmemDetail(ano);
-			//mv.addObject("b", b);
-			//mv.setViewName("board/boardDetailView");
-			mv.addObject("a", a).setViewName("Amember/amemberDetail");
-			
-		}else {
-			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
-		}
+	@ResponseBody
+	@RequestMapping(value="amDetail.me", produces="application/json; charset=utf-8")
+	public Amem selectAmemDetail(int memNo) {
 		
-		return mv;
+		Amem m = amService.selectAmemDetail(memNo);
+		
+		System.out.println(memNo);
+		System.out.println(m);
+		
+		return m;
 		
 	}
+		
 		
 	
 	
