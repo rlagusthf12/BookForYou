@@ -65,7 +65,7 @@ public class AmemberController {
 	// 회원 상세조회
 		
 	@ResponseBody
-	@RequestMapping(value="amDetail.me", produces="application/json; charset=utf-8")
+	@RequestMapping("amDetail.me")
 	public Amem selectAmemDetail(int memNo) {
 		
 		Amem m = amService.selectAmemDetail(memNo);
