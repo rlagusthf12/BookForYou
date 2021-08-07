@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.group.model.vo.GroupMember;
 import com.bookforyou.bk4u.member.model.vo.Member;
 
 
@@ -36,9 +37,9 @@ public class GroupDao {
 		return sqlSession.insert("boardMapper.insertGMem", m);
 	}
 	
-	//public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession){
-	//	return (ArrayList)sqlSession.selectList("groupMapper.groupMemberList");
-	//}
+	public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("groupMapper.groupMemberList");
+	}
 	
 		
 	public int selectSearchGListCount(SqlSession sqlSession , HashMap<String, String> map) {

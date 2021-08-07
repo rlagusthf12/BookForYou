@@ -166,12 +166,18 @@
                     		})
                     	})
                     </script>
+                  
+                  
+                       
+            </div>                
+               <hr>
+               <button type="button" id="more"  style="border-radius: 10px; background: white; ">더보기▼</button>
                    
-    <script>
-                    var more = +1;
+    				<script>
+                    var more = -1;
                      $(function(){$('#more').on('click',function(){
                          
-                             more = more -1;
+                             more = more +1;
                             
                             $.ajax({
                                 url : "group.bo",
@@ -216,19 +222,6 @@
                         }); 
                      }); 
                     </script>
-                       
-            </div>
-            
-                              
-               <hr>
-            
-                <br>
-                 <button type="button" id="more" style="border-radius: 10px; background: white; ">더보기▼</button>
-            
-        
-                    
-                    
-          
                 </div>
 
               

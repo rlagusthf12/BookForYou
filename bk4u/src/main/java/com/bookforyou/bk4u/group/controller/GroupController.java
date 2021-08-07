@@ -73,7 +73,7 @@ public class GroupController {
 			jboard.put("groupTitle", groupBoard.getGroupTitle());
 			jboard.put("groupScript", groupBoard.getGroupScript());
 			jboard.put("groupPlace", groupBoard.getGroupPlace());
-			jboard.put("groupImg", groupBoard.getGroupImg());
+			jboard.put("groupImg", groupBoard.getChangeName());
 
 			jarr.add(jboard);
 
@@ -108,11 +108,11 @@ public class GroupController {
 		
 	}
 	
-	/*
+	
 	@RequestMapping("insertGMem.me")
 	public void insertGMem (Member m ,Model model, HttpSession session) {
 		
-		int result = gService.insertGMem(m);
+		int result = gService.insertGroupMem(m);
 		
 		if(result > 0) {
 			
@@ -138,28 +138,29 @@ public class GroupController {
 		return mv;
 		
 	}
-	*/
+	
 	
 	public String saveFile(HttpSession session, MultipartFile upfile) {
-		String savePath = session.getServletContext().getRealPath("/resources/groupFiles/");
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
 		
 		String originName = upfile.getOriginalFilename();
-		// 20210702170130 ( 년월일시분초에 랜덤숫자 다섯개를 붙힘) + 21365 + (원본파일의확장자) .jps
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		int ranNum = (int)(Math.random() * 90000 + 10000);
 		String ext = originName.substring(originName.lastIndexOf("."));
 		
-		String groupImg = currentTime + ranNum + ext;
+		String changeName = currentTime + ranNum + ext;
 		
 		try {
-			upfile.transferTo(new File(savePath + groupImg));
+			upfile.transferTo(new File(savePath + changeName));
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
 		
-		return groupImg;
+		return changeName;
 		
 	}
+		
+	
 	
 	@RequestMapping("placeSelect.do")
 	public void selectAjax(HttpServletRequest req, HttpServletResponse res, String param) {

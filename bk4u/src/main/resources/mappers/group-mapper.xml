@@ -18,7 +18,7 @@
 			<result column="group_status" property="groupStatus"/>
 						
 	</resultMap>
-	<!-- 
+	
 	<resultMap type="GroupMember" id="groupMemberResult">
 		
 			<result column="group_boardno" property="groupBoardNo"/>
@@ -31,7 +31,7 @@
 		
 	</resultMap>
 	
-	-->
+	
 	<select id="selectList" resultMap="groupResult" >
 		SELECT *              
         FROM (SELECT ROWNUM NUM 
@@ -84,14 +84,14 @@
 		  )
 			
 	</insert>
-	<!-- 
-	<select id="groupMemberList" resultType="groupMemberResult">
+	
+	<select id="groupMemberList" resultMap="groupMemberResult">
 		select
 		       group_boardno
 		      ,group_enrolldate
 		      ,group_email
 		      ,group_level
-		  from groupBoard
+		  from groupMember
 		  order
 		  	 by group_enrolldate desc
 				
@@ -105,7 +105,7 @@
 	     		group_status='Y'
 
 	</select>
-	 -->
+	 
 	 
 	<select id="selectSearchList" resultMap="groupResult">
 			SELECT *              

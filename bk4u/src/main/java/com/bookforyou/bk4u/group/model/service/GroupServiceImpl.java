@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.group.model.vo.GroupMember;
 import com.bookforyou.bk4u.member.model.vo.Member;
 
 @Service
@@ -61,12 +62,12 @@ public class GroupServiceImpl implements GroupService{
 		
 		
 	}
-	/*
+	
 	@Override
 	public ArrayList<GroupMember> groupMemberList() {
 		return gDao.groupMemberList(sqlSession);
 	}
-	*/
+	
 
 	@Override
 	public int deleteGroupMem(String userId) {
