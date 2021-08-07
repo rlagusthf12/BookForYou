@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
@@ -29,6 +30,9 @@ public class SubscriptionController {
 
 	@Autowired
 	private SubscriptionService sService;
+	
+	@Autowired
+	private BookService bService;
 	
 	/**
 	 * [관리자] 정기구독 목록 조회 (한진)
@@ -262,10 +266,16 @@ public class SubscriptionController {
 		ArrayList<MemberInterest> iList = sService.selectAdminSubscInterest(sNo);
 		ArrayList<MemberCategory> cList = sService.selectAdminSubscCategory(sNo);
 		
+		HashMap<String, Integer> map = new HashMap<>();
+		int subscNo = sNo;
+		map.put("subscNo", subscNo);
+		Subscription s = sService.selectAdminSubscDetail(map);
+		
 		mv.addObject("bList", bList)
 		  .addObject("m", m)
 		  .addObject("iList", iList)
 		  .addObject("cList", cList)
+		  .addObject("s", s)
 		  .addObject("pi", pi)
 		  .addObject("sNo", sNo)
 		  .setViewName("subscription/adminBookSelect");
@@ -273,4 +283,32 @@ public class SubscriptionController {
 		return mv;
 		
 	}
+	
+	/**
+	 * [관리자] 도서 발송 (한진)
+	*/
+	@RequestMapping("subscDeliveryComplete.su")
+	public String inputSubscDelBook(ModelAndView mv, String suNo, String selectedBkNo, String delCompany, String shippingNumber) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("sNo", suNo);
+		map.put("bNo", selectedBkNo);
+		map.put("delCompany", delCompany);
+		map.put("shippingNumber", shippingNumber);
+		
+		System.out.println(selectedBkNo);
+		
+		int result = sService.insertSubscOrder(map);
+		
+		if(result > 0) {
+			mv.addObject("alertMsg", "정기구독 도서를 발송했습니다.");
+		}else {
+			mv.addObject("errorMsg", "정기구독 도서를 발송하지 못했습니다.");
+		}
+		
+		return "redirect:/adminSubscDeliveryList.su?date=0";
+	}
+	
+	
+	
 }

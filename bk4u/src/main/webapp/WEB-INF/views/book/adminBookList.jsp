@@ -126,6 +126,22 @@
             padding:0.1em 0.5em;
             font-size: 14px;
         }
+        /*배송 정보 변경 폼*/
+        .hide{display: none!important;}
+        .d_btn{
+            display: inline-block;
+            padding:.4em 1em;
+            margin:.2em .15em;
+            border:1px solid #ccc;
+            border-color: #dbdbdb #d2d2d2 #b2b2b2 #d2d2d3;
+            cursor: pointer;
+            color: #464646;
+            border-radius: .2em;
+            vertical-align: middle;
+            font-size: 1em;
+            line-height: 1.25em;
+            background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#f2f2f2));
+        }
 
         /* 정렬 select */
         #array-div{float:right; margin-top:15px;}

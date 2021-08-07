@@ -356,7 +356,28 @@
 		  join members using (mem_no)
 	</select>
 	
-	
+	<!-- [과니랒] 도서 발송 (한진) -->
+	<insert id="insertSubscOrder">
+		insert
+		  into subsc_bookorder
+		     (
+		       subsc_no,
+		       bk_no,
+		       shipping_date,
+		       shipping_company,
+		       shipping_number,
+		       shipping_status
+		     )
+		values
+		     (
+		       #{sNo},
+		       #{bNo},
+		       TO_CHAR(SYSDATE, 'YYYY-MM-DD'),
+		       #{delCompany},
+		       #{shippingNumber},
+		       '배송중'
+		     )
+	</insert>
 	
 	
 	

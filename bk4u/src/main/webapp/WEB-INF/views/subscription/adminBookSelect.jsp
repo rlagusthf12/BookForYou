@@ -12,6 +12,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 우편번호 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <style>
 		#outer{
@@ -122,6 +124,22 @@
         .btn{
             padding:0.1em 0.5em;
         }
+        /*배송 정보 변경 폼*/
+        .hide{display: none!important;}
+        .d_btn{
+            display: inline-block;
+            padding:.4em 1em;
+            margin:.2em .15em;
+            border:1px solid #ccc;
+            border-color: #dbdbdb #d2d2d2 #b2b2b2 #d2d2d3;
+            cursor: pointer;
+            color: #464646;
+            border-radius: .2em;
+            vertical-align: middle;
+            font-size: 1em;
+            line-height: 1.25em;
+            background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#f2f2f2));
+        }
 
         /* 정렬 select */
         #array-div{float:right; margin-top:15px;}
@@ -152,10 +170,20 @@
 <script>
 	$(document).ready(function(){
 	    $("#handling-btn").children().addClass("btn btn-outline-success");
+	    
+	    /* 체크박스 한개만 체크 */
+		$('input[name="bCheck"]').click(function(){
+			if($(this).prop('checked')) {
+				$('input[name="bCheck"]').prop('checked', false);
+				$(this).prop('checked', true);
+			}
+		})
+		
+		
 	})
 	
 	$(function(){
-		/* 테이블 행 선택 */
+		/* 도서 상세 조회 */
         $(".detailC").click(function(){
         	
         	var td = $(this);
@@ -164,12 +192,122 @@
         	location.href='adminBookDetail.bk?bkNo=' + bkNo;
         	
         })
+        
+        
+        /* 도서 발송 페이지 
+        $("#deli-btn").click(function(){
+        	
+        	var $sNo = ${ sNo };
+        	
+        	var $bNo = $('input[name="bCheck"]:checked').val();
+        	
+        	location.href='getSubscDelPage.su?sNo=' + $sNo + '&bNo=' + $bNo;
+        })
+        */
+        
+		/* 도서 발송 모달 열기 */
+		$("#modal-btn").click(function(){
+	   		$("#bookDel").modal();
+	   		
+	   		var tr = $('input[name="bCheck"]:checked').parent().parent();
+	   		var td = tr.children();
+	   		
+	   		/* 선택된 도서 띄우기 */
+	   		$("#selectedBook").val(td.eq(4).text() + '(' + td.eq(5).text() + '/' + td.eq(6).text() + ')');
+	    
+	   		$("#selectedBkNo").val(td.eq(3).text());
+	   		
+	   		/* 주소 띄우기 */
+	   		var $address = `${ s.subscAddress } ${ s.addressRef } ${ s.addressDetail }`;
+	   		$("#memAddress").val('[' + ${ s.subscPost } + ']' + $address);
+		})
+	      
+	    /* 주소 변경 폼 열기/닫기 */
+		$("#showAddressForm").click(function(){
+		    $("#addressForm").toggleClass("hide");
+		})
+        
 	})
+	
+	
 </script>
 </head>
 <body>
 
 	<jsp:include page="../adminSidebar.jsp"/>
+	
+	<!-- Modal -->
+		<div class="modal fade" id="bookDel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<h5 class="modal-title" id="exampleModalLabel">발송하기</h5>
+		        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      		</div>
+		      		<div class="modal-body">
+		        		<form class="row g-3" action="subscDeliveryComplete.su">
+		        			<input type="hidden" id="suNo" name="suNo" value="${ s.subscNo }">
+		        			<div class="col-12">
+							    <label for="selectedBook" class="form-label">선택한 도서</label>
+							    <input type="text" class="form-control" id="selectedBook">
+							    <input type="hidden" id="selectedBkNo" name="selectedBkNo">
+							</div>
+							  
+							<div class="col-md-4">
+							    <label for="delCompany" class="form-label">배송회사</label>
+							    <select id="delCompany" class="form-select" name="delCompany">
+							    	<option value="한진택배">한진택배</option>
+							      	<option value="로젠택배">로젠택배</option>
+							    </select>
+							</div>
+							<div class="col-md-6">
+							    <label for="shippingNumber" class="form-label">운송장번호</label>
+							    <input type="text" class="form-control" id="shippingNumber" name="shippingNumber" required>
+							</div>
+							  
+							<div class="col-12">
+							    <label for="memAddress" class="form-label">Address</label>
+							    <input type="text" class="form-control" id="memAddress">
+							</div>
+							  
+							<div class="col-12">
+							  	 <button type="button" class="btn btn-primary" id="showAddressForm">주소  변경</button>
+							</div>
+							  
+							<div id="addressForm" class="hide">
+								<div class="col-md-6">
+									<input type="hidden" id="hiddenOdNo" name="orderNo">
+									<input type="text" id="sample6_postcode" name="orderPost" class="form-control" placeholder="우편번호">
+								</div>
+								<div class="col-md-6">
+								    <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
+								</div>
+								<div class="col-12">
+									<input type="text" id="sample6_address" name="orderAddress" class="form-control" placeholder="주소"><br>
+								</div>
+								<div class="col-12">
+									<input type="text" id="sample6_extraAddress" name="addressRef" class="form-control" placeholder="참고항목">
+								</div>
+								<div class="col-md-6">
+									<input type="text" id="sample6_detailAddress" name="addressDetail"  class="form-control" placeholder="상세주소">
+								</div>
+							
+								<div class="col-12">
+									<div id="addressForm-btn" class="alterInfo-btn">
+			                            <button type="button" class="btn btn-primary" id="saveAddress">주소 저장</button>
+			                        </div>
+								</div>
+							</div>
+							  
+				    		<div class="modal-footer">
+				    			<button type="submit" class="btn btn-primary">발송하기</button>
+				    			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				    		</div>
+						</form>	
+					</div>
+				</div>
+		  	</div>
+		</div>
 	
 	<div id="outer">
         <div id="main-title">
@@ -258,7 +396,7 @@
             </div>
 
             <div id="handling-btn">
-                <button>도서선택</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#bookDel" id="modal-btn">발송하기</button>
             </div>
 
             <div  id="result-div">
@@ -334,6 +472,58 @@
 	            </ul>
 	        </div>
         </div>
+        
     </div>
+    
+    <!-- 우편번호API -->
+    <script>
+	    function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample6_detailAddress").focus();
+	            }
+	        }).open();
+	    }
+    </script>
 </body>
 </html>

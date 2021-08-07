@@ -135,5 +135,12 @@ public interface SubscriptionService {
 	 */
 	ArrayList<MemberCategory> selectAdminSubscCategory(int sNo);
 
+	/**
+	 * [관리자] 도서 발송 (한진)
+	 */
+	int insertSubscOrder(HashMap<String, String> map);
+
+	
+
 
 }

@@ -197,5 +197,14 @@ public class SubscriptionDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectAdminSubscCategory", sNo);
 	}
 
+	/**
+	 * [관리자] 도서 발송 (한진)
+	 */
+	public int insertSubscOrder(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("subscriptionMapper.insertSubscOrder", map);
+	}
+
+	
+
 
 }

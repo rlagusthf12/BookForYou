@@ -218,6 +218,16 @@ public class SubscriptionImpl implements SubscriptionService{
 		return sDao.selectAdminSubscCategory(sqlSession, sNo);
 	}
 
+	/**
+	 * [관리자] 도서 발송 (한진)
+	 */
+	@Override
+	public int insertSubscOrder(HashMap<String, String> map) {
+		return sDao.insertSubscOrder(sqlSession, map);
+	}
+
+	
+
 	
 	
 }
