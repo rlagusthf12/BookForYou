@@ -346,8 +346,11 @@
 	<select id="selectListForCalendarEvents" resultMap="SubscResult">
 		select 
 		       subsc_no,
+		       subsc_sdate,
+		       subsc_enddate,
 		       subsc_deldate,
 		       subsc_name,
+		       subsc_period,
 		       mem_name
 		  from subscription
 		  join members using (mem_no)

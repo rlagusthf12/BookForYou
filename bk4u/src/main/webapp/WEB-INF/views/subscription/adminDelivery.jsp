@@ -57,18 +57,34 @@
 		    		success:function(list){
 		    			events = [];
 		    			var d = "";
-		    			var f = "";
 		    			
+		 
 		    			for(i=0; i<list.length; i++) {
-		    				d='2021-08-' + list[i].subscDelDate
-		    				var event = {
-		    						title:list[i].memName,
-		    						start:d,
-		    						end:d,
-		    						display:'block',
-		    						allDay:false
-		    				};
-		    				events.push(event);
+		    				
+		    				for(j=0; j<list[i].subscPeriod.substring(0, 1); j++) {
+		    					if(Number(list[i].subscSdate.substring(0, 1))+j < 10) {
+		    						if(Number(list[i].subscDelDate) < 10) {
+		    							d=list[i].subscSdate.substring(7) + '-0' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-0' + list[i].subscDelDate
+		    						}else {
+			    						d=list[i].subscSdate.substring(7) + '-0' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-' + list[i].subscDelDate		    							
+		    						}
+		    					}else {
+		    						if(Number(list[i].subscDelDate) < 10) {
+		    							d=list[i].subscSdate.substring(7) + '-' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-0' + list[i].subscDelDate
+		    						}else {
+			    						d=list[i].subscSdate.substring(7) + '-' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-' + list[i].subscDelDate		    							
+		    						}
+		    					}
+		    					
+			    				var event = {
+			    						title:list[i].memName,
+			    						start:d,
+			    						end:d,
+			    						display:'block',
+			    						allDay:false
+			    				};
+			    				events.push(event);
+		    				}
 		    			}
 		    			successCallback(events);
 		    		},
@@ -317,8 +333,7 @@
                             <th>구독자</th>
                             <th>구독이름</th>
                             <th>구독기간</th>
-                            <th>도서</th>
-                            <th>배송코드/배송상태</th>
+                            <th>도서 발송</th>
                             <th width="70px">메모</th>
                         </tr>
                     </thead>
@@ -334,13 +349,8 @@
 			                            <td>${ s.subscName }</td>
 			                            <td>${ s.subscPeriod }</td>
 			                            <td>
-			                            	<div class="select-book">
-			                                    <a href="">선택하기</a>
-			                                </div>
-			                            </td>
-			                            <td>
 			                            	<div class="delivery">
-			                                    <a href="subscriptionDeliveryDetail.html">보내기</a>
+			                                    <a href="subscriptionDeliveryDetail.html">도서선택/발송</a>
 			                                </div>
 			                            </td>
 			                            <td style="display:none">${ s.deliveryRequest }</td>
