@@ -296,11 +296,12 @@
     <script>
          function detail(no){
 
-            console.log(no)
+        	var $no = no
+            console.log($no)
             $.ajax({
                url:"amDetail.me",
                data:{
-               memNo:no                                    
+               memNo:$no                                    
                },type:"post",
                success:function(no){
                   
