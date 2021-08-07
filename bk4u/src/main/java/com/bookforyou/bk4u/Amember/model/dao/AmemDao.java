@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.Amember.model.vo.Amem;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 @Repository
 public class AmemDao {
@@ -45,7 +46,7 @@ public class AmemDao {
 	
 	//회원 상세조회
 	
-	public Amem selectAmemDetail(SqlSessionTemplate sqlSession, int memNo) {
+	public Member selectAmemDetail(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("memberMapper.selectAmemDetail", memNo);
 	}
 	

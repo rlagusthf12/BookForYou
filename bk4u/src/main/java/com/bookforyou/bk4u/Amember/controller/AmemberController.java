@@ -65,10 +65,10 @@ public class AmemberController {
 	// 회원 상세조회
 		
 	@ResponseBody
-	@RequestMapping("amDetail.me")
-	public Amem selectAmemDetail(int memNo) {
+	@RequestMapping(value="amDetail.me", produces="application/json; charset=utf-8")
+	public Member selectAmemDetail(int memNo) {
 		
-		Amem m = amService.selectAmemDetail(memNo);
+		Member m = amService.selectAmemDetail(memNo);
 		
 		System.out.println(memNo);
 		System.out.println(m);

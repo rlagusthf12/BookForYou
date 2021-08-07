@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bookforyou.bk4u.Amember.model.dao.AmemDao;
 import com.bookforyou.bk4u.Amember.model.vo.Amem;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 
 @Service
@@ -60,7 +61,7 @@ public class AmemServicelmpl implements AmemService{
 	}
 	
 	@Override
-	public Amem selectAmemDetail(int memNo) {
+	public Member selectAmemDetail(int memNo) {
 		return amDao.selectAmemDetail(sqlSession, memNo);
 	}
 
