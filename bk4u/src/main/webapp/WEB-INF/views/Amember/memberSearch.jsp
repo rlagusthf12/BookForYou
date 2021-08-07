@@ -261,7 +261,7 @@
                 <!-- Modal body -->
                 <div class="modal-body" style="text-align:left">
                     <h4>&nbsp;&nbsp;&nbsp;
-                    	아이디 : <input type="text" name="id" value="${ a.memId }" readonly>&nbsp;&nbsp; 
+                    	아이디 : <input type="text" name="id" value="${ m.memId }" readonly>&nbsp;&nbsp; 
                     	이름: <input type="text" name="name" value="XXX" style="width:80px" readonly></h4>
                     
                     <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
