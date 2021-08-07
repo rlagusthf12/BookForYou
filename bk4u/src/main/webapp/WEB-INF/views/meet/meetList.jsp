@@ -33,13 +33,12 @@
 </head>
 <body>
       
-            <!--독서모임게시판상세불러오기-->
-            <jsp:include page=""/>
+           
                 
               <div class="content">
       
               <div class="innerOuter"  style="padding:5% 5%;" align="center">
-                    <br><br><br><br><br><br><br><br>
+                  
                     <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
@@ -87,7 +86,7 @@
                                       </table>
                                     </td> 
                                     <td height="180">
-                                        <div id="map" style="width:30px;height:180px;"></div>
+                                        <div id="map" style="width:200px;height:180px;"></div>
             
                                                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=59b5fb5033b78ddb6353f23ac7eb1bc7&libraries=services"></script>
                                                     <script>
@@ -224,14 +223,8 @@
                 </div>
             </div>        
       
-
-
-         
-            
-        
-
          <!--푸터바 입력-->
-         <jsp:include page=""/>  
+         <jsp:include page="../common/footer.jsp"/>  
 
 
     </body>

@@ -178,7 +178,6 @@
                     })
                     })
                 </script>
-                <br>
 
                 <hr>
 
@@ -188,7 +187,9 @@
                  
         </div>
     </div>
-        </body>
+    
+    <jsp:include page="../meet/meetList.jsp"/>
+   
 
           
 
