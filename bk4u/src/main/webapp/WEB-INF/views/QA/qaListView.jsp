@@ -150,7 +150,7 @@
 
 <body>
 
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	
 		<div class="faqTitle">1:1문의 내역</div>
@@ -174,83 +174,80 @@
 				<h2>답변 완료 </h2>
 				</div>
 				<div class="QAContentCount">
-				<h1>7 </h1>
+				<h1>${listCount} </h1>
 				</div>
 				<div class="QAContentCount">
-				<h1>2 </h1>
+				<h1>${yetCount} </h1>
 				</div>
 				<div class="QAContentCount">
-				<h1>12 </h1>
+				<h1>${ansCount} </h1>
 				</div>
 			</div>
 		
 		<div class="faqListTable">
 		<table class="table_board" >
 			<tbody>
+			<c:forEach var="q" items="${list}">
 				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
+					<td style="width: 5%;" class="qaNo">${q.qaNo}</td>
+					<td style="width: 20%;">${q.queType}</td>
+					<td style="width: 20%;">${q.memNickName}</td>
+					<td style="width: 40%;">${q.qaContent}</td>
+					<td style="width: 15%;" class="comp">${q.ansStatus}</td>
 				</tr>
-				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="yet">처리중</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>
-				</tr><tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 25%;">사용자아이디</td>
-					<td style="width: 40%;">결제관련문의</td>
-					<td style="width: 15%;" class="comp">답변 완료</td>					
-				</tr>
+		
+				
+			</c:forEach>			
+		
 			</tbody>
 		</table>
 		</div>
-		
-		 <div id="paging-wrap">
+		<script>
+			$(function(){
+				$(".table_board>tbody>tr").click(function(){
+					location.href="detail.qa?qaNo="+$(this).children(".qaNo").text();	
+				})
+				
+			});
+		</script>
+			<div id="paging-wrap">
             <ul class="pagination">
+            <c:choose>
+            <c:when test="${pi.currentPage eq 1}">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+            </c:when>
+            <c:otherwise>
+          	</c:otherwise>
+                    </c:choose>
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                    	<c:choose>
+                    		<c:when test="${ !empty condition }">
+                   				<li class="page-item"><a class="page-link" href="search.faq?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+                   			</c:when>
+                   			<c:otherwise>
+                   				<li class="page-item"><a class="page-link" href="list.qa?currentPage=${ p }">${ p }</a></li>
+                   			</c:otherwise>
+                    	</c:choose>
+                    </c:forEach>
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<c:choose>
+	                    		<c:when test="${ !empty condition }">
+		                    		<li class="page-item"><a class="page-link" href="search.bo?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">Next</a></li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item"><a class="page-link" href="list.qa?currentPage=${ pi.currentPage+1 }">다음</a></li>
+		                    	</c:otherwise>
+		                    </c:choose>
+	                    </c:otherwise>
+                    </c:choose>
             </ul>
         </div>
 	</div>
 	
-	<jsp:include page="../footer.jsp"/>
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

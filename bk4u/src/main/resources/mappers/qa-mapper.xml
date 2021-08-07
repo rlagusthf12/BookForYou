@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="qaMapper">
+
+	<resultMap id="qaResult" type="Qa">
+		<result column="QA_NO" property="qaNo"/>
+		<result column="QUE_TYPE_NO" property="queTypeNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="QA_CONTENT" property="qaContent"/>
+		<result column="QA_DATE" property="qaDate"/>
+		<result column="ANS_STATUS" property="ansStatus"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		<result column="EMAIL" property="email"/>
+		<result column="QUE_TYPE" property="queType"/>	
+		<result column="MEM_NICKNAME" property="memNickName"/>	
+	</resultMap>
+	
+	<resultMap id="asResult" type="As">
+		<result column="QA_NO" property="qaNo"/>
+		<result column="MEM_NO" property="memNo"/>		
+		<result column="ANS_CONTENT" property="asContent"/>
+		<result column="ANS_DATED" property="asDate"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+	</resultMap>
+	
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa	
+	</select>
+	
+	<select id="selectMemNoQaListCount" resultType="_int">
+		select
+		       count(*)		    
+		  from qa	
+		  where mem_no=#{memNo}
+	</select>
+	
+	<select id="selectAnsListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa	
+		  where ANS_STATUS = 'Y'
+	</select>
+	
+	<select id="selectYetListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa	
+		  where ANS_STATUS = 'N'
+	</select>
+	
+	
+	<select id="selectList" resultMap="qaResult">
+		select
+		       qa_no
+		     , que_type
+		     , mem_nickname
+		     , qa_content
+		     , to_char(qa_date, 'YYYY-MM-DD') as qa_date
+		     ,ans_status
+		     		   
+		  from qa join quetype	using(que_type_no)
+		  join members using(mem_no)	
+		 order
+		    by qa_no desc
+	</select>
+	
+	<select id="searchMemNoQaList" resultMap="qaResult">
+		select
+		       qa_no
+		     , mem_no
+		     , que_type
+		     , mem_nickname
+		     , qa_content
+		     , to_char(qa_date, 'YYYY-MM-DD') as qa_date
+		     ,ans_status
+		     		   
+		  from qa join quetype	using(que_type_no)
+		  join members using(mem_no)
+		 where mem_no=#{memNo} 	
+		 order
+		    by qa_no desc
+	</select>
+	
+	<select id="selectQa" resultMap="qaResult">
+		select
+			   qa_no			  
+		     , que_type
+		     , mem_nickname
+		     , mem_no		     
+		     , qa_content
+		     , to_char(qa_date, 'YYYY-MM-DD') as qa_date
+		     , ans_status
+		     , origin_name
+		     , change_name
+		     , email
+		     
+		     
+		  from qa join quetype	using(que_type_no)
+		  join members using(mem_no)	
+		where qa_no =#{qaNo}		     
+
+	</select>
+	
+	<select id="selectAs" resultMap="asResult">
+		select
+			   qa_no			  
+		     , mem_no
+		     , ans_content		    
+		     , to_char(ans_dated, 'YYYY-MM-DD') as ans_dated		    
+		     , origin_name
+		     , change_name
+		  from ans 
+		where qa_no =#{qaNo}		     
+
+	</select>
+	
+</mapper>
