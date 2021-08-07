@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.bookforyou.bk4u.Amember.model.vo.Amem;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 
 public interface AmemService {
@@ -19,7 +20,7 @@ public interface AmemService {
 	
 	// 회원상세조회
 	int increaseCount(int memNo);
-	Amem selectAmemDetail(int memNo);
+	Member selectAmemDetail(int memNo);
 	
 	// 회원탈퇴
 	int amDelete(String memId);
