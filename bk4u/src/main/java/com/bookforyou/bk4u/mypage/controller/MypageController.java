@@ -35,6 +35,8 @@ import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.service.MypageService;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
+import com.bookforyou.bk4u.qa.model.service.QaService;
+import com.bookforyou.bk4u.qa.model.vo.Qa;
 import com.google.gson.Gson;
 
 @Controller
@@ -51,6 +53,9 @@ public class MypageController {
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	@Autowired
+	private QaService qService;
 	
 	MemberInterest memberInterest;
 	
@@ -485,6 +490,49 @@ public class MypageController {
 	
 	}
 	
+	/**
+	 * 마이페이지 나의 문의 조회하는 컨트롤러 메서드 
+	 * @param currentPage
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("my-qna.mp")
+	public String selectMyQaList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,HttpSession session,Model model) {
+		Member member = (Member) session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		int listCount = qService.selectMemNoQaListCount(memNo);		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Qa> list = qService.searchMemNoQaList(pi,memNo);
+		
+		for(int i=0; i<list.size();i++) {
+			status(list.get(i));
+		}
+		
+		
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("list",list);
+		
+		return "mypage/myQna";
+	}
 	
+	public void status(Qa q) {
+		
+		switch(q.getAnsStatus()) {
+		
+		case "Y": q.setAnsStatus("답변완료");
+		break;
+			
+		case "N": q.setAnsStatus("처리중");
+		break;		
+		
+		default:
+			q.setAnsStatus("error");
+			System.out.println("error");	
+			break;			
+		}
+		
+	}
 	
 }

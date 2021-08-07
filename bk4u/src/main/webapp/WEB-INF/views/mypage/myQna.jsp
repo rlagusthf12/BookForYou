@@ -12,12 +12,12 @@
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .wrap {
             width: 1200px;
-            height: 1200px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -26,7 +26,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 900px;
             position: relative;
             display: inline-flex;
         }
@@ -56,6 +56,7 @@
         #table-box{
             margin-top: 50px;
             width: 90%;
+            height: 500px;
             margin:auto;
         }
 
@@ -79,6 +80,8 @@
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -189,115 +192,54 @@
                             </tr>
                           </thead>
                           <tbody>
+                          <c:forEach var="qna" items="${list }">
                             <tr>
-                              <td scope="row">10</td>
-                              <td>쇼핑몰 이용문의</td>
+                              <td scope="row">${qna.qaNo }</td>
+                              <td>${qna.queType }</td>
                               <td id="qna_content" style="white-space: nowrap;
                               overflow: hidden;
-                              text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해 여쭤봅니다..!!!!빨리 답변해주시죠!!!!!!testtesttesttest</td>
-                              <td>2021.07.04</td>
-                              <td>답변대기</td>
+                              text-overflow: ellipsis; max-width: 20px;">${qna.qaContent }</td>
+                              <td>${qna.qaDate }</td>
+                              <td>${qna.ansStatus }</td>
                             </tr>
-                            <tr>
-                                <td scope="row">9</td>
-                                <td>결제</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">결제에 관해 여쭤봅니다. 무통장 입금은 가능한지 궁금한데 빠르게 답장 부탁드립니다.</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                              <tr>
-                                <td scope="row">8</td>
-                                <td>쇼핑몰 이용문의</td>
-                                <td id="qna_content" style="white-space: nowrap;
-                                overflow: hidden;
-                                text-overflow: ellipsis; max-width: 20px;">쇼핑몰에 대해</td>
-                                <td>2021.07.04</td>
-                                <td>답변대기</td>
-                              </tr>
-                            
+                           </c:forEach>
                           </tbody>
                     </table>
                 </div>
+                <c:choose>
+                <c:when test="${ !empty list }">
                 <div id="paging-wrap">
                     <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">이전</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                        <li class="page-item disabled"><a class="page-link">다음</a></li>
-                    </ul>
+                	<c:choose>
+                    	<c:when test="${ pi.currentPage eq 1 }">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage}">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                </ul>
                 </div>
+                </c:when>
+                </c:choose>
             </div>  
 
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 
 </html>
