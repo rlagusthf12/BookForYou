@@ -17,8 +17,8 @@
 			<result column="group_writer" property="groupWriter"/>
 						
 	</resultMap>
-	
-	<resultMap type="GroupMember" id="gorupMemberResult">
+	<!-- 
+	<resultMap type="GroupMember" id="groupMemberResult">
 		
 			<result column="group_boardno" property="groupBoardNo"/>
 			<result column="group_enrolldate" property="groupEnrollDate"/>
@@ -28,12 +28,9 @@
 			<result column="group_reason" property="groupReason"/>
 
 		
-			
-			
-	
 	</resultMap>
 	
-	
+	-->
 	<select id="selectList" resultMap="groupResult" >
 		SELECT 
             , group_boardno 
@@ -81,7 +78,7 @@
 		  )
 			
 	</insert>
-	
+	<!-- 
 	<select id="groupMemberList" resultType="groupMemberResult">
 		select
 		       group_boardno
@@ -102,7 +99,8 @@
 	     		group_status='Y'
 
 	</select>
-	
+	 -->
+	 
 	<select id="selectSearchList" resultMap="groupResult">
 			SELECT *              
         FROM (SELECT ROWNUM NUM 
