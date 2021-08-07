@@ -356,4 +356,8 @@
 		  join members using (mem_no)
 	</select>
 	
+	
+	
+	
+	
 </mapper>

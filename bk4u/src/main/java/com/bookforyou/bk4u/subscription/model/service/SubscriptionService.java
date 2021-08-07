@@ -5,6 +5,9 @@ import java.util.HashMap;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.member.model.vo.MemberCategory;
+import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
@@ -106,6 +109,31 @@ public interface SubscriptionService {
 	 * [관리자] 풀캘린더에 표시할 리스트 조회 (한진)
 	 */
 	ArrayList<Subscription> selectListForCalendarEvents();
+
+	/**
+	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 개수 조회 (한진)
+	 */
+	int selectAdminSubscBookCount(int sNo);
+
+	/**
+	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 조회 (한진)
+	 */
+	ArrayList<Book> selectAdminSubscBookList(PageInfo pi, int sNo);
+
+	/**
+	 * [관리자] 회원 조회 (한진)
+	 */
+	Member selectAdminSubscMember(int sNo);
+
+	/**
+	 * [관리자] 정기구독 회원 interest 조회 (한진)
+	 */
+	ArrayList<MemberInterest> selectAdminSubscInterest(int sNo);
+
+	/**
+	 * [관리자] 정기구독 회원 sub_category 조회 (한진)
+	 */
+	ArrayList<MemberCategory> selectAdminSubscCategory(int sNo);
 
 
 }

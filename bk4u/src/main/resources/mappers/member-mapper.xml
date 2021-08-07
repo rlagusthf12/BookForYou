@@ -30,11 +30,13 @@
 	<resultMap id="memberInterestResult" type="MemberInterest">
 		<result column="mem_no" property="memNo"/>
 		<result column="interest_no" property="interestNo"/>
+		<result column="interest_content" property="interestContent"/>
 	</resultMap>
 	
 	<resultMap id="memberCategoryResult" type="MemberCategory">
 		<result column="mem_no" property="memNo"/>
 		<result column="sub_cate_no" property="subCategoryNo"/>
+		<result column="sub_cate_name" property="subCateName"/>
 	</resultMap>
 	
 	<resultMap id="couponResult" type="Coupon">
@@ -472,5 +474,41 @@
  		set mem_status = 'N'
  		where mem_no = #{memNo}
  	</update>
+ 	
+ 	<!-- [관리자] 정기구독 회원 조회 (한진) -->
+ 	<select id="selectAdminSubscMember" resultMap="memberResult">
+ 		select distinct
+		       mem_name,
+		       mem_age,
+		       mem_gender,
+		       mem_work,
+		       mem_level
+		  from subscription s
+		  join members m using (mem_no)
+		  join mem_interest using (mem_no)
+		 where subsc_no = #{sNo}
+ 	</select>
+ 	
+ 	<!-- [관리자] 정기구독 회원 interest 조회 (한진) -->
+ 	<select id="selectAdminSubscInterest" resultMap="memberInterestResult">
+ 		select
+		       interest_content
+		  from subscription s
+		  join members m using (mem_no)
+		  join mem_interest using (mem_no)
+		  join interest using (interest_no)
+		 where subsc_no = #{sNo}
+ 	</select>
+ 	
+ 	<!-- [관리자] 정기구독 회원 sub_category 조회 (한진) -->
+ 	<select id="selectAdminSubscCategory" resultMap="memberCategoryResult">
+ 		select 
+		       sub_cate_name
+		  from subscription s
+		  join members m using (mem_no)
+		  join mem_category using (mem_no)
+		  join sub_category using (sub_cate_no)
+		 where subsc_no = #{sNo}
+ 	</select>
 
 </mapper>

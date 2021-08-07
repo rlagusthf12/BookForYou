@@ -14,4 +14,5 @@ import lombok.ToString;
 public class MemberInterest {
 	private int memNo;
 	private int interestNo;
+	private String interestContent;
 }

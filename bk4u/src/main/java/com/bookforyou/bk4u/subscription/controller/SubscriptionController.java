@@ -14,6 +14,9 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.member.model.vo.MemberCategory;
+import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.subscription.model.service.SubscriptionService;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
@@ -243,5 +246,31 @@ public class SubscriptionController {
 
 		return s;
 
+	}
+	
+	/**
+	 * [관리자] 정기배송 도서 선택 (한진)
+	 */
+	@RequestMapping("selectSubscBook.su")
+	public ModelAndView selectAdminSubscBook(int sNo, ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int listCount = sService.selectAdminSubscBookCount(sNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Book> bList = sService.selectAdminSubscBookList(pi, sNo);
+		Member m = sService.selectAdminSubscMember(sNo);
+		ArrayList<MemberInterest> iList = sService.selectAdminSubscInterest(sNo);
+		ArrayList<MemberCategory> cList = sService.selectAdminSubscCategory(sNo);
+		
+		mv.addObject("bList", bList)
+		  .addObject("m", m)
+		  .addObject("iList", iList)
+		  .addObject("cList", cList)
+		  .addObject("pi", pi)
+		  .addObject("sNo", sNo)
+		  .setViewName("subscription/adminBookSelect");
+		
+		return mv;
+		
 	}
 }

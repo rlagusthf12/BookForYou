@@ -15,5 +15,5 @@ import lombok.ToString;
 public class MemberCategory {
 	private int memNo;
 	private int subCategoryNo;
-	
+	private String subCateName;
 }

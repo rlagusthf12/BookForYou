@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.member.model.vo.MemberCategory;
+import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 
@@ -155,6 +158,43 @@ public class SubscriptionDao {
 	 */
 	public ArrayList<Subscription> selectListForCalendarEvents(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectListForCalendarEvents");
+	}
+
+	/**
+	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 개수 조회 (한진)
+	 */
+	public int selectAdminSubscBookCount(SqlSessionTemplate sqlSession, int sNo) {
+		return sqlSession.selectOne("bookMapper.selectAdminSubscBookCount", sNo);
+	}
+
+	/**
+	 * [관리자] 회원 취향에 맞는 정기배송 목록 조회 (한진)
+	 */
+	public ArrayList<Book> selectAdminSubscBookList(SqlSessionTemplate sqlSession, PageInfo pi, int sNo) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSubscBookList", sNo, rowBounds);
+	}
+
+	/**
+	 * [관리자] 정기구독 회원 조회 (한진)
+	 */
+	public Member selectAdminSubscMember(SqlSessionTemplate sqlSession, int sNo) {
+		return sqlSession.selectOne("memberMapper.selectAdminSubscMember", sNo);
+	}
+
+	/**
+	 * [관리자] 정기구독 회원 interest 조회 (한진)
+	 */
+	public ArrayList<MemberInterest> selectAdminSubscInterest(SqlSessionTemplate sqlSession, int sNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectAdminSubscInterest", sNo);
+	}
+
+	/**
+	 * [관리자] 정기구독 회원 sub_category 조회 (한진)
+	 */
+	public ArrayList<MemberCategory> selectAdminSubscCategory(SqlSessionTemplate sqlSession, int sNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectAdminSubscCategory", sNo);
 	}
 
 

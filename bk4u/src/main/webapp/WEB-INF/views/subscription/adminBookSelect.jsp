@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,35 +143,27 @@
         .table td, .table th{border: 0.01em solid #dee2e6;}
         
         /* 페이징 */
-        #paging-area{
-            width:fit-content;
-            margin:auto;
-        }
-        #pagination{
-            padding:0;
-            list-style: none;
-        }
-        #pagination li{
-            display:inline-block;
-            width:35px;
-            height: 30px;
-            text-align: center;
-            line-height: 18px;
-            font-size:16px;
-            padding:5px;
-            border: 1px solid black;
-            border-radius: 5px;
-        }
-        #pagination li:hover{
-            cursor: pointer;
-            font-weight: 600;
-            color: #EC573B;
-        }
+       	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
+
+        #paging-wrap{width:fit-content; margin:auto;}
+        .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 </style>
 
 <script>
 	$(document).ready(function(){
 	    $("#handling-btn").children().addClass("btn btn-outline-success");
+	})
+	
+	$(function(){
+		/* 테이블 행 선택 */
+        $(".detailC").click(function(){
+        	
+        	var td = $(this);
+        	
+        	var bkNo = td.text();
+        	location.href='adminBookDetail.bk?bkNo=' + bkNo;
+        	
+        })
 	})
 </script>
 </head>
@@ -180,36 +173,36 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>정기배송 도서 선택</p>
         </div>
         <br>
         <div class="bar-outer" id="recommand-condition">
             <div>
-                <p id="bold">김유정</p>
+                <p id="bold">${ m.memName }</p>
                 <p>님의 도서 추천</p>
             </div>
             <div>
                 <table class="table-sm">
                     <tr>
                         <th>나이/성별</th>
-                        <td>20/여</td>
+                        <td>${ m.memAge }/${ m.memGender }</td>
                     </tr>
                     <tr>
                         <th>직업</th>
-                        <td>무직</td>
+                        <td>${ m.memWork }</td>
                     </tr>
                     <tr>
                         <th>난이도</th>
-                        <td>상</td>
+                        <td>${ m.memLevel }</td>
                     </tr>
                     <tr>
                         <th>관심사</th>
                         <td>
                             <ul>
-                                <li>#여행</li>
-                                <li>#진로</li>
-                                <li>#리더십</li>
+                                <c:forEach var="i" items="${ iList }">
+	                                <li>#${ i.interestContent }</li>
+                                </c:forEach>
                             </ul>
                         </td>
                     </tr>
@@ -217,35 +210,33 @@
                         <th>서브카테고리</th>
                         <td>
                             <ul>
-                                <li>#시</li>
-                                <li>#정치/사회</li>
-                                <li>#기술/공학</li>
-                                <li>#어학/사전</li>
-                                <li>#예술/건축</li>
-                                <li>#인문/사회</li>
+                            	<c:forEach var="c" items="${ cList }">
+                                	<li>#${ c.subCateName }</li>
+                                </c:forEach>
                             </ul>
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-        <div id="search-area">
-            <form action="">
+         <div id="search-area">
+            <form action="adminOListSearch.or">
+            <input type="hidden" name="array" value="${ ar }">
+            <input type="hidden" name="orStatus" value="5">
                 <div id="search-bar">
                     <div id="search-condition">
-                        <select name="condition">
+                        <select name="condition" >
                             <option value="searchAll">전체</option>
-                            <option value="productCode">상품코드</option>
-                            <option value="bookName">도서명</option>
-                            <option value="writerName">저자</option>
-                            <option value="publisher">출판사</option>
+                            <option value="orderNo">주문번호</option>
+                            <option value="memName">주문자명</option>
+                            <option value="memId">주문자ID</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="">
+                        <input type="text" name="keyword" >
                     </div>
                     <div id="search-btn">
-                        <input type="image" src="resources/search.png" name="Submit" value="Submit" align="absmiddle">
+                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
                     </div>
                 </div>
             </form>
@@ -288,34 +279,60 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><input type="checkbox"></td>
-                            <td><img src="" alt="" width="80" height="90"></td>
-                            <td>pn0001</td>
-                            <td>완전한 행복</td>
-                            <td>정유정</td>
-                            <td>은행나무</td>
-                            <td>2021-07-05</td>
-                            <td>25,000</td>
-                            <td>150</td>
-                            <td>Y</td>
-                        </tr>
+                    	<c:choose>
+                    		<c:when test = "${ bList.size() != 0}"> 
+		                    	<c:forEach var="b" items="${ bList }" varStatus="no">
+			                        <tr>
+			                            <td>${ no.count }</td>
+			                            <td><input type="checkbox" name="bCheck" value="${ b.bkNo }"></td>
+			                            <td><img src="" alt="" width="65" height="80"></td>
+			                            <td class="detailC">${ b.bkNo }</td>
+			                            <td>${ b.bkTitle }</td>
+			                            <td>${ b.writerName }</td>
+			                            <td>${ b.bkPublish }</td>
+			                            <td>${ b.bkDate }</td>
+			                            <td>${ b.bkPrice }</td>
+			                            <td>${ b.bkStock }</td>
+			                            <td></td>
+			                        </tr>
+		                        </c:forEach>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<tr>
+		                			<td colspan="12">조회된 결과가 존재하지 않습니다.</td>
+		                		</tr>
+		                	</c:otherwise>
+                        </c:choose>
                     </tbody>
                 </table>
             </div>
             <br>
-            <div id="paging-area">
-                <ul id="pagination">
-                    <li><a>&lt;</a></li>
-                    <li><a>1</a></li>
-                    <li><a>2</a></li>
-                    <li><a>3</a></li>
-                    <li><a>4</a></li>
-                    <li><a>5</a></li>
-                    <li><a>&gt;</a></li>
-                </ul>
-            </div>
+            <div id="paging-wrap">
+	            <ul class="pagination">
+	            	<c:choose>
+	            		<c:when test="${ pi.currentPage eq 1 }">
+	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+	                	</c:when>
+	                	<c:otherwise>
+			                <li class="page-item"><a class="page-link" href="selectSubscBook.su?sNo=${ sNo }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+	    				</c:otherwise>
+	    			</c:choose>            	
+	                
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                <li class="page-item"><a class="page-link" href="selectSubscBook.su?sNo=${ sNo }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
+	                </c:forEach>
+	                
+	                
+	                <c:choose>
+	                	<c:when test="${ pi.currentPage ge pi.maxPage }">
+			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<li class="page-item"><a class="page-link" href="selectSubscBook.su?sNo=${ sNo }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                	</c:otherwise>
+	                </c:choose>
+	            </ul>
+	        </div>
         </div>
     </div>
 </body>

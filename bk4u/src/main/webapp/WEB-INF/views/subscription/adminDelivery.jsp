@@ -174,6 +174,7 @@
             color:#307451;
             font-weight: 600;
         }
+        .delivery:hover{cursor:pointer;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -289,6 +290,16 @@
             const a = $(this).offset();
             $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
         })
+        
+        /* 도서선택/발송 */
+        $(".delivery-btn").click(function(){
+        	
+        	var tr = $(this).parent().parent().parent();
+        	var td = tr.children();
+        	var $sNo = td.eq(1).text();
+        	$(this).attr("href", "selectSubscBook.su?sNo=" + $sNo);
+        	
+        })
 	
 	})
 </script>
@@ -350,7 +361,7 @@
 			                            <td>${ s.subscPeriod }</td>
 			                            <td>
 			                            	<div class="delivery">
-			                                    <a href="subscriptionDeliveryDetail.html">도서선택/발송</a>
+			                                    <a class="delivery-btn">도서선택/발송</a>
 			                                </div>
 			                            </td>
 			                            <td style="display:none">${ s.deliveryRequest }</td>
