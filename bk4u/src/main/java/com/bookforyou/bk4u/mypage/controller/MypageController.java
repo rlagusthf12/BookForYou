@@ -517,6 +517,7 @@ public class MypageController {
 		return "mypage/myQna";
 	}
 	
+	
 	public void status(Qa q) {
 		
 		switch(q.getAnsStatus()) {
@@ -534,5 +535,7 @@ public class MypageController {
 		}
 		
 	}
+	
+	
 	
 }

@@ -12,6 +12,8 @@
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .wrap {
             width: 1200px;
@@ -68,11 +70,11 @@
             text-align: right;
             margin-bottom: 30px;
         }
-        #list-of-books thead tr th{
+        #list-of-qna thead tr th{
             cursor: default;
             text-align: center;
         }
-        #list-of-books tbody tr td{
+        #list-of-qna tbody tr td{
             cursor: pointer;
             text-align: center;
         }
@@ -179,7 +181,7 @@
                 <hr style="text-align: center; width: 95%; margin: auto;">
                 <br>
                 <div id="table-box">
-                    <table class="table table-hover" id="list-of-books">
+                    <table class="table table-hover" id="list-of-qna">
                         <thead class="table-light">
                             <tr>
                               <th width="15%">문의번호</th>
@@ -194,7 +196,7 @@
                           <tbody>
                           <c:forEach var="qna" items="${list }">
                             <tr>
-                              <td scope="row">${qna.qaNo }</td>
+                              <td scope="row" class="qaNo">${qna.qaNo }</td>
                               <td>${qna.queType }</td>
                               <td id="qna_content" style="white-space: nowrap;
                               overflow: hidden;
@@ -205,6 +207,13 @@
                            </c:forEach>
                           </tbody>
                     </table>
+                    <script type="text/javascript">
+            		$(function(){
+            			$("#list-of-qna>tbody>tr").click(function(){
+            				location.href = "detail.qa?qaNo=" + $(this).children(".qaNo").text();
+            			})
+            		})
+            	</script>
                 </div>
                 <c:choose>
                 <c:when test="${ !empty list }">
