@@ -77,6 +77,7 @@ public class GroupController {
 		
 	}
 	
+	/*
 	@RequestMapping("insertGMem.me")
 	public void insertGMem (Member m ,Model model, HttpSession session) {
 		
@@ -89,6 +90,7 @@ public class GroupController {
 			
 		} 
 	}
+	
 	
 	@RequestMapping("gorupMemberList")
 	public ModelAndView home(Model model) throws Exception {
@@ -105,7 +107,7 @@ public class GroupController {
 		return mv;
 		
 	}
-	
+	*/
 	
 	public String saveFile(HttpSession session, MultipartFile upfile) {
 		String savePath = session.getServletContext().getRealPath("/resources/groupFiles/");

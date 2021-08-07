@@ -64,11 +64,12 @@ public class GroupServiceImpl implements GroupService{
 		
 		
 	}
-	
+	/*
 	@Override
 	public ArrayList<GroupMember> groupMemberList() {
 		return gDao.groupMemberList(sqlSession);
 	}
+	*/
 
 	@Override
 	public int deleteMember(String userId) {

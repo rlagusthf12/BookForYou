@@ -36,9 +36,9 @@ public class GroupDao {
 		return sqlSession.insert("boardMapper.insertGMem", m);
 	}
 	
-	public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("groupMapper.groupMemberList");
-	}
+	//public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession){
+	//	return (ArrayList)sqlSession.selectList("groupMapper.groupMemberList");
+	//}
 	
 		
 	public int selectSearchGListCount(SqlSession sqlSession , HashMap<String, String> map) {

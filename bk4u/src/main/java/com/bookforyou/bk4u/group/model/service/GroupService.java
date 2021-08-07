@@ -30,7 +30,7 @@ public interface GroupService {
 	int insertGMem(Member m);
 	
 	// 멤버리스트
-	ArrayList<GroupMember> groupMemberList();
+	//ArrayList<GroupMember> groupMemberList();
 	
 	// 탈퇴
 	int deleteMember(String userId);
