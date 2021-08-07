@@ -22,7 +22,8 @@ public class GroupBoard {
 	private String groupNotice;
 	private String groupPlace;
 	private String groupOpen;
-	private String groupImg;
+	private String changeName;
+	private String originName;
 	private String groupWriter;
 	
 	

@@ -55,8 +55,8 @@
        	 
        	 #paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 
-    	#paging-wrap{width:fit-content; margin:auto;}
-    	.page-link, .page-link:hover{color:rgb(252, 190, 52);}
+    	 #paging-wrap{width:fit-content; margin:auto;}
+    	 .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 	
        	 
        	 
@@ -65,7 +65,7 @@
 <body>
 
     <!--메뉴바 입력-->
-    <jsp:include page=""/>
+    <jsp:include page="../common/menubar.jsp"/>
         
         <div class="content">
 
@@ -100,7 +100,6 @@
                     <form id="searchForm" action="search.gbo" method="Get" align="center">
                         <div class="select">
                             <select class="custom-select" name="condition">
-                                <option value="all">전체검색</option>
                                 <option value="groupTitle">모임이름</option>
                                 <option value="groupPlace">지역</option>
                                 <option value="groupType">온라인/오프라인</option>  
@@ -108,7 +107,7 @@
                             <hr>
                         </div>
                         <div class="text">
-                            <input type="text" class="form-control" name="keyword" value="${keyword }">
+                            <input type="text" class="form-control" name="keyword" value="${ keyword }">
                             
                         </div>
                             <button type="submit" class="searchBtn btn btn-secondary">검색</button>
@@ -129,16 +128,19 @@
                 <div class="gb">
                     <!-- 현재 가입한 모임이 없다면 -->
                     <p>현재 가입한 모임이 없습니다</p>
+                    <!-- 현재 가입한 모임이 있다면 -->
+                    
                 <hr>
                 <br>
                 <h6><b>독서모임 목록</b></h6>
-                    <!-- 현재 가입한 모임이 있다면 -->
+                    
                     
                     <table id="groupList" class="table table-borderless" align="center">
                     <tbody>
+                    
                     <c:forEach var="g" items="${ groupList }">
                         <tr>
-                            <td rowspan="3" width="230" height="200">${ g.groupImg }</td>
+                            <td rowspan="3" width="230" height="200">${ g.changeName }</td>
                             <td width="80" height="20" style="font-size: 13px;">${ g.groupType }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupDate }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupPlace }</td>
@@ -149,14 +151,14 @@
                         <tr>
                             <td colspan="3" height="160">${ g.groupScript }</td>
                         </tr>
-                 
-                   
+                        
                          </c:forEach>
                				
                         </tbody>
                          
                          
                     </table> 
+                    
                     <script>
                     	$(function(){
                     		$("#groupList>tbody>tr").click(function(){
@@ -165,7 +167,55 @@
                     	})
                     </script>
                    
-   
+    <script>
+                    var more = +1;
+                     $(function(){$('#more').on('click',function(){
+                         
+                             more = more -1;
+                            
+                            $.ajax({
+                                url : "group.bo",
+                                type: 'POST',
+                                data: { more : more},
+                                dataType: "json",
+                                success: function(data){
+                    
+                                    var addListHtml ="";
+                                        addListHtml += "<div style='height:200px'>";
+                                    for(var i in data.list){
+                                        
+                                        addListHtml += "<table>"
+                                        addListHtml += "<tr>"
+                                        addListHtml += "<td>"+data.list[i].group_img+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_type+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_date+"</td>";
+                                        addListHtml += "<td>"+data.list[i].group_place+"</td>";
+                                        addListHtml += "</tr>"
+                                        addListHtml += "<tr>"
+                                        addListHtml += "<td>"+data.list[i].group_title+"</td>";
+                                        addListHtml += "</tr>"
+                                        addListHtml += "<tr>"
+                                        addListHtml += "<td>"+data.list[i].group_script+"</td>";
+                                        addListHtml += "</tr>"
+                                        addListHtml += "</table>";	
+                                    }
+                                        addListHtml += "</div>";
+                                        
+                                    if(data.list.length>=1){
+                                        $("#morePage").append(addListHtml);
+                                    }else{
+                                        alert("다음페이지가 없습니다.");
+                                    }						
+                                },
+                                error: function (request,status,errorData){   
+                                    alert('error code: '+request.status+"\n"
+                                            +'message:' +request.reponseText+'\n'
+                                            + 'error :'+  errorData);
+                                }
+                            });
+                        }); 
+                     }); 
+                    </script>
                        
             </div>
             
@@ -173,32 +223,9 @@
                <hr>
             
                 <br>
-            <div id="paging-wrap">
-            <ul class="pagination">
-            	<c:choose>
-            	<c:when test="${pi.currentPage eq 1}">
-                <li class="page-item disabled"><a class="page-link">이전</a></li>
-                </c:when>
-                <c:otherwise>
-                	<li class="page-item"><a class="page-link" href="group.bo?currentPage=${ pi.currentPage-1 }">Previous</a></li>
-                </c:otherwise>
-                </c:choose>
-                
-                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}"> 
-                <li class="page-item"><a class="page-link" href="group.bo?currentPage=${ p }">${ p }</a></li>
-                </c:forEach>
-             
-             <c:choose>
-             	<c:when test="${pi.currentPage eq pi.maxPage}">
-             		    <li class="page-item disabled"><a class="page-link">다음</a></li>
-             	</c:when>
-             	<c:otherwise>
-             		<li class="page-item"><a class="page-link" href="broup.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
-		        </c:otherwise>
-             </c:choose>
+                 <button type="button" id="more" style="border-radius: 10px; background: white; ">더보기▼</button>
             
-            </ul>
-        </div>
+        
                     
                     
           
@@ -209,7 +236,7 @@
 
 
     <!--푸터바 입력-->
-    <jsp:include page=""/>
+    <jsp:include page="../common/footer.jsp"/>
 
 
 </body>

@@ -15,6 +15,7 @@
 			<result column="origin_name" property="originName"/>
 			<result column="change_name" property="changeName"/>
 			<result column="group_writer" property="groupWriter"/>
+			<result column="group_status" property="groupStatus"/>
 						
 	</resultMap>
 	<!-- 
@@ -32,33 +33,38 @@
 	
 	-->
 	<select id="selectList" resultMap="groupResult" >
-		SELECT 
-            , group_boardno 
-            , group_type
-            , group_date
-            , group_title
-            , group_script
-            , group_place
-            , change_name
+		SELECT *              
+        FROM (SELECT ROWNUM NUM 
+            , s.group_boardno 
+            , s.group_type
+            , s.group_date
+            , s.group_title
+            , s.group_script
+            , s.group_place
+            , s.change_name
+            FROM 
+                    (SELECT * FROM GROUPBOARD    
+      ORDER BY GROUP_BOARDNO DESC)s) 
+        WHERE NUM BETWEEN 1 AND 4
+	
+	</select>
+	
+	<select id="selectListMore" resultMap="groupResult">
+		select *             
+        FROM (SELECT ROWNUM NUM 
+            , s.group_boardno 
+            , s.group_type
+            , s.group_title
+            , s.group_script
+            , s.group_place
+            , s.group_img
             
-       from gorupBoard
-      where group_status = 'Y'
+              FROM 
+                    (SELECT * FROM GROUPBOARD 
              
-       ORDER 
-       	  BY GROUP_BOARDNO DESC
-	
-	
+                    ORDER BY GROUP_BOARDNO DESC)s) 
+        WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
 	</select>
-	
-	<select id="selectListCount" resultType="_int">
-	
-		select
-				count(*)
-		  from  board
-		 where  status = 'Y'
-		 	
-	</select>
-	
 	<insert id="inserGMem">
 		
 		insert 

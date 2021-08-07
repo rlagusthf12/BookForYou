@@ -10,20 +10,20 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
-import com.bookforyou.bk4u.group.model.vo.GroupMember;
 import com.bookforyou.bk4u.member.model.vo.Member;
 
 
 @Repository
 public class GroupDao {
 
-	public ArrayList<GroupBoard> selectList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("groupMapper.selectList");
-	}
-	
-	
+
 	public ArrayList<GroupBoard> selectListMore(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("gorupMapper.selectListMore");
+
+	}
+	public ArrayList<GroupBoard> selectList(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("groupMapper.selectList");
 	}
 	
 	public int insertGBoard(SqlSessionTemplate sqlSession, GroupBoard g) {

@@ -39,18 +39,49 @@ public class GroupController {
 	private GroupService gService;
 	
 	@RequestMapping(value="group.bo",  method=RequestMethod.GET)
-	public String selectList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public String groupListView(Model model) throws Exception {
 		
-		//System.out.println(currentPage);
-		int listCount = gService.selectListCount();
+		ArrayList<GroupBoard> groupList = gService.selectList();
+
+		model.addAttribute("groupList", groupList);
+		model.addAttribute("groupBoard", "../group/groupList.jsp");
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-		ArrayList<GroupBoard> list = gService.selectList(pi);
-		
-		model.addAttribute("pi" , pi);
-		model.addAttribute("list", list);
 				
 		return "group/groupList";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="group.bo", method=RequestMethod.POST)
+	public String groupListMore(String more, Model model) throws Exception{
+		
+		
+		int page = Integer.parseInt(more);
+		
+		List<GroupBoard> selectListMore = gService.selectListMore(page);
+		
+		JSONObject sendJson = new JSONObject();
+		
+		JSONArray jarr = new JSONArray();
+		
+		
+		for (GroupBoard groupBoard :selectListMore) {
+			JSONObject jboard = new JSONObject();
+			
+			jboard.put("groupBoardNo", groupBoard.getGroupBoardNo());
+			jboard.put("groupType", groupBoard.getGroupType());
+			jboard.put("groupDate", groupBoard.getGroupDate());	
+			jboard.put("groupTitle", groupBoard.getGroupTitle());
+			jboard.put("groupScript", groupBoard.getGroupScript());
+			jboard.put("groupPlace", groupBoard.getGroupPlace());
+			jboard.put("groupImg", groupBoard.getGroupImg());
+
+			jarr.add(jboard);
+
+		}
+		
+		sendJson.put("list", jarr);
+		return sendJson.toJSONString();
+		
 	}
 
 	
@@ -64,7 +95,7 @@ public class GroupController {
 	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session) {
 		
 				
-				int result = gService.insertGBoard(g);
+				int result = gService.insertGroup(g);
 				
 				if(result > 0) {
 					session.setAttribute("alertMsg", "독서모임 등록");
