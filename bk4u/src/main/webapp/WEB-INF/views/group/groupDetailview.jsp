@@ -38,13 +38,13 @@
 <body>
 
 <!--메뉴바 입력-->
-<jsp:include page=""/>
+<jsp:include page="../common/menubar.jsp"/>
 
 	<c:if test="${ !empty alertMsg }">
 		<script>
 			alert("$(alertMsg)");
 		</script>
-		<c:remove var=alertMsg" scope="session"/>
+		<c:remove var="alertMsg" scope="session"/>
   	</c:if>
         
     <div class="content">
@@ -119,8 +119,8 @@
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
                 
                 
-                <button type="submit" class="" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
-                <button type="submit" class="" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
+                <button type="submit" action="insertGMem.me" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
+                <button type="submit" class="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
                 
                 
                 <!--탈퇴여부 묻는 알람창-->
@@ -147,7 +147,7 @@
 
                 <br>
                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                <button type="submit" style="float: right;">수정하기</button>
+                <button type="submit" action="updateGroup.gbo" style="float: right;">수정하기</button>
                 <br><br>
 
 

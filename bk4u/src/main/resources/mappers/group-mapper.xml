@@ -16,6 +16,8 @@
 			<result column="change_name" property="changeName"/>
 			<result column="group_writer" property="groupWriter"/>
 			<result column="group_status" property="groupStatus"/>
+			<result column="group_count" property="groupCount"/>
+
 						
 	</resultMap>
 	
@@ -65,6 +67,14 @@
                     ORDER BY GROUP_BOARDNO DESC)s) 
         WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
 	</select>
+	
+	<update id="increaseCount">
+		update
+				groupBoard
+			set group_count = group_count+1
+		  where group_boardno = #{groupBoardNo}
+		    and group_status = 'Y' 
+	</update>
 	<insert id="inserGMem">
 		
 		insert 
@@ -170,7 +180,6 @@
 		 	 ,  group_title
 		 	 ,  group_writer
 		 	 , 	group_date
-		 	 ,  group_enrolldate
 			 ,  change_name
 			 ,  group_script
 			 ,  group_notice

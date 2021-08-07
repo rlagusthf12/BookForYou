@@ -202,13 +202,22 @@ public class GroupController {
 	}
 	
 	@RequestMapping("detail.gbo")
-	public ModelAndView selectGroup(@RequestParam("gno") int gno, ModelAndView mv) {
+	public ModelAndView selectGroup( int gno, ModelAndView mv) {
 		
+		int result = gService.increaseCount(gno);
 		
-		GroupBoard g = gService.selectGroup(gno);
-		mv.addObject("g", g).setViewName("group/groupDetailview");
+		if(result > 0 ) {
+			GroupBoard g = gService.selectGroup(gno);
+			mv.addObject("g", g).setViewName("group/groupDetailview");
+		
+			
+		}else { 
+			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
+			
+		}
 		
 		return mv;
+		
 		
 	}
 	

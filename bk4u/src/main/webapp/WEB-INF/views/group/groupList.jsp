@@ -52,14 +52,7 @@
          #editbtn {float: right;}
         
        	 #groupList {cursor:pointer;}
-       	 
-       	 #paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
-
-    	 #paging-wrap{width:fit-content; margin:auto;}
-    	 .page-link, .page-link:hover{color:rgb(252, 190, 52);}
-	
-       	 
-       	 
+              	 
 </style>
 </head>
 <body>

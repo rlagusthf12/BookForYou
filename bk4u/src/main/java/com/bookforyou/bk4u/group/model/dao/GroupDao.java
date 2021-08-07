@@ -19,7 +19,7 @@ public class GroupDao {
 
 
 	public ArrayList<GroupBoard> selectListMore(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("gorupMapper.selectListMore");
+		return (ArrayList)sqlSession.selectList("groupMapper.selectListMore");
 
 	}
 	public ArrayList<GroupBoard> selectList(SqlSessionTemplate sqlSession) {
@@ -34,7 +34,7 @@ public class GroupDao {
 	
 	
 	public int insertGMem(SqlSessionTemplate sqlSession, Member m) {
-		return sqlSession.insert("boardMapper.insertGMem", m);
+		return sqlSession.insert("groupMapper.insertGMem", m);
 	}
 	
 	public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession){
@@ -58,10 +58,13 @@ public class GroupDao {
 
 
 	public GroupBoard selectGroup(SqlSessionTemplate sqlSession, int groupBoard) {
-		return sqlSession.selectOne("boardMapper.selectGroup", groupBoard);
+		return sqlSession.selectOne("groupMapper.selectGroup", groupBoard);
 	}
 
-	
+	public int increaseCount(SqlSessionTemplate sqlSession, int groupBoardNo) {
+		return sqlSession.update("groupMapper.increaseCount", groupBoardNo);
+		
+	}
 	
 
 }
