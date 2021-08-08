@@ -43,4 +43,55 @@ public class RentalDao {
 		return sqlSession.insert("rentalMapper.insertRental", map);
 	}
 
+	/**
+	 * [관리자] 대여 목록 개수 조회 (한진)
+	 */
+	public int selectAdminRentalListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("rentalMapper.selectAdminRentalListCount");
+	}
+
+	/*
+	 * [관리자] '예약중'인 목록 개수 조회 (한진)
+	 */
+	public int selectAdminReserveListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("rentalMapper.selectAdminReserveListCount");
+	}
+
+	/**
+	 * [관리자] '대여중'인 목록 개수 조회 (한진)
+	 */
+	public int selectAdminRentalIngListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("rentalMapper.selectAdminRentalIngListCount");
+	}
+
+	/**
+	 * [관리자] '반납완료'인 목록 개수 조회 (한진)
+	 */
+	public int selectAdminReturnListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("rentalMapper.selectAdminReturnListCount");
+	}
+
+	/**
+	 * [관리자] '연체'인 목록 개수 조회 (한진)
+	 */
+	public int selectAdminOverdueListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("rentalMapper.selectAdminOverdueListCount");
+	}
+
+	/**
+	 * [관리자] '예약취소'인 목록 개수 조회 (한진)
+	 */
+	public int selectAdminRentalCancelListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("rentalMapper.selectAdminRentalCancelListCount");
+	}
+
+	/**
+	 * [관리자] 대여 목록 조회 (한진)
+	 */
+	public ArrayList<Rental> selectAdminRentalList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Integer> filter) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("rentalMapper.selectAdminRentalList", filter, rowBounds);
+	}
+
 }

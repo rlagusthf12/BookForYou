@@ -52,4 +52,60 @@ public class RentalServiceImpl implements RentalService {
 		return rentalDao.insertRental(sqlSession, map);
 	}
 
+	/**
+	 * [관리자] 대여 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminRentalListCount() {
+		return rentalDao.selectAdminRentalListCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] '예약중'인 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminReserveListCount() {
+		return rentalDao.selectAdminReserveListCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] '대여중'인 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminRentalIngListCount() {
+		return rentalDao.selectAdminRentalIngListCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] '반납완료'인 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminReturnListCount() {
+		return rentalDao.selectAdminReturnListCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] '연체'인 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminOverdueListCount() {
+		return rentalDao.selectAdminOverdueListCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] '예약취소'인 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminRentalCancelListCount() {
+		return rentalDao.selectAdminRentalCancelListCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] 대여 목록 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Rental> selectAdminRentalList(PageInfo pi, HashMap<String, Integer> filter) {
+		return rentalDao.selectAdminRentalList(sqlSession, pi, filter);
+	}
+
 }

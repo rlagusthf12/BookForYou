@@ -27,5 +27,7 @@ public class Rental {
 	public String writerName;
 	public String storeName;
 	public String bkLct;
+	public String memName;
+	public String memId;
 
 }

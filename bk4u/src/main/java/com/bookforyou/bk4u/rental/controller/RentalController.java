@@ -74,5 +74,65 @@ public class RentalController {
 		return result> 0 ? "success" : "fail";
 		
 	}
-
+	
+	/**
+	 * [관리자] 대여 목록 조회 (한진)
+	 */
+	@RequestMapping("adminRentalList.re")
+	public ModelAndView selectAdminRentalList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+												@RequestParam(value="rStatus", defaultValue="0") int rStatus,
+												@RequestParam(value="array", defaultValue="0") int array) {
+		
+		HashMap<String, Integer> filter = new HashMap<>();
+		filter.put("rStatus", rStatus);
+		filter.put("array", array);
+		
+		int listCount = rentalService.selectAdminRentalListCount();
+		
+		int reserveCount = rentalService.selectAdminReserveListCount();
+		int rentalIngCount = rentalService.selectAdminRentalIngListCount();
+		int returnCount = rentalService.selectAdminReturnListCount();
+		int overDueCount = rentalService.selectAdminOverdueListCount();
+		int rentalCancelCount = rentalService.selectAdminRentalCancelListCount();
+		
+		PageInfo pi = null;
+		
+		if(rStatus == 0) {
+			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			mv.setViewName("rental/adminRentalList");
+		}else {
+			if(rStatus == 1) {
+				pi = Pagination.getPageInfo(reserveCount, currentPage, 10, 5);
+				mv.setViewName("rental/adminReserve");
+			}else if(rStatus == 2) {
+				pi = Pagination.getPageInfo(rentalIngCount, currentPage, 10, 5);
+				mv.setViewName("rental/adminRentalIng");
+			}else if(rStatus == 3) {
+				pi = Pagination.getPageInfo(returnCount, currentPage, 10, 5);
+				mv.setViewName("rental/adminReturnBook");
+			}else if(rStatus == 4) {
+				pi = Pagination.getPageInfo(overDueCount, currentPage, 10, 5);
+				mv.setViewName("rental/adminOverdue");
+			}else if(rStatus == 5) {
+				pi = Pagination.getPageInfo(rentalCancelCount, currentPage, 10, 5);
+				mv.setViewName("rental/adminRentalCancel");
+			}
+		} 
+		
+		ArrayList<Rental> rList = rentalService.selectAdminRentalList(pi, filter);
+		
+		mv.addObject("listCount", listCount)
+		  .addObject("reserveCount", reserveCount)
+		  .addObject("rentalIngCount", rentalIngCount)
+		  .addObject("returnCount", returnCount)
+		  .addObject("overDueCount", overDueCount)
+		  .addObject("rentalCancelCount", rentalCancelCount)
+		  .addObject("pi", pi)
+		  .addObject("rStatus", rStatus)
+		  .addObject("ar", array)
+		  .addObject("rList", rList);
+		
+		return mv;
+	}
+	
 }

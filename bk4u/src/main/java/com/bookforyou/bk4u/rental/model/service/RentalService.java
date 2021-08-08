@@ -28,4 +28,40 @@ public interface RentalService {
 	 */
 	int insertRental(HashMap<String, Integer> map);
 
+	/**
+	 * [관리자] 전체 대여 목록 개수 조회 (한진)
+	 */
+	int selectAdminRentalListCount();
+
+	/**
+	 * [관리자] '예약중'인 목록 개수 조회 (한진)
+	 */
+	int selectAdminReserveListCount();
+	
+	/**
+	 * [관리자] '대여중'인 목록 개수 조회 (한진)
+	 */
+	int selectAdminRentalIngListCount();
+	
+	/**
+	 * [관리자] '반납완료'인 목록 개수 조회 (한진)
+	 */
+	int selectAdminReturnListCount();
+	
+	/**
+	 * [관리자] '연체'인 목록 개수 조회
+	 */
+	int selectAdminOverdueListCount();
+	
+	/**
+	 * [관리자] '예약취소'인 목록 개수 조회
+	 */
+	int selectAdminRentalCancelListCount();
+	
+	/**
+	 * [관리자] 대여 목록 조회 (한진)
+	 */
+	ArrayList<Rental> selectAdminRentalList(PageInfo pi, HashMap<String, Integer> filter);
+
+
 }

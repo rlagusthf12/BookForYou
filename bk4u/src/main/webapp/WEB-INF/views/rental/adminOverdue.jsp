@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,6 +87,7 @@
         .processing-next > img{
             width:100%; height: 100%; 
         }
+        .processing-outer:hover{cursor:pointer;}
 
         /* 공통 테두리 */
         .bar-outer{
@@ -199,36 +201,56 @@
         .table td, .table th{border: 0.01em solid #dee2e6;}
 
         /* 페이징 */
-        #paging-area{
-            width:fit-content;
-            margin:auto;
-        }
-        #pagination{
-            padding:0;
-            list-style: none;
-        }
-        #pagination li{
-            display:inline-block;
-            width:35px;
-            height: 30px;
-            text-align: center;
-            line-height: 18px;
-            font-size:16px;
-            padding:5px;
-            border: 1px solid grey;
-            border-radius: 5px;
-        }
-        #pagination li:hover{
-            cursor: pointer;
-            font-weight: 600;
-            color: #EC573B;
-        }
+       	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
+
+        #paging-wrap{width:fit-content; margin:auto;}
+        .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 </style>
 
 <script>
 	$(document).ready(function(){
 	    $("#handling-btn").children().addClass("btn btn-outline-success");
 	})
+	
+	$(function(){
+		
+		/* 상태 클릭  */
+	    $("#getStatus1").click(function(){
+	        location.href="adminRentalList.re?rStatus=1";
+	    })
+	    
+	    $("#getStatus2").click(function(){
+	        location.href="adminRentalList.re?rStatus=2";
+	    })
+	    
+	    $("#getStatus3").click(function(){
+	        location.href="adminRentalList.re?rStatus=3&array=2";
+	    })
+	    
+	    $("#getStatus4").click(function(){
+	        location.href="adminRentalList.re?rStatus=4&array=2";
+	    })
+	    
+	    $("#getStatus5").click(function(){
+	        location.href="adminRentalList.re?rStatus=5";
+	    })
+	    
+		/* 정렬 방법 변경 */
+	    $("#array-condition").change(function(){
+	        let ar = $(this).val();
+	
+	        if(${ empty keyword }){            	
+	            location.href=`adminRentalList.re?rStatus=${ rStatus }&array=` + ar;		 
+	        }else {
+	        	location.href=`adminRentalList.re?rStatus=${ rStatus }&condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	        }
+	    
+	    })
+	    
+	    /* 정렬 시 해당 값 selected */
+	    $("#array-condition").val("${ ar }").prop("selected", true);
+	})
+	
 </script>
 </head>
 <body>
@@ -242,7 +264,7 @@
         </div> 
         <br>
         <div id="processing-area">
-            <div class="processing-outer">
+            <div class="processing-outer" id="getStatus1">
                 <div class="processing-box">
                     <div class="img-area">
                         <img class="selected img-content" src="resources/adminCommon/images/reservation.png" alt="">
@@ -253,7 +275,7 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ reserveCount }</p>
                     </div>
                 </div>
             </div>
@@ -262,7 +284,7 @@
                 <img src="resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
-            <div class="processing-outer">
+            <div class="processing-outer" id="getStatus2">
                 <div class="processing-box">
                     <div class="img-area">
                         <img class="selected img-content" src="resources/adminCommon/images/rental.png" alt="">
@@ -273,7 +295,7 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ rentalIngCount }</p>
                     </div>
                 </div>
             </div>
@@ -282,7 +304,7 @@
                 <img src="resources/adminCommon/images/processing-next.png" alt="">
             </div>
 
-            <div class="processing-outer">
+            <div class="processing-outer" id="getStatus3">
                 <div class="processing-box">
                     <div class="img-area">
                         <img class="img-content" src="resources/adminCommon/images/returnbook.png" alt="">
@@ -293,12 +315,12 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ returnCount }</p>
                     </div>
                 </div>
             </div>
 
-            <div class="processing-outer" style="margin-left:40px;">
+            <div class="processing-outer" style="margin-left:40px;" id="getStatus4">
                 <div class="processing-box selected">
                     <div class="img-area selected">
                         <img class="img-content" src="resources/adminCommon/images/overdue selected.png" alt="">
@@ -309,12 +331,12 @@
                     </div>
     
                     <div class="number-area selected">
-                        <p>10</p>
+                        <p>${ overDueCount }</p>
                     </div>
                 </div>
             </div>
 
-            <div class="processing-outer">
+            <div class="processing-outer" id="getStatus5">
                 <div class="processing-box">
                     <div class="img-area">
                         <img class="selected img-content" src="resources/adminCommon/images/cancel .png" alt="">
@@ -325,7 +347,7 @@
                     </div>
     
                     <div class="number-area">
-                        <p>10</p>
+                        <p>${ rentalCancelCount }</p>
                     </div>
                 </div>
             </div>
@@ -361,8 +383,8 @@
             <br>
             <div id="array-div">
                 <select name="" id="array-condition">
-                    <option value="">대여신청일</option>
-                    <option value="">대여신청일 역순 </option>
+                    <option value="2">수령일</option>
+                    <option value="3">수령일 역순 </option>
                 </select>
             </div>
 
@@ -387,45 +409,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>0001</td>
-                            <td>최하늘<br>(choi0001)</td>
-                            <td>강남점</td>
-                            <td>행복한어쩌고</td>
-                            <td>2021-07-05</td>
-                            <td>1일</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <input type="checkbox">
-                            </td>
-                            <td>001</td>
-                            <td>최하늘<br>(choi0001)</td>
-                            <td>강남점</td>
-                            <td>행복한어쩌고</td>
-                            <td>2021-07-05</td>
-                            <td>1일</td>
-                        </tr>
+                    	<c:choose>
+                    		<c:when test="${ !empty rList }">
+		                    	<c:forEach var="r" items="${ rList }" varStatus="no">
+			                        <tr>
+			                            <td>${ no.count }</td>
+			                            <td>
+			                                <input type="checkbox">
+			                            </td>
+			                            <td>${ r.rentalNo }</td>
+			                            <td>${ r.memName }<br>(${ r.memId })</td>
+			                            <td>${ r.storeName }</td>
+			                            <td>${ r.bkTitle }</td>
+			                            <td>${ r.receiveDate }</td>
+			                            <td></td>
+			                        </tr>
+		                    	</c:forEach>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<tr>
+		                    		<td colspan="8">조회된 결과가 존재하지 않습니다.</td>
+		                    	</tr>
+		                    </c:otherwise>
+                    	</c:choose>
                     </tbody>
                 </table>
             </div>
             <br>
-            <div id="paging-area">
-                <ul id="pagination">
-                    <li><a>&lt;</a></li>
-                    <li><a>1</a></li>
-                    <li><a>2</a></li>
-                    <li><a>3</a></li>
-                    <li><a>4</a></li>
-                    <li><a>5</a></li>
-                    <li><a>&gt;</a></li>
-                </ul>
-            </div>
+            <div id="paging-wrap">
+	            <ul class="pagination">
+	            	<c:choose>
+	            		<c:when test="${ pi.currentPage eq 1 }">
+	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+	                	</c:when>
+	                	<c:otherwise>
+			                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+	    				</c:otherwise>
+	    			</c:choose>            	
+	                
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
+	                </c:forEach>
+	                
+	                
+	                <c:choose>
+	                	<c:when test="${ pi.currentPage ge pi.maxPage }">
+			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                	</c:otherwise>
+	                </c:choose>
+	            </ul>
+	        </div>
         </div>
     </div>
 </body>

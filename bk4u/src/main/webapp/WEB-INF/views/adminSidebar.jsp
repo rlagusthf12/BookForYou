@@ -268,22 +268,22 @@
                 <a href="javascript:void(0);"><i class="fa fa-envelope"></i><span>대여</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li class="active">
-                        <a href="rental/adminRentalList.jsp">대여 리스트</a>
+                        <a href="adminRentalList.re">대여 리스트</a>
                     </li>
                     <li>
-                        <a href="rental/adminReserve.jsp">예약</a>
+                        <a href="adminRentalList.re?rStatus=1">예약</a>
                     </li>
                     <li>
-                        <a href="rental/adminRentalIng.jsp">대여중</a>
+                        <a href="adminRentalList.re?rStatus=2">대여중</a>
                     </li>
                     <li>
-                        <a href="rental/adminReturnBook.jsp">반납완료</a>
+                        <a href="adminRentalList.re?rStatus=3">반납완료</a>
                     </li>
                     <li>
-                        <a href="rental/adminRentalCancel.jsp">예약취소</a>
+                        <a href="adminRentalList.re?rStatus=4">예약취소</a>
                     </li>
                     <li>
-                        <a href="rental/adminOverdue.jsp">연체</a>
+                        <a href="adminRentalList.re?rStatus=5">연체</a>
                     </li>
                 </ul>
             </li>
