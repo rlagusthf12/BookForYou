@@ -277,10 +277,10 @@
                         <a href="adminRentalList.re?rStatus=2">대여중</a>
                     </li>
                     <li>
-                        <a href="adminRentalList.re?rStatus=3">반납완료</a>
+                        <a href="adminRentalList.re?rStatus=3&array=2">반납완료</a>
                     </li>
                     <li>
-                        <a href="adminRentalList.re?rStatus=4">예약취소</a>
+                        <a href="adminRentalList.re?rStatus=4&array=2">예약취소</a>
                     </li>
                     <li>
                         <a href="adminRentalList.re?rStatus=5">연체</a>

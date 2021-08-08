@@ -108,4 +108,20 @@ public class RentalServiceImpl implements RentalService {
 		return rentalDao.selectAdminRentalList(sqlSession, pi, filter);
 	}
 
+	/**
+	 * [관리자] 검색 조건에 일치하는 목록 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminListSearchCount(HashMap<String, String> map) {
+		return rentalDao.selectAdminListSearchCount(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 검색 조건에 일치하는 목록 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Rental> selectAdminRentalSearchList(PageInfo pi, HashMap<String, String> map) {
+		return rentalDao.selectAdminRentalSearchList(sqlSession, pi, map);
+	}
+
 }

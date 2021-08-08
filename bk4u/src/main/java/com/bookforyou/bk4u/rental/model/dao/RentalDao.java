@@ -94,4 +94,21 @@ public class RentalDao {
 		return (ArrayList)sqlSession.selectList("rentalMapper.selectAdminRentalList", filter, rowBounds);
 	}
 
+	/**
+	 * [관리자] 검색 조건에 일치하는 목록 개수 조회 (한진)
+	 */
+	public int selectAdminListSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("rentalMapper.selectAdminListSearchCount", map);
+	}
+
+	/**
+	 * [관리자] 검색 조건에 일치하는 목록 조회 (한진)
+	 */
+	public ArrayList<Rental> selectAdminRentalSearchList(SqlSessionTemplate sqlSession, PageInfo pi,
+			HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBoudns = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("rentalMapper.selectAdminRentalSearchList", map, rowBoudns);
+	}
+
 }

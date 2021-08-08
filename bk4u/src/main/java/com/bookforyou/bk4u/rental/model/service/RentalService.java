@@ -63,5 +63,15 @@ public interface RentalService {
 	 */
 	ArrayList<Rental> selectAdminRentalList(PageInfo pi, HashMap<String, Integer> filter);
 
+	/**
+	 * [관리자] 검색 조건에 일치하는 목록 개수 조회 (한진)
+	 */
+	int selectAdminListSearchCount(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 검색 조건에 일치하는 목록 조회 (한진)
+	 */
+	ArrayList<Rental> selectAdminRentalSearchList(PageInfo pi, HashMap<String, String> map);
+
 
 }

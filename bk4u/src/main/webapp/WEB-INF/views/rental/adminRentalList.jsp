@@ -53,6 +53,7 @@
             height: 40px;
             padding:1px;
             margin:auto;
+            vertical-align: middle;
         }
 
         /* 검색 조건 select */
@@ -77,7 +78,7 @@
         /* 검색어 입력 */
         #search-input{
             display: inline-block;
-            width:70%;
+            width:65%;
             height: 100%;
         }
         #search-input > input{
@@ -90,42 +91,15 @@
             text-align: center;
         }
 
-        /* radio 태그 */
-        .form-check{margin-bottom: 10px; display:block;}
-        .form-check  span{
-            font-size: 17px;
-            font-weight: 600;
-            margin-right: 20px;
+        /* 검색 이미지 버튼 */
+        #search-btn{
+            width: 5%;
+            float:right;
+            margin:3px 20px 3px 0;
         }
-
-        /* 검색/초기화 버튼 */
-        #search-btn{text-align: center;}
-        #search-btn button{
-            width:80px;
+        #search-btn input{
+            width: 30px;
             height: 30px;
-            font-size: 15px;
-            font-weight: 600;
-            border: none;
-            border-radius: 5px;
-            margin-left:20px;
-        }
-        #search-btn button:hover{
-            cursor: pointer;
-        }
-        #search-btn button[type="submit"]{
-            background-color: #EC573B;
-            color:white;
-        }
-        #search-btn button[type="reset"]{
-            background-color:grey;
-            color: white;
-        }
-        #result-area{margin-top:50px;}
-        #result-title p{
-            float:left; 
-            margin:0 15px 0 0;
-            font-size:18px;
-            font-weight: 600;
         }
 
         /* 타이틀 */
@@ -218,31 +192,30 @@
         .memo-upgrade-btn{color:black;}
 
         /* 페이징 */
-        #paging-area{
-            width:fit-content;
-            margin:auto;
-        }
-        #pagination{
-            padding:0;
-            list-style: none;
-        }
-        #pagination li{
-            display:inline-block;
-            width:35px;
-            height: 30px;
-            text-align: center;
-            line-height: 18px;
-            font-size:16px;
-            padding:5px;
-            border: 1px solid grey;
-            border-radius: 5px;
-        }
-        #pagination li:hover{
-            cursor: pointer;
-            font-weight: 600;
-            color: #EC573B;
-        }
+       	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
+
+        #paging-wrap{width:fit-content; margin:auto;}
+        .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 </style>
+
+<script>
+	$(function(){
+		/* 정렬 방법 변경 */
+	    $("#array-condition").change(function(){
+	        let ar = $(this).val();
+	
+	        if(${ empty keyword }){            	
+	            location.href=`adminRentalList.re?rStatus=${ rStatus }&array=` + ar;		 
+	        }else {
+	        	location.href=`adminRentalList.re?rStatus=${ rStatus }&condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	        }
+	    
+	    })
+	    
+	    /* 정렬 시 해당 값 selected */
+	    $("#array-condition").val("${ ar }").prop("selected", true);
+	})
+</script>
 </head>
 <body>
 
@@ -250,40 +223,31 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>대여전체 조회</p>
         </div> 
         <br>
 
-        <div class="bar-outer" id="search-area">
-            <form action="">
+        <div id="search-area">
+            <form action="adminRentalListSearch.re">
+            	<input type="hidden" name="rStatus" value="${ rStatus }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition">
                             <option value="searchAll">전체</option>
-                            <option value="productCode">주문번호</option>
-                            <option value="bookName">주문자명</option>
-                            <option value="">주문자ID</option>
+                            <option value="rentalNo">대여번호</option>
+                            <option value="bookName">도서명</option>
+                            <option value="memId">대여자ID</option>
+                            <option value="memName">대여자명</option>
+                            <option value="storeName">매장명</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="">
+                        <input type="text" name="keyword">
                     </div>
-                </div>
-                <br>
-                <div class="form-check form-check-inline">
-                    <span>대여상태</span>
-                    <input type="radio"> 전체
-                    <input type="radio"> 예약중
-                    <input type="radio"> 대여중
-                    <input type="radio"> 반납완료
-                    <input type="radio"> 연체
-                    <input type="radio"> 예약취소
-                </div>
-                <br>
-                <div id="search-btn">
-                    <button type="submit">검색</button>
-                    <button type="reset">초기화</button>
+                    <div id="search-btn">
+                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
+                    </div>
                 </div>
             </form>
         </div>
@@ -296,8 +260,8 @@
             
             <div id="array-div">
                 <select name="" id="array-condition">
-                    <option value="">신청일순</option>
-                    <option value="">신청일 역순 </option>
+                    <option value="0">신청일순</option>
+                    <option value="1">신청일 역순 </option>
                 </select>
             </div>
 
@@ -317,44 +281,60 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>0001</td>
-                            <td>최하늘<br>(choi0001)</td>
-                            <td>강남점</td>
-                            <td>행복한어쩌고</td>
-                            <td>2021-07-01</td>
-                            <td>2021-07-05</td>
-                            <td>-</td>
-                            <td>대여중</td>
-                            
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>0001</td>
-                            <td>최하늘<br>(choi0001)</td>
-                            <td>강남점</td>
-                            <td>행복한어쩌고</td>
-                            <td>2021-07-01</td>
-                            <td>2021-07-05</td>
-                            <td>-</td>
-                            <td>예약중</td>
-                        </tr>
+                    	<c:if test="${ !empty rList }">
+                    		<c:choose>
+                    			<c:when test="${ !empty rList }">
+                    				<c:forEach var="r" items="${ rList }" varStatus="no">
+				                        <tr>
+				                            <td>${ no.count }</td>
+				                            <td>${ r.rentalNo }</td>
+				                            <td>${ r.memName }<br>(${ r.memId })</td>
+				                            <td>${ r.storeName }</td>
+				                            <td>${ r.bkTitle }</td>
+				                            <td>${ r.requestDate }</td>
+				                            <td>${ r.receiveDate }</td>
+				                            <td>${ r.returnDate }</td>
+				                            <td>${ r.rentalStatus }</td>
+				                        </tr>
+			                        </c:forEach>
+                        		</c:when>
+	                        	<c:otherwise>
+	                        		<tr>
+	                        			<td colspan="8">조회된 결과가 존재하지 않습니다.</td>
+	                        		</tr>
+	                        	</c:otherwise>
+                        	</c:choose>
+                        </c:if>
                     </tbody>
                 </table>
             </div>
             <br>
-            <div id="paging-area">
-                <ul id="pagination">
-                    <li><a>&lt;</a></li>
-                    <li><a>1</a></li>
-                    <li><a>2</a></li>
-                    <li><a>3</a></li>
-                    <li><a>4</a></li>
-                    <li><a>5</a></li>
-                    <li><a>&gt;</a></li>
-                </ul>
-            </div>
+           <div id="paging-wrap">
+	            <ul class="pagination">
+	            	<c:choose>
+	            		<c:when test="${ pi.currentPage eq 1 }">
+	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+	                	</c:when>
+	                	<c:otherwise>
+			                <li class="page-item"><a class="page-link" href="adminRentalList.re?rStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+	    				</c:otherwise>
+	    			</c:choose>            	
+	                
+	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                <li class="page-item"><a class="page-link" href="adminRentalList.re?rStatus=${ orStatus }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
+	                </c:forEach>
+	                
+	                
+	                <c:choose>
+	                	<c:when test="${ pi.currentPage ge pi.maxPage }">
+			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
+	                	</c:when>
+	                	<c:otherwise>
+	                		<li class="page-item"><a class="page-link" href="adminRentalList.re?rStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                	</c:otherwise>
+	                </c:choose>
+	            </ul>
+	        </div>
         </div>
     </div>
 </body>

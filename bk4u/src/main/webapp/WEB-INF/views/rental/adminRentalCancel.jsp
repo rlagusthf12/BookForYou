@@ -354,19 +354,21 @@
         </div>
 
         <div id="search-area">
-            <form action="">
+            <form action="adminRentalListSearch.re">
+            	<input type="hidden" name="rStatus" value="${ rStatus }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition">
                             <option value="searchAll">전체</option>
-                            <option value="productCode">상품코드</option>
+                            <option value="rentalNo">대여번호</option>
                             <option value="bookName">도서명</option>
-                            <option value="writerName">저자</option>
-                            <option value="publisher">출판사</option>
+                            <option value="memId">대여자ID</option>
+                            <option value="memName">대여자명</option>
+                            <option value="storeName">매장명</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="">
+                        <input type="text" name="keyword">
                     </div>
                     <div id="search-btn">
                         <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">

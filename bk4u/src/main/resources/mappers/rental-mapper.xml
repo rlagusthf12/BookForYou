@@ -202,5 +202,142 @@
 			    	</when>
 			    </choose>
 	</select>
+	
+	<!-- [관리자] 검색 조건에 일치하는 목록 개수 조회 (한진) -->
+	<select id="selectAdminListSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from rental
+		  join members using (mem_no)
+		  join book using (bk_no)
+		  join store using (store_no)
+		 where rental_no > 0
+		  <choose>
+		  	<when test="rStatus == 1">
+		  		and rental_status = '예약중'
+		  	</when>
+		  	<when test="rStatus == 2">
+		  		and rental_status = '대여중'
+		  	</when>
+		  	<when test="rStatus == 3">
+		  		and rental_status = '반납완료'
+		  	</when>
+		  	<when test="rStatus == 4">
+		  		and rental_status = '연체'
+		  	</when>
+		  	<when test="rStatus == 5">
+		  		and rental_status = '예약취소'
+		  	</when>
+		  </choose>
+		  <choose>
+			 <when test="condition == 'searchAll'">
+				and rental_no like '%' || #{keyword} || '%'
+				 or mem_name like '%' || #{keyword} || '%'
+				 or mem_id like '%' || #{keyword} || '%'
+				 or bk_title like '%' || #{keyword} || '%'
+				 or store_name 
+			 </when>
+			 <when test="condition == 'rentalNo'">
+				and rental_no
+			 </when>		
+			 <when test="condition == 'memName'">
+				and mem_name
+			 </when>
+			 <when test="condition == 'memId'">
+				and mem_id
+			 </when>
+			 <when test="condition == 'bookName'">
+				and bk_title
+			 </when>
+			 <when test="condition == 'storeName'">
+				and store_name
+			 </when>
+		  </choose>
+		  like '%' || #{keyword} || '%'
+	</select>
 
+	<!-- [관리자] 검색 조건에 일치하는 목록 조회 (한진) -->
+	<select id="selectAdminRentalSearchList" resultMap="rentalResult">
+		select
+		       rental_no,
+		       mem_id,
+		       mem_name,
+		       bk_no,
+		       bk_title,
+		       store_no,
+		       store_name,
+		       request_date,
+		       receive_date,
+		       return_date,
+		       rental_status
+		  from rental
+		  join members using (mem_no)
+		  join book using (bk_no)
+		  join store using (store_no)
+		 where rental_no > 0
+		  <choose>
+		  	<when test="rStatus == 1">
+		  		and rental_status = '예약중'
+		  	</when>
+		  	<when test="rStatus == 2">
+		  		and rental_status = '대여중'
+		  	</when>
+		  	<when test="rStatus == 3">
+		  		and rental_status = '반납완료'
+		  	</when>
+		  	<when test="rStatus == 4">
+		  		and rental_status = '연체'
+		  	</when>
+		  	<when test="rStatus == 5">
+		  		and rental_status = '예약취소'
+		  	</when>
+		  </choose>
+		  <choose>
+			 <when test="condition == 'searchAll'">
+				and (rental_no like '%' || #{keyword} || '%'
+				 or mem_name like '%' || #{keyword} || '%'
+				 or mem_id like '%' || #{keyword} || '%'
+				 or bk_title like '%' || #{keyword} || '%'
+				 or store_name like '%' || #{keyword} || '%')
+			 </when>
+			 <when test="condition == 'rentalNo'">
+				and rental_no like '%' || #{keyword} || '%'
+			 </when>		
+			 <when test="condition == 'memName'">
+				and mem_name like '%' || #{keyword} || '%'
+			 </when>
+			 <when test="condition == 'memId'">
+				and mem_id like '%' || #{keyword} || '%'
+			 </when>
+			 <when test="condition == 'bookName'">
+				and bk_title like '%' || #{keyword} || '%'
+			 </when>
+			 <when test="condition == 'storeName'">
+				and store_name like '%' || #{keyword} || '%'
+			 </when>
+		  </choose>
+		  order
+		     by
+			    <choose>
+			    	<when test="array == 0">
+			    		request_date desc
+			    	</when>
+			    	<when test="array == 1">
+			    		request_date asc
+			    	</when>
+			    	<when test="array == 2">
+			    		receive_date desc
+			    	</when>
+			    	<when test="array == 3">
+			    		receive_date asc
+			    	</when>
+			    	<when test="array == 4">
+			    		return_date desc
+			    	</when>
+			    	<when test="array == 5">
+			    		return_date asc
+			    	</when>
+			    </choose>
+	</select>
+	
 </mapper>
