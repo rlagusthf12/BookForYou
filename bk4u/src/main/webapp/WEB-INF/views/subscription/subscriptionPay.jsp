@@ -12,6 +12,8 @@
     <!--awesome icons--> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/69851f8880.js"></script>
+    <!--우편번호Api-->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
         body{font-family: "Noto Sans KR", sans-serif !important;}
@@ -33,7 +35,7 @@
         ul{list-style-type:none; margin:0; padding:0;}
         li{display:inline-block;}
         th, td{font-weight:normal; padding:0 40px 12px 0;}
-        .btn{border:1px solid rgb(252, 190, 52); border-radius:4px; margin-left:15px; padding:8px 15px;background:#fff; color:rgb(252, 190, 52); font-weight:600;}
+        .btn{border:1px solid rgb(252, 190, 52); border-radius:4px; margin-left:15px; padding:8px 15px; background:#fff; color:rgb(252, 190, 52); font-weight:600;}
         .btn:hover{cursor:pointer; background: rgb(252, 190, 52, 0.1);}
 
         /*공통타이틀*/
@@ -50,15 +52,16 @@
         #membership_period ul{margin:0; padding:0;}
 
         /**배송지정보*/
-        .btn_address{margin:0;}
         /*받는사람/휴대폰번호/이메일*/
         .receiver_name input, .phone input, .email_box input{width:300px; height:20px; padding:18px; border:1px solid #dedede; border-radius:5px;}
         /*주소*/
         .ad_container{display:flex; flex-direction: column;}
         .ad_container input{height:20px; padding:18px; border:1px solid #dedede; border-radius:5px;}
         .find_postnum{display:flex;}
-        .btn_address{margin-right:8px;}
         .ad_item input{width:530px; margin-top:8px;}
+        .btn_address{margin:0; margin-right:8px;}
+        .address_detail input{width:322px; margin-right:8px;}
+        .address_extra input{width:200px;}
         /*요청사항*/
         #request{width:560px; padding:8px 15px; border:1px solid #dedede; border-radius:5px;}
         
@@ -153,27 +156,15 @@
                         <table id="delivery">
                             <tr>
                                 <th>받는 사람</th>
-                                <td>
-                                    <div class="receiver_name">
-                                        <input type="text" value="이다은">
-                                    </div>
-                                </td>    
+                                <td><div class="receiver_name"><input type="text" name="memName" value="${ loginUser.memName }"></div></td>    
                             </tr>
                             <tr>
                                 <th>휴대폰 번호</th>
-                                <td>
-                                    <div class="phone">
-                                        <input type="text" value="010-1111-2222">
-                                    </div>
-                                </td>
+                                <td><div class="phone"><input type="text" name="memPhone" value="${ loginUser.memPhone }"></div></td>
                             </tr>
                             <tr>
                                 <th>이메일</th>
-                                <td>
-                                    <div class="email_box">
-                                        <input type="email" value="bkbk@naver.com">
-                                    </div>
-                                </td>
+                                <td><div class="email_box"><input type="email" name="memEmail" value="${ loginUser.memEmail }"></div></td>
                             </tr>
                             
                         </table>
@@ -204,24 +195,74 @@
                                 <th style="vertical-align:baseline;">주소</th>
                                 <td>
                                     <div class="ad_container address_box">
-                                        <form action=""></form>
                                         <div class="find_postnum">
-                                            <button class="btn btn_address">주소찾기</button>
-                                            <input type="text" value="12345">
+                                            <button type="button" class="btn btn_address" onclick="daumPostcode()">주소찾기</button>
+                                            <input type="text" id="postcode" placeholder="우편번호">
                                         </div>
                                         <div class="ad_item address">
-                                            <input type="text" value="서울시 강남구 가로수길 123">
+                                            <input type="text" id="address" placeholder="주소">
                                         </div>
-                                        <div class="ad_item address_detail">
-                                            <input type="text" value="1층 로비">
+                                        <div class="ad_item">
+                                        	<div class="ad_item-wrap" style="display:flex;">
+		                                        <div class="address_detail">
+		                                            <input type="text" id="detailAddress" placeholder="상세주소">
+		                                        </div>
+		                                        <div class="address_extra">
+		                                            <input type="text" id="extraAddress" placeholder="참고항목">
+		                                        </div>
+	                                        </div>
                                         </div>
+            	<script>
+            	function daumPostcode() {
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                        	// 팝업창 내부 : 검색결과 항목을 클릭했을때 실행할 코드
+                            var addr = ''; 
+                            var extraAddr = ''; 
+                            
+                         	// 사용자가 선택한 주소타입에 따른 주소값
+                            if (data.userSelectedType === 'R') { // 도로명주소
+                                addr = data.roadAddress;
+                            } else { // 지번주소
+                                addr = data.jibunAddress;
+                            }
+                         	
+                         	// 선택한 주소가 도로명일 때, 참고항목
+                            if(data.userSelectedType === 'R'){
+                            	// 법정동명이 있을 경우 추가 (법정리는 제외함) 마지막 문자가 "동/로/가로 끝남"
+                                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                    extraAddr += data.bname;
+                                }
+                             	// 건물명이 있고 공동주택일 경우
+                                if(data.buildingName !== '' && data.apartment === 'Y'){
+                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                }
+                             	// 참고항목이 있을 경우, 괄호를 추가한 최종 문자열 만들기
+                                if(extraAddr !== ''){
+                                    extraAddr = ' (' + extraAddr + ')';
+                                }
+                                document.getElementById("extraAddress").value = extraAddr;
+                            
+                            } else {
+                                document.getElementById("extraAddress").value = '';
+                            }
+
+                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                            document.getElementById('postcode').value = data.zonecode;
+                            document.getElementById("address").value = addr;
+                            // 커서를 상세주소 필드로 이동한다.
+                            document.getElementById("detailAddress").focus();
+                        }
+                    }).open();
+                }
+            	</script>                            
+                                        
                                         <label for="default-address">
                                             <div style="display:inline-block;">
                                                 <input type="checkbox" id="default-address" style=" width:20px; height:20px; margin-top:14px;">
                                             </div>
                                             <span style="vertical-align:4px; font-size:14px; color: #3b3b3b;">
-                                                기본 배송지로 저장
-                                            </span>
+                                                	기본 배송지로 저장
                                             </span>
                                         </label>
                                     </div>
@@ -277,7 +318,6 @@
                                 ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
                                 ,dayNamesMin: ['일','월','화','수','목','금','토'] 
                                 ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
-
                             }); 
                         });
                     </script>
@@ -346,11 +386,6 @@
                                 </div>
                             </div>
                         </div>
-        
-                    <style>
-                        
-                    </style>
-                        
                         
                         <!--결제금액area-->
                         <div class="paysum_area">
