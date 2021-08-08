@@ -161,6 +161,7 @@
             width: 80%;
             height: 80%;
             object-fit: cover;
+            border-radius: 70%;
         }
         .writer-title{font-size: 16px;}
         .writer-name{text-align: center;font-weight: 600;}
@@ -269,9 +270,61 @@
         			}
         		})
         	}
+
+        	/* 도서 이미지 클릭 시 파일 업로드 (input type="file" 숨기기) */
+        	$("#bkFile").hide();
+        	$("#introImg").click(function(){
+        		$("#bkFile").click();
+        	})
+        	const $bkFile = `${ book.introChangeName }`
+        	$("#bkFile").attr("src", $bkFile);
+        	$("#introImg").attr("src", $bkFile);
+        	
+        	if($bkFile == "") {
+        		$("#introImg").attr("src", "resources/adminCommon/images/book-cover.png");
+        	}
+        	
+        	/* 저자 이미지 클릭 시 파일 업로드 (input type="file" 숨기기) */
+        	$("#writerFile").hide();
+        	$("#writerImg").click(function(){
+        		$("#writerFile").click();
+        	})
+        	const $writerFile = `${ book.writerChangeName }`
+        	$("#writerFile").attr("src", $writerFile);
+        	$("#writerImg").attr("src", $writerFile);
+        	
+        	if($writerFile == "") {
+        		$("#writerImg").attr("src", "resources/adminCommon/images/person.png");
+        	}
+        	
+        	/* 닫기 버튼 */
+        	$("#back").click(function(){
+        		history.back();
+        	})
         	
         })
         
+        /* 도서 이미지 띄우기 */
+        function loadImg(inputFile){
+        	if(inputFile.files.length == 1) {
+    			var reader = new FileReader();
+        		reader.readAsDataURL(inputFile.files[0])
+        		reader.onload = function(e){
+        			$("#introImg").attr("src", e.target.result).show();
+        		}
+        	}
+        }
+        
+        /* 저자 이미지 띄우기 */
+        function loadWriterImg(inputFile){
+        	if(inputFile.files.length == 1) {
+        		var reader = new FileReader();
+        		reader.readAsDataURL(inputFile.files[0])
+        		reader.onload = function(e) {
+        			$("#writerImg").attr("src", e.target.result).show();
+        		}
+        	}
+        }
         
         /* summernote */
 		$(document).ready(function() {
@@ -282,25 +335,25 @@
 	        maxHeight: null,
 			lang: "ko-KR",
 			callbacks: { 
-							// onImageUpload 함수: '이미지를 업로드했을 때' 동작하는 함수
-							onImageUpload: function(files, editor, welEditable){
-								// 파일 업로드 (다중업로드를 위해 for문 사용)
-								for(var i=files.length-1; i>=0; i--){
-									uploadSummernoteImage(files[i], this);
-								}
+					    // onImageUpload 함수: '이미지를 업로드했을 때' 동작하는 함수
+						onImageUpload: function(files, editor, welEditable){
+							// 파일 업로드 (다중업로드를 위해 for문 사용)
+							for(var i = files.length - 1; i >= 0; i --){
+								uploadSummernoteImage(files[i], this);
 							}
+						}
 						}
 		});
 	
 		// 파일 업로드용 callbacks함수 실행
 		function uploadSummernoteImage(file, el){
-			var formData = new FormData();
-			formData.append('file', file); 
+			data = new FormData();
+			data.append('file', file); 
 			// callbacks함수에서 받아온 file들을 data에 추가해서 => ajax로 서버에 파일업로드함
 			$.ajax({
 				url: "uploadAdminSummernoteImageAjax",
-				data: formData,
-				type: "post",
+				data: data,
+				type: "POST",
 				enctype: 'multipart/form-data',
 				processData: false,
 				contentType: false,
@@ -315,9 +368,11 @@
 				//default 값이 "application/x-www-form-urlencoded; charset=UTF-8" 인데, 
 				//"multipart/form-data" 로 전송이 되게 false 로 넣어준다.
 				
-				success: function(imageUrl){
-					$('#blContent').summernote("insertImage", imageUrl.url);
-					//$('#blContent').summernote('editor.insertImage',url);
+				success: function(imgData){
+					$(el).summernote('editor.insertImage', imgData.url);
+				},
+				error: function(){
+					console.log("summerntoe-ajax 통신 실패");
 				}
 			});
 	}
@@ -341,6 +396,14 @@
 	  });
 	});
 </script>
+
+<script>
+	
+	
+		
+		
+	
+</script>
 </head>
 <body>
 
@@ -358,11 +421,14 @@
         </div>
         
         <div>
-            <form action="adminBookUpdate.bk">
+            <form action="adminBookUpdate.bk" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="bkNo" value="${ book.bkNo }"/>
                  <div id="info-area">
                     <div id="book-img">
-                        <img src="" alt="" width="150px;" height="180px;">
+                        <img src="resources/adminCommon/images/book-cover.png" id="introImg" width="150px;" height="180px;">
+                        <input type="file" id="bkFile" name="bkFile" onchange="loadImg(this);">
+                    	<input type="hidden" name="introOriginName" value="${ book.introOriginName }">
+                    	<input type="hidden" name="introChangeName" value="${ book.introChangeName }">
                     </div>
                     <div id="book-info">
                         <div class="book-info-content">
@@ -448,6 +514,7 @@
                     </ul>
         			
                     <!-- Tab panes -->
+                    <!-- 추천키워드 -->
                     <div class="tab-content">
                         <div id="keyword" class="container tab-pane active"><br>
                             <div class="recommended age">
@@ -509,26 +576,26 @@
                                 <div><p>장르</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="checkbox" id="bkSubCate1" name="ganre" value="소설"><label for="bkSubCate1">소설</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate2" name="ganre" value="시/에세이"><label for="bkSubCate2">시/에세이</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate3" name="ganre" value="경제/경영"><label for="bkSubCate3">경제/경영</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate4" name="ganre" value="자기계발"><label for="bkSubCate4">자기계발</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate5" name="ganre" value="요리"><label for="bkSubCate5">요리</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate6" name="ganre" value="역사/문화"><label for="bkSubCate6">역사/문화</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate7" name="ganre" value="종교"><label for="bkSubCate7">종교</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate8" name="ganre" value="정치/사회"><label for="bkSubCate8">정치/사회</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate9" name="ganre" value="예술"><label for="bkSubCate9">예술</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate10" name="ganre" value="유아"><label for="bkSubCate10">유아</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate11" name="ganre" value="기술/공학"><label for="bkSubCate11">기술/공학</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate12" name="ganre" value="컴퓨터/IT"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate13" name="ganre" value="문학/소설"><label for="bkSubCate13">문학/소설</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate14" name="ganre" value="어학/사전"><label for="bkSubCate14">어학/사전</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate15" name="ganre" value="생활/요리"><label for="bkSubCate15">생활/요리</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate16" name="ganre" value="예술/건축"><label for="bkSubCate16">예술/건축</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate17" name="ganre" value="경제/경영"><label for="bkSubCate17">경제/경영</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate18" name="ganre" value="인문/사회"><label for="bkSubCate18">인문/사회</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate19" name="ganre" value="일본도서"><label for="bkSubCate19">일본도서</label></div></li>
-                                        <li><div><input type="checkbox" id="bkSubCate20" name="ganre" value="중국도서"><label for="bkSubCate20">중국도서</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate1" name="ganre" value="소설"><label for="bkSubCate1">소설</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate2" name="ganre" value="시/에세이"><label for="bkSubCate2">시/에세이</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate3" name="ganre" value="경제/경영"><label for="bkSubCate3">경제/경영</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate4" name="ganre" value="자기계발"><label for="bkSubCate4">자기계발</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate5" name="ganre" value="요리"><label for="bkSubCate5">요리</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate6" name="ganre" value="역사/문화"><label for="bkSubCate6">역사/문화</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate7" name="ganre" value="종교"><label for="bkSubCate7">종교</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate8" name="ganre" value="정치/사회"><label for="bkSubCate8">정치/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate9" name="ganre" value="예술"><label for="bkSubCate9">예술</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate10" name="ganre" value="유아"><label for="bkSubCate10">유아</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate11" name="ganre" value="기술/공학"><label for="bkSubCate11">기술/공학</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate12" name="ganre" value="컴퓨터/IT"><label for="bkSubCate12">컴퓨터/IT</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate13" name="ganre" value="문학/소설"><label for="bkSubCate13">문학/소설</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate14" name="ganre" value="어학/사전"><label for="bkSubCate14">어학/사전</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate15" name="ganre" value="생활/요리"><label for="bkSubCate15">생활/요리</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate16" name="ganre" value="예술/건축"><label for="bkSubCate16">예술/건축</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate17" name="ganre" value="경제/경영"><label for="bkSubCate17">경제/경영</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate18" name="ganre" value="인문/사회"><label for="bkSubCate18">인문/사회</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate19" name="ganre" value="일본도서"><label for="bkSubCate19">일본도서</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate20" name="ganre" value="중국도서"><label for="bkSubCate20">중국도서</label></div></li>
                                     </ul>
                                 </div>
                             </div>
@@ -562,10 +629,14 @@
                             </div>
                         </div>
 
+						<!-- 저자소개 -->
                         <div id="writerInfo" class="container tab-pane fade"><br>
                             <div id="writer-profile">
                                 <div id="writer-img">
-                                    <img src="resources/adminCommon/images/person.png" alt="">
+                                    <img src="resources/adminCommon/images/person.png" alt="" id="writerImg">
+                                    <input type="file" id="writerFile" name="bkFile" onchange="loadWriterImg(this);">
+                                    <input type="hidden" name="writerOriginName" value="${ book.writerOriginName }">
+                                    <input type="hidden" name="writerChangeName" value="${ book.writerChangeName }">
                                 </div>
                                 <div class="writer-title writer-name"><span>${ book.writerName }</span></div>
                             </div>
@@ -574,17 +645,19 @@
                             </div>
                         </div>
 
+						<!-- 출판사 서평 / 목차 -->
                         <div id="bookInfo" class="container tab-pane fade"><br>
                             <div>
                                 <p>출판사 서평 / 목차</p>
                             </div>
                             <div class="container">
-							  <textarea class="summernote" name="editordata"></textarea>    
+							  <textarea class="summernote" name="bkContent">${ book.bkContent }</textarea>    
 							</div>
                         </div>
                     </div>
                     <br>
                     <div id="btn-submit">
+                    	<button type="button" id="back">닫기</button>
                         <button type="submit">저장</button>
                     </div>
                     

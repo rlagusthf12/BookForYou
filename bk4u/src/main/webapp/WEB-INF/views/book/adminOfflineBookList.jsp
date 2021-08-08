@@ -287,7 +287,7 @@
                     <tbody>
                         <tr>
                             <td>1</td>
-                            <td><img src="" alt="" width="80" height="90"></td>
+                            <td><img src="${ book.introChangeName }" alt="" width="80" height="90"></td>
                             <td>pn0001</td>
                             <td>완전한 행복</td>
                             <td>정유정</td>

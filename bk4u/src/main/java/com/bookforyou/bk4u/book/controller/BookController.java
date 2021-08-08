@@ -2,14 +2,17 @@ package com.bookforyou.bk4u.book.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +41,6 @@ public class BookController {
 	
 	/**
 	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 도서 개수&목록 조회(한진)
-	 * @param mv
-	 * @param currentPage
-	 * @param bkStatus
-	 * @return
 	 */
 	@RequestMapping("adminBookList.bk")
 	public ModelAndView adminBookList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, 
@@ -311,18 +310,42 @@ public class BookController {
 	@RequestMapping("adminBookUpdate.bk")
 	public String updateAdminBook(Book b, int bkNo, String year, String month, String day, 
 									@RequestParam(value="itrs") List<String> itrs, 
-									@RequestParam(value="ganre")List<String> ganre) {
+									@RequestParam(value="ganre") String subCateName,
+									MultipartFile[] bkFile, HttpSession session) {
 		
 		
 		String date = year + "-" + month + "-" + day;
-		
 		b.setBkDate(date);
 		b.setBkNo(bkNo);
+		b.setSubCateName(subCateName);
+		
+		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
+		if(!bkFile[0].getOriginalFilename().equals("")) {
+			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 삭제
+			if(b.getIntroOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getIntroChangeName())).delete();
+			}
+			// 새로 넘어온 첨부파일 업로드 시키기
+			String introChangeName = saveFile(session, bkFile[0]);
+			// b에 새로 넘어온 첨부파일에 대한 정보 담기
+			b.setIntroOriginName(bkFile[0].getOriginalFilename());
+			b.setIntroChangeName("resources/book/" + introChangeName);
+		}
+
+		if(!bkFile[1].getOriginalFilename().equals("")) {
+			if(b.getWriterOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getWriterChangeName())).delete();
+			}
+			String writerChangeName = saveFile(session, bkFile[1]);
+			b.setWriterOriginName(bkFile[1].getOriginalFilename());
+			b.setWriterChangeName("resources/book/" + writerChangeName);
+		}
 		
 		int result = bookService.updateAdminBook(b);
 		
 		List<String> selectedIntr = bookService.selectAdminBookInterest(b);
 
+		// 수정된 관심사목록이 원래 관심사목록에 포함되어있지 않을 경우 해당 관심사는 삭제하기
 		String interest = "";
 		for(int i=0; i<selectedIntr.size(); i++) {
 			if(!itrs.contains(selectedIntr.get(i))) {
@@ -330,10 +353,10 @@ public class BookController {
 				int delete = bookService.deleteAdminBookItrs(b);
 			}
 		}
-		
+
+		// 새롭게 등록된 관심사 목록은 추가
 		for(int i=0; i<itrs.size(); i++) {
 			interest = itrs.get(i);
-			
 			if(!selectedIntr.contains(interest)) {
 				b.setInterestContent(interest);
 				int	result1 = bookService.insertAdminBookItrs(b);					
@@ -343,6 +366,26 @@ public class BookController {
 		return "redirect:/adminBookDetail.bk?bkNo=" + b.bkNo;
 	}
 	
+	private String saveFile(HttpSession session, MultipartFile upfile) {
+		
+		String savePath = session.getServletContext().getRealPath("/resources/book/");
+		
+		String originName = upfile.getOriginalFilename(); // 20210702170130(년월일시분초) + 랜덤값 + .jpg (확장자)
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		int ranNum = (int)(Math.random() * 90000 + 10000);
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		String changeName = currentTime + ranNum + ext;
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		return changeName;
+	}
+
 	/**
 	 * [관리자] summernote 사진첨부 ajax(한진)
 	 */
@@ -362,15 +405,20 @@ public class BookController {
 		File file = new File(savePath + changeName);
 		
 		try {
-			upfile.transferTo(file);
-			jObj.addProperty("url", "resources/summernoteImage/" + changeName);
+			InputStream fileStream = upfile.getInputStream();
+			FileUtils.copyInputStreamToFile(fileStream, file); // 파일 저장
+			
+			/*upfile.transferTo(file);*/
+			
+			jObj.addProperty("url", "resources/summernoteImage/" + changeName); // contextroot + resources + 저장할 내부 폴더명
 			jObj.addProperty("responseCode", "success");
-		} catch (IllegalStateException | IOException e) {
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(file); // 저장된 파일 삭제
 			jObj.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
-		String imageUrl = jObj.toString();
-		return imageUrl;
+		String imageData = jObj.toString();
+		return imageData;
 	}
 	
 	
@@ -388,10 +436,33 @@ public class BookController {
 	@RequestMapping("adminBookInsert.bk")
 	public String insertAdminBook(Book b, String year, String month, String day,
 							      @RequestParam(value="ganre") String subCateName,
-							      @RequestParam(value="itrs") List<String> itrs) {
+							      @RequestParam(value="itrs") List<String> itrs,
+							      MultipartFile[] bkFile, HttpSession session) {
 		String date = year + "-" + month + "-" + day;
 		b.setBkDate(date);
 		b.setSubCateName(subCateName);
+		
+		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
+		if(!bkFile[0].getOriginalFilename().equals("")) {
+			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 삭제
+			if(b.getIntroOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getIntroChangeName())).delete();
+			}
+			// 새로 넘어온 첨부파일 업로드 시키기
+			String introChangeName = saveFile(session, bkFile[0]);
+			// b에 새로 넘어온 첨부파일에 대한 정보 담기
+			b.setIntroOriginName(bkFile[0].getOriginalFilename());
+			b.setIntroChangeName("resources/book/" + introChangeName);
+		}
+
+		if(!bkFile[1].getOriginalFilename().equals("")) {
+			if(b.getWriterOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getWriterChangeName())).delete();
+			}
+			String writerChangeName = saveFile(session, bkFile[1]);
+			b.setWriterOriginName(bkFile[1].getOriginalFilename());
+			b.setWriterChangeName("resources/book/" + writerChangeName);
+		}
 		
 		int result = bookService.insertAdminBook(b);
 		
