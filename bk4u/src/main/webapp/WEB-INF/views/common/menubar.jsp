@@ -201,7 +201,7 @@
         
         <div id="header_2">
             <ul>
-                <li><a href="">정기구독</a></li>
+                <li><a href="join.sub">정기구독</a></li>
                 <li><a href="">도서구매</a></li>
                 <li><a href="list.bl">커뮤니티</a></li>
                 <li><a href="">이벤트</a></li>

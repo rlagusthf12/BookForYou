@@ -309,6 +309,36 @@ public class SubscriptionController {
 		return "redirect:/adminSubscDeliveryList.su?date=0";
 	}
 	
+	/** 정기구독 메인페이지 호출용
+	 * @author daeunlee
+	 */
+	@RequestMapping("join.sub")
+	public String joinSub() {
+		return "subscription/subscriptionJoin";
+	}
+	
+	/** 정기구독 가입페이지 호출용
+	 * @author daeunlee
+	 */
+	@RequestMapping("joinAgree.sub")
+	public String joinAgreeSub() {
+		return "subscription/subscriptionJoinAgree";
+	}
+	
+	/** 정기구독 결제용
+	 * @author daeunlee
+	 */
+	
+	@RequestMapping("pay.sub")
+	public String paySub() {
+		return "subscription/subscriptionPay";
+	}
+	
+	
+	@RequestMapping("payComplete.sub")
+	public String payCompleteSub() {
+		return "subscription/subscriptionPayComplete";
+	}
 	
 	
 }
