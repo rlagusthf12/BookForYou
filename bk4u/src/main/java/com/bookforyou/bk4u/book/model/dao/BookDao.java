@@ -195,4 +195,18 @@ public class BookDao {
 	public int insertList(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.update("bookMapper.insertList", map);
 	}
+
+	/**
+	 * [관리자] 도서 삭제 (한진)
+	 */
+	public int deleteAdminBook(SqlSessionTemplate sqlSession, String bn) {
+		return sqlSession.delete("bookMapper.deleteAdminBook", bn);
+	}
+
+	/**
+	 * [관리자] 도서 관심사 행 삭제 (한진)
+	 */
+	public int deleteAdminBookInterest(SqlSessionTemplate sqlSession, String bn) {
+		return sqlSession.delete("bookMapper.deleteAdminBookInterest", bn);
+	}
 }

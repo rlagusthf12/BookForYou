@@ -221,4 +221,20 @@ public class BookServiceImpl implements BookService {
 	public int insertList(HashMap<String, Integer> map) {
 		return bookDao.insertList(sqlSession, map);
 	}
+
+	/**
+	 * [관리자] 도서 삭제 (한진)
+	 */
+	@Override
+	public int deleteAdminBook(String bn) {
+		return bookDao.deleteAdminBook(sqlSession, bn);
+	}
+
+	/**
+	 * [관리자] 도서 관심사 행 삭제 (한진)
+	 */
+	@Override
+	public int deleteAdminBookInterest(String bn) {
+		return bookDao.deleteAdminBookInterest(sqlSession, bn);
+	}
 }

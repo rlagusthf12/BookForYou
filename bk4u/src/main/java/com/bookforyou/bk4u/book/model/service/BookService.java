@@ -134,4 +134,14 @@ public interface BookService {
 	 * [공통] 도서 리스트 추가 (연지)
 	 */
 	int insertList(HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 도서 삭제 (한진)
+	 */
+	int deleteAdminBook(String bn);
+
+	/**
+	 * [관리자] 도서 관심사 행 삭제 (한진)
+	 */
+	int deleteAdminBookInterest(String bn);
 }

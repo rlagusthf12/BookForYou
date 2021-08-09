@@ -220,6 +220,7 @@
         	if($writerFile == "") {
         		$("#writerImg").attr("src", "resources/adminCommon/images/person.png");
         	}
+        	
         		
 	})
         
@@ -243,6 +244,19 @@
         			$("#writerImg").attr("src", e.target.result).show();
         		}
         	}
+        }
+        
+        /* form submit 전에 체크박스 한개 이상은 체크 되어있도록 검사 하기 */
+        function check(){
+        	var checkedInterest = document.getElementsByName("itrs");
+        	// 체크된 값이 하나라도 있으면 true
+        	for(var i=0; i<checkedInterest.length; i++) {
+        		if(checkedInterest[i].checked == true) {
+        			return true;
+        		}
+        	}
+		    alert("관심사를 하나 이상 체크해주세요.");        			
+		    return false;
         }
         
         /* summernote */
@@ -331,39 +345,37 @@
         </div>
 		<br>
         <div>
-            <form action="adminBookInsert.bk" method="POST">
+            <form action="adminBookInsert.bk" method="POST" onsubmit="return check();" enctype="multipart/form-data">
                  <div id="info-area">
                     <div id="book-img">
                         <img src="resources/adminCommon/images/book-cover.png" id="introImg" width="150px;" height="180px;">
                         <input type="file" id="bkFile" name="bkFile" onchange="loadImg(this);">
-                    	<input type="hidden" name="introOriginName" value="${ book.introOriginName }">
-                    	<input type="hidden" name="introChangeName" value="${ book.introChangeName }">
                     </div>
                     <div id="book-info">
                         <div class="book-info-content">
                             <div class="div-name">제목</div>
                             <div>
-                                <input type="text" style="width:400px;" name="bkTitle">
+                                <input type="text" style="width:400px;" name="bkTitle" required>
                             </div>
                         </div>
                         <div class="book-info-content">
                             <div class="div-name">저자</div>
                             <div>
-                                <input type="text" name="writerName">
+                                <input type="text" name="writerName" required>
                             </div>
                         </div>
                         <div class="book-info-content">
                             <div class="div-name">출판사</div>
                             <div>
-                                <input type="text" name="bkPublish">
+                                <input type="text" name="bkPublish" required>
                             </div>
                         </div>
                         <div class="book-info-content">
                             <div class="div-name">출간일</div>
                             <div>
-                                <input type="text" id="year" name="year" placeholder="년(4자리)" style="width: 80px;">
+                                <input type="text" id="year" name="year" placeholder="년(4자리)" style="width: 80px;" required>
                                 <span style="margin-left:5px;">
-                                    <select name="month" id="month" style="height:30px; width:70px;">
+                                    <select name="month" id="month" style="height:30px; width:70px;" required>
                                         <option>월</option>
                                         <option value="01">1</option>
                                         <option value="02">2</option>
@@ -379,29 +391,29 @@
                                         <option value="12">12</option>
                                     </select>
                                 </span>
-                                <input type="text" id="day" name="day" placeholder="일" style="margin-left:5px; width: 70px;">
+                                <input type="text" id="day" name="day" placeholder="일" style="margin-left:5px; width: 70px;" required>
                             </div>
                         </div>
                         <div class="book-info-content">
                             <div class="div-name">정가</div>
                             <div>
-                                <input type="text" name="bkPrice" style="width:100px;">
+                                <input type="text" name="bkPrice" style="width:100px;" required>
                             </div>
                         </div>
                         <div class="book-info-content">
                             <div class="div-name">재고</div>
                             <div>
-                                <input type="text" name="bkStock" style="width:100px;">
+                                <input type="text" name="bkStock" style="width:100px;" required>
                             </div>
                         </div>
                     </div>   
                     <div id="status-area">
                         <div class="book-status a">
-                            <input type="radio" id="bkStatusY" name="bkStatus" value="판매중"><label for="bkStatusY">판매중</label>
+                            <input type="radio" id="bkStatusY" name="bkStatus" value="판매중" required><label for="bkStatusY">판매중</label>
                             <input type="radio" id="bkStatusN" name="bkStatus" value="품절"><label for="bkStatusN">품절</label>
                         </div>
                         <div class="book-status b">
-                            <input type="radio" id="selStatusY" name="bkSelStatus" value="Y"><label for="selStatusY">게시함</label>
+                            <input type="radio" id="selStatusY" name="bkSelStatus" value="Y" required><label for="selStatusY">게시함</label>
                             <input type="radio" id="selStatusN" name="bkSelStatus" value="N"><label for="selStatusN">게시안함</label>
                         </div>
     
@@ -429,7 +441,7 @@
                                 <div><p>나이</p></div>
                                 <div>
                                     <ul>
-                                        <li><div class="book-age"><input type="radio" id="bkAge10" name="bkAge" value="10"><label for="bkAge10">10대</label></div></li>
+                                        <li><div class="book-age"><input type="radio" id="bkAge10" name="bkAge" value="10" required><label for="bkAge10">10대</label></div></li>
                                         <li><div class="book-age"><input type="radio" id="bkAge20" name="bkAge" value="20"><label for="bkAge20">20대</label></div></li>
                                         <li><div class="book-age"><input type="radio" id="bkAge30" name="bkAge" value="30"><label for="bkAge30">30대</label></div></li>
                                         <li><div class="book-age"><input type="radio" id="bkAge40" name="bkAge" value="40"><label for="bkAge40">40대</label></div></li>
@@ -443,7 +455,7 @@
                                 <div><p>성별</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="radio" id="bkGenF" name="bkGender" value="F"><label for="bkGenF">여성</label></div></li>
+                                        <li><div><input type="radio" id="bkGenF" name="bkGender" value="F" required><label for="bkGenF">여성</label></div></li>
                                         <li><div><input type="radio" id="bkGenM" name="bkGender" value="M"><label for="bkGenM">남성</label></div></li>
                                     </ul>
                                 </div>
@@ -484,7 +496,7 @@
                                 <div><p>장르</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="radio" id="bkSubCate1" name="ganre" value="소설"><label for="bkSubCate1">소설</label></div></li>
+                                        <li><div><input type="radio" id="bkSubCate1" name="ganre" value="소설" required><label for="bkSubCate1">소설</label></div></li>
                                         <li><div><input type="radio" id="bkSubCate2" name="ganre" value="시/에세이"><label for="bkSubCate2">시/에세이</label></div></li>
                                         <li><div><input type="radio" id="bkSubCate3" name="ganre" value="경제/경영"><label for="bkSubCate3">경제/경영</label></div></li>
                                         <li><div><input type="radio" id="bkSubCate4" name="ganre" value="자기계발"><label for="bkSubCate4">자기계발</label></div></li>
@@ -511,7 +523,7 @@
                                 <div><p>직업</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="radio" id="bkWorkStudent" name="bkWork" value="학생"><label for="bkWorkStudent">학생</label></div></li>
+                                        <li><div><input type="radio" id="bkWorkStudent" name="bkWork" value="학생" required><label for="bkWorkStudent">학생</label></div></li>
                                         <li><div><input type="radio" id="bkWorkPo" name="bkWork" value="공무원"><label for="bkWorkPo">공무원</label></div></li>
                                         <li><div><input type="radio" id="bkWorkMk" name="bkWork" value="마케터"><label for="bkWorkMk">마케터</label></div></li>
                                         <li><div><input type="radio" id="bkWorkPl" name="bkWork" value="기획자"><label for="bkWorkPl">기획자</label></div></li>
@@ -528,7 +540,7 @@
                                 <div><p>난이도</p></div>
                                 <div>
                                     <ul>
-                                        <li><div><input type="radio" id="bkLevelE" name="bkLevel" value="쉬움"><label for="bkLevelE">쉬움</label></div></li>
+                                        <li><div><input type="radio" id="bkLevelE" name="bkLevel" value="쉬움" required><label for="bkLevelE">쉬움</label></div></li>
                                         <li><div><input type="radio" id="bkLevelM" name="bkLevel" value="보통"><label for="bkLevelM">보통</label></div></li>
                                         <li><div><input type="radio" id="bkLevelH" name="bkLevel" value="어려움"><label for="bkLevelH">어려움</label></div></li>
                                         <li><div><input type="radio" id="bkLevelA" name="bkLevel" value="무관"><label for="bkLevelA">무관</label></div></li>
@@ -542,8 +554,6 @@
                                 <div id="writer-img">
                                     <img src="resources/adminCommon/images/person.png" alt="" id="writerImg">
                                     <input type="file" id="writerFile" name="bkFile" onchange="loadWriterImg(this);">
-                                    <input type="hidden" name="writerOriginName" value="${ book.writerOriginName }">
-                                    <input type="hidden" name="writerChangeName" value="${ book.writerChangeName }">
                                 </div>
                                 <div class="writer-title writer-name"><span></span></div>
                             </div>
