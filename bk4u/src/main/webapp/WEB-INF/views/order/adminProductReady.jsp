@@ -14,6 +14,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
+    	@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+    	
 		#outer{
             display:inline-block;
             position:absolute;
@@ -187,6 +189,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 반품 처리 컬럼 버튼 */
         .handling{
@@ -314,7 +322,7 @@
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
             	var $memo = td.eq(11).text();
-            	var $orderNo = td.eq(1).text();
+            	var $orderNo = td.eq(2).text();
             	$(".admin-memo-content .oNo").val($orderNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
             	
@@ -333,8 +341,7 @@
 			$(".memo-delete-btn").click(function(){
 				
 				var $orderNo = $(".oNo").val();
-				var $orStatus = 2;
-				location.href="deleteAdminMemo.or?orStatus=" + $orStatus + "&orderNo=" + $orderNo;
+				location.href="deleteAdminMemo.or?orderNo=" + $orderNo + "&orStatus=2";
 				
 			})			
 
@@ -641,7 +648,7 @@
 																<input type="hidden" name="orderNo" class="oNo"/>
 																<input type="hidden" name="orStatus" value="2"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -665,7 +672,7 @@
 																<input type="hidden" name="orderNo" class="oNo"/>
 																<input type="hidden" name="orStatus" value="2"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->

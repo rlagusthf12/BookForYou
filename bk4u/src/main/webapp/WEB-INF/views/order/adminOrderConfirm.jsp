@@ -14,6 +14,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
+	@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
+    	
 		#outer{
             display:inline-block;
             position:absolute;
@@ -185,6 +187,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}

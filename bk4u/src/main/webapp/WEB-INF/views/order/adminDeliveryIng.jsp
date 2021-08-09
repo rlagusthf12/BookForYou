@@ -188,6 +188,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 배송 처리 컬럼 버튼 */
         .handling{
@@ -322,7 +328,7 @@
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
             	var $memo = td.eq(10).text();
-            	var $orderNo = td.eq(1).text();
+            	var $orderNo = td.eq(2).text();
             	$(".admin-memo-content .oNo").val($orderNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
             	
@@ -341,9 +347,9 @@
 			$(".memo-delete-btn").click(function(){
 				
 				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+				location.href="deleteAdminMemo.or?orderNo=" + $orderNo + "&orStatus=4";
 				
-			})			
+			})				
 
             /* user-memo 모달 보여주기 */
             $(".user-memo.exist button").click(function(){
@@ -357,6 +363,27 @@
                 const a = $(this).offset();
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
+            
+            /* Click on select all checkbox */
+	        $("#result-div thead input[type='checkbox']").click(function(){
+	        	
+	        	if($(this).prop("checked")){
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", true);
+	        		})
+	        	}else {
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", false);
+	        		})
+	        	}
+	        })
+	        
+	        /* Click on another checkbox can affect the select all checkbox */
+	        $("#result-div tbody input[type='checkbox']").click(function(){
+	        	if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
+	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+	        	}
+	        })
 
             /* 주문상태 변경 */
 	        $("#handling-btn button").each(function(){
@@ -559,7 +586,8 @@
                         <tr>
                             <th>NO</th>
                             <th><input type="checkbox"></th>
-                            <th>주문번호<br>주문일</th>
+                            <th>주문번호</th>
+                            <th>주문일</th>
                             <th>주문자</th>
                             <th>도서명</th>
                             <th>발송일</th>
@@ -575,7 +603,8 @@
 			                        <tr>
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="oCheck" value="${ o.orderNo }"></td>
-			                            <td>${ o.orderNo } <br> ${ o.orderDate }</td>
+			                            <td class="detailC">${ o.orderNo }</td>
+			                            <td>${ o.orderDate }</td>
 			                            <td>${ o.memName } <br> (${ o.memId })</td>
 			                            <td>${ o.bkTitle }</td>
 			                            <td>${ o.shippingDate }</td>
@@ -619,8 +648,9 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="4"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -642,8 +672,9 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="4"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->

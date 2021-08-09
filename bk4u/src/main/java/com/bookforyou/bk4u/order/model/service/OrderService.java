@@ -111,5 +111,15 @@ public interface OrderService {
 	 * [관리자] 주문 상태 변경 (한진)
 	 */
 	int updateAdminOrderConfirm(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 주문 취소 테이블 insert (한진)
+	 */
+	int insertAdminCancel(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 운송장정보 등록/저장 (한진)
+	 */
+	int updateDeliveryInfo(HashMap<String, String> map);
 	
 }

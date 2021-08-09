@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,8 +51,6 @@ public class OrderController {
 		int selectDeliveryReadyCnt = oService.selectDeliveryReadyCnt();
 		int selectDeliveryCnt = oService.selectDeliveryCnt();
 		int selectFinish = oService.selectFinishCnt();
-		
-		mv.setViewName("order/adminOrderList");
 		
 		if(orStatus.equals("0")) {
 			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
@@ -124,11 +123,7 @@ public class OrderController {
 		map.put("orStatus", orStatus);
 		map.put("array", array);
 		
-		int conListCount = oService.selectAdminOListSearchCount(map);
-		
 		int listCount = oService.selectAllListCount();
-
-		PageInfo pi = null;
 
 		int selectConfirmCnt = oService.selectConfirmCnt();
 		int selectProductReadyCnt = oService.selectProductReadyCnt();
@@ -136,26 +131,21 @@ public class OrderController {
 		int selectDeliveryCnt = oService.selectDeliveryCnt();
 		int selectFinish = oService.selectFinishCnt();
 		
-		mv.setViewName("order/adminOrderList");
-		
+		int conListCount = oService.selectAdminOListSearchCount(map);
+		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+
 		if(orStatus.equals("0")) {
-			pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 			mv.setViewName("order/adminOrderList");
 		}else {
 			if(orStatus.equals("1")) {
-				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminOrderConfirm");
 			}else if(orStatus.equals("2")) {
-				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminProductReady");
 			}else if(orStatus.equals("3")) {
-				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminDeliveryReady");
 			}else if(orStatus.equals("4")){
-				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminDeliveryIng");
 			}else if(orStatus.equals("5")){
-				pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
 				mv.setViewName("order/adminComplete");
 			}else {
 				mv.setViewName("order/adminOrderList");
@@ -179,19 +169,29 @@ public class OrderController {
 		  .addObject("orStatus", orStatus);
 		
 		return mv;
+		
 	}
 	
 	/**
 	 * [관리자] 관리자 메모 등록/수정 (한진) 
 	 */
 	@RequestMapping("updateAdminMemo.or")
-	public String updateAdminMemo(String orStatus, String orderNo, String adminMemoContent) {
+	public String updateAdminMemo(String orStatus, String orderNo, String adminMemo) {
+		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("orderNo", orderNo);
-		map.put("memoContent", adminMemoContent);
+		map.put("adminMemo", adminMemo);
+		
+		System.out.println(map);
 		
 		int result = oService.updateAdminMemo(map);
-		
+		/*
+		if(result > 0) {
+			ra.addFlashAttribute("alertMsg", "메모를 저장하였습니다.");
+			ra.addFlashAttribute("url", "/adminOrderList.or?orStatus=" + orStatus);
+			return "redirect:/adminOrderList.or?orStatus=" + orStatus;
+		}
+		*/
 		return "redirect:/adminOrderList.or?orStatus=" + orStatus;
 	}
 	
@@ -202,6 +202,13 @@ public class OrderController {
 	public String deleteAdminMemo(String orStatus, String orderNo) {
 		int result = oService.deleteAdminMemo(orderNo);
 		
+		/*
+		if(result > 0) {
+			RedirectAttributes.addFlashAttribute("alertMsg", "메모를 삭제하였습니다.");
+			RedirectAttributes.addFlashAttribute("url", "/adminOrderList.or?orStatus=" + orStatus);
+			return "redirect:/adminOrderList.or?orStatus=" + orStatus;
+		}
+		*/
 		return "redirect:/adminOrderList.or?orStatus=" + orStatus;
 	}
 	
@@ -261,9 +268,14 @@ public class OrderController {
 			String odNo = odNoArr.get(i);
 			map.put("odNo", odNo);
 			map.put("odStatus", odStatus);
+			int result = oService.updateAdminOrderConfirm(map);
+			
+			if(odStatus.equals("2")) {
+				int cancelResult = oService.insertAdminCancel(map);
+			}
 		}
 		
-		int result = oService.updateAdminOrderConfirm(map);
+		
 		
 		if(orStatus.equals("1")) {
 			return "redirect:/adminOrderList.or?orStatus=1";
@@ -277,7 +289,26 @@ public class OrderController {
 			return "redirect:/adminOrderList.or?orStatus=5";
 		}
 		
+		
 		return "redirect:/adminOrderList.or?orStatus=1";
+	}
+	
+	/**
+	 * [관리자] 운송장정보 등록/저장 (한진)
+	 */
+	@RequestMapping("updateDeliveryInfo.or")
+	public String updateAdminDeliveryInfo(String deliveryCompany, String shippingNumber, String orderNo) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("deliveryCompany", deliveryCompany);
+		map.put("shippingNumber", shippingNumber);
+		map.put("orderNo", orderNo);
+		
+		System.out.println(map);
+		
+		int result = oService.updateDeliveryInfo(map);
+		
+		return "redirect:/adminOrderList.or?orStatus=3";
 	}
 	
 	

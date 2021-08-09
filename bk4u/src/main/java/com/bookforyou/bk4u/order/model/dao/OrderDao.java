@@ -161,5 +161,19 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateAdminOrderConfirm", map);
 	}
 
+	/**
+	 * [관리자] 주문 취소 테이블 insert (한진)
+	 */
+	public int insertAdminCancel(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("orderMapper.insertAdminCancel", map);
+	}
+
+	/**
+	 * [관리자] 운송장정보 등록/저장 (한진)
+	 */
+	public int updateDeliveryInfo(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("orderMapper.updateDeliveryInfo", map);
+	}
+
 	
 }

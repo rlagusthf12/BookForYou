@@ -31,29 +31,6 @@
         }
         a{text-decoration: none;}
 
-		/* 주문 상태 바 */
-        #status-bar{
-            margin:30px 0 60px 0;
-            font-size: 15px;
-        }
-         #status-bar > div{
-            display: inline-block;
-            margin: 0 3px 0 3px;
-            width:147px;
-            height:87px;
-            border:1px solid black;
-            text-align: center;
-            padding:10px;
-            font-weight: 600;
-           	box-shadow: 3px 3px 3px grey;
-        }
-        #status-bar p {font-size:17px; margin-bottom:10px;}
-        #status-bar span {color:#EC573B; font-size:20px;}
-		#status-bar > div:hover {
-			cursor:pointer;
-			box-shadow: 10px 10px 10px grey; 
-		}
-		
        /* 검색 영역 */
         #search-area{
             display:flex;
@@ -143,6 +120,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 반품 처리 컬럼 버튼 */
         .handling{
@@ -225,31 +208,6 @@
 	
 		$(function(){
 			
-			/* 상태 클릭  */
-	        $("#getStatusAll").click(function(){
-		        location.href="adminOrderList.or?";
-		    })
-		    
-		    $("#getStatus1").click(function(){
-		        location.href="adminOrderList.or?orStatus=1";
-		    })
-		    
-		    $("#getStatus2").click(function(){
-		        location.href="adminOrderList.or?orStatus=2";
-		    })
-		    
-		    $("#getStatus3").click(function(){
-		        location.href="adminOrderList.or?orStatus=3";
-		    })
-		    
-		    $("#getStatus4").click(function(){
-		        location.href="adminOrderList.or?orStatus=4";
-		    })
-		    
-		    $("#getStatus5").click(function(){
-		        location.href="adminOrderList.or?orStatus=5";
-		    })
-			
 		    /* 정렬 방법 변경 */
 		    $("#array-condition").change(function(){
 	            let ar = $(this).val();
@@ -291,7 +249,7 @@
 			$(".memo-delete-btn").click(function(){
 				
 				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+				location.href="deleteAdminMemo.or?orderNo=" + $orderNo + "&orStatus=0";
 				
 			})			
 
@@ -307,7 +265,22 @@
                 const a = $(this).offset();
                 $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
             })
-
+            
+            /* 주문 상세 보기 */
+	        $(".detailC").click(function(){
+	        	
+	        	var td = $(this);
+	        	var orderNo = td.text();
+	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	        	
+	        })
+	        
+	        /* alert 
+	        var url = "${url}";
+	        var alertMsg = "${alertMsg}";
+	        alert(alertMsg);
+	        location.href = url;
+	        */
 
         })
 
@@ -317,63 +290,19 @@
 
 	<jsp:include page="../adminSidebar.jsp"/>
 	
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+	
 	<div id="outer">
         <div id="main-title">
             <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>전체 주문 조회</p>
         </div> 
-        
-        <div id="status-bar">
-            <div id="getStatusAll">
-                <div>
-                    <p>전체</p>
-                </div>
-                <div>
-                    <span>${ listCount }</span>
-                </div>
-            </div>
-            <div id="getStatus1">
-                <div>
-                    <p>주문확인</p>
-                </div>
-                <div>
-                    <span>${ confirmCnt }</span>
-                </div>
-            </div>
-            <div id="getStatus2">
-                <div>
-                    <p>상품준비중</p>
-                </div>
-                <div>
-                    <span>${ productReadyCnt }</span>
-                </div>
-            </div>
-            <div id="getStatus3">
-                <div>
-                    <p>배송준비중</p>
-                </div>
-                <div>
-                    <span>${deliveryReadyCnt }</span>
-                </div>
-            </div>
-            <div id="getStatus4">
-                <div>
-                    <p>배송중</p>
-                </div>
-                <div>
-                    <span>${ deliveryCnt }</span>
-                </div>
-            </div>
-            <div id="getStatus5">
-                <div>
-                    <p>배송완료</p>
-                </div>
-                <div>
-                    <span>${ finishCnt }</span>
-                </div>
-            </div>
-        </div>
-
+		<br><br>
         <div id="search-area">
             <form action="adminOListSearch.or">
             <input type="hidden" name="array" value="${ ar }">
@@ -440,8 +369,8 @@
                             <th width="100px">주문자</th>
                             <th width="170px">도서명</th>
                             <th width="70px">결제금액</th>
-                            <th width="100px">결제수단<br>결제상태</th>
-                            <th width="110px">주문상태</th>
+                            <th width="90px">주문상태</th>
+                            <th width="90px">CS상태</th>
                             <th width="80px">배송상태</th>
                             <th width="70px">메모</th>
                         </tr>
@@ -452,13 +381,13 @@
 		                    	<c:forEach var="o" items="${ oList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td>${ o.orderNo }</td>
+			                            <td class="detailC">${ o.orderNo }</td>
 			                            <td>${ o.orderDate }</td>
 			                            <td>${ o.memName } <br> (${ o.memId })</td>
 			                            <td>${ o.bkTitle }</td>
-			                            <td>${ o.orderPrice }</td>
-			                            <td>${ o.payWay }<br>${ o.payStatus }</td>
-			                            <td>${ o.orderStatus }<br>${ o.csStatus }</td>
+			                            <td>${ o.orderPriceComma }</td>
+			                            <td>${ o.orderStatus }</td>
+			                            <td>${ o.csStatus }</td>
 			                            <td>${ o.deliveryStatus }</td>
 			                            <td style="display:none">${ o.deliveryMsg }</td>
 			                            <td style="display:none">${ o.adminMemo }</td>
@@ -496,10 +425,11 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
+															<form action="updateAdminMemo.or" method="POST">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="0"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -519,10 +449,11 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
+															<form action="updateAdminMemo.or" method="POST">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="0"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->

@@ -16,6 +16,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <style>
+	
 		#outer{
             display:inline-block;
             position:absolute;
@@ -147,6 +148,12 @@
 	    /* 닫기 버튼 */
 		$("#back").click(function(){
 			history.back();
+		})
+		
+		/* 주문 취소 */
+		$("#cancel-btn").click(function(){
+			var orderNo = $("#odNo").text();
+			location.href="adminOrderConfirm.or?selectedOd=" + orderNo + "&odStatus=2&orStatus=dt";
 		})
 	})
 </script>
@@ -396,7 +403,7 @@
 			                <button type="button">반품</button>	                	
 	                	</c:when>
 	            		<c:when test="${ od.orderStatus eq '주문확인' }">
-			                <button type="button">주문 취소</button>            		
+			                <button type="button" id="cancel-btn">주문 취소</button>            		
 	            		</c:when>
                 	</c:choose>
                 
