@@ -182,8 +182,6 @@ public class OrderController {
 		map.put("orderNo", orderNo);
 		map.put("adminMemo", adminMemo);
 		
-		System.out.println(map);
-		
 		int result = oService.updateAdminMemo(map);
 		/*
 		if(result > 0) {
@@ -224,7 +222,6 @@ public class OrderController {
 		Member m = oService.selectAdminOrderedMem(orderNo);
 		Payment p = oService.selectAdminOrderedPayment(orderNo);
 		CouponDetail c = oService.selectAdminOrderedUsedCoupon(orderNo);
-		System.out.println(c);
 		
 		mv.addObject("od", o)
 		  .addObject("oBook", oBook)
@@ -275,8 +272,6 @@ public class OrderController {
 			}
 		}
 		
-		
-		
 		if(orStatus.equals("1")) {
 			return "redirect:/adminOrderList.or?orStatus=1";
 		}else if(orStatus.equals("2")) {
@@ -288,7 +283,6 @@ public class OrderController {
 		}else if(orStatus.equals("5")) {
 			return "redirect:/adminOrderList.or?orStatus=5";
 		}
-		
 		
 		return "redirect:/adminOrderList.or?orStatus=1";
 	}

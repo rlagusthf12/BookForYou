@@ -63,7 +63,7 @@
 		       M.mem_name,
 		       M.mem_id,
 		       O.pay_status,
-		       regexp_replace(reverse(regexp_replace(reverse(to_char(O.order_price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
 		       O.order_date,
 		       O.order_status,
 		       O.cs_status,
@@ -85,10 +85,12 @@
 		        )A,
 		        orders O,
 		        book B,
-		        Members M
+		        Members M,
+		        payment P
 		  where A."bk_no" = B.bk_no
 		    and A."order_no" = O.order_no
 		    and M.mem_no = O.mem_no
+		    and O.pay_no = P.pay_no
 		 <choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -321,7 +323,7 @@
 		       M.mem_name,
 		       M.mem_id,
 		       O.pay_status,
-		       regexp_replace(reverse(regexp_replace(reverse(to_char(O.order_price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
 		       O.order_date,
 		       O.order_status,
 		       O.cs_status,
@@ -343,10 +345,12 @@
 		        )A,
 		        orders O,
 		        book B,
-		        Members M
+		        Members M,
+		        payment P
 		  where A."bk_no" = B.bk_no
 		    and A."order_no" = O.order_no
 		    and M.mem_no = O.mem_no
+		    and O.pay_no = P.pay_no
 		  <choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -413,6 +417,7 @@
 		       order_no,
 		       mem_no,
 		       pay_no,
+		       price,
 		       order_date,
 		       order_receiver,
 		       order_post,
@@ -435,6 +440,7 @@
 		       delivery_status,
 		       coupon_issue_num
 		  from orders
+		  join payment using (pay_no)
 		 where order_no = #{orderNo}		
 	</select>
 	

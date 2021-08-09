@@ -141,7 +141,7 @@
 	    var $add = Number($("#add").text());
 	    var $total = $price - $point + $add;
 	    $("#total").text($total);
-	    $("#total2").text($total);
+	    /*$("#total2").text($total);*/
 	    var $gp = $total * 0.01;
 	    $("#givPoint").text($gp);
 	    
@@ -353,7 +353,7 @@
                             <th>주문 금액</th>
 	                            <td id="price">${ od.orderPrice }</td>
                             <th>결제 금액</th>
-                            <td id="total2"></td>
+                            <td id="total2"${ od.payAmount }></td>
                         </tr>
                         <tr>
                             <th>추가금</th>
