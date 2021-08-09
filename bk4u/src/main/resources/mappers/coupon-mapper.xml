@@ -85,7 +85,7 @@
 	</insert>
 	
 	<!-- 쿠폰 조회 (형우) -->
-	<select id="selectAcouponLists" resultType="_int">
+	<select id="selectAcoupon" resultType="_int">
   		select
   				count(*)
   			from coupon
@@ -106,7 +106,7 @@
   			from coupon
   		   where coupon_status = 'Y'
   		   order
-  		   		by mem_no asc
+  		   		by coupon_no asc
   	</select>
 	
 </mapper>

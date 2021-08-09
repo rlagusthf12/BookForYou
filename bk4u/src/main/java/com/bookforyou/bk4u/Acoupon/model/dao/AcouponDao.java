@@ -22,14 +22,14 @@ public class AcouponDao {
 	// 쿠폰조회
 	
 	public int selectAcouponList(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("couponDetailMapper.selectAcouponLists");
+		return sqlSession.selectOne("couponDetailMapper.selectAcoupon");
 	}
 	
 	public ArrayList<Acoupon> selecltAcouponList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("couponDetailMapper.selectAcouponlist", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("couponDetailMapper.selectAcouponList", null, rowBounds);
 	}
 	
 	

@@ -23,4 +23,5 @@ public class CouponDetail {
 	private Date couponEndDate;
 	private String couponIssueNum;
 	private Date useDate;
+	private String couponStatus;
 }

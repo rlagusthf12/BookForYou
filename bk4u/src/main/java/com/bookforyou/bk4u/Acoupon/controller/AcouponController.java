@@ -41,26 +41,23 @@ public class AcouponController {
 		}
 	}
 	
-	@RequestMapping("AcouponList.me")
+	
+	
+	@RequestMapping("couponList.me")
 	public String AcouponList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
 		//System.out.println(currentPage);
 		
-		int AcouponCount = acService.selectAcouponListCount();
+		int acouponCount = acService.selectAcouponListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(AcouponCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(acouponCount, currentPage, 10, 5);
 		ArrayList<Acoupon> list = acService.selectList(pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		System.out.println(AcouponCount);
+		System.out.println(acouponCount);
 		
-		return "Acoupon/couponList";
-	}
-	
-	@RequestMapping("couponList.me")
-	public String couponlist() {
 		return "Acoupon/couponList";
 	}
 	
