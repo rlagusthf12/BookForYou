@@ -325,20 +325,20 @@ public class SubscriptionController {
 		return "subscription/subscriptionJoinAgree";
 	}
 	
+	
 	/** 정기구독 결제용
 	 * @author daeunlee
 	 */
-	
 	@RequestMapping("pay.sub")
 	public String paySub() {
 		return "subscription/subscriptionPay";
 	}
 	
-	
+	/*
 	@RequestMapping("payComplete.sub")
 	public String payCompleteSub() {
 		return "subscription/subscriptionPayComplete";
 	}
-	
+	*/
 	
 }

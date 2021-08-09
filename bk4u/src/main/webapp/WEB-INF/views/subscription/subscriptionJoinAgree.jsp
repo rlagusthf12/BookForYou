@@ -37,6 +37,7 @@
         .price-content_item{margin: 50px 0;}
         /*개별button*/
         .price-content_items{display: flex; height: 50px; width: 100%; border: 1px solid #dbdbdb; border-radius: 6px; background: #fff; margin-bottom: 15px; padding: 0 40px; line-height: 49px;}
+        .price-content_items:focus{background:#e6e6e6; border: 1px solid #cccccc;}
         /*기간font*/
         .term_item{margin-right: 20px; font-size: 16px; font-weight: bold;}
         /*가격font*/
@@ -120,7 +121,7 @@
                                 <div class="price-content_item">
                                     <button type="button" class="price-content_items" id="p1">
                                         <span class="term_item p1" id="p1_t">1개월</span>
-                                        <span class="price_item p1" id="p1_p">19,900원</span>
+                                        <span class="price_item p1" id="p1_p">19900</span>원
                                     </button>
                                 
                                     <button type="button" class="price-content_items" id="p3">
@@ -128,7 +129,7 @@
                                         <span class="term_price-explain">
                                             1개월 결제 대비 <em class="point-B">5%</em> 더 저렴해요
                                         </span>
-                                        <span class="price_item" id="p3_p">57,000원</span>
+                                        <span class="price_item" id="p3_p">57000</span>원
                                     </button>
                                 
                                     <button type="button" class="price-content_items" id="p6">
@@ -136,7 +137,7 @@
                                         <span class="term_price-explain">
                                             1개월 결제 대비 <em class="point-B">8%</em> 더 저렴해요
                                         </span>
-                                        <span class="price_item" id="p6_p">110,000원</span>
+                                        <span class="price_item" id="p6_p">110000</span>원
                                     </button>
                                 
                                     <button type="button" class="price-content_items" id="p12">
@@ -144,7 +145,7 @@
                                         <span class="term_price-explain">
                                             1개월 결제 대비 <em class="point-B">10%</em> 더 저렴해요
                                         </span>
-                                        <span class="price_item" id="p12_p">215,000원</span>
+                                        <span class="price_item" id="p12_p">215000</span>원
                                     </button>
                                 </div>
                             </div>
@@ -181,7 +182,7 @@
                                 <div class="price-content_item">
                                     <button type="button" class="price-content_items" id="b1">
                                         <span class="term_item" id="b1_t">1개월</span>
-                                        <span class="price_item" id="b1_p">9,900원</span>
+                                        <span class="price_item" id="b1_p">9900</span>원
                                     </button>
                                 
                                     <button type="button" class="price-content_items" id="b3">
@@ -189,7 +190,7 @@
                                         <span class="term_price-explain">
                                             1개월 결제 대비 <em class="point-B">5%</em> 더 저렴해요
                                         </span>
-                                        <span class="price_item" id="b3_p">28,000원</span>
+                                        <span class="price_item" id="b3_p">28000</span>원
                                     </button>
                                 
                                     <button type="button" class="price-content_items" id="b6">
@@ -197,7 +198,7 @@
                                         <span class="term_price-explain">
                                             1개월 결제 대비 <em class="point-B">8%</em> 더 저렴해요
                                         </span>
-                                        <span class="price_item" id="b6_p">54,000원</span>
+                                        <span class="price_item" id="b6_p">54000</span>원
                                     </button>
                                 
                                     <button type="button" class="price-content_items" id="b12">
@@ -205,7 +206,7 @@
                                         <span class="term_price-explain">
                                             1개월 결제 대비 <em class="point-B">10%</em> 더 저렴해요
                                         </span>
-                                        <span class="price_item" id="b12_p">107,000원</span>
+                                        <span class="price_item" id="b12_p">107000</span>원
                                     </button>
                                 </div>
                             </div>
@@ -223,7 +224,7 @@
     </div>
 
     <script>
-	    $(document).ready(function(){
+	    $(function(){
 	                
 	        $('ul.tabs li').click(function(){
 	            var tab_id = $(this).attr('data-tab');  
@@ -247,8 +248,10 @@
 			
 			// 프리미엄 : 기간+가격선택버튼
 			$('#p1').click(function(){
-				$('input[name=subscPeriod]').attr('value', $('#p1_t').text());
-				$('input[name=subscPrice]').attr('value', $('#p1_p').text());
+				var p1 = $('input[name=subscPeriod]').attr('value', $('#p1_t').text());
+				var p2 = parseInt($('input[name=subscPrice]').attr('value', $('#p1_p').text()));
+				console.log(p1);
+				console.log(p2);
 			})
 			$('#p3').click(function(){
 				$('input[name=subscPeriod]').attr('value', $('#p3_t').text());
