@@ -44,4 +44,5 @@ public class Order {
 	private int detailPrice;
 	private int couponPrice;
 	private int couponPriceRate;
+	private String orderPriceComma;
 }
