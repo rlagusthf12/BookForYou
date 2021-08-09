@@ -25,6 +25,10 @@ public class GroupBoard {
 	private String changeName;
 	private String originName;
 	private String groupWriter;
+	//그룹에 참가한 멤버 총 인원
+	private int memCount;
+	//그룹 상태
+	private String groupStatus;
 	
 	
 
