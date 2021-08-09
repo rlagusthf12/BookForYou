@@ -142,23 +142,21 @@
             <th width="70">쿠폰번호</th>
             <th>쿠폰명</th>
             <th>카테고리</th>
-            <th>등록일</th>
-            <th width="70">발행수량</th>
             <th>쿠폰발행기간</th>
             <th>쿠폰사용기간</th>
             <th width="100">상태</th>
         </tr>
+        <c:forEach var="c" items="${ list }">
         <tr>
             <td><input type="checkbox" name="choice" value="select"></td>
-            <td>1</td>
-            <td>10% 할인쿠폰</td>
-            <td>소설</td>
-            <td>2021-07-26</td>
-            <td>10 매</td>
-            <td>2021-07-26~2021-08-25</td>
-            <td>2021-07-26~2021-08-25</td>
-            <td>발행중</td>
+            <td class="cno">${ c.couponNo }</td>
+            <td>${ c.couponName }</td>
+            <td>${ c.couponKind }</td>
+            <td>${ c.couponStartDate }</td>
+            <td>${ c.couponEndDate }</td>
+            <td>${ c.couponStatus }</td>
         </tr>
+        </c:forEach>
     </table>
 
     <br><br>
@@ -253,7 +251,33 @@
                             </tr>
                         </tbody>
                     </table>
-                    </table>
+                    
+                    <div id="paging-wrap">
+            <ul class="pagination">
+            	<c:choose>
+            		<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                	<li class="page-item"><a class="page-link" href="amemSearch.me?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">            
+                		<li class="page-item disabled"><a class="page-link">다음</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                	</c:otherwise>
+                </c:choose>          
+            </ul>
+        </div>
                 </div>
         
                 <!-- Modal footer -->
