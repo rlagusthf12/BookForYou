@@ -20,6 +20,7 @@ public class Order {
 	private String bkTitle;
 	private String payWay;
 	private int payNo;
+	private int payAmount;
 	private Date orderDate;
 	private String orderReceiver;
 	private String orderPost;

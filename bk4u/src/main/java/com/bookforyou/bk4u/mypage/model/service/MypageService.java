@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 public interface MypageService {
 
@@ -37,6 +40,20 @@ public interface MypageService {
 	ArrayList<Book> selectMyList(HashMap<String, Object> listParam);
 
 	int deleteMyList(MyList myList);
+
+
+	//ArrayList<Order> selectMyOrderList(HashMap<String, Object> listParam);
+
+	int selectMyOrderListCount(HashMap<String, String> listParam);
+
+	ArrayList<Order> selectMyOrderList(HashMap<String, String> listParam, PageInfo pi);
+
+	int selectMyReadingGroupListCount(Member member);
+
+	ArrayList<GroupBoard> selectMyReadingGroupList(PageInfo pi, int memNo);
+
+	int selectMyReadingGroupMemberCount(int groupBoardNo);
+
 
 
 }

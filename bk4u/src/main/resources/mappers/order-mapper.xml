@@ -10,6 +10,7 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="pay_way" property="payWay"/>
 		<result column="pay_no" property="payNo"/>
+		<result column="price" property="payAmount"/>
 		<result column="order_date" property="orderDate"/>
 		<result column="order_receiver" property="orderReceiver"/>
 		<result column="order_post" property="orderPost"/>
@@ -524,4 +525,150 @@
 	 	   set delivery_company = #{deliveryCompany},
 	 	 where order_no = #{orderNo}
 	</update>
+	
+	<!-- [사용자] 마이페이지 초기 나의 주문 리스트 카운트 조회(세아)-->
+	<select id="selectMyOrderListCount" resultType="_int">
+		select count(*)
+		from(select s1.*
+		  from (
+		         select
+		                row_number() over(partition by order_no order by order_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+		                         order_no,
+		                         mem_name,
+		                         mem_id,
+		                         bk_title,
+		                         pay_way,
+		                         status,
+		                         order_date,
+		                         order_receiver,
+		                         order_post,
+		                         order_address,
+		                         address_detail,
+		                         address_ref,
+		                         order_phone,
+		                         delivery_msg,
+		                         order_price,
+		                         add_price,
+		                         used_points,
+		                         order_status,
+		                         pay_status,
+		                         cs_status,
+		                         price,
+		                         admin_memo,
+		                         product_status,
+		                         delivery_company,
+		                         shipping_number,
+		                         shipping_date,
+		                         delivery_status,
+		                         coupon_issue_num
+		                    from orders
+		                    join members using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+                            where mem_no = #{memNo}
+                            and order_date between #{beginDate} and #{endDate}
+                            <choose>
+		 						<when test="orderStatus == '주문확인'">
+		   							and order_status = '주문확인'
+							   	</when>
+							   	<when test="orderStatus == '결제완료'">
+							   		and order_status = '결제완료'
+							   	</when>
+							   	<when test="orderStatus == '주문취소'">
+							   		and order_status = '주문취소'
+							   	</when>
+							   	<when test="orderStatus == '상품준비중'">
+							   		and order_status = '상품준비중'
+							   	</when>
+							   	<when test="orderStatus == '배송준비중'">
+							   		and order_status = '배송준비중'
+							   	</when>
+							   	<when test="orderStatus == '배송완료'">
+							   		and order_status = '배송완료'
+							   	</when>
+							   	<when test="orderStatus == '반품'">
+							   		and order_status = '반품'
+							   	</when>
+							 </choose>
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1)
+	</select>
+	
+	<!-- [사용자] 마이페이지 초기 나의 주문 리스트 조회(세아)-->
+	<select id="selectMyOrderList" resultMap="orderResult">
+		select s1.*
+		  from (
+		         select
+		                row_number() over(partition by order_no order by order_date desc) rnum,
+		                t1.*
+		           from (
+		                  select 
+		                         order_no,
+		                         mem_name,
+		                         mem_id,
+		                         bk_title,
+		                         pay_way,
+		                         status,
+		                         order_date,
+		                         order_receiver,
+		                         order_post,
+		                         order_address,
+		                         address_detail,
+		                         address_ref,
+		                         order_phone,
+		                         delivery_msg,
+		                         order_price,
+		                         add_price,
+		                         used_points,
+		                         order_status,
+		                         pay_status,
+		                         cs_status,
+		                         price,
+		                         admin_memo,
+		                         product_status,
+		                         delivery_company,
+		                         shipping_number,
+		                         shipping_date,
+		                         delivery_status,
+		                         coupon_issue_num
+		                    from orders
+		                    join members using(mem_no)
+		                    join payment using(pay_no)
+		                    join order_detail using(order_no)
+		                    join book using(bk_no)
+                            where mem_no = #{memNo}
+                            and order_date between #{beginDate} and #{endDate}
+                            <choose>
+		 						<when test="orderStatus == '주문확인'">
+		   							and order_status = '주문확인'
+							   	</when>
+							   	<when test="orderStatus == '결제완료'">
+							   		and order_status = '결제완료'
+							   	</when>
+							   	<when test="orderStatus == '주문취소'">
+							   		and order_status = '주문취소'
+							   	</when>
+							   	<when test="orderStatus == '상품준비중'">
+							   		and order_status = '상품준비중'
+							   	</when>
+							   	<when test="orderStatus == '배송준비중'">
+							   		and order_status = '배송준비중'
+							   	</when>
+							   	<when test="orderStatus == '배송완료'">
+							   		and order_status = '배송완료'
+							   	</when>
+							   	<when test="orderStatus == '반품'">
+							   		and order_status = '반품'
+							   	</when>
+							 </choose>
+		                ) t1            
+		        ) s1
+		  where s1.rnum = 1
+	</select>
+	
 </mapper>

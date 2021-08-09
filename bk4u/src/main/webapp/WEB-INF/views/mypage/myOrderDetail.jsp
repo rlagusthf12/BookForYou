@@ -249,7 +249,12 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    정말 해당 주문을 취소하시겠습니까?
+                                                                         정말 해당 주문을 취소하시겠습니까?
+                                    <form>
+                                        <div class="mb-3">
+                                          <textarea class="form-control" id="message-text" style="width: 95%;" placeholder="취소 사유를 입력해주세요."></textarea>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-primary" data-bs-dismiss="modal" onclick="">확인</button>
@@ -290,9 +295,25 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    해당 주문건에 대한 반품을 신청하시겠습니까?
+                                                                         해당 주문건에 대한 반품을 신청하시겠습니까?
                                     <br>확인 버튼을 누르시면 반품 신청이 완료됩니다.
                                     <br>
+                                    <br>
+                                    <form>
+                                        <div class="mb-3" style="width: 90%;">
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected>반품 사유를 선택해주세요</option>
+                                                <option value="1">오배송</option>
+                                                <option value="2">상품파손</option>
+                                                <option value="3">변심</option>
+                                                <option value="4">배송지연</option>
+                                                <option value="5">기타</option>
+                                              </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <textarea class="form-control" id="message-text" style="width: 95%;" placeholder="기타를 선택할 경우 입력하세요" readonly></textarea>
+                                        </div>
+                                    </form>
                                     <br>반품 안내사항은 <a href="">FAQ</a>를 참고해주세요.
                                 </div>
                                 <div class="modal-footer">
