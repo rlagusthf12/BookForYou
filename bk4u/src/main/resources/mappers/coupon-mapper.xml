@@ -85,7 +85,7 @@
 	</insert>
 	
 	<!-- 쿠폰 조회 (형우) -->
-	<select id="selectAcouponList" resultType="_int">
+	<select id="selectAcouponLists" resultType="_int">
   		select
   				count(*)
   			from coupon

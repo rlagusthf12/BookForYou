@@ -25,6 +25,16 @@ public class AcouponServicelmpl implements AcouponService{
 		return acDao.insertAcoupon(sqlSession, c);
 	}
 
+	@Override
+	public int selectAcouponListCount() {
+		return acDao.selectAcouponList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Acoupon> selectList(PageInfo pi) {
+		return acDao.selecltAcouponList(sqlSession, pi);
+	}
+
 	
 
 

@@ -10,7 +10,8 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 public interface AcouponService {
 	
 	//쿠폰조회
-	
+	int selectAcouponListCount();
+	ArrayList<Acoupon> selectList(PageInfo pi);
 	
 	// 쿠폰등록
 	int insertAcoupon(Acoupon c) ;

@@ -22,7 +22,7 @@ public class AcouponController {
 	@Autowired
 	private AcouponService acService;
 	
-	@RequestMapping("incoupon.me")
+	@RequestMapping("coupon.me")
 	public String Acoupon() {
 		return "Acoupon/acoupon";
 	}
@@ -39,9 +39,26 @@ public class AcouponController {
 			model.addAttribute("errorMsg", "게시글 등록 실패");
 			return "common/errorPage";
 		}
-		
-		
 	}
+	
+	@RequestMapping("AcouponList.me")
+	public String AcouponList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		//System.out.println(currentPage);
+		
+		int AcouponCount = acService.selectAcouponListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(AcouponCount, currentPage, 10, 5);
+		ArrayList<Acoupon> list = acService.selectList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		System.out.println(AcouponCount);
+		
+		return "Acoupon/couponList";
+	}
+	
 	@RequestMapping("couponList.me")
 	public String couponlist() {
 		return "Acoupon/couponList";
