@@ -14,14 +14,13 @@
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
         .wrap {
             width: 1200px;
-            height: 1200px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -30,7 +29,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 1200px;
             position: relative;
             display: inline-flex;
         }
@@ -40,7 +39,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 900px;
+            height: 1100px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -123,6 +122,8 @@
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -219,7 +220,10 @@
                 </div>
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
                 <ul id="state-of-order">
-                    <li><a href="">입금/결제</a></li>
+                    <li><a href="">결제완료</a></li>
+                    <li><a href="">주문취소</a></li>
+                    <li><a href="">상품준비중</a></li>
+                    <li><a href="">배송준비중</a></li>
                     <li><a href="">배송중</a></li>
                     <li><a href="">배송완료</a></li>
                     <li><a href="">반품</a></li>
@@ -234,18 +238,21 @@
                     </div>
 
                     <div id="date-input-box">
-                        <input type="text" id="beginDate" class="form-control">
+                        <input type="text" id="beginDate" class="form-control" name="beginDate">
                     </div>
                     <div id="date-input-box">
-                        <input type="text" id="endDate" class="form-control">
+                        <input type="text" id="endDate" class="form-control" name="endDate">
                     </div>
                     <select class="form-select form-select-sm" id="state-select-box"
-                        aria-label=".form-select-sm example" style="margin-right: 10px;">
-                        <option value="1" selected>전체</option>
-                        <option value="2">입금/결제</option>
-                        <option value="3">배송중</option>
-                        <option value="4">배송완료</option>
-                        <option value="5">반품</option>
+                        aria-label=".form-select-sm example" style="margin-right: 10px;" name="orderStatus">
+                        <option value="전체" selected>전체</option>
+                        <option value="주문확인">결제완료</option>
+                        <option value="주문취소">주문취소</option>
+                        <option value="상품준비중">상품준비중</option>
+                        <option value="배송준비중">배송준비중</option>
+                        <option value="배송중">배송중</option>
+                        <option value="배송완료">배송완료</option>
+                        <option value="반품">반품</option>
                     </select>
                     <button type="button" class="btn btn-dark btn-sm" style="width:50px">조회</button>
                     <script>
@@ -253,7 +260,7 @@
                         // 시작 일자 달력 이미지 클릭시 달력 표기 
                         $('#beginDate').datepicker({
                             showOn: "button",
-                            buttonImage: "../images/calendar1.png",
+                            buttonImage: "resources/mypage/images/calendar1.png",
                             buttonImageOnly: true,
                             buttonText: "Select date"
                         });
@@ -262,7 +269,7 @@
                         // 종료 일자 달력 이미지 클릭시 달력 표기    
                         $('#endDate').datepicker({
                             showOn: "button",
-                            buttonImage: "../images/calendar1.png",
+                            buttonImage: "resources/mypage/images/calendar1.png",
                             buttonImageOnly: true,
                             buttonText: "Select date"
                         });
@@ -272,11 +279,16 @@
                         let year = d.getFullYear();
                         let month = d.getMonth() + 1; // 월은 0에서 시작하기 때문에 +1
                         let day = d.getDate();
-                        $('#beginDate').val(`${year}-${month}-${day}`);
+                        
+                        let beginDate = d;
                         $('#endDate').val(`${year}-${month}-${day}`);
 
+                        $('#beginDate').val(`${year}-${month}-${day}`);
+                        beginDate.setMonth(beginDate.getMonth() -1);
+                        $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                        beginDate.setMonth(beginDate.getMonth() +1);
+
                         // 버튼 클릭시 현재 날짜에서 1주일, 1개월, 3개월 더하기
-                        let beginDate = d;
                         $('#btnWeek').click(function () {
                             $('#endDate').val(`${year}-${month}-${day}`);
                             beginDate.setDate(beginDate.getDate() - 7);
@@ -311,95 +323,48 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <c:forEach var="order" items="${list }">
                             <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
+                                <th scope="row">${order.orderNo }</th>
+                                <td>${order.orderDate }</td>
+                                <td id="book-title">${order.bkTitle }</td>
+                                <td>${order.price }</td>
+                                <td>${order.orderStatus }</td>
                             </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr
+                       </c:forEach>  
                         </tbody>
                     </table>
-
                 </div>
                 <div id="paging-wrap">
                     <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">이전</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                        <li class="page-item disabled"><a class="page-link">다음</a></li>
-                    </ul>
+                	<c:choose>
+                    	<c:when test="${ pi.currentPage eq 1 }">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage}">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                	</ul>
                 </div>
             </div>
 
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 
 </html>
