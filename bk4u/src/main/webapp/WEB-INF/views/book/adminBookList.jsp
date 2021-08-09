@@ -126,6 +126,8 @@
             padding:0.1em 0.5em;
             font-size: 14px;
         }
+        #delete-btn, #handling-btn{display:inline-block;}
+        
         /*배송 정보 변경 폼*/
         .hide{display: none!important;}
         .d_btn{
@@ -179,7 +181,7 @@
     
     <script>
 	    $(function(){
-	        $("#handling-btn").children().addClass("btn btn-outline-success");
+	        $("#handling-btn, #delete-btn").children().addClass("btn btn-outline-success");
 	        
 	        /* 상태 클릭  */
 	        $("#getStatusAll").click(function(){
@@ -238,7 +240,7 @@
 	        	}
 	        })
 	        
-	        /* 판매중으로 바꾸기 */
+	        /* 도서 상태 병경 (다중 체크박스) */
 	        $("#handling-btn button").each(function(){
 	        	$(this).click(function(){
 	        		
@@ -251,6 +253,15 @@
 		        	
 		        })
 	        })
+	        
+	        /* 도서 삭제 (다중 체크박스) */
+		    $("#delete-book").click(function(){
+		    	var checkArr = new Array();
+		    	$("input:checkbox[name='bCheck']:checked").each(function(){
+		    		checkArr.push(this.value);
+		    	});
+		    	location.href="adminBookDelete.bk?selectedBook=" + checkArr;
+		    })
 	        
 	        /* 테이블 행 선택 */
 	        $(".detailC").click(function(){
@@ -385,7 +396,9 @@
                 <button id="handling-statusN" value="2">품절</button>
                 <button id="handling-selStatusY" value="3">게시함</button>
                 <button id="handling-selStatusN" value="4">게시안함</button>
-                <button id="enroll-newBook" >도서등록</button>
+            </div>
+            <div id="delete-btn">
+                <button id="delete-book">도서삭제</button>
             </div>
 
             <div  id="result-div">

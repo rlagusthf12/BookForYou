@@ -460,6 +460,12 @@
 		   	   bk_gender = #{bkGender},
 		   	   bk_work = #{bkWork},
 		   	   bk_level = #{bkLevel},
+		   	   sub_cate_no = (
+		   	   					select 
+		   	   					       sub_cate_no
+		   	   					  from sub_category
+		   	   					 where sub_cate_name = #{subCateName}
+		   	   					),
 		   	   writer_intro = #{writerIntro},
 		   	   writer_origin_name = #{writerOriginName},
 		   	   writer_change_name = #{writerChangeName},
@@ -713,4 +719,18 @@
                                 )
 		
 	</select>
+	
+	<!-- [관리자] 도서 삭제 (한진) -->
+	<delete id="deleteAdminBook">
+		delete
+		       book
+		 where bk_no = #{bn}
+	</delete>
+	
+	<!-- [관리자] 도서 관심사 행 삭제 (한진) -->
+	<delete id="deleteAdminBookInterest">
+		delete
+		       book_interest
+		 where bk_no = #{bn}
+	</delete>
 </mapper>

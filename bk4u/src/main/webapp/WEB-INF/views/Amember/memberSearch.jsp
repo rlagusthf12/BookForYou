@@ -305,7 +305,7 @@
                },type:"post",
                success:function(no){
                   
-            	   console.log(no);
+            	   
             	   
                },error:function(){
                   console.log("ajax 통신 실패");

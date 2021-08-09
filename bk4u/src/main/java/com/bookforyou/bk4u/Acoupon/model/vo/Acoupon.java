@@ -1,4 +1,4 @@
-package com.bookforyou.bk4u.couponDetail.model.vo;
+package com.bookforyou.bk4u.Acoupon.model.vo;
 
 import java.sql.Date;
 
@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter @Getter
 @ToString
-public class CouponDetail {
+public class Acoupon {
 	private String couponNo;
 	private String couponName;
 	private String couponKind;
@@ -21,7 +23,6 @@ public class CouponDetail {
 	private int couponPriceRate;
 	private Date couponStartDate;
 	private Date couponEndDate;
-	private String couponIssueNum;
-	private Date useDate;
 	private String couponStatus;
+	
 }

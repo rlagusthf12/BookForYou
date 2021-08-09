@@ -136,7 +136,7 @@
     <hr>    
  
     <h3>사용할 쿠폰을 등록하고 수정하실 수 있습니다.</h3>
-
+<form id="couponForm" method="post" action="incoupon.me">
     <table border="1" width="1200">
         <tr>
             <th width="200" height="50">쿠폰기능 사용권한</th>
@@ -149,12 +149,12 @@
         </tr>
         <tr>
            <th width="200" height="50">쿠폰명</th>
-           <td colspan="3"><input type="text"  value="" size="50" maxlength="15" style="margin-right: 550px;"></td>
+           <td colspan="3"><input type="text" id="title" name="couponName" value="" size="50" maxlength="15" style="margin-right: 550px;" required></td>
         </tr>
         <tr>
             <th height="50">쿠폰 카테고리</th>
             <td colspan="3" align="left"> &nbsp;&nbsp;
-                <input type="radio" name="category" value="choice"> 선택
+                <input type="radio" id="kind" name="couponKind" value="choice" required> 선택
                 <select name="bookcategory" value="option">
                     <option name="" value="">소설</option>
                     <option name="" value="">문학</option>
@@ -170,19 +170,23 @@
                 <input type="text" name="bookcategory">
             </td>
         </tr>
+        <!--  
         <tr>
            <th height="50">쿠폰발행 수량</th>
            <td colspan="3" align="left"> &nbsp;&nbsp;
                <input type="radio" name="coupon-amount" value="Y"> 제한없음 &nbsp;&nbsp;
                <input type="radio" name="coupon-amount" value="N"> 제한있음 <input type="text" value="" size="10"> 매(수량) 한정발급
            </td>
-        </tr>     
+        </tr>   
+        -->  
         <tr>
             <th height="50">쿠폰발행 기간</th>
+            <!--
             <td colspan="3" align="left"> &nbsp;
-                <input type="date" name="startDate" value=""> ~
-                <input type="date" name="endDate" value="">
+                <input type="date" id="sDate" name="couponStartDate" value=""> ~
+                <input type="date" id="eDate" name="couponEndDate" value="">
             </td>
+             -->
         </tr>
         <tr>
             <th width="200" height="100" rowspan="2">쿠폰사용 기간</th>
@@ -190,8 +194,8 @@
                 <input type="radio" name="period" value="date"> 기간
             </td>
             <td colspan="3" align="left"> &nbsp;
-                <input type="date" name="usingStartDate" value=""> ~
-                <input type="date" name="usingEndDate" value="">
+                <input type="date" id="sDate" name="couponStartDate" value=""> ~
+                <input type="date" id="eDate" name="couponEndDate" value="">
             </td>
         </tr>
         <tr>
@@ -212,9 +216,10 @@
             <td height="50">할인금액/할인율</td>
             <td  width="200">
                 <input type="text" size="10" maxlength="10">
-                    <select name="">
-                    <option value="퍼센트">%</option>
-                    <option value="원">원</option>
+                    <select name="couponContent">
+                    	<option value="퍼센트">%</option>
+                    	<option value="원">원</option>
+                    </select>
             </td>
             <td align="left"> &nbsp; ex) 2000원 할인, 50%할인</td>
         </tr>
@@ -229,9 +234,12 @@
             <td colspan="3" align="left"> &nbsp; 쿠폰 리스트에 들어갈 할인 정보와 쿠폰 안내문을 입력합니다.</td>
         </tr>
     </table>
+	
 
     <br><br>
 
-    <button type="button" class="btn btn-primary btn-lg" style="margin-left: 550px;" >쿠폰 등록하기</button>
+   			 <button type="submit"  class="btn btn-primary btn-lg" style="margin-left: 550px;" >쿠폰 등록하기</button>
+		</form>
+	</div>
 </body>
 </html>

@@ -196,13 +196,13 @@ public class BookController {
 		
 		HashMap<String, String> map = new HashMap<>();
 		
+		int result = 0;
 		for(int i=0; i<bkNoArr.size(); i++) {
 			String bkNo = bkNoArr.get(i);
 			map.put("bkNo", bkNo);
 			map.put("statusValue", statusValue);
+			result = bookService.updateBookStatus(map);
 		}
-		
-		int result = bookService.updateBookStatus(map);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 수정되었습니다.");
@@ -318,6 +318,9 @@ public class BookController {
 		b.setBkDate(date);
 		b.setBkNo(bkNo);
 		b.setSubCateName(subCateName);
+		
+		System.out.println("b : " + b);
+		System.out.println("sub : " + subCateName);
 		
 		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
 		if(!bkFile[0].getOriginalFilename().equals("")) {
@@ -442,6 +445,9 @@ public class BookController {
 		b.setBkDate(date);
 		b.setSubCateName(subCateName);
 		
+		System.out.println(bkFile);
+		
+		
 		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
 		if(!bkFile[0].getOriginalFilename().equals("")) {
 			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 삭제
@@ -464,12 +470,16 @@ public class BookController {
 			b.setWriterChangeName("resources/book/" + writerChangeName);
 		}
 		
-		int result = bookService.insertAdminBook(b);
 		
+		int result = bookService.insertAdminBook(b);
+
 		int lastBkNo = bookService.selectAdminLastBkNo();
 		int bkNo = lastBkNo - 1;
 		b.setBkNo(bkNo);
 		
+		System.out.println(b);
+		
+
 		for(int i=0; i<itrs.size(); i++) {
 			String interest = itrs.get(i);
 			b.setInterestContent(interest);
@@ -503,5 +513,24 @@ public class BookController {
 		}
 		
 		return result;
+	}
+	
+	/*
+	 * [관리자] 도서 삭제 (한진)
+	 */
+	@RequestMapping("adminBookDelete.bk")
+	public String adminBookDelete(ModelAndView mv,
+									@RequestParam(value="selectedBook") List<String> bkNoArr) {
+		
+		System.out.println("bkNoArr : " + bkNoArr);
+		for(String bn : bkNoArr) {
+			System.out.println("bn : " + bn);
+			int adminBookItrsDelete = bookService.deleteAdminBookInterest(bn);
+			int adminBookDelete = bookService.deleteAdminBook(bn); 
+		}
+		
+		mv.addObject("alertMsg", "도서가 삭제되었습니다.");
+		
+		return "redirect:/adminBookList.bk";
 	}
 }

@@ -25,9 +25,12 @@ public class AmemDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectAmemSearch", null, rowBounds);
 	}
 	
+	
+	//검색
 	public int selectAmemSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("memberMapper.selectAmemSearchListCount", map);
 	}
+	
 	
 	public ArrayList<Amem> selectAmemSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -39,6 +42,7 @@ public class AmemDao {
 		
 	}
 	
+	//회원 탈퇴
 	public int amDelete(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.delete("memberMapper.amDelete", memId);
 		

@@ -13,6 +13,7 @@
 		<result column="coupon_endDate" property="couponEndDate"/>
 		<result column="coupon_issue_num" property="couponIssueNum"/>
 		<result column="use_date" property="useDate"/>
+		<result column="coupon_status" property="couponStatus"/>
 	</resultMap>
 
 	<!-- [관리자] 주문 상세 조회 - 사용된 쿠폰 조회 (한진) -->
@@ -54,5 +55,58 @@
 		 where subsc_no = #{subscNo}
 		   and s.coupon_issue_no = m.coupon_issue_num
 	</select>
+	<!--  쿠폰등록 (형우) -->
+	<insert id="insertAcoupon">
+		insert
+		  into coupon
+		  (
+		    coupon_no
+		  , coupon_name
+		  , coupon_kind
+		  , coupon_content
+		  , coupon_price
+		  , coupon_pricerate
+		  , coupon_startdate
+		  , coupon_enddate
+		  , coupon_status
+		  )
+		  values
+		  (
+		    seq_cno.nextval
+		  , #{couponName}
+		  , #{couponKind}
+		  , #{couponContent}
+		  , #{couponPrice}
+		  , #{couponPriceRate}
+		  , #{couponStartDate}
+		  , #{couponEndDate}
+		  , default
+		  )
+	</insert>
+	
+	<!-- 쿠폰 조회 (형우) -->
+	<select id="selectAcoupon" resultType="_int">
+  		select
+  				count(*)
+  			from coupon
+  			where coupon_status = 'Y'
+  	</select>
+  	
+  	<select id="selectAcouponList" resultMap="couponDetailResult">
+  		select
+  				coupon_no,
+  				coupon_name,
+  				coupon_kind,
+  				coupon_content,
+  				coupon_price,
+  				coupon_pricerate,
+  				coupon_startdate,
+  				coupon_enddate,
+  				coupon_status
+  			from coupon
+  		   where coupon_status = 'Y'
+  		   order
+  		   		by coupon_no asc
+  	</select>
 	
 </mapper>
