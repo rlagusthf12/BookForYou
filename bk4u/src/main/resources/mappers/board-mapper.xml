@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+	
+	<resultMap id="boardResult" type="Board">
+		<result column="bo_no" property="boNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="mem_nickname" property="boWriter"/>
+		<result column="bo_title" property="boTitle"/>
+		<result column="bo_content" property="boContent"/>
+		<result column="bo_count" property="boCount"/>
+		<result column="bo_category" property="boCategory"/>
+		<result column="bo_cdate" property="boCdate"/>
+		<result column="bo_mdate" property="boMdate"/>
+		<result column="bo_like" property="boLike"/>
+		<result column="bo_status" property="boStatus"/>
+	</resultMap>
+	
+	<resultMap id="replyResult" type="Reply">
+		<result column="reply_no" property="replyNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="reply_type" property="replyType"/>
+		<result column="ref_post" property="refPost"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="reply_cdate" property="replyCdate"/>
+		<result column="reply_mdate" property="replyMdate"/>
+		<result column="delete_status" property="deleteStatus"/>
+		<result column="reply_refNo" property="replyRefNo"/>
+		<result column="depth" property="depth"/>
+	</resultMap>
+	
+	<!-- 게시판 게시글 갯수 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectListCount" resultType="_int">
+		select count(*)
+		  from board
+		 where bo_status='Y'
+	</select>
+	
+	<!-- 게시판 리스트 조회용 + 페이징 -->
+	<!-- @author daeunlee -->
+	<select id="selectList" resultMap="boardResult">
+		select 
+		       bo_no
+		     , mem_nickname
+		     , bo_title
+		     , bo_content
+		     , bo_count
+		     , bo_category
+		     , bo_cdate
+		     , bo_mdate
+		     , bo_like
+		  from board
+		  join members using(mem_no)
+		 where bo_status='Y'
+		 order
+		    by bo_no desc
+	</select>
+	
+	<!-- 게시글 작성용 -->
+	<!-- @author daeunlee -->
+	<insert id="insertBoard">
+		insert 
+		  into board
+		     (
+		       bo_no
+		     , mem_no
+		     , bo_title
+		     , bo_content
+		     , bo_category
+		     , bo_cdate
+		     )
+		values
+		     (
+		       seq_bno.nextval
+		     , #{memNo}
+		     , #{boTitle}
+		     , #{boContent}
+		     , #{boCategory}
+		     , SYSDATE
+		     )
+	</insert>
+	
+	<!-- 게시글 상세조회용 : 조회수 증가 -->
+	<!-- @author daeunlee -->
+	<update id="increaseCount">
+		update 
+		       board
+		   set bo_count = bo_count+1
+		 where bo_no = #{boNo}
+		   and bo_status='Y'
+	</update>
+	
+	<!-- 게시글 상세조회용 : 해당게시글 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectBoard" resultMap="boardResult">
+		select 
+		       bo_no
+		     , mem_nickname
+		     , bo_category
+		     , bo_title
+		     , bo_content
+		     , bo_count
+		     , bo_cdate
+		     , bo_mdate
+		     , bo_like
+		  from board
+		  join members using(mem_no)
+		 where bo_no = #{boNo}
+		   and bo_status='Y'
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<!-- @author daeunlee -->
+	<update id="updateBoard">
+		update
+		       board
+		   set 
+		       bo_title = #{boTitle}
+		     , bo_content = #{boContent}
+		     , bo_category = #{boCategory}
+		     , bo_mdate = SYSDATE
+		 where bo_no = #{boNo}
+	</update>
+	 
+	<!-- 댓글 리스트 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectReplyList" resultMap="replyResult">
+		select 
+		       reply_no
+		     , mem_no
+		     , reply_type
+		     , ref_post
+		     , reply_content
+		     , reply_cdate
+		     , reply_mdate
+		     , delete_status
+		     , reply_refNo
+		     , depth
+		  from reply
+		 where reply_type = 1
+		   and ref_post = #{boNo}
+		 start with reply_refno = 0
+		connect by prior reply_no = reply_refno
+		order siblings by reply_cdate desc
+	</select>
+	
+	<!-- 댓글 작성 -->
+	<!-- @author daeunlee -->
+	<insert id="insertReply">
+		insert 
+		  into reply
+		     ( 
+		       reply_no
+		     , mem_no
+		     , reply_type
+		     , ref_post
+		     , reply_content
+		     , reply_refno
+		     , depth
+		     )
+		values
+		     ( 
+		       seq_rno.nextval
+		     , #{memNo}
+		     , 1
+		     , #{refPost}
+		     , #{replyContent}
+		     , #{replyRefNo}
+		     , #{depth}
+		     )
+	</insert>
+	
+</mapper>
