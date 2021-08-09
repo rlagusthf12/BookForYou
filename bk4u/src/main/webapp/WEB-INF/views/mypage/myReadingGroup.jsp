@@ -12,12 +12,14 @@
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .wrap {
             width: 1200px;
-            height: 1200px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -26,7 +28,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 1100px;
             position: relative;
             display: inline-flex;
         }
@@ -36,7 +38,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 850px;
+            height: 880px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -56,6 +58,7 @@
         #table-box{
             margin-top: 50px;
             width: 90%;
+            height: 650px;
             margin:auto;
         }
 
@@ -100,6 +103,8 @@
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -197,68 +202,69 @@
                 <hr style="text-align: center; width: 95%; margin: auto;">
                 <br>
                 <div id="table-box">
+                <c:if test="${ empty list }">
+                   <h3 style="text-align:center; cursor: default">보관함에 담긴 책이 없습니다.</h3>
+                </c:if>
+                <c:forEach var="group" items="${list }">
                     <div class="card mb-3" id="group-card" style="max-width: 800px;">
+                    	<input type="hidden" name="groupBoardNo" id="groupBoardNo" value="${group.groupBoardNo }"/>
                         <div class="row g-0">
                           <div class="col-md-4">
-                            <img src="../images/group.jpg" style="max-width: 100%; height: fit-content; max-height: 200px;" class="rounded-start" alt="...">
+                            <img src="${group.originName }" style="max-width: 100%; height: 100%;" class="rounded-start" alt="..." onerror="this.src='resources/mypage/images/group.jpg'">
                           </div>
                           <div class="col-md-8">
                             <div class="card-body">
-                              <h5 class="card-title" id="group-title">책이 좋아</h5>
-                              <p class="card-text"><small class="text-muted">ONLINE</small></p>
-                              <p class="card-text" id="group-content">책을 좋아하는 사람들의 모입입니다. 매주 월요일 책을 선정하고 일요일에 독서모임을 가집니다. 매주 책의 주제는 변동됩니다. 많은 참여 부탁드립니다.</p>
-                              <p class="card-text"><i class="fa fa-user" aria-hidden="true"> 8</i></p>
+                              <h5 class="card-title" id="group-title">${group.groupTitle }</h5>
+                              <p class="card-text"><small class="text-muted">${group.groupType }</small></p>
+                              <p class="card-text" id="group-content">${group.groupScript }</p>
+                              <p class="card-text"><i class="fa fa-user" aria-hidden="true">${group.memCount }</i></p>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="card mb-3" id="group-card" style="max-width: 800px;">
-                        <div class="row g-0">
-                          <div class="col-md-4">
-                            <img src="../images/group.jpg" style="max-width: 100%; height: fit-content; max-height: 200px;" class="rounded-start" alt="...">
-                          </div>
-                          <div class="col-md-8">
-                            <div class="card-body">
-                              <h5 class="card-title" id="group-title">책이 좋아</h5>
-                              <p class="card-text"><small class="text-muted">ONLINE</small></p>
-                              <p class="card-text" id="group-content">책을 좋아하는 사람들의 모입입니다. 매주 월요일 책을 선정하고 일요일에 독서모임을 가집니다. 매주 책의 주제는 변동됩니다. 많은 참여 부탁드립니다.</p>
-                              <p class="card-text"><i class="fa fa-user" aria-hidden="true"> 8</i></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card mb-3" id="group-card" style="max-width: 800px;">
-                        <div class="row g-0">
-                          <div class="col-md-4">
-                            <img src="../images/group.jpg" style="max-width: 100%; height: fit-content; max-height: 200px;" class="rounded-start" alt="...">
-                          </div>
-                          <div class="col-md-8">
-                            <div class="card-body">
-                              <h5 class="card-title">책이 좋아</h5>
-                              <p class="card-text"><small class="text-muted">ONLINE</small></p>
-                              <p class="card-text" id="group-content">책을 좋아하는 사람들의 모입입니다. 매주 월요일 책을 선정하고 일요일에 독서모임을 가집니다. 매주 책의 주제는 변동됩니다. 많은 참여 부탁드립니다.</p>
-                              <p class="card-text"><i class="fa fa-user" aria-hidden="true"> 8</i></p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
+                  </c:forEach>
+                  <script type="text/javascript">
+            		$(function(){
+            			$("#group-card").click(function(){
+            				location.href = "detail.gbo?gno=" + $(this).children("#groupBoardNo").val();
+            			})
+            		})
+            	</script>
                 </div>
+                <c:choose>
+                <c:when test="${ !empty list }">
                 <div id="paging-wrap">
                     <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">이전</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                        <li class="page-item disabled"><a class="page-link">다음</a></li>
-                    </ul>
+                	<c:choose>
+                    	<c:when test="${ pi.currentPage eq 1 }">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage}">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                	</ul>
                 </div>
+                </c:when>
+                </c:choose>
             </div>  
 
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 
 </html>

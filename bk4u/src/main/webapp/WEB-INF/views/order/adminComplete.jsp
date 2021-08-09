@@ -187,6 +187,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -295,35 +301,35 @@
 	    /* 정렬 시 해당 값 selected */
 	    $("#array-condition").val("${ ar }").prop("selected", true);
 	    
-		/* admin-memo 모달 보여주기 */
+	    /* admin-memo 모달 보여주기 */
 		$(".admin-memo button").click(function(){
 			$(".admin-memo-content").toggleClass("hide");
-	
+
 			var tr = $(this).parent().parent().parent();
-	    	var td = tr.children();
-	    	var $memo = td.eq(9).text();
-	    	var $orderNo = td.eq(1).text();
-	    	$(".admin-memo-content .oNo").val($orderNo);
-	    	$(".admin-memo-content .memo-bottom input").val($memo);
-	    	
-	    	if($(this).parent().is(".no-exist")){
-	            $(".admin-memo-content .memo-delete-btn").hide();
-	        }else{
-	            $(".admin-memo-content .memo-delete-btn").show();
-	        }
-	    	
+        	var td = tr.children();
+        	var $memo = td.eq(9).text();
+        	var $orderNo = td.eq(1).text();
+        	$(".admin-memo-content .oNo").val($orderNo);
+        	$(".admin-memo-content .memo-bottom input").val($memo);
+        	
+        	if($(this).parent().is(".no-exist")){
+                $(".admin-memo-content .memo-delete-btn").hide();
+            }else{
+                $(".admin-memo-content .memo-delete-btn").show();
+            }
+        	
 			const a = $(this).offset();
-	        $(".admin-memo-content").offset({top: a.top , left: a.left-320});
-	        
+            $(".admin-memo-content").offset({top: a.top , left: a.left-320});
+            
 		})
 		
 		/* 관리자 메모 삭제 */
 		$(".memo-delete-btn").click(function(){
 			
 			var $orderNo = $(".oNo").val();
-			location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+			location.href="deleteAdminMemo.or?orderNo=" + $orderNo + "&orStatus=5";
 			
-		})			
+		})				
 	
 	    /* user-memo 모달 보여주기 */
 	    $(".user-memo.exist button").click(function(){
@@ -339,13 +345,11 @@
 	    })
 	
 	    /* 주문 상세 보기 */
-	        $(".detailC").click(function(){
-	        	
-	        	var td = $(this);
-	        	var orderNo = td.text();
-	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
-	        	
-	        })
+	    $(".detailC").click(function(){
+	        var td = $(this);
+	        var orderNo = td.text();
+	        location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	    })
 	
 	})
 </script>
@@ -582,8 +586,9 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="5"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -605,8 +610,9 @@
 															</div>
 															<form action="updateAdminMemo.or">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="orStatus" value="5"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -617,7 +623,6 @@
 														</div>					
 					                        	</c:otherwise>
 					                        </c:choose>
-					                        
 					                    </td>
 			                        </tr>
 		                        </c:forEach>
@@ -630,28 +635,6 @@
                         </c:choose>
                     </tbody>
                 </table>
-            </div>
-            <div class="user-memo-content hide">
-                <div class="memo-top">
-                    <p>구매자 배송메세지</p>
-                </div>
-                <div class="memo-bottom">
-                    <p>경비실에 맡겨주세요.</p>
-                </div>
-            </div>
-    
-            <div class="admin-memo-content hide">
-                <div class="memo-top">
-                    <p>관리자 메모</p>
-                </div>
-                <div class="memo-bottom">
-                    <p><input type="text" value="엄청 빠른 배송"></p>
-                </div>
-                <div class="memo-btn-area">
-                    <!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
-                    <button type="button" class="memo-delete-btn">삭제</button>
-                    <button type="button" class="memo-upgrade-btn">저장</button>
-                </div>
             </div>
             <br>
             <div id="paging-wrap">
