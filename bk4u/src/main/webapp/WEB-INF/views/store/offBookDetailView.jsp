@@ -46,7 +46,7 @@
             background-color: cornsilk;
         }
 
-        .search_book .book_img img{
+        #detail_top .book_img img{
             width: 100%;
             height: 100%;
         }
@@ -302,7 +302,7 @@
     <div class="wrap">
         <div id="content">
             <div id="detail_top">
-                <div class="book_img"><img src=""></div>
+                <div class="book_img"><img src="${ bk.introChangeName }"></div>
                 <div class="book_info">
                     <div>
                         <div>${ bk.bkTitle }</div>

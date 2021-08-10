@@ -23,6 +23,10 @@ public class OffBook {
 	private Date addDate;
 	private String bkTitle;
 	private String bkPublish;
+	private String bkDate;
 	private String writerName;
+	private String introOriginName;
+	private String introChangeName;
+	private String bkContent;
 	private String storeName;
 }
