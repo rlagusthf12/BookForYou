@@ -113,7 +113,7 @@ public class BookController {
 		ArrayList<Book> bList = null;
 		ArrayList<OffBook> obList = null;
 
-		if(condition == "searchAll" || condition == "bookTitle" || condition == "writerName" || condition == "publisher") {
+		if(condition.equals("searchAll") || condition.equals("bookTitle") || condition.equals("writerName") || condition.equals("publisher")) {
 			listCount = bookService.selectSearchBookCount(map);
 		}else {
 			storeNo = Integer.parseInt(condition);
@@ -123,16 +123,13 @@ public class BookController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 
-		if(condition == "searchAll" || condition == "bookTitle" || condition == "writerName" || condition == "publisher") {
+		if(condition.equals("searchAll") || condition.equals("bookTitle") || condition.equals("writerName") || condition.equals("publisher")) {
 			bList = bookService.selectSearchBook(pi, map);
 			mv.setViewName("book/bookSearchList");
 		}else {
 			obList = storeService.selectSearchOffBook(pi, map);
 			mv.setViewName("store/offBookSearchList");
-			System.out.println(obList);
 		}
-		
-		System.out.println(st);
 		
 		mv.addObject("pi", pi)
 		  .addObject("st", st)
