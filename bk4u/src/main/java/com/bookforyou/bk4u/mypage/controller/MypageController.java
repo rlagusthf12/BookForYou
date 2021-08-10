@@ -586,6 +586,9 @@ public class MypageController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("listCount",listCount);
 		model.addAttribute("list",list);
+		model.addAttribute("orderStatus",orderStatus);
+		model.addAttribute("beginDate",beginDate);
+		model.addAttribute("endDate",endDate);
 		
 		return "mypage/myOrderList";
 		
@@ -594,7 +597,7 @@ public class MypageController {
 	// java로 오늘날짜 구하기
 	private String getCurrentDate() {
 			Date dateNow = Calendar.getInstance(new SimpleTimeZone(0x1ee6280, "KST")).getTime();
-	        SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd", Locale.getDefault());
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 	        return formatter.format(dateNow);
 	}
 	
@@ -603,7 +606,7 @@ public class MypageController {
 	     Calendar cal = Calendar.getInstance(new SimpleTimeZone(0x1ee6280, "KST"));
 	     cal.add(Calendar.MONTH ,-1); // 한달전 날짜 가져오기
 	     Date monthago = cal.getTime();
-	     SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd", Locale.getDefault());
+	     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 	     return formatter.format(monthago);
 	}
 	
@@ -612,7 +615,7 @@ public class MypageController {
 	     Calendar cal = Calendar.getInstance(new SimpleTimeZone(0x1ee6280, "KST"));
 	     cal.add(Calendar.MONTH ,-3); // 세달전 날짜 가져오기
 	     Date monthago = cal.getTime();
-	     SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd", Locale.getDefault());
+	     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 	     return formatter.format(monthago);
 	}
 	

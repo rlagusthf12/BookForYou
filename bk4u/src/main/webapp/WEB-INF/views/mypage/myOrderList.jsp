@@ -70,11 +70,12 @@
             text-decoration: none;
             font-size: large;
             font-weight: bold;
+            color: rgb(189, 185, 185);
+            cursor: default;
         }
 
-        #state-of-order li a {
-            color: rgb(189, 185, 185);
-            text-decoration-line: none;
+        .color-enlighten{
+        	color:black;
         }
 
         #date-box {
@@ -119,6 +120,22 @@
         #paging-wrap{width:fit-content; margin:auto; margin-top: 30px;}
         .page-link, .page-link:hover{color:rgb(252, 190, 52);}
     </style>
+    <script>
+    $(document).ready(function(){
+    	var $statusInput = $("select[name='orderStatus'] option:selected");
+    	var status = $statusInput.text();
+    	$('#state-of-order li').each(function (index, item) {
+    	     console.log($(this).text());
+    	     if($(this).text() == status){
+    	    	 console.log("일치함");
+    	    	 $(this).css("color","black");
+    	     }else{
+    	    	 console.log("일치하지 않음");
+    	     }
+    	});
+    	
+    });
+    </script>
 </head>
 
 <body>
@@ -218,17 +235,19 @@
                 <div id="head-of-main-content">
                     주문내역 조회
                 </div>
+                
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
                 <ul id="state-of-order">
-                    <li><a href="">결제완료</a></li>
-                    <li><a href="">주문취소</a></li>
-                    <li><a href="">상품준비중</a></li>
-                    <li><a href="">배송준비중</a></li>
-                    <li><a href="">배송중</a></li>
-                    <li><a href="">배송완료</a></li>
-                    <li><a href="">반품</a></li>
+                    <li>결제완료</li>
+                    <li>주문취소</li>
+                    <li>상품준비중</li>
+                    <li>배송준비중</li>
+                    <li>배송중</li>
+                    <li>배송완료</li>
+                    <li>반품</li>
                 </ul>
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
+                <form action="my-order-list.mp" method="get" name="order-list-form" id="order-list-form">
                 <div id="date-box">
                     <div class="btn-group btn-group-sm" id="date-button-box" role="group"
                         aria-label="Basic radio toggle button group">
@@ -236,27 +255,30 @@
                         <button type="button" id="btnMonth" class="btn btn-outline-secondary">1개월</button>
                         <button type="button" id="btn3Month" class="btn btn-outline-secondary">3개월</button>
                     </div>
-
+					<input type="hidden" id="tempBeginDate" name="tempBeginDate" value="${beginDate }"/>
+					<input type="hidden" id="tempEndDate" name="tempEndDate" value="${endDate }"/>
                     <div id="date-input-box">
-                        <input type="text" id="beginDate" class="form-control" name="beginDate">
+                        <input type="text" id="beginDate" class="form-control" name="beginDate"/>
                     </div>
                     <div id="date-input-box">
-                        <input type="text" id="endDate" class="form-control" name="endDate">
+                        <input type="text" id="endDate" class="form-control" name="endDate"/>
                     </div>
                     <select class="form-select form-select-sm" id="state-select-box"
                         aria-label=".form-select-sm example" style="margin-right: 10px;" name="orderStatus">
-                        <option value="전체" selected>전체</option>
-                        <option value="주문확인">결제완료</option>
-                        <option value="주문취소">주문취소</option>
-                        <option value="상품준비중">상품준비중</option>
-                        <option value="배송준비중">배송준비중</option>
-                        <option value="배송중">배송중</option>
-                        <option value="배송완료">배송완료</option>
-                        <option value="반품">반품</option>
+                        <option value="전체" <c:if test="${orderStatus == '전체'}">selected</c:if>>전체</option>
+                        <option value="주문확인" <c:if test="${orderStatus == '주문확인'}">selected</c:if>>결제완료</option>
+                        <option value="주문취소" <c:if test="${orderStatus == '주문취소'}">selected</c:if>>주문취소</option>
+                        <option value="상품준비중" <c:if test="${orderStatus == '상품준비중'}">selected</c:if>>상품준비중</option>
+                        <option value="배송준비중" <c:if test="${orderStatus == '배송준비중'}">selected</c:if>>배송준비중</option>
+                        <option value="배송중" <c:if test="${orderStatus == '배송중'}">selected</c:if>>배송중</option>
+                        <option value="배송완료" <c:if test="${orderStatus == '배송완료'}">selected</c:if>>배송완료</option>
+                        <option value="반품" <c:if test="${orderStatus == '반품'}">selected</c:if>>반품</option>
                     </select>
-                    <button type="button" class="btn btn-dark btn-sm" style="width:50px">조회</button>
+                    <button type="button" class="btn btn-dark btn-sm" style="width:50px" onclick="selectMyOrderList();">조회</button>
                     <script>
-
+						function selectMyOrderList(){
+							$("#order-list-form").submit();
+						}
                         // 시작 일자 달력 이미지 클릭시 달력 표기 
                         $('#beginDate').datepicker({
                             showOn: "button",
@@ -274,23 +296,27 @@
                             buttonText: "Select date"
                         });
                         $('#endDate').datepicker('option', 'dateFormat', 'yy-mm-dd');
-
-                        let d = new Date();
+                        
+                       	var tempBegin = $("#tempBeginDate").val();
+                       	console.log(tempBegin);
+                        var tempEnd = $("#tempEndDate").val();
+                        
+                        let d = new Date(tempEnd);
+                        console.log(d);
                         let year = d.getFullYear();
                         let month = d.getMonth() + 1; // 월은 0에서 시작하기 때문에 +1
                         let day = d.getDate();
                         
-                        
+                        let startDate = new Date(tempBegin);
+                        let startYear = startDate.getFullYear();
+                        let startMonth = startDate.getMonth() + 1;
+                        let startDay = startDate.getDate();
                         
                         let beginDate = d;
-                        console.log(beginDate);
-                        console.log(d);
+							
+                        $("#beginDate").val(startYear + "-" + startMonth + "-" + startDay);
                         $('#endDate').val(year+"-"+month+"-" + day);
-                        $('#beginDate').val(year+"-"+month+"-" + day);
-                        beginDate.setMonth(beginDate.getMonth() -1);
-                        $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
-                        beginDate.setMonth(beginDate.getMonth() +1);
-
+                        
                         // 버튼 클릭시 현재 날짜에서 1주일, 1개월, 3개월 더하기
                         $('#btnWeek').click(function () {
                             $('#endDate').val(year+"-"+month+"-" + day);
@@ -314,6 +340,7 @@
                         });
                     </script>
                 </div>
+                </form>
                 <div id="order-list-box">
                     <table class="table table-hover" style="table-layout:fixed">
                         <thead class="table-light">
@@ -326,6 +353,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <c:if test="${ empty list }">
+                        	  <td colspan="5" style="text-align:center; cursor: default">해당하는 주문내역이 없습니다.</td>
+                        </c:if>
                         <c:forEach var="order" items="${list }">
                             <tr>
                                 <th scope="row">${order.orderNo }</th>
@@ -347,12 +377,12 @@
                     		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
                     	</c:when>
                     	<c:otherwise>
-                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    		<li class="page-item"><a class="page-link" href="my-order-list.mp?currentPage=${ pi.currentPage - 1 }&&beginDate=${beginDate}&&endDate=${endDate}&&orderStatus=${orderStatus}">Previous</a></li>
                     	</c:otherwise>
                     </c:choose>
                     
                     <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    	<li class="page-item"><a class="page-link" href="my-order-list.mp?currentPage=${ p }&&beginDate=${beginDate}&&endDate=${endDate}&&orderStatus=${orderStatus}">${p }</a></li>
                     </c:forEach>
                     
                     <c:choose>
@@ -360,7 +390,7 @@
                     		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                     	</c:when>
                     	<c:otherwise>
-                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                   			<li class="page-item"><a class="page-link" href="my-order-list.mp?currentPage=${ pi.currentPage + 1 }&&beginDate=${beginDate}&&endDate=${endDate}&&orderStatus=${orderStatus}">Next</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 	</ul>

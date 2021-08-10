@@ -569,6 +569,9 @@
 				<when test="orderStatus == '배송준비중'">
 					and order_status = '배송준비중'
 				</when>
+				<when test="orderStatus == '배송중'">
+					and order_status = '배송중'
+				</when>
 				<when test="orderStatus == '배송완료'">
 					and order_status = '배송완료'
 				</when>
@@ -621,6 +624,9 @@
 				</when>
 				<when test="orderStatus == '배송준비중'">
 					and order_status = '배송준비중'
+				</when>
+				<when test="orderStatus == '배송중'">
+					and order_status = '배송중'
 				</when>
 				<when test="orderStatus == '배송완료'">
 					and order_status = '배송완료'
