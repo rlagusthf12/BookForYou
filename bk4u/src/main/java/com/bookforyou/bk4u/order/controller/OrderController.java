@@ -269,6 +269,8 @@ public class OrderController {
 			
 			if(odStatus.equals("2")) {
 				int cancelResult = oService.insertAdminCancel(map);
+			}else if(odStatus.equals("6")) {
+				int returnResult = oService.insertAdminReturn(map);
 			}
 		}
 		

@@ -175,5 +175,12 @@ public class OrderDao {
 		return sqlSession.update("orderMapper.updateDeliveryInfo", map);
 	}
 
+	/**
+	 * [관리자] 반품 테이블 insert(한진)
+	 */
+	public int insertAdminReturn(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("orderMapper.insertAdminReturn", map);
+	}
+
 	
 }

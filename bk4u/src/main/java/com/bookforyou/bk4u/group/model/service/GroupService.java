@@ -29,7 +29,7 @@ public interface GroupService {
 	int updateGroup(GroupBoard g); 
 		
 	// 가입용
-	int insertGroupMem(Member m);
+	int insertGMem(GroupMember gm);
 	
 	// 멤버리스트
 	ArrayList<GroupMember> groupMemberList();

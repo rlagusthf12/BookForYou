@@ -416,7 +416,7 @@
 		       order_no,
 		       mem_no,
 		       pay_no,
-		       price,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
 		       order_date,
 		       order_receiver,
 		       order_post,
@@ -439,7 +439,7 @@
 		       delivery_status,
 		       coupon_issue_num
 		  from orders
-		  join payment using (pay_no)
+		  join payment P using (pay_no)
 		 where order_no = #{orderNo}		
 	</select>
 	
@@ -503,6 +503,10 @@
 		   		<when test="odStatus == 5">
 		   			order_status = '배송완료'
 		   		</when>
+		   		<when test="odStatus == 6">
+		   			order_status = '반품신청',
+		   			cs_status = '반품신청'
+		   		</when>
 		   </choose>
 		 where order_no = #{odNo}
 	</update>
@@ -518,6 +522,21 @@
 	           '사용자 요청에 의한 취소',
 	           sysdate,
 	           '취소신청',
+	           null
+	         )
+	</insert>
+	
+	<!-- [관리자] 반품 테이블 insert (한진) -->
+	<insert id="insertAdminReturn">
+		insert
+		  into return
+	    values
+	         (
+	           seq_returnno.nextval,
+	           #{odNo},
+	           '사용자 요청에 의한 반품',
+	           sysdate,
+	           '반품신청',
 	           null
 	         )
 	</insert>

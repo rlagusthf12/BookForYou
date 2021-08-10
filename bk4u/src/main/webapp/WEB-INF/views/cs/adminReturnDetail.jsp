@@ -106,6 +106,13 @@
 
 	<jsp:include page="../adminSidebar.jsp"/>
 	
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+	
 	<div id="outer">
         <div id="main-title">
             <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
@@ -265,6 +272,10 @@
                     <td>${ p.price }</td>
                 </tr>
                 <tr>
+	                <th scope="col">사용된 쿠폰 반환</th>
+	                <td>${ cd.couponPrice }</td>
+	            </tr>
+                <tr>
                     <th scope="col">사용된 포인트 반환</th>
                     <td>${ o.usedPoints }</td>
                 </tr>
@@ -276,14 +287,6 @@
         </div>
         <br><br>
         <div id="btn-area">
-        	<c:choose>
-        		<c:when test="${ r.status eq '반품처리중' }">
-        			<button type="button" id="complete-btn">반품완료</button>
-        		</c:when>
-        		<c:when test="${ r.status eq '반품완료' }">
-        			
-        		</c:when>
-        	</c:choose>
             <button type="button" id="back">닫기</button>
         </div>
         <br><br><br>

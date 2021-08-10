@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
@@ -159,24 +160,44 @@ public class CsController {
 	}
 	
 	/**
-	 * [관리자] 주문 취소 처리 (한진)
+	 * [관리자] 주문 취소/반품 처리 (한진)
 	*/
-	@RequestMapping("adminCancel.cs")
-	public String updateAdminCancel(ModelAndView mv, int cancelNo, int orderNo, int no) {
+	@RequestMapping("adminProcess.cs")
+	public String updateAdminProcess(ModelAndView mv, Refund r, RedirectAttributes ra) {
 		
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("orderNo", orderNo);
-		map.put("no", 1);
-		int orderResult = cService.updateAdminCsOrderStatus(map);
-		int cancelResult = cService.updateAdminCancelStatus(cancelNo);
+		Order o = new Order();
+		o.setOrderNo(r.getOrderNo());
+		int cancelResult = 0;
+		int returnResult = 0;
+		
+		if(r.getRefundKind().equals("취소")) {
+			o.setOrderStatus("주문취소");
+			o.setCsStatus("취소처리중");
+			// 취소 상태 변경
+			cancelResult = cService.updateAdminCancelStatus(o);
+			// 환불테이블에 insert
+			cService.insertAdminRefundStatus(r);
+		}else if(r.getRefundKind().equals("반품")) {
+			o.setOrderStatus("반품");
+			o.setCsStatus("반품처리중");
+			// 반품 상태 변경
+			returnResult = cService.updateAdminReturnStatus(o);
+			// 환불테이블에 insert
+			cService.insertAdminRefundStatus(r);
+		}
+		
+		// 주문 상태 변경
+		cService.updateAdminCsOrderStatus(o);
 		
 		if(cancelResult > 0) {
-			mv.addObject("alertMsg", "주문이 취소되었습니다.");
-			return "redirect:/adminCancelDetail.cs?calcelNo=" + cancelNo + "&orderNo=" + orderNo + "&no=1";
-		}else {
-			mv.addObject("errorMsg", "주문 취소 처리 실패");
-			return "redirect:/adminCancelDetail.cs?cancelNo=" + cancelNo + "&orderNo=" + orderNo + "&no=2";
+			ra.addFlashAttribute("alertMsg", "'취소처리중'으로 변경되었습니다.");
+			return "redirect:/adminCancelDetail.cs?canlcelNo=" + r.getKindNo() + "&orderNo=" + r.getOrderNo() + "&no=1";
+		}else if(returnResult > 0) {
+			ra.addFlashAttribute("alertMsg", "'반품처리중'으로 변경되었습니다.");
+			return "redirect:/adminReturnDetail.cs?returnNo=" + r.getKindNo() + "&orderNo=" + r.getOrderNo() + "&no=1";
 		}
+		
+		return "error";
 	}
 	 
 	/**
@@ -206,34 +227,6 @@ public class CsController {
 		}
 		
 		return mv;
-	}
-	
-	/**
-	 * [관리자] 반품 처리 (한진)
-	 */
-	@RequestMapping("adminReturn.cs")
-	public String updateAdminReturn(ModelAndView mv, int returnNo, int orderNo, int no, int rtStatus) {
-		
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("orderNo", orderNo);
-		map.put("no", 2);
-		map.put("rtStatus", rtStatus);
-		
-		HashMap<String, Integer> map2 = new HashMap<>();
-		map2.put("returnNo", returnNo);
-		map2.put("rtStatus", rtStatus);
-		
-		int orderResult = cService.updateAdminCsOrderStatus(map);
-		int returnResult = cService.updateAdminReturnStatus(map2);
-		
-		if(returnResult > 0) {
-			mv.addObject("alertMsg", "'반품처리중'으로 변경되었습니다.");
-			return "redirect:/adminReturnDetail.cs?returnNo=" + returnNo + "&orderNo=" + orderNo + "&no=1";
-		}else {
-			mv.addObject("errorMsg", "'반품처리중'변경 실패");
-			return "redirect:/adminReturnDetail.cs?returnNo=" + returnNo + "&orderNo=" + orderNo + "&no=1";
-		}
-		
 	}
 	
 	/**
@@ -267,23 +260,45 @@ public class CsController {
 	
 	/**
 	 * [관리자] 환불 처리 (한진)
-	 */
+	*/
 	@RequestMapping("adminRefund.cs")
-	public String updateAdminRefund(ModelAndView mv, int refundNo, int orderNo, int no) {
+	public String updateAdminRefund(ModelAndView mv, Refund r, RedirectAttributes ra) {
 		
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("orderNo", orderNo);
-		map.put("no", 3);
-		int orderResult = cService.updateAdminCsOrderStatus(map);
-		int refundResult = cService.updateAdminRefundStatus(refundNo);
+		Order o = new Order();
+		o.setOrderNo(r.getOrderNo());
 		
-		if(refundResult > 0) {
-			mv.addObject("alertMsg", "환불이 완료되었습니다.");
-			return "redirect:/adminRefundDetail.cs?refundNo=" + refundNo + "&orderNo=" + orderNo + "&no=1";
-		}else {
-			mv.addObject("errorMsg", "환불 처리 실패");
-			return "redirect:/adminRefundDetail.cs?refundNo=" + refundNo + "&orderNo=" + orderNo + "&no=2";
+		if(r.getRefundCoupon() != 0) {
+			// 쿠폰 반환 (mem_coupon에 status 변경)
+			int result = cService.updateAdminRefundCoupon(r);
+		}
+		if(r.getRefundPoint() != 0) {
+			// 포인트 반환 (point에 내역 '적립'이름으로 insert
+			cService.insertAdminRefundPoint(r);
 		}
 		
+		// 취소&반품 상태 변경
+		if(r.getRefundKind().equals("취소")) {
+			o.setCsStatus("취소완료");
+			cService.updateAdminCancelStatus(o);
+		}else if(r.getRefundKind().equals("반품")) {
+			o.setCsStatus("반품완료");
+			cService.updateAdminReturnStatus(o);
+		}
+		
+		// 환불 상태 변경
+		int refundResult = cService.updateAdminRefundStatus(r.getOrderNo());
+		
+		// 주문 상태 변경
+		o.setCsStatus("환불완료");
+		cService.updateAdminCsOrderStatus(o);
+		
+		if(refundResult > 0) {
+			ra.addFlashAttribute("alertMsg", "'환불'이 완료되었습니다.");
+			return "redirect:/adminRefundDetail.cs?refundNo=" + r.getKindNo() + "&orderNo=" + r.getOrderNo() + "&no=1";
+		}
+		
+		return "error";
+		
 	}
+
 }

@@ -510,5 +510,13 @@
 		  join sub_category using (sub_cate_no)
 		 where subsc_no = #{sNo}
  	</select>
+ 	
+ 	<!-- [관리자] 환불 - 사용된 쿠폰 반환 (한진) -->
+ 	<update id="updateAdminRefundCoupon">
+ 		update mem_cupon
+ 		   set status = 'Y',
+ 		       use_date = null
+ 		 where coupon_issue_num = #{refundCoupon}
+ 	</update>
 
 </mapper>

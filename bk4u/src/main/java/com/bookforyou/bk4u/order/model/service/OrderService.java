@@ -121,5 +121,10 @@ public interface OrderService {
 	 * [관리자] 운송장정보 등록/저장 (한진)
 	 */
 	int updateDeliveryInfo(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 반품 테이블 insert (한진)
+	 */
+	int insertAdminReturn(HashMap<String, String> map);
 	
 }

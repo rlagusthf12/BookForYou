@@ -360,7 +360,7 @@
 	 		var tr = $(this).parent().parent().parent();
 	 		var orderNo = tr.children().eq(3).text();
 	 		var returnNo = tr.children().eq(1).text();
-	 		$(".cancelPcs").attr("href", 'adminReturnDetail.cs?returnNo=' + returnNo + '&orderNo=' + orderNo + "&no=2");
+	 		$(".returnPcs").attr("href", 'adminReturnDetail.cs?returnNo=' + returnNo + '&orderNo=' + orderNo + "&no=2");
 	 	})
 	
 	})

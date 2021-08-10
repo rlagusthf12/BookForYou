@@ -200,5 +200,13 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.updateDeliveryInfo(sqlSession, map);
 	}
 
+	/**
+	 * [관리자] 반품 테이블 insert(한진)
+	 */
+	@Override
+	public int insertAdminReturn(HashMap<String, String> map) {
+		return oDao.insertAdminReturn(sqlSession, map);
+	}
+
 	
 }

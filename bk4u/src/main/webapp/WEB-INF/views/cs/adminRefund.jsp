@@ -502,7 +502,7 @@
 			                            <td>${ rf.orderNo }</td>
 			                            <td>${ rf.memName } <br> (${ rf.memId })</td>
 			                            <td>${ rf.bkTitle }</td>
-			                            <td>${ rf.refundPrice }</td>
+			                            <td>${ rf.orderPriceComma }</td>
 			                            <td>${ rf.refundPoint }</td>
 			                            <td>${ rf.payWay }</td>
 			                            <td>${ rf.status }</td>

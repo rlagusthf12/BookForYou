@@ -71,51 +71,53 @@
         </script>
 
        <div class="innerOuter" style="padding:5% 8%;" align="center">
-        <br><br><br><br><br><br><br><br>
+        <br><br><br><br>
     
          
             <table style="width: 800px;">
             
                 <h6 align="left"><b>독서모임게시판</b></h6>
-                <br><br><br><br><br>
+                <br><br>
 
                 <table border="1" style="width: 800px;">
                         <tr>
                             <td rowspan="2" width="500" height="200">
                                 <div class="card" style="width:500px">
-                                    <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                                    <img class="card-img-top" src="${ g.changeName }" alt="Card image">
                                         <div class="card-img-overlay">
                                         <h4 class="card-title">${ g.groupTitle }</h4>
                                         <p class="card-text">${ g.groupDate }</p>
                                 </div>
                               </div>
-                            </td>
-
-                            <td align="center"><b>회원목록</b></td>
-                        </tr>
-                     
-                        <tr>
-                            <td>                              
+                            </td>	
+                            <td align="center"><b>회원목록</b></td><br>
+                            
+                            <c:forEach var="gm" items="${groupMember}">
+ 							<td>             
                                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                                 
-                                <c:forEach var="groupMemberList" items="${groupMemberList}">
-                                <td>${ groupMemberList.getgroup_enrolldate}</td>
-                                <td>${ groupMemberList.getmem_no }</td>
-                                 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> <br>
-                                </c:forEach>
+                                <p>${ gm.memEmail }</p>
+                                <p>${ gm.groupEnrollDate }</p>
+                                 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> 
+                                 <br>
+							</c:forEach>
+							</td>
+                        </tr>
+                        
                                 <!-- 강퇴시키는 이유 쓰는 방법 -->
                                 <!-- 작성자가 가입자일 경우 가입되어 있는 사람들 프로필 사진 갖다대면 이름 나오게-->
                                 <!-- data-toggle="tooltip" title="회원닉네임" 토글튜토리얼 갖다대면 닉네임보이게-->
                                 <!-- 비공일 경우 일반 회원은 볼 수 없게 처리-->
-                            
-                            </td>
-                        </tr>
+                        
                 
                     
                 </table>
                 
                 <br>
-                <h6 align="left"><b>모임장아이디</b></h6>
+                <h6 align="left"><b>
+                ${ loginUser.memId } 
+                </b></h6>
+                <br>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
                 
                 
@@ -147,7 +149,7 @@
 
                 <br>
                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                <button type="submit" action="updateGroup.gbo" style="float: right;">수정하기</button>
+                <button type="submit" action="updateGroup.bo" style="float: right;">수정하기</button>
                 <br><br>
 
 
@@ -188,8 +190,9 @@
         </div>
     </div>
     
-    <jsp:include page="../meet/meetList.jsp"/>
+    
    
+    <jsp:include page="../meet/meetList.jsp"/>
 
           
 

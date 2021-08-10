@@ -12,6 +12,7 @@ import com.bookforyou.bk4u.cs.model.dao.CsDao;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Refund;
 import com.bookforyou.bk4u.cs.model.vo.Return;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 @Service
 public class CsServiceImpl implements CsService{
@@ -114,16 +115,16 @@ public class CsServiceImpl implements CsService{
 	 * [관리자] 주문 취소 - orders테이블 상태 변경 (한빈)
 	 */
 	@Override
-	public int updateAdminCsOrderStatus(HashMap<String, Integer> map) {
-		return cDao.updateAdminCsOrderStatus(sqlSession, map);
+	public int updateAdminCsOrderStatus(Order o) {
+		return cDao.updateAdminCsOrderStatus(sqlSession, o);
 	}
 
 	/**
 	 * [관리자] 주문취소 - cancel테이블 상태 변경 (한진)
 	 */
 	@Override
-	public int updateAdminCancelStatus(int cancelNo) {
-		return cDao.updateAdminCancelStatus(sqlSession, cancelNo);
+	public int updateAdminCancelStatus(Order o) {
+		return cDao.updateAdminCancelStatus(sqlSession, o);
 	}
 
 	/**
@@ -138,8 +139,8 @@ public class CsServiceImpl implements CsService{
 	 * [관리자] 반품 처리 (한진)
 	 */
 	@Override
-	public int updateAdminReturnStatus(HashMap<String, Integer> map2) {
-		return cDao.updateAdminReturnStatus(sqlSession, map2);
+	public int updateAdminReturnStatus(Order o) {
+		return cDao.updateAdminReturnStatus(sqlSession, o);
 	}
 
 	/**
@@ -157,6 +158,32 @@ public class CsServiceImpl implements CsService{
 	public int updateAdminRefundStatus(int refundNo) {
 		return cDao.updateAdminRefundStatus(sqlSession, refundNo);
 	}
+
+	/**
+	 * [관리자] 환불 테이블 insert (한진)
+	 */
+	@Override
+	public int insertAdminRefundStatus(Refund r) {
+		return cDao.insertAdminRefundStatus(sqlSession, r);
+	}
+
+	/**
+	 * [관리자] 환불 - 사용된 쿠폰 반환 (한진)
+	 */
+	@Override
+	public int updateAdminRefundCoupon(Refund r) {
+		return cDao.updateAdminRefundCoupon(sqlSession, r);
+	}
+
+	/**
+	 * [관리자] 환불 - 사용된 포인트 반환 (한진)
+	 */
+	@Override
+	public int insertAdminRefundPoint(Refund r) {
+		return cDao.insertAdminRefundPoint(sqlSession, r);
+	}
+
+	
 	
 	
 

@@ -32,14 +32,13 @@
             <div class="content">
   
             <div class="innerOuter"  style="padding:5% 5%;" align="center">
-                  <br><br><br><br><br><br><br><br>
                 <div align="left" style="padding-left:19px">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                          <a class="nav-link" href="meet.bo">모임정보</a>
+                          <a class="nav-link" href="../meet/meetList.jsp">모임정보</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link active" href="meetBoard.bo">소게시판</a>
+                          <a class="nav-link active" href="../groupboard/gorupBoardList.jsp">소게시판</a>
                         </li>
                 </div>
 
@@ -50,7 +49,6 @@
                             <button type="submit" style="float: right; margin: auto; border-radius: 10px; background: white;">글쓰기</button>
                         
                     <br><br>
-                    <c:forEach var="g" items="${ groupBoardList }">
                     <div style="border: 1px solid; width: 750; height: 800; margin: auto; border-radius: 10px;">
                         <table align="center" >
                             <tr>
@@ -77,7 +75,6 @@
                         </table>
                         <br>
                     </div>
-                    </c:forEach>
                     <br><br><br>
               
 
@@ -150,7 +147,7 @@
          <br><br>
 
          <!--푸터바 입력-->
-         <jsp:include page=""/>  
+         <jsp:include page="../common/footer.jsp"/>  
 
 
     </body>

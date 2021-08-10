@@ -155,6 +155,12 @@
 			var orderNo = $("#odNo").text();
 			location.href="adminOrderConfirm.or?selectedOd=" + orderNo + "&odStatus=2&orStatus=dt";
 		})
+		
+		/* 반품 */
+		$("#return-btn").click(function(){
+			var orderNo = $("#odNo").text();
+			location.href="adminOrderConfirm.or?selectedOd=" + orderNo + "&odStatus=6&orStatus=dt";
+		})
 	})
 </script>
 </head>
@@ -400,7 +406,7 @@
                 
 		            <c:choose>
 	                	<c:when test="${ od.orderStatus eq '배송완료' }">
-			                <button type="button">반품</button>	                	
+			                <button type="button" id="return-btn">반품</button>	                	
 	                	</c:when>
 	            		<c:when test="${ od.orderStatus eq '주문확인' }">
 			                <button type="button" id="cancel-btn">주문 취소</button>            		

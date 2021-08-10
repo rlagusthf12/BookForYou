@@ -515,7 +515,7 @@
 			                            <td class="detailO">${ c.orderNo }</td>
 			                            <td>${ c.memName } <br> (${ c.memId })</td>
 			                            <td>${ c.bkTitle }</td>
-			                            <td>${ c.price }</td>
+			                            <td>${ c.orderPriceComma }</td>
 			                            <td>${ c.payWay }</td>
 			                            <td>${ c.status }</td>
 			                            <td style="display:none">${ c.deliveryMsg }</td>

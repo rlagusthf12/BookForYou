@@ -110,9 +110,9 @@ public class GroupController {
 	
 	
 	@RequestMapping("insertGMem.me")
-	public void insertGMem (Member m ,Model model, HttpSession session) {
+	public void insertGMem (GroupMember gm ,Model model, HttpSession session) {
 		
-		int result = gService.insertGroupMem(m);
+		int result = gService.insertGMem(gm);
 		
 		if(result > 0) {
 			
@@ -197,7 +197,6 @@ public class GroupController {
 	} catch (Exception e) {
 		System.out.println("Controller error");
 	}
-	
 	
 	}
 	

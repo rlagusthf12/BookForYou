@@ -40,8 +40,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public GroupBoard selectGroup(int groupBoard) {
-		return gDao.selectGroup(sqlSession, groupBoard);
+	public GroupBoard selectGroup(int groupBoardNo) {
+		return gDao.selectGroup(sqlSession, groupBoardNo);
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 
 	@Override
-	public int insertGroupMem(Member m) {
-		return gDao.insertGMem(sqlSession, m);
+	public int insertGMem(GroupMember gm) {
+		return gDao.insertGMem(sqlSession, gm);
 		
 		
 	}
@@ -75,7 +75,7 @@ public class GroupServiceImpl implements GroupService{
 		return 0;
 	}
 
-	/*
+	
 	@Override
 	public int selectSearchGListCount(HashMap<String, String> map) {
 		
@@ -86,7 +86,7 @@ public class GroupServiceImpl implements GroupService{
 		
 	}
 
-	*/
+	
 	@Override
 	public ArrayList<GroupBoard> selectSearchList(HashMap<String, String> map, PageInfo pi) {
 		SqlSession sqlSession = getSqlSession();
@@ -108,12 +108,7 @@ public class GroupServiceImpl implements GroupService{
 
 	}
 
-	@Override
-	public int selectSearchGListCount(HashMap<String, String> map) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	
 
 	
