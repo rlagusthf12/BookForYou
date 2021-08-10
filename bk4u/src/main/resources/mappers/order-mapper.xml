@@ -504,6 +504,10 @@
 		   		<when test="odStatus == 5">
 		   			order_status = '배송완료'
 		   		</when>
+		   		<when test="odStatus == 6">
+		   			order_status = '반품신청',
+		   			cs_status = '반품신청'
+		   		</when>
 		   </choose>
 		 where order_no = #{odNo}
 	</update>
@@ -519,6 +523,21 @@
 	           '사용자 요청에 의한 취소',
 	           sysdate,
 	           '취소신청',
+	           null
+	         )
+	</insert>
+	
+	<!-- [관리자] 반품 테이블 insert (한진) -->
+	<insert id="insertAdminReturn">
+		insert
+		  into return
+	    values
+	         (
+	           seq_returnno.nextval,
+	           #{odNo},
+	           '사용자 요청에 의한 반품',
+	           sysdate,
+	           '반품신청',
 	           null
 	         )
 	</insert>
