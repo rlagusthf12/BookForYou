@@ -96,17 +96,12 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	@Override
-	public int selectMyOrderListCount(HashMap<String, String> listParam) {
+	public int selectMyOrderListCount(HashMap<String, Object> listParam) {
 		return mypageDao.selectMyOrderListCount(sqlSession, listParam);
 	}
 
-//	@Override
-//	public ArrayList<Order> selectMyOrderList(HashMap<String, Object> listParam) {
-//		return mypageDao.selectMyOrderList(sqlSession, listParam);
-//	}
-
 	@Override
-	public ArrayList<Order> selectMyOrderList(HashMap<String, String> listParam, PageInfo pi) {
+	public ArrayList<Order> selectMyOrderList(HashMap<String, Object> listParam, PageInfo pi) {
 		return mypageDao.selectMyOrderList(sqlSession, listParam,pi);
 	}
 

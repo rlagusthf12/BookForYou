@@ -81,19 +81,11 @@ public class MypageDao {
 		return sqlSession.delete("bookMapper.deleteMyList",list);
 	}
 
-	public int selectMyOrderListCount(SqlSessionTemplate sqlSession, HashMap<String, String> listParam) {
+	public int selectMyOrderListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam) {
 		return sqlSession.selectOne("orderMapper.selectMyOrderListCount",listParam);
 	}
 
-//	public ArrayList<Order> selectMyOrderList(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam) {
-//		PageInfo pi = (PageInfo) listParam.get("pi");
-//		HashMap<String,String> secondListParam = new HashMap<String,String>();
-//		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
-//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-//		return (ArrayList)sqlSession.selectList("orderMapper.selectMyOrderList",listParam,rowBounds);
-//	}
-
-	public ArrayList<Order> selectMyOrderList(SqlSessionTemplate sqlSession, HashMap<String, String> listParam,
+	public ArrayList<Order> selectMyOrderList(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam,
 			PageInfo pi) {
 		// TODO Auto-generated method stub
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();

@@ -41,12 +41,9 @@ public interface MypageService {
 
 	int deleteMyList(MyList myList);
 
+	int selectMyOrderListCount(HashMap<String, Object> listParam);
 
-	//ArrayList<Order> selectMyOrderList(HashMap<String, Object> listParam);
-
-	int selectMyOrderListCount(HashMap<String, String> listParam);
-
-	ArrayList<Order> selectMyOrderList(HashMap<String, String> listParam, PageInfo pi);
+	ArrayList<Order> selectMyOrderList(HashMap<String, Object> listParam, PageInfo pi);
 
 	int selectMyReadingGroupListCount(Member member);
 
