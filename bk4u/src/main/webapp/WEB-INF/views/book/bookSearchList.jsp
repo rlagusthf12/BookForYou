@@ -237,7 +237,7 @@
             
             <c:forEach var="b" items="${ bList }">
 	            <div class="search_book">
-	                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src=""></a></div>
+	                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
 	                <div class="book_info">
 	                    <div>
 	                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
@@ -273,52 +273,66 @@
             <script>
 	        	$(".search_book .btn_cart").click(function(){
 	        		
-	        		$.ajax({
-	            		url:"cartUpdate.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:$(this).parent().children("input[id=book_no]").val(),
-	            			cartQty:$(this).parent().closest(".book_info").find("input[type=number]").val()
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_cart").modal('show');
-	            			}else{
-	            				alert("장바구니 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("장바구니 추가 실패");
-	            		}
-		            })
+	        		var bkNo = $(this).siblings("input[id=book_no]").val();
+	        		console.log(bkNo);
+	        		
+	        		<c:choose>
+	        		<c:when test="${empty loginUser}">
+	        			alert("로그인 후 이용해주세요");
+	        		</c:when>
+	        		<c:otherwise>
+		        		$.ajax({
+		            		url:"cartUpdate.bk",
+		            		data:{
+		            			memNo:${ loginUser.memNo },
+		            			bkNo:$(this).siblings("input[id=book_no]").val();
+		            		},
+		            		type:"post",
+		            		success:function(result){
+		            			if(result == "success"){
+			    	        		$("#modal_cart").modal('show');
+		            			}else{
+		            				alert("장바구니 추가에 실패했습니다.");
+		            			}
+		            		},error:function(){
+		            			console.log("장바구니 추가 실패");
+		            		}
+			            })
+	        		</c:otherwise>
+        		</c:choose>
 	        	})
             </script>
             
             <script>
 	        	$(".search_book .btn_list").click(function(){
 	        		
-	        		console.log("d");
-	        		
-	        		$.ajax({
-	            		url:"listInsert.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:$(this).parent().children("input[id=book_no]").val()
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_list").modal('show');
-	            			}else if(result == "done"){
-	            				alert("이미 리스트에 존재하는 도서입니다.")
-	            			}
-	            			else{
-	            				alert("리스트 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("리스트 추가 실패");
-	            		}
-		            })
+	        		<c:choose>
+	        		<c:when test="${empty loginUser}">
+	        			alert("로그인 후 이용해주세요");
+	        		</c:when>
+	        		<c:otherwise>
+		        		$.ajax({
+		            		url:"listInsert.bk",
+		            		data:{
+		            			memNo:${ loginUser.memNo },
+		            			bkNo:$(this).siblings("input[id=book_no]").val();
+		            		},
+		            		type:"post",
+		            		success:function(result){
+		            			if(result == "success"){
+			    	        		$("#modal_list").modal('show');
+		            			}else if(result == "done"){
+		            				alert("이미 리스트에 존재하는 도서입니다.")
+		            			}else{
+		            				alert("리스트 추가에 실패했습니다.");
+		            			}
+		            		},error:function(){
+		            			console.log("리스트 추가 실패");
+		            		}
+			            })
+	        		</c:otherwise>
+        		</c:choose>
+        		
 	        	})
             </script>
             

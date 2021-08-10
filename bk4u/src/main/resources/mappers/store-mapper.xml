@@ -21,6 +21,9 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="bk_publish" property="bkPublish"/>
 		<result column="writer_name" property="writerName"/>
+		<result column="intro_originname" property="introOriginName"/>
+		<result column="intro_changename" property="introChangeName"/>
+		<result column="bk_content" property="bkContent"/>
 		<result column="store_name" property="storeName"/>
 	</resultMap>
 	
@@ -94,6 +97,90 @@
 		from off_book
 		join store using (store_no)
 		where bk_no = #{bkNo}
+	</select>
+	
+	<!-- [공통] 오프라인 도서 검색 결과 개수 조회 (연지) -->
+	<!-- 
+	<select id="selectSearchBookCount" resultType="_int">
+		select count(*)
+		
+		<choose>
+		 	<when test="condition == 'offStore'">
+		        from (select bk_no
+		                from off_book
+		                where bk_no in (select bk_no
+		                                from book
+		                                where bk_title like '%' || #{keyword} || '%')
+		                group by bk_no)
+		 	</when>
+		 	<otherwise>
+		        select count(*)
+		        from off_book
+		        where store_no in (select store_no
+		                            from store
+		                            where store_name like '%' || #{keyword} || '%')
+	 		</otherwise>
+		 </choose>
+	</select>
+	 -->
+	
+	<!-- [공통] 오프라인 도서 검색 결과 개수 조회 (연지) -->
+	<select id="selectSearchOffBookCount" resultType="_int">
+		select count(*)
+		  from (select bk_no, store_no, bk_title
+			    from off_book
+			    join book using (bk_no) 
+		 		where store_no = #{condition}) b
+ 		 where bk_title like '%' || #{keyword} || '%'
+	</select>
+	
+	<!-- [공통] 도서 검색 결과 리스트 조회 (연지) -->
+	<!-- 
+	<select id="selectSearchBook" resultMap="offBookResult">
+		select
+		       bk.bk_no
+		     , bk_title
+		     , bk_publish
+		     , bk_date
+		     , intro_originname
+		     , intro_changename
+		     , writer_name
+		     , bk_content
+             , ob.store_no
+             , ob.bk_status
+		  from book bk
+          join (select bk_no, store_no, bk_status
+                from off_book
+                where store_no = (select store_no
+                                  from store
+                                  where store_name like '%' || #{keyword} || '%')) ob on (bk.bk_no = ob.bk_no)
+          where bk.bk_no in (select bk_no
+                          from off_book
+                          where store_no = (select store_no
+                                            from store
+                                            where store_name like '%' || #{keyword} || '%'))
+	</select>
+	 -->
+	
+	<!-- [공통] 도서 검색 결과 리스트 조회 (연지) -->
+	<select id="selectSearchOffBook" resultMap="offBookResult">
+		select 
+		       bk.bk_no
+		     , bk_title
+		     , bk_publish
+		     , bk_date
+		     , intro_originname
+		     , intro_changename
+		     , writer_name
+		     , bk_content
+             , ob.store_no
+             , ob.bk_status
+		  from (select bk_no, store_no, ob.bk_status
+			    from off_book ob
+			    join book bk using (bk_no) 
+		 		where store_no = #{condition}) ob
+          join book bk on (ob.bk_no = bk.bk_no)
+ 		 where bk_title like '%' || #{keyword} || '%'
 	</select>
 	
 </mapper>

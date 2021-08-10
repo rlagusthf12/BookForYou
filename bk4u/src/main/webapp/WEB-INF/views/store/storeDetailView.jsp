@@ -142,6 +142,13 @@
 
     <jsp:include page="../common/menubar.jsp"/>
     
+    <script>
+    	$(function(){
+    		var el = "<option selected value='${st.storeNo}'>${st.storeName}</option>";
+    		$("#search-bar>#search-condition>select").append(el);	
+    	})
+    </script>
+    
     <div class="wrap">
         <div id="content">
             <div id="store_info">

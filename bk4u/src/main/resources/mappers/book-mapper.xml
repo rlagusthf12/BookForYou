@@ -97,6 +97,7 @@
 		 </choose> 
 	</select>
 	
+	<!-- [공통] 도서 검색 결과 개수 조회 (연지) -->
 	<select id="selectSearchBookCount" resultType="_int">
 		select
 		       count(*)
@@ -107,17 +108,23 @@
 	 			and bk_title
 	 			like '%' || #{keyword} || '%'
 	 			or writer_name
+	 			like '%' || #{keyword} || '%'
+	 			or bk_publish
 	 		</when>
 	 		<when test="condition == 'bookTitle'">
 	 			and bk_title
 	 		</when>
-	 		<otherwise>
+	 		<when test="condition == 'writerName'">
 	 			and writer_name
+	 		</when>
+	 		<otherwise>
+	 			and bk_publish
 	 		</otherwise>
 	 	</choose>
 	 	like '%' || #{keyword} || '%'
 	</select>
 	
+	<!-- [공통] 도서 검색 결과 리스트 조회 (연지) -->
 	<select id="selectSearchBook" resultMap="bookResult">
 		select
 		       bk_no
@@ -126,7 +133,6 @@
 		     , bk_publish
 		     , bk_price
 		     , bk_date
-			 , bk_price
 		     , intro_originname
 		     , intro_changename
 		     , bk_stock
@@ -150,15 +156,20 @@
 	 			and bk_title
 	 			like '%' || #{keyword} || '%'
 	 			or writer_name
+	 			like '%' || #{keyword} || '%'
+	 			or bk_publish
 	 		</when>
 	 		<when test="condition == 'bookTitle'">
 	 			and bk_title
 	 		</when>
-	 		<otherwise>
+	 		<when test="condition == 'writerName'">
 	 			and writer_name
+	 		</when>
+	 		<otherwise>
+	 			and bk_publish
 	 		</otherwise>
 	 	</choose>
-	 			like '%' || #{keyword} || '%'
+	 	like '%' || #{keyword} || '%'
 	</select>
 	
 	<!-- [관리자] '판매중'인 도서 개수 조회 (한진) -->
