@@ -14,14 +14,13 @@
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
         .wrap {
             width: 1200px;
-            height: 1200px;
-            margin: auto;
+            margin-top: 120px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .wrap>div {
@@ -30,7 +29,7 @@
 
         #content {
             background: #EEE;
-            height: 100%;
+            height: 1000px;
             position: relative;
             display: inline-flex;
         }
@@ -71,11 +70,12 @@
             text-decoration: none;
             font-size: large;
             font-weight: bold;
+            color: rgb(189, 185, 185);
+            cursor: default;
         }
 
-        #state-of-order li a {
-            color: rgb(189, 185, 185);
-            text-decoration-line: none;
+        .color-enlighten{
+        	color:black;
         }
 
         #date-box {
@@ -120,9 +120,27 @@
         #paging-wrap{width:fit-content; margin:auto; margin-top: 30px;}
         .page-link, .page-link:hover{color:rgb(252, 190, 52);}
     </style>
+    <script>
+    $(document).ready(function(){
+    	var $statusInput = $("select[name='orderStatus'] option:selected");
+    	var status = $statusInput.text();
+    	$('#state-of-order li').each(function (index, item) {
+    	     console.log($(this).text());
+    	     if($(this).text() == status){
+    	    	 console.log("일치함");
+    	    	 $(this).css("color","black");
+    	     }else{
+    	    	 console.log("일치하지 않음");
+    	     }
+    	});
+    	
+    });
+    </script>
 </head>
 
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -217,14 +235,19 @@
                 <div id="head-of-main-content">
                     주문내역 조회
                 </div>
+                
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
                 <ul id="state-of-order">
-                    <li><a href="">입금/결제</a></li>
-                    <li><a href="">배송중</a></li>
-                    <li><a href="">배송완료</a></li>
-                    <li><a href="">반품</a></li>
+                    <li>결제완료</li>
+                    <li>주문취소</li>
+                    <li>상품준비중</li>
+                    <li>배송준비중</li>
+                    <li>배송중</li>
+                    <li>배송완료</li>
+                    <li>반품</li>
                 </ul>
                 <hr style="text-align: center; width: 95%; margin: auto; color:black;">
+                <form action="my-order-list.mp" method="get" name="order-list-form" id="order-list-form">
                 <div id="date-box">
                     <div class="btn-group btn-group-sm" id="date-button-box" role="group"
                         aria-label="Basic radio toggle button group">
@@ -232,28 +255,34 @@
                         <button type="button" id="btnMonth" class="btn btn-outline-secondary">1개월</button>
                         <button type="button" id="btn3Month" class="btn btn-outline-secondary">3개월</button>
                     </div>
-
+					<input type="hidden" id="tempBeginDate" name="tempBeginDate" value="${beginDate }"/>
+					<input type="hidden" id="tempEndDate" name="tempEndDate" value="${endDate }"/>
                     <div id="date-input-box">
-                        <input type="text" id="beginDate" class="form-control">
+                        <input type="text" id="beginDate" class="form-control" name="beginDate"/>
                     </div>
                     <div id="date-input-box">
-                        <input type="text" id="endDate" class="form-control">
+                        <input type="text" id="endDate" class="form-control" name="endDate"/>
                     </div>
                     <select class="form-select form-select-sm" id="state-select-box"
-                        aria-label=".form-select-sm example" style="margin-right: 10px;">
-                        <option value="1" selected>전체</option>
-                        <option value="2">입금/결제</option>
-                        <option value="3">배송중</option>
-                        <option value="4">배송완료</option>
-                        <option value="5">반품</option>
+                        aria-label=".form-select-sm example" style="margin-right: 10px;" name="orderStatus">
+                        <option value="전체" <c:if test="${orderStatus == '전체'}">selected</c:if>>전체</option>
+                        <option value="주문확인" <c:if test="${orderStatus == '주문확인'}">selected</c:if>>결제완료</option>
+                        <option value="주문취소" <c:if test="${orderStatus == '주문취소'}">selected</c:if>>주문취소</option>
+                        <option value="상품준비중" <c:if test="${orderStatus == '상품준비중'}">selected</c:if>>상품준비중</option>
+                        <option value="배송준비중" <c:if test="${orderStatus == '배송준비중'}">selected</c:if>>배송준비중</option>
+                        <option value="배송중" <c:if test="${orderStatus == '배송중'}">selected</c:if>>배송중</option>
+                        <option value="배송완료" <c:if test="${orderStatus == '배송완료'}">selected</c:if>>배송완료</option>
+                        <option value="반품" <c:if test="${orderStatus == '반품'}">selected</c:if>>반품</option>
                     </select>
-                    <button type="button" class="btn btn-dark btn-sm" style="width:50px">조회</button>
+                    <button type="button" class="btn btn-dark btn-sm" style="width:50px" onclick="selectMyOrderList();">조회</button>
                     <script>
-
+						function selectMyOrderList(){
+							$("#order-list-form").submit();
+						}
                         // 시작 일자 달력 이미지 클릭시 달력 표기 
                         $('#beginDate').datepicker({
                             showOn: "button",
-                            buttonImage: "../images/calendar1.png",
+                            buttonImage: "resources/mypage/images/calendar1.png",
                             buttonImageOnly: true,
                             buttonText: "Select date"
                         });
@@ -262,43 +291,56 @@
                         // 종료 일자 달력 이미지 클릭시 달력 표기    
                         $('#endDate').datepicker({
                             showOn: "button",
-                            buttonImage: "../images/calendar1.png",
+                            buttonImage: "resources/mypage/images/calendar1.png",
                             buttonImageOnly: true,
                             buttonText: "Select date"
                         });
                         $('#endDate').datepicker('option', 'dateFormat', 'yy-mm-dd');
-
-                        let d = new Date();
+                        
+                       	var tempBegin = $("#tempBeginDate").val();
+                       	console.log(tempBegin);
+                        var tempEnd = $("#tempEndDate").val();
+                        
+                        let d = new Date(tempEnd);
+                        console.log(d);
                         let year = d.getFullYear();
                         let month = d.getMonth() + 1; // 월은 0에서 시작하기 때문에 +1
                         let day = d.getDate();
-                        $('#beginDate').val(`${year}-${month}-${day}`);
-                        $('#endDate').val(`${year}-${month}-${day}`);
-
-                        // 버튼 클릭시 현재 날짜에서 1주일, 1개월, 3개월 더하기
+                        
+                        let startDate = new Date(tempBegin);
+                        let startYear = startDate.getFullYear();
+                        let startMonth = startDate.getMonth() + 1;
+                        let startDay = startDate.getDate();
+                        
                         let beginDate = d;
+							
+                        $("#beginDate").val(startYear + "-" + startMonth + "-" + startDay);
+                        $('#endDate').val(year+"-"+month+"-" + day);
+                        
+                        // 버튼 클릭시 현재 날짜에서 1주일, 1개월, 3개월 더하기
                         $('#btnWeek').click(function () {
-                            $('#endDate').val(`${year}-${month}-${day}`);
+                            $('#endDate').val(year+"-"+month+"-" + day);
                             beginDate.setDate(beginDate.getDate() - 7);
-                            $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                            $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                             beginDate.setDate(beginDate.getDate() + 7); // 버튼 클릭 시 계속 더해지기 때문에 초기화
                         });
 
                         $('#btnMonth').click(function () {
-                            $('#endDate').val(`${year}-${month}-${day}`);
+                            $('#endDate').val(year+"-"+month+"-" + day);
                             beginDate.setMonth(beginDate.getMonth() - 1);
-                            $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                            $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                             beginDate.setMonth(beginDate.getMonth() + 1);
                         });
 
                         $('#btn3Month').click(function () {
-                            $('#endDate').val(`${year}-${month}-${day}`);
+                            $('#endDate').val(year+"-"+month+"-" + day);
                             beginDate.setMonth(beginDate.getMonth() - 3);
-                            $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                            $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                             beginDate.setMonth(beginDate.getMonth() + 3);
                         });
                     </script>
                 </div>
+                </form>
                 <div id="order-list-box">
                     <table class="table table-hover" style="table-layout:fixed">
                         <thead class="table-light">
@@ -311,95 +353,55 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <c:if test="${ empty list }">
+                        	  <td colspan="5" style="text-align:center; cursor: default">해당하는 주문내역이 없습니다.</td>
+                        </c:if>
+                        <c:forEach var="order" items="${list }">
                             <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
+                                <th scope="row">${order.orderNo }</th>
+                                <td>${order.orderDate }</td>
+                                <td id="book-title">${order.bkTitle }</td>
+                                <td>${order.orderPriceComma }</td>
+                                <td>${order.orderStatus }</td>
                             </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>2021.07.21</td>
-                                <td id="book-title">[도서]코드로 배우는 스프링 부트 웹 프로젝트 : 현업 개발을 위한 단계별 실습서 [동영상 강의 제공]</td>
-                                <td>30600</td>
-                                <td>배송완료</td>
-                            </tr
+                       </c:forEach>  
                         </tbody>
                     </table>
-
                 </div>
+                <c:choose>
+                <c:when test="${ !empty list }">
                 <div id="paging-wrap">
                     <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">이전</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                        <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                        <li class="page-item disabled"><a class="page-link">다음</a></li>
-                    </ul>
+                	<c:choose>
+                    	<c:when test="${ pi.currentPage eq 1 }">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                    		<li class="page-item"><a class="page-link" href="my-order-list.mp?currentPage=${ pi.currentPage - 1 }&&beginDate=${beginDate}&&endDate=${endDate}&&orderStatus=${orderStatus}">Previous</a></li>
+                    	</c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+                    	<li class="page-item"><a class="page-link" href="my-order-list.mp?currentPage=${ p }&&beginDate=${beginDate}&&endDate=${endDate}&&orderStatus=${orderStatus}">${p }</a></li>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage eq pi.maxPage}">
+                    		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                    	</c:when>
+                    	<c:otherwise>
+                   			<li class="page-item"><a class="page-link" href="my-order-list.mp?currentPage=${ pi.currentPage + 1 }&&beginDate=${beginDate}&&endDate=${endDate}&&orderStatus=${orderStatus}">Next</a></li>
+                		</c:otherwise>
+                	</c:choose>
+                	</ul>
                 </div>
+                </c:when>
+                </c:choose>
             </div>
 
         </div>
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 
 </html>

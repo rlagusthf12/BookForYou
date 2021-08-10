@@ -11,6 +11,7 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Refund;
 import com.bookforyou.bk4u.cs.model.vo.Return;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 @Repository
 public class CsDao {
@@ -107,15 +108,15 @@ public class CsDao {
 	/**
 	 * [관리자] 주문취소 - orders테이블 상태 변경 (한진)
 	 */
-	public int updateAdminCsOrderStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
-		return sqlSession.update("csMapper.updateAdminCsOrderStatus", map);
+	public int updateAdminCsOrderStatus(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("csMapper.updateAdminCsOrderStatus", o);
 	}
 
 	/**
 	 * [관리자] 주문취소 - cancel테이블 상태 변경 (한진)
 	 */
-	public int updateAdminCancelStatus(SqlSessionTemplate sqlSession, int cancelNo) {
-		return sqlSession.update("csMapper.updateAdminCancelStatus", cancelNo);
+	public int updateAdminCancelStatus(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("csMapper.updateAdminCancelStatus", o);
 	}
 
 	/**
@@ -128,8 +129,8 @@ public class CsDao {
 	/**
 	 * [관리자] 반품 상태 변경 (한진)
 	 */
-	public int updateAdminReturnStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map2) {
-		return sqlSession.update("csMapper.updateAdminReturnStatus", map2);
+	public int updateAdminReturnStatus(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.update("csMapper.updateAdminReturnStatus", o);
 	}
 
 	/**
@@ -143,8 +144,31 @@ public class CsDao {
 	 * [관리자] 환불 처리 (한진)
 	 */
 	public int updateAdminRefundStatus(SqlSessionTemplate sqlSession, int refundNo) {
-		return sqlSession.update("csMapper.updateAdminRefund", refundNo);
+		return sqlSession.update("csMapper.updateAdminRefundStatus", refundNo);
 	}
+
+	/**
+	 * [관리자] 환불 테이블 insert (한진)
+	 */
+	public int insertAdminRefundStatus(SqlSessionTemplate sqlSession, Refund r) {
+		return sqlSession.insert("csMapper.insertAdminRefundStatus", r);
+	}
+
+	/**
+	 * [관리자] 환불 - 사용된 쿠폰 반환 (한진)
+	 */
+	public int updateAdminRefundCoupon(SqlSessionTemplate sqlSession, Refund r) {
+		return sqlSession.update("memberMapper.updateAdminRefundCoupon", r);
+	}
+
+	/**
+	 * [관리자] 환불 - 사용된 포인트 반환 (한진)
+	 */
+	public int insertAdminRefundPoint(SqlSessionTemplate sqlSession, Refund r) {
+		return sqlSession.insert("csMapper.insertAdminRefundPoint", r);
+	}
+
+	
 
 	
 

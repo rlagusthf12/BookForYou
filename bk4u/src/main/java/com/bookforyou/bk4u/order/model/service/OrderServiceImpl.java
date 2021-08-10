@@ -184,5 +184,29 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.updateAdminOrderConfirm(sqlSession, map);
 	}
 
+	/**
+	 * [관리자] 주문 취소 테이블 insert (한진)
+	 */
+	@Override
+	public int insertAdminCancel(HashMap<String, String> map) {
+		return oDao.insertAdminCancel(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 운송장정보 등록/저장 (한진)
+	 */
+	@Override
+	public int updateDeliveryInfo(HashMap<String, String> map) {
+		return oDao.updateDeliveryInfo(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 반품 테이블 insert(한진)
+	 */
+	@Override
+	public int insertAdminReturn(HashMap<String, String> map) {
+		return oDao.insertAdminReturn(sqlSession, map);
+	}
+
 	
 }

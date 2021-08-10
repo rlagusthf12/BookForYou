@@ -21,6 +21,8 @@
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         .wrap {
             width: 1200px;
@@ -214,7 +216,7 @@
                               <th scope="row"> <input class="form-check-input" type="checkbox" name="bkNo" value="${book.bkNo }" id="bkNo"></th>
                               <td><a href="detail.bk?bkNo=${ book.bkNo }">${book.bkTitle }</a></td>
                               <td>${book.bkPublish }</td>
-                              <td>${book.bkPrice }원</td>
+                              <td>${book.orderPriceComma }원</td>
                               <td>${book.bkGrade}</td>
                               <td style="visibility:hidden;position:absolute;">${book.bkNo }</td>
                             </tr>
@@ -263,7 +265,7 @@
                    			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
                 		</c:otherwise>
                 	</c:choose>
-                </ul>
+                	</ul>
                 </div>
                 </c:when>
                 </c:choose>

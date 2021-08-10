@@ -187,7 +187,13 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
-
+		.detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
+        
         /* 반품 처리 컬럼 버튼 */
         .handling{
             border: 0.1em solid #EC573B;
@@ -325,6 +331,28 @@
 		    
 		    /* 정렬 시 해당 값 selected */
 		    $("#array-condition").val("${ ar }").prop("selected", true);
+			
+		    /* Click on select all checkbox */
+	        $("#result-div thead input[type='checkbox']").click(function(){
+	        	
+	        	if($(this).prop("checked")){
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", true);
+	        		})
+	        	}else {
+	        		$("#result-div tbody input[type='checkbox']").each(function(){
+	        			$(this).prop("checked", false);
+	        		})
+	        	}
+	        })
+	        
+	        /* Click on another checkbox can affect the select all checkbox */
+	        $("#result-div tbody input[type='checkbox']").click(function(){
+	        	if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
+	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+	        	}
+	        })
+	        
 		    
 			/* admin-memo 모달 보여주기 */
 			$(".admin-memo button").click(function(){
@@ -333,7 +361,7 @@
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
             	var $memo = td.eq(10).text();
-            	var $orderNo = td.eq(1).text();
+            	var $orderNo = td.eq(2).text();
             	$(".admin-memo-content .oNo").val($orderNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
             	
@@ -391,7 +419,15 @@
 	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
 	        	
 	        })
-
+	        
+	        /* delivery-company selected */
+		    $(".delivery-company option").each(function(){
+	        	var s = $(this).parent().siblings("input");
+	        	if($(this).val() == s.val()) {
+	        		$(this).prop("selected", true);
+	        	}
+	   		})
+			
         })
 </script>
 </head>
@@ -564,8 +600,8 @@
 
             <div id="handling-btn">
                 <button value="4">배송중</button>
-                <button value="4-1">준비완료</button>
-                <button value="4-2">준비중</button>
+                <button value="41">준비완료</button>
+                <button value="42">준비중</button>
             </div>
 
             <div id="result-div">
@@ -597,23 +633,27 @@
 			                            <td>${ o.bkTitle }</td>
 			                            <td>${ o.orderPrice }</td>
 			                            <td>
-			                            	<div class="delivery-wrap">
-			                                    <div class="delivery-company">
-			                                        <select name="" id="">
-			                                            <option value="">우체국</option>
-			                                            <option value="">대한통운</option>
-			                                            <option value="">롯데택배</option>
-			                                            <option value="">한진택배</option>
-			                                        </select>
-			                                    </div>
-			                                    <br>
-			                                    <div class="tracking-no">
-			                                        <input type="text">
-			                                    </div>
-			                                </div>
-			                                <div  class="delivery-btn">
-			                                    <button class="btn btn-outline-danger">저장</button>
-			                                </div>
+			                            	<form action="updateDeliveryInfo.or" method="POST">
+			                            		<input type="hidden" name="orderNo" value="${ o.orderNo }">
+				                            	<div class="delivery-wrap">
+				                                    <div class="delivery-company">
+				                                    	<input type="hidden" class="dc" value="${ o.deliveryCompany }">
+				                                        <select name="deliveryCompany">
+				                                            <option value="우체국">우체국</option>
+				                                            <option value="대한통운">대한통운</option>
+				                                            <option value="롯데택배">롯데택배</option>
+				                                            <option value="한진택배">한진택배</option>
+				                                        </select>
+				                                    </div>
+				                                    <br>
+				                                    <div class="tracking-no">
+				                                        <input type="text" name="shippingNumber" value="${ o.shippingNumber }">
+				                                    </div>
+				                                </div>
+				                                <div  class="delivery-btn">
+				                                    <button type="submit" class="btn btn-outline-danger">저장</button>
+				                                </div>
+			                                </form>
 			                            </td>
 			                            <td>${ o.deliveryStatus }</td>
 			                            <td style="display:none">${ o.deliveryMsg }</td>
@@ -656,7 +696,7 @@
 																<input type="hidden" name="orderNo" class="oNo"/>
 																<input type="hidden" name="orStatus" value="3"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -680,7 +720,7 @@
 																<input type="hidden" name="orderNo" class="oNo"/>
 																<input type="hidden" name="orStatus" value="3"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->

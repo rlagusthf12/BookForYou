@@ -223,19 +223,7 @@
                         <a href="adminOrderList.or">전체 주문 조회</a>
                     </li>
                     <li>
-                        <a href="adminOrderList.or?orStatus=1">주문확인</a>
-                    </li>
-                    <li>
-                        <a href="adminOrderList.or?orStatus=2">상품준비중</a>
-                    </li>
-                    <li>
-                        <a href="adminOrderList.or?orStatus=3">배송준비중</a>
-                    </li>
-                    <li>
-                        <a href="adminOrderList.or?orStatus=4">배송중</a>
-                    </li>
-                    <li>
-                        <a href="adminOrderList.or?orStatus=5">배송완료</a>
+                        <a href="adminOrderList.or?orStatus=1">주문관리</a>
                     </li>
                 </ul>
             </li>

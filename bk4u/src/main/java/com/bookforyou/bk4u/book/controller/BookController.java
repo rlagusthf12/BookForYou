@@ -319,9 +319,6 @@ public class BookController {
 		b.setBkNo(bkNo);
 		b.setSubCateName(subCateName);
 		
-		System.out.println("b : " + b);
-		System.out.println("sub : " + subCateName);
-		
 		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
 		if(!bkFile[0].getOriginalFilename().equals("")) {
 			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 삭제
@@ -445,9 +442,6 @@ public class BookController {
 		b.setBkDate(date);
 		b.setSubCateName(subCateName);
 		
-		System.out.println(bkFile);
-		
-		
 		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
 		if(!bkFile[0].getOriginalFilename().equals("")) {
 			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 삭제
@@ -476,9 +470,6 @@ public class BookController {
 		int lastBkNo = bookService.selectAdminLastBkNo();
 		int bkNo = lastBkNo - 1;
 		b.setBkNo(bkNo);
-		
-		System.out.println(b);
-		
 
 		for(int i=0; i<itrs.size(); i++) {
 			String interest = itrs.get(i);
@@ -522,9 +513,7 @@ public class BookController {
 	public String adminBookDelete(ModelAndView mv,
 									@RequestParam(value="selectedBook") List<String> bkNoArr) {
 		
-		System.out.println("bkNoArr : " + bkNoArr);
 		for(String bn : bkNoArr) {
-			System.out.println("bn : " + bn);
 			int adminBookItrsDelete = bookService.deleteAdminBookInterest(bn);
 			int adminBookDelete = bookService.deleteAdminBook(bn); 
 		}

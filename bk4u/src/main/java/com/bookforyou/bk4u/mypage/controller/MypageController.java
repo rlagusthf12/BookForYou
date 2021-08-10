@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.SimpleTimeZone;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,12 +32,15 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.service.MailSendService;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.service.MypageService;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
+import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.qa.model.service.QaService;
 import com.bookforyou.bk4u.qa.model.vo.Qa;
 import com.google.gson.Gson;
@@ -62,6 +68,8 @@ public class MypageController {
 	MemberCategory memberCategory;
 	
 	private Logger log = LoggerFactory.getLogger(MypageController.class);
+	
+	
 	
 	
 	
@@ -502,7 +510,7 @@ public class MypageController {
 		Member member = (Member) session.getAttribute("loginUser");
 		int memNo = member.getMemNo();
 		int listCount = qService.selectMemNoQaListCount(memNo);		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		ArrayList<Qa> list = qService.searchMemNoQaList(pi,memNo);
 		
 		for(int i=0; i<list.size();i++) {
@@ -535,6 +543,122 @@ public class MypageController {
 		}
 		
 	}
+	
+	/**
+	 * 마이페이지 주문내역 조회하는 메서드 (수정중, 보람쌤께 질문후 수정 예정)
+	 * @param currentPage
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("my-order-list.mp")
+	public String myOrderList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,HttpSession session,Model model, @RequestParam(value="beginDate", required=false) String beginDate, @RequestParam(value="endDate", required=false) String endDate, @RequestParam(value="orderStatus", defaultValue="전체") String orderStatus) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		log.info("memNo: " + memNo);
+		if(beginDate == null) {
+			beginDate = getThreeMonthAgoDate();
+			// 나중에 데이터 생기면 MonthAgoDate로 바꾸기
+			endDate = getCurrentDate();
+		}
+		log.info("beginDate : " + beginDate);
+		log.info("endDate : " + endDate);
+		log.info("currentPage: " + currentPage);
+		HashMap<String,Object> listParam = new HashMap<String,Object>();
+		
+		listParam.put("memNo",memNo);
+		listParam.put("beginDate",beginDate);
+		listParam.put("endDate", endDate);
+		listParam.put("orderStatus", orderStatus);
+		log.info("orderStautus" + orderStatus);
+		
+		int listCount = mypageService.selectMyOrderListCount(listParam);
+		log.info("listCount: "+ listCount );
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		//listParam.put("pi",pi);
+		ArrayList<Order> list = mypageService.selectMyOrderList(listParam , pi);
+		
+		for(int i=0; i<list.size();i++) {
+			changeOrderStatus(list.get(i));
+		}
+		
+		log.info("list:" + list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("listCount",listCount);
+		model.addAttribute("list",list);
+		model.addAttribute("orderStatus",orderStatus);
+		model.addAttribute("beginDate",beginDate);
+		model.addAttribute("endDate",endDate);
+		
+		return "mypage/myOrderList";
+		
+	}
+	
+	// java로 오늘날짜 구하기
+	private String getCurrentDate() {
+			Date dateNow = Calendar.getInstance(new SimpleTimeZone(0x1ee6280, "KST")).getTime();
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+	        return formatter.format(dateNow);
+	}
+	
+	// 1달 전
+	private String getMonthAgoDate() {
+	     Calendar cal = Calendar.getInstance(new SimpleTimeZone(0x1ee6280, "KST"));
+	     cal.add(Calendar.MONTH ,-1); // 한달전 날짜 가져오기
+	     Date monthago = cal.getTime();
+	     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+	     return formatter.format(monthago);
+	}
+	
+	// 3달전
+	private String getThreeMonthAgoDate() {
+	     Calendar cal = Calendar.getInstance(new SimpleTimeZone(0x1ee6280, "KST"));
+	     cal.add(Calendar.MONTH ,-3); // 세달전 날짜 가져오기
+	     Date monthago = cal.getTime();
+	     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+	     return formatter.format(monthago);
+	}
+	
+	public void changeOrderStatus(Order order) {
+		
+		switch(order.getOrderStatus()) {
+		
+		case "주문확인": order.setOrderStatus("결제완료");
+		break;
+
+		}
+	
+	}
+	
+	/**
+	 * 나의 독서모임 조회
+	 * @param currentPage
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("my-reading-group.mp")
+	public String selectMyReadingGroup(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		int listCount = mypageService.selectMyReadingGroupListCount(member);
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,3,5);
+		ArrayList<GroupBoard> list = mypageService.selectMyReadingGroupList(pi,memNo);
+		
+		for(int i=0; i<list.size();i++) {
+			int groupBoardNo = list.get(i).getGroupBoardNo();
+			int memCount = mypageService.selectMyReadingGroupMemberCount(groupBoardNo);
+			list.get(i).setMemCount(memCount);
+			log.info(list.get(i).getOriginName());
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("listCount",listCount);
+		model.addAttribute("pi",pi);
+		
+		return "mypage/myReadingGroup";
+	}
+	
 	
 	
 	

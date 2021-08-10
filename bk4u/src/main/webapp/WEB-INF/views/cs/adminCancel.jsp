@@ -186,6 +186,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailO:hover, .detailC:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 취소 처리 컬럼 버튼 */
         .handling.detail{
@@ -509,7 +515,7 @@
 			                            <td class="detailO">${ c.orderNo }</td>
 			                            <td>${ c.memName } <br> (${ c.memId })</td>
 			                            <td>${ c.bkTitle }</td>
-			                            <td>${ c.price }</td>
+			                            <td>${ c.orderPriceComma }</td>
 			                            <td>${ c.payWay }</td>
 			                            <td>${ c.status }</td>
 			                            <td style="display:none">${ c.deliveryMsg }</td>

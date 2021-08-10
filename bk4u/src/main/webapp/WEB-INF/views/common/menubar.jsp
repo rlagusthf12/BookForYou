@@ -8,6 +8,11 @@
 <title>Insert title here</title>
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<!-- 캘린더 불러오는 제이쿼리 버전이랑 충돌되어서 주석처리하였습니다. 필요하시면 각자의 페이지에 복사하셔서 써주시면 감사하겠습니다. -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
@@ -15,7 +20,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
 <style>
-   
     #header{
         width:1200px;
         height:100px;
@@ -41,9 +45,9 @@
     
     #header_2>ul{width:100%; height:100%; list-style-type: none; margin: auto; padding:0;}
     #header_2>ul>li{float:left; width:20%; height:100%; line-height: 35px; text-align:center;}
-    #header_2>ul>li a{text-decoration: none; color:black; font-size: 18px; font-weight: 900;}
+    #header_2>ul>li a{text-decoration: none; font-size: 18px; font-weight: 900;}
 
-    #header_2{border-bottom:5px solid orange}
+    #header_2{border-bottom:5px solid rgb(252, 190, 52);}
 
     #header a{text-decoration:none; color:black}
 
@@ -132,6 +136,13 @@
         .btn{
             padding:0.1em 0.5em;
         }
+        
+        /*메뉴바 호버*/
+        #navi a{font-size: 18px; height:100%; width:100%; display:block; line-height:40px; transform:scale(1);}
+        #navi>li>ul{list-style-type: none; padding:0; display: none; width:250px; background:rgb(252, 190, 52); position:absolute; z-index:100;}
+        #navi>li>ul>li>a{color:#fff; font-weight:normal;}
+        #navi>li>a:hover+ul{display:block; }
+        #navi>li>ul:hover{display:block;}
 </style>
 </head>
 <body>
@@ -200,10 +211,15 @@
         <br><br><br><br>
         
         <div id="header_2">
-            <ul>
+            <ul id="navi">
                 <li><a href="join.sub">정기구독</a></li>
                 <li><a href="">도서구매</a></li>
-                <li><a href="list.bl">커뮤니티</a></li>
+                <li><a href="">커뮤니티</a>
+                	<ul>
+                        <li><a href="list.bl">독서록</a></li>
+                        <li><a href="list.bo">자유게시판</a></li>
+                    </ul>
+                </li>
                 <li><a href="">이벤트</a></li>
                 <li><a href="">고객센터</a></li>
             </ul>

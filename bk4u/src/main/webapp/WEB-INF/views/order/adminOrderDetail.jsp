@@ -16,6 +16,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <style>
+	
 		#outer{
             display:inline-block;
             position:absolute;
@@ -140,13 +141,25 @@
 	    var $add = Number($("#add").text());
 	    var $total = $price - $point + $add;
 	    $("#total").text($total);
-	    $("#total2").text($total);
+	    /*$("#total2").text($total);*/
 	    var $gp = $total * 0.01;
 	    $("#givPoint").text($gp);
 	    
 	    /* 닫기 버튼 */
 		$("#back").click(function(){
 			history.back();
+		})
+		
+		/* 주문 취소 */
+		$("#cancel-btn").click(function(){
+			var orderNo = $("#odNo").text();
+			location.href="adminOrderConfirm.or?selectedOd=" + orderNo + "&odStatus=2&orStatus=dt";
+		})
+		
+		/* 반품 */
+		$("#return-btn").click(function(){
+			var orderNo = $("#odNo").text();
+			location.href="adminOrderConfirm.or?selectedOd=" + orderNo + "&odStatus=6&orStatus=dt";
 		})
 	})
 </script>
@@ -346,7 +359,7 @@
                             <th>주문 금액</th>
 	                            <td id="price">${ od.orderPrice }</td>
                             <th>결제 금액</th>
-                            <td id="total2"></td>
+                            <td id="total2"${ od.payAmount }></td>
                         </tr>
                         <tr>
                             <th>추가금</th>
@@ -393,10 +406,10 @@
                 
 		            <c:choose>
 	                	<c:when test="${ od.orderStatus eq '배송완료' }">
-			                <button type="button">반품</button>	                	
+			                <button type="button" id="return-btn">반품</button>	                	
 	                	</c:when>
 	            		<c:when test="${ od.orderStatus eq '주문확인' }">
-			                <button type="button">주문 취소</button>            		
+			                <button type="button" id="cancel-btn">주문 취소</button>            		
 	            		</c:when>
                 	</c:choose>
                 

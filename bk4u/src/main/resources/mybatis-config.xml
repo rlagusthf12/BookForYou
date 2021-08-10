@@ -31,7 +31,7 @@
 		<typeAlias type="com.bookforyou.bk4u.mypage.model.vo.MyList" alias="MyList"/>
 		<typeAlias type="com.bookforyou.bk4u.qa.model.vo.Qa" alias="Qa"/>
 		<typeAlias type="com.bookforyou.bk4u.qa.model.vo.As" alias="As"/>
-		
+		<typeAlias type="com.bookforyou.bk4u.board.model.vo.Board" alias="Board"/>
 	</typeAliases>
 
 	<mappers>
@@ -48,7 +48,8 @@
 		<mapper resource="/mappers/coupon-mapper.xml"/>
 		<mapper resource="/mappers/cs-mapper.xml"/>
 		<mapper resource="/mappers/store-mapper.xml"/>
-			<mapper resource="/mappers/qa-mapper.xml"/>	
+		<mapper resource="/mappers/qa-mapper.xml"/>
+		<mapper resource="/mappers/board-mapper.xml"/>	
 	</mappers>
 
 </configuration>

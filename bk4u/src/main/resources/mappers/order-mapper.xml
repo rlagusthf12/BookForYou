@@ -34,6 +34,7 @@
 		<result column="detail_price" property="detailPrice"/>
 		<result column="coupon_price" property="couponPrice"/>
 		<result column="coupon_pricerate" property="couponPriceRate"/>
+		<result column="order_price_comma" property="orderPriceComma"/>
 	</resultMap>
 	
 	<resultMap type="OrderDetail" id="orderDetailResult">
@@ -52,54 +53,43 @@
 		select 
 			   count(*)
 		  from orders
-		 where not order_status in ('반품', '주문취소', '환불')
 	</select>
 	
 	<!-- [관리자] 전체 주문 목록 조회 (한진) -->
 	<select id="selectAdminOrderList" resultMap="orderResult">
-		select s1.*
+		select
+		       O.order_no,
+		       M.mem_name,
+		       M.mem_id,
+		       O.pay_status,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
+		       O.order_date,
+		       O.order_status,
+		       O.cs_status,
+		       O.delivery_company,
+		       O.shipping_number,
+		       O.shipping_date,
+		       O.delivery_status,
+		       O.product_status,
+		       O.delivery_msg,
+		       O.admin_memo,
+		       bk_title || decode(A."quantity", 1, null, ' 외 ' || to_char(A."quantity" - 1) || '권') as "bk_title"
 		  from (
 		         select
-		                row_number() over(partition by order_no order by order_date desc) rnum,
-		                t1.*
-		           from (
-		                  select 
-		                         order_no,
-		                         mem_name,
-		                         mem_id,
-		                         bk_title,
-		                         pay_way,
-		                         status,
-		                         order_date,
-		                         order_receiver,
-		                         order_post,
-		                         order_address,
-		                         address_detail,
-		                         address_ref,
-		                         order_phone,
-		                         delivery_msg,
-		                         order_price,
-		                         add_price,
-		                         used_points,
-		                         order_status,
-		                         pay_status,
-		                         cs_status,
-		                         admin_memo,
-		                         product_status,
-		                         delivery_company,
-		                         shipping_number,
-		                         shipping_date,
-		                         delivery_status,
-		                         coupon_issue_num
-		                    from orders
-		                    join members using(mem_no)
-		                    join payment using(pay_no)
-		                    join order_detail using(order_no)
-		                    join book using(bk_no)
-		                ) t1            
-		        ) s1
-		  where s1.rnum = 1
-		    and not order_status in ('반품', '주문취소', '환불')
+		                order_no "order_no",
+		                min (bk_no) "bk_no",
+		                sum(quantity) "quantity"
+		           from order_detail
+		          group by order_no
+		        )A,
+		        orders O,
+		        book B,
+		        Members M,
+		        payment P
+		  where A."bk_no" = B.bk_no
+		    and A."order_no" = O.order_no
+		    and M.mem_no = O.mem_no
+		    and O.pay_no = P.pay_no
 		 <choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -289,7 +279,7 @@
 			   count(*)
 		  from orders
 		  join members using(mem_no)
-		  where not order_status in ('반품', '주문취소', '환불')
+		 where order_no > 0
 		<choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -309,68 +299,57 @@
 		 </choose>
 		<choose>
 			<when test="condition == 'searchAll'">
-				and order_no like '%' || #{keyword} || '%'
+				and (order_no like '%' || #{keyword} || '%'
 				   or mem_name like '%' || #{keyword} || '%'
-				   or mem_id
+				   or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'orderNo'">
-				  and order_no
+				  and order_no like '%' || #{keyword} || '%'
 			</when>		
 			<when test="condition == 'memName'">
-				  and mem_name
+				  and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-				  and mem_id
+				  and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-		like '%' || #{keyword} || '%'
 	</select>
 	
 	<!-- [관리자] 검색 조건에 일치하는 주문 목록 조회 (한진) -->
 	<select id="selectAdminOrderSearchList" resultMap="orderResult">
-		select s1.*
+		select
+		       O.order_no,
+		       M.mem_name,
+		       M.mem_id,
+		       O.pay_status,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
+		       O.order_date,
+		       O.order_status,
+		       O.cs_status,
+		       O.delivery_company,
+		       O.shipping_number,
+		       O.shipping_date,
+		       O.delivery_status,
+		       O.product_status,
+		       O.delivery_msg,
+		       O.admin_memo,
+		       bk_title || decode(A."quantity", 1, null, ' 외 ' || to_char(A."quantity" - 1) || '권') as "bk_title"
 		  from (
 		         select
-		                row_number() over(partition by order_no order by order_date desc) rnum,
-		                t1.*
-		           from (
-		                  select 
-		                         order_no,
-		                         mem_name,
-		                         mem_id,
-		                         bk_title,
-		                         pay_way,
-		                         status,
-		                         order_date,
-		                         order_receiver,
-		                         order_post,
-		                         order_address,
-		                         address_detail,
-		                         address_ref,
-		                         order_phone,
-		                         delivery_msg,
-		                         order_price,
-		                         add_price,
-		                         used_points,
-		                         order_status,
-		                         pay_status,
-		                         cs_status,
-		                         admin_memo,
-		                         product_status,
-		                         delivery_company,
-		                         shipping_number,
-		                         shipping_date,
-		                         delivery_status,
-		                         coupon_issue_num
-		                    from orders
-		                    join members using(mem_no)
-		                    join payment using(pay_no)
-		                    join order_detail using(order_no)
-		                    join book using(bk_no)
-		                ) t1            
-		        ) s1
-		  where (s1.rnum = 1
-		  and not order_status in ('반품', '주문취소', '환불'))
+		                order_no "order_no",
+		                min (bk_no) "bk_no",
+		                sum(quantity) "quantity"
+		           from order_detail
+		          group by order_no
+		        )A,
+		        orders O,
+		        book B,
+		        Members M,
+		        payment P
+		  where A."bk_no" = B.bk_no
+		    and A."order_no" = O.order_no
+		    and M.mem_no = O.mem_no
+		    and O.pay_no = P.pay_no
 		  <choose>
 		 	<when test="orStatus == 1">
 		 		and order_status = '주문확인'
@@ -391,20 +370,19 @@
 		 <choose>
 			<when test="condition == 'searchAll'">
 				and (order_no like '%' || #{keyword} || '%'
-				   or mem_name like '%' || #{keyword} || '%')
-				   or mem_id
+				   or mem_name like '%' || #{keyword} || '%'
+				   or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'orderNo'">
-				  and order_no
+				  and order_no like '%' || #{keyword} || '%'
 			</when>		
 			<when test="condition == 'memName'">
-				  and mem_name
+				  and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-				  and mem_id
+				  and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-		like '%' || #{keyword} || '%'
 		 order
 		    by 
 		 <choose>
@@ -421,7 +399,7 @@
 	<update id="updateAdminMemo">
 		update
 		       orders
-		   set admin_memo = #{memoContent}
+		   set admin_memo = #{adminMemo}
 		 where order_no = #{orderNo} 
 	</update>
 	
@@ -438,6 +416,7 @@
 		       order_no,
 		       mem_no,
 		       pay_no,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
 		       order_date,
 		       order_receiver,
 		       order_post,
@@ -460,6 +439,7 @@
 		       delivery_status,
 		       coupon_issue_num
 		  from orders
+		  join payment P using (pay_no)
 		 where order_no = #{orderNo}		
 	</select>
 	
@@ -495,35 +475,186 @@
 		       orders
 		   set
 		   <choose>
-		   		<when test="odStatus == '1'">
+		   		<when test="odStatus == 1">
 		   			order_status = '상품준비중'
 		   		</when>
-		   		<when test="odStatus == '2'">
-		   			order_status = '주문취소'
+		   		<when test="odStatus == 2">
+		   			order_status = '주문취소',
+		   			cs_status = '취소신청'
 		   		</when>
-		   		<when test="odStatus == '3'">
+		   		<when test="odStatus == 3">
 		   			order_status = '배송준비중'
 		   		</when>
-		   		<when test="odStatus == '31'">
+		   		<when test="odStatus == 31">
 		   			product_status = '준비완료'
 		   		</when>
-		   		<when test="odStatus == '32'">
+		   		<when test="odStatus == 32">
 		   			product_status = '준비중'
 		   		</when>
-		   		<when test="odStatus == '4'">
+		   		<when test="odStatus == 4">
 		   			order_status = '배송중'
 		   		</when>
-		   		<when test="odStatus == '41'">
+		   		<when test="odStatus == 41">
 		   			delivery_status = '준비완료'
 		   		</when>
-		   		<when test="odStatus == '42'">
+		   		<when test="odStatus == 42">
 		   			delivery_status = '준비중'
 		   		</when>
-		   		<when test="odStatus == '5'">
+		   		<when test="odStatus == 5">
 		   			order_status = '배송완료'
+		   		</when>
+		   		<when test="odStatus == 6">
+		   			order_status = '반품신청',
+		   			cs_status = '반품신청'
 		   		</when>
 		   </choose>
 		 where order_no = #{odNo}
 	</update>
+	
+	<!-- [관리자] 주문 취소 테이블 insert (한진) -->
+	<insert id="insertAdminCancel">
+		insert
+		  into cancel
+	    values
+	         (
+	           seq_cancelno.nextval,
+	           #{odNo},
+	           '사용자 요청에 의한 취소',
+	           sysdate,
+	           '취소신청',
+	           null
+	         )
+	</insert>
+	
+	<!-- [관리자] 반품 테이블 insert (한진) -->
+	<insert id="insertAdminReturn">
+		insert
+		  into return
+	    values
+	         (
+	           seq_returnno.nextval,
+	           #{odNo},
+	           '사용자 요청에 의한 반품',
+	           sysdate,
+	           '반품신청',
+	           null
+	         )
+	</insert>
+	
+	<!-- [관리자] 운송장정보 등록/저장 (한진) -->
+	<update id="updateDeliveryInfo">
+	 	update
+	 	       shipping_number = #{shippingNumber}
+	 	       orders
+	 	   set delivery_company = #{deliveryCompany},
+	 	 where order_no = #{orderNo}
+	</update>
+	
+	<!-- [사용자] 마이페이지 초기 나의 주문 리스트 카운트 조회(세아)-->
+	<select id="selectMyOrderListCount" resultType="_int">
+		select count(*) from(
+		       select O.order_no
+		  from (
+		         select
+		                order_no "order_no",
+		                min (bk_no) "bk_no",
+		                sum(quantity) "quantity"
+		           from order_detail
+		          group by order_no
+		        )A,
+		        orders O,
+		        book B,
+		        Members M,
+		        payment P
+		  where A."bk_no" = B.bk_no
+		    and A."order_no" = O.order_no
+		    and M.mem_no = O.mem_no
+		    and O.pay_no = P.pay_no
+            and O.mem_no = #{memNo}
+            and O.order_date between #{beginDate} and #{endDate}
+            <choose>
+		 		<when test="orderStatus == '주문확인'">
+		   			and order_status = '주문확인'
+				</when>
+				<when test="orderStatus == '결제완료'">
+					and order_status = '결제완료'
+				</when>
+				<when test="orderStatus == '주문취소'">
+					and order_status = '주문취소'
+				</when>
+				<when test="orderStatus == '상품준비중'">
+					and order_status = '상품준비중'
+				</when>
+				<when test="orderStatus == '배송준비중'">
+					and order_status = '배송준비중'
+				</when>
+				<when test="orderStatus == '배송중'">
+					and order_status = '배송중'
+				</when>
+				<when test="orderStatus == '배송완료'">
+					and order_status = '배송완료'
+				</when>
+				<when test="orderStatus == '반품'">
+					and order_status = '반품'
+				</when>
+			</choose>
+			)
+	</select>
+	
+	<!-- [사용자] 마이페이지 초기 나의 주문 리스트 조회(세아)-->
+	<select id="selectMyOrderList" resultMap="orderResult">
+		select
+               O.mem_no,
+		       O.order_no,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
+		       O.order_date,
+		       O.order_status,
+		       bk_title || decode(A."quantity", 1, null, ' 외 ' || to_char(A."quantity" - 1) || '권') as "bk_title"
+		  from (
+		         select
+		                order_no "order_no",
+		                min(bk_no) "bk_no",
+		                sum(quantity) "quantity"
+		           from order_detail
+		          group by order_no
+		        )A,
+		        orders O,
+		        book B,
+		        Members M,
+		        payment P
+		  where A."bk_no" = B.bk_no
+		    and A."order_no" = O.order_no
+		    and M.mem_no = O.mem_no
+		    and O.pay_no = P.pay_no
+            and O.mem_no = #{memNo}
+            and O.order_date between #{beginDate} and #{endDate}
+            <choose>
+		 		<when test="orderStatus == '주문확인'">
+		   			and order_status = '주문확인'
+				</when>
+				<when test="orderStatus == '결제완료'">
+					and order_status = '결제완료'
+				</when>
+				<when test="orderStatus == '주문취소'">
+					and order_status = '주문취소'
+				</when>
+				<when test="orderStatus == '상품준비중'">
+					and order_status = '상품준비중'
+				</when>
+				<when test="orderStatus == '배송준비중'">
+					and order_status = '배송준비중'
+				</when>
+				<when test="orderStatus == '배송중'">
+					and order_status = '배송중'
+				</when>
+				<when test="orderStatus == '배송완료'">
+					and order_status = '배송완료'
+				</when>
+				<when test="orderStatus == '반품'">
+					and order_status = '반품'
+				</when>
+			</choose>
+			order by order_date desc
+	</select>
 	
 </mapper>

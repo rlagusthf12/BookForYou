@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.dao.MypageDao;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -91,10 +95,30 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.deleteMyList(sqlSession,list);
 	}
 
+	@Override
+	public int selectMyOrderListCount(HashMap<String, Object> listParam) {
+		return mypageDao.selectMyOrderListCount(sqlSession, listParam);
+	}
 
+	@Override
+	public ArrayList<Order> selectMyOrderList(HashMap<String, Object> listParam, PageInfo pi) {
+		return mypageDao.selectMyOrderList(sqlSession, listParam,pi);
+	}
 
+	@Override
+	public int selectMyReadingGroupListCount(Member member) {
+		return mypageDao.selectMyReadingGroupListCount(sqlSession,member);
+	}
 
-	
-	
+	@Override
+	public ArrayList<GroupBoard> selectMyReadingGroupList(PageInfo pi, int memNo) {
+		return mypageDao.selectMyReadingGroupList(sqlSession,pi,memNo);
+	}
+
+	@Override
+	public int selectMyReadingGroupMemberCount(int groupBoardNo) {
+		return mypageDao.selectMyReadingGroupMemberCount(sqlSession,groupBoardNo);
+	}
+
 
 }

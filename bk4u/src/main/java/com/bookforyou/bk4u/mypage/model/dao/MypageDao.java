@@ -10,10 +10,13 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.group.model.vo.GroupBoard;
+import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
+import com.bookforyou.bk4u.order.model.vo.Order;
 
 @Repository
 public class MypageDao {
@@ -60,12 +63,10 @@ public class MypageDao {
 	}
 
 	public int selectMyListCount(SqlSessionTemplate sqlSession, Member member) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("bookMapper.selectMyListCount",member);
 	}
 
 	public ArrayList<Book> selectMyList(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam) {
-		// TODO Auto-generated method stub
 		PageInfo pi = (PageInfo) listParam.get("pi");
 		Member member = (Member) listParam.get("member");
 		
@@ -77,8 +78,33 @@ public class MypageDao {
 	}
 
 	public int deleteMyList(SqlSessionTemplate sqlSession, MyList list) {
-		// TODO Auto-generated method stub
 		return sqlSession.delete("bookMapper.deleteMyList",list);
+	}
+
+	public int selectMyOrderListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam) {
+		return sqlSession.selectOne("orderMapper.selectMyOrderListCount",listParam);
+	}
+
+	public ArrayList<Order> selectMyOrderList(SqlSessionTemplate sqlSession, HashMap<String, Object> listParam,
+			PageInfo pi) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("orderMapper.selectMyOrderList",listParam,rowBounds);
+	}
+
+	public int selectMyReadingGroupListCount(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("groupMapper.selectMyReadingGroupListCount",member);
+	}
+
+	public ArrayList<GroupBoard> selectMyReadingGroupList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("groupMapper.selectMyReadingGroupList",memNo,rowBounds);
+	}
+
+	public int selectMyReadingGroupMemberCount(SqlSessionTemplate sqlSession, int groupBoardNo) {
+		return sqlSession.selectOne("groupMapper.selectMyReadingGroupMemberCount",groupBoardNo);
 	}
 
 
