@@ -59,7 +59,7 @@
             , s.group_title
             , s.group_script
             , s.group_place
-            , s.group_img
+            , s.change_name
             
               FROM 
                     (SELECT * FROM GROUPBOARD 
@@ -71,10 +71,11 @@
 	<update id="increaseCount">
 		update
 				groupBoard
-			set group_count = group_count+1
+			set group_count = group_count + 1
 		  where group_boardno = #{groupBoardNo}
 		    and group_status = 'Y' 
 	</update>
+	
 	<insert id="inserGMem">
 		
 		insert 
@@ -92,7 +93,6 @@
 		  , #{mem_email}
 		  , #{group_level}
 		  )
-			
 	</insert>
 	
 	<select id="groupMemberList" resultMap="groupMemberResult">

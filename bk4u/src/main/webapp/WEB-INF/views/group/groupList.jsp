@@ -69,7 +69,6 @@
             $(document).ready(function() {
     
                 $(window).scroll(function() {
-                    // top button controll
                     if ($(this).scrollTop() > 500) {
                         $('#topButton').fadeIn();
                     } else {
@@ -118,52 +117,52 @@
                 <hr>
                 
                 <h6>활동중인 독서모임</h6><br>
-                <div class="gb">
+                <div>
                     <!-- 현재 가입한 모임이 없다면 -->
                     <p>현재 가입한 모임이 없습니다</p>
                     <!-- 현재 가입한 모임이 있다면 -->
-                    
+                </div>    
                 <hr>
                 <br>
                 <h6><b>독서모임 목록</b></h6>
                     
                     
                     <table id="groupList" class="table table-borderless" align="center">
-                    <tbody>
-                    
+                    <tbody>         
                     <c:forEach var="g" items="${ groupList }">
-                        <tr>
+                        <tr>    
+                        	<input type="hidden" value="${g.groupBoardNo}">    
                             <td rowspan="3" width="230" height="200">${ g.changeName }</td>
                             <td width="80" height="20" style="font-size: 13px;">${ g.groupType }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupDate }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupPlace }</td>
                         </tr>
                         <tr>
+                        	<input type="hidden" value="${g.groupBoardNo}"> 
                             <td colspan="3" height="20"><b>${ g.groupTitle }</b></td>                        
                         </tr>
                         <tr>
+                        	<input type="hidden" value="${g.groupBoardNo}"> 
                             <td colspan="3" height="160">${ g.groupScript }</td>
                         </tr>
-                        
                          </c:forEach>
-               				
                         </tbody>
-                         
                          
                     </table> 
                     
                     <script>
                     	$(function(){
                     		$("#groupList>tbody>tr").click(function(){
-                    			location.href="detail.gbo?gno=" + $(this).children(".gno").text();
+                    			location.href="detail.gbo?gno=" + $(this).children().eq(0).val();
+                    			//console.log($(this).children(".gno").text()); 
                     		})
                     	})
                     </script>
-                  
-                  
-                       
-            </div>                
+                        
+               
+                         
                <hr>
+               
                <button type="button" id="more"  style="border-radius: 10px; background: white; ">더보기▼</button>
                    
     				<script>
@@ -175,7 +174,7 @@
                             $.ajax({
                                 url : "group.bo",
                                 type: 'POST',
-                                data: { more : more},
+                                data: {more : more },
                                 dataType: "json",
                                 success: function(data){
                     
@@ -185,7 +184,7 @@
                                         
                                         addListHtml += "<table>"
                                         addListHtml += "<tr>"
-                                        addListHtml += "<td>"+data.list[i].group_img+"</td>";
+                                        addListHtml += "<td>"+data.list[i].change_name+"</td>";
                                         addListHtml += "<td>"+data.list[i].group_type+"</td>";
                                         addListHtml += "<td>"+data.list[i].group_date+"</td>";
                                         addListHtml += "<td>"+data.list[i].group_place+"</td>";
