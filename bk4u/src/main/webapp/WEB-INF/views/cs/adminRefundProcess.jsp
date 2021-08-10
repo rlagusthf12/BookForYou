@@ -92,10 +92,6 @@
 			history.back();
 		})
 		
-		/* 환불완료 버튼 */
-		$("#complete-btn").click(function(){
-			location.href="adminRefund.cs?refundNo=" + ${ r.refundNo } + "&orderNo=" + ${ o.orderNo } + "&no=3"
-		})
 	})
 </script>
 </head>
@@ -230,30 +226,42 @@
             </table>
         </div>
         <br>
-        <div>
-            <div class="caption">
-                <p>-- 환불방식 --</p>
-            </div>
-            <table class="table table-hover vertical table-sm">
-                <tr>
-                    <th scope="col" style="width:300px;">현금/카드환불액</th>
-                    <td>${ p.price }</td>
-                </tr>
-                <tr>
-                    <th scope="col">사용된 포인트 반환</th>
-                    <td>${ o.usedPoints }</td>
-                </tr>
-                <tr>
-                    <th scope="col">총환불액</th>
-                    <td>${ p.price + o.usedPoints }</td>
-                </tr>
-            </table>
-        </div>
-        <br><br>
-        <div id="btn-area">
-            <button type="button" id="complete-btn">환불 완료</button>
-            <button type="button" id="back">닫기</button>
-        </div>
+         <form action="adminRefund.cs" method="POST">
+        	<input type="hidden" name="kindNo" value="${ r.kindNo }">
+        	<input type="hidden" name="orderNo" value="${ o.orderNo }">
+        	<input type="hidden" name="memNo" value="${ r.memNo }">
+        	<input type="hidden" name="refundKind" value="${ o.orderStatus }">
+        	<input type="hidden" name="refundCoupon" value="${ r.refundCoupon }">
+        	<input type="hidden" name="refundPoint" value="${ r.refundPoint }">
+	        <div>
+	            <div class="caption">
+	                <p>-- 환불방식 --</p>
+	            </div>
+	            <table class="table table-hover vertical table-sm">
+	                <tr>
+	                    <th scope="col" style="width:300px;">현금/카드환불액</th>
+	                    <td>${ p.price }</td>
+	                </tr>
+	                <tr>
+	                    <th scope="col">사용된 쿠폰 반환</th>
+	                    <td>${ cd.couponPrice }</td>
+	                </tr>
+	                <tr>
+	                    <th scope="col">사용된 포인트 반환</th>
+	                    <td>${ o.usedPoints }</td>
+	                </tr>
+	                <tr>
+	                    <th scope="col">총환불액</th>
+	                    <td>${ p.price + o.usedPoints }</td>
+	                </tr>
+	            </table>
+	        </div>
+	        <br><br>
+	        <div id="btn-area">
+	            <button type="submit" id="complete-btn">환불 완료</button>
+	            <button type="button" id="back">닫기</button>
+	        </div>
+        </form>
         <br><br><br>
     </div>  
 </body>

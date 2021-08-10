@@ -96,11 +96,6 @@
 		document.getElementById("refundPoint").innerText += `(최대 반환 가능 금액: ` + $point + `)`;
 		document.getElementById("totalRefund").innerText += $total + $point;
 	
-		/* 반품 처리중 버튼 */
-		$("#return-btn").click(function(){
-			location.href="adminReturn.cs?returnNo=" + ${ r.returnNo } + "&orderNo=" + ${ o.orderNo } + "&no=2&rtStatus=1"
-		})
-		
 		/* 닫기 버튼 */
 		$("#back").click(function(){
 			history.back();
@@ -262,36 +257,47 @@
             </table>
         </div>
         <br>
-        <div>
-            <div class="caption">
-                <p>-- 환불방식 --</p>
-            </div>
-            <table class="table table-hover table-sm vertical">
-                
-                <tr>
-                    <th scope="col" style="width:300px;">현금/카드환불액</th>
-                    <td>
-                        <input type="text">
-                        <p id="refundPrice"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="col">사용된 포인트 반환</th>
-                    <td>
-                        <input type="text">
-                        <p id="refundPoint"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="col">총환불액</th>
-                    <td id="totalRefund"></td>
-                </tr>
-            </table>
-        </div>
-        <div id="btn-area">
-        	<button type="button" id="return-btn">반품처리</button>
-            <button type="button" id="back">닫기</button>
-        </div>
+         <form action="adminProcess.cs" method="POST">
+        	<input type="hidden" name="kindNo" value="${ r.returnNo }">
+        	<input type="hidden" name="orderNo" value="${ o.orderNo }">
+        	<input type="hidden" name="refundKind" value="반품">
+	        <div>
+	            <div class="caption">
+	                <p>-- 환불방식 --</p>
+	            </div>
+	            <table class="table table-hover table-sm vertical">
+	                <tr>
+	                    <th scope="col" style="width:300px;">현금/카드환불액</th>
+	                    <td>
+	                        <input type="text" name="refundPrice">
+	                        <p id="refundPrice"></p>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th scope="col">사용된 쿠폰 반환</th>
+	                    <td>
+	                        <input type="text" name="refundCoupon">
+	                        <p id="refundCoupon"></p>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th scope="col">사용된 포인트 반환</th>
+	                    <td>
+	                        <input type="text" name="refundPoint">
+	                        <p id="refundPoint"></p>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <th scope="col">총환불액</th>
+	                    <td id="totalRefund"></td>
+	                </tr>
+	            </table>
+	        </div>
+	        <div id="btn-area">
+	        	<button type="submit" id="return-btn">반품처리</button>
+	            <button type="button" id="back">닫기</button>
+	        </div>
+        </form>
         <br><br><br>
     </div>  
 </body>

@@ -22,10 +22,12 @@ public class Refund {
 	private int kindNo;
 	private int refundPrice;
 	private int refundPoint;
+	private int memNo;
 	private String memId;
 	private String memName;
 	private String payWay;
 	private int price;
 	private String bkTitle;
 	private String deliveryMsg;
+	private int refundCoupon;
 }

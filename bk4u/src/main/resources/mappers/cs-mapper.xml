@@ -33,6 +33,8 @@
 		<result column="price" property="price"/>
 		<result column="bk_title" property="bkTitle"/>
 		<result column="delivery_msg" property="deliveryMsg"/>
+		<result column="refund_coupon" property="refundCoupon"/>
+		<result column="mem_no" property="memNo"/>
 	</resultMap>
 	
 	<resultMap id="returnResult" type="Return">
@@ -504,31 +506,23 @@
 		       orders
 		   set 
 		   <choose>
-		   		<when test="no == 1">
-		   			order_status = '주문취소',
-		       		cs_status = '주문취소'
+		   		<when test="orderStatus != null">
+		   			order_status = #{orderStatus},
+		       		cs_status = #{csStatus}
 		   		</when>
-		   		<when test="rtStatus == 1">
-		   			order_status = '반품',
-		   			cs_status = '반품처리중'
-		   		</when>
-		   		<when test="rtStatus == 2">
-		   			order_status = '반품',
-		   			cs_status = '반품완료'
-		   		</when>
-		   		<when test="no == 3">
-		   			cs_status = '환불완료'
+		   		<when test="orderStatus == null">
+		   			cs_status = #{csStatus}
 		   		</when>
 		   </choose>
 		 where order_no = #{orderNo}
 	</update>
 	
 	<!-- [관리자] 주문취소 - cancel테이블 상태 변경 (한진) -->
-	<update id="insertAdminCancelStatus">
+	<update id="updateAdminCancelStatus">
 		update
 		       cancel
-		   set status = '취소완료'
-		 where cancel_no = #{cancelNo}
+		   set status = #{csStatus}
+		 where order_no = #{orderNo}
 	</update>
 	
 	<!-- [관리자] 반품 상세 조회 (한진) -->
@@ -549,14 +543,8 @@
 		update
 		       return
 		   set
-		   <choose>
-		   		<when test="rtStatus == 1">
-		   			status = '반품처리중'
-		   		</when>
-		   		<when test="rtStatus == 2">
-		   			status = '반품완료'
-		   		</when>
-		   </choose>
+		   		status = #{csStatus}
+		    where order_no = #{orderNo}
 	</update>
 	
 	<!-- [관리자] 환불 상세 조회 -->
@@ -570,16 +558,54 @@
 		       refund_kind,
 		       kind_no,
 		       refund_price,
-		       refund_point
+		       refund_point,
+		       refund_coupon
 		  from refund
 		 where refund_no = #{refundNo}
 	</select>
 	
 	<!-- [관리자] 환불 처리  -->
-	<update id="updateAdminRefund">
+	<update id="updateAdminRefundStatus">
 		update
 		       refund
 		   set status = '환불완료'
-		 where refund_no = #{refundNo}  
+		 where order_no = #{orderNo}  
 	</update>
+	
+	<!-- [관리자] 환불 테이블 insert (한진) -->
+	<insert id="insertAdminRefundStatus">
+		insert
+		  into refund
+		values
+		     (
+		       seq_refundno.nextval,
+		       #{orderNo},
+		       '환불전',
+		       sysdate,
+		       null,
+		       #{refundKind},
+		       #{kindNo},
+			   #{refundPrice},
+			   #{refundPoint},
+			   #{refundCoupon}
+		     )
+	</insert>
+	
+	<!-- [관리자] 환불 - 사용된 포인트 반환 (한진)  -->
+	<insert id="insertAdminRefundPoint">
+		insert
+		  into point
+		values
+		     (
+		       seq_pointno.nextval,
+		       #{memNo},
+		       #{orderNo},
+		       null,
+		       '적립',
+		       #{refundPoint},
+		       sysdate
+		     )
+	</insert>
+	
+	
 </mapper>
