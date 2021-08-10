@@ -552,28 +552,28 @@ public class MypageController {
 	 * @return
 	 */
 	@RequestMapping("my-order-list.mp")
-	public String myOrderList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,HttpSession session,Model model, @RequestParam(value="beginDate", required=false) String beginDate, @RequestParam(value="endDate", required=false) String endDate, @RequestParam(value="endDate", defaultValue="전체") String orderStatus) {
+	public String myOrderList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,HttpSession session,Model model, @RequestParam(value="beginDate", required=false) String beginDate, @RequestParam(value="endDate", required=false) String endDate, @RequestParam(value="orderStatus", defaultValue="전체") String orderStatus) {
 		Member member = (Member)session.getAttribute("loginUser");
 		int memNo = member.getMemNo();
 		log.info("memNo: " + memNo);
 		if(beginDate == null) {
-			beginDate = getCurrentDate();
+			beginDate = getThreeMonthAgoDate();
 			// 나중에 데이터 생기면 MonthAgoDate로 바꾸기
-			endDate = getThreeMonthAgoDate();
+			endDate = getCurrentDate();
 		}
-		log.info(beginDate);
-		log.info(endDate);
-		log.info("currentPage:" + currentPage);
-		HashMap<String,String> listParam = new HashMap<String,String>();
+		log.info("beginDate : " + beginDate);
+		log.info("endDate : " + endDate);
+		log.info("currentPage: " + currentPage);
+		HashMap<String,Object> listParam = new HashMap<String,Object>();
 		
-		listParam.put("memNo",Integer.toString(memNo));
+		listParam.put("memNo",memNo);
 		listParam.put("beginDate",beginDate);
 		listParam.put("endDate", endDate);
 		listParam.put("orderStatus", orderStatus);
 		log.info("orderStautus" + orderStatus);
 		
 		int listCount = mypageService.selectMyOrderListCount(listParam);
-		log.info("listCount:"+ listCount );
+		log.info("listCount: "+ listCount );
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		//listParam.put("pi",pi);
 		ArrayList<Order> list = mypageService.selectMyOrderList(listParam , pi);

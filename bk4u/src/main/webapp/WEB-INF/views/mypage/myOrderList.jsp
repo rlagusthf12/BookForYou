@@ -29,7 +29,7 @@
 
         #content {
             background: #EEE;
-            height: 1200px;
+            height: 1000px;
             position: relative;
             display: inline-flex;
         }
@@ -39,7 +39,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1100px;
+            height: 900px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -280,33 +280,36 @@
                         let month = d.getMonth() + 1; // 월은 0에서 시작하기 때문에 +1
                         let day = d.getDate();
                         
+                        
+                        
                         let beginDate = d;
-                        $('#endDate').val(`${year}-${month}-${day}`);
-
-                        $('#beginDate').val(`${year}-${month}-${day}`);
+                        console.log(beginDate);
+                        console.log(d);
+                        $('#endDate').val(year+"-"+month+"-" + day);
+                        $('#beginDate').val(year+"-"+month+"-" + day);
                         beginDate.setMonth(beginDate.getMonth() -1);
-                        $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                        $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                         beginDate.setMonth(beginDate.getMonth() +1);
 
                         // 버튼 클릭시 현재 날짜에서 1주일, 1개월, 3개월 더하기
                         $('#btnWeek').click(function () {
-                            $('#endDate').val(`${year}-${month}-${day}`);
+                            $('#endDate').val(year+"-"+month+"-" + day);
                             beginDate.setDate(beginDate.getDate() - 7);
-                            $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                            $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                             beginDate.setDate(beginDate.getDate() + 7); // 버튼 클릭 시 계속 더해지기 때문에 초기화
                         });
 
                         $('#btnMonth').click(function () {
-                            $('#endDate').val(`${year}-${month}-${day}`);
+                            $('#endDate').val(year+"-"+month+"-" + day);
                             beginDate.setMonth(beginDate.getMonth() - 1);
-                            $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                            $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                             beginDate.setMonth(beginDate.getMonth() + 1);
                         });
 
                         $('#btn3Month').click(function () {
-                            $('#endDate').val(`${year}-${month}-${day}`);
+                            $('#endDate').val(year+"-"+month+"-" + day);
                             beginDate.setMonth(beginDate.getMonth() - 3);
-                            $('#beginDate').val(`${beginDate.getFullYear()}-${beginDate.getMonth() + 1}-${beginDate.getDate()}`);
+                            $('#beginDate').val(beginDate.getFullYear() +  "-" + (beginDate.getMonth() + 1) + "-" + beginDate.getDate());
                             beginDate.setMonth(beginDate.getMonth() + 3);
                         });
                     </script>
@@ -328,13 +331,15 @@
                                 <th scope="row">${order.orderNo }</th>
                                 <td>${order.orderDate }</td>
                                 <td id="book-title">${order.bkTitle }</td>
-                                <td>${order.price }</td>
+                                <td>${order.orderPriceComma }</td>
                                 <td>${order.orderStatus }</td>
                             </tr>
                        </c:forEach>  
                         </tbody>
                     </table>
                 </div>
+                <c:choose>
+                <c:when test="${ !empty list }">
                 <div id="paging-wrap">
                     <ul class="pagination">
                 	<c:choose>
@@ -360,6 +365,8 @@
                 	</c:choose>
                 	</ul>
                 </div>
+                </c:when>
+                </c:choose>
             </div>
 
         </div>
