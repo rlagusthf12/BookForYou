@@ -150,13 +150,13 @@
 			                    <div id="search-condition">
 			                        <select name="condition">
 			                            <option value="searchAll">전체</option>
-			                            <option value="bookName">도서명</option>
+			                            <option value="bookTitle">도서명</option>
 			                            <option value="writerName">저자</option>
 			                            <option value="publisher">출판사</option>
 			                        </select>
 			                    </div>
 			                    <div id="search-input">
-			                        <input type="text" name="">
+			                        <input type="text" name="keyword">
 			                    </div>
 			                    <div id="search-btn">
 			                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">

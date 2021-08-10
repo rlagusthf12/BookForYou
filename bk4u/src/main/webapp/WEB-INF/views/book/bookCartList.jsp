@@ -352,7 +352,7 @@
 			<c:forEach var="b" items="${ bList }">
             <div class="cart_book">
                 <input type="checkbox" name="bkNo" value="${ b.bkNo }">
-                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src=""></a></div>
+                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
                 <div class="book_info">
                     <div>
                         <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>

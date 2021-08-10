@@ -27,6 +27,9 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.store.model.service.StoreService;
+import com.bookforyou.bk4u.store.model.vo.OffBook;
+import com.bookforyou.bk4u.store.model.vo.Store;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -38,6 +41,9 @@ public class BookController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private StoreService storeService;
 	
 	/**
 	 * [관리자] 전체 도서 목록 조회 + 페이징, 상태별 도서 개수&목록 조회(한진)
@@ -101,16 +107,38 @@ public class BookController {
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
-		int listCount = bookService.selectSearchBookCount(map);
+		int listCount = 0;
+		int storeNo = 0;
+		Store st = null;
+		ArrayList<Book> bList = null;
+		ArrayList<OffBook> obList = null;
+
+		if(condition == "searchAll" || condition == "bookTitle" || condition == "writerName" || condition == "publisher") {
+			listCount = bookService.selectSearchBookCount(map);
+		}else {
+			storeNo = Integer.parseInt(condition);
+			listCount = storeService.selectSearchOffBookCount(map);
+			st = storeService.selectStoreDetail(storeNo);
+		}
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 
-		ArrayList<Book> bList = bookService.selectSearchBook(pi, map);
+		if(condition == "searchAll" || condition == "bookTitle" || condition == "writerName" || condition == "publisher") {
+			bList = bookService.selectSearchBook(pi, map);
+			mv.setViewName("book/bookSearchList");
+		}else {
+			obList = storeService.selectSearchOffBook(pi, map);
+			mv.setViewName("store/offBookSearchList");
+			System.out.println(obList);
+		}
+		
+		System.out.println(st);
 		
 		mv.addObject("pi", pi)
+		  .addObject("st", st)
 		  .addObject("keyword", keyword)
 		  .addObject("bList", bList)
-		  .setViewName("book/bookSearchList");
+		  .addObject("obList", obList);
 		
 		return mv;
 	}
