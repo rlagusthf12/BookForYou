@@ -9,6 +9,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 
@@ -139,8 +140,20 @@ public interface SubscriptionService {
 	 * [관리자] 도서 발송 (한진)
 	 */
 	int insertSubscOrder(HashMap<String, String> map);
-
 	
-
+	/** 포인트 조회
+	 * @author daeunlee
+	 */
+	ArrayList<Coupon> selectSubscCoupon(int memNo);
+	
+	/** 쿠폰 조회 
+	 * @author daeunlee
+	 */
+	int selectSubPoint(int memNo);
+	
+	/** 정기구독 등록
+	 * @author daeunlee
+	 */
+	int insertSubsc(Subscription sub);
 
 }

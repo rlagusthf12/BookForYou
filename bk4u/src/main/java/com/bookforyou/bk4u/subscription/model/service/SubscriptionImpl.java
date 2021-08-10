@@ -14,6 +14,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.subscription.model.dao.SubscriptionDao;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 
@@ -225,7 +226,31 @@ public class SubscriptionImpl implements SubscriptionService{
 	public int insertSubscOrder(HashMap<String, String> map) {
 		return sDao.insertSubscOrder(sqlSession, map);
 	}
-
+	
+	/** 포인트 조회
+	 * @author daeunlee
+	 */
+	@Override
+	public ArrayList<Coupon> selectSubscCoupon(int memNo) {
+		return sDao.selectSubscCoupon(sqlSession, memNo);
+	}
+	
+	/** 쿠폰 조회 
+	 * @author daeunlee
+	 */
+	@Override
+	public int selectSubPoint(int memNo) {
+		return sDao.selectSubPoint(sqlSession, memNo);
+	}
+	
+	/** 정기구독 등록
+	 * @author daeunlee
+	 */
+	@Override
+	public int insertSubsc(Subscription sub) {
+		return sDao.insertSubsc(sqlSession, sub);
+	}
+	
 	
 
 	

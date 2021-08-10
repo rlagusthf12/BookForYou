@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.subscription.model.service.SubscriptionService;
 import com.bookforyou.bk4u.subscription.model.vo.Subscription;
 import com.google.gson.Gson;
@@ -325,20 +327,37 @@ public class SubscriptionController {
 		return "subscription/subscriptionJoinAgree";
 	}
 	
-	
-	/** 정기구독 결제용
+	/** 정기구독 결제용 : 쿠폰+포인트 조회
 	 * @author daeunlee
 	 */
 	@RequestMapping("pay.sub")
-	public String paySub() {
-		return "subscription/subscriptionPay";
+	public ModelAndView selectPaySub(int memNo, ModelAndView mv) {
+		// 쿠폰,포인트 조회
+		ArrayList<Coupon> cp = sService.selectSubscCoupon(memNo);
+		int p = sService.selectSubPoint(memNo);
+		
+		mv.addObject("cp", cp)
+		  .addObject("p", p)
+		  .setViewName("subscription/subscriptionPay");
+		
+		return mv;
 	}
 	
-	/*
-	@RequestMapping("payComplete.sub")
-	public String payCompleteSub() {
-		return "subscription/subscriptionPayComplete";
+	/** 정기구독 등록
+	 * @author daeunlee
+	 */
+	@RequestMapping("insertSubPay.sub")
+	public String insertSubsc(Subscription sub, Model model) {
+		int result = sService.insertSubsc(sub);
+		
+		if(result > 0) {
+			model.addAttribute("sub", sub);
+			return "subscription/subscriptionPayComplete";
+		}else {
+			model.addAttribute("errorMsg", "게시글 등록 실패");
+            return "common/errorPage";
+		}
 	}
-	*/
+	
 	
 }

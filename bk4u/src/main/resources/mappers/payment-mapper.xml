@@ -44,4 +44,35 @@
 		 where subsc_no = #{subscNo}
 	</select>
 	
+	
+	<insert id="insertSubsc">
+		insert 
+		  into payment
+		     ( 
+		       pay_no
+		     , pay_way
+		     , price
+		     , status
+		     , pay_date
+		     )
+		values
+		     ( 
+		       seq_pno.nextval
+		     , #{payWay}
+		     , #{price}
+		     , #{status}
+		     , SYSDATE
+		     );
+	</insert>
+	
+	<select id="selectPayList" resultMap="paymentResult">
+		select
+		       pay_no,
+		       pay_way,
+		       price,
+		       status,
+		       pay_date
+		  from payment
+	</select>
+	
 </mapper>

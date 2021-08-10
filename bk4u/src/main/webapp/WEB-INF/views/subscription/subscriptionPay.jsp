@@ -119,7 +119,7 @@
 
         <div class="content">
             <div class="container">
-                <form class="orderForm" id="orderForm" name="orderForm" method="post" action="payComplete.sub">-
+                <form class="orderForm" id="orderForm" name="orderForm" method="post" action="payComplete.sub">
     
                     <!--멤버십정보area-->
                     <div class="item membership_area">
@@ -274,6 +274,11 @@
                     }); 
                 });
             	
+            	$(function () {
+            		selectPayList();
+                })
+            	
+            	
             	function requestPay() {
             		IMP.init('imp01966425'); //가맹점 식별코드
             		IMP.request_pay({
@@ -287,24 +292,49 @@
             		    buyer_tel : '${ loginUser.memPhone }', //구매자전화번호
             		    buyer_postcode : '$("#postcode").val()'
             		}, function(rsp) {
+            			console.log(rsp);
             			if (rsp.success) {
             				var msg = '결제가 완료되었습니다.';
             				msg += '고유ID : ' + rsp.imp_uid;
             				msg += '상점 거래ID : ' + rsp.merchant_uid;
             				msg += '결제 금액 : ' + rsp.paid_amount;
             				msg += '카드 승인번호 : ' + rsp.apply_num;
+            				// payment디비연결
             				$.ajax({
-            					type:"POST",
-            					url:"/verifyIamport/" + rsp.imp_uid ,
-            					headers: { "Content-Type": "application/json" },
-            					data: {payNo: rsp.imp_uid} // 결제번호
-            				});
-            			} else {
-            				var msg = '결제에 실패하였습니다.';
-            				msg += '에러내용 : ' + rsp.error_msg;
-            			}
+		    			        url:"insertSubsc.pay",
+		    			        method: "POST",
+		    		            headers: { "Content-Type": "application/json" },
+		    			        data:{
+		    			        	payWay:	rsp.pay_method,
+		    						price: rsp.paid_amount,
+		    						status: rsp.status
+		    			        }, 
+		    			        success: function(status){
+		    			        	if(status == "success"){
+		    			        	console.log(status);
+		    			        	}
+		    			        },error:function(){
+		    			        	console.log("ajaxㄴㄴ");
+		    			        }
+		    			   })
+                    	} else {
+            		        var msg = '결제에 실패하였습니다.';
+                    		msg += '에러내용 : ' + rsp.error_msg;
+            		    }
             			alert(msg);
-	       			})
+            		});
+	       		
+            	}
+            	
+       		    // 결제리스트 불러오기
+       		    function selectPayList(){
+       		    	$.ajax({
+       		    		type:"POST",
+       		    		url:"payNo.pay", 
+       		    		success: function(list){
+       		    			console.log(list);
+       		    		}
+       		    	})
        		    }
             	</script>                            
                                         
@@ -371,7 +401,14 @@
                                 <th>보유 포인트</th>
                                 <td>
                                     <div class="input_area">
-                                        <input type="text" id="mypoint" name="">
+                                    	<c:choose>
+	                                    	<c:when test="${ !empty pointPrice }">
+	                                        	<input type="number" id="mypoint" name="pointPrice" value="${ p.pointPrice }">
+	                                        </c:when>
+	                                        <c:otherwise>
+	                                        	<input type="number" id="mypoint" name="pointPrice" value="0" readonly>
+	                                        </c:otherwise>
+                                        </c:choose>
                                         <span class="measure">원</span>
                                     </div>
                                 </td>
@@ -380,7 +417,7 @@
                                 <th>사용 포인트</th>
                                 <td>
                                     <div class="input_area">
-                                        <input type="text" id="use_point" name="">
+                                        <input type="text" id="use_point">
                                         <span class="measure">원</span>
                                     </div>
                                     <button class="btn btn_coupon">전액사용</button>

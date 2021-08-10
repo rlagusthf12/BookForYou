@@ -32,6 +32,7 @@
 		<typeAlias type="com.bookforyou.bk4u.qa.model.vo.Qa" alias="Qa"/>
 		<typeAlias type="com.bookforyou.bk4u.qa.model.vo.As" alias="As"/>
 		<typeAlias type="com.bookforyou.bk4u.board.model.vo.Board" alias="Board"/>
+		<typeAlias type="com.bookforyou.bk4u.point.model.vo.Point" alias="Point"/>
 	</typeAliases>
 
 	<mappers>
