@@ -416,7 +416,7 @@
 		       order_no,
 		       mem_no,
 		       pay_no,
-		       price,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(P.price)), '([0-9]{3})','\1,')),'^,','') as "order_price_comma",
 		       order_date,
 		       order_receiver,
 		       order_post,
@@ -439,7 +439,7 @@
 		       delivery_status,
 		       coupon_issue_num
 		  from orders
-		  join payment using (pay_no)
+		  join payment P using (pay_no)
 		 where order_no = #{orderNo}		
 	</select>
 	

@@ -242,7 +242,7 @@
             <table class="table table-hover vertical table-sm">
                 <tr>
                     <th scope="col" style="width:300px;">현금/카드환불액</th>
-                    <td>${ p.price }</td>
+                    <td>${ o.orderPriceComma }</td>
                 </tr>
                 <tr>
 	                <th scope="col">사용된 쿠폰 반환</th>
@@ -254,7 +254,7 @@
                 </tr>
                 <tr>
                     <th scope="col">총환불액</th>
-                    <td>${ p.price + o.usedPoints }</td>
+                    <td>${ p.price + o.usedPoints + cd.couponPrice }</td>
                 </tr>
             </table>
         </div>

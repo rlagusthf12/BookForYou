@@ -25,4 +25,5 @@ public class Return {
 	private int price;
 	private String bkTitle;
 	private String deliveryMsg;
+	private String orderPriceComma;
 }

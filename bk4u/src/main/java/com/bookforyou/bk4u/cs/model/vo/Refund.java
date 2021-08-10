@@ -30,4 +30,5 @@ public class Refund {
 	private String bkTitle;
 	private String deliveryMsg;
 	private int refundCoupon;
+	private String orderPriceComma;
 }

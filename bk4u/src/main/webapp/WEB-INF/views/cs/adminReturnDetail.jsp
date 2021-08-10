@@ -287,14 +287,6 @@
         </div>
         <br><br>
         <div id="btn-area">
-        	<c:choose>
-        		<c:when test="${ r.status eq '반품처리중' }">
-        			<button type="button" id="complete-btn">반품완료</button>
-        		</c:when>
-        		<c:when test="${ r.status eq '반품완료' }">
-        			
-        		</c:when>
-        	</c:choose>
             <button type="button" id="back">닫기</button>
         </div>
         <br><br><br>
