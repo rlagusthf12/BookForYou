@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.store.model.dao.StoreDao;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
 import com.bookforyou.bk4u.store.model.vo.Store;
@@ -58,6 +60,22 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public ArrayList<Store> selectOffBookStoreList(int bkNo){
 		return storeDao.selectOffBookStoreList(sqlSession, bkNo);
+	}
+
+	/*
+	 * [공통] 오프라인 도서 검색 개수ㄴ 조회 (연지)
+	 */
+	@Override
+	public int selectSearchOffBookCount(HashMap<String, String> map) {
+		return storeDao.selectSearchOffBookCount(sqlSession, map);
+	}
+
+	/*
+	 * [공통] 오프라인 도서 검색 결과 조회 (연지)
+	 */
+	@Override
+	public ArrayList<OffBook> selectSearchOffBook(PageInfo pi, HashMap<String, String> map){
+		return storeDao.selectSearchOffBook(sqlSession, pi, map);
 	}
 
 }

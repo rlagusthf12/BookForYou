@@ -154,20 +154,20 @@
         <tr>
             <th height="50">쿠폰 카테고리</th>
             <td colspan="3" align="left"> &nbsp;&nbsp;
-                <input type="radio" id="kind" name="couponKind" value="choice" required> 선택
-                <select name="bookcategory" value="option">
-                    <option name="" value="">소설</option>
-                    <option name="" value="">문학</option>
-                    <option name="" value="">비문학</option>
-                    <option name="" value="">만화</option>
-                    <option name="" value="">수필</option>
-                    <option name="" value="">기타</option>
+                <input type="radio" name="couponKind" value="choice" required> 선택
+                <select name="bookcategory">
+                    <option value="1">소설</option>
+                    <option value="2">문학</option>
+                    <option value="3">비문학</option>
+                    <option value="4">만화</option>
+                    <option value="5">수필</option>
+                    <option value="6">기타</option>
                 </select>
 
                 &nbsp;&nbsp;&nbsp;
 
-                <input type="radio" name="category" value="write"> 직접입력
-                <input type="text" name="bookcategory">
+                <input type="radio"  name="couponKind" value="choice"> 직접입력
+                <input type="text" name="category">
             </td>
         </tr>
         <!--  
@@ -179,15 +179,15 @@
            </td>
         </tr>   
         -->  
+            <!--
         <tr>
             <th height="50">쿠폰발행 기간</th>
-            <!--
             <td colspan="3" align="left"> &nbsp;
                 <input type="date" id="sDate" name="couponStartDate" value=""> ~
                 <input type="date" id="eDate" name="couponEndDate" value="">
             </td>
-             -->
         </tr>
+             -->
         <tr>
             <th width="200" height="100" rowspan="2">쿠폰사용 기간</th>
             <td width="150" align="left"> &nbsp;&nbsp;&nbsp;&nbsp;
