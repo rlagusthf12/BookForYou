@@ -240,12 +240,12 @@
                     		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
                     	</c:when>
                     	<c:otherwise>
-                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    		<li class="page-item"><a class="page-link" href="my-reading-group.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
                     	</c:otherwise>
                     </c:choose>
                     
                     <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    	<li class="page-item"><a class="page-link" href="my-reading-group.mp?currentPage=${ p }">${p }</a></li>
                     </c:forEach>
                     
                     <c:choose>
@@ -253,7 +253,7 @@
                     		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                     	</c:when>
                     	<c:otherwise>
-                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                   			<li class="page-item"><a class="page-link" href="my-reading-group.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 	</ul>
