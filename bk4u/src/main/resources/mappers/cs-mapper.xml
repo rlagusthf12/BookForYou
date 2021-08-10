@@ -337,25 +337,24 @@
 		    and O.pay_no = P.pay_no
 		  <choose>
 			<when test="condition == 'searchAll'">
-			   and order_no like '%' || #{keyword} || '%'
+			   and (C.order_no like '%' || #{keyword} || '%'
 				or cancel_no like '%' || #{keyword} || '%'
 				or mem_name like '%' || #{keyword} || '%'
-				or mem_id
+				or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'orderNo'">
-			   and order_no 
+			   and C.order_no like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'cancelNo'">
-			   and cancel_no 
+			   and cancel_no like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memName'">
-			   and mem_name 
+			   and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-			   and mem_id 
+			   and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-				like '%' || #{keyword} || '%'
 		  order
 		     by
 		 <choose>
@@ -402,25 +401,24 @@
 		    and O.pay_no = P.pay_no
 		  <choose>
 			<when test="condition == 'searchAll'">
-			   and order_no like '%' || #{keyword} || '%'
+			   and (R.order_no like '%' || #{keyword} || '%'
 				or return_no like '%' || #{keyword} || '%'
 				or mem_name like '%' || #{keyword} || '%'
-				or mem_id
+				or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'orderNo'">
-			   and order_no 
+			   and R.order_no like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'returnNo'">
-			   and return_no 
+			   and return_no like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memName'">
-			   and mem_name 
+			   and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-			   and mem_id 
+			   and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-				like '%' || #{keyword} || '%'
 		 order
 		    by 
 		 <choose>
@@ -470,25 +468,24 @@
 		    and O.pay_no = P.pay_no
 		  <choose>
 			<when test="condition == 'searchAll'">
-			   and order_no like '%' || #{keyword} || '%'
+			   and (R.order_no like '%' || #{keyword} || '%'
 				or refund_no like '%' || #{keyword} || '%'
 				or mem_name like '%' || #{keyword} || '%'
-				or mem_id
+				or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'orderNo'">
-			   and order_no 
+			   and R.order_no like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'refundNo'">
-			   and refund_no 
+			   and refund_no like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memName'">
-			   and mem_name 
+			   and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-			   and mem_id 
+			   and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-				like '%' || #{keyword} || '%'
 		  order
 		     by
 		<choose>
