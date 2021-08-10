@@ -248,7 +248,7 @@
   	<select id="selectCouponCount" resultType="_int">
   		select
     		   count(*)
-		  from mem_cupon
+		  from mem_coupon
 		 where mem_no = #{memNo}
   	</select>
   	
@@ -267,7 +267,7 @@
                c.coupon_kind coupon_category,
                coupon_price,
                coupon_pricerate
-		  from mem_cupon mc
+		  from mem_coupon mc
           join coupon c using (coupon_no)
 		 where mem_no = 3
            and status = 'Y'
@@ -513,7 +513,7 @@
  	
  	<!-- [관리자] 환불 - 사용된 쿠폰 반환 (한진) -->
  	<update id="updateAdminRefundCoupon">
- 		update mem_cupon
+ 		update mem_coupon
  		   set status = 'Y',
  		       use_date = null
  		 where coupon_issue_num = #{refundCoupon}

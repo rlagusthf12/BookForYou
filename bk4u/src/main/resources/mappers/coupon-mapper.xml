@@ -30,7 +30,7 @@
 		       coupon_enddate,
 		       use_date
 		  from coupon c
-		  join mem_cupon m on (c.coupon_no = m.coupon_no)
+		  join mem_coupon m on (c.coupon_no = m.coupon_no)
 		  join orders o on (o.mem_no = m.mem_no)
 		 where order_no = #{orderNo}
 		   and o.coupon_issue_num = m.coupon_issue_num
@@ -50,7 +50,7 @@
 		       coupon_enddate,
 		       use_date
 		  from coupon c
-		  join mem_cupon m on (c.coupon_no = m.coupon_no)
+		  join mem_coupon m on (c.coupon_no = m.coupon_no)
 		  join subscription s on (s.mem_no = s.mem_no)
 		 where subsc_no = #{subscNo}
 		   and s.coupon_issue_no = m.coupon_issue_num
