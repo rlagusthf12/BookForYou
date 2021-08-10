@@ -186,9 +186,9 @@
 	  from (select coupon_issue_num, coupon_price, coupon_pricerate
 	        from (select coupon_issue_num, coupon_no, c.coupon_price, coupon_pricerate
 	                from coupon c
-	                join mem_cupon mc using (coupon_no))
+	                join mem_coupon mc using (coupon_no))
 	        where coupon_no = (select coupon_no
-	                             from mem_cupon
+	                             from mem_coupon
 	                             where COUPON_ISSUE_NUM = (select COUPON_ISSUE_NUM
 	                                                         from orders
 	                                                        where order_no = #{orderNo}))) c
@@ -656,5 +656,27 @@
 			</choose>
 			order by order_date desc
 	</select>
+	
+	<!-- [사용자] 마이페이지 주문 상세 리스트 조회(세아) -->
+	<select id="selectMyOrderDetailList" resultMap="orderDetailResult">
+		select order_no,
+       		bk_no,
+       		bk_title,
+       		quantity,
+       		detail_price,
+       		detail_status
+		from order_detail
+		join book using(bk_no)
+		where order_no = #{orderNo}
+	</select>
+	
+	<!-- [사용자] 마이페이지 주문 상세 책의 총 개수 조회 -->
+	<select id="selectMyOrderDeatilQuantity" resultType="_int">
+		select 
+       		count(quantity)
+		from order_detail
+		where order_no = #{orderNo}
+	</select>
+	
 	
 </mapper>
