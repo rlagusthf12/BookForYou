@@ -44,7 +44,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;    
     font-size: 20px;
-    margin-left: 40px;
+    margin-left: 80px;
 	}
 	
 	.content{
@@ -65,6 +65,7 @@
 		line-height: 3em;
 		border-radius: 4px;
 		background-color: rgb(224, 224, 224);
+		border:0px;
 		width:136px;
 		height:48px;		
 		margin-top:100px;
@@ -77,23 +78,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;    
     font-size: 20px;
-    text-align:center;
     
-	}
-	.uploadfile{
-	width:500px;
-	height:100px;
-	}
-	.emailinpu{
-	width:500px;
-	height:100px;
-	}
-	.emailinput>*{
-	margin-top:18px;
-	margin-left:10px;
-	}
-	.check{
-	margin-left:50px;
 	}
 	
 </style>
@@ -102,56 +87,27 @@
 
 <jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
-<form action="write.qa" method="post">
-<input type="hidden" name="memNo" value="7">
-<div class="faqTitle">1:1문의 하기</div>
-
+<div class="faqTitle">FAQ</div>
+<form action="update.faq" metod="post">
+<input type="hidden" name="faqNo" value="${f.faqNo}">
+<h2 style="margin-top:10px; margin-left:35px;">질문</h2>
+<input type="text" class="titleinput" name="faqQue" value="${f.faqQue}">
+<br><br><br>
 <h2 style="margin-top:10px;">유형 선택</h2>
 <select style="margin-left:45px;" name="queTypeNo">
+<option value="${f.queTypeNo}" selected>${f.queType}</option>
 <c:forEach var="q" items="${list1}">
 <option value="${q.queTypeNo}">${q.queType}</option>
 </c:forEach>
 </select>
 <br><br><br>
 
-<h2 style="margin-left:40px;">내용</h2>
-<textarea class="content" placeholder="문의내용" name="qaContent"></textarea>
-<br><br><br><br>
-<h2>사진 첨부</h2>
-<div class="uploadfile">
-<input type="file" style="margin-top:5px; float:right;" >
-</div>
-<h2 style="margin-top:10px;">답변 알림</h2>
-<div class="emailinput">
-<input type="checkbox" class="check" onclick="emailfunc(this.value,'emailOn');">
-<b>이메일</b>
-<span class="emailOn">
-</span>
+<h2 style="margin-left:35px;">답변</h2>
+<textarea class="content" name="faqAns">${f.faqAns}</textarea>
 
-</div>
-<script>
-		
-$(document).ready(function() { 
-	$("input:checkbox").on('click', function() { 
-		if ( $(this).prop('checked') ) { 
-			$(".emailOn").append("<input type='text' class='email' name='email'>");
-			} else {
-				$(".emailOn").empty();
-			}
-		}); 
-	});
-
-	
-
-
-
-</script>
-<br><br><br>
-<hr>
-<button class="uploadButton" type="submit">등록하기</button> 
- 
+<button type ="submit" class="uploadButton">등록하기</button> 
  </form>
-<div class="ListButton" onclick="location.href='list.qa'">목록으로</div>
+<div class="ListButton" onclick="javascript:history.go(-2);">목록으로</div>
 </div>
 <jsp:include page="../common/footer.jsp"/>
 

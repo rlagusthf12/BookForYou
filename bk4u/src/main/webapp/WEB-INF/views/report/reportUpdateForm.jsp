@@ -30,6 +30,7 @@
 		background-color: rgb(252, 190, 52);
 		width:120px;
 		float:right;
+		border:0px;
 		
 		
 	}
@@ -43,11 +44,13 @@
 		background-color: rgb(224, 224, 224);
 		float:right;
 		margin-right:100px;
+		border:0px;
 	}
 	
-	h2{
+	h4{
 	float:left
 	}	
+	
 	.titleinput{	
     width: 800px;
     height: 60px;
@@ -89,34 +92,33 @@
 
 <jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
-<div class="faqTitle">경고 사유</div>
+<div class="faqTitle">신고</div>
 <hr>
-<form action="write.reli" method="post">
-<h2 style="margin-top:10px;">신고 유형</h2>
-<input type="text" placeholder="게시글유형자동등록" class="titleinput" name ="reliType" value="${re.reportType1}" readonly>
+<form action="update.re" method="post">
+<input type="hidden" name="reportNo" value="${re.reportNo}">
+<h4 style="margin-top:15px; text-align:center;">게시판유형</h4>
+<input type="text" value="${re.reportType1}" class="titleinput" readonly>
+
 <br><br><br>
-<h2>신고 계정</h2>
-<input type="text" placeholder="신고계정명" class="titleinput"  name="memNickName">
-<br><br><br>
-<h2 style="margin-left:35px;">내용</h2>
-<textarea class="content" name="reliContent">내용을 입력해주세요.</textarea>
+
+
+<h4 style="margin-left:35px;">내용</h4>
+<textarea class="content" name="reportContent">${re.reportContent}</textarea>
 <br><br><br><br>
-<h2>사진 첨부</h2>
+<h4>사진 첨부</h4>
 <div class="uploadfile">
 <input type="file" style="margin-top:5px; float:right;" >
 </div>
 
-<h2 >신고 링크</h2>
-<input type="hidden" name="reliLink" value="${re.reportLink}">
+<h4>신고 링크</h4>
 <a href="${re.reportLink}" style="margin-left:30px; font-size:20px;">${re.reportLink}</a>
 <br><br><br><br><hr>
 
 <div class="foot">
-<button class="cancelButton" onclick="javascript:history.go(-1);">취소</button> 
+<button type="reset" class="cancelButton" onclick="javascript:history.go(-1);">취소</button> 
 <button type="submit" class="uploadButton">등록하기</button>
-</div>
-</form> 
- 
+</div> 
+ </form>
 
 </div>
 <jsp:include page="../common/footer.jsp"/>

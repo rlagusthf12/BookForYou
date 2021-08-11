@@ -44,7 +44,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;    
     font-size: 20px;
-    margin-left: 40px;
+    margin-left: 80px;
 	}
 	
 	.content{
@@ -65,6 +65,7 @@
 		line-height: 3em;
 		border-radius: 4px;
 		background-color: rgb(224, 224, 224);
+		border:0px;
 		width:136px;
 		height:48px;		
 		margin-top:100px;
@@ -84,25 +85,29 @@
 </head>
 <body>
 
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
 <div class="faqTitle">FAQ</div>
-
-<h2 style="margin-top:10px;">문의 제목</h2>
-<input type="text" placeholder="제목을 입력해주세요." class="titleinput">
+<form action="write.faq" metod="post">
+<h2 style="margin-top:10px; margin-left:35px;">질문</h2>
+<input type="text" placeholder="질문을 입력해주세요." class="titleinput" name="faqQue">
 <br><br><br>
 <h2 style="margin-top:10px;">유형 선택</h2>
-<select style="margin-left:40px;"><option>기타</option></select>
+<select style="margin-left:45px;" name="queTypeNo">
+<c:forEach var="q" items="${list1}">
+<option value="${q.queTypeNo}">${q.queType}</option>
+</c:forEach>
+</select>
 <br><br><br>
 
-<h2 style="margin-left:35px;">내용</h2>
-<textarea class="content">문의내용</textarea>
+<h2 style="margin-left:35px;">답변</h2>
+<textarea class="content" name="faqAns">문의답변</textarea>
 
-<div class="uploadButton">등록하기</div> 
- 
-<div class="ListButton">목록으로</div>
+<button type ="submit" class="uploadButton">등록하기</button> 
+ </form>
+<div class="ListButton" onclick="javascript:history.go(-1);">목록으로</div>
 </div>
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

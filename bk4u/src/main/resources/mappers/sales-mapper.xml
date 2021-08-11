@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="salesMapper">
+
+	<resultMap id="salesResult" type="Sales">
+	
+		<result column="dt" property="dt"/>
+		<result column="orders" property="order"/>
+		<result column="sub" property="sub"/>
+		<result column="pr" property="sales"/>			
+	</resultMap>
+	
+	
+	
+	<select id="yearsSales" resultMap="salesResult">
+		select to_char(pay_date ,'YYYY') dt, sum(price) pr, 
+		sum(price)-nvl(sum(subsc_price),0) orders, nvl(sum(subsc_price),0) sub
+		from payment left outer join subscription using(pay_no)
+        left outer join orders using(pay_no)
+		where status in('결제완료','입금완료')
+		group by to_char(pay_date ,'YYYY')
+		order by  to_char(pay_date ,'YYYY') asc
+	</select>
+	
+	<select id="monthSales" resultMap="salesResult">		
+		select to_char(pay_date ,'YYYY-MM') dt, sum(price) pr, 
+		sum(price)-nvl(sum(subsc_price),0) orders, nvl(sum(subsc_price),0) sub
+		from payment left outer join subscription using(pay_no)
+        left outer join orders using(pay_no)
+		where status in('결제완료','입금완료') and to_char(pay_date ,'YYYY') = #{d}
+		group by to_char(pay_date ,'YYYY-MM')
+		order by  to_char(pay_date ,'YYYY-MM') asc
+	</select>
+	
+	<select id="dailySales" resultMap="salesResult">	
+		select to_char(pay_date ,'YYYY-MM-dd') dt, sum(price) pr,
+				sum(price)-nvl(sum(subsc_price),0) orders, nvl(sum(subsc_price),0) sub
+		from payment left outer join subscription using(pay_no)
+        left outer join orders using(pay_no)
+		where status in('결제완료','입금완료') and to_char(pay_date ,'YYYY-MM') = #{d}
+		group by to_char(pay_date ,'YYYY-MM-dd')
+		order by  to_char(pay_date ,'YYYY-MM-dd') asc
+	</select>	
+	
+	
+
+	
+</mapper>

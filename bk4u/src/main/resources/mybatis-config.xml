@@ -33,6 +33,9 @@
 		<typeAlias type="com.bookforyou.bk4u.qa.model.vo.As" alias="As"/>
 		<typeAlias type="com.bookforyou.bk4u.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.bookforyou.bk4u.point.model.vo.Point" alias="Point"/>
+		<typeAlias type="com.bookforyou.bk4u.report.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.bookforyou.bk4u.report.model.vo.ReportList" alias="ReportList"/>
+		<typeAlias type="com.bookforyou.bk4u.sales.model.vo.Sales" alias="Sales"/>
 	</typeAliases>
 
 	<mappers>
@@ -50,7 +53,10 @@
 		<mapper resource="/mappers/cs-mapper.xml"/>
 		<mapper resource="/mappers/store-mapper.xml"/>
 		<mapper resource="/mappers/qa-mapper.xml"/>
-		<mapper resource="/mappers/board-mapper.xml"/>	
+		<mapper resource="/mappers/board-mapper.xml"/>
+		<mapper resource="/mappers/report-mapper.xml"/>	
+		<mapper resource="/mappers/sales-mapper.xml"/>	
+		<mapper resource="/mappers/faq-mapper.xml"/>
 	</mappers>
 
 </configuration>

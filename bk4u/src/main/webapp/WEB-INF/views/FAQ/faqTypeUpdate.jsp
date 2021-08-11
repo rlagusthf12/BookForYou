@@ -89,36 +89,58 @@ display:inline-block;
 	text-align:center;
 
 	}
+	.delete{
+	width:100px;
+	height:100px;
+	text-align:center;
+	float:right;
+	
+	}
 </style>
 
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
 <div class="quetitle">문의 유형별 도움말</div>
+
+<form action="updateQueType.faq" method="post">
+
 <div class="quelist">
-<div class="queTypeList" >결제/환불  <input type="checkbox"checked></div>
-<div class="queTypeList" >쇼핑몰이용문의 <input type="checkbox"checked> </div>
-<div class="queTypeList">사용자 계정 문의 <input type="checkbox"checked></div>
+
+<c:forEach var="t" items="${list1}" varStatus="a">
+<input type="hidden" name="faqList1[${a.index}].queTypeNo" value="${t.queTypeNo}">
+<div class="queTypeList"><textarea name="faqList1[${a.index}].queType">${t.queType}</textarea>
+<div class="delete">삭제</div></div>
+</c:forEach>
+
 <div id="addList"></div>
 <div class="queTypeList" id="add">목록 추가+</div>
 </div>
 <div class="updatebutton">
-<span class="updateFAQList"><b>목록수정</b></span>
+<button type="submit" class="updateFAQList">목록 수정</button>
 </div>
+</form>
 
 
-<div class="ListButton">목록으로</div>
+<div class="ListButton" onclick="location.href='main.faq'">목록으로</div>
 </div>
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 <script>
-        $(function(){
+        $(function(){        
+        	
             $("#add").click(function(){
-           		var add=$("<div class='queTypeList'><textarea></textarea><input type='checkbox'checked></div>"); 
+            	var i=$('.queTypeList').length-1;
+           		var add=$("<div class='queTypeList'><textarea name='faqList1["+i+"].queType'></textarea><div class='delete'>삭제</div></div>"); 
             		
                $("#addList").append(add);
-            })
-        })
+            });   
+          
+            	$(document).on("click",".delete",function(){
+            		  $(this).parent().remove();
+            		
+            		});
+        });     
     </script>
 </body>
 </html>

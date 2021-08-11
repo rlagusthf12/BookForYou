@@ -29,17 +29,13 @@
 	color: rgb(158, 158, 158);
 	margin-bottom:40px;
 	}
-	.reportDate{
-	font-size: 18px; 
-	color: rgb(158, 158, 158);
-	margin-bottom:10px;
-	}
 	
 	.reportContent{
 	font-size: 20px;
 	width:765px;
 	height:503px;
 	}
+
 	.Button{
 	font-size: 16px; 
 	color: rgb(0, 0, 0); 
@@ -70,38 +66,20 @@
 <body>
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
-	<div class="reportTitle">1:1문의</div>
+	<div class="reportTitle">신고 사유</div>
 	<hr>
-	<div class="reportLittleTitle">${q.memNickName}</div>
-	<div class="reportDate">${q.qaDate}</div>
-	<div class="reportType">${q.queType}</div>
+	<div class="reportLittleTitle">신고 번호: ${reli.reliNo} <br><br>제재자 명:&nbsp;<b>${reli.memNickName}</b></div>
+	<div class="reportType">${reli.reliType}&nbsp;&nbsp;&nbsp;<a href="${reli.reliLink}">신고글링크</a></div>	
 	<div class="reportContent">
-	<p>${q.qaContent}</p>	
+	<p>${reli.reliContent}</p>	
 	</div>	
 	<hr>
 			
-	<div class="Button" onclick="location.href='updateForm.qa?qaNo=${q.qaNo}'">수정</div>
-	<div class="Button" onclick="location.href='delete.qa?qaNo=${q.qaNo}'">삭제</div>
-	<c:if test="${q.ansStatus=='N'}">
-	<div class="Button" onclick="location.href='writeForm.as?qaNo=${q.qaNo}'">답변 작성</div>
-	</c:if>
-	<c:if test="${!empty a}">
-	<div class="reportTitle">답변</div>
-	<hr>
-	<div class="reportLittleTitle">관리자</div>
-	<div class="reportDate">${a.asDate}</div>
-	<div class="reportType">${q.queType}</div>
-	<div class="reportContent">
-	<p>${a.asContent}</p>	
-	</div>	
-	<hr>
-	<c:if test="${loginUser.memNo==1}">
-	<div class="Button" onclick="location.href='updateForm.as?qaNo=${q.qaNo}'">수정</div>
-	</c:if>
-	</c:if>
-			
-	<div class="ListButton" onclick="location.href='list.qa'">목록으로</div>
+	<div class="Button" onclick="location.href='updateForm.reli?reliNo=${reli.reliNo}'">수정</div>
+	<div class="Button" onclick="location.href='delete.reli?reliNo=${reli.reliNo}'">삭제</div>	
+	
+	<div class="ListButton" onclick="location.href='list.reli'">목록으로</div>
 	</div>
-	<jsp:include page="../common/footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

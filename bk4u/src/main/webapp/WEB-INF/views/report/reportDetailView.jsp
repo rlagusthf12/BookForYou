@@ -63,25 +63,24 @@
 
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	<div class="reportTitle">신고</div>
 	<hr>
-	<div class="reportLittleTitle">신고 1</div>
-	<div class="reportType">독서모임&nbsp;&nbsp;&nbsp;<a href="">신고글링크</a></div>
+	<div class="reportLittleTitle">신고 번호: ${re.reportNo}</div>
+	<div class="reportType">${re.reportType1}&nbsp;&nbsp;&nbsp;<a href="${re.reportLink}">신고글링크</a></div>
 	
 	<div class="reportContent">
-	<p>신고 내용</p>
-	<img src="">
+	<p>${re.reportContent}</p>	
 	</div>	
 	<hr>
 			
-	<div class="Button">수정</div>
-	<div class="Button">삭제</div>
+	<div class="Button" onclick="location.href='updateForm.re?reportNo=${re.reportNo}'">수정</div>
+	<div class="Button" onclick="location.href='delete.re?reportNo=${re.reportNo}'">삭제</div>
+	<div class="Button" onclick="location.href='writeForm.reli?reportNo=${re.reportNo}'">경고작성</div>
 	
-	
-	<div class="ListButton">목록으로</div>
+	<div class="ListButton" onclick="location.href='list.re'">목록으로</div>
 	</div>
-	<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

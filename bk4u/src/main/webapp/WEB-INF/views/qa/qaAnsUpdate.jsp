@@ -63,7 +63,17 @@
 	margin-left:340px;
 	margin-bottom:200px;
 	}
-
+.content{
+	color: rgb(94, 94, 94); 
+	background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;    
+    font-size: 20px;
+	width:767px;
+	height:450px;
+	resize:none;
+	margin-bottom:20px;	
+	}
 </style>
 
 </head>
@@ -79,28 +89,26 @@
 	<p>${q.qaContent}</p>	
 	</div>	
 	<hr>
-			
-	<div class="Button" onclick="location.href='updateForm.qa?qaNo=${q.qaNo}'">수정</div>
-	<div class="Button" onclick="location.href='delete.qa?qaNo=${q.qaNo}'">삭제</div>
-	<c:if test="${q.ansStatus=='N'}">
-	<div class="Button" onclick="location.href='writeForm.as?qaNo=${q.qaNo}'">답변 작성</div>
-	</c:if>
-	<c:if test="${!empty a}">
+	
+	
+	<form action="update.as" method="post">
+	<input type="hidden" name="qaNo" value="${q.qaNo}">
+	<input type="hidden" name="memNo" value="1">
+	<input type="hidden" name="ansStatus" value="Y">
 	<div class="reportTitle">답변</div>
 	<hr>
-	<div class="reportLittleTitle">관리자</div>
-	<div class="reportDate">${a.asDate}</div>
-	<div class="reportType">${q.queType}</div>
+	<div class="reportLittleTitle">관리자</div>	
 	<div class="reportContent">
-	<p>${a.asContent}</p>	
+	<textarea class="content" placeholder="답변  내용" name="asContent">${a.asContent}</textarea>	
+	<input type="file">
 	</div>	
 	<hr>
-	<c:if test="${loginUser.memNo==1}">
-	<div class="Button" onclick="location.href='updateForm.as?qaNo=${q.qaNo}'">수정</div>
-	</c:if>
-	</c:if>
+	<button class="Button" type="submit">답변등록</button>
+	</form>
 			
 	<div class="ListButton" onclick="location.href='list.qa'">목록으로</div>
+	
+	
 	</div>
 	<jsp:include page="../common/footer.jsp"/>
 </body>

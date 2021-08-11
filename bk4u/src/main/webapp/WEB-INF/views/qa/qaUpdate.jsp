@@ -102,12 +102,14 @@
 
 <jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
-<form action="write.qa" method="post">
-<input type="hidden" name="memNo" value="7">
+<form action="update.qa" method="post">
+<input type="hidden" name="qaNo" value="${q.qaNo}">
+
 <div class="faqTitle">1:1문의 하기</div>
 
 <h2 style="margin-top:10px;">유형 선택</h2>
 <select style="margin-left:45px;" name="queTypeNo">
+<option value="${q.queTypeNo}" selected>${q.queType}</option>
 <c:forEach var="q" items="${list1}">
 <option value="${q.queTypeNo}">${q.queType}</option>
 </c:forEach>
@@ -115,7 +117,7 @@
 <br><br><br>
 
 <h2 style="margin-left:40px;">내용</h2>
-<textarea class="content" placeholder="문의내용" name="qaContent"></textarea>
+<textarea class="content" placeholder="문의내용" name="qaContent">${q.qaContent}</textarea>
 <br><br><br><br>
 <h2>사진 첨부</h2>
 <div class="uploadfile">
@@ -134,7 +136,7 @@
 $(document).ready(function() { 
 	$("input:checkbox").on('click', function() { 
 		if ( $(this).prop('checked') ) { 
-			$(".emailOn").append("<input type='text' class='email' name='email'>");
+			$(".emailOn").append("<input type='text' class='email' name='email' value='${q.email}'>");
 			} else {
 				$(".emailOn").empty();
 			}
