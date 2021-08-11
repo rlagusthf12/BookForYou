@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -17,6 +19,9 @@ import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 
 @Repository
 public class MypageDao {
@@ -107,6 +112,49 @@ public class MypageDao {
 		return sqlSession.selectOne("groupMapper.selectMyReadingGroupMemberCount",groupBoardNo);
 	}
 
+	public ArrayList<OrderDetail> selectMyOrderDetailList(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("orderMapper.selectMyOrderDetailList",orderNo);
+	}
+
+	public int selectMyOrderDetailQuantity(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("orderMapper.selectMyOrderDeatilQuantity",orderNo);
+	}
+
+	public Order selectMyOrder(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("orderMapper.selectOrder",orderNo);
+	}
+
+	public Payment selectOrderedPayment(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("paymentMapper.selectOrderedPayment",orderNo);
+	}
+
+	public int insertMyOrderCancel(SqlSessionTemplate sqlSession, Cancel cancelData) {
+		return sqlSession.insert("csMapper.insertMyOrderCancel",cancelData);
+	}
+
+	public int updateMyOrderDelivered(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.update("orderMapper.updateMyOrderDelivered",orderNo);
+	}
+
+	public int updateMyOrderDetailDelivered(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.update("orderMapper.updateMyOrderDetailDelivered",orderNo);
+	}
+
+	public int insertOrderPoint(SqlSessionTemplate sqlSession, Point point) {
+		return sqlSession.insert("pointMapper.insertMyPoint",point);
+	}
+
+	public int insertMyOrderReturn(SqlSessionTemplate sqlSession, Return rt) {
+		return sqlSession.insert("csMapper.insertMyOrderReturn",rt);
+	}
+
+	public int selectMyReturnCount(SqlSessionTemplate sqlSession, Return rt) {
+		return sqlSession.selectOne("csMapper.selectMyReturnCount",rt);
+	}
+
+	public int selectMyCancelCount(SqlSessionTemplate sqlSession, Cancel cancelData) {
+		return sqlSession.selectOne("csMapper.selectMyCancelCount",cancelData);
+	}
 
 
 

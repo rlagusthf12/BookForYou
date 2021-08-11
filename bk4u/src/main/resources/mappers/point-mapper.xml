@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pointMapper">
+	<resultMap id="pointResult" type="Point">
+		<result column="point_no" property="pointNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="order_no" property="orderNo"/>
+		<result column="subsc_no" property="subscNo"/>
+		<result column="point_content" property="pointContent"/>
+		<result column="point_price" property="pointPrice"/>
+		<result column="occurrence_date" property="occurrenceDate"/>
+	</resultMap>
+	
+	<insert id="insertMyPoint">
+		insert
+		  into point
+		  (
+		  	point_no,
+		  	mem_no,
+		  	order_no,
+		  	point_content,
+		  	point_price
+		  )
+	    values
+	         (
+	           seq_pointno.nextval,
+	           #{memNo},
+	           #{orderNo},
+	           #{pointContent},
+	           #{pointPrice}
+	         )
+	</insert>
+
+</mapper>

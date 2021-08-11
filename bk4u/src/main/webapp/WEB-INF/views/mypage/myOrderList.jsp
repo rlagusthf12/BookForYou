@@ -358,7 +358,7 @@
                         </c:if>
                         <c:forEach var="order" items="${list }">
                             <tr>
-                                <th scope="row">${order.orderNo }</th>
+                                <th scope="row" class="ono">${order.orderNo }</th>
                                 <td>${order.orderDate }</td>
                                 <td id="book-title">${order.bkTitle }</td>
                                 <td>${order.orderPriceComma }</td>
@@ -367,6 +367,14 @@
                        </c:forEach>  
                         </tbody>
                     </table>
+                    <script type="text/javascript">
+            		$(function(){
+            			$("#order-list-box>table>tbody>tr").click(function(){
+            			console.log("확인");
+            			location.href = "my-order-detail.mp?orderNo=" + $(this).children(".ono").text();
+            		})
+            		})
+            	</script>
                 </div>
                 <c:choose>
                 <c:when test="${ !empty list }">

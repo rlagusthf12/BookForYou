@@ -32,6 +32,8 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.service.MailSendService;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.service.MemberService;
@@ -41,6 +43,9 @@ import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.service.MypageService;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.qa.model.service.QaService;
 import com.bookforyou.bk4u.qa.model.vo.Qa;
 import com.google.gson.Gson;
@@ -657,6 +662,151 @@ public class MypageController {
 		model.addAttribute("pi",pi);
 		
 		return "mypage/myReadingGroup";
+	}
+	
+	/**
+	 * 마이페이지 특정 주문의 상세 페이지로 이동하는 메서드
+	 * @param orderNo
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("my-order-detail.mp")
+	public String selectMyOrderDetail(int orderNo,HttpSession session,Model model) {
+		ArrayList<OrderDetail> list = mypageService.selectOrderDetailList(orderNo);
+		int bookCount = mypageService.selectMyOrderDeatilQuantity(orderNo);
+		Order order = mypageService.selectOrder(orderNo);
+		Payment payment = mypageService.selectOrderedPayment(orderNo);
+		
+		model.addAttribute("list",list);
+		model.addAttribute("count",bookCount);
+		model.addAttribute("order",order);
+		model.addAttribute("payment",payment);
+		
+		return "mypage/myOrderDetail";
+		
+	}
+	
+	/**
+	 * 마이페이지 내 주문 취소
+	 * @author 안세아
+	 * @param orderNo
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("cancel-my-order.mp")
+	public String insertMyOrderCancel(int orderNo,String cancelReason,HttpSession session) {
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("orderNo",orderNo);
+		map.put("cancelReason",cancelReason);
+		
+		Cancel cancelData = new Cancel();
+		cancelData.setOrderNo(orderNo);
+		cancelData.setCancelReason(cancelReason);
+		cancelData.setStatus("취소신청");
+		
+		// 이미 접수된 내역인지 확인
+		int count = mypageService.selectMyCancelCount(cancelData);
+		
+		if(count == 0) {
+			//주문 취소 테이블에 주문번호, 취소 사유 insert, 취소신청
+			int result = mypageService.insertMyOrderCancel(cancelData);
+			
+			if(result > 0) {
+				session.setAttribute("cancelMsg", "주문 취소 접수가 완료되었습니다.");
+				return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+			}else {
+				session.setAttribute("cancelMsg", "주문 취소 접수에 실패하였습니다.Q&A에 문의 부탁드립니다.");
+				return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+			}
+		}else {
+			session.setAttribute("cancelMsg", "주문 취소 접수가 이미 진행중입니다.");
+			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+		}
+		
+	}
+	
+	/**
+	 * 마이페이지 내 주문 수취확인 및 구매확정 (주문/주문상세 상태 배송완료로 바뀌고, 포인트 적립됨)
+	 * @author 안세아
+	 * @param orderNo
+	 * @param price
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("update-my-order-delivered.mp")
+	public String updateMyOrderDelivered(int orderNo, int price, HttpSession session) {
+		log.info("price: " + price);
+		
+		Member member = (Member) session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		
+		int result = mypageService.updateMyOrderDelivered(orderNo);
+		log.info("result : " + result);
+		int result2 = mypageService.updateMyOrderDetailDelivered(orderNo);
+		log.info("result2 : " + result2);
+		if(result > 0 && result2 > 0) {
+			int pt = (int) Math.round(price / 10);
+			Point point = new Point();
+			point.setPointPrice(pt);
+			point.setMemNo(memNo);
+			point.setOrderNo(orderNo);
+			point.setPointContent("적립");
+			
+			int result3 = mypageService.insertOrderPoint(point);
+			log.info("result3 : " + result3);
+			if(result3 > 0) {
+				session.setAttribute("orderDeliveredMsg", "구매가 확정되고 포인트가 적립되었습니다.");
+				return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+			}else {
+				session.setAttribute("orderDeliveredMsg", "구매 확정이 실패하였습니다.");
+				return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+			}
+		}else {
+			session.setAttribute("orderDeliveredMsg", "구매 확정이 실패하였습니다.");
+			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+		}
+	}
+	/**
+	 * 마이페이지 내 주문 반품 신청
+	 * @author 안세아
+	 * @param orderNo
+	 * @param returnReason
+	 * @param etcText
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("return-my-order.mp")
+	public String updateMyOrderReturn(int orderNo, String returnReason, String etcText, HttpSession session) {
+		Member member = (Member) session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		Return rt = new Return();
+		rt.setOrderNo(orderNo);
+		rt.setStatus("반품신청");
+		if(returnReason.equals("기타")) {
+			rt.setReturnReason(etcText);
+		}else {
+			rt.setReturnReason(returnReason);
+		}
+		// 이미 접수된 내역인지 확인
+		int count = mypageService.selectMyReturnCount(rt);
+		
+		if(count == 0) {
+		
+			int result = mypageService.insertMyOrderReturn(rt);
+		
+			if(result > 0) {
+				session.setAttribute("cancelMsg", "반품 처리 접수가 완료되었습니다.");
+				return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+			}else {
+				session.setAttribute("cancelMsg", "반품 접수에 실패하였습니다. Q&A에 문의부탁드립니다.");
+				return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+			}
+		}else {
+			session.setAttribute("cancelMsg", "이미 반품 접수된 내역이 있습니다.");
+			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+		}
 	}
 	
 	

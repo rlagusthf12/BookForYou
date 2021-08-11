@@ -618,5 +618,54 @@
 		     )
 	</insert>
 	
+	<!-- [사용자] 내 주문 취소 접수 하기 (세아) -->
+	<insert id="insertMyOrderCancel">
+		insert
+		into cancel
+		(
+			cancel_no,
+			order_no,
+			cancel_reason,
+			status	
+		)
+		values
+		(
+			seq_cancelno.nextval,
+			#{orderNo},
+			#{cancelReason},
+			#{status}
+		)
+	</insert>
+	
+	<!-- [사용자] 내 주문 반품 접수하기 (세아) -->
+	<insert id="insertMyOrderReturn">
+		insert
+		into return
+		(
+			return_no,
+			order_no,
+			return_reason,
+			status
+		)values
+		(
+			seq_reno.nextval,
+			#{orderNo},
+			#{returnReason},
+			#{status}
+		)
+	</insert>
+	
+	<select id="selectMyReturnCount" resultType="_int">
+		select count(*)
+		from return
+		where order_no = #{orderNo}
+	</select>
+	
+	<select id="selectMyCancelCount" resultType="_int">
+		select count(*)
+		from cancel
+		where order_no = #{orderNo}
+	</select>
+	
 	
 </mapper>

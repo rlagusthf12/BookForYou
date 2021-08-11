@@ -6,12 +6,17 @@ import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 
 public interface MypageService {
 
@@ -50,6 +55,30 @@ public interface MypageService {
 	ArrayList<GroupBoard> selectMyReadingGroupList(PageInfo pi, int memNo);
 
 	int selectMyReadingGroupMemberCount(int groupBoardNo);
+
+	ArrayList<OrderDetail> selectOrderDetailList(int orderNo);
+
+	int selectMyOrderDeatilQuantity(int orderNo);
+
+	Order selectOrder(int orderNo);
+
+	Payment selectOrderedPayment(int orderNo);
+
+	int insertMyOrderCancel(Cancel cancelData);
+
+	int updateMyOrderDelivered(int orderNo);
+
+	int updateMyOrderDetailDelivered(int orderNo);
+
+	int insertOrderPoint(Point point);
+
+	int insertMyOrderReturn(Return rt);
+
+	int selectMyReturnCount(Return rt);
+
+	int selectMyCancelCount(Cancel cancelData);
+
+
 
 
 

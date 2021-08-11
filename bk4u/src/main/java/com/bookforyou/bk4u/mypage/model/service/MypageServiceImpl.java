@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -19,6 +21,9 @@ import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.mypage.model.dao.MypageDao;
 import com.bookforyou.bk4u.mypage.model.vo.MyList;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.order.model.vo.OrderDetail;
+import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -119,6 +124,64 @@ public class MypageServiceImpl implements MypageService {
 	public int selectMyReadingGroupMemberCount(int groupBoardNo) {
 		return mypageDao.selectMyReadingGroupMemberCount(sqlSession,groupBoardNo);
 	}
+
+	@Override
+	public ArrayList<OrderDetail> selectOrderDetailList(int orderNo) {
+		return mypageDao.selectMyOrderDetailList(sqlSession,orderNo);
+	}
+
+	@Override
+	public int selectMyOrderDeatilQuantity(int orderNo) {
+		return mypageDao.selectMyOrderDetailQuantity(sqlSession,orderNo);
+	}
+
+	@Override
+	public Order selectOrder(int orderNo) {
+		return mypageDao.selectMyOrder(sqlSession,orderNo);
+	}
+
+	@Override
+	public Payment selectOrderedPayment(int orderNo) {
+		return mypageDao.selectOrderedPayment(sqlSession,orderNo);
+	}
+
+	@Override
+	public int insertMyOrderCancel(Cancel cancelData) {
+		return mypageDao.insertMyOrderCancel(sqlSession,cancelData);
+	}
+
+	@Override
+	public int updateMyOrderDelivered(int orderNo) {
+		return mypageDao.updateMyOrderDelivered(sqlSession,orderNo);
+	}
+
+	@Override
+	public int updateMyOrderDetailDelivered(int orderNo) {
+		return mypageDao.updateMyOrderDetailDelivered(sqlSession, orderNo);
+	}
+
+	@Override
+	public int insertOrderPoint(Point point) {
+		return mypageDao.insertOrderPoint(sqlSession,point);
+	}
+
+	@Override
+	public int insertMyOrderReturn(Return rt) {
+		return mypageDao.insertMyOrderReturn(sqlSession,rt);
+	}
+
+	@Override
+	public int selectMyReturnCount(Return rt) {
+		return mypageDao.selectMyReturnCount(sqlSession,rt);
+	}
+
+	@Override
+	public int selectMyCancelCount(Cancel cancelData) {
+		return mypageDao.selectMyCancelCount(sqlSession,cancelData);
+	}
+
+
+
 
 
 }

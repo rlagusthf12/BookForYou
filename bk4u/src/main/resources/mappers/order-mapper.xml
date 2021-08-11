@@ -670,13 +670,29 @@
 		where order_no = #{orderNo}
 	</select>
 	
-	<!-- [사용자] 마이페이지 주문 상세 책의 총 개수 조회 -->
+	<!-- [사용자] 마이페이지 주문 상세 책의 총 개수 조회(세아) -->
 	<select id="selectMyOrderDeatilQuantity" resultType="_int">
 		select 
        		count(quantity)
 		from order_detail
 		where order_no = #{orderNo}
 	</select>
+	
+	<!-- [사용자] 마이페이지 주문 상태 변경(세아) -->
+	<update id="updateMyOrderDelivered">
+		update
+			orders
+		set order_status='배송완료'
+		where order_no = #{orderNo}
+	</update>
+	
+	<!-- [사용자] 마이페이지 주문 상세 상태 변경(세아) -->
+	<update id="updateMyOrderDetailDelivered">
+		update
+			order_detail
+		set detail_status='배송완료'
+		where order_no = #{orderNo}
+	</update>
 	
 	
 </mapper>
