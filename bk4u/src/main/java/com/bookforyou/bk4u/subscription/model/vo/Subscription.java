@@ -19,7 +19,7 @@ public class Subscription {
 	private String subscName;
 	private String subscPeriod;
 	private String subscPrice;
-	private Date subscSdate;
+	private String subscSdate;
 	private String subscEndDate;
 	private int subscDelDate;
 	private String subscStatus;
