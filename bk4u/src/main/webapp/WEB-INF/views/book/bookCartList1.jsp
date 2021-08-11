@@ -354,7 +354,6 @@
 			<c:forEach var="b" items="${ bList }" varStatus="status">
             <div class="cart_book">
                 <input type="checkbox" name="bkNo" value="${ b.bkNo }">
-                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
                 <div class="book_info">
                     <div>
                         <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
@@ -371,7 +370,7 @@
                         <div><input type="number" name="bookList[${ status.index }].bkQty" min="1" max="5" value="${ b.bkQty }"></div>
                         <div><button class="btn_qty">수량변경</button></div>
                     </div>
-                    <div><span>${ b.bkPrice }</span>원</div>
+                    <div>${ b.bkPrice }원</div>
                     <div>
                         <div>주문하기</div>
                         <div>리스트</div>
@@ -382,6 +381,16 @@
             </div>
             </c:forEach>
             </form>
+            
+            <script>
+	            var array = new Array();
+	            $('input:checkbox[name=bkNo]:checked').each(function() {
+	                array.push(this.val());
+	            });
+	            			
+	            $("#bkNoArr").val(array);
+	            $("#orderForm").submit();
+            </script>
             
             <script>
 	        	$(".book_info>div:nth-child(4)>div:nth-child(2)").click(function(){
@@ -465,10 +474,7 @@
             </script>
             
             <script>
-            	var allPrice = 0;
-            </script>
             
-            <script>
             /*
             $("#check_all").change(function(){
             	if($("#check_all").is(":checked")){
@@ -480,34 +486,24 @@
             */
             
             $("#check_all").change(function(){
-            	if($("#check_all").is(":checked")){
+            	if($("#check_all").prop(":checked")){
             		$(".cart_book").children("input[type=checkbox]").prop('checked', true);
-            		allPrice = 82000;
-                	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
-            		
             	}else{
             		$(".cart_book").children("input[type=checkbox]").prop('checked', false);
-                	allPrice = 0;
-                	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
             	}
             })
-            </script>
             
-            <script>
-            $(".cart_book input[type=checkbox]").change(function(){
-            	
-                var bq = $(this).next().next().children().eq(1).children().eq(0).children("input").val();
-                var bp = $(this).next().next().children().eq(2).children("span").text();
-            	
-            	if($(this).is(":checked")){
-	                allPrice += (bq * bp);
-	            }else{
-	                allPrice -= (bq * bp);
-	            }
-            	
-            	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
-            	
-            });
+            $(".cart_book").children("input[type=checkbox]").change(function(){
+            	$(".cart_book").children("input[type=checkbox]").each(function() {
+	                if($(this).prop(":checked")){
+	                	var bq = $(this).next().chldren().eq(1).children.eq(0).children("input").val();
+	                	var bp = $(this).next().chldren().eq(1).children.eq(3).text();
+	                	
+	                	console.log(bq);
+	                	console.log(bp);
+	                }
+	            });
+            })
             </script>
             
             <div id="cart_bottom">
