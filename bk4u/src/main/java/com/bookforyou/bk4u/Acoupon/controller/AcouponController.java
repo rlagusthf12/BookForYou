@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.Acoupon.model.service.AcouponService;
 import com.bookforyou.bk4u.Acoupon.model.vo.Acoupon;
-import com.bookforyou.bk4u.Amember.model.vo.Amem;
+
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 
@@ -43,23 +44,7 @@ public class AcouponController {
 	
 	
 	
-	@RequestMapping("couponList.me")
-	public String AcouponList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
-		
-		//System.out.println(currentPage);
-		
-		int acouponCount = acService.selectAcouponListCount();
-		
-		PageInfo pi = Pagination.getPageInfo(acouponCount, currentPage, 10, 5);
-		ArrayList<Acoupon> list = acService.selectList(pi);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
-		System.out.println(acouponCount);
-		
-		return "Acoupon/couponList";
-	}
 	
+
+}	
 	
-}

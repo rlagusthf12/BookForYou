@@ -154,21 +154,23 @@
         <tr>
             <th height="50">쿠폰 카테고리</th>
             <td colspan="3" align="left"> &nbsp;&nbsp;
-                <input type="radio" name="couponKind" value="choice" required> 선택
-                <select name="bookcategory">
-                    <option value="1">소설</option>
-                    <option value="2">문학</option>
-                    <option value="3">비문학</option>
-                    <option value="4">만화</option>
-                    <option value="5">수필</option>
-                    <option value="6">기타</option>
+                <input type="radio" required> 선택
+                <select name="couponKind">
+                    <option value="소설">소설</option>
+                    <option value="문학">문학</option>
+                    <option value="비문학">비문학</option>
+                    <option value="만화">만화</option>
+                    <option value="수필">수필</option>
+                    <option value="모든상품가능">기타</option>
                 </select>
 
                 &nbsp;&nbsp;&nbsp;
-
-                <input type="radio"  name="couponKind" value="choice"> 직접입력
+			<!-- 없어도 될거같아서 일단 주석
+                <input type="radio"  name="couponKind"> 직접입력
                 <input type="text" name="category">
+            -->
             </td>
+            
         </tr>
         <!--  
         <tr>

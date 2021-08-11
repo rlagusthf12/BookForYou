@@ -24,5 +24,5 @@ public class Acoupon {
 	private Date couponStartDate;
 	private Date couponEndDate;
 	private String couponStatus;
-	
+
 }
