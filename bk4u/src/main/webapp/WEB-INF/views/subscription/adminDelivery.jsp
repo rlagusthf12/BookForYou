@@ -57,25 +57,119 @@
 		    		success:function(list){
 		    			events = [];
 		    			var d = "";
-		    			
-		 
+		
 		    			for(i=0; i<list.length; i++) {
 		    				
-		    				for(j=0; j<list[i].subscPeriod.substring(0, 1); j++) {
-		    					if(Number(list[i].subscSdate.substring(0, 1))+j < 10) {
+		    				var period = list[i].subscPeriod.split('개');
+		    				for(j=0; j<period[0]; j++) {
+		    					
+		    					//console.log(Number(list[i].subscSdate.substring(4, 6)) + j);
+		    					/*
+		    					if(Number(list[i].subscSdate.substring(4, 6))+j > 12) {
 		    						if(Number(list[i].subscDelDate) < 10) {
-		    							d=list[i].subscSdate.substring(7) + '-0' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-0' + list[i].subscDelDate
+		    							d=(Number(list[i].subscSdate.substring(0, 4))+1) + '-' + list[i].subscSdate.substring(4, 6) + '-0' + list[i].subscDelDate;
 		    						}else {
-			    						d=list[i].subscSdate.substring(7) + '-0' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-' + list[i].subscDelDate		    							
+			    						d=(Number(list[i].subscSdate.substring(0, 4))+1) + '-' + list[i].subscSdate.substring(4, 6) + '-' + list[i].subscDelDate;		    							
 		    						}
 		    					}else {
-		    						if(Number(list[i].subscDelDate) < 10) {
-		    							d=list[i].subscSdate.substring(7) + '-' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-0' + list[i].subscDelDate
+		    						if(Number(list[i].subscSdate.substring(4, 6))+j < 10) {
+			    						if(Number(list[i].subscDelDate) < 10) {
+			    							d=list[i].subscSdate.substring(0, 4) + '-0' + (Number(list[i].subscSdate.substring(4, 6))+j) + '-0' + list[i].subscDelDate;
+			    						}else {
+				    						d=list[i].subscSdate.substring(0, 4) + '-0' + (Number(list[i].subscSdate.substring(4, 6))+j) + '-' + list[i].subscDelDate;		    							
+			    						}		    							
+		    						}
+		    					}
+		    					*/
+		    					/*
+		    					var strY = list[i].subscSdate.substring(0, 4);
+		    					var strM = list[i].subscSdate.substring(4, 6);
+		    					var strD;
+		    					if(list[i].subscDelDate < 10) {
+		    						strD = "0" + list[i].subscDelDate;
+		    					}else {
+			    					strD = list[i].subscDelDate;
+		    					}
+		    					var strDate = strY + '-' + strM + '-' + strD;
+		    					
+		    					var realDate = new Date(strDate);
+		    					
+		    					const formatDate = (realDate)=>{
+		    						let formatted_date = realDate.getDate() + "-" + (realDate.getMonth() + 1) + "-" + realDate.getFullYear();
+		    						return formatted_date;
+		    					}
+		    					
+		    					var $date = formatDate(realDate);
+		    					*/
+		    					
+		    					var yyyy = list[i].subscSdate.substring(0, 4);
+		    					var mm = list[i].subscSdate.substring(4, 6);
+		    					var dd = list[i].subscDelDate;
+		    					
+		    					if(Number(mm)+j < 10) {
+		    						if(Number(dd) < 10) {
+		    							d= yyyy + '-0' + (Number(mm)+j) + '-0' + dd
 		    						}else {
-			    						d=list[i].subscSdate.substring(7) + '-' + (Number(list[i].subscSdate.substring(0, 1))+j) + '-' + list[i].subscDelDate		    							
+			    						d=yyyy + '-0' + (Number(mm)+j) + '-' + dd		    							
 		    						}
 		    					}
 		    					
+		    					if(Number(mm)+j >= 10){
+		    						if(Number(dd) < 10) {
+		    							d= yyyy + '-' + (Number(mm)+j) + '-0' + dd
+		    						}else {
+			    						d= yyyy + '-' + (Number(mm)+j) + '-' + dd		    							
+		    						}
+		    					}
+		    					
+		    					if(Number(mm)+j > 12) {
+		    						mm = (Number(mm) + j - 12);
+		    						console.log(mm);
+		    						yyyy = (Number(yyyy) + 1);
+		    						
+		    						if(mm < 10) {
+			    						if(Number(dd) < 10) {
+			    							d= yyyy + '-0' + mm + '-0' + dd
+			    						}else {
+				    						d= yyyy + '-0' + mm + '-' + dd		    							
+			    						}
+		    						}
+		    					}
+		    					
+		    					
+		    					
+		    					
+		    					
+		    					
+		    					/*
+		    					var yyyy = realDate.getFullYear();
+		    					var mm = (realDate.getMonth() + 1);
+		    					var dd = realDate.getDate();
+		    					
+		    					
+		    					
+		    					var d = yyyy + "-" + mm + "-" + dd;
+		    					
+		    					if(mm + j > 12) {
+		    						yyyy = yyyy + 1;
+		    						mm = Number(mm+j-12);
+		    						if(mm + j < 10) {
+			    						mm = "0" + mm;
+			    					}
+		    						
+		    					}
+		    					
+		    					if(mm + j < 10) {
+		    						mm = "0" + mm;
+		    					}
+		    					if(dd < 10) {
+		    						dd = "0" + dd;
+		    					}
+		    					
+		    					console.log(mm);
+		    					
+		    					*/
+		    					console.log(d);
 			    				var event = {
 			    						title:list[i].memName,
 			    						start:d,
