@@ -13,6 +13,7 @@ import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
+import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
 
 @Service
 public class MemberSerivceImpl implements MemberService{
@@ -157,7 +158,13 @@ public class MemberSerivceImpl implements MemberService{
 	public String selectMemberPassword(int memNo) {
 		return memberDao.selectMemberPassword(sqlSession,memNo);
 	}
-	
-	
+
+	/*
+	 * [사용자] 주소록 리스트 조회 (연지)
+	 */
+	@Override
+	public ArrayList<MemberPhonebook> selectMemPhonebookList(int memNo){
+		return memberDao.selectMemPhonebookList(sqlSession, memNo);
+	}
 
 }

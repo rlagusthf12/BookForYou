@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
+import com.bookforyou.bk4u.member.model.service.MemberService;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
 import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
@@ -29,6 +33,9 @@ public class OrderController {
 
 	@Autowired
 	private OrderService oService;
+
+	@Autowired
+	private MemberService memberService;
 	
 	/**
 	 * [관리자] 전체 주문 목록 조회 (한진)
@@ -307,7 +314,31 @@ public class OrderController {
 		return "redirect:/adminOrderList.or?orStatus=3";
 	}
 	
-	
+	/*
+	 * [사용자] 도서 주문 (연지)
+	 */
+	@RequestMapping("order.od")
+	public ModelAndView adminOListSearch(ModelAndView mv, int memNo, Book bk) {
+		
+		ArrayList<MemberPhonebook> pList = memberService.selectMemPhonebookList(memNo);
+		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
+		
+		int allPrice = 0;
+		
+		for(Book b : bk.getBookList()) {
+			allPrice += (b.getBkPrice() * b.getBkQty());
+		}
+		
+		System.out.println(allPrice);
+		
+		mv.addObject("bList", bk.getBookList())
+		  .addObject("pList", pList)
+		  .addObject("cList", cList)
+		  .addObject("allPrice", allPrice)
+		  .setViewName("order/orderPaymentView");
+		
+		return mv;
+	}
 	
 	
 }

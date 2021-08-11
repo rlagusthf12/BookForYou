@@ -53,6 +53,18 @@
 		<result column="coupon_price" property="couponPrice"/>
 		<result column="coupon_pricerate" property="couponPriceRate"/>
 	</resultMap>
+	
+	<resultMap id="memberPhonebookResult" type="MemberPhonebook">
+		<result column="phone_no" property="phoneNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="name" property="name"/>
+		<result column="post_no" property="postNo"/>
+		<result column="basic_address" property="basicAddress"/>
+		<result column="detail_address" property="detailAddress"/>
+		<result column="address_refer" property="addressRefer"/>
+		<result column="phone" property="phone"/>
+		<result column="mem_name" property="memName"/>
+	</resultMap>
   	
   	<!-- [사용자] 비밀번호 암호화 적용 전 로그인 메서드(안세아) -->
   	<select id="loginMember" resultMap="memberResult">
@@ -518,5 +530,22 @@
  		       use_date = null
  		 where coupon_issue_num = #{refundCoupon}
  	</update>
+ 	
+ 	<!-- [사용자] 주소록 리스트 조회 (연지) -->
+ 	<select id="selectMemPhonebookList" resultMap="memberPhonebookResult">
+ 		select 
+		       phone_no,
+		       mem_no,
+		       name,
+		       post_no,
+		       basic_address,
+		       detail_address,
+		       address_refer,
+		       phone,
+		       mem_name
+		  from phonebook p
+		  join members m using (mem_no)
+		 where mem_no = #{memNo}
+ 	</select>
 
 </mapper>
