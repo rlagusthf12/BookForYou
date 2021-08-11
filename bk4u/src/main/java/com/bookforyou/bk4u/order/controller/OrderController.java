@@ -317,6 +317,7 @@ public class OrderController {
 	/*
 	 * [사용자] 도서 주문 (연지)
 	 */
+	
 	@RequestMapping("order.od")
 	public ModelAndView adminOListSearch(ModelAndView mv, int memNo, Book bk) {
 		
@@ -339,6 +340,35 @@ public class OrderController {
 		
 		return mv;
 	}
+	
+	/*
+	 * [사용자] 도서 주문 (연지)
+	 */
+	/*
+	@RequestMapping("order.od")
+	public ModelAndView adminOListSearch(ModelAndView mv, int memNo,
+										@RequestParam(value = "bkNoArr[]") List<Integer> bkNoArr) {
+		
+		ArrayList<Book> bList = oService.selectOrderBookList(memNo, bkNoArr[]);
+		ArrayList<MemberPhonebook> pList = memberService.selectMemPhonebookList(memNo);
+		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
+		
+		int allPrice = 0;
+		
+		for(Book b : bList) {
+			allPrice += (b.getBkPrice() * b.getBkQty());
+		}
+		
+		System.out.println(allPrice);
+		
+		mv.addObject("pList", pList)
+		  .addObject("cList", cList)
+		  .addObject("allPrice", allPrice)
+		  .setViewName("order/orderPaymentView");
+		
+		return mv;
+	}
+	*/
 	
 	
 }
