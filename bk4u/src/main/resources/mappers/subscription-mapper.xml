@@ -32,6 +32,30 @@
 		<result column="shipping_number" property="shippingNumber"/>
 		<result column="shipping_status" property="shippingStatus"/>
 	</resultMap>
+	
+	<resultMap type="Point" id="PointResult">
+		<result column="pointNo" property="pointNo"/>
+		<result column="memNo" property="memNo"/>
+		<result column="orderNo" property="orderNo"/>
+		<result column="subscNo" property="subscNo"/>
+		<result column="pointContent" property="pointContent"/>
+		<result column="pointPrice" property="pointPrice"/>
+	</resultMap>
+	
+	<resultMap type="Coupon" id="CouponResult">
+		<result column="couponIssueNum" property="couponIssueNum"/>
+		<result column="couponNo" property="couponNo"/>
+		<result column="memNo" property="memNo"/>
+		<result column="couponKind" property="couponKind"/>
+		<result column="createDate" property="createDate"/>
+		<result column="expireDate" property="expireDate"/>
+		<result column="status" property="status"/>
+		<result column="useDate" property="useDate"/>
+		<result column="couponName" property="couponName"/>
+		<result column="couponCategory" property="couponCategory"/>
+		<result column="couponPrice" property="couponPrice"/>
+		<result column="couponPriceRate" property="couponPriceRate"/>
+	</resultMap>
 
 	<!-- [관리자] 정기구독 목록 개수 조회 (한진) -->
 	<select id="selectAllListCount" resultType="_int">
@@ -379,6 +403,71 @@
 		     )
 	</insert>
 	
+	<!-- 쿠폰 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectSubscCoupon" resultMap="CouponResult">
+		select
+		        COUPON_ISSUE_NUM
+		      , COUPON_NO  
+		      , COUPON_KIND
+		      , CREATE_DATE
+		  from mem_coupon
+		  join members using (mem_no) 
+		 where mem_no = #{memNo}
+		   and STATUS = 'Y'
+	</select>
 	
+	<!-- 포인트 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectSubPoint" resultType="_int">
+		select
+		       sum(POINT_PRICE)
+		  from point
+		  join members using (mem_no) 
+		 where mem_no = #{memNo}
+	</select>
 	
+	<!-- 정기구독 등록 -->
+	<!-- @author daeunlee -->
+	<insert id="insertSubsc">
+		insert
+		  into subscription
+		  	 (
+		       subsc_no
+		     , mem_no
+		     , subsc_name
+		     , subsc_price
+		     , subsc_period
+		     , subsc_sdate
+		     , subsc_enddate
+		     , subsc_deldate
+		     , subsc_status
+		     , subsc_receiver
+		     , subsc_post
+		     , subsc_address
+		     , address_detail
+		     , address_ref
+		     , subsc_phone
+		     , deliveryrequest
+		     )
+		values
+		     ( 
+		       SEQ_SUBNO.nextval
+		     , #{memNo}
+		     , #{subscName}
+		     , #{subscPrice}
+		     , #{subscPeriod}
+		     , #{subscSdate}
+		     , #{subscEndDate}
+		     , #{subscDelDate}
+		     , 'Y'
+		     , #{subscReceiver}
+		     , #{subscPost}
+		     , #{subscAddress}
+		     , #{addressDetail}
+		     , #{addressRef}
+		     , #{subscPhone}
+		     , #{deliveryRequest}
+		     )
+	</insert>
 </mapper>

@@ -9,7 +9,7 @@
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
    .body1{
-   width:1200px;    
+   width:1200px;  
    margin:auto;   
    }
 .que{
@@ -24,21 +24,22 @@
     font-size: 20px;
     margin: 20px;  
 }
+
 .quetitle{
+	
 	font-weight:bold;
 	font-size:36px;
 	margin: 160px 0 80px 100px;
 }
 .quelist{
-	width:1200px;	
-	text-align:center;
-	height:300px;
+	width:1200px;		
+	text-align:center;	
 	margin-left:100px;
 }
 .quelist1{
 	width:1200px;	
-	text-align:center;
 	height:200px;
+	text-align:center;	
 	margin-left:70px;
 }
 .updateFAQList{
@@ -102,73 +103,62 @@ display:inline-block;
     resize: none;
     margin-top:30px;
 }
+
+.updatebutton{
+width:100%;
+}
 </style>
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
+
 <div class="quetitle">자주 묻는 질문</div>
 <div class="quelist1">
 <ol>
+<c:forEach var="f" items="${ list }" end="2" step="1">
 <li>
-<span class="que">자주 묻는 질문 1</span>
-<div class="ans">자주 묻는 질문 1<br>
-<textarea class="ansContent" readonly>질문 1에 대한 답변입니다.</textarea>
+<span class="que">${f.faqQue}</span>
+<div class="ans">${f.faqQue}<br>
+<textarea class="ansContent" readonly>${f.faqAns}</textarea>
 </div>
 </li>
-<li>
-<span class="que">자주 묻는 질문 1</span>
-<div class="ans">자주 묻는 질문 1<br>
-<textarea class="ansContent" readonly>질문 1에 대한 답변입니다.</textarea>
-</div>
-</li>
-<li>
-<span class="que">자주 묻는 질문 1</span>
-<div class="ans">자주 묻는 질문 1<br>
-<textarea class="ansContent" readonly>질문 1에 대한 답변입니다.</textarea>
-</div>
-</li>
+</c:forEach>
 </ol>
 </div>
+
 <div class="quelist1">
 <ol>
+<c:forEach var="f" items="${ list }" begin="3" end="5" step="1">
 <li>
-<span class="que">자주 묻는 질문 1</span>
-<div class="ans">자주 묻는 질문 1<br>
-<textarea class="ansContent" readonly>질문 1에 대한 답변입니다.</textarea>
+<span class="que">${f.faqQue}</span>
+<div class="ans">${f.faqQue}<br>
+<textarea class="ansContent" readonly>${f.faqAns}</textarea>
 </div>
 </li>
-<li>
-<span class="que">자주 묻는 질문 1</span>
-<div class="ans">자주 묻는 질문 1<br>
-<textarea class="ansContent" readonly>질문 1에 대한 답변입니다.</textarea>
-</div>
-</li>
-<li>
-<span class="que">자주 묻는 질문 1</span>
-<div class="ans">자주 묻는 질문 1<br>
-<textarea class="ansContent" readonly>질문 1에 대한 답변입니다.</textarea>
-</div>
-</li>
+</c:forEach>
 </ol>
 </div>
-<div class="updatebutton">
-<span class="updateFAQList"><b>목록수정</b></span>
+<div style="width:100%; height:100px;">
 </div>
+<div class="updatebutton">
+<span class="updateFAQList" style="border: 0px;"></span>
+</div>
+
 <div class="quetitle">문의 유형별 도움말</div>
 <div class="quelist">
-<div class="queTypeList" >결제/환불 </div>
-<div class="queTypeList" >쇼핑몰이용문의 </div>
-<div class="queTypeList">사용자 계정 문의 </div>
+<c:forEach var="f" items="${list1}">
+<div class="queTypeList" onclick="location.href='typeListView.faq?type=${f.queType}'">${f.queType}</div>
+</c:forEach>
 </div>
 <div class="updatebutton">
-<span class="updateFAQList"><b>목록수정</b></span>
+<c:if test="${loginUser.memNo==1}">	
+<span class="updateFAQList" onclick="location.href='typeUpdateForm.faq'">목록수정</span>
+</c:if>
+</div>
 </div>
 
-
-
-</div>
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 <script>
         $(function(){
             $(".que").click(function(){
@@ -187,6 +177,12 @@ display:inline-block;
                 }
             })
         })
+        
+        	$(function(){
+            		$("queTypeList").click(function(){
+            			location.href="list.faq?condition=" + $(this).text();
+            		})
+            	})
     </script>
 </body>
 </html>

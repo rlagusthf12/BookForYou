@@ -36,15 +36,13 @@
     
     .table_board>tbody>tr>*{	
 		height:46px;
-	
-		border-bottom: 1px solid #ccc;
-	}
-	
-	.table_board>tbody>tr>td{
 		border-top:1px solid #ccc;
 		text-align: center;
 		height:60px;
 	}
+	
+	
+	
 	
 	
 	.write{
@@ -105,7 +103,7 @@
 
 <body>
 
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	
 		<div class="faqTitle">문의 유형별 도움말</div>
@@ -114,63 +112,80 @@
 		<input type="text"/>
 		</div>
 		<div class="faqType">
-		<span class="selectedtype">결제/환불</span>
-		<span class="type" style="width:200px;">쇼핑몰 이용 문의</span>
-		<span class="type">전체 조회</span>
+		<c:forEach var="f" items="${list1}">
+		<span class="type" onclick="location.href='typeListView.faq?type=${f.queType}'">${f.queType}</span>
+		</c:forEach>	
 		
 		</div>		
 		<div class="faqListTable">
-		<table class="table_board" >
+		<table id="faqList" class="table_board" >
 			<tbody>
-				
 				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
+					<th class="faqNo" style="width: 10%;">No.</td>
+					<th style="width: 20%;">문의 유형</td>
+					<th style="width: 60%;">내용</td>
+					<th style="width: 10%;">조회수</td>
 				</tr>
+				<c:forEach var="f" items="${list}">
 				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
+					<td class="faqNo" style="width: 10%;">${f.faqNo}</td>
+					<td style="width: 20%;">${f.queType}</td>
+					<td style="width: 60%;">${f.faqQue}</td>
+					<td style="width: 10%;">${f.faqCount}</td>
 				</tr>
-				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
-				</tr>
-				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
-				</tr>
-				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
-				</tr>
-				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
-				</tr>
-				<tr>
-					<td style="width: 20%;">결제/환불</td>
-					<td style="width: 48%;">자주묻는질문1</td>
-				</tr>
-			
-				
+				</c:forEach>
 			</tbody>
 		</table>
-		
-		<div class="write">도움말 작성</div>		
-		<div class="write">1:1문의하기</div>		
+		<script>
+            	$(function(){
+            		$(".table_board>tbody>tr").click(function(){
+            			location.href="detail.faq?faqNo=" + $(this).children(".faqNo").text();
+            		})
+            	});
+           
+            </script>
+         <c:if test="${loginUser.memNo==1}">	   
+		<div class="write" onclick="location.href='writeForm.faq'">도움말 작성</div>
+		</c:if>		
+		<div class="write" onclick="location.href='writeForm.qa'">1:1문의하기</div>		
 		</div>
 		 <div id="paging-wrap">
             <ul class="pagination">
+            <c:choose>
+            <c:when test="${pi.currentPage eq 1}">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+            </c:when>
+            <c:otherwise>
+          	</c:otherwise>
+                    </c:choose>
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                    	<c:choose>
+                    		<c:when test="${ !empty condition }">
+                   				<li class="page-item"><a class="page-link" href="search.faq?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+                   			</c:when>
+                   			<c:otherwise>
+                   				<li class="page-item"><a class="page-link" href="list.faq?currentPage=${ p }">${ p }</a></li>
+                   			</c:otherwise>
+                    	</c:choose>
+                    </c:forEach>
+                    <c:choose>
+                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<c:choose>
+	                    		<c:when test="${ !empty condition }">
+		                    		<li class="page-item"><a class="page-link" href="search.bo?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">Next</a></li>
+		                    	</c:when>
+		                    	<c:otherwise>
+		                    		<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage+1 }">Next</a></li>
+		                    	</c:otherwise>
+		                    </c:choose>
+	                    </c:otherwise>
+                    </c:choose>
             </ul>
         </div>
 	</div>
-	<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

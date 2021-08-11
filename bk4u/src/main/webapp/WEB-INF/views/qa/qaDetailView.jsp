@@ -80,9 +80,11 @@
 	</div>	
 	<hr>
 			
-	<div class="Button">수정</div>
-	<div class="Button">삭제</div>
-	
+	<div class="Button" onclick="location.href='updateForm.qa?qaNo=${q.qaNo}'">수정</div>
+	<div class="Button" onclick="location.href='delete.qa?qaNo=${q.qaNo}'">삭제</div>
+	<c:if test="${q.ansStatus=='N'}">
+	<div class="Button" onclick="location.href='writeForm.as?qaNo=${q.qaNo}'">답변 작성</div>
+	</c:if>
 	<c:if test="${!empty a}">
 	<div class="reportTitle">답변</div>
 	<hr>
@@ -93,9 +95,12 @@
 	<p>${a.asContent}</p>	
 	</div>	
 	<hr>
+	<c:if test="${loginUser.memNo==1}">
+	<div class="Button" onclick="location.href='updateForm.as?qaNo=${q.qaNo}'">수정</div>
+	</c:if>
 	</c:if>
 			
-	<div class="ListButton">목록으로</div>
+	<div class="ListButton" onclick="location.href='list.qa'">목록으로</div>
 	</div>
 	<jsp:include page="../common/footer.jsp"/>
 </body>

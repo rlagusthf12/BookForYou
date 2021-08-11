@@ -10,6 +10,7 @@ import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
+import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
 
 @Repository
 public class MemberDao {
@@ -99,6 +100,13 @@ public class MemberDao {
 	public String selectMemberPassword(SqlSessionTemplate sqlSession, int memNo) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.selectMemberPassword", memNo);
+	}
+
+	/*
+	 * [사용자] 주소록 리스트 조회 (연지)
+	 */
+	public ArrayList<MemberPhonebook> selectMemPhonebookList(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemPhonebookList", memNo);
 	}
 
 

@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.payment.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,6 @@ public class Payment {
 	private int deposit;
 	private String depositName;
 	private String depositBank;
+	
+	ArrayList<Payment> paymentList;
 }

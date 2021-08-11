@@ -119,8 +119,14 @@
 
         <div class="content">
             <div class="container">
-                <form class="orderForm" id="orderForm" name="orderForm" method="post" action="payComplete.sub">-
-    
+                <form class="orderForm" id="orderForm" name="orderForm" method="post" action="">
+    				<input type="hidden" name="memNo" value="${ loginUser.memNo }">
+    				<input type="hidden" name="subscName" value="${ param.subscName }">
+    				<input type="hidden" name="subscPrice" value="${ param.subscPrice }">
+    				<input type="hidden" name="subscPeriod" value="${ param.subscPeriod }">
+    				<input type="hidden" name="subscSdate">
+    				<input type="hidden" name="subscEndDate">
+    				<input type="hidden" name="subscDelDate">
                     <!--멤버십정보area-->
                     <div class="item membership_area">
                         <div class="title">멤버십 정보</div>
@@ -134,7 +140,7 @@
                                     <td>
                                         <ul>
                                             <li>${ param.subscPeriod }</li>
-                                            <li>( 2021.07.04 ~ 2021.08.04 )</li>
+                                            <li>( <span class="sDate"></span> ~ <span class="eDate"></span> )</li>
                                         </ul>
                                     </td>
                                 </tr>
@@ -144,13 +150,83 @@
                                 </tr>
                                 <tr>
                                     <th>다음 결제일</th>
-                                    <td>2021.08.04</td>
+                                    <td><span class="eDate"></span></td>
                                 </tr>
                             </table>
                         </div>
                         
                     </div>
-
+	<script>
+		$(function(){
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth()+1;
+			var day = date.getDate();
+			if ((month+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
+				month = "0" + month;
+			}
+			if ((day+"").length < 2) {// 일이 한자리 수인 경우 앞에 0을 붙여주기 위해
+		        day = "0" + day;
+			}
+		    var Today = year + "." + month + "." + day; // 오늘 날짜 (2021.08.11)
+		    
+			// 1) 멤버십 선택 == 1개월
+		    if('${ param.subscPeriod }' == '1개월'){
+			    var monthOne = date.getMonth()+2;
+			    if ((monthOne+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
+			    	monthOne = "0" + monthOne;
+				}
+			    var laterOne = year + "." + monthOne + "." + day; // 1개월뒤
+			    $(".eDate").html(laterOne);
+			    $("input[name=subscEndDate]").val(laterOne);
+		    }
+		    
+		    // 2) 멤버십 선택 == 3개월
+			if('${ param.subscPeriod }' == '3개월'){
+			    var monthThree = date.getMonth()+4;
+			    if(monthThree > 12){
+			    	year++;
+			    	monthThree = monthThree-12;
+			    }
+			    if ((monthThree+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
+			    	monthThree = "0" + monthThree;
+				}
+			    var laterThree = year + "." + monthThree + "." + day; // 3개월뒤
+			    $(".eDate").html(laterThree);
+			    $("input[name=subscEndDate]").val(laterThree);
+		    }
+		    
+		    // 3) 멤버십 선택 == 6개월
+			if('${ param.subscPeriod }' == '6개월'){
+			    var monthSix = date.getMonth()+7;
+			    if(monthSix > 12){
+			    	year++;
+			    	monthSix = monthSix - 12;
+			    }
+			    if ((monthSix+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
+			    	monthSix = "0" + monthSix;
+				}
+			    var laterSix = year + "." + monthSix + "." + day; // 6개월뒤
+			    $(".eDate").html(monthSix);
+			    $("input[name=subscEndDate]").val(monthSix);
+		    }
+		    
+		    // 4) 멤버십 선택 == 12개월 == 1년
+			if('${ param.subscPeriod }' == '12개월'){
+			    var monthTwelve = date.getFullYear()+1;
+			    var laterTwelve = monthTwelve + "." + month + "." + day; // 12개월뒤
+			    $(".eDate").html(laterTwelve);
+			    $("input[name=subscEndDate]").val(laterTwelve);
+		    }
+		    
+		    // 적용
+		    $("input[name=subscSdate]").val(Today);
+			$(".sDate").html(Today);
+		});
+		
+		
+	</script>
+	
                     <!--주문자정보area-->
                     <div class="item delivery_area">
                         <div class="title">주문자</div>
@@ -259,17 +335,19 @@
             	
             	$(function() { 
                     $( "#datepicker" ).datepicker({ 
-                        dateFormat: 'yy-mm-dd'
+                        dateFormat: 'yy.mm.dd'
                         ,showMonthAfterYear:true 
                         ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
                         ,dayNamesMin: ['일','월','화','수','목','금','토'] 
                         ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
                     	,onSelect:function(d){
-                    		var arr=d.split("-");
-                    		var day=arr[2];
+                    		var arr = d.split(".");
+                    		var day = arr[2];
                     		$("#dayPick").show();
                     		$("#day").text(day);
-                    		console.log(day);
+                    		
+                    		// 배송일 입력
+                    		$("input[name=subscDelDate]").val(day);
                     	}
                     }); 
                 });
@@ -287,25 +365,55 @@
             		    buyer_tel : '${ loginUser.memPhone }', //구매자전화번호
             		    buyer_postcode : '$("#postcode").val()'
             		}, function(rsp) {
+            			console.log(rsp);
             			if (rsp.success) {
+            				
+            				$("#orderForm").attr("action", "insertSubPay.sub").submit();
+            				
+            				/*
             				var msg = '결제가 완료되었습니다.';
             				msg += '고유ID : ' + rsp.imp_uid;
             				msg += '상점 거래ID : ' + rsp.merchant_uid;
             				msg += '결제 금액 : ' + rsp.paid_amount;
             				msg += '카드 승인번호 : ' + rsp.apply_num;
+            				
+            				// payment디비연결
             				$.ajax({
-            					type:"POST",
-            					url:"/verifyIamport/" + rsp.imp_uid ,
-            					headers: { "Content-Type": "application/json" },
-            					data: {payNo: rsp.imp_uid} // 결제번호
-            				});
-            			} else {
-            				var msg = '결제에 실패하였습니다.';
-            				msg += '에러내용 : ' + rsp.error_msg;
-            			}
+		    			        url:"insertSubsc.pay",
+		    			        method: "POST",
+		    		            headers: { "Content-Type": "application/json" },
+		    			        data:{
+		    			        	payWay:	rsp.pay_method,
+		    						price: rsp.paid_amount,
+		    						status: rsp.status
+		    			        }, 
+		    			        success: function(status){
+		    			        	if(status == "success"){
+		    			        	console.log(status);
+		    			        	}
+		    			        },error:function(){
+		    			        	console.log("ajaxㄴㄴ");
+		    			        }
+		    			   })*/
+                    	} else {
+            		        var msg = '결제에 실패하였습니다.';
+                    		msg += '에러내용 : ' + rsp.error_msg;
+            		    }
             			alert(msg);
-	       			})
-       		    }
+            		});
+	       		
+            	}
+            	/*
+       		    // 결제리스트 불러오기
+       		    function selectPayList(){
+       		    	$.ajax({
+       		    		type:"POST",
+       		    		url:"payNo.pay", 
+       		    		success: function(list){
+       		    			console.log(list);
+       		    		}
+       		    	})
+       		    }*/
             	</script>                            
                                         
                                         <label for="default-address">
@@ -317,7 +425,7 @@
                                             </span>
                                         </label>
                                     </div>
-                                </td>
+                                </td> 
                             </tr>
                             <tr>
                                 <th>배송요청사항</th>
@@ -371,7 +479,14 @@
                                 <th>보유 포인트</th>
                                 <td>
                                     <div class="input_area">
-                                        <input type="text" id="mypoint" name="">
+                                    	<c:choose>
+	                                    	<c:when test="${ !empty pointPrice }">
+	                                        	<input type="number" id="mypoint" value="${ p.pointPrice }">
+	                                        </c:when>
+	                                        <c:otherwise>
+	                                        	<input type="number" id="mypoint" value="0" readonly>
+	                                        </c:otherwise>
+                                        </c:choose>
                                         <span class="measure">원</span>
                                     </div>
                                 </td>
@@ -380,7 +495,7 @@
                                 <th>사용 포인트</th>
                                 <td>
                                     <div class="input_area">
-                                        <input type="text" id="use_point" name="">
+                                        <input type="text" id="use_point">
                                         <span class="measure">원</span>
                                     </div>
                                     <button class="btn btn_coupon">전액사용</button>
@@ -396,7 +511,7 @@
                                 <th>쿠폰 적용</th>
                                 <td>
                                     <div class="input_area">
-                                        <input type="text" id="coupon" name="mycoupon">
+                                        <input type="text" id="coupon">
                                         <span class="measure"></span>
                                     </div>
                                     <button class="btn btn_coupon">쿠폰사용</button>
@@ -453,7 +568,7 @@
         
                             </div>
                             <div class="paysum-item paynotice_area">
-                                <input type="checkbox" class="btn_paynotice" id="btnAgree" name="btnAgree">
+                                <input type="checkbox" class="btn_paynotice" id="btnAgree">
                                 <label for="btnAgree" id="btn_paynotice-label">상품, 가격, 할인, 유의 사항 등에 동의하였으며 결제에 동의합니다.</label>
                             </div>
                         </div>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="faqMapper">
+	<resultMap id="faqResult" type="Faq">
+		<result column="FAQ_NO" property="faqNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="QUE_TYPE_NO" property="queTypeNo"/>
+		<result column="FAQ_QUE" property="faqQue"/>
+		<result column="FAQ_ANS" property="faqAns"/>
+		<result column="FAQ_DATE" property="faqDate"/>
+		<result column="FAQ_COUNT" property="faqCount"/>
+		<result column="FAQ_LIST" property="faqList"/>
+		<result column="QUE_TYPE" property="queType"/>		
+	</resultMap>
+	
+	<select id="selectFaqList" resultMap="faqResult">
+		select FAQ_NO, QUE_TYPE,FAQ_QUE,FAQ_ANS,FAQ_COUNT,FAQ_LIST
+		from faq join quetype using(que_type_no)		
+		order by faq_count desc		
+	</select>
+	
+	<select id="selectTypeList" resultMap="faqResult">
+		select *
+		from quetype
+	</select>
+	
+	<update id="updateQueType">
+		update
+			quetype
+			set que_type = #{queType}
+		where que_type_no = #{queTypeNo}
+	</update>
+	
+	<insert id="insertQueType">
+		insert into
+			quetype(que_type_no, que_type) 
+			values(seq_quetype.nextval,#{queType})
+		
+	</insert>
+	
+	<delete id="deleteQueType">	
+		delete from quetype
+			where que_type_no = #{queTypeNo}
+	</delete>
+	
+	<select id="typeListCount" resultType="_int">
+		select
+		       count(*)
+		  from faq join quetype using(que_type_no)
+		 where que_type = #{type}		 	
+	</select>
+  
+  	<select id="selectTypeList1" resultMap="faqResult">
+  		select
+  			faq_no
+  		   ,mem_no
+  		   ,que_type
+  		   ,faq_que
+  		   ,faq_ans
+  		   ,faq_date
+  		   ,faq_count
+  		   ,faq_list
+  		 from faq join quetype using(que_type_no)
+  		 
+  		 where que_type = #{type}
+  		 order by faq_no desc
+  	</select>
+  	
+  	<update id="increaseCount">
+  		update
+  			faq
+  		set faq_count = faq_count+1
+  		 where faq_no = #{faqNo}
+  	</update>
+  	
+  	<select id="selectFaq" resultMap="faqResult">	
+  		select
+  			faq_no
+  		   ,mem_no
+  		   ,que_type_no
+  		   ,que_type
+  		   ,faq_que
+  		   ,faq_ans
+  		   ,faq_date
+  		   ,faq_count
+  		   ,faq_list
+  		 from faq join quetype using(que_type_no)  		 
+  		 where faq_no = #{faqNo}  		
+  	</select>
+  	
+  	<insert id="writeFaq">
+  		insert into
+  			faq(faq_no,mem_no,faq_que,faq_ans,faq_count,que_type_no)
+  		values(seq_faq.nextval,1,#{faqQue},#{faqAns},0,#{queTypeNo})	
+  			
+  	</insert>
+  	
+  	<delete id="deleteFaq">	
+  		delete from faq
+  		where faq_no =#{faqNo}
+  	</delete>
+  	
+  	<update id="updateFaq">
+  		update
+  			faq
+  		set faq_que=#{faqQue}
+  		   ,faq_ans=#{faqAns}
+  		   ,que_type_no=#{queTypeNo}
+  		 where faq_no = #{faqNo}
+  	</update>
+  	
+</mapper>

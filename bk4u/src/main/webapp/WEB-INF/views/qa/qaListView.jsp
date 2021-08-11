@@ -24,6 +24,7 @@
 	font-weight:bold;
 	font-size:36px;
 	margin-top:200px;
+	margin-bottom:200px;
 	}
 	
 	.faqListTable{
@@ -137,6 +138,8 @@
 		background-color: rgb(224, 224, 224);
 		width:136px;
 		height:48px;	
+		float:right;
+		margin-top:100px;
 	}
 	
 #paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
@@ -154,14 +157,12 @@
 	<div class="body1">
 	
 		<div class="faqTitle">1:1문의 내역</div>
-		<div class="searchBar">
-		<select name="choice"><option>전체</option></select>
-		<input type="text"/>
-		</div>
+		
 		<div class="faqType">
-		<span class="selectedtype">결제/환불</span>
-		<span class="type" style="width:200px;">쇼핑몰 이용 문의</span>
-		<span class="type">전체 조회</span>
+		<c:forEach var="q" items="${list1}">
+		<span class="type" onclick="location.href='typeListView.qa?type=${q.queType}'">${q.queType}</span>
+		</c:forEach>
+		<span class="type" onclick="location.href='list.qa'">전체 조회</span>	
 		</div>			
 			<div class="QACount">
 				<div class="QAContent">
@@ -195,13 +196,13 @@
 					<td style="width: 40%;">${q.qaContent}</td>
 					<td style="width: 15%;" class="comp">${q.ansStatus}</td>
 				</tr>
-		
-				
 			</c:forEach>			
 		
 			</tbody>
 		</table>
+		<div class="writeButton" onclick="location.href='writeForm.qa'">1:1문의 작성</div>
 		</div>
+		
 		<script>
 			$(function(){
 				$(".table_board>tbody>tr").click(function(){

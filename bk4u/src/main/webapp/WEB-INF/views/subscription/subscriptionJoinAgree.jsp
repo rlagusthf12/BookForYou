@@ -81,6 +81,7 @@
 
             <!-- 멤버십 기간/가격 넘기는 form -->
             <form method="post" action="pay.sub">
+            	<input type="hidden" id="memNo" name="memNo" value="${ loginUser.memNo }">
 	            <input type="hidden" id="subscName" name="subscName">
 	            <input type="hidden" id="subscPeriod" name="subscPeriod">
 	            <input type="hidden" id="subscPrice" name="subscPrice">

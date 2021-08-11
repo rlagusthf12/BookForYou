@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.faq.model.vo;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Faq {
 	private Date faqDate;
 	private int faqCount;
 	private String faqList;
-	private String queType;
+	private String queType;	
 	
 
 }

@@ -21,7 +21,7 @@
 	}
 	
 	.reportListTable{
-	margin: 0 0 300px 0;
+	margin: 0 0 100px 0;
 	}
 	
 	.table_board{
@@ -31,17 +31,23 @@
 	    border-top: 2px solid #ccc; 
 	    border-bottom: 2px solid #ccc;
 	    width:100%;
+	   table-layout: fixed;
     }
     
-    .table_board>tbody>tr>*{	
+    .table_board>tbody>tr>th{	
 		height:46px;
 		border-bottom: 1px solid #ccc;
+		text-align: center;
+		background-color:rgb(224,224,224);;
 	}
 	
 	.table_board>tbody>tr>td{
 		border-top:1px solid #ccc;
 		text-align: center;
 		height:60px;
+		white-space:nowrap;  
+		text-overflow:ellipsis; 
+		overflow:hidden;
 	}
 	
 	
@@ -95,7 +101,7 @@
 
     #paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 
-    #paging-wrap{width:fit-content; margin:auto;}
+    #paging-wrap{width:fit-content; margin:auto; margin-bottom:100px;}
     .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 
 </style>
@@ -103,7 +109,7 @@
 
 <body>
 
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	
 		<div class="reportTitle">신고</div>
@@ -115,57 +121,63 @@
 		<div class="reportListTable">
 		<table class="table_board" >
 			<tbody>
+			<tr>
+					<th>No.</th>
+					<th style="width: 20%;">게시판 유형</th>
+					<th style="width: 35%;">내용</th>
+					<th style="width: 20%;">작성일자</th>
+					<th style="width: 20%;">처리 상태</th>
+				</tr>
+			<c:forEach var="r" items="${list}">
+				<tr>
+					<td class="reportNo">${r.reportNo}</td>
+					<td style="width: 20%;">${r.reportType1}</td>
+					<td style="width: 35%;">${r.reportContent}</td>
+					<td style="width: 20%;">${r.reportDate}</td>
+					<td style="width: 20%;">${r.reportStatus}</td>
+				</tr>
+				</c:forEach>
 				
-				<tr>
-					<td style="width: 20%;">독서모임</td>
-					<td style="width: 40%;">신고1</td>
-					<td style="width: 20%;">2021-07-01</td>
-					<td style="width: 20%;">접수완료</td>
-				</tr>
-				<tr>
-					<td style="width: 20%;">독서모임</td>
-					<td style="width: 40%;">신고1</td>
-					<td style="width: 20%;">2021-07-01</td>
-					<td style="width: 20%;">접수완료</td>
-				</tr><tr>
-					<td style="width: 20%;">독서모임</td>
-					<td style="width: 40%;">신고1</td>
-					<td style="width: 20%;">2021-07-01</td>
-					<td style="width: 20%;">접수완료</td>
-				</tr><tr>
-					<td style="width: 20%;">독서모임</td>
-					<td style="width: 40%;">신고1</td>
-					<td style="width: 20%;">2021-07-01</td>
-					<td style="width: 20%;">접수완료</td>
-				</tr><tr>
-					<td style="width: 20%;">독서모임</td>
-					<td style="width: 40%;">신고1</td>
-					<td style="width: 20%;">2021-07-01</td>
-					<td style="width: 20%;">접수완료</td>
-				</tr><tr>
-					<td style="width: 20%;">독서모임</td>
-					<td style="width: 40%;">신고1</td>
-					<td style="width: 20%;">2021-07-01</td>
-					<td style="width: 20%;">접수완료</td>
-				</tr>
 			
 			</tbody>
 		</table>
 					
 		</div>
-		
+		<script>
+            	$(function(){
+            		$(".table_board>tbody>tr").click(function(){
+            			location.href="detail.re?reportNo=" + $(this).children(".reportNo").text();
+            		})
+            	});
+           
+            </script>
 		 <div id="paging-wrap">
             <ul class="pagination">
+            	<c:choose>
+            	<c:when test="${pi.currentPage eq 1}">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+                </c:when>
+                <c:otherwise>
+                	<li class="page-item"><a class="page-link" href="list.re?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                </c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}"> 
+                <li class="page-item"><a class="page-link" href="list.re?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+             
+             <c:choose>
+             	<c:when test="${pi.currentPage eq pi.maxPage}">
+             		    <li class="page-item disabled"><a class="page-link">다음</a></li>
+             	</c:when>
+             	<c:otherwise>
+             		<li class="page-item"><a class="page-link" href="list.re?currentPage=${ pi.currentPage+1 }">Next</a></li>
+		        </c:otherwise>
+             </c:choose>            
             </ul>
+           
         </div>
 	</div>
-	<jsp:include page="../footer.jsp"/>
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -19,9 +19,9 @@
 
         .wrap {
             width: 1200px;
+            height: 1300px;
             margin: auto;
             margin-top: 150px;
-            margin-bottom: 80px;
         }
 
         #content {
@@ -353,7 +353,7 @@
             z-index: 3;
         }
 
-        #coupon_box>form>div:nth-child(1){
+        #coupon_box>div:nth-child(1){
             font-size: 18px;
             font-weight: 600;
             padding-top: 20px;
@@ -368,35 +368,35 @@
             background: darkgrey;
         }
 
-        #coupon_box>form>div:nth-child(3){
+        #coupon_box>div:nth-child(3){
             text-align: center;
             margin-bottom: 20px;
         }
 
-        #coupon_box>form>div:nth-child(3)>table{
+        #coupon_box>div:nth-child(3)>table{
             font-size: 13px;
             margin: 20px 20px;
         }
 
-        #coupon_box>form>div:nth-child(3) th, td{
+        #coupon_box>div:nth-child(3) th, td{
             padding: 10px 10px;
         }
         
-        #coupon_box>form>div:nth-child(3) th{
+        #coupon_box>div:nth-child(3) th{
             color: rgb(51, 51, 51);
             background-color: rgb(235, 235, 235);
         }
         
-        #coupon_box>form>div:nth-child(3) td{
+        #coupon_box>div:nth-child(3) td{
             border-bottom: solid 1px rgb(192, 192, 192);
         }
 
-        #coupon_box>form>div:nth-child(4){
+        #coupon_box>div:nth-child(4){
             margin-top: 20px;
             margin-bottom: 25px;
         }
 
-        #coupon_box>form>div:nth-child(4)>button{
+        #coupon_box>div:nth-child(4)>button{
             width: 90px;
             height: 40px;
             font-weight: 700;
@@ -405,12 +405,12 @@
             margin: 0px 5px;
         }
 
-        #coupon_box>form>div:nth-child(4)>button:nth-child(1){
+        #coupon_box>div:nth-child(4)>button:nth-child(1){
             color: rgb(255, 255, 255);
             background-color: rgb(52, 152, 219);
         }
 
-        #coupon_box>form>div:nth-child(4)>button:nth-child(2){
+        #coupon_box>div:nth-child(4)>button:nth-child(2){
             color: rgb(64, 64, 64);
             background-color: rgb(224, 224, 224);
         }
@@ -545,7 +545,7 @@
             padding: 12px 10px;
         }
 
-        #address_box>div:nth-child(2)>table button{
+        #content .btn_select{
             width: 45px;
             height: 28px;
             color: rgb(52, 152, 219);
@@ -585,38 +585,21 @@
                 </script>
 
                 <div id="order_info" style="display: block;">
+                
+                <c:forEach var="b" items="${ bList }" varStatus="status">
                     <div class="book_list">
-                        <div class="book_img"><img src=""></div>
+                        <div class="book_img"><img src="${ b.introChangeName }"></div>
                         <div class="book_info">
                             <div>
-                                <div>달까지 가자</div>
-                                <div>장류진</div>
+                                <div>${ b.bkTitle }</div>
+                                <div>${ b.writerName }</div>
                             </div>
-                            <div>14000원</div>
+                            <div>${ b.bkPrice * b.bkQty }</div>
                         </div>
                     </div>
                     <div class="line"></div>
-                    <div class="book_list">
-                        <div class="book_img"><img src=""></div>
-                        <div class="book_info">
-                            <div>
-                                <div>달까지 가자</div>
-                                <div>장류진</div>
-                            </div>
-                            <div>14000원</div>
-                        </div>
-                    </div>
-                    <div class="line"></div>
-                    <div class="book_list">
-                        <div class="book_img"><img src=""></div>
-                        <div class="book_info">
-                            <div>
-                                <div>달까지 가자</div>
-                                <div>장류진</div>
-                            </div>
-                            <div>14000원</div>
-                        </div>
-                    </div>
+                </c:forEach>
+                
                 </div>
 
                 <div id="shipping_info" style="display: none;">
@@ -637,23 +620,23 @@
                         <table>
                             <tr>
                                 <th>이름</th>
-                                <td><input type="text" size="15" placeholder=" 이름"></td>
+                                <td><input type="text" name="orderReceiver" size="15" placeholder=" 이름" required></td>
                             </tr>
                             <tr>
                                 <th>배송주소</th>
-                                <td><input type="text" size="15"placeholder=" 우편번호"> <button>주소검색</button></td>
+                                <td><input type="text" name="orderPost" size="15"placeholder=" 우편번호" required> <button>주소검색</button></td>
                             </tr>
                             <tr>
                                 <th></th>
-                                <td><input type="text" size="45" placeholder=" 도로명주소"></td>
+                                <td><input type="text" name="orderAddress" size="45" placeholder=" 도로명주소" required></td>
                             </tr>
                             <tr>
                                 <th></th>
-                                <td><input type="text" size="45" placeholder=" 상세주소"></td>
+                                <td><input type="text" name="addressDetail" size="45" placeholder=" 상세주소" required></td>
                             </tr>
                             <tr>
                                 <th>연락처</th>
-                                <td><input type="text" size="25" placeholder=" -를 포함하여 입력해주세요"></td>
+                                <td><input type="text" name="orderPhone" size="25" placeholder=" -를 포함하여 입력해주세요" required></td>
                             </tr>
                         </table>
                     </div>
@@ -685,7 +668,7 @@
 
             <div id="address_box">
                 <div>
-                    주소록
+                    	주소록
                     <button type="button" class="btn-close"></button>
                 </div>
                 <div>
@@ -693,31 +676,22 @@
                         <tr>
                             <th></th>
                             <th>이름</th>
-                            <th>주소</th>
+                            <th colspan="2">주소</th>
                             <th>연락처</th>
                             <th>우편번호</th>
                         </tr>
-                        <tr>
-                            <td><button>선택</button></td>
-                            <td>최연지</td>
-                            <td>서울특별시 노원구 화랑로51길 78, 502동 506호(공릉동,비선아파트)</td>
-                            <td>010-1234-5678</td>
-                            <td>12345</td>
-                        </tr>
-                        <tr>
-                            <td><button>선택</button></td>
-                            <td>최연지</td>
-                            <td>서울특별시 노원구 화랑로51길 78, 502동 506호(공릉동,비선아파트)</td>
-                            <td>010-1234-5678</td>
-                            <td>12345</td>
-                        </tr>
-                        <tr>
-                            <td><button>선택</button></td>
-                            <td>최연지</td>
-                            <td>서울특별시 노원구 화랑로51길 78, 502동 506호(공릉동,비선아파트)</td>
-                            <td>010-1234-5678</td>
-                            <td>12345</td>
-                        </tr>
+                        
+                        <c:forEach var="p" items="${ pList }" varStatus="status">
+	                        <tr>
+	                            <td><button class="btn_select">선택</button></td>
+	                            <td> ${ p.memName }</td>
+	                            <td> ${ p.basicAddress }</td>
+	                            <td> ${ p.detailAddress }</td>
+	                            <td> ${ p.phone }</td>
+	                            <td> ${ p.postNo }</td>
+	                        </tr>
+                        </c:forEach>
+                        
                     </table>
                 </div>
             </div>
@@ -733,7 +707,23 @@
 
                 $("#address_box>div:nth-child(2)>table button").click(function(){
                     $("#address_box").css('display', 'none');
-                    $("#shipping_info table input[type=text]").val("a");
+                    $("#shipping_info table input[name=orderReceiver]").val($(this).parent().next().text());
+                    $("#shipping_info table input[name=orderPost]").val($(this).parent().next().next().next().next().next().text());
+                    $("#shipping_info table input[name=orderAddress]").val($(this).parent().next().next().text());
+                    $("#shipping_info table input[name=addressDetail]").val($(this).parent().next().next().next().text());
+                    $("#shipping_info table input[name=orderPhone]").val($(this).parent().next().next().next().next().text());
+                });
+                
+                $("#shipping_info #mem_info").click(function(){
+					console.log(2);
+                });
+                
+                $("#shipping_info #user_ip").click(function(){
+                	$("#shipping_info table input[name=orderReceiver]").val("");
+                    $("#shipping_info table input[name=orderPost]").val("");
+                    $("#shipping_info table input[name=orderAddress]").val("");
+                    $("#shipping_info table input[name=addressDetail]").val("");
+                    $("#shipping_info table input[name=orderPhone]").val("");
                 });
             </script>
             
@@ -742,7 +732,7 @@
                 <div id="info_box">
                     <div>
                         <div>총 주문 금액</div>
-                        <div>42000원</div>
+                        <div>${ allPrice }원</div>
                     </div>
                     <div id="line"></div>
                     <div>
@@ -757,55 +747,66 @@
                     </div>
                     <div>
                         <div>총 결제 금액</div>
-                        <div>42000원</div>
+                        <div>${ allPrice }원</div>
                     </div>
                 </div>
             </div>
 
             <div id="coupon_box">
-                <form action="" method="post">
-                    <div>
-                        사용 가능 쿠폰
-                    </div>
-                    <div id="line"></div>
-                    <div>
-                        <table>
-                            <tr>
-                                <th></th>
-                                <th>쿠폰명</th>
-                                <th>적용도서</th>
-                                <th>할인율(할인금액)</th>
-                                <th>사용기한</th>
+            	<div>
+            		사용 가능 쿠폰
+                </div>
+                <div id="line"></div>
+                <div>
+                	<table>
+                		<tr>
+                			<th></th>
+                			<th>쿠폰명</th>
+                			<th>적용도서</th>
+                			<th>할인율(할인금액)</th>
+                			<th>사용기한</th>
+                		</tr>
+                		<c:forEach var="c" items="${ cList }" varStatus="status">
+                			<tr>
+                                <td><button class="btn_select">선택</button></td>
+                                <td>${ c.couponName }</td>
+                                <td>${ c.couponCategory }</td>
+                                <td>
+	                                <c:choose>
+			                        	<c:when test="${ c.couponPrice ne null }">
+			                            	${ c.couponPrice }원 할인
+			                            </c:when>
+			                        	<c:otherwise>
+			                        		${ c.couponPriceRate } 할인
+			                        	</c:otherwise>
+			                        </c:choose>
+								</td>
+                                <td>${ c.expireDate }</td>
+                                <c:choose>
+                                	<c:when test="${ c.couponPrice ne null }">
+                                		<input type="hidden" value="${ c.couponPrice }">
+                                	</c:when>
+                                	<c:otherwise>
+                                		<input type="hidden" value="${ c.couponPriceRate * allPrice }">
+                                	</c:otherwise>
+                                </c:choose>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>7월 바캉스 쿠폰</td>
-                                <td>국내도서</td>
-                                <td>10%</td>
-                                <td>2021-07-30</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>7월 바캉스 쿠폰</td>
-                                <td>국내도서</td>
-                                <td>10%</td>
-                                <td>2021-07-30</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>7월 바캉스 쿠폰</td>
-                                <td>국내도서</td>
-                                <td>10%</td>
-                                <td>2021-07-30</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div align="center">
-                        <button type="submit">쿠폰적용</button>
-                        <button type="button" class="btn_cancel">취소</button>
-                    </div>
-                </form>
+                		</c:forEach>
+                	</table>
+                </div>
+                
+                <div align="center">
+                	<button type="button">쿠폰적용</button>
+                	<button type="button" class="btn_cancel">취소</button>
+                </div>
             </div>
+            
+            <script>
+            	$("#coupon_box .btn_select").click(function(){
+            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text($(this).parent().parent().find("input[type=hidden]").val() + "원");
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } - $(this).parent().parent().find("input[type=hidden]").val() + "원");
+                });
+            </script>
 
             <div id="point_box">
                 <div>

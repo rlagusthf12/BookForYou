@@ -52,7 +52,7 @@
        }
     
     /* 페이징 스타일 */
-    #paging-wrap, input::placeholder{font-size: 25px; margin-left: 300px; }
+    #paging-wrap, input::placeholder{font-size: 25px; margin-left: 500px; }
 
     #paging-wrap{width:fit-content;}
     .page-link, .page-link:hover{color:rgb(252, 190, 52);
@@ -181,7 +181,7 @@
         </tr>
         <c:forEach var="c" items="${ list }">
         <tr>
-            <td><input type="checkbox" name="choice" value="select"></td>
+            <td height="70"><input type="checkbox" name="noList" value="${ list.no }"></td>
             <td class="cno">${ c.couponNo }</td>
             <td>${ c.couponName }</td>
             <td>${ c.couponKind }</td>
@@ -192,12 +192,58 @@
         </c:forEach>
     </table>
 
+	<script> 
 	
+			$(()=>{ $('#listAllCheck').change(()=>{
+						if($('#listAllCheck').prop('checked')){
+							$('input[name="noList"]').prop('checked',true); 
+						}else { 
+							$('input[name="noList"]').prop('checked',false);
+						}
+					}); 
+			//선택삭제가 클릭되면
+			 $("#delSelect").click(()=>{ 
+				 console.log('test'); 
+			 $('#delList').submit(); 
+		   }) 
+		}) 
+	</script>
+	}
+
+
+
+
+	<div id="paging-wrap">
+            <ul class="pagination">
+            	<c:choose>
+            		<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="couponList.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                	<li class="page-item"><a class="page-link" href="couponList.me?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">            
+                		<li class="page-item disabled"><a class="page-link">다음</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="couponList.me?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                	</c:otherwise>
+                </c:choose>          
+            </ul>
+        </div>
 
     <br><br>
 
-    <button type="button" class="btn btn-warning btn-lg" data-toggle="modal"  data-target="#msearch" style="margin-left: 500px;">쿠폰 등록하기</button>
-    <button type="button" class="btn btn-danger btn-lg" >쿠폰 삭제하기</button>
+    <button type="button" class="btn btn-warning btn-lg" data-toggle="modal"  data-target="#msearch" style="margin-left: 450px;">쿠폰 등록하기</button>
+    <button type="submit" id="delList" class="btn btn-danger btn-lg" >쿠폰 삭제하기</button>
     
     
    

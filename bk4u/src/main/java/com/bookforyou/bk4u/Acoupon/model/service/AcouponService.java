@@ -17,7 +17,6 @@ public interface AcouponService {
 	int insertAcoupon(Acoupon c) ;
 
 	
-	
 }
 	
 

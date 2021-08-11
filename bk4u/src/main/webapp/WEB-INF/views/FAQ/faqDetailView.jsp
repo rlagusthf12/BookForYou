@@ -63,25 +63,27 @@
 
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	<div class="faqTitle">도움말 상세보기</div>
 	<hr>
-	<div class="faqLittleTitle">결제/환불 관련 문의 1</div>
-	<div class="faqType">결제/환불</div>
+	<div class="faqLittleTitle">${f.faqQue}</div>
+	<div class="faqType">${f.queType}</div>
 	
 	<div class="faqContent">
-	<p>결제 환불 관련 문의 내용</p>
+	<p>${f.faqAns}</p>
 	</div>	
 	<hr>
 		
 	<div class="Button">1:1문의하기</div>
-	<div class="Button">수정</div>
-	<div class="Button">삭제</div>
+	<c:if test="${loginUser.memNo==1}">	
+	<div class="Button" onclick="location.href='updateForm.faq?faqNo=${f.faqNo}'">수정</div>
+	<div class="Button" onclick="location.href='delete.faq?faqNo=${f.faqNo}'">삭제</div>
+	</c:if>
 	
 	
-	<div class="ListButton">목록으로</div>
+	<div class="ListButton" onclick="javascript:history.go(-1);">목록으로</div>
 	</div>
-	<jsp:include page="../footer.jsp"/>
+	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

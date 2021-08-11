@@ -43,6 +43,7 @@
 		background-color: rgb(224, 224, 224);
 		float:right;
 		margin-right:100px;
+		border:0px;
 	}
 	
 	h2{
@@ -74,6 +75,7 @@
 	.uploadfile{
 	width:500px;
 	height:200px;
+	
 	}
 	.foot{
 	width:700px;
@@ -87,17 +89,21 @@
 </head>
 <body>
 
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
+<form action="write.re" method="post">
 <div class="faqTitle">신고</div>
+<input type="hidden" name="memNo" value="${re.memNo}">
+<input type="hidden" name="reportRefNo" value="${re.reportRefNo}">
 <hr>
 <h2 style="margin-top:10px;">신고 유형</h2>
-<input type="text" placeholder="게시글유형자동등록" class="titleinput" readonly>
+<input type="hidden" name="reportType" value="${re.reportType}">
+<input type="text"  name ="reportType1" value="${re.reportType1}" class="titleinput" readonly>
 <br><br><br>
 
 
 <h2 style="margin-left:35px;">내용</h2>
-<textarea class="content">내용을 입력해주세요.</textarea>
+<textarea class="content" name="reportContent">내용을 입력해주세요.</textarea>
 <br><br><br><br>
 <h2>사진 첨부</h2>
 <div class="uploadfile">
@@ -105,17 +111,18 @@
 </div>
 
 <h2 >신고 링크</h2>
-<a href="" style="margin-left:30px; font-size:20px;">신고링크 자동등록</a>
+<input type="hidden" name="reportLink" value="${re.reportLink}">
+<a href="${re.reportLink}" style="margin-left:30px; font-size:20px;">${re.reportLink}</a>
 <br><br><br><br><hr>
 
 <div class="foot">
-<div class="cancelButton">취소</div> 
-<div class="uploadButton">등록하기</div>
+<div class="cancelButton" onclick="javascript:history.go(-1);">취소</div> 
+<button type="submit" class="uploadButton">등록하기</button>
 </div> 
- 
+ </form>
 
 </div>
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 
 </body>
 </html>

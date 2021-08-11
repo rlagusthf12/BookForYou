@@ -82,32 +82,32 @@
 	<div class="body1">
 	<div class="reportTitle">1:1문의</div>
 	<hr>
-	<div class="reportLittleTitle">사용자 닉네임</div>
-	<div class="reportDate">2021-07-15</div>
-	<div class="reportType">결제/환불</div>
+	<div class="reportLittleTitle">${q.memNickName}</div>
+	<div class="reportDate">${q.qaDate}</div>
+	<div class="reportType">${q.queType}</div>
 	<div class="reportContent">
-	<p>신고 내용</p>
-	<img src="">
+	<p>${q.qaContent}</p>	
 	</div>	
 	<hr>
-			
-	<div class="Button">수정</div>
-	<div class="Button">삭제</div>
 	
+	
+	<form action="write.as" method="post">
+	<input type="hidden" name="qaNo" value="${q.qaNo}">
+	<input type="hidden" name="memNo" value="1">
+	<input type="hidden" name="ansStatus" value="Y">
 	<div class="reportTitle">답변</div>
 	<hr>
-	<div class="reportLittleTitle">관리자 닉네임</div>
-	<div class="reportDate">2021-07-17</div>
-	<div class="reportType">결제/환불</div>
+	<div class="reportLittleTitle">관리자</div>	
 	<div class="reportContent">
-	<textarea class="content">답변</textarea>	
+	<textarea class="content" placeholder="답변  내용" name="asContent"></textarea>	
 	<input type="file">
 	</div>	
 	<hr>
-	<div class="Button">답변등록</div>
-	
+	<button class="Button" type="submit">답변등록</button>
+	</form>
 			
-	<div class="ListButton">목록으로</div>
+	<div class="ListButton" onclick="location.href='list.qa'">목록으로</div>
+	
 	
 	</div>
 	<jsp:include page="../common/footer.jsp"/>

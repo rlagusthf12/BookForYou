@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reportMapper">
+	<resultMap id="reportResult" type="Report">
+		<result column="REPORT_NO" property="reportNo"/>
+		<result column="MEM_NO" property="memNo"/>
+		<result column="REPORT_CONTENT" property="reportContent"/>
+		<result column="REPORT_DATE" property="reportDate"/>
+		<result column="REPORT_REFNO" property="reportRefNo"/>
+		<result column="REPORT_TYPE" property="reportType"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changName"/>
+		<result column="REPORT_LINK" property="reportLink"/>	
+		<result column="REPORT_STATUS" property="reportStatus"/>		
+	</resultMap>
+	
+		<resultMap id="reportListResult" type="ReportList">
+		<result column="RELI_NO" property="reliNo"/>
+		<result column="RELI_CONTENT" property="reliContent"/>
+		<result column="RELI_DATE" property="reliDate"/>
+		<result column="MEM_NICKNAME" property="memNickName"/>
+		<result column="REPORT_LINK" property="reliLink"/>
+		<result column="REPORT_LIST_TYPE" property="reliType"/>
+		<result column="ORIGIN_NAME" property="originName"/>		
+		<result column="CHANGE_NAME" property="changeName"/>				
+	</resultMap>
+	
+	
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from report	
+	</select>
+	
+		<select id="selectReListCount" resultType="_int">
+		select
+		       count(*)
+		  from reportlist	
+	</select>
+	
+	<select id="selectReportList" resultMap="reportResult">
+		select REPORT_NO, 
+			   MEM_NO,
+			   REPORT_CONTENT,
+			   REPORT_DATE,
+			   REPORT_TYPE,
+			   REPORT_REFNO,
+			   REPORT_LINK,
+			   REPORT_STATUS
+			 
+		from report	
+		
+	</select>
+	
+	<select id="selectReReportList" resultMap="reportListResult">
+		select RELI_NO, 
+			   RELI_CONTENT,
+			   RELI_DATE,
+			   MEM_NICKNAME,
+			   REPORT_LINK,
+			   REPORT_LIST_TYPE,
+			   ORIGIN_NAME,
+			   CHANGE_NAME
+			 
+		from reportlist	
+		
+	</select>
+	
+		<select id="selectReport" resultMap="reportResult">
+		select REPORT_NO, 
+			   MEM_NO,
+			   REPORT_CONTENT,
+			   REPORT_DATE,
+			   REPORT_TYPE,
+			   REPORT_REFNO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   REPORT_LINK,
+			   REPORT_STATUS
+			 
+		from report	
+			where report_no = #{reportNo}
+		
+	</select>
+	
+	<select id="selectReReport" resultMap="reportListResult">
+		select RELI_NO, 
+			   RELI_CONTENT,
+			   RELI_DATE,
+			   MEM_NICKNAME,
+			   REPORT_LINK,
+			   REPORT_LIST_TYPE,
+			   ORIGIN_NAME,
+			   CHANGE_NAME
+			 
+		from reportlist	
+				where reli_no = #{reliNo}
+	</select>
+	
+	<delete id="deleteReport">
+		delete from report
+			where report_no =#{reportNo}
+	</delete>
+	
+	<delete id="deleteReReport">
+		delete from reportlist
+			where reli_no =#{reliNo}
+	</delete>
+	
+	<update id="updateReport">	
+		update report
+		set report_content = #{reportContent}
+		where report_no = #{reportNo}
+	</update>
+	
+	<update id="updateReReport">	
+		update reportlist
+		set reli_content = #{reliContent}
+		where reli_no = #{reliNo}
+	</update>
+	
+	<insert id="writeReport">
+		insert into
+		report(REPORT_NO,
+		       MEM_NO,	
+		       REPORT_CONTENT,
+		       REPORT_REFNO,
+		       REPORT_TYPE,
+		       ORIGIN_NAME,
+		       CHANGE_NAME,
+		       REPORT_LINK)
+		values(seq_reno.nextval,
+			   #{memNo},	
+			   #{reportContent},
+			   #{reportRefNo},
+			   #{reportType},
+			   #{originName},
+			   #{changeName},
+			   #{reportLink})
+	</insert>
+	
+	<insert id="writeReReport">
+		insert into
+		report(RELI_NO,
+		       RELI_CONTENT,		      
+		       MEM_NICKNAME,
+		       REPORT_LINK,
+		       REPORT_LIST_TYPE,
+		       ORIGIN_NAME,
+		       CHANGE_NAME)
+		values(seq_relino.nextval,
+			   #{reliContent},	
+			   #{memNickName},
+			   #{reliLink},
+			   #{reliType},
+			   #{originName},
+			   #{changeName} )
+	</insert>
+	
+	</mapper>

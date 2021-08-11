@@ -53,6 +53,11 @@
 		  where ANS_STATUS = 'N'
 	</select>
 	
+	<select id="selectTypeList" resultMap="qaResult">
+		select *
+		from quetype
+	</select>
+	
 	
 	<select id="selectList" resultMap="qaResult">
 		select
@@ -90,6 +95,7 @@
 		select
 			   qa_no			  
 		     , que_type
+		     , que_type_no
 		     , mem_nickname
 		     , mem_no		     
 		     , qa_content
@@ -118,5 +124,93 @@
 		where qa_no =#{qaNo}		     
 
 	</select>
+	
+	<insert id="writeAns">
+		insert
+		into	ans(QA_NO,MEM_NO,ANS_CONTENT,ORIGIN_NAME,CHANGE_NAME)
+		
+			values(#{qaNo},1,#{asContent},#{originName},#{changeName})		
+			
+	</insert>
+	
+	<insert id="writeQa">
+		insert
+		into	qa(QA_NO,MEM_NO,QA_CONTENT,ORIGIN_NAME,CHANGE_NAME,QUE_TYPE_NO,EMAIL)
+			values(seq_qaNo.nextval,#{memNo},#{qaContent},#{originName},#{changeName},#{queTypeNo},#{email})	
+	
+			
+	</insert>
+	
+	<update id="updateStatus">
+		update
+			qa
+		set ans_status = 'Y'
+		where qa_no =#{qaNo}
+	</update>
+	
+	<update id="updateQa">
+		update
+			qa
+		set que_type_no = #{queTypeNo}, qa_content=#{qaContent},
+		email = #{email}
+		
+		where qa_no =#{qaNo}
+	</update>
+	
+	<update id="updateAns">
+		update
+			ans
+		set  ans_content=#{asContent}		
+		
+		where qa_no =#{qaNo}
+	</update>
+	
+	<delete id="deleteQa">
+		delete from qa
+		where qa_no = #{qaNo}		
+				
+	</delete>
+	
+	<delete id="deleteAns">
+		delete from ans
+		where qa_no =#{qaNo}
+	</delete>
+	
+	<select id="typeListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa join quetype using(que_type_no)
+		 where que_type = #{type}		 	
+	</select>
+	
+	<select id="typeAnsListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa join quetype using(que_type_no)
+		  where ANS_STATUS = 'Y' and que_type = #{type}
+	</select>
+	
+	<select id="typeYetListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa join quetype using(que_type_no)
+		  where ANS_STATUS = 'N' and que_type = #{type}
+	</select>
+  
+  	<select id="selectTypeList1" resultMap="qaResult">
+  		select
+  			  qa_no
+		     , que_type
+		     , mem_nickname
+		     , qa_content
+		     , to_char(qa_date, 'YYYY-MM-DD') as qa_date
+		     ,ans_status
+		     		   
+		  from qa join quetype	using(que_type_no)
+		  join members using(mem_no)
+  		 
+  		 where que_type = #{type}
+  		 order by qa_no desc
+  	</select>
 	
 </mapper>

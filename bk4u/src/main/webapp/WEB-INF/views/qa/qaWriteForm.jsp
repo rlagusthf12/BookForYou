@@ -102,14 +102,20 @@
 
 <jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
+<form action="write.qa" method="post">
+<input type="hidden" name="memNo" value="7">
 <div class="faqTitle">1:1문의 하기</div>
 
 <h2 style="margin-top:10px;">유형 선택</h2>
-<select style="margin-left:50px;"><option>기타</option></select>
+<select style="margin-left:45px;" name="queTypeNo">
+<c:forEach var="q" items="${list1}">
+<option value="${q.queTypeNo}">${q.queType}</option>
+</c:forEach>
+</select>
 <br><br><br>
 
 <h2 style="margin-left:40px;">내용</h2>
-<textarea class="content">문의내용</textarea>
+<textarea class="content" placeholder="문의내용" name="qaContent"></textarea>
 <br><br><br><br>
 <h2>사진 첨부</h2>
 <div class="uploadfile">
@@ -117,15 +123,35 @@
 </div>
 <h2 style="margin-top:10px;">답변 알림</h2>
 <div class="emailinput">
-<input type="checkbox" class="check">
+<input type="checkbox" class="check" onclick="emailfunc(this.value,'emailOn');">
 <b>이메일</b>
-<input type="text" class="email">
+<span class="emailOn">
+</span>
+
 </div>
+<script>
+		
+$(document).ready(function() { 
+	$("input:checkbox").on('click', function() { 
+		if ( $(this).prop('checked') ) { 
+			$(".emailOn").append("<input type='text' class='email' name='email'>");
+			} else {
+				$(".emailOn").empty();
+			}
+		}); 
+	});
+
+	
+
+
+
+</script>
 <br><br><br>
 <hr>
-<div class="uploadButton">등록하기</div> 
+<button class="uploadButton" type="submit">등록하기</button> 
  
-<div class="ListButton">목록으로</div>
+ </form>
+<div class="ListButton" onclick="location.href='list.qa'">목록으로</div>
 </div>
 <jsp:include page="../common/footer.jsp"/>
 
