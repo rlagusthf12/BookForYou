@@ -334,24 +334,29 @@
             <div id="cart_title">
                 장바구니
             </div>
-
+			
+			<form action="order.od" method="post">
             <div id="cart_top">
                 <div>
                     <input type="checkbox" id="check_all"> 전체선택
+                    <input type="hidden" name="memNo" value="${ loginUser.memNo }">
                 </div>
                 <div>
                     <span>선택한 상품을</span>
-                    <button class="btn_order">주문하기</button>
-                    <button class="btn_list"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modal_list">리스트</button>
+                    <button class="btn_order" type="submit">주문하기</button>
+                    <button class="btn_list">리스트</button>
                     <button class="btn_delete">삭제</button>
                 </div>
             </div>
 			
-			<c:forEach var="b" items="${ bList }">
+			
+			<c:forEach var="b" items="${ bList }" varStatus="status">
             <div class="cart_book">
-                <input type="checkbox" name="bkNo" value="${ b.bkNo }">
+                <input type="checkbox" name="bookList[${ status.index }].bkNo" value="${ b.bkNo }">
+                <input type="hidden" name="bookList[${ status.index }].bkTitle" value="${ b.bkTitle }">
+                <input type="hidden" name="bookList[${ status.index }].writerName" value="${ b.writerName }">
+                <input type="hidden" name="bookList[${ status.index }].bkPrice" value="${ b.bkPrice }">
+                <input type="hidden" name="bookList[${ status.index }].introChangeName" value="${ b.introChangeName }">
                 <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
                 <div class="book_info">
                     <div>
@@ -366,7 +371,7 @@
                     </div>
                     
                     <div>
-                        <div><input type="number" min="1" max="5" value="${ b.bkQty }"></div>
+                        <div><input type="number" name="bookList[${ status.index }].bkQty" min="1" max="5" value="${ b.bkQty }"></div>
                         <div><button class="btn_qty">수량변경</button></div>
                     </div>
                     <div>${ b.bkPrice }원</div>
@@ -379,6 +384,7 @@
                 </div>
             </div>
             </c:forEach>
+            </form>
             
             <script>
 	        	$(".book_info>div:nth-child(4)>div:nth-child(2)").click(function(){

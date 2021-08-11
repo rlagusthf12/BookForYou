@@ -7,6 +7,7 @@ import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
+import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
 
 public interface MemberService {
 	
@@ -51,6 +52,11 @@ public interface MemberService {
 	int updateMemberWorkAndLevel(Member member);
 
 	String selectMemberPassword(int memNo);
+
+	/*
+	 * [사용자] 주소록 리스트 조회 (연지)
+	 */
+	ArrayList<MemberPhonebook> selectMemPhonebookList(int memNo);
 
 
 	
