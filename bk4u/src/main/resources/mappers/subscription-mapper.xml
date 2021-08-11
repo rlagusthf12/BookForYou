@@ -432,6 +432,7 @@
 	<insert id="insertSubsc">
 		insert
 		  into subscription
+		  	 (
 		       subsc_no
 		     , mem_no
 		     , subsc_name
@@ -440,6 +441,7 @@
 		     , subsc_sdate
 		     , subsc_enddate
 		     , subsc_deldate
+		     , subsc_status
 		     , subsc_receiver
 		     , subsc_post
 		     , subsc_address
@@ -450,14 +452,15 @@
 		     )
 		values
 		     ( 
-		       seq_subno.nextval
+		       SEQ_SUBNO.nextval
 		     , #{memNo}
 		     , #{subscName}
 		     , #{subscPrice}
 		     , #{subscPeriod}
-		     , SYSDATE
+		     , #{subscSdate}
 		     , #{subscEndDate}
 		     , #{subscDelDate}
+		     , 'Y'
 		     , #{subscReceiver}
 		     , #{subscPost}
 		     , #{subscAddress}

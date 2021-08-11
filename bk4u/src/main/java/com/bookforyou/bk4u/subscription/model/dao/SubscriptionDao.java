@@ -223,6 +223,6 @@ public class SubscriptionDao {
 	 * @author daeunlee
 	 */
 	public int insertSubsc(SqlSessionTemplate sqlSession, Subscription sub) {
-		return sqlSession.selectOne("subscriptionMapper.insertSubsc", sub);
+		return sqlSession.insert("subscriptionMapper.insertSubsc", sub);
 	}
 }
