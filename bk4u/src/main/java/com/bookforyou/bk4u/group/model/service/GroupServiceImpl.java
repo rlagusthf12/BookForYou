@@ -71,9 +71,6 @@ public class GroupServiceImpl implements GroupService{
 		return 0;
 	}
 
-
-
-
 	@Override
 	public int increaseCount(int groupBoardNo) {
 		return gDao.increaseCount(sqlSession, groupBoardNo);
@@ -90,6 +87,12 @@ public class GroupServiceImpl implements GroupService{
 	public ArrayList<GroupBoard> selectSearchList(HashMap<String, String> map) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int deleteGroup(int groupBoardNo) {
+		 return gDao.deleteGroup(sqlSession, groupBoardNo);
+		
 	}
 
 	

@@ -150,6 +150,7 @@
                 <br>
                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                 <c:if test="${ loginUser.memId eq g.groupWriter }">
+                <button type="submit"  style="float: right;" onclick="postFormSubmit(2);">삭제하기</button>
                 <button type="submit"  style="float: right;" onclick="postFormSubmit(1);">수정하기</button>
                 
                 <br><br>
@@ -164,6 +165,8 @@
 					function postFormSubmit(num){
 						if(num==1){
 							$("#postForm").attr("action", "updateForm.gbo").submit();
+						} else{
+							$("#postForm").attr("action", "delete.gbo").submit();
 						}
 					}
 				</script>

@@ -230,6 +230,26 @@ public class GroupController {
 		
 	}
 	
+	@RequestMapping("delete.gbo")
+	public String deleteGroup(int gno, String filePath, HttpSession session, Model model) {
+		int result = gService.deleteGroup(gno);
+		 
+		if(result > 0 ) {
+			
+			if(!filePath.equals("")) { //첨부파일이 있었다 = > 삭제한다
+				String removeFilePath = session.getServletContext().getRealPath(filePath);
+				new File(removeFilePath).delete();
+			}
+			
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			return "redirect:group.bo";
+			
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+	}
+	
 	
 	@RequestMapping("updateForm.gbo")
 	public String updateForm(int gno, Model model) {
@@ -237,6 +257,8 @@ public class GroupController {
 		return "group/groupChange";
 		
 	}
+
+	
 	
 	@RequestMapping("update.gbo")
 	public String updateGroup(GroupBoard g, MultipartFile reupfile, HttpSession session, Model model) {

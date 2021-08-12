@@ -64,8 +64,13 @@ public class GroupDao {
 		
 	}
 	
+	public int deleteGroup(SqlSessionTemplate sqlSession, int groupBoardNo) {
+		return sqlSession.update("groupMapper.deleteGroup", groupBoardNo);
+	}
+	
 	public int updateGroup(SqlSessionTemplate sqlSession, GroupBoard g){
 		return sqlSession.update("groupMapper.updateGroup", g);
 	}
+	
 
 }

@@ -47,9 +47,8 @@
             , s.group_status
             FROM 
            (SELECT * FROM GROUPBOARD 
-           WHERE GROUP_STATUS = 'Y'  
-      ORDER BY GROUP_BOARDNO DESC
-      )s) 
+            WHERE GROUP_STATUS = 'Y'  
+      ORDER BY GROUP_BOARDNO DESC)s) 
         WHERE NUM BETWEEN 1 AND 4
           
 	
@@ -66,9 +65,9 @@
             , s.change_name
             
               FROM 
-                    (SELECT * FROM GROUPBOARD g
-             WHERE GROUP_STATUS = 'Y' 
-                    ORDER BY GROUP_BOARDNO DESC)s)
+                    (SELECT * FROM GROUPBOARD 
+             		WHERE GROUP_STATUS = 'Y'
+                    ORDER BY GROUP_BOARDNO DESC)s) 
         WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
                   
         
@@ -188,26 +187,22 @@
 		  into groupBoard
 		  (
 		  group_boardno
-		 ,group_writer
 		 ,group_type
 		 ,group_title
 		 ,group_place
 		 ,group_script
 		 ,group_limit
-		 ,origin_name
 		 ,change_name
 		 ,group_open
 		  )
 		  values
 		  (
 		  seq_gno.nextval
-		 ,#{groupWriter}
 		 ,#{groupType}
 		 ,#{groupTitle}
 		 ,#{groupPlace}
 		 ,#{groupScript}
 		 ,#{groupLimit}
-		 ,#{originName}
 		 ,#{changeName}
 		 ,#{groupOpen}
 		  )
@@ -226,6 +221,14 @@
 	     from  groupBoard
 	    where  group_boardNo = #{groupBoardNo}
 	</select>
+	
+	<update id="deleteGroup">
+		update 
+				groupBoard
+		   set group_status ='N'
+		  where group_boardno = #{groupBoardNo}
+	
+	</update>
 	
 	<update id="updateGroup">
 	
