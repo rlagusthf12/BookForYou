@@ -6,6 +6,8 @@ import java.util.HashMap;
 import com.bookforyou.bk4u.Acoupon.model.vo.Acoupon;
 import com.bookforyou.bk4u.Amember.model.vo.Amem;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.mypage.model.vo.MyList;
 
 public interface AcouponService {
 	
@@ -17,7 +19,9 @@ public interface AcouponService {
 	int insertAcoupon(Acoupon c) ;
 
 	// 쿠폰삭제
-	int deleteAcoupon(int boardNo);
+	
+
+
 	
 }
 	

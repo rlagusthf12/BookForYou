@@ -168,8 +168,8 @@
     <hr>    
  
     <h3>등록한 쿠폰 리스트와 쿠폰의 게시여부를 보실 수 있습니다.</h3> 
-
-    <table border="1" width="1200" height="200">
+    
+   <table border="1" width="1200" height="200">
         <tr height="50">
             <th width="70"><input type="checkbox" name="allCheck" id="allCheck"> 선택</th>
             <th width="80">쿠폰번호</th>
@@ -179,9 +179,10 @@
             <th>쿠폰 종료기간</th>
             <th width="100">상태</th>
         </tr>
+        
         <c:forEach var="c" items="${ list }">
         <tr>
-            <td height="70"><input type="checkbox" name="check" class="check"></td>
+            <td height="70"><input type="checkbox" name="chBox" id="chBox" value="${c.couponNo}"></td>
             <td class="cno">${ c.couponNo }</td>
             <td>${ c.couponName }</td>
             <td>${ c.couponKind }</td>
@@ -191,19 +192,23 @@
         </tr>
         </c:forEach>
     </table>
-
+	
 	<script>
 		$("#allCheck").click(function(){
 		 var chk = $("#allCheck").prop("checked");
 		 if(chk) {
-		  $(".check").prop("checked", true);
+		  $(".chBox").prop("checked", true);
 		 } else {
-		  $(".check").prop("checked", false);
+		  $(".chBox").prop("checked", false);
 		 }
 		});
-</script>
-	
+	</script>
 
+	<script>
+		 $(".chBox").click(function(){
+		  $("#allCheck").prop("checked", false);
+		 });
+	</script>
 
 
 
@@ -236,31 +241,35 @@
 
     <br><br>
 
-    <button type="button" class="btn btn-warning btn-lg" data-toggle="modal"  data-target="#msearch" style="margin-left: 450px;">쿠폰 등록하기</button>
-    <button type="submit" id="delList" class="btn btn-danger btn-lg" >쿠폰 삭제하기</button>
+	<div id="button">
+    	<button type="button" class="btn btn-warning btn-lg" data-toggle="modal"  data-target="#msearch" style="margin-left: 450px;">쿠폰 등록하기</button>
+    	<button type="button" class="btn btn-danger btn-lg" id="couponDel" >쿠폰 삭제하기</button>
+    </div>
+    <script>
+ $("#couponDel").click(function(){
+  var confirm_val = confirm("정말 삭제하시겠습니까?");
+  
+  if(confirm_val) {
+   var checkArr = new Array();
+   
+   $("input[class='chBox']:checked").each(function(){
+    checkArr.push($(this).val(${c.couponNo}));
+   });
     
- <script>
-	 $("#delList").click(function(){
-	  var confirm_val = confirm("정말 삭제하시겠습니까?");
-	  
-	  if(confirm_val) {
-	   var checkArr = new Array();
-	   
-	   $("input[class='check']:checked").each(function(){
-	    checkArr.push($(this).attr("data-cartNum"));
-	   });
-	    
-	   $.ajax({
-	    url : "/Acoupon/couponList",
-	    type : "post",
-	    data : { check : checkArr },
-	    success : function(){
-	     location.href = "/Acoupon/couponList";
-	    }
-	   });
-	  } 
-	 });
+   $.ajax({
+    url : "/Acoupon/couponList",
+    type : "post",
+    traditional:true,
+    data : { chbox : checkArr },
+    success : function(){
+     location.href = "/Acoupon/couponList";
+    }
+   });
+  } 
+ });
 </script>
+	
+</div>
 
      <!-- 회원검색 모달 -->
      <div class="modal" id="msearch">

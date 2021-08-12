@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.Acoupon.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.Acoupon.model.service.AcouponService;
 import com.bookforyou.bk4u.Acoupon.model.vo.Acoupon;
-
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.member.model.vo.Member;
+
 
 @Controller
 public class AcouponController {
@@ -60,21 +62,32 @@ public class AcouponController {
 		return "Acoupon/couponList";
 	}
 	
-	@RequestMapping("couponDelete.me")
-	public String deleteCoupon(int acno, String filePath, Model model, HttpSession session) {
-		
-		int result = acService.deleteAcoupon(acno); // service, dao, sql문 
-		
-		if(result > 0) { // 성공 => 리스트페이지
-				
-			session.setAttribute("alertMsg", "성공적으로 쿠폰이 삭제되었습니다.");
-			return "redirect:couponList.me";
-			
-		}else { // 실패
-			model.addAttribute("errorMsg", "쿠폰 삭제 실패");
-			return "common/errorPage";
-		}
-		
+	// 카트 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteCart", method = RequestMethod.POST)
+	public int deleteCart(HttpSession session,
+	     @RequestParam(value = "chbox[]") List<String> chArr, CartVO cart) throws Exception {
+	 logger.info("delete cart");
+	 
+	 MemberVO member = (MemberVO)session.getAttribute("member");
+	 String userId = member.getUserId();
+	 
+	 int result = 0;
+	 int cartNum = 0;
+	 
+	 
+	 if(member != null) {
+	  cart.setUserId(userId);
+	  
+	  for(String i : chArr) {   
+	   cartNum = Integer.parseInt(i);
+	   cart.setCartNum(cartNum);
+	   service.deleteCart(cart);
+	  }   
+	  result = 1;
+	 }  
+	 return result;  
 	}
-}	
+	
+}
 	
