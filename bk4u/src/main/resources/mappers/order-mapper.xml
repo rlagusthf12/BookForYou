@@ -47,6 +47,36 @@
 		<result column="writer_name" property="writerName"/>
 		<result column="bk_publish" property="bkPublish"/>
 	</resultMap>
+
+	<resultMap id="bookResult" type="Book">
+		<result column="bk_no" property="bkNo"/>
+		<result column="sub_cate_no" property="subCateNo"/>
+		<result column="main_cate_name" property="mainCateName"/>
+		<result column="sub_cate_name" property="subCateName"/>
+		<result column="interest_content" property="interestContent"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="bk_publish" property="bkPublish"/>
+		<result column="bk_date" property="bkDate"/>
+		<result column="bk_price" property="bkPrice"/>
+		<result column="intro_originname" property="introOriginName"/>
+		<result column="intro_changename" property="introChangeName"/>
+		<result column="bk_stock" property="bkStock"/>
+		<result column="bk_seldate" property="bkSelDate"/>
+		<result column="bk_mdate" property="bkModiDate"/>
+		<result column="bk_selstatus" property="bkSelStatus"/>
+		<result column="bk_age" property="bkAge"/>
+		<result column="bk_gender" property="bkGender"/>
+		<result column="bk_work" property="bkWork"/>
+		<result column="bk_level" property="bkLevel"/>
+		<result column="bk_status" property="bkStatus"/>
+		<result column="writer_name" property="writerName"/>
+		<result column="writer_intro" property="writerIntro"/>
+		<result column="writer_origin_name" property="writerOriginName"/>
+		<result column="writer_change_name" property="writerChangeName"/>
+		<result column="bk_content" property="bkContent"/>
+		<result column="grade_star" property="bkGrade"/>
+		<result column="cart_qty" property="bkQty"/>
+	</resultMap>
 	
 	<!-- [관리자] 전체 주문 개수 조회 (한진) -->
 	<select id="selectAllListCount" resultType="_int">
@@ -693,6 +723,38 @@
 		set detail_status='배송완료'
 		where order_no = #{orderNo}
 	</update>
+	
+	<!-- [사용자] 주문 도서 조회 (연지) -->
+	<select id="selectOrderBook" resultMap="bookResult">
+		select  
+		       bk_no,
+		       sub_cate_no,
+		       bk_title,
+		       bk_publish,
+		       bk_date,
+		       bk_price,
+		       intro_originname,
+		       intro_changename,
+		       bk_stock,
+		       bk_seldate,
+		       bk_mdate,
+		       bk_selstatus,
+		       bk_age,
+		       bk_gender,
+		       bk_work,
+		       bk_level,
+		       bk_status,
+		       writer_name,
+		       writer_intro,
+		       writer_origin_name,
+		       writer_change_name,
+		       bk_content,
+		       cart_qty
+		  from cart
+		  join book bk using (bk_no)
+		  where bk_no = #{bkNo}
+		    and mem_no = #{memNo}
+	</select>
 	
 	
 </mapper>

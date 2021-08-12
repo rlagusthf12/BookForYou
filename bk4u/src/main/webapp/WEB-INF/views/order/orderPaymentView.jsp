@@ -715,7 +715,7 @@
                 });
                 
                 $("#shipping_info #mem_info").click(function(){
-					console.log(2);
+					console.log(${ loginUser.memName });
                 });
                 
                 $("#shipping_info #user_ip").click(function(){

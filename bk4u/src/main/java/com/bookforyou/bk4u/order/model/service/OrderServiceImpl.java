@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -206,6 +207,14 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int insertAdminReturn(HashMap<String, String> map) {
 		return oDao.insertAdminReturn(sqlSession, map);
+	}
+
+	/*
+	 * [사용자] 주문 도서 조회 (연지)
+	 */
+	@Override
+	public Book selectOrderBook(HashMap<String, Integer> map) {
+		return oDao.selectOrderBook(sqlSession, map);
 	}
 
 	

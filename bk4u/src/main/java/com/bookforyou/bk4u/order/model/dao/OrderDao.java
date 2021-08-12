@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail;
 import com.bookforyou.bk4u.member.model.vo.Member;
@@ -180,6 +181,13 @@ public class OrderDao {
 	 */
 	public int insertAdminReturn(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.insert("orderMapper.insertAdminReturn", map);
+	}
+
+	/*
+	 * [사용자] 주문 도서 조회 (연지)
+	 */
+	public Book selectOrderBook(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("orderMapper.selectOrderBook", map);
 	}
 
 	

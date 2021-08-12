@@ -204,8 +204,13 @@ public class BookController {
 		int cpCount = memberService.selectCouponCount(memNo);
 		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
 		
+		for(Book b : bList) {
+			System.out.println(b);
+		}
+		
 		mv.addObject("bList", bList)
 		  .addObject("cpCount", cpCount)
+		  .addObject("cList", cList)
 		  .setViewName("book/bookCartList");
 		
 		return mv;
