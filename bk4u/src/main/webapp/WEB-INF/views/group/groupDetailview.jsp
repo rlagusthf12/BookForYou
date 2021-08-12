@@ -85,24 +85,27 @@
                                 <div class="card" style="width:500px">
                                     <img class="card-img-top" src="${ g.changeName }" alt="Card image">
                                         <div class="card-img-overlay">
-                                        <h4 class="card-title">${ g.groupTitle }</h4>
-                                        <p class="card-text">${ g.groupDate }</p>
+                                        <h4 class="card-title" style="background:white;">${ g.groupTitle }</h4>
+                                        <p class="card-text" style="background:white;">${ g.groupDate }</p>
                                 </div>
                               </div>
                             </td>	
-                            <td align="center"><b>회원목록</b></td><br>
                             
-                            <c:forEach var="gm" items="${groupMember}">
- 							<td>             
-                                <!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                                
-                                <p>${ gm.memEmail }</p>
-                                <p>${ gm.groupEnrollDate }</p>
-                                 <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> 
-                                 <br>
-							</c:forEach>
-							</td>
-                        </tr>
+                            <td align="center"><b>회원목록</b></td>
+							<!-- 작성자가 모임장일 경우 뜨는 버튼-->
+                            <tr>    
+                            
+                            	<input type="hidden" name="groupMemberList" value="${ g.groupBoardNo }">   
+                            	<td> 아이디 </td>   
+                                <td> 가입날짜 </td>
+                                <td> 이메일 </td>
+                                <td> <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> 
+                                </td>   
+							</tr>
+							<br>
+							
+							
+                        
                         
                                 <!-- 강퇴시키는 이유 쓰는 방법 -->
                                 <!-- 작성자가 가입자일 경우 가입되어 있는 사람들 프로필 사진 갖다대면 이름 나오게-->
@@ -114,15 +117,12 @@
                 </table>
                 
                 <br>
-                <h6 align="left"><b>
-                ${ loginUser.memId } 
-                </b></h6>
-                <br>
+                <h6 align="left"><b>${ g.groupWriter }</b></h6>
+                
+                <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;" action="insertGMem.me">가입하기</button>
+                
+                <button type="submit" action="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
-                
-                
-                <button type="submit" action="insertGMem.me" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
-                <button type="submit" class="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
                 
                 
                 <!--탈퇴여부 묻는 알람창-->
@@ -149,9 +149,24 @@
 
                 <br>
                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                <button type="submit" action="updateGroup.bo" style="float: right;">수정하기</button>
+                <c:if test="${ loginUser.memId eq g.groupWriter }">
+                <button type="submit"  style="float: right;" onclick="postFormSubmit(1);">수정하기</button>
+                
                 <br><br>
-
+				</c:if>
+				
+				<form id="postForm" action="" method="post">
+					<input type="hidden" name="gno" value="${ g.groupBoardNo }">
+					<input type="hidden" name="filePath" value="${ g.changeName }">
+				</form>
+				
+				<script>
+					function postFormSubmit(num){
+						if(num==1){
+							$("#postForm").attr("action", "updateForm.gbo").submit();
+						}
+					}
+				</script>
 
                 <hr>
               

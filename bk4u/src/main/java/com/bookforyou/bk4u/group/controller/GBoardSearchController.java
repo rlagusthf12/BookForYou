@@ -44,13 +44,11 @@ public class GBoardSearchController extends HttpServlet {
 		map.put("keyword", keyword);
 		
 		GroupService gService = new GroupServiceImpl();
-		int searchCount = gService.selectSearchGListCount(map);
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
-		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 1 , 4);
-		ArrayList<GroupBoard> list = gService.selectSearchList(map, pi);
+		//PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 1 , 4);
+		ArrayList<GroupBoard> list = gService.selectSearchList(map);
 		
-		request.setAttribute("pi", pi);
+		//request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
 		request.setAttribute("condition", condition);

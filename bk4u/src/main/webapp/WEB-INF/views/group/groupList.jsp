@@ -111,7 +111,7 @@
 			
                 <!--로그인한 모든 회원에게 보이는 버튼-->
                 <c:if test="${ !empty loginUser }">
-                <button type="submit" id="makeBoard">독서모임 만들기</button>
+                <button type="button" id="makeBoard" ><a href="createGroup.bo">독서모임 만들기</a></button>
                 </c:if>
                 <br><br>
                 <hr>
@@ -132,7 +132,7 @@
                     <c:forEach var="g" items="${ groupList }">
                         <tr>    
                         	<input type="hidden" value="${g.groupBoardNo}">    
-                            <td rowspan="3" width="230" height="200">${ g.changeName }</td>
+                            <td rowspan="3" width="230" height="200"><img src="${ g.changeName }"></td>
                             <td width="80" height="20" style="font-size: 13px;">${ g.groupType }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupDate }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupPlace }</td>
@@ -154,7 +154,6 @@
                     	$(function(){
                     		$("#groupList>tbody>tr").click(function(){
                     			location.href="detail.gbo?gno=" + $(this).children().eq(0).val();
-                    			//console.log($(this).children(".gno").text()); 
                     		})
                     	})
                     </script>
@@ -163,6 +162,9 @@
                          
                <hr>
                
+               
+                
+				
                <button type="button" id="more"  style="border-radius: 10px; background: white; ">더보기▼</button>
                    
     				<script>
@@ -173,8 +175,8 @@
                             
                             $.ajax({
                                 url : "group.bo",
-                                type: 'POST',
-                                data: {more : more },
+                                type: "POST",
+                                data: {"more" : more },
                                 dataType: "json",
                                 success: function(data){
                     
@@ -200,7 +202,7 @@
                                         addListHtml += "</div>";
                                         
                                     if(data.list.length>=1){
-                                        $("#morePage").append(addListHtml);
+                                        $("groupList").append(addListHtml);
                                     }else{
                                         alert("다음페이지가 없습니다.");
                                     }						

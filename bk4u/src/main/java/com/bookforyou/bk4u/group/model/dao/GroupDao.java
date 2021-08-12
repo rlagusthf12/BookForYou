@@ -28,12 +28,14 @@ public class GroupDao {
 	}
 	
 	public int insertGBoard(SqlSessionTemplate sqlSession, GroupBoard g) {
+		System.out.println(g);
 		return sqlSession.insert("groupMapper.insertGBoard", g);
 			
 		}
 	
 	
 	public int insertGMem(SqlSessionTemplate sqlSession, GroupMember gm) {
+		System.out.println(gm);
 		return sqlSession.insert("groupMapper.insertGMem", gm);
 	}
 	
@@ -47,12 +49,8 @@ public class GroupDao {
 		
 	}
 	
-	public ArrayList<GroupBoard> selectSearchList(SqlSession sqlSession, HashMap<String, String> map, PageInfo pi){
-		
-		int offset = (pi.getCurrentPage() -1) + pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		return (ArrayList)sqlSession.selectList("groupMapper.selectSearchList", map, rowBounds);
+	public ArrayList<GroupBoard> selectSearchList(SqlSession sqlSession, HashMap<String, String> map){
+		return (ArrayList)sqlSession.selectList("groupMapper.selectSearchList", map);
 		
 	}
 
@@ -66,5 +64,8 @@ public class GroupDao {
 		
 	}
 	
+	public int updateGroup(SqlSessionTemplate sqlSession, GroupBoard g){
+		return sqlSession.update("groupMapper.updateGroup", g);
+	}
 
 }

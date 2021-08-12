@@ -18,6 +18,7 @@ public class GroupMember {
 	private String memEmail;
 	private String groupLevel;
 	private Date groupWithdraw;
-	private String groupResaon;
+	private String groupReason;
+	private int groupMem;
 	
 }

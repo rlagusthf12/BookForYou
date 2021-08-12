@@ -44,10 +44,14 @@
             , s.group_script
             , s.group_place
             , s.change_name
+            , s.group_status
             FROM 
-                    (SELECT * FROM GROUPBOARD    
-      ORDER BY GROUP_BOARDNO DESC)s) 
+           (SELECT * FROM GROUPBOARD 
+           WHERE GROUP_STATUS = 'Y'  
+      ORDER BY GROUP_BOARDNO DESC
+      )s) 
         WHERE NUM BETWEEN 1 AND 4
+          
 	
 	</select>
 	
@@ -62,10 +66,12 @@
             , s.change_name
             
               FROM 
-                    (SELECT * FROM GROUPBOARD 
-             
-                    ORDER BY GROUP_BOARDNO DESC)s) 
+                    (SELECT * FROM GROUPBOARD g
+             WHERE GROUP_STATUS = 'Y' 
+                    ORDER BY GROUP_BOARDNO DESC)s)
         WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
+                  
+        
 	</select>
 	
 	<update id="increaseCount">
@@ -76,23 +82,35 @@
 		    and group_status = 'Y' 
 	</update>
 	
-	<insert id="inserGMem">
+	<insert id="insertGMem">
 		
+		 
 		insert 
 		  into groupMember
 		  (
 		  	group_boardno
+		  , mem_no
 		  ,	group_enrolldate
 		  ,	mem_email
 		  ,	group_level
+		  , group_withdraw
+		  , group_reason
 		  )
 		  values
 		  (
 		  	seq_gno.nextval
-		  , #{gorupEnrollDate}
-		  , #{mem_email}
-		  , #{group_level}
+		  , #{memNo} 
+		  , sysdate
+		  , #{memEmail}
+		  , #{groupLevel}
+		  , #{groupWithdraw}
+		  , #{groupReason}
 		  )
+		  select
+		  (
+		  
+		  )
+	
 	</insert>
 	
 	<select id="groupMemberList" resultMap="groupMemberResult">
@@ -107,27 +125,48 @@
 				
 	</select>
 	
+	<select id="groupMemberCount" resultType="_int">
+		SELECT 
+             count(*)
+            
+              from groupBoard g 
+             where g.group_status= 'Y'
+    </select>
+	
 	<select id="selectSearchGListCount" resultType="_int">
-		select
-			   count(*)
-	      from groupBoard
-	     where 
-	     		group_status='Y'
-
+		SELECT 
+             count(*)
+            
+              from groupBoard g 
+             where g.group_status= 'Y'
+             
+          
+            <if test="condition == 'groupTitle'">
+            where group_title
+           </if>
+           <if test="condition == 'groupScript'">
+            and group_script
+            </if>
+           <if test="condition == 'groupPlace'">
+            and group_place
+            </if>
+	     		like '%' || #{keyword} || '%'
+             
 	</select>
 	 
 	 
 	<select id="selectSearchList" resultMap="groupResult">
-			SELECT *              
-        FROM (SELECT ROWNUM NUM 
-            , s.group_boardno 
-            , s.group_type
-            , s.group_title
-            , s.group_script
-            , s.group_place
-            , s.change_name
+			SELECT 
+            group_boardno 
+            , group_type
+            , group_title
+            , group_script
+            , group_place
+            , change_name
             
-              FROM GROUPBOARD 
+              from groupBoard g 
+             where g.group_status= 'Y'
+             
             <choose>
             <when test="condition == 'groupTitle'">
             where group_title
@@ -141,9 +180,6 @@
            </choose>
 	     		like '%' || #{keyword} || '%'
              
-             
-                    ORDER BY GROUP_BOARDNO DESC)s)
-                    where NUM between 1 and 4
 	</select>
 
 
@@ -152,22 +188,26 @@
 		  into groupBoard
 		  (
 		  group_boardno
+		 ,group_writer
 		 ,group_type
 		 ,group_title
 		 ,group_place
 		 ,group_script
 		 ,group_limit
+		 ,origin_name
 		 ,change_name
 		 ,group_open
 		  )
 		  values
 		  (
 		  seq_gno.nextval
+		 ,#{groupWriter}
 		 ,#{groupType}
 		 ,#{groupTitle}
 		 ,#{groupPlace}
 		 ,#{groupScript}
 		 ,#{groupLimit}
+		 ,#{originName}
 		 ,#{changeName}
 		 ,#{groupOpen}
 		  )
@@ -187,41 +227,23 @@
 	    where  group_boardNo = #{groupBoardNo}
 	</select>
 	
-	<!-- [사용자] 마이페이지 내가 속한 그룹 리스트들 개수 조회 (세아) -->
-	<select id="selectMyReadingGroupListCount" resultType="_int">
-		select
-			count(*)
-		from groupmember
-		where mem_no = #{memNo}
-			and not group_level = 'N'
-	</select>
+	<update id="updateGroup">
 	
-	<!-- [사용자] 마이페이지 내가 속한 그룹의 총 멤버 회원수 조회(세아) -->
-	<select id="selectMyReadingGroupMemberCount" resultType="_int">
-		select count(*)
-		from groupmember
-		where group_boardno = #{groupBoardNo} 
-			and not group_level = 'N'
-	</select>
-	
-	<!-- [사용자] 마이페이지 내가 속한 그룹의 리스트 조회(세아) -->
-	<select id="selectMyReadingGroupList" resultMap="groupResult">
-		select group_boardno,
-			   m.mem_no,
-			   group_level,
-			   group_type,
-			   group_title,
-			   group_script,
-			   group_date,
-			   group_status,
-			   group_writer,
-			   origin_name,
-			   change_name
-		from groupboard g
-		join groupmember m using(group_boardno)
-		where group_status = 'Y' 
-			and not group_level = 'N' 
-			and m.mem_no=#{memNo}
-	</select>
+		update
+				groupBoard
+		   set  
+		   	      group_boardno = #{groupBoardNo}
+				 ,group_writer = #{groupWriter}
+				 ,group_type = #{groupType}
+				 ,group_title = #{groupTitle}
+				 ,group_place = #{groupPlace}
+				 ,group_script = #{groupScript}
+				 ,group_limit = #{groupLimit}
+				 ,origin_name = #{originName}
+				 ,change_name = #{changeName}
+				 ,group_open = #{groupOpen}
+				 
+		 where group_boardno = #{groupBoardNo}
+	</update>
 	
 </mapper>

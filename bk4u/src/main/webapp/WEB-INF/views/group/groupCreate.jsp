@@ -30,7 +30,7 @@
 <body>
 
         <!--메뉴바 입력-->
-        <jsp:include page=""/>
+        <jsp:include page="../common/menubar.jsp"/>
             
             <div class="content">
 
@@ -38,7 +38,7 @@
                 <br><br><br><br><br><br><br><br>
                   
                      
-                		<h6 align="left"><b><a href="insertGroup.bo">독서모임게시판</a></b></h6>
+                		<h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                         <br><br><br>
                        <form id="createGroup" method="post" action="insertGroup.bo" enctype="multipart/form-data">
                         
@@ -49,7 +49,11 @@
                             
                             
                             <thead>
-                                <tr>
+                                <tr>                            	
+                                	<td><input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter"></td>
+                               	
+                 				</tr>
+                 				<tr>
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
                                     <td colspan="2">  
 										<div>
@@ -71,7 +75,7 @@
                                
                                                                    
                                 </script>
-                                    <form name="cityForm">
+                                    <form name="groupPlace">
                                 
                                     <tr>
                                         <td><label for="">지역검색</label></td>
@@ -133,16 +137,16 @@
                                     <td><label for="">사진</label></td>
                                     <td height="130">
                                        
-                                        <img src="" id="img" name="groupImg">
+                                        <img src="resources/groupFiles" id="upfile" name="upfile">
                                         <br>
-                                        <input type="file" id="changeName" class="form-control-file border" onchange="miri(this);">
+                                        <input type="file" id="upfile" name="upfile" class="form-control-file border" onchange="miri(this);">
 
                                         <script>
                                             function miri(tag){
                                                 var reader = new FileReader();
                                                 reader.readAsDataURL(tag.files[0]);
                                                 reader.onload = function() {
-                                                    document.getElementById("img").src = this.result;
+                                                    document.getElementById("upfile").src = this.result;
                                                 } 
                                             }
                                         </script>
@@ -179,7 +183,7 @@
                 </div>
 
             <!--푸터바 입력-->
-            <jsp:include page=""/>  
+            <jsp:include page="../common/footer.jsp"/>  
 
         </body>
     </html>

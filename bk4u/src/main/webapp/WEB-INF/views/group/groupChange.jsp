@@ -29,8 +29,10 @@
 <body>
 
         <!--메뉴바 입력-->
-        <jsp:include page=""/>
+        <jsp:include page="../common/menubar.jsp"/>
             
+            <form id="updateForm" method="post" action="update.gbo" enctype="multipart/form-data">
+            <input type="hidden" name="boardNo" value="${ g.groupBoardNo }">
             <div class="content">
 
             <div class="innerOuter" style="padding:5% 10%;" align="center">
@@ -59,28 +61,28 @@
                                 </tr>
                                 <tr>
                                   
-                                    <td colspan="2" ><input type="text" readonly placeholder="원래소모임이름"></td>
+                                    <td colspan="2" ><input type="text" readonly value="${g.groupTitle}"></td>
                                    
                                 </tr>
 
                                 <tr>
                                     <td>*참여인원</td>
-                                    <td colspan="2"><input type="number"></td>
+                                    <td colspan="2"><input type="number" ></td>
                                 </tr>
                                
                                                                    
                                 </script>
-                                    <form name="cityForm">
+                                    <form name="groupPlace">
                                 
                                     <tr>
                                         <td>지역검색</td>
-                                        <td colspan="2" ><input type="text" readonly placeholder="원래지역이름"></td>
+                                        <td colspan="2" ><input type="text" readonly value="${g.groupPlace}"></td>
 
                                 </tr>
                                 
                                 <tr>
                                     <td><label for="">모임소개</label></td>
-                                    <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
+                                    <td><textarea name="groupScript" id="" cols="30" rows="10" value=${g.groupScript }></textarea></td>
                                 </tr>
                          
 
@@ -88,19 +90,28 @@
                                     <td><label for="">사진</label></td>
                                     <td height="130">
                                        
-                                        <img src="" id="img">
+                                        <img src="resources/groupFiles" id="upfile" name="upfile">
                                         <br>
-                                        <input type="file" name="groupImg" onchange="miri(this);">
+                                        <input type="file" name="reupfile" onchange="miri(this);">
 
+										
                                         <script>
                                             function miri(tag){
                                                 var reader = new FileReader();
                                                 reader.readAsDataURL(tag.files[0]);
                                                 reader.onload = function() {
-                                                    document.getElementById("img").src = this.result;
+                                                    document.getElementById("upfile").src = this.result;
                                                 } 
                                             }
                                         </script>
+                                        
+                                        <c:if test="${ !empty g.originName }">
+                                         	현재 업로드된 파일:
+                                        <a href="${ g.changeName }" download="${ g.originName }">${ g.originName }</a>
+                                        <input type="hidden" name="" value="${g.originName }">
+                                        <input type="hidden" name="" value="${g.changeName }">
+                                        
+                                        </c:if>
                                     </td>
                                     
                                 </tr>
@@ -118,7 +129,7 @@
                         </table>
 
                         <br>
-                        <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">개설하기</button>
+                        <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">만들기</button>
                         <button type="reset" style="border-color: grey; background-color: white; border-radius: 10px;">초기화</button>
                         <br><br>
                         </div>>
@@ -129,9 +140,9 @@
 
 
                 </div>
-
+				</form>
             <!--푸터바 입력-->
-            <jsp:include page=""/>  
+            <jsp:include page="../common/footer.jsp"/>  
 
         </body>
     </html>

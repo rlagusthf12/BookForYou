@@ -92,12 +92,22 @@ public class GroupController {
 	}
 	
 	@RequestMapping("insertGroup.bo")
-	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session) {
+	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session, Model model) {
 		
+				
+				
+				if(!upfile.getOriginalFilename().equals("")) {
+
+					
+					String changeName = saveFile(session, upfile);
+					g.setOriginName(upfile.getOriginalFilename());
+					g.setChangeName("resources/groupFiles/" + changeName);
+				}
 				
 				int result = gService.insertGroup(g);
 				
 				if(result > 0) {
+					
 					session.setAttribute("alertMsg", "독서모임 등록");
 					return "redirect:group.bo";
 				} else {
@@ -109,17 +119,18 @@ public class GroupController {
 	}
 	
 	
+	
 	@RequestMapping("insertGMem.me")
-	public void insertGMem (GroupMember gm ,Model model, HttpSession session) {
-		
+	public String insertGMem (GroupMember gm ,HttpSession session) {
+
 		int result = gService.insertGMem(gm);
 		
 		if(result > 0) {
 			
 			session.setAttribute("alertMsg", "가입되었습니다.");
-			return ;
-			
 		} 
+		
+			return"redirect:group.bo";
 	}
 	
 	
@@ -136,12 +147,11 @@ public class GroupController {
 		mv.addObject("groupMemberList", groupMemberList);
 		
 		return mv;
-		
 	}
 	
 	
 	public String saveFile(HttpSession session, MultipartFile upfile) {
-		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		String savePath = session.getServletContext().getRealPath("/resources/groupFiles/");
 		
 		String originName = upfile.getOriginalFilename();
 		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -216,6 +226,42 @@ public class GroupController {
 		}
 		
 		return mv;
+		
+		
+	}
+	
+	
+	@RequestMapping("updateForm.gbo")
+	public String updateForm(int gno, Model model) {
+		model.addAttribute("g", gService.selectGroup(gno));
+		return "group/groupChange";
+		
+	}
+	
+	@RequestMapping("update.gbo")
+	public String updateGroup(GroupBoard g, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		if(!reupfile.getOriginalFilename().equals("")) {
+			if(g.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(g.getChangeName())).delete();				
+			}
+			
+			String changeName = saveFile(session, reupfile);
+			g.setOriginName(reupfile.getOriginalFilename());
+			g.setChangeName("resources/groupFiles/" + changeName);				
+			
+		}
+		
+				int result = gService.updateGroup(g);
+						
+						if(result > 0) {
+							session.setAttribute("alertMsg", "수정되었습니다.");
+							return "redirect:detail.gbo?gno=" + g.getGroupBoardNo();
+						}else {
+							model.addAttribute("errorMsg", "게시글 수정 실패");
+							return "common/errorPage";
+							
+						}
 		
 		
 	}

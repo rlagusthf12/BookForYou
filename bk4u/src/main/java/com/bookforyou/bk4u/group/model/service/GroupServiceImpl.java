@@ -1,5 +1,6 @@
 package com.bookforyou.bk4u.group.model.service;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,7 +14,8 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.group.model.vo.GroupMember;
-import com.bookforyou.bk4u.member.model.vo.Member;
+
+
 
 @Service
 public class GroupServiceImpl implements GroupService{
@@ -44,16 +46,10 @@ public class GroupServiceImpl implements GroupService{
 		return gDao.selectGroup(sqlSession, groupBoardNo);
 	}
 
-	@Override
-	public int deleteGroup(int GroupBoardNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int updateGroup(GroupBoard g) {
-		// TODO Auto-generated method stub
-		return 0;
+		return gDao.updateGroup(sqlSession, g);
 	}
 
 	@Override
@@ -75,37 +71,25 @@ public class GroupServiceImpl implements GroupService{
 		return 0;
 	}
 
-	
-	@Override
-	public int selectSearchGListCount(HashMap<String, String> map) {
-		
-		SqlSession sqlSession = getSqlSession();
-		int searchCount = gDao.selectSearchGListCount(sqlSession, map);
-		sqlSession.close();
-		return searchCount;
-		
-	}
-
-	
-	@Override
-	public ArrayList<GroupBoard> selectSearchList(HashMap<String, String> map, PageInfo pi) {
-		SqlSession sqlSession = getSqlSession();
-		ArrayList<GroupBoard> list = gDao.selectSearchList(sqlSession, map, pi);
-		sqlSession.close();
-		return list;
-		
-	}
 
 
-	private SqlSession getSqlSession() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public int increaseCount(int groupBoardNo) {
 		return gDao.increaseCount(sqlSession, groupBoardNo);
 
+	}
+
+	@Override
+	public int selectSearchGListCount(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<GroupBoard> selectSearchList(HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
