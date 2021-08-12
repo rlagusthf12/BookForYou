@@ -384,6 +384,21 @@
             </form>
             
             <script>
+	            $("#cart_top .btn_order").click(function(){
+	            	
+	            	console.log("asd");
+	            	var array = new Array();
+		            $('input:checkbox[name=bkNo]:checked').each(function() {
+		                array.push($(this).val());
+		            });
+		            			
+		            $("#bkNoArr").val(array);
+		            $("#orderForm").submit();
+	            })
+	            
+            </script>
+            
+            <script>
 	        	$(".book_info>div:nth-child(4)>div:nth-child(2)").click(function(){
 	        		
 	        		$.ajax({
