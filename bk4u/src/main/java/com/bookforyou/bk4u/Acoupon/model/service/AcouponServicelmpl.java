@@ -35,6 +35,12 @@ public class AcouponServicelmpl implements AcouponService{
 		return acDao.selecltAcouponList(sqlSession, pi);
 	}
 
+	@Override
+	public int deleteAcoupon(int boardNo) {
+		return acDao.deleteAcoupon(sqlSession, boardNo);
+	}
+
+	
 
 
 

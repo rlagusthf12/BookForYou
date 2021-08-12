@@ -171,8 +171,8 @@
 
     <table border="1" width="1200" height="200">
         <tr height="50">
-            <th width="50">선택</th>
-            <th width="70">쿠폰번호</th>
+            <th width="70"><input type="checkbox" name="allCheck" id="allCheck"> 선택</th>
+            <th width="80">쿠폰번호</th>
             <th>쿠폰명</th>
             <th>카테고리</th>
             <th>쿠폰 발행기간</th>
@@ -181,7 +181,7 @@
         </tr>
         <c:forEach var="c" items="${ list }">
         <tr>
-            <td height="70"><input type="checkbox" name="noList" value="${ list.no }"></td>
+            <td height="70"><input type="checkbox" name="check" class="check"></td>
             <td class="cno">${ c.couponNo }</td>
             <td>${ c.couponName }</td>
             <td>${ c.couponKind }</td>
@@ -192,23 +192,17 @@
         </c:forEach>
     </table>
 
-	<script> 
+	<script>
+		$("#allCheck").click(function(){
+		 var chk = $("#allCheck").prop("checked");
+		 if(chk) {
+		  $(".check").prop("checked", true);
+		 } else {
+		  $(".check").prop("checked", false);
+		 }
+		});
+</script>
 	
-			$(()=>{ $('#listAllCheck').change(()=>{
-						if($('#listAllCheck').prop('checked')){
-							$('input[name="noList"]').prop('checked',true); 
-						}else { 
-							$('input[name="noList"]').prop('checked',false);
-						}
-					}); 
-			//선택삭제가 클릭되면
-			 $("#delSelect").click(()=>{ 
-				 console.log('test'); 
-			 $('#delList').submit(); 
-		   }) 
-		}) 
-	</script>
-	}
 
 
 
@@ -245,8 +239,28 @@
     <button type="button" class="btn btn-warning btn-lg" data-toggle="modal"  data-target="#msearch" style="margin-left: 450px;">쿠폰 등록하기</button>
     <button type="submit" id="delList" class="btn btn-danger btn-lg" >쿠폰 삭제하기</button>
     
-    
-   
+ <script>
+	 $("#delList").click(function(){
+	  var confirm_val = confirm("정말 삭제하시겠습니까?");
+	  
+	  if(confirm_val) {
+	   var checkArr = new Array();
+	   
+	   $("input[class='check']:checked").each(function(){
+	    checkArr.push($(this).attr("data-cartNum"));
+	   });
+	    
+	   $.ajax({
+	    url : "/Acoupon/couponList",
+	    type : "post",
+	    data : { check : checkArr },
+	    success : function(){
+	     location.href = "/Acoupon/couponList";
+	    }
+	   });
+	  } 
+	 });
+</script>
 
      <!-- 회원검색 모달 -->
      <div class="modal" id="msearch">

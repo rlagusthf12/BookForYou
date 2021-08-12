@@ -42,9 +42,39 @@ public class AcouponController {
 		}
 	}
 	
+	@RequestMapping("couponList.me")
+	public String AcouponList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		//System.out.println(currentPage);
+		
+		int acouponCount = acService.selectAcouponListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(acouponCount, currentPage, 10, 5);
+		ArrayList<Acoupon> list = acService.selectList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		System.out.println(acouponCount);
+		
+		return "Acoupon/couponList";
+	}
 	
-	
-	
-
+	@RequestMapping("couponDelete.me")
+	public String deleteCoupon(int acno, String filePath, Model model, HttpSession session) {
+		
+		int result = acService.deleteAcoupon(acno); // service, dao, sql문 
+		
+		if(result > 0) { // 성공 => 리스트페이지
+				
+			session.setAttribute("alertMsg", "성공적으로 쿠폰이 삭제되었습니다.");
+			return "redirect:couponList.me";
+			
+		}else { // 실패
+			model.addAttribute("errorMsg", "쿠폰 삭제 실패");
+			return "common/errorPage";
+		}
+		
+	}
 }	
 	

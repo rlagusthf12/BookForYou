@@ -16,6 +16,8 @@ public interface AcouponService {
 	// 쿠폰등록
 	int insertAcoupon(Acoupon c) ;
 
+	// 쿠폰삭제
+	int deleteAcoupon(int boardNo);
 	
 }
 	

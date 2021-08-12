@@ -108,5 +108,13 @@
   		   order
   		   		by coupon_no asc
   	</select>
+  	
+  	<!-- 쿠폰 삭제 -->
+	<update id="deleteCoupon">
+		update
+		       coupon
+		   set status = 'N'
+		 where coupon_no = #{couponNo}
+	</update>
 	
 </mapper>

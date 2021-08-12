@@ -33,5 +33,7 @@ public class AcouponDao {
 		return (ArrayList)sqlSession.selectList("couponDetailMapper.selectAcouponList", null, rowBounds);
 	}
 	
-
+	public int deleteAcoupon(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("couponDetailMapper.deleteCoupon", boardNo);
+	}
 }
