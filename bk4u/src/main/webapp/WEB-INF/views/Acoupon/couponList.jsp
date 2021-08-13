@@ -173,10 +173,10 @@
 	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
 	        	}
 	        })
-    /* 도서 삭제 (다중 체크박스) */
+    /* 쿠폰 삭제 (다중 체크박스) */
      $("#delete-coupon").click(function(){
 		    	var checkArr = new Array();
-		    	$("input:checkbox[name='bCheck']:checked").each(function(){
+		    	$("input:checkbox[name='cCheck']:checked").each(function(){
 		    		checkArr.push(this.value);
 		    	});
 		    	location.href="couponDelete.me?selectedCoupon=" + checkArr;
@@ -234,7 +234,7 @@
      <tbody>
         <c:forEach var="c" items="${ list }">
         <tr>
-            <td height="70"><input type="checkbox" name="delCoupon" id="delCoupon"  value="${c.couponNo}"></td>
+            <td height="70"><input type="checkbox" name="cCheck" id="delCoupon"  value="${c.couponNo}"></td>
             <td class="couponD">${ c.couponNo }</td>
             <td>${ c.couponName }</td>
             <td>${ c.couponKind }</td>
