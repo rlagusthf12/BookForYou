@@ -16,6 +16,10 @@
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
+    	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif;
+    	}
         .wrap {
             width: 1200px;
             margin-top: 120px;

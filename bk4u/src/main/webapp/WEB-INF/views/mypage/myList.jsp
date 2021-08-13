@@ -24,6 +24,10 @@
     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
+    	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif;
+    	}
         .wrap {
             width: 1200px;
             margin-top: 120px;
