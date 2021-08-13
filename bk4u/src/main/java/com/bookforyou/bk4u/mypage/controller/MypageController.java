@@ -103,7 +103,7 @@ public class MypageController {
 	 */
 	@RequestMapping("my-recommend.mp")
 	public String updateMyRecommend(HttpSession session, Model model) {
-		Member loginUser = (Member) session.getAttribute("loginUser");
+		//Member loginUser = (Member) session.getAttribute("loginUser");
 		
 		return "mypage/myRecommend";
 	}
