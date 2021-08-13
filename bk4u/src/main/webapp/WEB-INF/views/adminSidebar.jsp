@@ -307,7 +307,7 @@
         </ul>
     </div>
     <br><br>
-    <h1 align="center">Welcom To <br><i style="color:#EC573B; font-size: 40px;">BK4U</i></h1>
+    <h1 align="center">Welcome To <br><i style="color:#EC573B; font-size: 40px;">BK4U</i></h1>
 </aside>
 </body>
 </body>
