@@ -111,9 +111,10 @@
   	
   	<!-- 쿠폰 삭제 -->
 	<delete id="deleteCoupon">
-	 delete coupon
-	     where couponNo = #{cartNo}
-	         
+		delete
+		  from coupon
+		 where coupon_no = #{cn}
+           
 	</delete>
 	
 </mapper>

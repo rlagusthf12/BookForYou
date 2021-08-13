@@ -1,7 +1,9 @@
 package com.bookforyou.bk4u.Acoupon.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.Acoupon.model.service.AcouponService;
 import com.bookforyou.bk4u.Acoupon.model.vo.Acoupon;
@@ -62,7 +66,17 @@ public class AcouponController {
 		return "Acoupon/couponList";
 	}
 	
-	
-	
+	@RequestMapping("couponDelete.me")
+	public String adminBookDelete(ModelAndView mv,
+									@RequestParam(value="selectedCoupon") List<String> cNoArr) {
+		
+		for(String cn : cNoArr) {		
+			int CouponDelete = acService.deleteCoupon(cn); 
+		}
+		
+		mv.addObject("alertMsg", "도서가 삭제되었습니다.");
+		
+		return "redirect:/CouponList.me";
+	}
 }
 	
