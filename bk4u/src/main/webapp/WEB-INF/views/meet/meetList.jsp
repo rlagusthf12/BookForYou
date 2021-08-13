@@ -58,7 +58,7 @@
                                         <b>진행 예정인 정모</b>
                                         <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                                         <button type="submit" class="" style="float: right;" >삭제하기</button> 
-                                         <button type="submit" class="" style="float: right;" >정모공지</button>
+                                         <button type="submit" class="" style="float: right;" ><a href="createMeet.bo">정모공지</a></button>
                                     </td>
                                     <td style="padding-right: 35px;"><b>만남의 장소</b></td>
                                 </tr>
@@ -144,7 +144,9 @@
                                         <b>이미 진행된 정모</b>
 
                                         <!-- 작성자가 모임장일 경우 뜨는 버튼-->
+                                        <c:if test="${ loginUser.memId eq g.groupWriter }"> 
                                         <button type="submit" class="" style="float: right;" >삭제하기</button>
+                                        </c:if>
                                     </td>
                                 </tr>
                                

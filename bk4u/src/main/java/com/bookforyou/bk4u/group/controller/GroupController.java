@@ -288,4 +288,9 @@ public class GroupController {
 		
 	}
 	
+	@RequestMapping("createMeet.bo")
+	public String createMeet() {
+		return"meet/meetCreate";	
+	}
+	
 }

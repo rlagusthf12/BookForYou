@@ -105,11 +105,7 @@
 		  , #{groupWithdraw}
 		  , #{groupReason}
 		  )
-		  select
-		  (
 		  
-		  )
-	
 	</insert>
 	
 	<select id="groupMemberList" resultMap="groupMemberResult">
