@@ -32,26 +32,30 @@
 <body>
 
       <!--메뉴바 입력-->
-      <jsp:include page=""/>
+      <jsp:include page="../common/menubar.jsp"/>
           
         <div class="content">
 
         <div class="innerOuter"  style="padding:5% 5%;" align="center">
                      <br><br><br><br><br><br><br><br>
-                        <h6 align="left"><b>독서모임게시판</b></h6>
+                		<h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                         <br><br><br>
+						<form id="createMeet" method="post" action="createMeet.bo" enctype="multipart/form-data">
+                        
                         <div style="border-radius: 10%; border: solid; width: 600px;">
                         <table>
                             <br><br>
                             <h4 align="center">모임 장소 및 시간</h4>
                             <br><br>
-
+                           
+                           
+							
                             <tr>
+                            
                                 <td>오프라인 주소</td>
-                                <td><input type="text" id="offlineAddress" placeholder="주소를 입력해주세요">
-                                <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
-                                <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-
+                                <input type="text" id="sample5_address" placeholder="주소">
+								<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+								<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
                                 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                                 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=59b5fb5033b78ddb6353f23ac7eb1bc7&libraries=services"></script>
                                         <script>
@@ -100,10 +104,19 @@
                                                             }
                                                         }).open();
                                                     }
-                                        </script>
+                               
+                                                   </script>
+                                                   </tr>
+                           
+                           
+                           
+                             
                             <tr>
+                            
                                 <td>온라인 주소</td>
-                                <td><input type="text" ></td>
+                                <input type="text" name="onlineAddress">
+                                
+                                
                             </tr>
                             <tr>
                                 <td>*모임날짜</td>
@@ -138,10 +151,11 @@
                             <button type="submit" style=" background:rgb(236, 87, 59); color: white; border: none;">등록하기</button>
                             <button type="reset" style=" border: none;">초기화</button>
                         <br><br><br> 
-               
+
+               			</form>
 
             <!--푸터바 입력-->
-            <jsp:include page=""/>  
+            <jsp:include page="../common/footer.jsp"/>  
 
         </body>
     </html>

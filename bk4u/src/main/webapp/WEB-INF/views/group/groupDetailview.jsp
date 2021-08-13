@@ -93,15 +93,16 @@
                             
                             <td align="center"><b>회원목록</b></td>
 							<!-- 작성자가 모임장일 경우 뜨는 버튼-->
+                          	<c:forEach var="gm" items="${ groupMemberList }">
                             <tr>    
-                            
-                            	<input type="hidden" name="groupMemberList" value="${ g.groupBoardNo }">   
-                            	<td> 아이디 </td>   
-                                <td> 가입날짜 </td>
-                                <td> 이메일 </td>
+                            	<input type="hidden" value="${ g.groupBoardNo }">   
+                            	<td>${ gm.memNo }</td> 
+                            	<td>${ gm.memEmail }</td>  
+                            	<td>${ gm.groupEnrollDate }</td> 
                                 <td> <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> 
                                 </td>   
 							</tr>
+							</c:forEach>
 							<br>
 							
 							
@@ -119,7 +120,8 @@
                 <br>
                 <h6 align="left"><b>${ g.groupWriter }</b></h6>
                 
-                <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;" action="insertGMem.me">가입하기</button>
+                
+                <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
                 
                 <button type="submit" action="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
