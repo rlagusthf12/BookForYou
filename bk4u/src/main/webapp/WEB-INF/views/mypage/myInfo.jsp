@@ -212,7 +212,7 @@
                 <nav>
                     <ul class="mcd-menu">
                         <li>
-                            <a href="my-order-list.mp" class="active">
+                            <a href="my-order-list.mp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <strong>주문내역</strong>
                                 <small>주문 및 배송 현황을 조회합니다.</small>
@@ -285,7 +285,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="info.mp">
+                            <a href="info.mp" class="active">
                                 <i class="fa fa-user" class="active"></i>
                                 <strong>개인정보 수정</strong>
                                 <small>개인정보를 수정합니다.</small>

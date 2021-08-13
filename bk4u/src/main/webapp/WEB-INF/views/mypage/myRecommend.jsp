@@ -175,7 +175,7 @@
                 <nav>
                    <ul class="mcd-menu">
                         <li>
-                            <a href="my-order-list.mp" class="active">
+                            <a href="my-order-list.mp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <strong>주문내역</strong>
                                 <small>주문 및 배송 현황을 조회합니다.</small>
@@ -210,7 +210,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="my-recommend.mp">
+                            <a href="my-recommend.mp" class="active">
                                 <i class="fa fa-check-square-o"></i>
                                 <strong>추천 설정</strong>
                                 <small>도서 추천 정보를 조회/수정합니다.</small>
