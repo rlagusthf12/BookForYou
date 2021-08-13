@@ -216,7 +216,7 @@
                               <th scope="row"> <input class="form-check-input" type="checkbox" name="bkNo" value="${book.bkNo }" id="bkNo"></th>
                               <td><a href="detail.bk?bkNo=${ book.bkNo }">${book.bkTitle }</a></td>
                               <td>${book.bkPublish }</td>
-                              <td>${book.orderPriceComma }원</td>
+                              <td>${book.bkPrice }원</td>
                               <td>${book.bkGrade}</td>
                               <td style="visibility:hidden;position:absolute;">${book.bkNo }</td>
                             </tr>

@@ -197,7 +197,7 @@
 		                        
 		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        
-		                        <a href="" style="font-weight: bold;">마이페이지</a>
+		                        <a href="my-order-list.mp" style="font-weight: bold;">마이페이지</a>
 		                        <a href="cart.bk?memNo=${ loginUser.memNo }" style="font-weight: bold;">장바구니</a>
 		                        
 		                   	</c:otherwise>

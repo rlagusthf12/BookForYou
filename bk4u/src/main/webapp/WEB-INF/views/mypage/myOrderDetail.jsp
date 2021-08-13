@@ -155,7 +155,7 @@
                 <nav>
                     <ul class="mcd-menu">
                         <li>
-                            <a href="" class="active">
+                            <a href="my-order-list.mp" class="active">
                                 <i class="fa fa-shopping-cart"></i>
                                 <strong>주문내역</strong>
                                 <small>주문 및 배송 현황을 조회합니다.</small>
@@ -176,7 +176,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-list.mp">
                                 <i class="fa fa-archive"></i>
                                 <strong>보관함</strong>
                                 <small>찜한 내역을 조회합니다.</small>
@@ -190,7 +190,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-recommend.mp">
                                 <i class="fa fa-check-square-o"></i>
                                 <strong>추천 설정</strong>
                                 <small>도서 추천 정보를 조회/수정합니다.</small>
@@ -208,14 +208,14 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-reading-group.mp">
                                 <i class="fa fa-comments-o"></i>
                                 <strong>활동한 내역</strong>
                                 <small>활동 내역을 조회합니다.</small>
                             </a>
                             <ul>
-                                <li><a href="#"><i class="fa fa-users"></i>나의 독서모임</a></li>
-                                <li><a href="#"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
+                                <li><a href="my-reading-group.mp"><i class="fa fa-users"></i>나의 독서모임</a></li>
+                                <li><a href="my-qna.mp"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
                                 <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
                                 <li><a href="#"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
@@ -228,7 +228,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="info.mp">
                                 <i class="fa fa-user" class="active"></i>
                                 <strong>개인정보 수정</strong>
                                 <small>개인정보를 수정합니다.</small>
