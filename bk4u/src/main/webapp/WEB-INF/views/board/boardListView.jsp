@@ -86,13 +86,6 @@
 	                <p>회원들간 자유롭게 이야기 나눌 수 있는 공간입니다 :)</p>
 	            </div>
 	            <div class="add_info-wrap" style="margin:20px 0; padding:10px 0;">
-	                <!--새글갯수area-->
-	                <div class="new_num" style="float: left;">
-	                    새글
-	                    <span class="num_item" style="font-weight: bold;">20</span>
-	                    / 
-	                    100
-	                </div>
 	                <!--카테고리area-->
 	                <div class="head-cate-wrap" style="float: right;">
 	                    <a href="">전체보기</a>
@@ -121,13 +114,13 @@
 	                <tbody>
 	                <c:forEach var="b" items="${ list }">
 	                    <tr>
-	                        <td><div class="txt_boNo">${ b.boNo }</div></td>
-	                        <td><div class="txt_category">${ b.boCategory }</div></td>
-	                        <td><div class="txt_title">${ b.boTitle }</div></td>
-	                        <td><a href="" class="txt_writer">${ b.boWriter }</a></td>
-	                        <td><div class="txt_cdate">${ b.boCdate }</div></td>
-	                        <td><div class="txt_like">${ b.boLike }</div></td>
-	                        <td><div class="txt_count">${ b.boCount }</div></td>
+	                        <td class="bno">${ b.boNo }</td>
+	                        <td>${ b.boCategory }</td>
+	                        <td>${ b.boTitle }</td>
+	                        <td>${ b.boWriter }</td>
+	                        <td>${ b.boCdate }</td>
+	                        <td>${ b.boLike }</td>
+	                        <td>${ b.boCount }</td>
 	                    </tr>
 	              	</c:forEach>  
 	                </tbody>
@@ -135,7 +128,7 @@
 	            <script>
 		            $(function () {
 		                $("#freeboard>tbody>tr").click(function () {
-		                    location.href = "detail.bo?boNo=" + $(this).find(".txt_boNo").text();
+		                    location.href = "detail.bo?boNo=" + $(this).children(".bno").text();
 		                })
 		                
 		            })
@@ -190,6 +183,26 @@
 	        </div>
 	    </div>
     <jsp:include page="../common/footer.jsp"/>
+    <script>
+    
+	 	// 작성 로그인한 회원만 가능
+	    function enrollClick(){
+	    	
+	    	var loginUser = "<c:out value='${loginUser}'/>";
+	    	//console.log(loginUser);
+	    	if(!loginUser){
+	    		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+	    		if(conf == true){ // 로그인창
+	    			location.href = "login-form.me";
+	    		}else{ // 화면
+	    			return;
+	    		}
+	    	}else{
+	    		location.href = "enrollForm.bo"
+	    	};
+	    }
+    
+    </script>
     
 </body>
 </html>
