@@ -41,4 +41,25 @@ public class BoardDao {
 	public Board selectBoard(SqlSessionTemplate sqlSession, int boNo) {
         return sqlSession.selectOne("boardMapper.selectBoard", boNo);
     }
+	
+	/** 게시글 작성용 
+	 * @author daeunlee
+	 */
+	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
+        return sqlSession.insert("boardMapper.insertBoard", b);
+    }
+	
+	/** 게시글 수정용 
+	 * @author daeunlee
+	 */
+	public int updateBoard(SqlSessionTemplate sqlSession, Board b) {
+        return sqlSession.update("boardMapper.updateBoard", b);
+    }
+	
+	/** 게시글 삭제용 
+	 * @author daeunlee
+	 */
+	public int deleteBoard(SqlSessionTemplate sqlSession, int boNo) {
+        return sqlSession.update("boardMapper.deleteBoard", boNo);
+    }
 }

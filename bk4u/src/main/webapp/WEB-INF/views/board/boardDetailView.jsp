@@ -123,7 +123,7 @@
                 
 	                <form id="postForm" action="" method="post">
 	                	<!--글번호-->
-	                	<input type="hidden" id="blNo" name="blNo" value="${ b.boNo }">
+	                	<input type="hidden" id="boNo" name="boNo" value="${ b.boNo }">
 	                </form>
                 </c:if>
                 
@@ -162,17 +162,6 @@
                         <div class="viewer_item">
                             ${ b.boContent }
                         </div>
-                    </div>
-                </div>
-
-                <!--좋아요-->
-                <div class="like_area">
-                    <div class="like-wrap">
-                        <button id="btn_like" type="button">
-                            <img src="" alt="" style="width: 20px; height: 20px;">
-                            	좋아요
-                            <span id="btn_num">${ b.boLike }</span>
-                        </button>
                     </div>
                 </div>
 
@@ -270,8 +259,6 @@
         		        			console.log(errorThrown); 
         		        		}
                     		})
-                    	}
-                    	
                     	// 댓글 작성용 ajax
                     	function addReply(){
                     		if($("#replyContent").val().trim().length != 0){
@@ -297,7 +284,6 @@
             		        		}
                     			})
                     		}
-                    	}
 
                     </script>
             

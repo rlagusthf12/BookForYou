@@ -43,22 +43,22 @@ public class BoardServiceImpl implements BoardService{
 		return boDao.selectBoard(sqlSession, boNo);
 	}
 	
+	// 게시글 작성하기용
 	@Override
 	public int insertBoard(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boDao.insertBoard(sqlSession, b);
 	}
-
+	
+	// 게시글 삭제용
 	@Override
 	public int deleteBoard(int boNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boDao.deleteBoard(sqlSession, boNo);
 	}
-
+	
+	// 게시글 수정용
 	@Override
 	public int updateBoard(Board b) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boDao.updateBoard(sqlSession, b);
 	}
 
 	@Override
