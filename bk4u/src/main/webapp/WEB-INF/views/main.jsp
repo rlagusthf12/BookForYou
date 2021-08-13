@@ -520,7 +520,7 @@ hr::after{
      <!-- 푸터바 -->
     <jsp:include page="common/footer.jsp"/>
 
-    <br><br><br><br><br><br>
+    <!--  <br><br><br><br><br><br>-->
 
 
 </body>
