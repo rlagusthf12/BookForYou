@@ -13,6 +13,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Refund;
 import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
@@ -184,6 +185,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int insertMyBookGrade(Grade grade) {
 		return mypageDao.insertMyBookGrade(sqlSession, grade);
+	}
+
+	@Override
+	public Refund selectMyRefund(int orderNo) {
+		return mypageDao.selectMyRefund(sqlSession,orderNo);
 	}
 
 

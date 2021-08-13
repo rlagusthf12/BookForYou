@@ -12,6 +12,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Refund;
 import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
@@ -159,6 +160,10 @@ public class MypageDao {
 
 	public int insertMyBookGrade(SqlSessionTemplate sqlSession, Grade grade) {
 		return sqlSession.insert("bookMapper.insertMyBookGrade",grade);
+	}
+
+	public Refund selectMyRefund(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("csMapper.selectMyRefund",orderNo);
 	}
 
 

@@ -31,6 +31,7 @@ import com.bookforyou.bk4u.common.model.service.MailSendService;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
+import com.bookforyou.bk4u.cs.model.vo.Refund;
 import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.member.model.service.MemberService;
@@ -675,11 +676,14 @@ public class MypageController {
 		Order order = mypageService.selectOrder(orderNo);
 		log.info("order: " + order);
 		Payment payment = mypageService.selectOrderedPayment(orderNo);
+		Refund refund = mypageService.selectMyRefund(orderNo);
 		
 		model.addAttribute("list",list);
 		model.addAttribute("count",bookCount);
 		model.addAttribute("order",order);
 		model.addAttribute("payment",payment);
+		model.addAttribute("refund",refund);
+		log.info("refund : " + refund);
 		
 		return "mypage/myOrderDetail";
 		
@@ -807,6 +811,15 @@ public class MypageController {
 		}
 	}
 	
+	/**
+	 * 마이페이지 도서 평점 메서드
+	 * @author 안세아
+	 * @param orderNo
+	 * @param bkNo
+	 * @param starGrade
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("insert-grade.mp")
 	public String insertGrade(int orderNo,int bkNo,int starGrade,HttpSession session) {
 		Member member = (Member)session.getAttribute("loginUser");

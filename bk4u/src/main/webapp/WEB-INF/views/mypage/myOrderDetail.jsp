@@ -40,7 +40,7 @@
 
         #content {
             background: #EEE;
-            height: 1400px;
+            height: 1600px;
             position: relative;
             display: inline-flex;
         }
@@ -50,7 +50,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 1300px;
+            height: 1500px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -101,6 +101,7 @@
         #book-list-box table tbody {
             display: block;
             max-height: 320px;
+            height: 320px;
             overflow-y: auto;
         }
 
@@ -574,7 +575,7 @@
                             </tr>
                             <tr>
                                 <th class="table-secondary">사용 포인트</th>
-                                <td>${order.usedPoints }</td>
+                                <td>${order.usedPoints } point</td>
                                 <th class="table-secondary">쿠폰 할인금액</th>
                                 <td>${order.couponPrice }원</td>
                             </tr>
@@ -588,7 +589,6 @@
                             </tr>
                             <c:choose>
                             <c:when test="${ payment.payWay eq '무통장' }">
-                            <!--입금일 경우-->
                             <tr>
                                 <th class="table-secondary">입금자</th>
                                 <td>${payment.depositName }</td>
@@ -599,9 +599,83 @@
                                 <th class="table-secondary">입금액</th>
                                 <td colspan="3">${payment.deposit }원</td>
                             </tr>
-                            <!--결제수단이 입금일 경우-->
                             </c:when>
+                            <c:otherwise>
+                            <tr>
+                                <th class="table-secondary">입금자</th>
+                                <td>해당 사항이 없습니다.</td>
+                                <th class="table-secondary">입금 은행</th>
+                                <td>해당 사항이 없습니다.</td>
+                            </tr>
+                            <tr>
+                                <th class="table-secondary">입금액</th>
+                                <td colspan="3">해당 사항이 없습니다.</td>
+                            </tr>
+                            </c:otherwise>
                             </c:choose>
+                        </table>
+                    </div>
+                    <p><b>환불 정보</b></p>
+                    <div id="refund-info-box">
+                        <table class="table table-bordered">
+                         <c:choose>
+                            <c:when test="${ !empty refund }">
+                        	<tr>
+                                <th class="table-secondary">취소/반품 구분</th>
+                                <td colspan="3">${refund.refundKind }</td>
+                            </tr> 
+                            <tr>
+                                <th class="table-secondary">환불 상태</th>
+                                <td>${refund.status }</td>
+                                <th class="table-secondary">환불 신청일</th>
+                                <td>${refund.refundDate }에 신청하였습니다.</td>
+                            </tr>
+                            <c:if test="${refund.refundCoupon eq 0}">
+                            	<tr>
+                                	<th class="table-secondary">환불 쿠폰</th>
+                                	<td colspan="3">${refund.refundCouponName } </td>
+                            	</tr> 
+                            </c:if>
+                            <c:if test="${refund.refundCoupon ne 0}">
+                            	<tr>
+                                	<th class="table-secondary">환불 쿠폰</th>
+                                	<td colspan="3">(${refund.refundCoupon})${refund.refundCouponName } </td>
+                            	</tr> 
+                            </c:if>
+                            <tr>
+                                <th class="table-secondary">환불된 포인트</th>
+                                <td colspan="3">${refund.refundPoint } point</td>
+                            </tr>
+                            <tr>
+                                <th class="table-secondary">환불 금액</th>
+                                <td colspan="3">${refund.refundPrice }원 </td>
+                            </tr> 
+                            </c:when>
+                            <c:otherwise>
+                            	<tr>
+                                <th class="table-secondary">취소/반품 구분</th>
+                                <td colspan="3">환불신청 내역이 없습니다.</td>
+                            </tr> 
+                            <tr>
+                                <th class="table-secondary">환불 상태</th>
+                                <td>환불신청 내역이 없습니다.</td>
+                                <th class="table-secondary">환불 신청일</th>
+                                <td>환불신청 내역이 없습니다.</td>
+                            </tr>
+                            <tr>
+                                <th class="table-secondary">환불 쿠폰</th>
+                                <td colspan="3">환불신청 내역이 없습니다.</td>
+                            </tr> 
+                            <tr>
+                                <th class="table-secondary">환불된 포인트</th>
+                                <td colspan="3">환불신청 내역이 없습니다.</td>
+                            </tr>
+                            <tr>
+                                <th class="table-secondary">환불 금액</th>
+                                <td colspan="3">환불신청 내역이 없습니다. </td>
+                            </tr> 
+                            </c:otherwise>
+                           </c:choose>
                         </table>
                     </div>
                 </div>

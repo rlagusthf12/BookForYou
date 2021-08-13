@@ -35,6 +35,7 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="delivery_msg" property="deliveryMsg"/>
 		<result column="refund_coupon" property="refundCoupon"/>
+		<result column="coupon_name" property="refundCouponName"/>
 		<result column="mem_no" property="memNo"/>
 		<result column="order_price_comma" property="orderPriceComma"/>
 	</resultMap>
@@ -655,15 +656,35 @@
 		)
 	</insert>
 	
+	<!-- [사용자] 마이페이지 반품 내역이 있는지 확인(세아) -->
 	<select id="selectMyReturnCount" resultType="_int">
 		select count(*)
 		from return
 		where order_no = #{orderNo}
 	</select>
 	
+	<!-- [사용자] 마이페이지 주문 취소 내역이 있는지 확인(세아) -->
 	<select id="selectMyCancelCount" resultType="_int">
 		select count(*)
 		from cancel
+		where order_no = #{orderNo}
+	</select>
+	
+	<!-- [사용자] 마이페이지 환불 정보 조회하기 -->
+	<select id="selectMyRefund" resultMap="refundResult">
+		select refund_no
+       		, order_no
+       		, r.status
+       		, refund_date
+       		, refund_kind
+       		, kind_no
+       		, refund_price
+       		, refund_point
+       		, nvl(refund_coupon,0) refund_coupon
+       		, nvl(coupon_name,'적용하신 쿠폰이 없습니다') coupon_name
+		from refund r
+		left join mem_coupon mc on mc.coupon_issue_num =  r.refund_coupon
+		left join coupon c on mc.coupon_no = c.coupon_no
 		where order_no = #{orderNo}
 	</select>
 	
