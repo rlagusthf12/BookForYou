@@ -245,4 +245,42 @@
 		 where group_boardno = #{groupBoardNo}
 	</update>
 	
+	<!-- 마이페이지에 쓰이니 삭제하지 말아주세요 -->
+	<!-- [사용자] 마이페이지 내가 속한 그룹 리스트들 개수 조회 (세아) -->
+	<select id="selectMyReadingGroupListCount" resultType="_int">
+		select
+			count(*)
+		from groupmember
+		where mem_no = #{memNo}
+			and not group_level = 'N'
+	</select>
+
+	<!-- [사용자] 마이페이지 내가 속한 그룹의 총 멤버 회원수 조회(세아) -->
+	<select id="selectMyReadingGroupMemberCount" resultType="_int">
+		select count(*)
+		from groupmember
+		where group_boardno = #{groupBoardNo} 
+			and not group_level = 'N'
+	</select>
+
+	<!-- [사용자] 마이페이지 내가 속한 그룹의 리스트 조회(세아) -->
+	<select id="selectMyReadingGroupList" resultMap="groupResult">
+		select group_boardno,
+			   m.mem_no,
+			   group_level,
+			   group_type,
+			   group_title,
+			   group_script,
+			   group_date,
+			   group_status,
+			   group_writer,
+			   origin_name,
+			   change_name
+		from groupboard g
+		join groupmember m using(group_boardno)
+		where group_status = 'Y' 
+			and not group_level = 'N' 
+			and m.mem_no=#{memNo}
+	</select>
+	
 </mapper>
