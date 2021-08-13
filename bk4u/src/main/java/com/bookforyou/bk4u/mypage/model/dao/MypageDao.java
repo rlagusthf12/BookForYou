@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Return;
@@ -154,6 +155,10 @@ public class MypageDao {
 
 	public int selectMyCancelCount(SqlSessionTemplate sqlSession, Cancel cancelData) {
 		return sqlSession.selectOne("csMapper.selectMyCancelCount",cancelData);
+	}
+
+	public int insertMyBookGrade(SqlSessionTemplate sqlSession, Grade grade) {
+		return sqlSession.insert("bookMapper.insertMyBookGrade",grade);
 	}
 
 

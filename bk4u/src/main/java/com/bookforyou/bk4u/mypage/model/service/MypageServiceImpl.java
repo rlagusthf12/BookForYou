@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Return;
@@ -178,6 +179,11 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public int selectMyCancelCount(Cancel cancelData) {
 		return mypageDao.selectMyCancelCount(sqlSession,cancelData);
+	}
+
+	@Override
+	public int insertMyBookGrade(Grade grade) {
+		return mypageDao.insertMyBookGrade(sqlSession, grade);
 	}
 
 

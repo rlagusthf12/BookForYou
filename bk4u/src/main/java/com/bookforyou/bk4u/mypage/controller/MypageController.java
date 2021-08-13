@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,17 +24,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.service.MailSendService;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Return;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
-import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
@@ -676,6 +673,7 @@ public class MypageController {
 		ArrayList<OrderDetail> list = mypageService.selectOrderDetailList(orderNo);
 		int bookCount = mypageService.selectMyOrderDeatilQuantity(orderNo);
 		Order order = mypageService.selectOrder(orderNo);
+		log.info("order: " + order);
 		Payment payment = mypageService.selectOrderedPayment(orderNo);
 		
 		model.addAttribute("list",list);
@@ -808,6 +806,29 @@ public class MypageController {
 			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
 		}
 	}
+	
+	@RequestMapping("insert-grade.mp")
+	public String insertGrade(int orderNo,int bkNo,int starGrade,HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		
+		Grade grade = new Grade();
+		grade.setMemNo(memNo);
+		grade.setBkNo(bkNo);
+		grade.setGradeStar(starGrade);
+		
+		int result = mypageService.insertMyBookGrade(grade);
+		
+		if(result > 0) {
+			session.setAttribute("gradeMsg", "도서 평점이 등록되었습니다.");
+			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+		}else {
+			session.setAttribute("gradeMsg", "도서 평점 등록에 실패하였습니다.");
+			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
+		}
+	}
+	
+	
 	
 	
 	

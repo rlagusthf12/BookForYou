@@ -46,6 +46,7 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="writer_name" property="writerName"/>
 		<result column="bk_publish" property="bkPublish"/>
+		<result column="grade_star" property="gradeStar" />
 	</resultMap>
 
 	<resultMap id="bookResult" type="Book">
@@ -687,8 +688,8 @@
 			order by order_date desc
 	</select>
 	
-	<!-- [사용자] 마이페이지 주문 상세 리스트 조회(세아) -->
-	<select id="selectMyOrderDetailList" resultMap="orderDetailResult">
+	<!-- [사용자] 마이페이지 주문 상세 리스트 조회 구버전(세아) -->
+	<!--  <select id="selectMyOrderDetailList" resultMap="orderDetailResult">
 		select order_no,
        		bk_no,
        		bk_title,
@@ -698,6 +699,23 @@
 		from order_detail
 		join book using(bk_no)
 		where order_no = #{orderNo}
+	</select>-->
+	
+	<!-- [사용자] 마이페이지 주문 상세 리스트 조회 신버전(세아) -->
+	<select id="selectMyOrderDetailList" resultMap="orderDetailResult">
+		select o.order_no,
+       		od.bk_no,
+       		bk_title,
+       		quantity,
+       		detail_price,
+       		detail_status,
+            nvl(g.grade_star,0) grade_star
+		from order_detail od
+		join book b on b.bk_no = od.bk_no
+        join orders o on o.order_no = od.order_no
+        join members m on o.mem_no = m.mem_no
+        left join grade g on m.mem_no = g.mem_no and b.bk_no = g.bk_no
+		where od.order_no = #{orderNo}
 	</select>
 	
 	<!-- [사용자] 마이페이지 주문 상세 책의 총 개수 조회(세아) -->

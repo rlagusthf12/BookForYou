@@ -250,6 +250,12 @@
 				</script>
 				<c:remove var="orderDeliveredMsg" scope="session"/>
 				</c:if>
+				<c:if test="${ !empty gradeMsg }">
+				<script>
+					alertify.alert("${gradeMsg}");
+				</script>
+				<c:remove var="gradeMsg" scope="session"/>
+				</c:if>
                 <div id="head-of-main-content">
                     주문 내역 - 상세 조회
                 </div>
@@ -360,17 +366,20 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body star-modal-centered">
+                                <form action="insert-grade.mp" action="post" name="insert-grade" id="insert-grade">
                                     잘 읽어보셨나요?
                                     <br>
                                     책의 평점을 주세요.
                                     <br>
                                     <br>BK4U의 회원들에게 도움이 됩니다.
                                     <br><br>
+                                    <input type="hidden" name="orderNo" value="${order.orderNo }" />
+                                    <input type="hidden" name="bkNo" id="bkNo" value="${ orderDetail.bkNo }"/> 
                                     <div id="star-box">
                                         <div class="form-check star-margin">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1" value="1">
+                                            <input class="form-check-input" type="radio" name="starGrade"
+                                                id="flexRadioDefault1" value="1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star-o star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star-o star-style" aria-hidden="true"></i>
@@ -379,9 +388,9 @@
                                             </label>
                                         </div>
                                         <div class="form-check star-margin">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1" value="1">
+                                            <input class="form-check-input" type="radio" name="starGrade"
+                                                id="flexRadioDefault1" value="2">
+                                            <label class="form-check-label" for="flexRadioDefault1">
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star-o star-style" aria-hidden="true"></i>
@@ -390,9 +399,9 @@
                                             </label>
                                         </div>
                                         <div class="form-check star-margin">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1" value="1">
+                                            <input class="form-check-input" type="radio" name="starGrade"
+                                                id="flexRadioDefault1" value="3">
+                                            <label class="form-check-label" for="flexRadioDefault1">
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
@@ -401,9 +410,9 @@
                                             </label>
                                         </div>
                                         <div class="form-check star-margin">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1" value="1">
+                                            <input class="form-check-input" type="radio" name="starGrade"
+                                                id="flexRadioDefault1" value="4">
+                                            <label class="form-check-label" for="flexRadioDefault1">
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
@@ -412,9 +421,9 @@
                                             </label>
                                         </div>
                                         <div class="form-check star-margin">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                id="flexRadioDefault1">
-                                            <label class="form-check-label" for="flexRadioDefault1" value="1">
+                                            <input class="form-check-input" type="radio" name="starGrade"
+                                                id="flexRadioDefault1" value="5">
+                                            <label class="form-check-label" for="starGrade">
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
                                                 <i class="fa fa-star star-style" aria-hidden="true"></i>
@@ -423,9 +432,10 @@
                                             </label>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-primary" data-bs-dismiss="modal" onclick="">평점 주기</button>
+                                    <button class="btn btn-primary" data-bs-dismiss="modal" onclick="insertGradeFormSubmit();">평점 주기</button>
                                     <button class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                                 </div>
                             </div>
@@ -462,8 +472,13 @@
                              <c:choose>
                              	<c:when test="${ orderDetail.detailStatus eq '배송완료' }">
                                 <tr>
-                                    <td style="width: 135px;"><button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                	<c:if test="${orderDetail.gradeStar eq 0 }">
+                                    <td style="width: 135px;">배송완료<button type="button" id="grade-pop-btn" class="btn btn-secondary btn-sm" data-bk= "${ orderDetail.bkNo }" data-bs-toggle="modal"
                                             data-bs-target="#grade-modal">평점 주기</button></td>
+                                    </c:if>
+                                    <c:if test="${orderDetail.gradeStar ne 0 }">
+                                     <td style="width: 135px;">${ orderDetail.detailStatus}</td>
+                                    </c:if>
                                     <td style="width: 395px;"><a href="detail.bk?bkNo=${ orderDetail.bkNo }">${orderDetail.bkTitle }</a></td>
                                     <td style="width: 40px;">${orderDetail.quantity }</td>
                                     <td style="width: 160px;">${orderDetail.detailPrice }</td>
@@ -595,6 +610,10 @@
         </div>
     </div>
     <script>
+    	$(document).on("click", "#grade-pop-btn", function () {
+        	var myBkNo = $(this).data('bk');
+        	$(".star-modal-centered #bkNo").val( myBkNo );
+   		});
     	function cancelOrderFormSubmit(){
     		$("#cancel-order").submit();
     	}
@@ -616,6 +635,10 @@
     			$("#etc-text").attr('readOnly',true);
     		}
     		
+    	}
+    	
+    	function insertGradeFormSubmit(){
+    		$("#insert-grade").submit();
     	}
     	
     

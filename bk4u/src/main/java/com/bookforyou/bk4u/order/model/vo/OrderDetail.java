@@ -19,4 +19,5 @@ public class OrderDetail {
 	private String bkTitle;
 	private String bkPublish;
 	private String writerName;
+	private int gradeStar;
 }

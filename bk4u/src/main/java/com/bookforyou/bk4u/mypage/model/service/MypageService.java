@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Return;
@@ -77,6 +78,8 @@ public interface MypageService {
 	int selectMyReturnCount(Return rt);
 
 	int selectMyCancelCount(Cancel cancelData);
+
+	int insertMyBookGrade(Grade grade);
 
 
 

@@ -781,4 +781,18 @@
 		       book_interest
 		 where bk_no = #{bn}
 	</delete>
+	
+	<!-- [사용자] 마이페이지 도서 평점 주기 -->
+	<insert id="insertMyBookGrade">
+		insert
+		into grade(
+			mem_no,
+			bk_no,
+			grade_star
+		)values(
+			#{memNo},
+			#{bkNo},
+			#{gradeStar}
+		)
+	</insert>
 </mapper>
