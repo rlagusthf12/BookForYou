@@ -351,7 +351,7 @@
                                             <textarea class="form-control" id="etc-text" name="etcText" style="width: 95%;" placeholder="기타를 선택할 경우 입력하세요" readonly></textarea>
                                         </div>
                                     </form>
-                                    <br>반품 안내사항은 <a href="">FAQ</a>를 참고해주세요.
+                                    <br>반품 안내사항은 <a href="main.faq">FAQ</a>를 참고해주세요.
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-primary" data-bs-dismiss="modal" onclick="returnOrderFormSubmit();">확인</button>
