@@ -20,5 +20,6 @@ public class GroupMember {
 	private Date groupWithdraw;
 	private String groupReason;
 	private int groupMem;
+	private String memId;
 	
 }

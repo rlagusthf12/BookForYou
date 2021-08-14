@@ -17,6 +17,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -121,12 +122,13 @@ public class GroupController {
 	
 	
 	@RequestMapping("insertGMem.me")
-	public String insertGMem (GroupMember gm ,HttpSession session) {
+	public String insertGMem (GroupMember gm ,HttpSession session, Member m) {
 
+		ArrayList<Member> member = gService.memberInfo(m);
 		int result = gService.insertGMem(gm);
 		
 		if(result > 0) {
-			
+		
 			session.setAttribute("alertMsg", "가입되었습니다.");
 		} 
 		
@@ -172,43 +174,6 @@ public class GroupController {
 		
 	
 	
-	@RequestMapping("placeSelect.do")
-	public void selectAjax(HttpServletRequest req, HttpServletResponse res, String param) {
-		try {
-			String province = param;
-			
-			List<String> cityList = new ArrayList();
-			
-			if(province.equals("seoul")) {
-				cityList.add("강남구");
-				cityList.add("강서구");
-				cityList.add("강북구");
-				cityList.add("강동구");
-				cityList.add("노원구");
-			} else if (province.equals("busan")){
-				cityList.add("해운대구");
-				cityList.add("경포대구");
-				cityList.add("강북구");
-				cityList.add("강동구");
-				cityList.add("노원구");
-			}
-			
-			JSONArray jsonArray = new JSONArray();
-			for( int i = 0;  i < cityList.size(); i++) {
-				jsonArray.add(cityList.get(i));
-			}
-			
-			PrintWriter pw = res.getWriter();
-			pw.print(jsonArray.toString());
-			pw.flush();
-			pw.close();
-			
-		 
-	} catch (Exception e) {
-		System.out.println("Controller error");
-	}
-	
-	}
 	
 	@RequestMapping("detail.gbo")
 	public ModelAndView selectGroup( int gno, ModelAndView mv) {

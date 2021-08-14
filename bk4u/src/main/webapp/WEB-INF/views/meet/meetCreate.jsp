@@ -10,7 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <style>
-        #groupMaking{
+   #groupMaking{
             width: 800px;
             margin: auto;
         }
@@ -36,8 +36,9 @@
           
         <div class="content">
 
-        <div class="innerOuter"  style="padding:5% 5%;" align="center">
-                     <br><br><br><br><br><br><br><br>
+            <div class="innerOuter"  style="padding:5% 5%;" align="center">
+                    
+                    <br><br><br><br><br><br><br><br>
                 		<h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                         <br><br><br>
 						<form id="createMeet" method="post" action="createMeet.bo" enctype="multipart/form-data">
@@ -52,7 +53,8 @@
 							
                             <tr>
                             
-                                <td>오프라인 주소</td>
+                                <td><label>오프라인 주소</label></td>
+                                <td>
                                 <input type="text" id="sample5_address" placeholder="주소">
 								<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
 								<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
@@ -106,6 +108,7 @@
                                                     }
                                
                                                    </script>
+                                                   <td>
                                                    </tr>
                            
                            
@@ -113,17 +116,17 @@
                              
                             <tr>
                             
-                                <td>온라인 주소</td>
-                                <input type="text" name="onlineAddress">
+                                <td><label>온라인 주소</label></td>
+                                <td><input type="text" name="onlineAddress"></td>
                                 
                                 
                             </tr>
                             <tr>
-                                <td>*모임날짜</td>
+                                <td><label>*모임날짜</label></td>
                                 <td><input type="date"></td>
                             </tr>
                             <tr>
-                                <td>*모임시간</td>
+                                <td><label>*모임시간</label></td>
                                 <td><input type="time">~<input type="time"></td>
                             </tr>
                             <tr>
@@ -155,7 +158,8 @@
                			</form>
 
             <!--푸터바 입력-->
-            <jsp:include page="../common/footer.jsp"/>  
+           <jsp:include page="../common/footer.jsp"/>  
+  
 
         </body>
     </html>

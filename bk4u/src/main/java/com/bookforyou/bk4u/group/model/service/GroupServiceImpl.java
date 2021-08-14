@@ -14,6 +14,7 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.group.model.vo.GroupMember;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 
 
@@ -64,6 +65,10 @@ public class GroupServiceImpl implements GroupService{
 		return gDao.groupMemberList(sqlSession);
 	}
 	
+	@Override
+	public ArrayList<Member> memberInfo(Member m){
+		return gDao.member(sqlSession, m);
+	}
 
 	@Override
 	public int deleteGroupMem(String userId) {
@@ -94,6 +99,8 @@ public class GroupServiceImpl implements GroupService{
 		 return gDao.deleteGroup(sqlSession, groupBoardNo);
 		
 	}
+
+	
 
 	
 	
