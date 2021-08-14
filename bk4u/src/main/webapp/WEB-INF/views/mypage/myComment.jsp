@@ -148,7 +148,7 @@
                             <ul>
                                 <li><a href="my-reading-group.mp"><i class="fa fa-users"></i>나의 독서모임</a></li>
                                 <li><a href="my-qna.mp"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
-                                <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
+                                <li><a href="my-board.mp"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
                                 <li><a href="#" class="active"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>

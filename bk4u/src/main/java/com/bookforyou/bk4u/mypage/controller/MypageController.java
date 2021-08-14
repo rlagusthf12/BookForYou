@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.service.MailSendService;
@@ -839,6 +840,29 @@ public class MypageController {
 			session.setAttribute("gradeMsg", "도서 평점 등록에 실패하였습니다.");
 			return "redirect:my-order-detail.mp?orderNo=" + orderNo;
 		}
+	}
+	
+	/**
+	 * 마이페이지 나의 자유게시판 글 조회
+	 * @author 안세아
+	 * @param currentPage
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("my-board.mp")
+	public String selectMyBoardList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		int listCount = mypageService.selectMyBoardListCount(memNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = mypageService.selectMyBoardList(pi,memNo);
+		
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("list",list);
+		
+		return "mypage/myBoard";
 	}
 	
 	

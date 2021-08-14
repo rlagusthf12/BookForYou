@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
@@ -190,6 +191,16 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Refund selectMyRefund(int orderNo) {
 		return mypageDao.selectMyRefund(sqlSession,orderNo);
+	}
+
+	@Override
+	public int selectMyBoardListCount(int memNo) {
+		return mypageDao.selectMyBoardListCount(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<Board> selectMyBoardList(PageInfo pi, int memNo) {
+		return mypageDao.selectMyBoardList(sqlSession,pi,memNo);
 	}
 
 

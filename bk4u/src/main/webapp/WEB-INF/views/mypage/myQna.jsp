@@ -156,7 +156,7 @@
                             <ul>
                                 <li><a href="my-reading-group.mp"><i class="fa fa-users"></i>나의 독서모임</a></li>
                                 <li><a href="my-qna.mp" class="active"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
-                                <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
+                                <li><a href="my-board.mp"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
                                 <li><a href="#"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>
@@ -228,12 +228,12 @@
                     		<li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
                     	</c:when>
                     	<c:otherwise>
-                    		<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+                    		<li class="page-item"><a class="page-link" href="my-qna.mp?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
                     	</c:otherwise>
                     </c:choose>
                     
                     <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-                    	<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ p }">${p }</a></li>
+                    	<li class="page-item"><a class="page-link" href="my-qna.mp?currentPage=${ p }">${p }</a></li>
                     </c:forEach>
                     
                     <c:choose>
@@ -241,7 +241,7 @@
                     		<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
                     	</c:when>
                     	<c:otherwise>
-                   			<li class="page-item"><a class="page-link" href="my-list.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+                   			<li class="page-item"><a class="page-link" href="my-qna.mp?currentPage=${ pi.currentPage + 1 }">Next</a></li>
                 		</c:otherwise>
                 	</c:choose>
                 </ul>
