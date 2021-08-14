@@ -213,7 +213,7 @@
         <div id="header_2">
             <ul id="navi">
                 <li><a href="join.sub">정기구독</a></li>
-                <li><a href="">도서구매</a></li>
+                <li><a href="storeMain.st">bk4u 매장</a></li>
                 <li><a href="">커뮤니티</a>
                 	<ul>
                         <li><a href="list.bl">독서록</a></li>
