@@ -195,4 +195,34 @@
 		 bo_cdate desc
 	</select>
 	
+	<!-- 마이페이지 나의 자유 게시판 댓글 갯수 조회(세아) -->
+	<select id="selectMyReplyListCount" resultType="_int">
+		select count(*)
+		from reply
+		where mem_no = #{memNo}
+		and reply_type = 1
+		and delete_status = 'N'
+	</select>
+	
+	<!-- 마이페이지 나의 자유 게시판 댓글 조회(세아) -->
+	<select id="selectMyReplyList" resultMap="replyResult">
+		select
+    		reply_no,
+    		mem_no,
+    		reply_type,
+    		ref_post,
+    		reply_content,
+    		reply_cdate,
+    		reply_mdate,
+    		delete_status,
+    		reply_refno,
+    		depth
+		from reply
+		where mem_no = #{memNo}
+		and reply_type = 1
+		and delete_status = 'N'
+		order by
+			reply_cdate desc
+	</select>
+	
 </mapper>

@@ -25,6 +25,7 @@ import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 @Repository
 public class MypageDao {
@@ -175,6 +176,16 @@ public class MypageDao {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("boardMapper.selectMyBoardList",memNo,rowBounds);
+	}
+
+	public int selectMyReplyListCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("boardMapper.selectMyReplyListCount",memNo);
+	}
+
+	public ArrayList<Reply> selectMyReplyList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMyReplyList",memNo,rowBounds);
 	}
 
 

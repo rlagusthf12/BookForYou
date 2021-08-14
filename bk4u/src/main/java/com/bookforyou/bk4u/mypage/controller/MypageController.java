@@ -47,6 +47,7 @@ import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.qa.model.service.QaService;
 import com.bookforyou.bk4u.qa.model.vo.Qa;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 import com.google.gson.Gson;
 
 @Controller
@@ -865,6 +866,28 @@ public class MypageController {
 		return "mypage/myBoard";
 	}
 	
+	/**
+	 * 마이페이지 내 댓글 리스트 조회
+	 * @author 안세아
+	 * @param currentPage
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("my-reply.mp")
+	public String selectMyReplyList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		int listCount = mypageService.selectMyReplyListCount(memNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Reply> list = mypageService.selectMyReplyList(pi,memNo);
+		
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("list",list);
+		
+		return "mypage/myReply";
+	}
 	
 	
 	

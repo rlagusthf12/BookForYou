@@ -20,6 +20,7 @@ import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 public interface MypageService {
 
@@ -88,6 +89,10 @@ public interface MypageService {
 	int selectMyBoardListCount(int memNo);
 
 	ArrayList<Board> selectMyBoardList(PageInfo pi, int memNo);
+
+	int selectMyReplyListCount(int memNo);
+
+	ArrayList<Reply> selectMyReplyList(PageInfo pi, int memNo);
 
 
 

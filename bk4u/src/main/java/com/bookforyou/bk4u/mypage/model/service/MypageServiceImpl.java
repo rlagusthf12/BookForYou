@@ -27,6 +27,7 @@ import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -201,6 +202,16 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public ArrayList<Board> selectMyBoardList(PageInfo pi, int memNo) {
 		return mypageDao.selectMyBoardList(sqlSession,pi,memNo);
+	}
+
+	@Override
+	public int selectMyReplyListCount(int memNo) {
+		return mypageDao.selectMyReplyListCount(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<Reply> selectMyReplyList(PageInfo pi, int memNo) {
+		return mypageDao.selectMyReplyList(sqlSession,pi,memNo);
 	}
 
 
