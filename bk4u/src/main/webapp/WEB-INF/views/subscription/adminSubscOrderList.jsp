@@ -14,7 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <style>
-	 	#outer{
+		#outer{
             display:inline-block;
             position:absolute;
             margin:50px 0 0 250px;
@@ -23,7 +23,6 @@
         #main-title > p{
             display:inline-block;
             position: absolute;
-            width:120px;
             height:30px;
             line-height: 30px;
             margin:0 0 0 15px;
@@ -32,70 +31,7 @@
         }
         a{text-decoration: none;}
 
-        /* 절차 */
-        #processing-area>div{display:inline-block; width:32%;}
-        .processing-box{
-            border:1px solid grey;
-            width:180px;
-            height: 80px;
-            border-radius: 10px;
-            padding:10px;
-            margin:auto;
-        }
-        .processing-box.selected{border:1px solid rgb(255, 150, 59);}
-        .img-area{
-            display: inline-block;
-            width:55px;
-            height: 100%;
-            border-radius: 70%;
-            text-align: center;
-            vertical-align: middle;
-            background-color:rgb(224, 224, 224);
-            
-        }
-        .selected.img-area{background-color: rgb(255, 150, 59);}
-        .img-content{
-            width: 40px;
-            height: 40px;
-            object-fit: cover;
-            margin:9px 0 9px 0;
-            vertical-align: middle;
-        }
-        .text-area, .number-area{
-            display: inline-block;
-            position:absolute;
-        }
-        .text-area{
-            font-size:18px;
-            height: 22px;
-            width: 100px;
-            text-align: center;
-        }
-        .text-area > p, .number-area > p{
-            margin:auto;
-        }
-        .selected.text-area > p{color: rgb(255, 150, 59);}
-        .number-area{
-            margin: 30px 0 0 0;
-            font-size:20px;
-            font-weight: 700;
-            height: 25px;
-            width: 100px;
-            text-align: center;
-        }
-        
-        .processing-box:hover{
-        	cursor:pointer;
-			box-shadow: 0px 0px 10px grey;
-        }
-
-        /* 공통 테두리 */
-        .bar-outer{
-            border:1px solid grey;
-            padding:15px;
-        }
-
-        /* 검색 영역 */
+       /* 검색 영역 */
         #search-area{
             display:flex;
             justify-content: center;
@@ -169,6 +105,9 @@
            font-size:14px;
         }
 
+        /* 처리 버튼 */
+        .btn{padding:0.1em 0.5em;}
+
         /* 조회 결과 테이블 */
         #result-div{
             margin-top:20px; 
@@ -176,10 +115,12 @@
             text-align: center;
             
         }
+        
+        /* 테이블 */
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
-        .detailO:hover{
+        .detailC:hover{
         	cursor:pointer;
         	color:#EC573B;
         	font-size:16px;
@@ -188,21 +129,10 @@
 
         /* 반품 처리 컬럼 버튼 */
         .handling{
-            padding:0.1em 0.5em;
-            margin:5px 0;
-        }
-        .handling.detail{
             border: 0.1em solid #EC573B;
-            background-color: white;
-        }
-        .handling.detail>a{color:#EC573B;}
-        .handling{
             border-radius: 5px;
-            font-weight: 600;
-            background-color: #EC573B;
         }
-        .handling>a{color: white;}
-        .showDetail:hover, .returnPcs:hover{cursor:pointer;}
+        .handling>a{color: #EC573B;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -264,8 +194,9 @@
         }
         .memo-delete-btn{color:rgb(255, 150, 59);}
         .memo-upgrade-btn{color:black;}
+        
 
-        /* 페이징 */
+         /* 페이징 */
        	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 
         #paging-wrap{width:fit-content; margin:auto;}
@@ -273,175 +204,113 @@
 </style>
 
 <script>
-	$(function(){
 	
-		/* 상태 클릭  */
-	    $("#getStatus1").click(function(){
-	        location.href="adminCSList.cs?cStatus=1";
-	    })
-	    
-	    $("#getStatus2").click(function(){
-	        location.href="adminCSList.cs?cStatus=2";
-	    })
-	    
-	    $("#getStatus3").click(function(){
-	        location.href="adminCSList.cs?cStatus=3";
-	    })
-	    
-	    /* 정렬 방법 변경 */
-	    $("#array-condition").change(function(){
-	        let ar = $(this).val();
 	
-	        if(${ empty keyword }){            	
-	            location.href=`adminCSList.cs?cStatus=2&array=` + ar;		 
-	        }else {
-	        	location.href=`adminCsListSearch.cs?cStatus=2&condition=${ condition }&keyword=${ keyword }&array=` + ar;
-	        }
-	    
-	    })
-	    
-	    /* 정렬 시 해당 값 selected */
-	    $("#array-condition").val("${ ar }").prop("selected", true);
-	    
-		/* admin-memo 모달 보여주기 */
-		$(".admin-memo button").click(function(){
-			$(".admin-memo-content").toggleClass("hide");
-	
-			var tr = $(this).parent().parent().parent();
-	    	var td = tr.children();
-	    	var $memo = td.eq(10).text();
-	    	var $orderNo = td.eq(3).text();
-	    	$(".admin-memo-content .oNo").val($orderNo);
-	    	$(".admin-memo-content .memo-bottom input").val($memo);
-	    	
-	    	if($(this).parent().is(".no-exist")){
-	            $(".admin-memo-content .memo-delete-btn").hide();
-	        }else{
-	            $(".admin-memo-content .memo-delete-btn").show();
-	        }
-	    	
-			const a = $(this).offset();
-	        $(".admin-memo-content").offset({top: a.top , left: a.left-320});
+		$(function(){
+			
+		    /* 정렬 방법 변경 */
+		    $("#array-condition").change(function(){
+	            let ar = $(this).val();
+
+	            if(${ empty keyword }){            	
+		            location.href=`adminSubscOrderList.su?array=` + ar;		 
+	            }else {
+	            	location.href=`adminSubscOrderListSearch.or?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	            }
 	        
-		})
-		
-		/* 관리자 메모 삭제 */
-		$(".memo-delete-btn").click(function(){
+		    })
+		    
+		    /* 정렬 시 해당 값 selected */
+		    $("#array-condition").val("${ ar }").prop("selected", true);
+		    
+			/* admin-memo 모달 보여주기 */
+			$(".admin-memo button").click(function(){
+				$(".admin-memo-content").toggleClass("hide");
+
+				var tr = $(this).parent().parent().parent();
+            	var td = tr.children();
+            	var $memo = td.eq(10).text();
+            	var $orderNo = td.eq(1).text();
+            	$(".admin-memo-content .oNo").val($orderNo);
+            	$(".admin-memo-content .memo-bottom input").val($memo);
+            	
+            	if($(this).parent().is(".no-exist")){
+                    $(".admin-memo-content .memo-delete-btn").hide();
+                }else{
+                    $(".admin-memo-content .memo-delete-btn").show();
+                }
+            	
+				const a = $(this).offset();
+                $(".admin-memo-content").offset({top: a.top , left: a.left-320});
+                
+			})
 			
-			var $orderNo = $(".oNo").val();
-			location.href="deleteAdminMemo.cs?orderNo=" + $orderNo + "&cStatus=return";
-			
-		})			
-	
-	    /* user-memo 모달 보여주기 */
-	    $(".user-memo.exist button").click(function(){
-	    	
-	    	var tr = $(this).parent().parent().parent();
-	    	var td = tr.children();
-	    	var $memo = td.eq(9).text();
-	    	$(".user-memo-content .memo-bottom p").text($memo);
-	    	
-	        $(".user-memo-content").toggleClass("hide");
-	        const a = $(this).offset();
-	        $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
-	    })
-	
-	    /* 주문 상세 보기 */
-	    $(".detailO").click(function(){
-	    	var td = $(this);
-	        var orderNo = td.text();
-	        location.href='adminOrderDetail.or?orderNo=' + orderNo;
-	    })
-	    
-	    /* 반품 상세 보기 */
-	    $(".showDetail").click(function(){
-	    	var tr = $(this).parent().parent().parent();
-	 		var orderNo = tr.children().eq(3).text();
-	 		var returnNo = tr.children().eq(1).text();
-		    $(".showDetail").attr("href", 'adminReturnDetail.cs?returnNo=' + returnNo + '&orderNo=' + orderNo + "&no=1");
-	    })
-	    
-	    /* 반품 처리 */
-	    $(".returnPcs").click(function(){
-	 		var tr = $(this).parent().parent().parent();
-	 		var orderNo = tr.children().eq(3).text();
-	 		var returnNo = tr.children().eq(1).text();
-	 		$(".returnPcs").attr("href", 'adminReturnDetail.cs?returnNo=' + returnNo + '&orderNo=' + orderNo + "&no=2");
-	 	})
-	
-	})
+			/* 관리자 메모 삭제 */
+			$(".memo-delete-btn").click(function(){
+				
+				var $orderNo = $(".oNo").val();
+				location.href="deleteAdminMemo.or?orderNo=" + $orderNo + "&orStatus=0";
+				
+			})			
+
+            /* user-memo 모달 보여주기 */
+            $(".user-memo.exist button").click(function(){
+            	
+            	var tr = $(this).parent().parent().parent();
+            	var td = tr.children();
+            	var $memo = td.eq(9).text();
+            	$(".user-memo-content .memo-bottom p").text($memo);
+            	
+                $(".user-memo-content").toggleClass("hide");
+                const a = $(this).offset();
+                $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
+            })
+            
+            /* 주문 상세 보기 */
+	        $(".detailC").click(function(){
+	        	
+	        	var td = $(this);
+	        	var orderNo = td.text();
+	        	location.href='adminOrderDetail.or?orderNo=' + orderNo;
+	        	
+	        })
+	        
+	        /* alert 
+	        var url = "${url}";
+	        var alertMsg = "${alertMsg}";
+	        alert(alertMsg);
+	        location.href = url;
+	        */
+
+        })
+
 </script>
 </head>
 <body>
 
 	<jsp:include page="../adminSidebar.jsp"/>
 	
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+	
 	<div id="outer">
         <div id="main-title">
             <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
-            <p>CS 관리</p>
+            <p>정기구독 발송 내역</p>
         </div> 
-        <br>
-        <div id="processing-area">
-            <div>
-                <div class="processing-box" id="getStatus1">
-                    <div class="img-area">
-                        <img class="img-content" src="resources/adminCommon/images/cancel .png" alt="">
-                    </div>
-    
-                    <div class="text-area">
-                        <p>취소</p>
-                    </div>
-    
-                    <div class="number-area">
-                        <p>${ cancelCount }</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div class="processing-box selected" id="getStatus2">
-                    <div class="img-area selected">
-                        <img class="img-content" src="resources/adminCommon/images/return selected.png" alt="">
-                    </div>
-    
-                    <div class="text-area selected">
-                        <p>반품</p>
-                    </div>
-    
-                    <div class="number-area selected">
-                        <p>${ returnCount }</p>
-                    </div>
-                </div>
-            </div>
-
-            <div>
-                <div class="processing-box" id="getStatus3">
-                    <div class="img-area">
-                        <img class="img-content" src="resources/adminCommon/images/refund.png" alt="">
-                    </div>
-    
-                    <div class="text-area">
-                        <p>환불</p>
-                    </div>
-    
-                    <div class="number-area">
-                        <p>${ refundCount }</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><br>
+		<br><br>
         <div id="search-area">
-            <form action="adminCsListSearch.cs">
+            <form action="adminOListSearch.or">
             <input type="hidden" name="array" value="${ ar }">
-            <input type="hidden" name="cStatus" value="2">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
                             <option value="searchAll">전체</option>
                             <option value="orderNo">주문번호</option>
-                            <option value="returnNo">반품번호</option>
                             <option value="memName">주문자명</option>
                             <option value="memId">주문자ID</option>
                         </select>
@@ -460,19 +329,33 @@
             <div id="result-title">
                 <p>조회결과</p>
                 <c:choose>
-                	<c:when test="${ not empty conListCount }">
-                		<span>[총 ${ conListCount }개]</span>
-                	</c:when>
-                	<c:when test="${ cStatus eq 2 }">
-                		<span>[총 ${ returnCount }개]</span>
-                	</c:when>
+	                <c:when test="${ not empty conListCount }">
+	                	<span>[총 ${ conListCount }개]</span>
+	                </c:when>
+	            	<c:when test="${ orStatus eq 1 }">
+			            <span>[총 ${ confirmCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 2 }">
+			            <span>[총 ${ productReadyCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 3 }">
+			            <span>[총 ${ deliveryReadyCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 4 }">
+			            <span>[총 ${ deliveryCnt }개]</span>
+			        </c:when>
+			        <c:when test="${ orStatus eq 5 }">
+			            <span>[총 ${ finishCnt }개]</span>
+			        </c:when>
+	                <c:otherwise>
+			            <span>[총 ${ listCount }개]</span>			                
+	                </c:otherwise>
                 </c:choose>
-                
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">
-                    <option value="0">반품일 최신순</option>
-                    <option value="1">반품일 역순 </option>
+                    <option value="0">발송일순</option>
+                    <option value="1">발송일 역순 </option>
                 </select>
             </div>
 
@@ -480,50 +363,33 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>반품번호</th>
-                            <th>반품신청일<br>(반품접수일)</th>
-                            <th>주문번호</th>
-                            <th>주문자</th>
-                            <th>도서명</th>
-                            <th>결제수단</th>
-                            <th>반품상태</th>
-                            <th>반품처리</th>
+                            <th width="45px">NO</th>
+                            <th width="50px">구독번호</th>
+                            <th width="90px">주문자</th>
+                            <th width="170px">도서명</th>
+                            <th width="70px">발송일</th>
+                            <th width="90px">운송장정보</th>
+                            <th width="90px">배송상태</th>
                             <th width="70px">메모</th>
                         </tr>
                     </thead>
                     <tbody>
                     	<c:choose>
-                    		<c:when test = "${ rtList.size() != 0}"> 
-		                    	<c:forEach var="rt" items="${ rtList }" varStatus="no">
+                    		<c:when test = "${ sList.size() != 0}"> 
+		                    	<c:forEach var="s" items="${ sList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td>${ rt.returnNo }</td>
-			                            <td>${ rt.returnDate }</td>
-			                            <td class="detailO">${ rt.orderNo }</td>
-			                            <td>${ rt.memName } <br> (${ rt.memId })</td>
-			                            <td>${ rt.bkTitle }</td>
-			                            <td>${ rt.payWay }</td>
-			                            <td>${ rt.status }</td>
-			                            <td>
-			                            	<c:choose>
-			                            		<c:when test="${ rt.status eq '반품신청' }">
-			                            			<div class="handling">
-					                                    <a class="returnPcs">처리</a>
-					                                </div>
-			                            		</c:when>
-			                            		<c:otherwise>
-			                            			<div class="handling detail">
-					                                    <a class="showDetail">상세</a>
-					                                </div>
-			                            		</c:otherwise>
-			                            	</c:choose>
-			                            </td>
-			                            <td style="display:none">${ rt.deliveryMsg }</td>
-			                            <td style="display:none">${ rt.adminMemo }</td>
+			                            <td class="detailC">${ s.subscNo }</td>
+			                            <td>${ s.memName } <br> (${ s.memId })</td>
+			                            <td>${ s.bkTitle }</td>
+			                            <td>${ s.shippingDate }</td>
+			                            <td>${ s.shippingCompany } <br> ${ s.shippingNumber }</td>
+			                            <td>${ s.shippingStatus }</td>
+			                            <td style="display:none">${ s.deliveryRequest }</td>
+			                            <td style="display:none">${ s.adminMemo }</td>
 					                    <td>
 				                            <c:choose>
-				                            	<c:when test="${ empty rt.deliveryMsg }">
+				                            	<c:when test="${ empty s.deliveryRequest }">
 						                             	<!-- 사용자 배송메세지(DELIVERY_MSG)가 존재하지 않을(NULL) 경우 -->
 						                                <div class="user-memo no-exist">
 						                                    <button type="button">user</button>
@@ -545,7 +411,7 @@
 					                            </c:otherwise>
 					                        </c:choose>
 					                        <c:choose>
-					                        	<c:when test="${ empty rt.adminMemo }">
+					                        	<c:when test="${ empty s.adminMemo }">
 						                                <!-- 관리자 메모(ADMIN_MEMO)가 존재하지 않을(NULL) 경우 -->
 						                                <div class="admin-memo no-exist">
 						                                    <button type="button">admin</button>
@@ -555,11 +421,11 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.cs">
+															<form action="updateAdminMemo.or" method="POST">
 																<input type="hidden" name="orderNo" class="oNo"/>
-																<input type="hidden" name="cStatus" value="return"/>
+																<input type="hidden" name="orStatus" value="0"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -579,11 +445,11 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.cs">
+															<form action="updateAdminMemo.or" method="POST">
 																<input type="hidden" name="orderNo" class="oNo"/>
-																<input type="hidden" name="cStatus" value="return"/>
+																<input type="hidden" name="orStatus" value="0"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemoContent"></p>
+																	<p><input type="text" name="adminMemo"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -608,7 +474,7 @@
                     </tbody>
                 </table>
             </div>
-            
+												
             <br>
             <div id="paging-wrap">
 	            <ul class="pagination">
@@ -617,12 +483,12 @@
 	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
 	                	</c:when>
 	                	<c:otherwise>
-			                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+			                <li class="page-item"><a class="page-link" href="adminSubscOrderList.su?array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
 	    				</c:otherwise>
 	    			</c:choose>            	
 	                
 	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
+		                <li class="page-item"><a class="page-link" href="adminSubscOrderList.su?array=${ ar }&currentPage=${ p }">${ p }</a></li>
 	                </c:forEach>
 	                
 	                
@@ -631,12 +497,15 @@
 			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
 	                	</c:when>
 	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                		<li class="page-item"><a class="page-link" href="adminSubscOrderList.su?array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
 	                	</c:otherwise>
 	                </c:choose>
 	            </ul>
 	        </div>
         </div>
+
+        
+        
     </div>
 </body>
 </html>

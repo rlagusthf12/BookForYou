@@ -359,5 +359,29 @@ public class SubscriptionController {
 		}
 	}
 	
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 */
+	@RequestMapping("adminSubscOrderList.su")
+	public ModelAndView selectAdminSubscOrderList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+												  @RequestParam(value="array", defaultValue="0") int array) {
+
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("array", array);
+		
+		int listCount = sService.selectAdminSubscOrderCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<Subscription> sList = sService.selectAdminSubscOrderList(pi, map);
+		
+		mv.addObject("sList", sList)
+		  .addObject("listCount", listCount)
+		  .addObject("pi", pi)
+		  .addObject("ar", array)
+		  .setViewName("subscription/adminSubscOrderList");
+		
+		return mv;
+		
+	}
 	
 }

@@ -250,6 +250,9 @@
                     <li>
                         <a href="adminSubscDeliveryList.su">정기구독 발송</a>
                     </li>
+                     <li>
+                        <a href="adminSubscOrderList.su">정기구독 발송 리스트</a>
+                    </li>
                 </ul>
             </li>
             <li class="sub-menu">

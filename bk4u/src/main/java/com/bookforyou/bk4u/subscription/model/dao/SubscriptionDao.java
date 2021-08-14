@@ -225,4 +225,22 @@ public class SubscriptionDao {
 	public int insertSubsc(SqlSessionTemplate sqlSession, Subscription sub) {
 		return sqlSession.insert("subscriptionMapper.insertSubsc", sub);
 	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 */
+	public int selectAdminSubscOrderCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("subscriptionMapper.selectAdminSubscOrderCount");
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 * @param map 
+	 */
+	public ArrayList<Subscription> selectAdminSubscOrderList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Integer> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectAdminSubscOrderList", map, rowBounds);
+	}
+
 }

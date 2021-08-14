@@ -22,6 +22,7 @@
             margin-left:250px;
             width: 950px;
         }
+        
         #main-title > p{
             display:inline-block;
             position: absolute;
@@ -42,7 +43,8 @@
             margin: 0 10px 0 10px;
             width:165px;
             height:87px;
-            border:1px solid black;
+            border:1px solid grey;
+            border-radius:20px;
             text-align: center;
             padding:10px;
             font-weight: 600;

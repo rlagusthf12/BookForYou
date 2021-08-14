@@ -31,6 +31,7 @@
 		<result column="shipping_company" property="shippingCompany"/>
 		<result column="shipping_number" property="shippingNumber"/>
 		<result column="shipping_status" property="shippingStatus"/>
+		<result column="bk_title" property="bkTitle"/>
 	</resultMap>
 	
 	<resultMap type="Point" id="PointResult">
@@ -470,4 +471,41 @@
 		     , #{deliveryRequest}
 		     )
 	</insert>
+	
+	<!-- [관리자] 정기구독 발송 내역 개수 조회 (한진) -->
+	<select id="selectAdminSubscOrderCount" resultType="_int">
+		select
+		       count(*)
+		  from subsc_bookorder
+	</select>
+	
+	<!-- [관리자] 정기구독 발송 내역 조회 (한진) -->
+	<select id="selectAdminSubscOrderList" resultMap="SubscResult">
+		select
+		       subsc_no,
+		       mem_name,
+		       mem_id,
+		       bk_title,
+		       shipping_date,
+		       shipping_company,
+		       shipping_number,
+		       shipping_status,
+		       deliveryrequest,
+		       admin_memo
+		  from subsc_bookorder
+		  join book using(bk_no)
+		  join subscription using(subsc_no)
+		  join members using (mem_no)
+		  <choose>
+		  	<when test="array == 0">
+		  		order 
+		  		   by shipping_date desc 
+		  	</when>
+		  	<when test="array == 1">
+		  		order 
+		  		   by shipping_date asc 
+		  	</when>
+		  </choose>
+	</select>
+	
 </mapper>

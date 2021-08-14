@@ -156,4 +156,15 @@ public interface SubscriptionService {
 	 */
 	int insertSubsc(Subscription sub);
 
+	/**
+	 * [관리자] 정기구독 발송 내역 개수 조회 (한진)
+	 */
+	int selectAdminSubscOrderCount();
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 */
+	ArrayList<Subscription> selectAdminSubscOrderList(PageInfo pi, HashMap<String, Integer> map);
+
+
 }
