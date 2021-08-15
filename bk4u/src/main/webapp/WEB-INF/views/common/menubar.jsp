@@ -221,7 +221,31 @@
                     </ul>
                 </li>
                 <li><a href="">이벤트</a></li>
-                <li><a href="">고객센터</a></li>
+                <li><a href="">고객센터</a>
+                	<ul>
+                        <li><a href="list.no">공지사항</a></li>
+                        <li><a href="main.faq">FAQ</a></li>
+                          <c:choose>
+                        <c:when test="${loginUser.memNo==1}">                       
+                     	<li><a href="list.qa">1:1문의</a></li>                    
+                        </c:when>
+                        <c:otherwise>
+                          <li><a href="listAd.qa?memNo=${loginUser.memNo}">1:1문의</a></li>                          
+                          </c:otherwise>
+                        </c:choose>
+                      
+                        <c:choose>
+                        <c:when test="${loginUser.memNo==1}">
+                         <li><a href="listAd.re">신고</a></li>
+                        <li><a href="list.reli">신고 사유</a></li>                         
+                        </c:when>
+                        <c:otherwise>
+                        <li><a href="list.re?memNo=${loginUser.memNo}">신고</a></li>
+                        </c:otherwise>
+                        </c:choose>
+                    </ul>   
+                
+                </li>
             </ul>
         </div>
     </div>

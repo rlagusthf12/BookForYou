@@ -18,20 +18,38 @@ public class QaDao {
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("qaMapper.selectListCount");
 	}
+	
+	public int selectListAdCount(SqlSessionTemplate sqlSession,int memNo) {
+		return sqlSession.selectOne("qaMapper.selectListAdCount",memNo);
+	}
+	
 	public int selectMemNoQaListCount(SqlSessionTemplate sqlSession,int memNo) {
 		return sqlSession.selectOne("qaMapper.selectMemNoQaListCount", memNo);
 	}
 	public int selectAnsListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("qaMapper.selectAnsListCount");
 	}
+	
+	public int selectAnsAdListCount(SqlSessionTemplate sqlSession,int memNo) {
+		return sqlSession.selectOne("qaMapper.selectAnsAdListCount",memNo);
+	}
 	public int selectYetListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("qaMapper.selectYetListCount");
 	}
 	
+	public int selectYetAdListCount(SqlSessionTemplate sqlSession,int memNo) {
+		return sqlSession.selectOne("qaMapper.selectYetAdListCount",memNo);
+	}
 	public ArrayList<Qa> selectList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("qaMapper.selectList", null,rowBounds);
+	}
+	
+	public ArrayList<Qa> selectAdList(SqlSessionTemplate sqlSession, PageInfo pi,int memNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("qaMapper.selectAdList",memNo,rowBounds);
 	}
 	public ArrayList<Qa> selectTypeList(SqlSessionTemplate sqlSession){
 		

@@ -26,6 +26,10 @@ public class QaServiceImpl implements QaService {
 		public int selectListCount() {
 			return qDao.selectListCount(sqlSession);
 		}
+		@Override
+		public int selectListAdCount(int memNo) {
+			return qDao.selectListAdCount(sqlSession,memNo);
+		}
 		
 		@Override
 		public ArrayList<Qa> selectTypeList(){		
@@ -38,13 +42,28 @@ public class QaServiceImpl implements QaService {
 		}
 		
 		@Override
+		public int selectAnsAdListCount(int memNo) {
+			return qDao.selectAnsAdListCount(sqlSession,memNo);
+		}
+		
+		@Override
 		public int selectYetListCount() {
 			return qDao.selectYetListCount(sqlSession);
 		}
 		
 		@Override
+		public int selectYetAdListCount(int memNo) {
+			return qDao.selectYetAdListCount(sqlSession,memNo);
+		}
+		
+		@Override
 		public ArrayList<Qa> selectList(PageInfo pi){
 			return qDao.selectList(sqlSession,pi);
+		}
+		
+		@Override
+		public ArrayList<Qa> selectAdList(PageInfo pi,int memNo){
+			return qDao.selectAdList(sqlSession,pi,memNo);
 		}
 		
 		@Override

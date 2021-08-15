@@ -7,11 +7,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.store.model.dao.StoreDao;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
 import com.bookforyou.bk4u.store.model.vo.Store;
+import com.bookforyou.bk4u.store.model.vo.StoreBook;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -77,5 +77,42 @@ public class StoreServiceImpl implements StoreService {
 	public ArrayList<OffBook> selectSearchOffBook(PageInfo pi, HashMap<String, String> map){
 		return storeDao.selectSearchOffBook(sqlSession, pi, map);
 	}
+	
+	//관리자 (김현솔)
+	@Override
+	public  int selectListCount() {
+		return storeDao.selectListCount(sqlSession);
+	}
+	
+	@Override
+	 public int selectBookListCount(int storeNo) {
+		return storeDao.selectBookListCount(sqlSession,storeNo);
+	}
+	
+	@Override
+	 public ArrayList<Store> selectStoreList(PageInfo pi){
+		return storeDao.selectStoreList(sqlSession,pi);
+	}
+	
+	@Override
+	 public ArrayList<StoreBook> selectStoreBookList(PageInfo pi,int storeNo){
+		return storeDao.selectStoreBookList(sqlSession,pi,storeNo);
+	}
+	
+	@Override
+	public int addStore(Store st) {
+		return storeDao.addStore(sqlSession,st);
+	}
+	
+	@Override
+	public int updateStore(Store st) {
+		return storeDao.updateStore(sqlSession,st);
+	}
+	
+	@Override
+	public int deleteStore(int storeNo) {
+		return storeDao.deleteStore(sqlSession,storeNo);
+	}
+	
 
 }

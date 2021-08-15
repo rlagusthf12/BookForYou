@@ -30,6 +30,13 @@
 		select
 		       count(*)
 		  from report	
+		  where mem_no =#{memNo}
+	</select>
+	
+	<select id="selectListCountAd" resultType="_int">
+		select
+		       count(*)
+		  from report			  
 	</select>
 	
 		<select id="selectReListCount" resultType="_int">
@@ -39,6 +46,21 @@
 	</select>
 	
 	<select id="selectReportList" resultMap="reportResult">
+		select REPORT_NO, 
+			   MEM_NO,
+			   REPORT_CONTENT,
+			   REPORT_DATE,
+			   REPORT_TYPE,
+			   REPORT_REFNO,
+			   REPORT_LINK,
+			   REPORT_STATUS
+			 
+		from report	
+		where mem_no=#{memNo}
+		
+	</select>
+	
+		<select id="selectReportListAd" resultMap="reportResult">
 		select REPORT_NO, 
 			   MEM_NO,
 			   REPORT_CONTENT,

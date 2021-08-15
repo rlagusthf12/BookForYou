@@ -146,8 +146,10 @@
             </script>
          <c:if test="${loginUser.memNo==1}">	   
 		<div class="write" onclick="location.href='writeForm.faq'">도움말 작성</div>
-		</c:if>		
+		</c:if>	
+		 <c:if test="${loginUser != null}">	  	
 		<div class="write" onclick="location.href='writeForm.qa'">1:1문의하기</div>		
+		</c:if>	
 		</div>
 		 <div id="paging-wrap">
             <ul class="pagination">

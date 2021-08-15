@@ -32,6 +32,13 @@
 		  from qa	
 	</select>
 	
+		<select id="selectListAdCount" resultType="_int">
+		select
+		       count(*)
+		  from qa	
+		  where mem_no = #{memNo}
+	</select>
+	
 	<select id="selectMemNoQaListCount" resultType="_int">
 		select
 		       count(*)		    
@@ -46,11 +53,26 @@
 		  where ANS_STATUS = 'Y'
 	</select>
 	
+		
+	<select id="selectAnsAdListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa	
+		  where ANS_STATUS = 'Y' and mem_no=#{memNo}
+	</select>
+	
 	<select id="selectYetListCount" resultType="_int">
 		select
 		       count(*)
 		  from qa	
 		  where ANS_STATUS = 'N'
+	</select>
+	
+		<select id="selectYetAdListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa	
+		  where ANS_STATUS = 'N' and mem_no =#{memNo}
 	</select>
 	
 	<select id="selectTypeList" resultMap="qaResult">
@@ -70,6 +92,22 @@
 		     		   
 		  from qa join quetype	using(que_type_no)
 		  join members using(mem_no)	
+		 order
+		    by qa_no desc
+	</select>
+	
+		<select id="selectAdList" resultMap="qaResult">
+		select
+		       qa_no
+		     , que_type
+		     , mem_nickname
+		     , qa_content
+		     , to_char(qa_date, 'YYYY-MM-DD') as qa_date
+		     ,ans_status
+		     		   
+		  from qa join quetype	using(que_type_no)
+		  join members using(mem_no)
+		  where mem_no = #{memNo}	
 		 order
 		    by qa_no desc
 	</select>

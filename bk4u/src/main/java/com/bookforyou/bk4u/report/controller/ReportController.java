@@ -21,11 +21,11 @@ public class ReportController {
 	private ReportService rService;
 	
 	@RequestMapping("list.re")
-	public ModelAndView selectMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public ModelAndView selectMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, int memNo) {
 		
-		int listCount = rService.selectListCount();
+		int listCount = rService.selectListCount(memNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-		ArrayList<Report> list = rService.selectReportList(pi);
+		ArrayList<Report> list = rService.selectReportList(pi,memNo);
 		for(Report re : list) {
 			type(re);
 		}
@@ -33,6 +33,23 @@ public class ReportController {
 		mv .addObject("pi",pi)
 		   .addObject("list",list)
 		   .setViewName("report/reportList");
+		
+		return mv;
+	}
+	
+	@RequestMapping("listAd.re")
+	public ModelAndView selectMainAd(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int listCount = rService.selectListCountAd();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Report> list = rService.selectReportListAd(pi);
+		for(Report re : list) {
+			type(re);
+		}
+	
+		mv .addObject("pi",pi)
+		   .addObject("list",list)
+		   .setViewName("report/reportListAd");
 		
 		return mv;
 	}

@@ -77,8 +77,9 @@
 			
 	<div class="Button" onclick="location.href='updateForm.re?reportNo=${re.reportNo}'">수정</div>
 	<div class="Button" onclick="location.href='delete.re?reportNo=${re.reportNo}'">삭제</div>
+	<c:if test="${loginuser.memNo==1}">
 	<div class="Button" onclick="location.href='writeForm.reli?reportNo=${re.reportNo}'">경고작성</div>
-	
+	</c:if>
 	<div class="ListButton" onclick="location.href='list.re'">목록으로</div>
 	</div>
 <jsp:include page="../common/footer.jsp"/>

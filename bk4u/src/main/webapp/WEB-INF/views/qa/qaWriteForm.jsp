@@ -69,6 +69,7 @@
 		height:48px;		
 		margin-top:100px;
 		margin-left:840px;
+		border:0px;
 	}
 	select{
 	width: 800px;
@@ -103,7 +104,7 @@
 <jsp:include page="../common/menubar.jsp"/>
 <div class="body1">
 <form action="write.qa" method="post">
-<input type="hidden" name="memNo" value="7">
+<input type="hidden" name="memNo" value="${loginUser.memNo}">
 <div class="faqTitle">1:1문의 하기</div>
 
 <h2 style="margin-top:10px;">유형 선택</h2>

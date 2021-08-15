@@ -79,9 +79,10 @@
 	<p>${q.qaContent}</p>	
 	</div>	
 	<hr>
-			
+	<c:if test="${loginUser.memNo==q.memNo}">		
 	<div class="Button" onclick="location.href='updateForm.qa?qaNo=${q.qaNo}'">수정</div>
 	<div class="Button" onclick="location.href='delete.qa?qaNo=${q.qaNo}'">삭제</div>
+	</c:if>
 	<c:if test="${q.ansStatus=='N'}">
 	<div class="Button" onclick="location.href='writeForm.as?qaNo=${q.qaNo}'">답변 작성</div>
 	</c:if>
