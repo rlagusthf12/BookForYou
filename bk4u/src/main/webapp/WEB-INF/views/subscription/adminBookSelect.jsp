@@ -179,10 +179,46 @@
 			}
 		})
 		
-		
 	})
 	
 	$(function(){
+		
+		/* 중복 여부 ajax */
+		var $bkNoArr = [];
+		$(".bkNo").each(function(){
+			var $bkNo = $(this).text();
+			$bkNoArr.push($bkNo);
+		})
+		var $sNo = ${sNo};
+		
+		$.ajax({
+			url:"checkBookDuplicates",
+			traditional : true,
+			data:{
+				bkNo:$bkNoArr,
+				sNo:$sNo
+			},
+			success:function(result){
+				
+				for(var i=0; i<result.length; i++){
+					$(".bkNo").each(function(){
+						$b = $(this).text();
+						if($(this).text() == result[i].bkNo){
+							
+							$(this).siblings(".checkDuplicates").text(result[i].result)
+						}
+					
+					})
+					
+				}
+				
+			},
+			error:function(){
+				console.log("ajax 통신 실패");
+			}
+		})
+		
+		
 		/* 도서 상세 조회 */
         $(".detailC").click(function(){
         	
@@ -358,20 +394,19 @@
             </div>
         </div>
          <div id="search-area">
-            <form action="adminOListSearch.or">
-            <input type="hidden" name="array" value="${ ar }">
-            <input type="hidden" name="orStatus" value="5">
+            <form action="selectAdminBookSelectSearchList.su" method="POST">
+            <input type="hidden" name="sNo" value="${ s.subscNo }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
                             <option value="searchAll">전체</option>
-                            <option value="orderNo">주문번호</option>
-                            <option value="memName">주문자명</option>
-                            <option value="memId">주문자ID</option>
+                            <option value="bookNo">도서번호</option>
+                            <option value="bookTitle">도서명</option>
+                            <option value="writerName">저자</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="keyword" >
+                        <input type="text" name="keyword">
                     </div>
                     <div id="search-btn">
                         <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
@@ -383,7 +418,14 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+                	<c:when test="${ not empty conListCount }">
+                		<span>[총 ${ conListCount }개]</span>
+                	</c:when>
+                	<c:otherwise>
+                		<span>[총 ${ listCount }개]</span>
+                	</c:otherwise>
+                </c:choose>
             </div>
             <br>
             <div id="array-div">
@@ -424,14 +466,14 @@
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="bCheck" value="${ b.bkNo }"></td>
 			                            <td><img src="" alt="" width="65" height="80"></td>
-			                            <td class="detailC">${ b.bkNo }</td>
+			                            <td class="detailC bkNo">${ b.bkNo }</td>
 			                            <td>${ b.bkTitle }</td>
 			                            <td>${ b.writerName }</td>
 			                            <td>${ b.bkPublish }</td>
 			                            <td>${ b.bkDate }</td>
 			                            <td>${ b.bkPrice }</td>
 			                            <td>${ b.bkStock }</td>
-			                            <td></td>
+			                            <td class="checkDuplicates"></td>
 			                        </tr>
 		                        </c:forEach>
 		                	</c:when>
