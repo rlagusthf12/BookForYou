@@ -191,5 +191,15 @@ public interface SubscriptionService {
 	 */
 	int checkBookDuplicates(HashMap<String, String> map);
 
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진)
+	 */
+	int selectSubscOrderSearchCount(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 조회 (한진)
+	 */
+	ArrayList<Subscription> selectAdminSubscOrderSearchList(PageInfo pi, HashMap<String, String> map);
+
 
 }

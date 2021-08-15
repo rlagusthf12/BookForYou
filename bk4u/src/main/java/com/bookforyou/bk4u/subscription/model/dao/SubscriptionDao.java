@@ -280,4 +280,20 @@ public class SubscriptionDao {
 		return sqlSession.selectOne("subscriptionMapper.checkBookDuplicates", map);
 	}
 
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진)
+	 */
+	public int selectSubscOrderSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("subscriptionMapper.selectSubscOrderSearchCount", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 조회 (한진)
+	 */
+	public ArrayList<Subscription> selectAdminOrderSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectAdminOrderSearchList", map, rowBounds);
+	}
+
 }

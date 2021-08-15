@@ -534,4 +534,74 @@
 		   and bk_no = #{bkNo}
 	</select>
 	
+	<!-- [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진) -->
+	<select id="selectSubscOrderSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from subsc_bookorder
+		  join subscription using (subsc_no)
+		  join members using (mem_no)
+		 <choose>
+	 		<when test="condition == 'searchAll'">
+	 			where (subsc_no like '%' || #{keyword} || '%'
+	 			 or mem_name like '%' || #{keyword} || '%'
+	 			 or mem_id like '%' || #{keyword} || '%')
+	 		</when>
+	 		<when test="condition == 'subscNo'">
+	 			where subsc_no like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memName'">
+	 			where mem_name like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			where mem_id like '%' || #{keyword} || '%'
+	 		</when>
+	 	</choose>
+	</select>
+	
+	<!-- [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진) -->
+	<select id="selectAdminOrderSearchList" resultMap="SubscResult">
+		select
+		       subsc_no,
+		       mem_name,
+		       mem_id,
+		       bk_title,
+		       shipping_date,
+		       shipping_company,
+		       shipping_number,
+		       shipping_status,
+		       deliveryrequest,
+		       admin_memo
+		  from subsc_bookorder
+		  join subscription using (subsc_no)
+		  join members using (mem_no)
+		  join book using (bk_no)
+		 <choose>
+	 		<when test="condition == 'searchAll'">
+	 			where (subsc_no like '%' || #{keyword} || '%'
+	 			 or mem_name like '%' || #{keyword} || '%'
+	 			 or mem_id like '%' || #{keyword} || '%')
+	 		</when>
+	 		<when test="condition == 'subscNo'">
+	 			where subsc_no like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memName'">
+	 			where mem_name like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			where mem_id like '%' || #{keyword} || '%'
+	 		</when>
+	 	</choose>
+	 	 order
+	 		by
+	 	<choose>
+	 		<when test="array == 0">
+	 			 shipping_date desc
+	 		</when>
+	 		<when test="array == 1">
+	 			 shipping_date asc
+	 		</when>
+	 	</choose>
+	</select>
+	
 </mapper>

@@ -511,10 +511,38 @@ public class SubscriptionController {
 			
 			jsonList.add(jObj);
 			
-			
 		}
 		
 		return jsonList;
+		
+	}
+	
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 기능 (한진)
+	 */
+	@RequestMapping("adminSubscOrderSearchList.su")
+	public ModelAndView selectSubscOrderSearchList(ModelAndView mv, String keyword, String condition,
+													@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+													@RequestParam(value="array", defaultValue="0") String array) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		map.put("array", array);
+		
+		int conListCount = sService.selectSubscOrderSearchCount(map);
+		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+		
+		ArrayList<Subscription> sList = sService.selectAdminSubscOrderSearchList(pi, map);
+		
+		mv.addObject("sList", sList)
+		  .addObject("conListCount", conListCount)
+		  .addObject("pi", pi)
+		  .addObject("ar", array)
+		  .addObject("condition", condition)
+		  .addObject("keyword", keyword)
+		  .setViewName("subscription/adminSubscOrderList");
+		
+		return mv;
 		
 	}
 }
