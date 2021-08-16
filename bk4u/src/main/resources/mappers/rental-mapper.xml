@@ -231,29 +231,28 @@
 		  </choose>
 		  <choose>
 			 <when test="condition == 'searchAll'">
-				and rental_no like '%' || #{keyword} || '%'
+				and (rental_no like '%' || #{keyword} || '%'
 				 or mem_name like '%' || #{keyword} || '%'
 				 or mem_id like '%' || #{keyword} || '%'
 				 or bk_title like '%' || #{keyword} || '%'
-				 or store_name 
+				 or store_name like '%' || #{keyword} || '%')
 			 </when>
 			 <when test="condition == 'rentalNo'">
-				and rental_no
+				and rental_no like '%' || #{keyword} || '%'
 			 </when>		
 			 <when test="condition == 'memName'">
-				and mem_name
+				and mem_name like '%' || #{keyword} || '%'
 			 </when>
 			 <when test="condition == 'memId'">
-				and mem_id
+				and mem_id like '%' || #{keyword} || '%'
 			 </when>
 			 <when test="condition == 'bookName'">
-				and bk_title
+				and bk_title like '%' || #{keyword} || '%'
 			 </when>
 			 <when test="condition == 'storeName'">
-				and store_name
+				and store_name like '%' || #{keyword} || '%'
 			 </when>
 		  </choose>
-		  like '%' || #{keyword} || '%'
 	</select>
 
 	<!-- [관리자] 검색 조건에 일치하는 목록 조회 (한진) -->
@@ -340,4 +339,40 @@
 			    </choose>
 	</select>
 	
+	<!-- [관리자] 대여 상태 변경 (한진) -->
+	<update id="updateRentalStatus">
+		update
+		       rental
+		<choose>
+			<when test="statusValue == 'rental'">
+			   set rental_status = '대여중'
+			</when>
+			<when test="statusValue == 'cancel'">
+			   set rental_status = '예약취소'
+			</when>
+			<when test="statusValue == 'return'">
+			   set rental_status = '반납완료'
+			</when>
+			<when test="statusValue == 'overDue'">
+			   set rental_status = '연체'
+			</when>
+		</choose>
+		 where rental_no = #{rNo}
+	</update>
+	
+	<!-- [관리자] '대여중' 수령일 변경 (한진) -->
+	<update id="updateRentalReceiveDate">
+		update
+		       rental
+		   set receive_date = sysdate
+		 where rental_no = #{rNo} 
+	</update>
+	
+	<!-- [관리자] '반납완료' 반납일 변경 (한진) -->
+	<update id="updateRentalReturnDate">
+		update
+		       rental
+		   set return_date = sysdate
+		 where rental_no = #{rNo}
+	</update>
 </mapper>

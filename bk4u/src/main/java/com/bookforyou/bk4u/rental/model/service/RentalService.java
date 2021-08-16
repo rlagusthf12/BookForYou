@@ -73,5 +73,20 @@ public interface RentalService {
 	 */
 	ArrayList<Rental> selectAdminRentalSearchList(PageInfo pi, HashMap<String, String> map);
 
+	/**
+	 * [관리자] 대여 상태 변경 (한진)
+	 */
+	int updateRentalStatus(HashMap<String, String> map);
+
+	/**
+	 * [관리자] '대여중' 수령일 변경 (한진)
+	 */
+	int updateRentalReceiveDate(HashMap<String, String> map);
+
+	/**
+	 * [관리자] '반납완료' 반납일 변경 (한진)
+	 */
+	int updateRentalReturnDate(HashMap<String, String> map);
+
 
 }

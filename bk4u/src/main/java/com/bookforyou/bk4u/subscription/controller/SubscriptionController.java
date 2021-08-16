@@ -413,6 +413,7 @@ public class SubscriptionController {
 			      return "redirect:/adminSubscList.su";
 		case "5": ra.addAttribute("date", date);
 				  return "redirect:/adminSubscDeliveryList.su";
+		case "6": return "redirect:/adminSubscOrderList.su";
 		}
 		
 		return "error";
@@ -441,6 +442,7 @@ public class SubscriptionController {
 			      return "redirect:/adminSubscList.su";
 		case "5": ra.addAttribute("date", date);
 				  return "redirect:/adminSubscDeliveryList.su";
+		case "6": return "redirect:/adminSubscOrderList.su";
 		}
 		
 		return "error";

@@ -111,4 +111,25 @@ public class RentalDao {
 		return (ArrayList)sqlSession.selectList("rentalMapper.selectAdminRentalSearchList", map, rowBoudns);
 	}
 
+	/**
+	 * [관리자] 대여 상태 변경 (한진)
+	 */
+	public int updateRentalStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("rentalMapper.updateRentalStatus", map);
+	}
+
+	/**
+	 * [관리자] '대여중' 수령일 변경 (한진)
+	 */
+	public int updateRentalReceiveDate(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("rentalMapper.updateRentalReceiveDate", map);
+	}
+
+	/**
+	 * [관리자] '반납완료' 반납일 변경 (한진)
+	 */
+	public int updateRentalReturnDate(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("rentalMapper.updateRentalReturnDate", map);
+	}
+
 }

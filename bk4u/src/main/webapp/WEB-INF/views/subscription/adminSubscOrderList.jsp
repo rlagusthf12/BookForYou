@@ -215,7 +215,7 @@
 	            if(${ empty keyword }){            	
 		            location.href=`adminSubscOrderList.su?array=` + ar;		 
 	            }else {
-	            	location.href=`adminSubscOrderListSearch.or?condition=${ condition }&keyword=${ keyword }&array=` + ar;
+	            	location.href=`adminSubscOrderSearchList.su?condition=${ condition }&keyword=${ keyword }&array=` + ar;
 	            }
 	        
 		    })
@@ -229,9 +229,9 @@
 
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(10).text();
-            	var $orderNo = td.eq(1).text();
-            	$(".admin-memo-content .oNo").val($orderNo);
+            	var $memo = td.eq(8).text();
+            	var $subscNo = td.eq(1).text();
+            	$(".admin-memo-content .sNo").val($subscNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
             	
             	if($(this).parent().is(".no-exist")){
@@ -248,8 +248,8 @@
 			/* 관리자 메모 삭제 */
 			$(".memo-delete-btn").click(function(){
 				
-				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo + "&orStatus=0";
+				var $subscNo = $(".sNo").val();
+				location.href="deleteAdminMemo.su?subscNo=" + $subscNo + "&page=6";
 				
 			})			
 
@@ -258,7 +258,7 @@
             	
             	var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(9).text();
+            	var $memo = td.eq(7).text();
             	$(".user-memo-content .memo-bottom p").text($memo);
             	
                 $(".user-memo-content").toggleClass("hide");
@@ -406,11 +406,11 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or" method="POST">
-																<input type="hidden" name="orderNo" class="oNo"/>
-																<input type="hidden" name="orStatus" value="0"/>
+															<form action="updateAdminMemo.su" method="POST">
+																<input type="hidden" name="subscNo" class="sNo"/>
+																<input type="hidden" name="page" value="6"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemo"></p>
+																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
@@ -431,10 +431,10 @@
 																<p>관리자 메모</p>
 															</div>
 															<form action="updateAdminMemo.or" method="POST">
-																<input type="hidden" name="orderNo" class="oNo"/>
-																<input type="hidden" name="orStatus" value="0"/>
+																<input type="hidden" name="subscNo" class="sNo"/>
+																<input type="hidden" name="page" value="6"/>
 																<div class="memo-bottom">
-																	<p><input type="text" name="adminMemo"></p>
+																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
 																<div class="memo-btn-area">
 																	<!-- 관리자 메모가 존재하지 않을 때는 삭제 버튼이 없음!! 저장버튼만 있음  -->
