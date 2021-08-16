@@ -143,6 +143,9 @@
         #navi>li>ul>li>a{color:#fff; font-weight:normal;}
         #navi>li>a:hover+ul{display:block; }
         #navi>li>ul:hover{display:block;}
+        
+        /**/
+        #header_1_right button{background: none; border: none; font-weight: bold;}
 </style>
 </head>
 <body>
@@ -188,7 +191,7 @@
                 		<c:choose>
                 			<c:when test="${loginUser.memStatus eq 'A' }">
                 				<a href="amain.me" style="font-weight: bold;">관리자 전환</a> |
-                				<a href="logout.me" style="font-weight: bold;">로그아웃 </a>
+                				<a href="logout.me">로그아웃 </a>
 		                    </c:when>
 		     
 		                    <c:otherwise>
@@ -197,8 +200,11 @@
 		                        
 		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        
+		                        <form  action="cart.bk" method="post" style="margin-top: -35px; margin-left: 40px;">
 		                        <a href="my-order-list.mp" style="font-weight: bold;">마이페이지</a>
-		                        <a href="cart.bk?memNo=${ loginUser.memNo }" style="font-weight: bold;">장바구니</a>
+		                        <button type="submit" style="font-weight: bold;">장바구니</button>
+		                        <input type="hidden" name="memNo" value="${ loginUser.memNo }">
+		                        </form>
 		                        
 		                   	</c:otherwise>
 		                   	
