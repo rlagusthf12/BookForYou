@@ -47,7 +47,7 @@
             background-color: cornsilk;
         }
 
-        .search_book .book_img img{
+        .book_img img{
             width: 100%;
             height: 100%;
         }
@@ -272,7 +272,7 @@
     <div class="wrap">
         <div id="content">
             <div id="detail_top">
-                <div class="book_img"><img src=""></div>
+                <div class="book_img"><img src="${ bk.introChangeName }"></div>
                 <div class="book_info">
                     <div>
                         <div>${ bk.bkTitle }</div>
@@ -501,7 +501,7 @@
                         <div class="modal-body">
                             <div>성공적으로 장바구니에 담겼습니다</div>
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="openWindow();">장바구니 보러가기</button>
+                                <button type="button" class="btn btn-primary" onclick="goToCart();">장바구니 보러가기</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
                             </div>
                         </div>
@@ -515,13 +515,25 @@
                         <div class="modal-body">
                             <div>성공적으로 리스트에 담겼습니다</div>
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="openWindow();">리스트 보러가기</button>
+                                <button type="button" class="btn btn-primary" onclick="goToList();">리스트 보러가기</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <script>
+            	function goToCart(){
+            		location.href = "cart.bk?memNo=${loginUser.memNo}";
+            	}
+            </script>
+            
+            <script>
+            	function goToList(){
+            		location.href = "my-list.mp";
+            	}
+            </script>
 
         </div>
     </div>

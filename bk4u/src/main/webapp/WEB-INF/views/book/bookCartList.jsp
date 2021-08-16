@@ -32,7 +32,6 @@
             width: 80%;
             height: 100%;
             margin: auto;
-            position: relative;
         }
         
         #content #cart_title{
@@ -235,6 +234,7 @@
         }
 
         #cart_bottom>div{
+            position: relative;
             width: fit-content;
             margin-top: 20px;
             float: left;
@@ -275,8 +275,8 @@
             border-radius: 4px;
             background-color: white;
             position: absolute;
-            top: 820px;
-            left: 50px;
+            top: 500px;
+            left: 80px;
             display: none;
             z-index: 3;
         }
@@ -385,13 +385,19 @@
             
             <script>
 	            $("#cart_top .btn_order").click(function(){
-	            	var array = new Array();
-		            $('input:checkbox[name=bkNo]:checked').each(function() {
-		                array.push($(this).val());
-		            });
-		            			
-		            $("#bkNoArr").val(array);
-		            $("#orderForm").submit();
+						            	
+					if($('input:checkbox[name=bkNo]:checked').length == 0){	
+						alert("주문할 도서를 선택해주세요.");
+					}else{
+						var array = new Array();
+			            $('input:checkbox[name=bkNo]:checked').each(function() {
+			                array.push($(this).val());
+			            });
+			            			
+			            $("#bkNoArr").val(array);
+			            $("#orderForm").submit();
+					}
+	            	
 	            })
             </script>
             

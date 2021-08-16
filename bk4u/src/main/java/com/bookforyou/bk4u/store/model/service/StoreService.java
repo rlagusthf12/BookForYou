@@ -11,7 +11,7 @@ import com.bookforyou.bk4u.store.model.vo.StoreBook;
 public interface StoreService {
 
 	/*
-	 * [공통] 오프라인 매장 메인 조회 (연지)
+	 * [공통] 오프라인 매장 상세 조회 (연지)
 	 */
 	Store selectStoreDetail(int storeNo);
 
@@ -36,7 +36,7 @@ public interface StoreService {
 	ArrayList<Store> selectOffBookStoreList(int bkNo);
 
 	/*
-	 * [공통] 오프라인 도서 검색 개수ㄴ 조회 (연지)
+	 * [공통] 오프라인 도서 검색 개수 조회 (연지)
 	 */
 	int selectSearchOffBookCount(HashMap<String, String> map);
 

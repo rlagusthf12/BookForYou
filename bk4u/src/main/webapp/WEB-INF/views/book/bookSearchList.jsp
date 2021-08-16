@@ -285,7 +285,7 @@
 		            		url:"cartUpdate.bk",
 		            		data:{
 		            			memNo:${ loginUser.memNo },
-		            			bkNo:$(this).siblings("input[id=book_no]").val();
+		            			bkNo:$(this).siblings("input[id=book_no]").val()
 		            		},
 		            		type:"post",
 		            		success:function(result){
@@ -315,7 +315,7 @@
 		            		url:"listInsert.bk",
 		            		data:{
 		            			memNo:${ loginUser.memNo },
-		            			bkNo:$(this).siblings("input[id=book_no]").val();
+		            			bkNo:$(this).siblings("input[id=book_no]").val()
 		            		},
 		            		type:"post",
 		            		success:function(result){
@@ -403,7 +403,7 @@
                         <div class="modal-body">
                             <div>성공적으로 리스트에 담겼습니다</div>
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="openWindow();">리스트 보러가기</button>
+                                <button type="button" class="btn btn-primary" onclick="goToList();">리스트 보러가기</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
                             </div>
                         </div>
@@ -414,6 +414,12 @@
             <script>
             	function goToCart(){
             		location.href = "cart.bk?memNo=${loginUser.memNo}";
+            	}
+            </script>
+            
+            <script>
+            	function goToList(){
+            		location.href = "my-list.mp";
             	}
             </script>
 
