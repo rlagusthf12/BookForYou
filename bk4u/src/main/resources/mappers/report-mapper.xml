@@ -163,7 +163,7 @@
 	
 	<insert id="writeReReport">
 		insert into
-		report(RELI_NO,
+		reportlist(RELI_NO,
 		       RELI_CONTENT,		      
 		       MEM_NICKNAME,
 		       REPORT_LINK,

@@ -10,8 +10,8 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 public class Member {
 	public int memNo;

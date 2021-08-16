@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.report.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.service.MemberService;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.report.model.service.ReportService;
 import com.bookforyou.bk4u.report.model.vo.Report;
 import com.bookforyou.bk4u.report.model.vo.ReportList;
@@ -19,6 +22,9 @@ public class ReportController {
 
 	@Autowired
 	private ReportService rService;
+	
+	@Autowired
+	private MemberService mService;
 	
 	@RequestMapping("list.re")
 	public ModelAndView selectMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, int memNo) {
@@ -139,8 +145,7 @@ public class ReportController {
 	@RequestMapping("update.reli")
 	public ModelAndView updateReReport(ModelAndView mv,ReportList reli) {
 		int result = rService.updateReReport(reli);
-		ReportList re = rService.selectReReport(reli.getReliNo());
-		System.out.println(re);
+		ReportList re = rService.selectReReport(reli.getReliNo());		
 		mv.addObject("reli",re)		
 		.setViewName("report/reportReasonDatailView");
 		
@@ -156,9 +161,9 @@ public class ReportController {
 	}
 	
 	@RequestMapping("writeForm.reli")
-	public ModelAndView reasonWriteForm(ModelAndView mv,int reNo) {
+	public ModelAndView reasonWriteForm(ModelAndView mv,int reportNo) {
 		
-		Report re = rService.selectReport(reNo);
+		Report re = rService.selectReport(reportNo);
 		
 		System.out.println(re);
 		type(re);
@@ -181,7 +186,9 @@ public class ReportController {
 	@RequestMapping("write.reli")
 	public String reasonWriteForm(ModelAndView mv,ReportList reli) {
 		
-		int result = rService.writeReReport(reli);		
+		int result1 = mService.updateReportStack(reli);		
+		int result = rService.writeReReport(reli);
+				
 		
 		return "redirect:list.reli";
 	}

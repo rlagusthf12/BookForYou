@@ -71,10 +71,10 @@ public class ReportDao {
 	}
 	
 	public int writeReport(SqlSessionTemplate sqlSession, Report report) {
-		return sqlSession.insert("reportMapper.insertReport", report);
+		return sqlSession.insert("reportMapper.writeReport", report);
 	}
 	
 	public int writeReReport(SqlSessionTemplate sqlSession, ReportList reli) {
-		return sqlSession.insert("reportMapper.insertReReport", reli);
+		return sqlSession.insert("reportMapper.writeReReport", reli);
 	}
 }

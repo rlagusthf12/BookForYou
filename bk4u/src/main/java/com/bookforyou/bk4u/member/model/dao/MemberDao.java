@@ -11,6 +11,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
+import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 @Repository
 public class MemberDao {
@@ -18,6 +19,10 @@ public class MemberDao {
 	
 	public Member loginMember(SqlSessionTemplate sqlSession, Member member) {
 		return sqlSession.selectOne("memberMapper.loginMember", member);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession, Member member) {
+		return sqlSession.selectOne("memberMapper.selectMember", member);
 	}
 
 	public int idCheck(SqlSessionTemplate sqlSession, String memId) {
@@ -109,7 +114,17 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectMemPhonebookList", memNo);
 	}
 
-
+	/*
+	 * [관리자] 신고 스텍 증가 (김현솔)
+	 */
+	
+	public int updateReportStack(SqlSessionTemplate sqlSession, ReportList reli) {
+		return sqlSession.update("memberMapper.updateReportStack", reli);
+	}
+	
+	public int updateStatus(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.update("memberMapper.updateStatus", memNo);
+	}
 
 	
 	

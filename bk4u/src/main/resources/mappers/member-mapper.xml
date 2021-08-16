@@ -98,6 +98,7 @@
     		and email_status = 'Y'
     		and not mem_status = 'N'
   	</select>
+  	  	
   	
   	<!-- [사용자] 아이디 중복 확인 메서드(안세아) -->
   	<select id="idCheck" resultType="_int">
@@ -547,5 +548,19 @@
 		  join members m using (mem_no)
 		 where mem_no = #{memNo}
  	</select>
+ 	
+ 	<!-- [관리자] 신고 스텍 증가 (김현솔) -->
+ 	<update id="updateReportStack">
+ 		update members
+ 		set report_count = report_count+1
+ 		where mem_nickname = #{memNickName}
+ 	</update>
+ 	
+ 	<!-- [관리자] 사용자 상태 변경 (김현솔) -->
+ 	<update id="updateStatus">
+ 		update members
+ 		set mem_status = 'N'
+ 		where mem_no = #{memNo} and report_count >= 3
+ 	</update>
 
 </mapper>

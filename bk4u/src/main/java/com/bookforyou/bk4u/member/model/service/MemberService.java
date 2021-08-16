@@ -8,10 +8,11 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
+import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 public interface MemberService {
 	
-	Member loginMember(Member member);
+	Member loginMember(Member member);	
 
 	int idCheck(String memId);
 
@@ -58,7 +59,10 @@ public interface MemberService {
 	 */
 	ArrayList<MemberPhonebook> selectMemPhonebookList(int memNo);
 
-
-	
+	/*
+	 * [관리자] 신고 스텍증가 (김현솔)
+	 */
+	int updateReportStack(ReportList reli);
+	int updateStatus(int memNo);
 }
 
