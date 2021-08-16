@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.subscription.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
@@ -147,9 +149,9 @@ public class SubscriptionController {
 	 * [관리자] 정기구독 상세 조회 (한진)
 	 */
 	@RequestMapping("adminSubscDetail.su")
-	public ModelAndView selectAdminSubscDetail(ModelAndView mv, int subscNo, int distinctionNo) {
+	public ModelAndView selectAdminSubscDetail(ModelAndView mv, String subscNo,String distinctionNo) {
 		
-		HashMap<String, Integer> map = new HashMap<>();
+		HashMap<String, String> map = new HashMap<>();
 		map.put("subscNo", subscNo);
 		map.put("distinctionNo", distinctionNo);
 		
@@ -165,7 +167,7 @@ public class SubscriptionController {
 		  .addObject("p", p)
 		  .addObject("cp", cp);
 		
-		if(distinctionNo == 1) {
+		if(distinctionNo.equals("1")) {
 			mv.setViewName("subscription/adminSubScriptionDetail");
 		}else {
 			mv.setViewName("subscription/adminDeliveryDetail");
@@ -215,6 +217,7 @@ public class SubscriptionController {
 		}
 		mv.addObject("s", s)
 		  .addObject("pi", pi)
+		  .addObject("date", date)
 		  .setViewName("subscription/adminDelivery");
 		
 		return mv;
@@ -258,7 +261,7 @@ public class SubscriptionController {
 	 * [관리자] 정기배송 도서 선택 (한진)
 	 */
 	@RequestMapping("selectSubscBook.su")
-	public ModelAndView selectAdminSubscBook(int sNo, ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public ModelAndView selectAdminSubscBook(String sNo, ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
 		int listCount = sService.selectAdminSubscBookCount(sNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
@@ -268,13 +271,13 @@ public class SubscriptionController {
 		ArrayList<MemberInterest> iList = sService.selectAdminSubscInterest(sNo);
 		ArrayList<MemberCategory> cList = sService.selectAdminSubscCategory(sNo);
 		
-		HashMap<String, Integer> map = new HashMap<>();
-		int subscNo = sNo;
-		map.put("subscNo", subscNo);
+		HashMap<String, String> map = new HashMap<>();
+		map.put("subscNo", sNo);
 		Subscription s = sService.selectAdminSubscDetail(map);
 		
 		mv.addObject("bList", bList)
 		  .addObject("m", m)
+		  .addObject("listCount", listCount)
 		  .addObject("iList", iList)
 		  .addObject("cList", cList)
 		  .addObject("s", s)
@@ -384,4 +387,162 @@ public class SubscriptionController {
 		
 	}
 	
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	@RequestMapping("updateAdminMemo.su")
+	public String updateAdminMemo(String subscNo, String adminMemoContent, String page, RedirectAttributes ra,
+					              @RequestParam(value="date", defaultValue="0") String date) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("subscNo", subscNo);
+		map.put("adminMemo", adminMemoContent);
+		
+		int result = sService.updateAdminMemo(map);
+		
+		switch(page)
+		{
+		case "0": ra.addAttribute("subscStatus", "0"); 
+			      return "redirect:/adminSubscList.su";
+		case "1": ra.addAttribute("subscStatus", "1"); 
+				  return "redirect:/adminSubscList.su";
+		case "2": ra.addAttribute("subscStatus", "2"); 
+				  return "redirect:/adminSubscList.su";
+		case "3": ra.addAttribute("subscStatus", "3"); 
+			      return "redirect:/adminSubscList.su";
+		case "4": ra.addAttribute("subscStatus", "4"); 
+			      return "redirect:/adminSubscList.su";
+		case "5": ra.addAttribute("date", date);
+				  return "redirect:/adminSubscDeliveryList.su";
+		}
+		
+		return "error";
+	}
+	
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	@RequestMapping("deleteAdminMemo.su")
+	public String deleteAdminMemo(String subscNo, String page, RedirectAttributes ra,
+								  @RequestParam(value="date", defaultValue="0") String date) {
+		
+		int result = sService.deleteAdminMemo(subscNo);
+		
+		switch(page)
+		{
+		case "0": ra.addAttribute("subscStatus", "0"); 
+			      return "redirect:/adminSubscList.su";
+		case "1": ra.addAttribute("subscStatus", "1"); 
+				  return "redirect:/adminSubscList.su";
+		case "2": ra.addAttribute("subscStatus", "2"); 
+				  return "redirect:/adminSubscList.su";
+		case "3": ra.addAttribute("subscStatus", "3"); 
+			      return "redirect:/adminSubscList.su";
+		case "4": ra.addAttribute("subscStatus", "4"); 
+			      return "redirect:/adminSubscList.su";
+		case "5": ra.addAttribute("date", date);
+				  return "redirect:/adminSubscDeliveryList.su";
+		}
+		
+		return "error";
+	}
+	
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 기능(한진)
+	 */
+	@RequestMapping("selectAdminBookSelectSearchList.su")
+	public ModelAndView selectAdminBookSelectSearchList(ModelAndView mv, String keyword, String condition, String sNo,
+														@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+														@RequestParam(value="array", defaultValue="0") String array) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("subscNo", sNo);
+		
+		int conListCount = sService.selectAdminBookSelectSearchListCount(map);
+		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+		
+		ArrayList<Book> bList = sService.selectAdminBookSelectSearchList(pi, map);
+		Member m = sService.selectAdminSubscMember(sNo);
+		ArrayList<MemberInterest> iList = sService.selectAdminSubscInterest(sNo);
+		ArrayList<MemberCategory> cList = sService.selectAdminSubscCategory(sNo);
+		Subscription s = sService.selectAdminSubscDetail(map);
+		
+		mv.addObject("bList", bList)
+		  .addObject("m", m)
+		  .addObject("conListCount", conListCount)
+		  .addObject("iList", iList)
+		  .addObject("cList", cList)
+		  .addObject("s", s)
+		  .addObject("pi", pi)
+		  .addObject("sNo", sNo)
+		  .setViewName("subscription/adminBookSelect");
+		
+		return mv;
+		
+	}
+	
+	/**
+	 * [관리자] 정기구독 도서 중복 체크 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("checkBookDuplicates")
+	public JsonArray checkBookDuplicates(@RequestParam(value="bkNo") List<String> bkNo, String sNo) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("sNo", sNo);
+		
+		int check = 0;
+		JsonArray jsonList = new JsonArray();
+		
+		for(String bn : bkNo) {
+			map.put("bkNo", bn);
+			check = sService.checkBookDuplicates(map);
+			
+			JsonObject jObj = new JsonObject();
+			
+			String result = "";
+			if(check > 0) {
+				jObj.addProperty("bkNo", bn);
+				jObj.addProperty("result", "Y");
+			}else {
+				jObj.addProperty("bkNo", bn);
+				jObj.addProperty("result", "N");
+			}
+			
+			jsonList.add(jObj);
+			
+		}
+		
+		return jsonList;
+		
+	}
+	
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 기능 (한진)
+	 */
+	@RequestMapping("adminSubscOrderSearchList.su")
+	public ModelAndView selectSubscOrderSearchList(ModelAndView mv, String keyword, String condition,
+													@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+													@RequestParam(value="array", defaultValue="0") String array) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("condition", condition);
+		map.put("array", array);
+		
+		int conListCount = sService.selectSubscOrderSearchCount(map);
+		PageInfo pi = Pagination.getPageInfo(conListCount, currentPage, 10, 5);
+		
+		ArrayList<Subscription> sList = sService.selectAdminSubscOrderSearchList(pi, map);
+		
+		mv.addObject("sList", sList)
+		  .addObject("conListCount", conListCount)
+		  .addObject("pi", pi)
+		  .addObject("ar", array)
+		  .addObject("condition", condition)
+		  .addObject("keyword", keyword)
+		  .setViewName("subscription/adminSubscOrderList");
+		
+		return mv;
+		
+	}
 }

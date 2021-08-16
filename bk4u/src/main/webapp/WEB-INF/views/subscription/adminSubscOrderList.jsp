@@ -304,13 +304,13 @@
         </div> 
 		<br><br>
         <div id="search-area">
-            <form action="adminOListSearch.or">
+            <form action="adminSubscOrderSearchList.su">
             <input type="hidden" name="array" value="${ ar }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
                             <option value="searchAll">전체</option>
-                            <option value="orderNo">주문번호</option>
+                            <option value="subscNo">구독번호</option>
                             <option value="memName">주문자명</option>
                             <option value="memId">주문자ID</option>
                         </select>
@@ -332,21 +332,6 @@
 	                <c:when test="${ not empty conListCount }">
 	                	<span>[총 ${ conListCount }개]</span>
 	                </c:when>
-	            	<c:when test="${ orStatus eq 1 }">
-			            <span>[총 ${ confirmCnt }개]</span>
-			        </c:when>
-			        <c:when test="${ orStatus eq 2 }">
-			            <span>[총 ${ productReadyCnt }개]</span>
-			        </c:when>
-			        <c:when test="${ orStatus eq 3 }">
-			            <span>[총 ${ deliveryReadyCnt }개]</span>
-			        </c:when>
-			        <c:when test="${ orStatus eq 4 }">
-			            <span>[총 ${ deliveryCnt }개]</span>
-			        </c:when>
-			        <c:when test="${ orStatus eq 5 }">
-			            <span>[총 ${ finishCnt }개]</span>
-			        </c:when>
 	                <c:otherwise>
 			            <span>[총 ${ listCount }개]</span>			                
 	                </c:otherwise>
@@ -483,21 +468,20 @@
 	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
 	                	</c:when>
 	                	<c:otherwise>
-			                <li class="page-item"><a class="page-link" href="adminSubscOrderList.su?array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+			                <li class="page-item"><a class="page-link" href="adminSubscOrderSearchList.su?array=${ ar }&condition=${ condition }&keyword=${ keyword }&currentPage=${ pi.currentPage-1 }">이전</a></li>
 	    				</c:otherwise>
 	    			</c:choose>            	
 	                
 	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                <li class="page-item"><a class="page-link" href="adminSubscOrderList.su?array=${ ar }&currentPage=${ p }">${ p }</a></li>
+		                <li class="page-item"><a class="page-link" href="adminSubscOrderSearchList.su?array=${ ar }&condition=${ condition }&keyword=${ keyword }&currentPage=${ p }">${ p }</a></li>
 	                </c:forEach>
-	                
 	                
 	                <c:choose>
 	                	<c:when test="${ pi.currentPage ge pi.maxPage }">
 			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
 	                	</c:when>
 	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="adminSubscOrderList.su?array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                		<li class="page-item"><a class="page-link" href="adminSubscOrderSearchList.su?array=${ ar }&condition=${ condition }&keyword=${ keyword }&currentPage=${ pi.currentPage+1 }">다음</a></li>
 	                	</c:otherwise>
 	                </c:choose>
 	            </ul>

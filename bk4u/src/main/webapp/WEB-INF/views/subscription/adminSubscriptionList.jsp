@@ -148,7 +148,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
-
+		.detailS:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -266,8 +271,8 @@
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
             	var $memo = td.eq(11).text();
-            	var $orderNo = td.eq(1).text();
-            	$(".admin-memo-content .oNo").val($orderNo);
+            	var $subscNo = td.eq(1).text();
+            	$(".admin-memo-content .sNo").val($subscNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
             	
             	if($(this).parent().is(".no-exist")){
@@ -284,8 +289,9 @@
 			/* 관리자 메모 삭제 */
 			$(".memo-delete-btn").click(function(){
 				
-				var $orderNo = $(".oNo").val();
-				location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+				var $subscNo = $(".sNo").val();
+				console.log($subscNo);
+				location.href="deleteAdminMemo.su?subscNo=" + $subscNo + "&page=" + ${subscStatus};
 				
 			})			
 
@@ -303,7 +309,7 @@
             })
 
             /* 상세 보기 */
-            $(".sNo").click(function(){
+            $(".detailS").click(function(){
             	var $sNo = $(this).text();
             	location.href=`adminSubscDetail.su?subscNo=` + $sNo + `&distinctionNo=1`;
             })
@@ -444,7 +450,7 @@
 		                    	<c:forEach var="s" items="${ subsc }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td class="sNo">${ s.subscNo }</td>
+			                            <td class="detailS">${ s.subscNo }</td>
 			                            <td>${ s.subscSdate } <br> ${ s.subscEndDate }</td>
 			                            <td>${ s.memName } <br> (${ s.memId })</td>
 			                            <td>${ s.subscName }</td>
@@ -489,8 +495,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
+															<form action="updateAdminMemo.su" method="POST">
 																<input type="hidden" name="subscNo" class="sNo"/>
+																<input type="hidden" name="page" value="${ s.subscStatus }"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -512,8 +519,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
+															<form action="updateAdminMemo.su" method="POST">
 																<input type="hidden" name="subscNo" class="sNo"/>
+																<input type="hidden" name="page" value="${ s.subscStatus }"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

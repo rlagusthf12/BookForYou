@@ -28,23 +28,6 @@
 		    
 		    dateClick:function(info){
 		  		var $date = info.dateStr.substring(8);
-		    	console.log($date);
-		    	
-		    	/*
-			    $.ajax({
-					url: 'getSubscDeliveryList.su',
-					data:{date: $date},
-					type: 'GET',
-					success: function(result) {
-						
-						console.log(result);
-						
-					},
-					error:function(){
-						console.log("ajax통신실패");
-					}
-				});
-		    	*/
 		    	
 		    	location.href="adminSubscDeliveryList.su?date=" + $date;
 				
@@ -62,45 +45,6 @@
 		    				
 		    				var period = list[i].subscPeriod.split('개');
 		    				for(j=0; j<period[0]; j++) {
-		    					
-		    					//console.log(Number(list[i].subscSdate.substring(4, 6)) + j);
-		    					/*
-		    					if(Number(list[i].subscSdate.substring(4, 6))+j > 12) {
-		    						if(Number(list[i].subscDelDate) < 10) {
-		    							d=(Number(list[i].subscSdate.substring(0, 4))+1) + '-' + list[i].subscSdate.substring(4, 6) + '-0' + list[i].subscDelDate;
-		    						}else {
-			    						d=(Number(list[i].subscSdate.substring(0, 4))+1) + '-' + list[i].subscSdate.substring(4, 6) + '-' + list[i].subscDelDate;		    							
-		    						}
-		    					}else {
-		    						if(Number(list[i].subscSdate.substring(4, 6))+j < 10) {
-			    						if(Number(list[i].subscDelDate) < 10) {
-			    							d=list[i].subscSdate.substring(0, 4) + '-0' + (Number(list[i].subscSdate.substring(4, 6))+j) + '-0' + list[i].subscDelDate;
-			    						}else {
-				    						d=list[i].subscSdate.substring(0, 4) + '-0' + (Number(list[i].subscSdate.substring(4, 6))+j) + '-' + list[i].subscDelDate;		    							
-			    						}		    							
-		    						}
-		    					}
-		    					*/
-		    					/*
-		    					var strY = list[i].subscSdate.substring(0, 4);
-		    					var strM = list[i].subscSdate.substring(4, 6);
-		    					var strD;
-		    					if(list[i].subscDelDate < 10) {
-		    						strD = "0" + list[i].subscDelDate;
-		    					}else {
-			    					strD = list[i].subscDelDate;
-		    					}
-		    					var strDate = strY + '-' + strM + '-' + strD;
-		    					
-		    					var realDate = new Date(strDate);
-		    					
-		    					const formatDate = (realDate)=>{
-		    						let formatted_date = realDate.getDate() + "-" + (realDate.getMonth() + 1) + "-" + realDate.getFullYear();
-		    						return formatted_date;
-		    					}
-		    					
-		    					var $date = formatDate(realDate);
-		    					*/
 		    					
 		    					var yyyy = list[i].subscSdate.substring(0, 4);
 		    					var mm = list[i].subscSdate.substring(4, 6);
@@ -136,40 +80,6 @@
 		    						}
 		    					}
 		    					
-		    					
-		    					
-		    					
-		    					
-		    					
-		    					/*
-		    					var yyyy = realDate.getFullYear();
-		    					var mm = (realDate.getMonth() + 1);
-		    					var dd = realDate.getDate();
-		    					
-		    					
-		    					
-		    					var d = yyyy + "-" + mm + "-" + dd;
-		    					
-		    					if(mm + j > 12) {
-		    						yyyy = yyyy + 1;
-		    						mm = Number(mm+j-12);
-		    						if(mm + j < 10) {
-			    						mm = "0" + mm;
-			    					}
-		    						
-		    					}
-		    					
-		    					if(mm + j < 10) {
-		    						mm = "0" + mm;
-		    					}
-		    					if(dd < 10) {
-		    						dd = "0" + dd;
-		    					}
-		    					
-		    					console.log(mm);
-		    					
-		    					*/
-		    					console.log(d);
 			    				var event = {
 			    						title:list[i].memName,
 			    						start:d,
@@ -348,9 +258,9 @@
 
 			var tr = $(this).parent().parent().parent();
         	var td = tr.children();
-        	var $memo = td.eq(10).text();
-        	var $orderNo = td.eq(1).text();
-        	$(".admin-memo-content .oNo").val($orderNo);
+        	var $memo = td.eq(8).text();
+        	var $subscNo = td.eq(1).text();
+        	$(".admin-memo-content .sNo").val($subscNo);
         	$(".admin-memo-content .memo-bottom input").val($memo);
         	
         	if($(this).parent().is(".no-exist")){
@@ -367,8 +277,8 @@
 		/* 관리자 메모 삭제 */
 		$(".memo-delete-btn").click(function(){
 			
-			var $orderNo = $(".oNo").val();
-			location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+			var $subscNo = $(".sNo").val();
+			location.href="deleteAdminMemo.su?subscNo=" + $subscNo + "&date=" + ${ date } + "&page=5";
 			
 		})			
 
@@ -377,7 +287,7 @@
         	
         	var tr = $(this).parent().parent().parent();
         	var td = tr.children();
-        	var $memo = td.eq(9).text();
+        	var $memo = td.eq(7).text();
         	$(".user-memo-content .memo-bottom p").text($memo);
         	
             $(".user-memo-content").toggleClass("hide");
@@ -494,8 +404,10 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
-																<input type="hidden" name="orderNo" class="oNo"/>
+															<form action="updateAdminMemo.su" method="POST">
+																<input type="hidden" name="subscNo" class="sNo"/>
+																<input type="hidden" name="page" value="5"/>
+																<input type="hidden" name="date" value="${ date }"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -517,8 +429,10 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
-																<input type="hidden" name="orderNo" class="oNo"/>
+															<form action="updateAdminMemo.su" method="POST">
+																<input type="hidden" name="subscNo" class="sNo"/>
+																<input type="hidden" name="page" value="5"/>
+																<input type="hidden" name="date" value="${ date }"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -554,12 +468,12 @@
 	                		<li class="page-item disabled"><a class="page-link">이전</a></li>
 	                	</c:when>
 	                	<c:otherwise>
-			                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
+			                <li class="page-item"><a class="page-link" href="adminSubscDeliveryList.su?date=${ date }&array=${ ar }&currentPage=${ pi.currentPage-1 }">이전</a></li>
 	    				</c:otherwise>
 	    			</c:choose>            	
 	                
 	                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                <li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
+		                <li class="page-item"><a class="page-link" href="adminSubscDeliveryList.su?date=${ date }&array=${ ar }&currentPage=${ p }">${ p }</a></li>
 	                </c:forEach>
 	                
 	                
@@ -568,7 +482,7 @@
 			                <li class="page-item disabled"><a class="page-link">다음</a></li>            	
 	                	</c:when>
 	                	<c:otherwise>
-	                		<li class="page-item"><a class="page-link" href="adminOrderList.or?orStatus=${ orStatus }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
+	                		<li class="page-item"><a class="page-link" href="adminSubscDeliveryList.su?date=${ date }&array=${ ar }&currentPage=${ pi.currentPage+1 }">다음</a></li>
 	                	</c:otherwise>
 	                </c:choose>
 	            </ul>
