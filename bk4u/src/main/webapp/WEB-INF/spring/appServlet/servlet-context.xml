@@ -57,6 +57,9 @@
 	  			<mapping path="/insert-grade.mp"/>
 	  			<mapping path="/my-board.mp"/>
 	  			<mapping path="/my-reply.mp"/>
+	  			<mapping path="/listAd.qa"/>
+	  			<mapping path="/list.re"/>
+	  			
 	  			<beans:bean id="loginInterceptor" class="com.bookforyou.bk4u.common.interceptor.LoginInterceptor"/>
 	  		</interceptor>
 	  </interceptors>
