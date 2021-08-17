@@ -237,4 +237,12 @@ public class BookServiceImpl implements BookService {
 	public int deleteAdminBookInterest(String bn) {
 		return bookDao.deleteAdminBookInterest(sqlSession, bn);
 	}
+
+	/**
+	 * 메인 베스트 셀러 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Book> selectMainBestSeller() {
+		return bookDao.selectMainBestSeller(sqlSession);
+	}
 }

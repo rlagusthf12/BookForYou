@@ -30,6 +30,8 @@
 		<result column="bk_content" property="bkContent"/>
 		<result column="grade_star" property="bkGrade"/>
 		<result column="cart_qty" property="bkQty"/>
+		<result column="rank" property="rank"/>
+		<result column="quantity" property="quantity"/>
 	</resultMap>
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
@@ -892,6 +894,31 @@
 	 		</when>
 	 	</choose>
 		
+	</select>
+	
+	<!-- 메인 베스트 셀러 조회 (한진) -->
+	<select id="selectMainBestSeller" resultMap="bookResult">
+		select
+		       B2.rank,
+		       B2.quantity,
+		       B.bk_no,
+		       bk_title,
+		       bk_publish,
+		       writer_name,
+		       intro_changename
+		  from book B, (
+		                select *
+		                  from (
+		                        select rank() over (order by sum(quantity) desc, bk_no desc) rank,
+		                               O.bk_no,
+		                               sum(quantity)quantity
+		                          from order_detail O
+		                         group
+		                            by bk_no
+		                        )
+		                  <![CDATA[where rank < 6]]>
+		                )B2
+		 where B.bk_no in B2.bk_no
 	</select>
 	
 </mapper>

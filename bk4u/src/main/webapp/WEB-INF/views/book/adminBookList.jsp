@@ -43,12 +43,10 @@
             margin: 0 10px 0 10px;
             width:165px;
             height:87px;
-            border:1px solid grey;
-            border-radius:20px;
             text-align: center;
             padding:10px;
             font-weight: 600;
-           	box-shadow: 3px 3px 3px grey;
+           	background-color:#F7F6E7;
         }
         #status-bar p {font-size:17px; margin-bottom:10px;}
         #status-bar span {color:#EC573B; font-size:20px;}

@@ -548,4 +548,15 @@ public class BookController {
 		
 		return "redirect:/adminBookList.bk";
 	}
+	
+	/**
+	 * 메인 베스트 셀로 조회 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("getMainBestSeller.bk")
+	public ArrayList selectMainBestSeller() {
+		
+		ArrayList<Book> bList = bookService.selectMainBestSeller();
+		return bList;
+	}
 }

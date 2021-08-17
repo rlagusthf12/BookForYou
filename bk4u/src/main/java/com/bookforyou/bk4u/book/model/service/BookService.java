@@ -144,4 +144,9 @@ public interface BookService {
 	 * [관리자] 도서 관심사 행 삭제 (한진)
 	 */
 	int deleteAdminBookInterest(String bn);
+
+	/**
+	 * 메인 베스트 셀러 조회 (한진)
+	 */
+	ArrayList<Book> selectMainBestSeller();
 }

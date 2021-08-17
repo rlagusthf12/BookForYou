@@ -209,4 +209,11 @@ public class BookDao {
 	public int deleteAdminBookInterest(SqlSessionTemplate sqlSession, String bn) {
 		return sqlSession.delete("bookMapper.deleteAdminBookInterest", bn);
 	}
+
+	/**
+	 * 메인 베스트 셀러 조회 (한진)
+	 */
+	public ArrayList<Book> selectMainBestSeller(SqlSessionTemplate sqlSession) {
+		 return (ArrayList)sqlSession.selectList("bookMapper.selectMainBestSeller");
+	}
 }
