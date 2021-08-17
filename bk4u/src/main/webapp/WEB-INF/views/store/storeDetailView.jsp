@@ -15,12 +15,14 @@
             border: 1px solid white;
             box-sizing: border-box;
         }
+        
+		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        *{font-family: "Noto Sans KR", sans-serif;}
 
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 120px;
-            margin-bottom: 80px;
+            margin-bottom: 50px;
         }
 
         #content {

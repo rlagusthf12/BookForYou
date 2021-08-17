@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,6 +31,9 @@ import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 public class OrderController {
@@ -389,6 +393,47 @@ public class OrderController {
 		  .setViewName("order/orderPaymentView");
 		
 		return mv;
+	}
+
+	/*
+	 * [사용자] 주문 정보 입력 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="orderBook.od", produces="text/html; charset=utf-8")
+	public String insertOrderInfo(Order o) {
+
+		int result = oService.insertOrderInfo(o);
+		
+		return result> 0 ? "success" : "fail";
+	}
+
+	/*
+	 * [사용자] 주문 상세 정보 입력 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="orderDetail.od", produces="text/html; charset=utf-8")
+	public String insertOrderDetailInfo(@RequestParam String data) {
+		
+		JSONArray jsonArray = JSONArray.fromObject(data);
+	    List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+	    
+	    for (int i=0; i<jsonArray.size(); i++) {
+	    	JSONObject obj = (JSONObject)jsonArray.get(i);
+	    	
+	    	Map<String, Object> map = new HashMap<String, Object>();   
+	    	
+	        map.put("bkNo", obj.get("bkNo"));
+	        map.put("quantity", obj.get("quantity"));
+	        map.put("detailPrice", obj.get("detailPrice"));
+	            
+	        list.add(map);
+	    }
+
+		for( Map<String,Object> m : list) {
+			int result = oService.insertOrderDetailInfo(m);
+		}
+		
+		return "success";
 	}
 	
 	

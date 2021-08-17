@@ -27,6 +27,7 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.store.model.service.StoreService;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
 import com.bookforyou.bk4u.store.model.vo.Store;
@@ -197,8 +198,11 @@ public class BookController {
 	 * [공통] 도서 장바구니 조회 (연지)
 	 */
 	@RequestMapping("cart.bk")
-	public ModelAndView selectCartList(ModelAndView mv, int memNo) {
+	public ModelAndView selectCartList(ModelAndView mv, HttpSession session) {
 
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		
 		ArrayList<Book> bList = bookService.selectCartList(memNo);
 		
 		int cpCount = memberService.selectCouponCount(memNo);

@@ -21,14 +21,14 @@
 
         /**글쓰기내용전체area*/
         .content{width:900px; padding:30px; margin:auto;}
-        .content_area{margin-top:150px;}
+        .content_area{margin-top:50px;}
 
         /*카테고리select*/
         .select_item{font-size:12px; color:#fff; background:rgb(252, 190, 52); padding:2px 5px; border-radius:5px;}
         /*제목전체area*/
         .title-wrap{width:100%; margin:15px 0;}
         /*제목텍스트*/
-        .title_item{font-size:20px; margin-right:15px;}
+        .title_item{display:inline-block; font-size:20px; margin-right:15px; margin-bottom:20px;}
         .title_tool a, .title_tool span{font-size:12px; color:#bebebe;}
 
         /**작성자area*/
@@ -167,7 +167,7 @@
                 <!--작성자-->
                 <div class="writer_area">
                     <a href="" class="writer_thumb">
-                        <img src="" width="30" height="30" id="thumb_img">
+                        <img src="resources/adminCommon/images/person.png" width="30" height="30" id="thumb_img">
                     </a>
                     <div class="writer_nick_box" style="display:inline-block;">
                         <div class="writer_nick_info">

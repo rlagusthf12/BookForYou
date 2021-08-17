@@ -46,6 +46,7 @@
         .mylist_txt{margin-left:20px; text-decoration:none;}
         .mylist_title{font-size:20px;}
         .mylist_info{font-size:15px;}
+        .fa-book-reader{font-size:50px; color:#5c5c5c;}
 
         /*북포유인기독서록*/
         .top_list_head{font-size:20px; margin:40px 0;}
@@ -140,7 +141,7 @@
                     <a href="" class="mylist-item">
                         <div>
                             <span class="mylist_icon" style="vertical-align: middle;">
-                                <img src="" alt="" width="50px" height="50px">
+                                <i class="fas fa-book-reader"></i>
                             </span>
                         </div>
                         <div class="mylist_txt">

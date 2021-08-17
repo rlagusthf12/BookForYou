@@ -19,11 +19,13 @@
         span{
             border: solid 1px blue;
         }*/
+        
+		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        *{font-family: "Noto Sans KR", sans-serif;}
 
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 150px;
             margin-bottom: 80px;
         }
 

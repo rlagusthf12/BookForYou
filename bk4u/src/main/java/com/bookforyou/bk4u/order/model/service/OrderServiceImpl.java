@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.order.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -215,6 +216,22 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public Book selectOrderBook(HashMap<String, Integer> map) {
 		return oDao.selectOrderBook(sqlSession, map);
+	}
+
+	/*
+	 * [사용자] 주문 정보 입력 (연지)
+	 */
+	@Override
+	public int insertOrderInfo(Order o) {
+		return oDao.insertOrderInfo(sqlSession, o);
+	}
+
+	/*
+	 * [사용자] 주문 상세 정보 입력 (연지)
+	 */
+	@Override
+	public int insertOrderDetailInfo(Map<String, Object> m) {
+		return oDao.insertOrderDetailInfo(sqlSession, m);
 	}
 
 	

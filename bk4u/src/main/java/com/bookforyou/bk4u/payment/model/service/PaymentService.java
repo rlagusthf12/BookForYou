@@ -13,4 +13,9 @@ public interface PaymentService {
 	
 	ArrayList<Payment> selectPayList();
 
+	/*
+	 * [사용자] 결제 정보 입력 (연지)
+	 */
+	int insertOrderPaymentInfo(int price);
+
 }

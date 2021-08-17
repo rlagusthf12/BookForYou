@@ -17,9 +17,10 @@
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 150px;
-            margin-bottom: 80px;
         }
+        
+		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        *{font-family: "Noto Sans KR", sans-serif;}
 
         .wrap>div {
             width: 100%;
@@ -70,7 +71,11 @@
             height: 300px;
             margin-top: 20px;
             margin-left: 75px;
-            background-color: aliceblue;
+        }
+        
+        #main_content #book_img img{
+            width: 100%;
+            height: 100%;
         }
 
         #main_content #book_info{
@@ -241,7 +246,7 @@
                 </table>
 
                 <div id="book_img">
-                    <img src="">
+                    <img src="${ rt.introChangeName }">
                 </div>
 
                 <div id="book_info">

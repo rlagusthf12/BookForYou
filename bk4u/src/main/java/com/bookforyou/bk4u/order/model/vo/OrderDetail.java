@@ -1,5 +1,7 @@
 package com.bookforyou.bk4u.order.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +22,6 @@ public class OrderDetail {
 	private String bkPublish;
 	private String writerName;
 	private int gradeStar;
+	
+	private ArrayList<OrderDetail> odList;
 }

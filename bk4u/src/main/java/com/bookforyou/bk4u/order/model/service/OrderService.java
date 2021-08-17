@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.order.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -132,5 +133,15 @@ public interface OrderService {
 	 * [사용자] 주문 도서 조회 (연지)
 	 */
 	Book selectOrderBook(HashMap<String, Integer> map);
+
+	/*
+	 * [사용자] 주문 정보 입력 (연지)
+	 */
+	int insertOrderInfo(Order o);
+
+	/*
+	 * [사용자] 주문 상세 정보 입력 (연지)
+	 */
+	int insertOrderDetailInfo(Map<String, Object> m);
 	
 }

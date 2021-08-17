@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,17 +11,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <!--bootstrap end-->
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <style>
         div{
             border: solid 1px white;
             box-sizing: border-box;
         }
+        
+		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        *{font-family: "Noto Sans KR", sans-serif;}
 
         .wrap {
             width: 1200px;
             height: 1300px;
             margin: auto;
-            margin-top: 150px;
         }
 
         #content {
@@ -552,6 +559,8 @@
             border-radius: 4px;
             background-color: white;
         }
+        
+        .hidden-col{display: none;}
     </style>
 </head>
 <body>
@@ -593,6 +602,8 @@
                             <div>
                                 <div>${ b.bkTitle }</div>
                                 <div>${ b.writerName }</div>
+                                <input type="hidden" value="${ b.bkNo }">
+                            	<input type="hidden" value="${ b.bkQty }">
                             </div>
                             <div>${ b.bkPrice * b.bkQty }</div>
                         </div>
@@ -636,7 +647,10 @@
                             </tr>
                             <tr>
                                 <th>연락처</th>
-                                <td><input type="text" name="orderPhone" size="25" placeholder=" -를 포함하여 입력해주세요" required></td>
+                                <td>
+	                                <input type="text" name="orderPhone" size="25" placeholder=" -를 포함하여 입력해주세요" required>
+	                                <input type="hidden" name="addressRef" size="45" placeholder=" 상세주소" required>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -734,6 +748,7 @@
 	                            <td> ${ p.memName }</td>
 	                            <td> ${ p.basicAddress }</td>
 	                            <td> ${ p.detailAddress }</td>
+	                            <td class="hidden-col"> ${ p.addressRefer }</td>
 	                            <td> ${ p.phone }</td>
 	                            <td> ${ p.postNo }</td>
 	                        </tr>
@@ -755,17 +770,19 @@
                 $("#address_box>div:nth-child(2)>table button").click(function(){
                     $("#address_box").css('display', 'none');
                     $("#shipping_info table input[name=orderReceiver]").val($(this).parent().next().text());
-                    $("#shipping_info table input[name=orderPost]").val($(this).parent().next().next().next().next().next().text());
+                    $("#shipping_info table input[name=orderPost]").val($(this).parent().next().next().next().next().next().next().text());
                     $("#shipping_info table input[name=orderAddress]").val($(this).parent().next().next().text());
                     $("#shipping_info table input[name=addressDetail]").val($(this).parent().next().next().next().text());
-                    $("#shipping_info table input[name=orderPhone]").val($(this).parent().next().next().next().next().text());
+                    $("#shipping_info table input[name=addressRef]").val($(this).parent().next().next().next().next().text());
+                    $("#shipping_info table input[name=orderPhone]").val($(this).parent().next().next().next().next().next().text());
                 });
                 
                 $("#shipping_info #mem_info").click(function(){
                 	$("#shipping_info table input[name=orderReceiver]").val("${ loginUser.memName }");
                     $("#shipping_info table input[name=orderPost]").val("${ loginUser.memPost }");
-                    $("#shipping_info table input[name=orderAddress]").val("${ loginUser.memBasicAddress }" + "${ loginUser.memAddressRefer }");
+                    $("#shipping_info table input[name=orderAddress]").val("${ loginUser.memBasicAddress }");
                     $("#shipping_info table input[name=addressDetail]").val("${ loginUser.memDetailAddress }");
+                    $("#shipping_info table input[name=addressRef]").val("${ loginUser.memAddressRefer }");
                     $("#shipping_info table input[name=orderPhone]").val("${ loginUser.memPhone }");
                 });
                 
@@ -799,6 +816,7 @@
                     <div>
                         <div>총 결제 금액</div>
                         <div>${ allPrice }원</div>
+                        <input type="hidden" value="${ allPrice }">
                     </div>
                 </div>
             </div>
@@ -856,6 +874,7 @@
             	$("#coupon_box .btn_select").click(function(){
             		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text($(this).parent().parent().find("input[type=hidden]").val() + "원");
             		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } - $(this).parent().parent().find("input[type=hidden]").val() + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(${ allPrice } - $(this).parent().parent().find("input[type=hidden]").val());
                 });
             </script>
 
@@ -887,6 +906,7 @@
                 $("#coupon_box .btn_cancel").click(function(){
             		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text("0원");
                 	$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(${ allPrice });
                     $("#coupon_box").css('display', 'none');
                 });
 
@@ -907,13 +927,132 @@
             <div id="policy_info">
                 <div>구매 동의</div>
                 <div>
-                    <input type="checkbox">
+                    <input type="checkbox" name="policy_check">
                     &nbsp;상품, 가격, 할인 정보, 유의 사항 등을 확인하였으며 구매에 동의합니다.
                 </div>
-                <button>결제하기</button>
+                <button onclick="payRequest()">결제하기</button>
             </div>
         </div>
     </div>
+    
+    <script>
+    	function payRequest() {
+    		
+    		if($("#policy_info input[name=policy_check]").is(":checked")){
+    			var IMP = window.IMP;
+        	    IMP.init("imp49550969");
+        	    
+    			var oName = $("#order_info>.book_list:nth-child(1)>.book_info>div:nth-child(1)>div:nth-child(1)").text();
+        	    
+        	    if(${ fn:length(bList) } > 1){
+        	    	oName += " 외 " + (${ fn:length(bList) } - 1) + "권";
+        	    }
+        	    
+        	 	// IMP.request_pay(param, callback) 호출
+        	    IMP.request_pay({ // param
+        	      pg: "html5_inicis", // PG사 선택
+        	      pay_method: "card", // 지불 수단
+        	      merchant_uid: 'merchant_' + new Date().getTime(), //가맹점에서 구별할 수 있는 고유한id
+        	      name: oName, // 상품명
+        	      amount: $("#payment_info>#info_box>div:nth-child(4)>input").val(), // 가격
+        	      buyer_email: "${ loginUser.memEmail }",
+        	      buyer_name: "${ loginUser.memName }", // 구매자 이름
+        	      buyer_tel: "${ loginUser.memPhone }", // 구매자 연락처 
+        	      buyer_addr: "${ loginUser.memBasicAddress }",// 구매자 주소지
+        	      buyer_postcode: "${ loginUser.memPost }" // 구매자 우편번호
+        	    }, function (rsp) {
+        	    	console.log(rsp);
+        	    	if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+        	    	     // jQuery로 HTTP 요청
+        	    		 $.ajax({
+        	    	          url: "orderBook.pay", // 가맹점 서버
+        	    	          method: "POST",
+        	    	          headers: { "Content-Type": "application/json" },
+        	    	          data: {
+        	    	        	  // impUid: rsp.imp_uid, // 고유id
+        	    	              // merchantUid: rsp.merchant_uid, // 상점 거래id
+          						  price: rsp.paid_amount, // 결제 금액
+          						  // applyNum: rsp.apply_num, // 카드 승인 번호
+          						  // applyDate: rsp.paid_at // 결제승인시각, number타입
+        	    	          }
+        	    	      }).done(function (data) {
+        	    	    	  insertOrderInfo();
+        	    	      })
+        	    	} else {
+        	    		alert("결제에 실패하였습니다. 에러 내용: " +  rsp.error_msg);
+        	    	}
+        	    });
+    		}else{
+    			alert("구매 동의에 체크해주세요.");
+    		}
+    	}
+	    
+    </script>
+    
+    <script>
+    	function insertOrderInfo(){
+    		$.ajax({
+  	          url: "orderBook.od",
+  	          data: {
+  	              memNo: ${ loginUser.memNo },
+  	              orderReceiver: $("#shipping_info table input[name=orderReceiver]").val(),
+  	              orderPost: $("#shipping_info table input[name=orderPost]").val(),
+  	              orderAddress: $("#shipping_info table input[name=orderAddress]").val(),
+  	              AddressDetail: $("#shipping_info table input[name=orderDetail]").val(),
+  	              addressRef: $("#shipping_info table input[name=AddressRef]").val(),
+  	              orderPhone: $("#shipping_info table input[name=orderPhone]").val(),
+				  orderPrice: ${ allPrice },
+				  addPrice: 0,
+				  usedPoints: 0
+  	          },
+  	          type:"post",
+      		  success:function(result){
+      			  if(result == "success"){
+      				  insertOrderDetailInfo();
+      			  }
+      		  },error:function(){
+      			  console.log("order insert ajax 실패");
+      		  }
+  	      })
+    	}
+    </script>
+    
+    <script>
+    	function insertOrderDetailInfo(){
+    		
+    		var param = [];
+    		 
+    	    $(".book_list").each(function(i) {
+    	        var data = {
+    	            bkNo: $(this).children().eq(1).children().eq(0).children().eq(2).val(),
+    	            quantity: $(this).children().eq(1).children().eq(0).children().eq(3).val(),
+    	            detailPrice: $(this).children().eq(1).children().eq(1).text()
+    	        };
+    	        
+    	        param.push(data);
+    	    });
+    	    
+    	    var jsonData = JSON.stringify(param);
+    	    jQuery.ajaxSettings.traditional = true;
+    		
+    		$.ajax({
+  	          url: "orderDetail.od",
+			  type: "post",
+			  headers: {
+  	              "mode" : CommonConstant.RequestMode.regist
+  	          },
+  	          data: {
+  	              data: jsonData
+  	          },
+  	          dataType:"json",
+      		  success:function(result){
+      			  console.log(result);
+      		  },error:function(){
+      			  console.log("order detail insert ajax 실패");
+      		  }
+  	      })
+    	}
+    </script>
     
     <jsp:include page="../common/footer.jsp"/>
     
