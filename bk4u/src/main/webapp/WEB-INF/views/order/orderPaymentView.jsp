@@ -620,7 +620,7 @@
                     <div>
                         <div>배송지</div>
                         <div>
-                            <input type="radio" id="recent" name="ad"> <label for="recent">최근 배송지</label>
+                            <input type="radio" id="recent_ad" name="ad"> <label for="recent">최근 배송지</label>
                             &nbsp;&nbsp;
                             <input type="radio" id="ad_list" name="ad"> <label for="ad_list">주소록</label>
                             &nbsp;&nbsp;
@@ -765,6 +765,22 @@
             </div>
 
             <script>
+	            $("#shipping_info #recent_ad").click(function(){
+	            	<c:choose>
+	                	<c:when test="${ empty mp }">
+	                    	alert("최근 주문한 배송지가 없습니다.");
+	                    </c:when>
+	                	<c:otherwise>
+		                	$("#shipping_info table input[name=orderReceiver]").val("${ mp.memName }");
+		                    $("#shipping_info table input[name=orderPost]").val("${ mp.postNo }");
+		                    $("#shipping_info table input[name=orderAddress]").val("${ mp.basicAddress }");
+		                    $("#shipping_info table input[name=addressDetail]").val("${ mp.detailAddress }");
+		                    $("#shipping_info table input[name=addressRef]").val("${ mp.addressRefer }");
+		                    $("#shipping_info table input[name=orderPhone]").val("${ mp.phone }");
+	                	</c:otherwise>
+	                </c:choose>
+	            });
+            
                 $("#shipping_info #ad_list").click(function(){
                     $("#address_box").css('display', 'block');
                 });

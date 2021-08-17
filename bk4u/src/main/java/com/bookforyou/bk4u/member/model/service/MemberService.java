@@ -64,5 +64,10 @@ public interface MemberService {
 	 */
 	int updateReportStack(ReportList reli);
 	int updateStatus(int memNo);
+
+	/*
+	 * [사용자] 최근 사용 주소록 조회 (연지)
+	 */
+	MemberPhonebook selectRecentPhonebook(int memNo);
 }
 

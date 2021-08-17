@@ -593,5 +593,22 @@
  		set mem_status = 'N'
  		where mem_no = #{memNo} and report_count >= 3
  	</update>
+ 	
+ 	<!-- [사용자] 최근 사용 주소록 조회 (연지) -->
+ 	<select id="selectRecentPhonebook" resultMap="memberPhonebookResult">
+ 		select order_receiver mem_name,
+ 			   order_post post_no,
+ 			   order_address basic_address,
+ 			   address_detail detail_address,
+ 			   address_ref address_refer,
+ 			   order_phone phone
+		  from orders
+		 where order_no = (select order_no
+		                   from (select order_no
+		                         from orders
+		                         where mem_no = #{memNo}
+		                         order by order_date desc)
+		                   where rownum = 1)
+ 	</select>
 
 </mapper>

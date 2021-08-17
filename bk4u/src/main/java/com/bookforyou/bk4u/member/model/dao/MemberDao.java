@@ -126,6 +126,13 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateStatus", memNo);
 	}
 
+	/*
+	 * [사용자] 최근 사용 주소록 조회 (연지)
+	 */
+	public MemberPhonebook selectRecentPhonebook(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("memberMapper.selectRecentPhonebook", memNo);
+	}
+
 	
 	
 }

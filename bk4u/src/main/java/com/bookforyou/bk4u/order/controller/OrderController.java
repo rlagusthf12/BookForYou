@@ -370,12 +370,15 @@ public class OrderController {
 		ArrayList<MemberPhonebook> pList = memberService.selectMemPhonebookList(memNo);
 		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
 		
+		MemberPhonebook mp = memberService.selectRecentPhonebook(memNo);
+		
 		int allPrice = 0;
 		
 		for(Book b : bList) {
 			allPrice += (b.getBkPrice() * b.getBkQty());
 		}
 		
+		/*
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd (E)");
 		
@@ -385,10 +388,12 @@ public class OrderController {
 		for(int l = 1; l<5; l++) {
 			String today = sdf.format(cal.getTime());
 		}
+		*/
 		
 		mv.addObject("bList", bList)
 		  .addObject("pList", pList)
 		  .addObject("cList", cList)
+		  .addObject("mp", mp)
 		  .addObject("allPrice", allPrice)
 		  .setViewName("order/orderPaymentView");
 		
