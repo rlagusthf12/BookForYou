@@ -143,5 +143,10 @@ public interface OrderService {
 	 * [사용자] 주문 상세 정보 입력 (연지)
 	 */
 	int insertOrderDetailInfo(Map<String, Object> m);
+
+	/*
+	 * [사용자] 사용한 포인트 차감 (연지)
+	 */
+	int insertUsedPoint(Order o);
 	
 }

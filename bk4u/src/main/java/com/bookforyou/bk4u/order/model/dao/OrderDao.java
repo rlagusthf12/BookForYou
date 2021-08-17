@@ -205,5 +205,12 @@ public class OrderDao {
 		return sqlSession.insert("orderMapper.insertOrderDetailInfo", m);
 	}
 
+	/*
+	 * [사용자] 사용한 포인트 차감 (연지)
+	 */
+	public int insertUsedPoint(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.insert("orderMapper.insertUsedPoint", o);
+	}
+
 	
 }

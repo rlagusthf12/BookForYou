@@ -826,4 +826,20 @@
 	         )
 	</insert>
 	
+	<!-- [사용자] 사용한 포인트 차감 (연지) -->
+	<insert id="insertUsedPoint">
+		insert
+		  into point
+	    values
+	         (
+	           seq_point.nextval,
+	           #{memNo},
+	           seq_ono.curval,
+	           null,
+	           '차감',
+	           #{detailPrice} * 0.01,
+	           sysdate
+	         )
+	</insert>
+	
 </mapper>

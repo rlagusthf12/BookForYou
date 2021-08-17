@@ -234,5 +234,12 @@ public class OrderServiceImpl implements OrderService {
 		return oDao.insertOrderDetailInfo(sqlSession, m);
 	}
 
+	/*
+	 * [사용자] 사용한 포인트 차감 (연지)
+	 */
+	@Override
+	public int insertUsedPoint(Order o) {
+		return oDao.insertUsedPoint(sqlSession, o);
+	}
 	
 }

@@ -421,6 +421,7 @@ public class OrderController {
 	public String insertOrderInfo(Order o) {
 
 		int result = oService.insertOrderInfo(o);
+		int result1 = oService.insertUsedPoint(o);
 		
 		return result> 0 ? "success" : "fail";
 	}
