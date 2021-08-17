@@ -141,15 +141,15 @@ public interface SubscriptionService {
 	 */
 	int insertSubscOrder(HashMap<String, String> map);
 	
-	/** 포인트 조회
+	/** 쿠폰 조회
 	 * @author daeunlee
 	 */
 	ArrayList<Coupon> selectSubscCoupon(int memNo);
 	
-	/** 쿠폰 조회 
+	/** 포인트 조회 
 	 * @author daeunlee
 	 */
-	int selectSubPoint(int memNo);
+	ArrayList<Point> selectSubPoint(int memNo);
 	
 	/** 정기구독 등록
 	 * @author daeunlee

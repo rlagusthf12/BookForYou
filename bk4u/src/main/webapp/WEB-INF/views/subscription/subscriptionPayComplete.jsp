@@ -83,7 +83,7 @@
             <!--텍스트정보area-->
             <div class="text_info-warp">
                 <div class="text_info-items">
-                    <span class="period-item">프리미엄(1개월)</span>
+                    <span class="period-item">${sub.subscName}(${sub.subscPeriod})</span>
                     <span class="txt-item">멤버십 결제가 완료되었습니다.</span>
                 </div>
                 <div class="add_info-wrap">결제내역은 마이페이지 > 
@@ -91,7 +91,12 @@
                      에서 확인하실 수 있습니다.
                 </div>
             </div>
-            
+            <script>
+            $(function(){
+            	var subNo = ${sub.subscNo};
+            	console.log(subNo);
+            })
+            </script>
 
             <!--주문정보area-->
             <div class="order_info-wrap">
@@ -104,21 +109,17 @@
                 <table class="order-wrap">
                     <tbody>
                         <tr>
-                            <th>주문번호</th>
-                            <td>2021070545302831</td>
-                        </tr>
-                        <tr>
                             <th>주문일자</th>
-                            <td>2021.07.15</td>
+                            <td>${sub.subscSdate}</td>
                         </tr>
                         <tr>
                             <th>상품정보</th>
-                            <td>프리미엄 (1개월)</td>
+                            <td>${sub.subscName}(${sub.subscPeriod})</td>
                         </tr>
                         <tr>
                             <th>상품금액</th>
                             <td>
-                                <em class="price-item">19,900</em>
+                                <em class="price-item">${sub.subscPrice}</em>
                                 <span class="measure">원</span>
                             </td>
                         </tr>
@@ -143,7 +144,7 @@
             </div>
             
 
-            <!--결제정보area-->
+            <!--결제정보area
             <div class="pay_info-wrap">
                 <div class="title_txt">
                     <div class="title_txt-wrap">
@@ -168,13 +169,13 @@
                         <tr style="border-bottom:1px solid #ddd;">
                             <th>카드번호</th>
                             <td>
-                                5272-****-****-****
+                                1111-****-****-****
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            
+            -->
 
             <!--추가이동버튼area-->
             <div class="btn-wrap">

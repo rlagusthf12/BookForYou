@@ -78,7 +78,8 @@
 	            <div class="editor_area">
 	                <div class="editor">
 	                    <div class="editor_content">
-							<textarea class="summernote" id="boContent" name="boContent" value="${ b.boContent }"></textarea>  
+							<textarea class="summernote" id="boContent" name="boContent"></textarea>  
+	                    	
 	                    </div>
 	                </div>
 	            </div>
@@ -104,6 +105,9 @@
 	    }
 		// *summernote 에디터
 		$(document).ready(function() {
+			
+			var con = '<c:out value="${ b.boContent }"/>';
+			$('textarea[name=boContent]').html(con);
 			
 			// 기본세팅
 	       	$('.summernote').summernote({
@@ -163,6 +167,8 @@
 	       function postForm() {
 	           $('textarea[name="boContent"]').val($('.summernote').summernote('code'));
 	       }
+	       
+	       
 	        
 	        
 	    </script>

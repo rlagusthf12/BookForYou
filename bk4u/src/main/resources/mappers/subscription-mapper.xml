@@ -34,27 +34,28 @@
 	</resultMap>
 	
 	<resultMap type="Point" id="PointResult">
-		<result column="pointNo" property="pointNo"/>
-		<result column="memNo" property="memNo"/>
-		<result column="orderNo" property="orderNo"/>
-		<result column="subscNo" property="subscNo"/>
-		<result column="pointContent" property="pointContent"/>
-		<result column="pointPrice" property="pointPrice"/>
+		<result column="point_no" property="pointNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="order_no" property="orderNo"/>
+		<result column="subsc_no" property="subscNo"/>
+		<result column="point_content" property="pointContent"/>
+		<result column="point_price" property="pointPrice"/>
 	</resultMap>
 	
 	<resultMap type="Coupon" id="CouponResult">
-		<result column="couponIssueNum" property="couponIssueNum"/>
-		<result column="couponNo" property="couponNo"/>
-		<result column="memNo" property="memNo"/>
-		<result column="couponKind" property="couponKind"/>
-		<result column="createDate" property="createDate"/>
-		<result column="expireDate" property="expireDate"/>
+		<result column="coupon_issue_num" property="couponIssueNum"/>
+		<result column="coupon_no" property="couponNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="coupon_kind" property="couponKind"/>
+		<result column="create_date" property="createDate"/>
+		<result column="expire_date" property="expireDate"/>
 		<result column="status" property="status"/>
-		<result column="useDate" property="useDate"/>
-		<result column="couponName" property="couponName"/>
-		<result column="couponCategory" property="couponCategory"/>
-		<result column="couponPrice" property="couponPrice"/>
-		<result column="couponPriceRate" property="couponPriceRate"/>
+		<result column="use_date" property="useDate"/>
+		<result column="coupon_name" property="couponName"/>
+		<result column="coupon_content" property="couponContent"/>
+		<result column="coupon_price" property="couponPrice"/>
+		<result column="coupon_category" property="couponCategory"/>
+		<result column="coupon_price_Rate" property="couponPriceRate"/>
 	</resultMap>
 
 	<!-- [관리자] 정기구독 목록 개수 조회 (한진) -->
@@ -403,27 +404,31 @@
 		     )
 	</insert>
 	
-	<!-- 쿠폰 조회 -->
+	<!-- 내쿠폰 조회 -->
 	<!-- @author daeunlee -->
 	<select id="selectSubscCoupon" resultMap="CouponResult">
 		select
-		        COUPON_ISSUE_NUM
-		      , COUPON_NO  
-		      , COUPON_KIND
-		      , CREATE_DATE
-		  from mem_coupon
-		  join members using (mem_no) 
+		        coupon_issue_num
+		      , coupon_no  
+		      , mc.coupon_kind
+		      , create_date
+		      , expire_date
+		      , coupon_name
+		      , coupon_content
+		      , coupon_price
+		      , mem_no
+		  from mem_coupon mc
+		  join coupon using (coupon_no)
 		 where mem_no = #{memNo}
-		   and STATUS = 'Y'
+		   and coupon_status = 'Y'
 	</select>
 	
 	<!-- 포인트 조회 -->
 	<!-- @author daeunlee -->
-	<select id="selectSubPoint" resultType="_int">
+	<select id="selectSubPoint" resultMap="PointResult">
 		select
-		       sum(POINT_PRICE)
+		       point_price
 		  from point
-		  join members using (mem_no) 
 		 where mem_no = #{memNo}
 	</select>
 	
@@ -470,4 +475,5 @@
 		     , #{deliveryRequest}
 		     )
 	</insert>
+	
 </mapper>

@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,17 +61,49 @@ public class BoardServiceImpl implements BoardService{
 	public int updateBoard(Board b) {
 		return boDao.updateBoard(sqlSession, b);
 	}
-
+	
+	// 6. 댓글리스트 조회용
 	@Override
 	public ArrayList<Reply> selectReplyList(int boNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return boDao.selectReplyList(sqlSession, boNo);
 	}
 
+	// 7. 댓글 작성용
 	@Override
 	public int insertReply(Reply r) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boDao.insertReply(sqlSession, r);
 	}
+	
+	// 8. 대댓글 작성용
+	@Override
+	public int insertReco(Reply r) {
+		return boDao.insertReco(sqlSession, r);
+	}
+	
+	// 9. 게시글 검색 : 갯수 조회용
+	@Override
+	public int selectSearchListCount(HashMap<String, String> map) {
+		return boDao.selectSearchListCount(sqlSession, map);
+	}
+	
+	// 10. 게시글 검색 : 게시글 조회용
+	@Override
+	public ArrayList<Board> selectBoardSearchList(HashMap<String, String> map, PageInfo pi) {
+		return boDao.selectBoardSearchList(sqlSession, map, pi);
+	}
+	
+	// 11. 카테고리별 게시글 갯수
+	@Override
+	public int selectBoardCategoryCount(String category) {
+		return boDao.selectBoardCategoryCount(sqlSession, category);
+	}
+	
+	// 12. 카테고리별 게시글 조회용
+	@Override
+	public ArrayList<Board> selectBoardCategory(String category, PageInfo pi) {
+		return boDao.selectBoardCategory(sqlSession, category, pi);
+	}
+	
+
 
 }

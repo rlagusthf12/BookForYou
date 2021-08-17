@@ -65,7 +65,7 @@ public class AcouponController {
 		
 		return "Acoupon/couponList";
 	}
-	
+	/*
 	@RequestMapping("couponDelete.me")
 	public String adminBookDelete(ModelAndView mv,
 									@RequestParam(value="selectedCoupon") List<String> cNoArr) {
@@ -77,6 +77,6 @@ public class AcouponController {
 		mv.addObject("alertMsg", "도서가 삭제되었습니다.");
 		
 		return "redirect:/CouponList.me";
-	}
+	}*/
 }
 	

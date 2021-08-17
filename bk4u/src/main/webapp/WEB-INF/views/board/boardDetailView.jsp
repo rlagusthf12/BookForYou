@@ -16,7 +16,6 @@
         body{font-family: "Noto Sans KR", sans-serif !important;}
         div{box-sizing: border-box;}
         .wrap{width: 1200px; margin:0 auto;}
-        a{text-decoration:none;}
         li{list-style:none;}
 
         /**글쓰기내용전체area*/
@@ -33,12 +32,12 @@
 
         /**작성자area*/
         .writer_area{padding:5px 0;}
-        .writer_nickname{color:#000; font-size:15px;}
+        .writer_nickname{color:#000 !important; font-size:15px !important; text-decoration:none !important; margin-left:10px;}
         .writer_nickname:hover{color:#000; text-decoration:none;}
         #thumb_img{border-radius: 70%; overflow: hidden;}
         
         /**작성일/조회수*/
-        .content_info_box{color:#bebebe; font-size:12px; }
+        .content_info_date, .content_info_views{color:#9c9c9c !important; font-size:13px !important;}
         .content_info_views{margin-left: 15px;}
 
         /**에디터area*/
@@ -67,7 +66,7 @@
         .reply_content{width:760px; height:40px; resize:none; vertical-align:middle; border:none;} 
         textarea::placeholder {font-size:14px;}
         textarea:focus{outline: none;}
-        .replyBtn{border:none; border-radius:6px; padding:5px 10px; color:#fff; background:rgb(252, 190, 52);}
+        .replyBtn, #removeRecomment{border:none; border-radius:6px; padding:5px 10px; margin-right:5px; color:#fff; background:rgb(252, 190, 52);}
 
         /**li개별댓글area*/
         .comment-wrap{padding-top:10px;}
@@ -88,7 +87,7 @@
         .comment_info_date{margin-right:10px;}
         
         /*답글*/
-        .btn_recomment{margin-top:5px; font-size:13px; color:#9c9c9c;} .btn_recomment:hover{color:#9c9c9c; text-decoration:none;}
+        #addRecomment{margin-top:5px; font-size:13px; color:#9c9c9c; border:none; background:#fff;}
         .comment_area-recomment{padding-left:46px;}
         /*대댓글입력칸*/
         .recomment_content{width:675px;}
@@ -96,7 +95,8 @@
         /*댓글페이징*/
         #paging-wrap{width:fit-content; margin:auto; font-size:14px;}
         .page-link, .page-link:hover{color:rgb(252, 190, 52);}
-
+        
+		#reportBtn{margin-left:15px; font-size:13px; padding:0; color:#9c9c9c; border:none; background:#fff;}
         </style>
 </head>
 <body>
@@ -150,10 +150,11 @@
                     </div>
                 </div>
 
-                <!--작성일/조회수-->
+                <!--작성일/조회수/신고하기-->
                 <div class="content_info_box">
                     <span class="content_info_date">${ b.boCdate }</span>
                     <span class="content_info_views">조회수 ${ b.boCount }</span>
+                    <button id="reportBtn">신고</button>
                 </div>
 
                 <!--에디터글내용area-->
@@ -164,7 +165,8 @@
                         </div>
                     </div>
                 </div>
-
+				
+				
                 <!--댓글-->
                 <div id="reply_area">
                     <!--댓글갯수-->
@@ -179,9 +181,6 @@
                             <textarea class="reply_content" id="replyContent" cols="20" rows="1" placeholder="기분 좋은 댓글은 작성자에게 힘이 됩니다 :)"></textarea>
                             <button type="submit" class="replyBtn" onclick="addReply();">등록</button>
                         </div>
-                        <div class="reply-img">
-                            <img src="" alt="" style="width:20px; height:20px;">
-                        </div>
                     </div>
                     <!--댓글목록area-->
                     <ul id="replyArea"><!-- 댓글 ajax결과 --></ul>
@@ -191,102 +190,164 @@
         </div>
     </div>
             
-                    <script>
-                    	$(function(){
-                    		selectReplyList();
-                    	})
-                    	
-                    	// 댓글 리스트 조회용 ajax
-                    	function selectReplyList(){
-                    		$.ajax({
-                    			url:"rlistAjax.bo",
-                    			data:{blNo:${b.boNo}},
-                    			success: function(list){
-                    				$("#reply_count").text(list.length);
-                    					
-	                    				var result = "";
-	                    				var subResult = "";
-	                    				
-	                    				for(var i in list){
-	                    					
-	                    					if(list[i].replyRefNo == 0){ // 참조하는 댓글 == 0
-		                    					result +=
-		                    						// 원댓글
-		                                            '<li id="" class="comment-wrap">' +
-		                                                '<div class="comment_area">' +
-		                                                    '<a href="" class="comment_thumb"><img src="" width="36" height="36" id="comment_thumb_img"></a>' +
-		                                                    '<input type="hidden" id="replyNo" name="replyNo" value="' + list[i].replyNo + '">' +
-		                                                    '<input type="hidden" name="replyRefNo" value ="'+ list[i].replyRefNo +'">' +
-		                                                    '<div class="comment_box">' +
-		                                                        '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>' +
-		                                                        '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>' +
-		                                                        '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
-		                                                        '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' + '<a href="" class="btn_report">신고</a></div>' +
-		                                                        '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><a href="" class="btn_recomment" onclick="addRecomment();">답글쓰기</a></div></div>' +
-		                                                    '</div>' +
-		                                                '</div>' +
-		                                           '</li>' +
-		                                           '<div class="subReply' + list[i].replyNo + '"></div>'
-	                    					}	
-                    						$("#replyArea").html(result);
-                    						
-                    						if(list[i].replyRefNo != 0){ // 참조하는 댓글 != 0
-                    							subResult +=
-	                    							// 대댓글
-	                                                '<li id="" class="comment-wrap comment_area-recomment">' +
-	                                                    '<div class="comment_area">' +
-	                                                        '<a href="" class="comment_thumb"><img src="" width="36" height="36" id="comment_thumb_img"></a>' +
-	                                                        '<input type="hidden" id="replyNo" name="replyNo" value="' + list[i].replyNo + '">' +
-	                                                        '<input type="hidden" name="replyRefNo" value ="'+ list[i].replyRefNo +'">' +
-	                                                        '<div class="comment_box">' +
-	                                                            '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>'+
-	                                                            '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>'+
-	                                                            '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
-	                                                            '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span><a href="" class="btn_report">신고</a></div>' +
-	                                                            '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><a href="" type="button" class="btn_recomment" onclick="addRecomment();">답글쓰기</a></div></div>' +
-	                                                        '</div>' +
-	                                                    '</div>' + 
-	                                                '</li>' +
-	                                                '<div class="subReply' + list[i].replyNo + '"></div>'
-	                    					}
-                    						//console.log(subResult);
-                    						$(".subReply"+list[i].replyRefNo).html(subResult);
-	                    				}
-                    				
-                    			},error: function(jqXHR, textStatus, errorThrown){ 
-        		        			console.log(jqXHR); 
-        		        			console.log(textStatus); 
-        		        			console.log(errorThrown); 
-        		        		}
-                    		})
-                    	// 댓글 작성용 ajax
-                    	function addReply(){
-                    		if($("#replyContent").val().trim().length != 0){
-                    			$.ajax({
-                    				url:"rinsertAjax.bl",
-                    				data:{
-                    					memNo:${loginUser.memNo},
-                    					refPost:$("input[name=boNo]").val(),
-                    					replyContent:$("#replyContent").val(),
-                    					replyRefNo:$("input[name=replyRefNo]").val(),
-                    					depth:$("input[name=depth]").val()
-                    				},success: function(status){
-                    					
-                    					if(status == "success"){
-                    						selectReplyList();
-                    						$("#replyContent").val("");
-                    					}
-                    					
-                    				},error: function(jqXHR, textStatus, errorThrown){ 
-            		        			console.log(jqXHR); 
-            		        			console.log(textStatus); 
-            		        			console.log(errorThrown); 
-            		        		}
-                    			})
-                    		}
+	<script>
+		
+		$(function(){
+			selectReplyList();
+		})
+		
+		// 댓글 리스트 조회용 ajax
+		function selectReplyList(){
+			
+			$.ajax({
+				url:"rlistAjax.bo",
+				data:{boNo:${b.boNo}},
+				success: function(list){
+					$("#reply_count").text(list.length);
+						
+	 				var result = "";
+	 				var subResult = "";
+	 				
+	 				for(var i in list){
+	 					
+	 					if(list[i].replyRefNo == 0){ // 참조하는 댓글 == 0
+	  					result +=
+	  						// 원댓글
+	                          '<li id="" class="comment-wrap">' +
+	                              '<div class="comment_area">' +
+	                                  '<a href="" class="comment_thumb"><img src="" width="36" height="36" id="comment_thumb_img"></a>' +
+	                                  '<input type="hidden" id="reNo" name="replyNo" value="' + list[i].replyNo + '">' +
+	                                  '<input type="hidden" name="replyRefNo" value ="'+ list[i].replyRefNo +'">' +
+	                                  '<div class="comment_box">' +
+	                                      '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>' +
+	                                      '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>' +
+	                                      '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
+	                                      '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' + '<a href="" class="btn_report">신고</a></div>' +
+	                                      '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><button id="addRecomment">답글쓰기</button></div></div>' +
+	                                  '</div>' +
+	                              '</div>' +
+	                               
+	                              // 대댓글 작성창
+	                              '<div class="reply-input" id="popup" style="display:none;">' +
+                                  '<div class="reply-text">' +
+	                                  '<input type="hidden" name="depth" value="2">' +
+	                  				  '<input type="hidden" name="reply_refno" value="' + list[i].replyNo + '">' +
+	                                      '<textarea class="reply_content" id="recoContent" cols="20" rows="1" placeholder="기분 좋은 댓글은 작성자에게 힘이 됩니다 :)"></textarea>' +
+	                                      '<button type="submit" class="replyBtn" onclick="addReco();">등록</button>' +
+	                                      '<button id="removeRecomment">취소</button>' +
+                                  '</div>' +
+                                  '</div>' +
+	                         '</li>' +
+	                         '<div class="subReply' + list[i].replyNo + '"></div>'
+	 					}	
+						$("#replyArea").html(result);
+						
+						// 대댓글버튼
+						$("button[id='addRecomment']").click(function(){
+							$('#popup').show();
+						});
+						$("button[id='removeRecomment']").click(function(){
+							$('#popup').hide();
+						});
+						
+						
+							
+						if(list[i].replyRefNo != 0){ // 참조하는 댓글 != 0
+							subResult +=
+								// 대댓글
+	                            '<li id="" class="comment-wrap comment_area-recomment">' +
+	                                '<div class="comment_area">' +
+	                                    '<a href="" class="comment_thumb"><img src="" width="36" height="36" id="comment_thumb_img"></a>' +
+	                                    '<input type="hidden" id="replyNo" name="replyNo" value="' + list[i].replyNo + '">' +
+	                                    '<input type="hidden" name="replyRefNo" value ="'+ list[i].replyRefNo +'">' +
+	                                    '<div class="comment_box">' +
+	                                        '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>'+
+	                                        '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>'+
+	                                        '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
+	                                        '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span><a href="" class="btn_report">신고</a></div>' +
+	                                        '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><a href="javascript:void(0)" id="addRecomment" onclick="addBtn();">답글쓰기</a></div></div>' +
+	                                    '</div>' +
+	                                '</div>' + 
+	                            '</li>' +
+	                            '<div class="subReply' + list[i].replyNo + '"></div>'
+	 					}
+						$(".subReply"+list[i].replyRefNo).html(subResult);
+	 				}// for문끝
+	 				
+	 				
+					
+				},error: function(jqXHR, textStatus, errorThrown){ 
+					console.log(jqXHR); 
+					console.log(textStatus); 
+					console.log(errorThrown); 
+				}
+			})
+			
+		}
+			
+		// 댓글 작성용 ajax
+		function addReply(){
+			
+			if($("#replyContent").val().trim().length != 0){
+				$.ajax({
+					url:"rinsertAjax.bo",
+					dataType:'text',
+					data:{
+						memNo:${loginUser.memNo},
+						refPost:$("input[name=boNo]").val(),
+						replyContent:$("#replyContent").val(),
+						replyRefNo:$("input[id=replyNo]").val(),
+						depth:$("input[name=depth]").val()
+					},success: function(status){ 
+						
+						if(status == "success"){
+							console.log('success:성공');
+							selectReplyList();
+							$("#replyContent").val("");
+						}else if(status == "fail"){
+							console.log('success:실패');
+						}else{
+							console.log('success:데이터오류?' + data);
+						}
+						
+					},error: function(request,status,error){ 
+						console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			  		}
+				})
+			}
+		}
+		// 대댓글 작성용 ajax
+		function addReco(){
+			if($("#recoContent").val().trim().length != 0){
+				$.ajax({
+					url:"recoinsertAjax.bo",
+					dataType:'text',
+					data:{
+						memNo:${loginUser.memNo},
+						refPost:$("input[name=boNo]").val(),
+						replyContent:$("#recoContent").val(),
+						replyRefNo:$("#reNo").val(),
+						depth:$("input[name=depth]").val()
+					},success: function(status){ 
+						
+						if(status == "success"){
+							console.log('success:성공');
+							selectReplyList();
+							$("#replyContent").val("");
+						}else if(status == "fail"){
+							console.log('success:실패');
+						}else{
+							console.log('success:데이터오류?' + data);
+						}
+						
+					},error: function(request,status,error){ 
+						console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+			  		}
+				})
+			}
+		}
+	</script>
 
-                    </script>
-            
 
 
 

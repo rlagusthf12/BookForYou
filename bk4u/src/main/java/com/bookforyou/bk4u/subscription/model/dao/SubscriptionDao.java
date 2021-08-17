@@ -205,18 +205,18 @@ public class SubscriptionDao {
 		return sqlSession.insert("subscriptionMapper.insertSubscOrder", map);
 	}
 	
-	/** 포인트 조회
+	/** 쿠폰 조회
 	 * @author daeunlee
 	 */
 	public ArrayList<Coupon> selectSubscCoupon(SqlSessionTemplate sqlSession, int memNo) {
 		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectSubscCoupon", memNo);
 	}
 	
-	/** 쿠폰 조회 
+	/** 포인트 조회 
 	 * @author daeunlee
 	 */
-	public int selectSubPoint(SqlSessionTemplate sqlSession, int memNo) {
-		return sqlSession.selectOne("subscriptionMapper.selectSubPoint", memNo);
+	public ArrayList<Point> selectSubPoint(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectSubPoint", memNo);
 	}
 	
 	/** 정기구독 등록

@@ -333,10 +333,11 @@ public class SubscriptionController {
 	@RequestMapping("pay.sub")
 	public ModelAndView selectPaySub(int memNo, ModelAndView mv) {
 		// 쿠폰,포인트 조회
-		ArrayList<Coupon> cp = sService.selectSubscCoupon(memNo);
-		int p = sService.selectSubPoint(memNo);
+		ArrayList<Coupon> cList = sService.selectSubscCoupon(memNo);
+		ArrayList<Point> p = sService.selectSubPoint(memNo);
+		System.out.println(cList);
 		
-		mv.addObject("cp", cp)
+		mv.addObject("cList", cList)
 		  .addObject("p", p)
 		  .setViewName("subscription/subscriptionPay");
 		
@@ -358,6 +359,5 @@ public class SubscriptionController {
             return "common/errorPage";
 		}
 	}
-	
 	
 }

@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!--awesome icons--> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/69851f8880.js"></script>
     <style>
         @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
         body{font-family: "Noto Sans KR", sans-serif !important;}
@@ -33,12 +36,12 @@
 
         /**작성자area*/
         .writer_area{padding:5px 0;}
-        .writer_nickname{color:#000 !important; font-size:15px !important; text-decoration:none !important; margin-left:10px;}
+        .writer_nickname{color:#000; font-size:15px;}
         .writer_nickname:hover{color:#000; text-decoration:none;}
         #thumb_img{border-radius: 70%; overflow: hidden;}
         
         /**작성일/조회수*/
-        .content_info_date, .content_info_views{color:#9c9c9c !important; font-size:13px !important;}
+        .content_info_box{color:#bebebe; font-size:12px; }
         .content_info_views{margin-left: 15px;}
 
         /**에디터area*/
@@ -68,8 +71,9 @@
             line-height: 30px;
             margin: 0 10px;
         }
-        #btn_num{color:rgb(236, 87, 59); font-weight:600; font-size:15px;}
-
+		.fa-heart{color:rgb(252, 190, 52); font-size:20px;}
+		
+		
         /**독서록area*/
         .booklist_area{margin:0 auto; width: 700px;}
         .writer_nick_info span{font-size: 20px; font-weight:500; margin-left: 10px;}
@@ -83,7 +87,7 @@
         .booklist_item_r{background:#fff; box-shadow:0 2px 5px 0 rgba(94, 94, 94, 0.19);}
         
         /**댓글area*/
-        #reply_area{border-top:1px solid #ebebeb; height:1000px; margin-top: 150px;}
+        /*#reply_area{border-top:1px solid #ebebeb; height:1000px; margin-top: 150px;}*/
         /*댓글갯수*/
         .reply_info{padding:20px 0; font-size:20px; font-weight:500;}
         .reply_count{color:rgb(252, 190, 52); margin-left:20px;}
@@ -121,8 +125,7 @@
         /*댓글페이징*/
         #paging-wrap{width:fit-content; margin:auto; font-size:14px;}
         .page-link, .page-link:hover{color:rgb(252, 190, 52);}
-		
-		#reportBtn{margin-left:15px; font-size:13px; padding:0; color:#9c9c9c; border:none; background:#fff;}
+
         </style>
 </head>
 <body>
@@ -176,11 +179,10 @@
                     </div>
                 </div>
 
-                <!--작성일/조회수/신고하기-->
+                <!--작성일/조회수-->
                 <div class="content_info_box">
                     <span class="content_info_date">${ bl.blCdate }</span>
                     <span class="content_info_views">조회수 ${ bl.blCount }</span>
-                    <button id="reportBtn">신고</button>
                 </div>
 
                 <!--에디터글내용area-->
@@ -211,19 +213,79 @@
                 <!--좋아요/스크랩-->
                 <div class="like_area">
                     <div class="like-wrap">
-                        <button id="btn_like" type="button">
-                            <img src="" alt="" style="width: 20px; height: 20px;">
+                        <!-- 좋아요버튼 -->
+                        <button id="btn_like" type="button" onclick="btnLike()">
+                        
+                        <c:choose>
+                        	<c:when test="${ loginUser.memNo eq l.memNo }">
+                            	<i class="fas fa-heart"></i>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<i class="far fa-heart"></i><!--빈하트-->
+                            </c:otherwise>
+                        </c:choose>
                             	좋아요
-                            <span id="btn_num">${ bl.blLike }</span>
                         </button>
-                        <button id="btn_scrap" type="button">
-                            <img src="" alt="" style="width: 20px; height: 20px;">
+                        
+                        <!-- 스크랩버튼 -->
+                        <button id="btn_scrap" type="button" onclick="LikeAndScrap(2)">
                             	스크랩
-                            <span id="btn_num">${ bl.blScrap }</span>
                         </button>
+                        
+                        
                     </div>
                 </div>
-
+		
+                
+	<script>
+	function btnLike(){
+    	
+    	var loginUser = "<c:out value='${loginUser}'/>";
+    	//console.log(loginUser);
+    	if(!loginUser){
+    		var conf = confirm("로그인이 필요한 서비스입니다.");
+    		if(conf == true){ // 로그인창
+    			location.href = "loginForm.me"
+    		}else{ // 화면
+    			return;
+    		}
+    	}else{ // 로그인 o : 좋아요 시작
+    		var refPost = $("input [name=blNo]").val();
+    		var memNo = ${loginUser.memNo};
+    		var replyData = {"refPost" : refPost, "memNo" : memNo};
+    		
+    		// 좋아요 증가용
+	    	function insertLike(){
+	    		$.ajax({
+	                url         :   "insertLike.li",
+	                dataType    :   "text",
+	                type        :   "post",
+	                data        :   replyData,
+	                success     :   function(status){
+	                    if(status == "success") { // 좋아요 like테이블 등록성공
+	                    	$('.fas fa-heart').show();
+	                    	$('.far fa-heart').hide();
+	                    }
+	                },
+	                error:function(request, error) {
+	        			alert("fail");
+	        			// error 발생 이유를 알려준다.
+	        			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	        		}
+	            });
+	    	}
+    		
+    		   	
+    	
+    	
+    	};
+    	
+    	
+    	
+    	
+    }
+	
+	</script>
                 <!--작성자의 독서록area-->
                 <div class="booklist_area">
                     <div class="writer_box">
@@ -268,172 +330,116 @@
                     <div class="reply_info">
                     	댓글<span id="reply_count"></span>
                     </div>
+                    
                     <!--댓글작성창-->
-                    <div class="reply-input">
-                        <div class="reply-text">
-                        	<input type="hidden" name="depth" value="1">
-        					<input type="hidden" name="reply_refno" value="0">
-                            <textarea class="reply_content" id="replyContent" cols="20" rows="1" placeholder="기분 좋은 댓글은 작성자에게 힘이 됩니다 :)"></textarea>
-                            <button type="submit" class="replyBtn" onclick="addReply();">등록</button>
-                        </div>
-                        <div class="reply-img">
-                            <img src="" alt="" style="width:20px; height:20px;">
-                        </div>
-                    </div>
-                    <!--댓글목록area-->
-                    <ul id="replyArea"><!-- 댓글 ajax결과 --></ul>
+                    <input type="hidden" id="board_id" name="board_id" value="${boardView.id}" />
+			        <div align="center">
+			            <table width="1200px">
+			                <tr>
+			                    <td width="500px">
+			                        <input type="hidden" id="reply_writer" name="memNo" value="${loginUser.memNo }" style="width:170px;" maxlength="10" value="닉넴">
+			                        <button id="reply_save" name="reply_save">댓글 등록</button>
+			                    </td>
+			                </tr>
+			                <tr>
+			                    <td>
+			                        <textarea id="reply_content" name="replyContent" rows="4" cols="50" placeholder="댓글을 입력하세요."></textarea>
+			                    </td>
+			                </tr>
+			            </table>
+			            <table width="1200px" id="reply_area">
+			                <tr reply_type="all" height="10px" > <!-- 뒤에 댓글 붙이기 쉽게 선언 -->
+			                </tr>
+			                <!-- 댓글이 들어갈 공간 -->
+			            </table>
+			        </div>
+			        
                 </div>
-
+                
+                
+                
             </div>
         </div>
     </div>
             
 	<script>
 		$(function(){
-			selectReplyList();
-		});
+			var status = false; //수정과 대댓글을 동시에 적용 못하도록
+            
+            // 일반 댓글 작성
+            $("#reply_save").click(function(){
+                 
+                if($("#memNo").val() == ""){
+                    alert("로그인이 필요합니다.");
+                    return false;
+                }
+                if($("#reply_content").val().trim() == ""){
+                    $("#reply_content").focus();
+                    return false;
+                }
+                 
+                var replyData = {
+						refPost         : $("input[name=blNo]").val(),
+						replyRefNo      : "0",  
+                        depth           : "0",
+                        memNo           : ${loginUser.memNo},
+                        replyContent    : $("#reply_content").val()
+                };
+                
+                var replyNo;
+                var replyContent = $("#reply_content").val()
+                
+                $.ajax({
+                    url         :   "rinsertAjax.bl",
+                    dataType    :   "text",
+                    type        :   "post",
+                    data        :   replyData,
+                    success     :   function(status){
+                        if(status != "success") {
+                            console.log("실패");
+                        }else{
+                            var replyNo =  status.replyNo;
+                            var replyContent =  status.replyContent;
+                        }
+                    },
+                    error:function(request, error) {
+            			alert("fail");
+            			// error 발생 이유를 알려준다.
+            		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+            		}
+                });
+                
+                var reply_area = $("#reply_area"); // 댓글테이블
+                 
+                var reply = 
+                    '<tr reply_type="main">'+
+                    '   <td width="820px">'+ replyContent + '</td>'+
+                    '   <td width="100px">'+ ${loginUser.memNo} + '</td>'+
+                    '   <td align="center">'+
+                    '       <button name="reply_reply" reply_no = "' + replyNo + '">댓글</button>'+
+                    '       <button name="reply_modify" r_type = "main" reply_no = "' + replyNo + '">수정</button>'+
+                    '       <button name="reply_del" reply_no = "' + replyNo +'">삭제</button>      '+
+                    '   </td>'+
+                    '</tr>';
+                     
+                 if($('#reply_area').contents().size()==0){ // 댓글 영역에 댓글이 없으면
+                     $('#reply_area').append(reply);
+                 }else{ // 있으면 마지막 댓글 뒤에
+                     $('#reply_area tr:last').after(reply);
+                 }
+
+                //댓글 초기화
+                $("#reply_writer").val("");
+                $("#reply_content").val("");
+            });
+             
+             
+        });
 		
-		// 댓글 리스트 조회용 ajax
-		function selectReplyList(){
-			$.ajax({
-				url:"rlistAjax.bl",
-				data:{blNo:${bl.blNo}},
-				success: function(list){
-					$("#reply_count").text(list.length);
-						
-	 				var result = "";
-	 				var subResult = "";
-	 				
-					for(var i in list){
-	 					
-	 					if(list[i].replyRefNo == 0){ // 참조하는 댓글 == 0
-	  					result +=
-	  						// 원댓글
-	                          '<li id="" class="comment-wrap">' +
-	                              '<div class="comment_area">' +
-	                                  '<a href="" class="comment_thumb"><img src="" width="36" height="36" id="comment_thumb_img"></a>' +
-	                                  '<input type="hidden" id="reNo" name="replyNo" value="' + list[i].replyNo + '">' +
-	                                  '<input type="hidden" name="replyRefNo" value ="'+ list[i].replyRefNo +'">' +
-	                                  '<div class="comment_box">' +
-	                                      '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>' +
-	                                      '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>' +
-	                                      '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
-	                                      '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' + '<a href="" class="btn_report">신고</a></div>' +
-	                                      '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><button id="addRecomment">답글쓰기</button></div></div>' +
-	                                  '</div>' +
-	                              '</div>' +
-	                               
-	                              // 대댓글 작성창
-	                              '<div class="reply-input" id="popup" style="display:none;">' +
-                                  '<div class="reply-text">' +
-	                                  '<input type="hidden" name="depth" value="2">' +
-	                  				  '<input type="hidden" name="reply_refno" value="' + list[i].replyNo + '">' +
-	                                      '<textarea class="reply_content" id="recoContent" cols="20" rows="1" placeholder="기분 좋은 댓글은 작성자에게 힘이 됩니다 :)"></textarea>' +
-	                                      '<button type="submit" class="replyBtn" onclick="addReco();">등록</button>' +
-	                                      '<button id="removeRecomment">취소</button>' +
-                                  '</div>' +
-                                  '</div>' +
-	                         '</li>' +
-	                         '<div class="subReply' + list[i].replyNo + '"></div>'
-	 					}	
-						$("#replyArea").html(result);
-						
-						// 대댓글버튼
-						$("button[id='addRecomment']").click(function(){
-							$('#popup').show();
-						});
-						$("button[id='removeRecomment']").click(function(){
-							$('#popup').hide();
-						});
-						
-						
-							
-						if(list[i].replyRefNo != 0){ // 참조하는 댓글 != 0
-							subResult +=
-								// 대댓글
-	                            '<li id="" class="comment-wrap comment_area-recomment">' +
-	                                '<div class="comment_area">' +
-	                                    '<a href="" class="comment_thumb"><img src="" width="36" height="36" id="comment_thumb_img"></a>' +
-	                                    '<input type="hidden" id="replyNo" name="replyNo" value="' + list[i].replyNo + '">' +
-	                                    '<input type="hidden" name="replyRefNo" value ="'+ list[i].replyRefNo +'">' +
-	                                    '<div class="comment_box">' +
-	                                        '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>'+
-	                                        '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>'+
-	                                        '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
-	                                        '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span><a href="" class="btn_report">신고</a></div>' +
-	                                        '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><a href="javascript:void(0)" id="addRecomment" onclick="addBtn();">답글쓰기</a></div></div>' +
-	                                    '</div>' +
-	                                '</div>' + 
-	                            '</li>' +
-	                            '<div class="subReply' + list[i].replyNo + '"></div>'
-	 					}
-						$(".subReply"+list[i].replyRefNo).html(subResult);
-	 				}// for문끝
-					
-				},error: function(jqXHR, textStatus, errorThrown){ 
-					console.log(jqXHR); 
-					console.log(textStatus); 
-					console.log(errorThrown); 
-				}
-			})
-		};
 		
-		// 댓글 작성용 ajax
-		function addReply(){
-			if($("#replyContent").val().trim().length != 0){
-				$.ajax({
-					url:"rinsertAjax.bl",
-					dataType:'text',
-					data:{
-						memNo:${loginUser.memNo},
-						refPost:$("input[name=blNo]").val(),
-						replyContent:$("#replyContent").val(),
-						replyRefNo:$("input[id=replyNo]").val(),
-						depth:$("input[name=depth]").val()
-					},success: function(status){
-						if(status == "success"){
-							selectReplyList();
-							$("#replyContent").val("");
-						}
-					},error: function(jqXHR, textStatus, errorThrown){ 
-			  			console.log(jqXHR); 
-			  			console.log(textStatus); 
-			  			console.log(errorThrown); 
-			  		}
-				})
-			}
-		};
 		
-		// 대댓글 작성용 ajax
-		function addReco(){
-			if($("#recoContent").val().trim().length != 0){
-				$.ajax({
-					url:"recoinsertAjax.bl",
-					dataType:'text',
-					data:{
-						memNo:${loginUser.memNo},
-						refPost:$("input[name=boNo]").val(),
-						replyContent:$("#recoContent").val(),
-						replyRefNo:$("#reNo").val(),
-						depth:$("input[name=depth]").val()
-					},success: function(status){ 
-						
-						if(status == "success"){
-							console.log('success:성공');
-							selectReplyList();
-							$("#replyContent").val("");
-						}else if(status == "fail"){
-							console.log('success:실패');
-						}else{
-							console.log('success:데이터오류?' + data);
-						}
-						
-					},error: function(request,status,error){ 
-						console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-			  		}
-				})
-			}
-		}
+
 	</script>
             
 
