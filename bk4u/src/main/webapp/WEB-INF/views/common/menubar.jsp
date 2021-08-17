@@ -22,13 +22,13 @@
 <style>
     #header{
         width:1200px;
-        height:100px;
+        height:auto;
         padding-top: 20px;
         margin:auto;
     }
     #header>div{width:100%; margin-bottom:10px}
     #header_1{height:40%;}
-    #header_2{height:60%;}
+    #header_2{height:50px;}
 
     #header_1>div{
         height:100%;
