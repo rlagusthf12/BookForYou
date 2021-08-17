@@ -19,6 +19,9 @@
         div{
             border: 1px solid red;
         }*/
+        
+		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        *{font-family: "Noto Sans KR", sans-serif;}
 
         .wrap {
             width: 1200px;

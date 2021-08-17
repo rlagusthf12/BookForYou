@@ -24,6 +24,8 @@ public class Rental {
 	public String rentalStatus;
 	public String bkTitle;
 	public String bkPublish;
+	public String introOriginName;
+	public String introChangeName;
 	public String writerName;
 	public String storeName;
 	public String bkLct;

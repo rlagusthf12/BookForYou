@@ -20,6 +20,9 @@
             margin-top: 150px;
             margin-bottom: 80px;
         }
+        
+		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+        *{font-family: "Noto Sans KR", sans-serif;}
 
         .wrap>div {
             width: 100%;
@@ -241,7 +244,7 @@
                 </table>
 
                 <div id="book_img">
-                    <img src="">
+                    <img src="${ rt.introChangeName }">
                 </div>
 
                 <div id="book_info">
