@@ -187,7 +187,6 @@
                     <tr>
                         <th scope="col">주문번호</th>
                         <th scope="col">주문일(결제일)</th>
-                        <th scope="col">결제상태</th>
                         <th scope="col">주문상태</th>
                         <th scope="col">cs상태</th>
                         <th scope="col">배송상태</th>
@@ -198,7 +197,6 @@
 	                    <tr>
 	                        <td id="odNo">${ od.orderNo }</td>
 	                        <td>${ od.orderDate }</td>
-	                        <td>${ od.payStatus }</td>
 	                        <td>${ od.orderStatus }</td>
 	                        <td>${ od.csStatus }</td>
 	                        <td>${ od.deliveryStatus }</td>
@@ -357,13 +355,13 @@
                     <table class="table table-bordered table-sm vertical">
                         <tr>
                             <th>주문 금액</th>
-	                            <td id="price">${ od.orderPrice }</td>
+	                        <td id="price">${ od.orderPrice }</td>
                             <th>결제 금액</th>
                             <td id="total2"${ od.payAmount }></td>
                         </tr>
                         <tr>
                             <th>추가금</th>
-                            	<td id="add">${ od.addPrice }</td>
+                           	<td id="add">${ od.addPrice }</td>
                             <th>적립 포인트</th>
                             <td id="givPoint"></td>
                         </tr>
@@ -377,14 +375,10 @@
                             		<td width="300px;">-</td>
                             	</c:otherwise>
                             </c:choose>
-                            <th>결제 수단</th>
-                            <td>${ oPay.payWay }</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
                             <td id="point">0</td>
-                            <th>결제 상태</th>
-                            <td>${ oPay.status }</td>
                         </tr>
                         <tr>
                             <th>합계</th>

@@ -87,7 +87,7 @@
     .best-seller, .book-report {font-size:14px;}
 
     /* 독서록 */
-    .book-report .content{margin: 0 20px;}
+    .book-report .content{margin: 0 30px;}
     .book-report-top > div{display: inline-block;}
     .book-report-top p{margin:0px;}
     .user-img-area img{border-radius: 5px;}
