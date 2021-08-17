@@ -82,10 +82,11 @@
     .user-img-area img{border-radius: 5px;}
     .book-report-middle{border:1px solid grey; padding:10px; margin: 10px 0 10px 0;}
     .book-report-middle .book-info{margin: 0 10px 0 0px;}
-    .book-report-bottom{border:1px solid grey; padding:10px; width:350px;}
+    .book-report-bottom{border:1px solid grey; padding:10px; width:350px; height:120px;}
     .writer-date{float:right;}
     .like{position:absolute; margin:35px 0 0 140px;}
     .book-title, .book-writer, .book-publish{margin:5px 0;}
+    .book-report-bottom p{margin:0px; display:inline-block;}
 
     /* star-rating */
     .star-rating{
@@ -109,11 +110,12 @@
     .rate:not(:checked) > label:before {
         content: '★ ';
     }
-    /*
+    
     .rate > input:checked ~ label {
         color: #ffc700;    
     }
-    */
+    
+    
     /*
     .rate:not(:checked) > label:hover,
     .rate:not(:checked) > label:hover ~ label {
@@ -127,10 +129,12 @@
         color: #c59b08;
     }
     */
+    
 </style>
 
 <script>
 	$(function(){
+		/* 베스트 셀러 불러오기 */
 		$.ajax({
 			url:"getMainBestSeller.bk",
 			success:function(bestSeller){
@@ -171,8 +175,115 @@
 			}
 		})
 		
+		/* 인기 독서록 불러오기 */
+		$.ajax({
+			url:"getMainBookReport.bl",
+			success:function(bookReport){
+				console.log(bookReport);
+				
+				for(let i=0; i<bookReport.length; i++) {
+					
+					let bkTitle = bookReport[i].bkTitle;
+					let bkPublish = bookReport[i].bkPublish;
+					let writerName = bookReport[i].writerName;
+					let blLike = bookReport[i].blLike;
+					let blRate = bookReport[i].blRate;
+					let blTitle = bookReport[i].blTitle;
+					let blContent = bookReport[i].blContent;
+					let blWriter = bookReport[i].blWriter;
+					let blCdate = bookReport[i].blCdate;
+					let introChangeName = bookReport[i].introChangeName;
+			
+					
+					// 날짜
+					let month = blCdate.split("월")[0];
+					if(month.length < 2) {
+						month = "0" + month;
+					}
+					let year = blCdate.split(",")[1];
+					let day = blCdate.split("월 ")[1].split(",")[0];
+					if(day.length < 2) {
+						day = "0" + day;
+					}
+					cDate = year + "-" + month + "-" + day;
+					
+					// 글자수
+					if(bkTitle.length > 11) {
+						bkTitle = bkTitle.substring(0, 9) + "...";
+					}
+					if(bkPublish.length > 5) {
+						bkPublish = bkPublish.substring(0, 5) + "...";
+					}
+					if(writerName.length > 5) {
+						writerName = writerName.substring(0, 5) + "...";
+					}
+					
+					if(blContent.length > 70) {
+						blContent = blContent.substring(0, 70) + "...";
+					}
+					
+					
+					
+					let content = `<div class="content">
+						                <div class="book-report-top">
+						                <div class="user-img-area">
+						                    <img src="resources/adminCommon/images/person.png" alt="" width="70px;" height="70px;">
+						                </div>
+						                <div class="user-name"><p>` + blWriter + `</p></div>
+						                <div class="writer-date">` + cDate + `</div>
+						                <div class="like">
+						                    <img src="resources/adminCommon/images/like.png" alt="" width="25px;" height="25px;">	` +
+						                    blLike + `
+						                </div>
+						            </div>
+						            <div class="book-report-middle">
+						                <img src=` + introChangeName + ` alt="..." width="140px;" height="170px;">
+						                <div class="book-info">
+						                    <div class="book-title">` + bkTitle + `</div>
+						                    <div class="book-writer">` + writerName + `</div>
+						                    <div class="book-publish">` + bkPublish + `</div>
+						
+						                    <div class="star-rating">
+						                        <div class="rate">
+						                            <input type="radio" id="star5" name="rate" value="5" />
+						                            <label for="star5" title="text">5 stars</label>
+						                            <input type="radio" id="star4" name="rate" value="4" />
+						                            <label for="star4" title="text">4 stars</label>
+						                            <input type="radio" id="star3" name="rate" value="3" />
+						                            <label for="star3" title="text">3 stars</label>
+						                            <input type="radio" id="star2" name="rate" value="2" />
+						                            <label for="star2" title="text">2 stars</label>
+						                            <input type="radio" id="star1" name="rate" value="1" />
+						                            <label for="star1" title="text">1 star</label>
+						                        </div>
+						                    </div>
+						                </div>
+						                
+						            </div>
+						            <div class="book-report-bottom">
+						                <p>` + blContent + `</p>
+						            </div>
+						        </div>`;
+						     
+					// 별점
+					for(var j=1; j<=blRate; j++) {
+						$("input[name='rate']").each(function(){
+							if($(this).val() <= blRate){
+								$(this).prop("checked", true);								
+							}
+						})
+					}        
+					$(".book-report .content-area").append(content);
+				}
+			},
+			error:function(){
+				console.log("인기 독서록 ajax 통신 실패");
+			}
+		})
 		
 	})
+	
+	
 </script>
 <body>
 	
@@ -363,126 +474,9 @@
             <div class="content-more"><p>더보기 ></p></div>
             <br><br><br>
             <div class="content-area">
-                <div class="content">
-                    <div class="book-report-top">
-                        <div class="user-img-area">
-                            <img src="resources/adminCommon/images/person.png" alt="" width="70px;" height="70px;">
-                        </div>
-                        <div class="user-name"><p>붘붘님</p></div>
-                        <div class="writer-date">2021-08-01</div>
-                        <div class="like">
-                            <img src="resources/adminCommon/images/like.png" alt="" width="25px;" height="25px;">
-                            300
-                        </div>
-                    </div>
-                    <div class="book-report-middle">
-                        <img src="resources/book/2021080900100934878.png" alt="..." width="140px;" height="170px;">
-                        <div class="book-info">
-                            <div class="book-title">지적 대화를 위한 넓고 얕은 지식 </div>
-                            <div class="book-writer">채사장</div>
-                            <div class="book-publish">한빛비즈</div>
-
-                            <div class="star-rating">
-                                <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="book-report-bottom">
-                        <p>있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은  ... 더보기</p>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="book-report-top">
-                        <div class="user-img-area">
-                            <img src="resources/adminCommon/images/person.png" alt="" width="70px;" height="70px;">
-                        </div>
-                        <div class="user-name"><p>붘붘님</p></div>
-                        <div class="writer-date">2021-08-01</div>
-                        <div class="like">
-                            <img src="resources/adminCommon/images/like.png" alt="" width="25px;" height="25px;">
-                            300
-                        </div>
-                    </div>
-                    <div class="book-report-middle">
-                        <img src="resources/book/2021080900100934878.png" alt="..." width="140px;" height="170px;">
-                        <div class="book-info">
-                            <div class="book-title">지적 대화를 위한 넓고 얕은 지식 </div>
-                            <div class="book-writer">채사장</div>
-                            <div class="book-publish">한빛비즈</div>
-
-                            <div class="star-rating">
-                                <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="book-report-bottom">
-                        <p>있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은  ... 더보기</p>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="book-report-top">
-                        <div class="user-img-area">
-                            <img src="resources/adminCommon/images/person.png" alt="" width="70px;" height="70px;">
-                        </div>
-                        <div class="user-name"><p>붘붘님</p></div>
-                        <div class="writer-date">2021-08-01</div>
-                        <div class="like">
-                            <img src="resources/adminCommon/images/like.png" alt="" width="25px;" height="25px;">
-                            300
-                        </div>
-                    </div>
-                    <div class="book-report-middle">
-                        <img src="resources/book/2021080900100934878.png" alt="..." width="140px;" height="170px;">
-                        <div class="book-info">
-                            <div class="book-title">지적 대화를 위한 넓고 얕은 지식 </div>
-                            <div class="book-writer">채사장</div>
-                            <div class="book-publish">한빛비즈</div>
-
-                            <div class="star-rating">
-                                <div class="rate">
-                                    <input type="radio" id="star5" name="rate" value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" id="star4" name="rate" value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" name="rate" value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" name="rate" value="2" />
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" name="rate" value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div class="book-report-bottom">
-                        <p>있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은  ... 더보기</p>
-                    </div>
-                </div>
+                
+                
+                
             </div>
         </div>
         <br><br><br>

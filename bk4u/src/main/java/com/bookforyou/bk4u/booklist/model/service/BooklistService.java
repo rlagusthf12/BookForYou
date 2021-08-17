@@ -67,5 +67,10 @@ public interface BooklistService {
 	 * @author daeunlee
 	 */
 	public ArrayList<Booklist> selectTopBooklistList();
+	
+	/**
+	 * 12. [메인] 인기 독서록 불러오기 (한진)
+	 */
+	ArrayList<Booklist> selectMainBookReport();
 
 }

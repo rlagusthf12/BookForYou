@@ -131,4 +131,12 @@ public class BooklistServiceImpl implements BooklistService{
 		return null;
 	}
 
+	/**
+	 * [메인] 인기 독서록 불러오기 (한진)
+	 */
+	@Override
+	public ArrayList<Booklist> selectMainBookReport() {
+		return blDao.selectMainBookReport(sqlSession);
+	}
+
 }

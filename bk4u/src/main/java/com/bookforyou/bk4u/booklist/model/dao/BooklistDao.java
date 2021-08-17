@@ -109,5 +109,12 @@ public class BooklistDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("booklistMapper.selectBooklistSearchList", map, rowBounds);
 	}
+
+	/**
+	 * [메인] 인기 독서록 불러오기 (한진)
+	 */
+	public ArrayList<Booklist> selectMainBookReport(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("booklistMapper.selectMainBookReport");
+	}
 	
 }

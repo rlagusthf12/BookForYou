@@ -300,5 +300,17 @@ public class BooklistController {
 		return changeName;
 		
 	}
-
+	
+	/**
+	 * [메인] 인기 독서록 불러오기 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("getMainBookReport.bl")
+	public ArrayList selectMainBookReport() {
+		
+		ArrayList<Booklist> bl = blService.selectMainBookReport();
+		System.out.println(bl);
+		return bl;
+	}
+	
 }
