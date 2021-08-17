@@ -80,8 +80,8 @@ public class AcouponController {
 		mv.addObject("alertMsg", "도서가 삭제되었습니다.");
 		
 		return "redirect:/CouponList.me";
-	}*/
-		return "redirect:/couponList.me";
 	}
+		return "redirect:/couponList.me";
+	}*/
 }
 	

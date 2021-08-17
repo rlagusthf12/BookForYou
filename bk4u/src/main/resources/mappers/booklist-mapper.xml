@@ -389,6 +389,7 @@
 					  	   )A
 				   )
 			 where rownum between 1 and 2
+	</select>
 
 	<!-- [메인] 인기 독서록 불러오기 (한진) -->
 	<select id="selectMainBookReport" resultMap="booklistResult">
