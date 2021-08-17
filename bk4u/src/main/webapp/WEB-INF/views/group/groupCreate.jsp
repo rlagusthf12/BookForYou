@@ -78,12 +78,12 @@
                                
                                                                    
                                 </script>
-                                    <form name="groupPlace">
+                                    <form >
                                 
                                     <tr>
                                         <td><label for="">지역검색</label></td>
                                         <td>
-                                            <select id="select_type">
+                                            <select id="select_type" name="groupPlace">
 											    <option>광역시도</option>
 											    <option>서울</option>
 											    <option>경기도</option>
@@ -96,11 +96,11 @@
 											
 											<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 											<script type="text/javascript">
-											    var f_china = ["강남구","강서구","강동구","노원구"];
-											    var f_japan = ["구리시","평택시"];
-											    var f_korea = ["비빔밥", "불고기", "삼겹살"];
-											    var f_america = ["충주시"]
-											    var foods = [ ["메뉴 선택"], f_china, f_japan, f_korea, f_america];
+											    var seoul = ["강남구","강서구","강동구","노원구"];
+											    var kyeongki = ["구리시","평택시"];
+											    var busan = ["해운대구", "광안리"];
+											    var kangwon = ["충주시"]
+											    var foods = [ ["시/도/군"], seoul, kyeongki, busan, kangwon];
 											
 											    function createTag(index) {
 											        var result = "";

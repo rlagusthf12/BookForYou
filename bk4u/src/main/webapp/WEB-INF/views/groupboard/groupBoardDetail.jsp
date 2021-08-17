@@ -27,8 +27,7 @@
 </head>
 <body>
 
-      <!--독서모임게시판상세불러오기-->
-      <jsp:include page=""/>
+      
           
         <div class="content">
 
@@ -37,12 +36,12 @@
 
                 <div align="left" style="padding-left:19px">
                     <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">모임정보</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#">소게시판</a>
-                        </li>
+                            <li class="nav-item">
+                              <a class="nav-link active" href="meet.bo">모임정보</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="meetBoard.bo">소게시판</a>
+                            </li>
                 </div>
        
             
@@ -153,7 +152,7 @@
        
 
          <!--푸터바 입력-->
-         <jsp:include page=""/>  
+         <jsp:include page="../common/footer.jsp"/>  
 
 
      </body>

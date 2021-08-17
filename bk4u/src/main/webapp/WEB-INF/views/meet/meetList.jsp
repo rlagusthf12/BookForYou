@@ -32,20 +32,27 @@
 </style>
 </head>
 <body>
-      
+           
+            <jsp:include page="../common/menubar.jsp"/>  
            
                 
               <div class="content">
       
               <div class="innerOuter"  style="padding:5% 5%;" align="center">
+             
                   
-                    <div align="left" style="padding-left:19px">
+                  <input type="hidden" value="${ groupBoardNo }">
+                  
+                   <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                              <a class="nav-link active" href="#">모임정보</a>
+                       	   <li class="nav-item">
+                              <a class="nav-link" href="detail.gbo?gno=${g.groupBoardNo}">모임정보</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="#">소게시판</a>
+                              <a class="nav-link active" href="meet.bo">정모게시판</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="meetBoard.bo">소게시판</a>
                             </li>
                     </div>
       
@@ -65,24 +72,41 @@
                                 <br>
                         </table>    
 
+						
+
                         <table border="2" width="770px">
-                            <br>
-                                <tr>
+                        <br>
+                       
+                                
+                                    
+                                
                                     <td height="180" width="570px">
-                                      <table>
-                                          <tr>
-                                              <td style="height:5px">날짜 : </td>
+                                      <table  id="selectMList">
+                                           <c:forEach var="m" items="${ selectMList }">
+                                    
+			                            <tr>
+					                            <input type="hidden" value="${m.groupBoardNo}">    
+					                            <input type="hidden" value="${m.meetNo}">  
+					                            
+                                              <td style="height:5px">날짜 : ${ m.meetDate } </td>
                                           </tr>
                                           <tr>
-                                              <td style="height:40px">장소 : </td>
+                                              <td style="height:40px">장소 :  ${ m.offlineAddress }</td>
                                           </tr>
                                           
                                           <tr>
                                               <td style="height:100px">
-                                                  참여자프로필아이콘
-                                                  data-toggle="tooltip" title="회원닉네임" 
+                                              
+                            
+					                            <input type="hidden" value="${m.groupBoardNo}">    
+					                            <input type="hidden" value="${m.meetNo}">
+					                            
+					                            <c:forEach var="ma" items="${ meetAttendList }">
+                                                   ${ ma.memId }  
+                                                </c:forEach>
                                               </td>
                                           </tr>
+                                          </c:forEach>
                                       </table>
                                     </td> 
                                     <td height="180">
@@ -103,7 +127,7 @@
                                                     var geocoder = new kakao.maps.services.Geocoder();
                                                     
                                                     // 주소로 좌표를 검색합니다
-                                                    geocoder.addressSearch('sample5_address', function(result, status) {
+                                                    geocoder.addressSearch('${ offlineAddress }', function(result, status) {
                                                     
                                                         // 정상적으로 검색이 완료됐으면 
                                                         if (status === kakao.maps.services.Status.OK) {
@@ -130,8 +154,9 @@
                                 </td>
                                 </tr>
                 
-                        
-                                </tr>
+                        		
+                                
+                                
                                
                         </table>
 
@@ -204,18 +229,23 @@
 
                     <div class="attandGroup">
                             <table width="750px" align="center">
+                            <input type="hidden" value="${g.groupBoardNo }">
+                            <input type="hidden" value="${m.meetNo }">
+                            <c:if test="${num eq 1 }">
                                 <tr>
-                                    <td>날짜</td>
-                                    <td colspan="2">시간</td>
+                                    <td>${ m.meetDate }</td>
+                                    <td colspan="2">${ m.meetTime }</td>
                                 </tr>
                                 <tr>
-                                    <td>장소 </td> 
-                                    <td align="right">가격</td>
+                                    <td>${ m.meetPlace } </td> 
+                                    <td align="right">${ m.meetPrice } 원 </td>
                                     <td width="200">
+                                    
                                         <button style="float: right; border-color: black; background-color: white; border-radius: 10px;" >취소하기</button>
                                         <button style="float: right;  border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;" >참여하기</button>
                                     </td> 
                                 </tr>
+                                </c:if>
                                 <br>
                             </table>
                     </div>

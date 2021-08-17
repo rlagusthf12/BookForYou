@@ -41,21 +41,23 @@
                     <br><br><br><br><br><br><br><br>
                 		<h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                         <br><br><br>
-						<form id="createMeet" method="post" action="createMeet.bo" enctype="multipart/form-data">
                         
+						<form id="createMeet" method="post" action="insertMeet.bo" enctype="multipart/form-data">
                         <div style="border-radius: 10%; border: solid; width: 600px;">
                         <table>
                             <br><br>
                             <h4 align="center">모임 장소 및 시간</h4>
                             <br><br>
                            
+                           <input type="hidden" value="${meetNo}">
+                           <input type="hidden" value="${groupBoardNo }"  > 
                            
 							
                             <tr>
                             
                                 <td><label>오프라인 주소</label></td>
                                 <td>
-                                <input type="text" id="sample5_address" placeholder="주소">
+                                <input type="text" id="sample5_address" placeholder="주소" name="offlineAddress">
 								<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
 								<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
                                 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -123,16 +125,16 @@
                             </tr>
                             <tr>
                                 <td><label>*모임날짜</label></td>
-                                <td><input type="date"></td>
+                                <td><input type="date" name="meetDate"></td>
                             </tr>
                             <tr>
                                 <td><label>*모임시간</label></td>
-                                <td><input type="time">~<input type="time"></td>
+                                <td><input type="time" name="meetTime"></td>
                             </tr>
                             <tr>
                                 <!-- 모임 인원보다 같거나 작아야 하는 조건 -->
                                 <td>*참여인원</td>
-                                <td><input type="number"></td>
+                                <td><input type="number" name="meetLimit"></td>
                             </tr>
                             <tr>
                                 <td>*정보공개</td>
@@ -145,7 +147,7 @@
                             </tr>
                             <tr>
                                 <td>*참여비</td>
-                                <td><input type="number">원</td>
+                                <td><input type="number" name="meetPrice">원</td>
                             </tr>
 
                         </table>

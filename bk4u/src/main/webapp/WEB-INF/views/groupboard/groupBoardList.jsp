@@ -27,19 +27,22 @@
 </head>
 <body>
   
-          
+           <jsp:include page="../group/groupDetailview.jsp"/> 
               
             <div class="content">
   
             <div class="innerOuter"  style="padding:5% 5%;" align="center">
                 <div align="left" style="padding-left:19px">
                     <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                          <a class="nav-link" href="../meet/meetList.jsp">모임정보</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link active" href="../groupboard/gorupBoardList.jsp">소게시판</a>
-                        </li>
+                       <li class="nav-item">
+                              <a class="nav-link" href="detail.gbo?gno=${g.groupBoardNo}">모임정보</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="meet.bo">정모게시판</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link active" href="meetBoard.bo">소게시판</a>
+                            </li>
                 </div>
 
                     <div align="center" style="width: 800px; border-radius: 10px; height: auto; border: 1px solid; padding-right: 20px; padding-left: 20px;"> 

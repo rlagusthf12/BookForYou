@@ -73,11 +73,26 @@
        <div class="innerOuter" style="padding:5% 8%;" align="center">
         <br><br><br><br>
     
+    			 
+      
          
             <table style="width: 800px;">
             
                 <h6 align="left"><b>독서모임게시판</b></h6>
                 <br><br>
+                
+                <div align="left" style="padding-left:19px">
+                        <ul class="nav nav-tabs">
+                       	   <li class="nav-item">
+                              <a class="nav-link active" href="redirect:detail.gbo?gno=" + g.getGroupBoardNo()">모임정보</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="meet.bo">정모게시판</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="meetBoard.bo">소게시판</a>
+                            </li>
+                    </div>
 
                 <table border="1" style="width: 800px;">
                         <tr>
@@ -121,9 +136,9 @@
                 <h6 align="left"><b>${ g.groupWriter }</b></h6>
                 
                 <form id="groupMember" method="post" action="insertGMem.me">
-                <input type="hidden" value="${ loginUser.memId }">
-                <input type="hidden" value="${ loginUser.memEmail }">
-                <input type="hidden" value="${ g.groupBoardNo }">
+                <input type="hidden" value="${ loginUser.memId eq groupMemberList.memId}">
+                <input type="hidden" value="${ loginUser.memEmail eq groupMemberList.memEmail }">
+                <input type="hidden" value="${ g.groupBoardNo eq groupMemberList.groupBoardNo }">
                 <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
                 </form>
                 <button type="submit" action="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
@@ -220,7 +235,7 @@
     
     
    
-    <jsp:include page="../meet/meetList.jsp"/>
+    <jsp:include page="../common/footer.jsp"/>
 
           
 

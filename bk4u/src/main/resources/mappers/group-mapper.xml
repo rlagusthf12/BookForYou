@@ -1,286 +1,399 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="groupMapper">
-	
+
 	<resultMap type="GroupBoard" id="groupResult">
-			<result column="group_boardno" property="groupBoardNo"/>
-			<result column="group_type" property="groupType"/>
-			<result column="group_title" property="groupTitle"/>
-			<result column="group_script" property="groupScript"/>
-			<result column="group_date" property="groupDate"/>
-			<result column="group_limit" property="groupLimit"/>			
-			<result column="group_notice" property="groupNotice"/>			
-			<result column="group_place" property="groupPlace"/>			
-			<result column="group_open" property="groupOpen"/>		
-			<result column="origin_name" property="originName"/>
-			<result column="change_name" property="changeName"/>
-			<result column="group_writer" property="groupWriter"/>
-			<result column="group_status" property="groupStatus"/>
-			<result column="group_count" property="groupCount"/>
+		<result column="group_boardno" property="groupBoardNo" />
+		<result column="group_type" property="groupType" />
+		<result column="group_title" property="groupTitle" />
+		<result column="group_script" property="groupScript" />
+		<result column="group_date" property="groupDate" />
+		<result column="group_limit" property="groupLimit" />
+		<result column="group_notice" property="groupNotice" />
+		<result column="group_place" property="groupPlace" />
+		<result column="group_open" property="groupOpen" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="group_writer" property="groupWriter" />
+		<result column="group_status" property="groupStatus" />
+		<result column="group_count" property="groupCount" />
 
-						
+
 	</resultMap>
-	
+
 	<resultMap type="GroupMember" id="groupMemberResult">
-		
-			<result column="group_boardno" property="groupBoardNo"/>
-			<result column="group_enrolldate" property="groupEnrollDate"/>
-			<result column="mem_email" property="memEmail"/>
-			<result column="group_level" property="groupLevel"/>
-			<result column="group_withdraw" property="groupWithdraw"/>
-			<result column="group_reason" property="groupReason"/>
 
-		
+		<result column="group_boardno" property="groupBoardNo" />
+		<result column="group_enrolldate" property="groupEnrollDate" />
+		<result column="mem_email" property="memEmail" />
+		<result column="group_level" property="groupLevel" />
+		<result column="group_withdraw" property="groupWithdraw" />
+		<result column="group_reason" property="groupReason" />
+
+
 	</resultMap>
 	
+	<resultMap type="Meet" id="meetResult">
+			<result column="meet_no" property="meetNo" />
+			<result column="group_boardno" property="groupBoardNo" />
+			<result column="mem_no" property="memNo" />
+			<result column="offline_address" property="offlineAddress" />
+			<result column="meet_date" property="meetDate" />
+			<result column="meet_time" property="meetTime" />
+			<result column="meet_status" property="meetStatus" />
+			<result column="meet_limit" property="meetLimit" />
+			<result column="meet_price" property="meetPrice" />
+			<result column="group_level" property="groupLevel" />
+			
 	
-	<select id="selectList" resultMap="groupResult" >
-		SELECT *              
-        FROM (SELECT ROWNUM NUM 
-            , s.group_boardno 
-            , s.group_type
-            , s.group_date
-            , s.group_title
-            , s.group_script
-            , s.group_place
-            , s.change_name
-            , s.group_status
-            FROM 
-           (SELECT * FROM GROUPBOARD 
-            WHERE GROUP_STATUS = 'Y'  
-      ORDER BY GROUP_BOARDNO DESC)s) 
-        WHERE NUM BETWEEN 1 AND 4
-          
 	
+	</resultMap>
+	
+	<resultMap type="MeetBoard" id="boardResult">
+		<result column="mboard_no" property="mBoardNo" />
+		<result column="mem_no" property="memNo" />
+		<result column="mboard_content" property="mBoardContent" />
+		<result column="mboard_createdate" property="mBoardCreateDate" />
+		<result column="mboard_status" property="mboardStatus" />
+		<result column="group_level" property="groupLevel" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="mboard_writer" property="mBoardWriter"/>
+
+	</resultMap>
+
+	<select id="selectList" resultMap="groupResult">
+		SELECT *
+		FROM (SELECT ROWNUM NUM
+		, s.group_boardno
+		, s.group_type
+		, s.group_date
+		, s.group_title
+		, s.group_script
+		, s.group_place
+		, s.change_name
+		, s.group_status
+		FROM
+		(SELECT * FROM GROUPBOARD
+		WHERE GROUP_STATUS = 'Y'
+		ORDER BY GROUP_BOARDNO DESC)s)
+		WHERE NUM BETWEEN 1 AND 4
+
+
 	</select>
-	
+
 	<select id="selectListMore" resultMap="groupResult">
-		select *             
-        FROM (SELECT ROWNUM NUM 
-            , s.group_boardno 
-            , s.group_type
-            , s.group_title
-            , s.group_script
-            , s.group_place
-            , s.change_name
-            
-              FROM 
-                    (SELECT * FROM GROUPBOARD 
-             		WHERE GROUP_STATUS = 'Y'
-                    ORDER BY GROUP_BOARDNO DESC)s) 
-        WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
-                  
-        
+		select *
+		FROM (SELECT ROWNUM NUM
+		, s.group_boardno
+		, s.group_type
+		, s.group_title
+		, s.group_script
+		, s.group_place
+		, s.change_name
+
+		FROM
+		(SELECT * FROM GROUPBOARD
+		WHERE GROUP_STATUS = 'Y'
+		ORDER BY GROUP_BOARDNO DESC)s)
+		WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
+
+
 	</select>
-	
+
 	<update id="increaseCount">
 		update
-				groupBoard
-			set group_count = group_count + 1
-		  where group_boardno = #{groupBoardNo}
-		    and group_status = 'Y' 
+		groupBoard
+		set group_count = group_count + 1
+		where group_boardno = #{groupBoardNo}
+		and group_status = 'Y'
 	</update>
 	
+	<select id="memberInfo" resultMap="groupMemberResult">
+		select
+			mem_no
+			, mem_id
+			, mem_email
+		from members	  
+	   
+	</select>
+
 	<insert id="insertGMem">
-		
-		 
-		insert 
-		  into groupMember
-		  (
-		  	group_boardno
-		  , mem_no
-		  ,	group_enrolldate
-		  ,	mem_email
-		  ,	group_level
-		  , group_withdraw
-		  , group_reason
-		  )
-		  values
-		  (
-		  	seq_gno.nextval
-		  , #{memNo} 
-		  , sysdate
-		  , #{memEmail}
-		  , #{groupLevel}
-		  , #{groupWithdraw}
-		  , #{groupReason}
-		  )
-		  
+
+
+		insert
+		into groupMember
+		(
+		group_boardno
+		, mem_no
+		, group_enrolldate
+		, mem_email
+		, group_level
+		, group_withdraw
+		, group_reason
+		)
+		values
+		(
+		seq_gno.nextval
+		, #{memNo}
+		, sysdate
+		, #{memEmail}
+		, #{groupLevel}
+		, #{groupWithdraw}
+		, #{groupReason}
+		)
+
 	</insert>
 	
+
 	<select id="groupMemberList" resultMap="groupMemberResult">
-		select
-		       group_boardno
-		      ,group_enrolldate
-		      ,group_email
-		      ,group_level
-		  from groupMember
-		  order
-		  	 by group_enrolldate desc
-				
+	SELECT
+       		GROUP_BOARDNO
+		  ,	MEM_NO
+	      , MEM_EMAIL
+	      , GROUP_ENROLLDATE
+	      
+			from groupMember m
+			where m.group_level ='GM' 
+	        order by m.group_enrolldate desc
+
 	</select>
-	
+
 	<select id="groupMemberCount" resultType="_int">
-		SELECT 
-             count(*)
-            
-              from groupBoard g 
-             where g.group_status= 'Y'
-    </select>
-	
-	<select id="selectSearchGListCount" resultType="_int">
-		SELECT 
-             count(*)
-            
-              from groupBoard g 
-             where g.group_status= 'Y'
-             
-          
-            <if test="condition == 'groupTitle'">
-            where group_title
-           </if>
-           <if test="condition == 'groupScript'">
-            and group_script
-            </if>
-           <if test="condition == 'groupPlace'">
-            and group_place
-            </if>
-	     		like '%' || #{keyword} || '%'
-             
+		SELECT
+		count(*)
+
+		from groupBoard g
+		where g.group_status= 'Y'
 	</select>
-	 
-	 
+
+	<select id="selectSearchGListCount" resultType="_int">
+		SELECT
+		count(*)
+
+		from groupBoard g
+		where g.group_status= 'Y'
+
+
+		<if test="condition == 'groupTitle'">
+			where group_title
+		</if>
+		<if test="condition == 'groupScript'">
+			and group_script
+		</if>
+		<if test="condition == 'groupPlace'">
+			and group_place
+		</if>
+		like '%' || #{keyword} || '%'
+
+	</select>
+
+
 	<select id="selectSearchList" resultMap="groupResult">
-			SELECT 
-            group_boardno 
-            , group_type
-            , group_title
-            , group_script
-            , group_place
-            , change_name
-            
-              from groupBoard g 
-             where g.group_status= 'Y'
-             
-            <choose>
-            <when test="condition == 'groupTitle'">
-            where group_title
-           </when>
-           <when test="condition == 'groupScript'">
-            and group_script
-            </when>
-            <otherwise>
-            and group_place
-            </otherwise>
-           </choose>
-	     		like '%' || #{keyword} || '%'
-             
+		SELECT
+		group_boardno
+		, group_type
+		, group_title
+		, group_script
+		, group_place
+		, change_name
+
+		from groupBoard g
+		where g.group_status= 'Y'
+
+		<choose>
+			<when test="condition == 'groupTitle'">
+				where group_title
+			</when>
+			<when test="condition == 'groupScript'">
+				and group_script
+			</when>
+			<otherwise>
+				and group_place
+			</otherwise>
+		</choose>
+		like '%' || #{keyword} || '%'
+
 	</select>
 
 
 	<insert id="insertGBoard">
 		insert
-		  into groupBoard
-		  (
-		  group_boardno
-		 ,group_type
-		 ,group_title
-		 ,group_place
-		 ,group_script
-		 ,group_limit
-		 ,change_name
-		 ,group_open
-		  )
-		  values
-		  (
-		  seq_gno.nextval
-		 ,#{groupType}
-		 ,#{groupTitle}
-		 ,#{groupPlace}
-		 ,#{groupScript}
-		 ,#{groupLimit}
-		 ,#{changeName}
-		 ,#{groupOpen}
-		  )
-	
+		into groupBoard
+		(
+		group_boardno
+		,group_type
+		,group_title
+		,group_place
+		,group_script
+		,group_limit
+		,change_name
+		,group_open
+		)
+		values
+		(
+		seq_gno.nextval
+		,#{groupType}
+		,#{groupTitle}
+		,#{groupPlace}
+		,#{groupScript}
+		,#{groupLimit}
+		,#{changeName}
+		,#{groupOpen}
+		)
+
 	</insert>
-	
+
 	<select id="selectGroup" resultMap="groupResult">
 		select
-		 		group_boardno
-		 	 ,  group_title
-		 	 ,  group_writer
-		 	 , 	group_date
-			 ,  change_name
-			 ,  group_script
-			 ,  group_notice
-	     from  groupBoard
-	    where  group_boardNo = #{groupBoardNo}
+		group_boardno
+		, group_title
+		, group_writer
+		, group_date
+		, change_name
+		, group_script
+		, group_notice
+		from groupBoard
+		where group_boardNo = #{groupBoardNo}
 	</select>
-	
+
 	<update id="deleteGroup">
-		update 
-				groupBoard
-		   set group_status ='N'
-		  where group_boardno = #{groupBoardNo}
-	
-	</update>
-	
-	<update id="updateGroup">
-	
 		update
-				groupBoard
-		   set  
-		   	      group_boardno = #{groupBoardNo}
-				 ,group_writer = #{groupWriter}
-				 ,group_type = #{groupType}
-				 ,group_title = #{groupTitle}
-				 ,group_place = #{groupPlace}
-				 ,group_script = #{groupScript}
-				 ,group_limit = #{groupLimit}
-				 ,origin_name = #{originName}
-				 ,change_name = #{changeName}
-				 ,group_open = #{groupOpen}
-				 
-		 where group_boardno = #{groupBoardNo}
+		groupBoard
+		set group_status ='N'
+		where group_boardno = #{groupBoardNo}
+
+	</update>
+
+	<update id="updateGroup">
+
+		update
+		groupBoard
+		set
+		group_boardno = #{groupBoardNo}
+		,group_writer = #{groupWriter}
+		,group_type = #{groupType}
+		,group_title = #{groupTitle}
+		,group_place = #{groupPlace}
+		,group_script = #{groupScript}
+		,group_limit = #{groupLimit}
+		,origin_name = #{originName}
+		,change_name = #{changeName}
+		,group_open = #{groupOpen}
+
+		where group_boardno = #{groupBoardNo}
 	</update>
 	
+	<insert id="insertMeet">
+		insert
+		into meet
+				(
+				group_boardno
+				,meet_no
+				,offline_address
+				,online_address
+				,meet_date
+				,meet_time
+				,meet_limit
+				,meet_price
+				,group_level
+				)
+				values
+				(
+				#{groupBoardNo}
+				,seq_mno.nextval
+				,#{offlineAddress}
+				,#{onlineAddress}
+				,#{meetDate}
+				,#{meetTime}
+				,#{meetLimit}
+				,#{meetPrice}
+				,#{groupLevel}
+				)
+
+	</insert>
+	
+	<select id="selectMList" resultMap="meetResult">
+		SELECT *
+		FROM (SELECT ROWNUM NUM
+		, s.group_boardno
+		, s.meet_no
+		, s.offline_address
+		, s.meet_date
+		, s.meet_time
+
+		FROM
+		(SELECT * FROM MEET
+		WHERE MEET_STATUS = 'Y'
+		ORDER BY MEET_NO DESC)s)
+		WHERE NUM = 1
+		
+		
+	</select>	
+	
+	<select id="selectGBList" resultMap="boardResult">
+		SELECT *
+		FROM (SELECT ROWNUM NUM
+		, s.mboard_no
+		, s.memNo
+		, s.mboard_content
+		, s.mboard_createdate
+		, s.mboard_status
+		, s.originName
+		, s.changeName
+		, s.mboard_writer
+		
+		FROM
+		(SELECT * FROM MEETBOARD
+		WHERE MBOARD_STATUS = 'Y'
+		  AND GROUP_BOARDNO = #{GROUPBOARDNO}
+		ORDER BY MBOARD_NO DESC)s)
+		WHERE NUM BETWEEN 1 AND 4
+
+
+	</select>
+
 	<!-- 마이페이지에 쓰이니 삭제하지 말아주세요 -->
 	<!-- [사용자] 마이페이지 내가 속한 그룹 리스트들 개수 조회 (세아) -->
 	<select id="selectMyReadingGroupListCount" resultType="_int">
 		select
-			count(*)
-		from groupmember
+		count(*)
+		from groupMember
 		where mem_no = #{memNo}
-			and not group_level = 'N'
+		and not group_level = 'N'
 	</select>
 
 	<!-- [사용자] 마이페이지 내가 속한 그룹의 총 멤버 회원수 조회(세아) -->
 	<select id="selectMyReadingGroupMemberCount" resultType="_int">
-		select count(*)
-		from groupmember
-		where group_boardno = #{groupBoardNo} 
-			and not group_level = 'N'
+		select
+		count(*)
+		from groupMember
+		where group_boardno = #{groupBoardNo}
+		and not group_level = 'N'
 	</select>
 
 	<!-- [사용자] 마이페이지 내가 속한 그룹의 리스트 조회(세아) -->
 	<select id="selectMyReadingGroupList" resultMap="groupResult">
-		select group_boardno,
-			   m.mem_no,
-			   group_level,
-			   group_type,
-			   group_title,
-			   group_script,
-			   group_date,
-			   group_status,
-			   group_writer,
-			   origin_name,
-			   change_name
-		from groupboard g
-		join groupmember m using(group_boardno)
-		where group_status = 'Y' 
-			and not group_level = 'N' 
-			and m.mem_no=#{memNo}
+		select
+		group_boardno,
+		m.mem_no,
+		group_level,
+		group_type,
+		group_title,
+		group_script,
+		group_date,
+		group_status,
+		group_writer,
+		origin_name,
+		change_name
+		from groupBoard g
+		join groupMember m using(group_boardno)
+		where
+		group_status = 'Y'
+		and not group_level = 'N'
+		and m.mem_no=#{memNo}
 	</select>
-	
+
+
+
 </mapper>

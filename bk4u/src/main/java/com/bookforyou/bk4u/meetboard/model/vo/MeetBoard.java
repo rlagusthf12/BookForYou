@@ -19,8 +19,9 @@ public class MeetBoard {
 	private Date mBoardCreateDate;
 	private String mBoardStatus;
 	private String groupLevel;
-	private String upFileOrigin;
-	private String upFileUrl;
+	private String originName;
+	private String changeName;
+	private String mBoardWriter;
 
 	
 }
