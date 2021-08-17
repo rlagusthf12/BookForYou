@@ -14,6 +14,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 @Service
@@ -187,6 +188,14 @@ public class MemberSerivceImpl implements MemberService{
 	@Override
 	public MemberPhonebook selectRecentPhonebook(int memNo) {
 		return memberDao.selectRecentPhonebook(sqlSession, memNo);
+	}
+
+	/*
+	 * [사용자] 보유 포인트 조회 (연지)
+	 */
+	@Override
+	public ArrayList<Point> selectMemPoint(int memNo){
+		return memberDao.selectMemPoint(sqlSession, memNo);
 	}
 
 }

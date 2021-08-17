@@ -954,12 +954,12 @@
 
             <div id="point_box">
                 <div>
-                    보유 포인트 적용
+                	보유 포인트 적용
                 </div>
                 <div id="line"></div>
                 <div>
-                    <div>보유 포인트: 100원</div>
-                    <input type="text" value="0"> <button>전액</button>
+                    <div>보유 포인트: ${ point }원</div>
+                    <input type="text" name="uPoint" value="0"> <button onclick="pointSelect()">전액</button>
                 </div>
                 <div align="center">
                     <button type="submit" class="btn_apply">포인트 적용</button>
@@ -993,8 +993,22 @@
                     $("#point_box").css('display', 'none');
                 });
 
+                /*
                 $("#point_box>div:nth-child(3)>button").click(function(){
                     $("#point_box input[type=text]").val("100");
+                });
+                */
+            </script>
+            
+            <script>
+            	function pointSelect(){
+            		$("#point_box input[name=uPoint]").val(${ point });
+            	}
+            	
+            	$("#point_box .btn_apply").click(function(){
+            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text($("#point_box input[name=uPoint]").val() + "원");
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } - $("#point_box input[name=uPoint]").val() + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(${ allPrice } - $("#point_box input[name=uPoint]").val());
                 });
             </script>
 
@@ -1077,7 +1091,7 @@
   	              orderPhone: $("#shipping_info table input[name=orderPhone]").val(),
 				  orderPrice: ${ allPrice },
 				  addPrice: 0,
-				  usedPoints: 0
+				  usedPoints: $("#point_box input[name=uPoint]").val()
   	          },
   	          type:"post",
       		  success:function(result){

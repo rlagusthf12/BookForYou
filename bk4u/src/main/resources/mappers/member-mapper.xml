@@ -65,6 +65,16 @@
 		<result column="phone" property="phone"/>
 		<result column="mem_name" property="memName"/>
 	</resultMap>
+	
+	<resultMap id="pointResult" type="Point">
+		<result column="point_no" property="pointNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="order_no" property="orderNo"/>
+		<result column="subsc_no" property="subscNo"/>
+		<result column="point_content" property="pointContent"/>
+		<result column="point_price" property="pointPrice"/>
+		<result column="occurrence_date" property="occurrenceDate"/>
+	</resultMap>
   	
   	<!-- [사용자] 비밀번호 암호화 적용 전 로그인 메서드(안세아) -->
   	<select id="loginMember" resultMap="memberResult">
@@ -609,6 +619,19 @@
 		                         where mem_no = #{memNo}
 		                         order by order_date desc)
 		                   where rownum = 1)
+ 	</select>
+ 	
+ 	<!-- [사용자] 보유 포인트 조회 (연지) -->
+ 	<select id="selectMemPoint" resultMap="pointResult">
+ 		select point_no,
+ 			   mem_no,
+ 			   order_no,
+ 			   subsc_no,
+ 			   point_content,
+ 			   point_price,
+ 			   occurrence_date
+		  from point
+		 where mem_no = #{memNo}
  	</select>
 
 </mapper>

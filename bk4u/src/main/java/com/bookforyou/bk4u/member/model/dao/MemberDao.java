@@ -11,6 +11,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 @Repository
@@ -131,6 +132,13 @@ public class MemberDao {
 	 */
 	public MemberPhonebook selectRecentPhonebook(SqlSessionTemplate sqlSession, int memNo) {
 		return sqlSession.selectOne("memberMapper.selectRecentPhonebook", memNo);
+	}
+
+	/*
+	 * [사용자] 보유 포인트 조회 (연지)
+	 */
+	public ArrayList<Point> selectMemPoint(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemPoint", memNo);
 	}
 
 	

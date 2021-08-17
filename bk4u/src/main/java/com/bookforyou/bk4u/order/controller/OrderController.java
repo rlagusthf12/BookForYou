@@ -31,6 +31,7 @@ import com.bookforyou.bk4u.order.model.service.OrderService;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
+import com.bookforyou.bk4u.point.model.vo.Point;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -378,6 +379,17 @@ public class OrderController {
 			allPrice += (b.getBkPrice() * b.getBkQty());
 		}
 		
+		ArrayList<Point> ptList = memberService.selectMemPoint(memNo);
+		int point = 0;
+				
+		for(Point p : ptList) {
+			if(p.getPointContent().equals("적립")) {
+				point += p.getPointPrice();
+			}else {
+				point -= p.getPointPrice();
+			}
+		}
+		
 		/*
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd (E)");
@@ -395,6 +407,7 @@ public class OrderController {
 		  .addObject("cList", cList)
 		  .addObject("mp", mp)
 		  .addObject("allPrice", allPrice)
+		  .addObject("point", point)
 		  .setViewName("order/orderPaymentView");
 		
 		return mv;

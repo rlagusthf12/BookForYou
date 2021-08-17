@@ -28,6 +28,7 @@ import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.service.MemberService;
 import com.bookforyou.bk4u.member.model.vo.Coupon;
 import com.bookforyou.bk4u.member.model.vo.Member;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.store.model.service.StoreService;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
 import com.bookforyou.bk4u.store.model.vo.Store;
@@ -208,9 +209,21 @@ public class BookController {
 		int cpCount = memberService.selectCouponCount(memNo);
 		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
 		
+		ArrayList<Point> ptList = memberService.selectMemPoint(memNo);
+		int point = 0;
+				
+		for(Point p : ptList) {
+			if(p.getPointContent().equals("적립")) {
+				point += p.getPointPrice();
+			}else {
+				point -= p.getPointPrice();
+			}
+		}
+		
 		mv.addObject("bList", bList)
 		  .addObject("cpCount", cpCount)
 		  .addObject("cList", cList)
+		  .addObject("point", point)
 		  .setViewName("book/bookCartList");
 		
 		return mv;

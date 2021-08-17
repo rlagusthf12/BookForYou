@@ -8,6 +8,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
+import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 public interface MemberService {
@@ -69,5 +70,10 @@ public interface MemberService {
 	 * [사용자] 최근 사용 주소록 조회 (연지)
 	 */
 	MemberPhonebook selectRecentPhonebook(int memNo);
+
+	/*
+	 * [사용자] 보유 포인트 조회 (연지)
+	 */
+	ArrayList<Point> selectMemPoint(int memNo);
 }
 

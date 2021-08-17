@@ -404,7 +404,7 @@
 		                </div>
 		                <div>
 		                    <span>보유 포인트</span>
-		                    <span>0원</span>
+		                    <span>${ point }원</span>
 		                </div>
 		                <div>
 		                    <span>총 상품 가격</span>
