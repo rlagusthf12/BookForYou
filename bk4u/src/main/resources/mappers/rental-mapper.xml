@@ -17,6 +17,7 @@
 		<result column="intro_changename" property="introChangeName"/>
 		<result column="writer_name" property="writerName"/>
 		<result column="store_name" property="storeName"/>
+		<result column="store_address" property="storeAddress"/>
 		<result column="bk_lct" property="bkLct"/>
 		<result column="mem_name" property="memName"/>
 		<result column="mem_id" property="memId"/>
@@ -66,6 +67,7 @@
 		       intro_changename,
                writer_name,
 		       store_name,
+		       store_address,
 		       bk_lct
 		  from rental r
 		  join book bk on (r.bk_no = bk.bk_no)
