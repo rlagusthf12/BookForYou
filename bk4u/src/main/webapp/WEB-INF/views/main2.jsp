@@ -13,6 +13,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <style>
+	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+       *{
+          font-family: "Noto Sans KR", sans-serif;
+       }
 	.outer{
         width:1200px;	
         margin:auto;
@@ -44,7 +48,7 @@
     .book-info{
         width:150px;
         float:right;
-        margin-right: 40px;
+        margin-right: 20px;
     }
     #recommand-title{
         margin: 20px 0 15px 0;
@@ -55,6 +59,8 @@
     
     .best-seller a, .book-report a{text-decoration:none; color:black;}
     #recommand-area .carousel-inner .carousel-item:hover{cursor:pointer;}
+    .book-img{margin-left:40px;}
+    .book-writer, .book-publish{font-size:14px; color:grey;}
 
     /* 베스트 셀러 */
     .best-seller{}
@@ -78,6 +84,7 @@
     .best-seller-info{text-align:center;}
     .best-seller-img{width:150px; margin:auto;}
     .bestSeller:hover{cursor:pointer;}
+    .best-seller, .book-report {font-size:14px;}
 
     /* 독서록 */
     .book-report .content{margin: 0 20px;}
@@ -86,13 +93,15 @@
     .user-img-area img{border-radius: 5px;}
     .book-report-middle{border:1px solid grey; padding:10px; margin: 10px 0 10px 0;}
     .book-report-middle .book-info{margin: 0 10px 0 0px;}
-    .book-report-bottom{border:1px solid grey; padding:10px; width:350px; height:120px;}
+    .book-report-bottom{border:1px solid grey; padding:10px; width:340px; height:120px;}
     .writer-date{float:right;}
-    .like{position:absolute; margin:35px 0 0 140px;}
+    .like{position:absolute; margin:35px 0 0 160px;}
     .book-title, .book-writer, .book-publish{margin:5px 0;}
-    .book-report-bottom p{margin:0px; display:inline-block;}
+    .book-report-bottom p{margin:0px; }
     .book-report .content:hover{cursor:pointer;}
-
+    .book-report-img{margin-right:20px;}
+	.user-name{font-size:15px; font-weight:600;}
+	
     /* star-rating */
     .star-rating{
         display: inline-block;
@@ -227,15 +236,15 @@
 						writerName = writerName.substring(0, 5) + "...";
 					}
 					
-					if(blContent.length > 70) {
-						blContent = blContent.substring(0, 70) + "...";
+					if(blContent.length > 80) {
+						blContent = blContent.substring(0, 80) + "...";
 					}
 					
 					let content = `<div class="content">
 										<input type="hidden" value=` + blNo + `>
 						                <div class="book-report-top">
 						                <div class="user-img-area">
-						                    <img src=` + changeImgName + ` alt="" width="70px;" height="70px;">
+						                    <img class="book-report-img" src=` + changeImgName + ` alt="" width="70px;" height="70px;">
 						                </div>
 						                <div class="user-name"><p>` + blWriter + `</p></div>
 						                <div class="writer-date">` + cDate + `</div>
@@ -329,7 +338,7 @@
 			                            <span>사이에서 인기있는 책</span>
 			                        </div>
 			                        <br>
-			                        <img src=` + introChangeName + ` alt="..." width="140px;" height="170px;">
+			                        <img class="book-img" src=` + introChangeName + ` alt="..." width="140px;" height="170px;">
 			                        <div class="book-info">
 			                            <div class="book-title">` + bkTitle + `</div>
 			                            <div class="book-writer">` + bkWriter + `</div>
@@ -353,7 +362,7 @@
 			                    <span>사이에서 인기있는 책</span>
 			                 </div>
 			                 <br>
-			                 <img src=` + bookList[0].introChangeName + ` width="140px;" height="170px;">
+			                 <img class="book-img" src=` + bookList[0].introChangeName + ` width="140px;" height="170px;">
 			                 <div class="book-info">
 			                     <div class="book-title">` + bookList[0].bkTitle + `</div>
 			                     <div class="book-writer">` + bookList[0].writerName + `</div>
@@ -455,7 +464,6 @@
 	                        <div class="carousel-item active" data-bs-interval="10000">
 	                            
 	                        </div>
-	                        
 	                    </div>
 	                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
 	                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -479,8 +487,6 @@
 		                        <div class="carousel-item active" data-bs-interval="10000">
 		                            
 		                        </div>
-		                        
-		                        
 		                    </div>
 		                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
 		                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -497,7 +503,7 @@
         </div>
 
         <div class="best-seller">
-            <div class="content-title"><p>베스트 셀러</p></div>
+            <div class="content-title"><p>베스트 셀러</p></div><br>
             <div class="content-more"><a href="">더보기 ></a></div>
             <br><br><br>
             <div class="content-area">
@@ -506,12 +512,10 @@
         </div>
         <br><br><br>
         <div class="book-report">
-            <div class="content-title"><p>인기 독서록</p></div>
+            <div class="content-title"><p>인기 독서록</p></div><br>
             <div class="content-more"><a href="list.bl">더보기 ></a></div>
             <br><br><br>
             <div class="content-area">
-                
-                
                 
             </div>
         </div>
