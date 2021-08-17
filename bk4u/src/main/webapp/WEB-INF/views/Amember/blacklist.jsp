@@ -205,65 +205,31 @@
                 </tr>
             </thead>
             <tbody>
+            	<c:forEach var="as" items="${ list }">
                 <tr data-toggle="modal" data-id="1" data-target="#ptable">
-                    <td height="80">1</td>
-                    <td>user01</td>
-                    <td>북포유</td>
-                    <td>bk4u@naver.com</td>
-                    <td>2021-07-21</td>
-                    <td>테스트 계정</td>
+                    <td height="80">${ as.memNo }</td>
+                    <td>${ as.memId }</td>
+                    <td>${ as.memName }</td>
+                    <td>${ as.memEmail }</td>
+                    <td>${ as.memEnrolldate }</td>
+                    <td>${ as.blackReason }</td>
                     <td><button type="button" class="btn btn-danger">삭제</button></td>
                     
-                </tr>
-                <tr data-toggle="modal" data-id="2" data-target="#ptable">
-                    <td height="80">2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-danger">삭제</button></td>
-                </tr>
-                <tr data-toggle="modal" data-id="3" data-target="#ptable">
-                    <td height="80">3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-danger">삭제</button></td>
-                </tr>
-                <tr data-toggle="modal" data-id="4" data-target="#ptable">
-                    <td height="80">4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-danger">삭제</button></td>
-                </tr>
-                <tr data-toggle="modal" data-id="5" data-target="#ptable">
-                    <td height="80">5</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-danger">삭제</button></td>
-                </tr>
+                </tr>                
+                </c:forEach>
             </tbody>
         </table>
-
+</div>
         <br><br>
 
         <div id="paging-wrap">
             <ul class="pagination">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
                 <li class="page-item disabled"><a class="page-link">다음</a></li>
             </ul>
         </div>

@@ -50,6 +50,12 @@
            margin-top: 30px;
            text-align: center;
        }
+    /* 처리 버튼 */
+        .btn{
+            padding:0.1em 0.5em;
+            font-size: 14px;
+        }
+        #del-btn, #commit-btn{display:inline-block;}
     
     /* 페이징 스타일 */
     #paging-wrap, input::placeholder{font-size: 25px; margin-left: 500px; }
@@ -151,26 +157,28 @@
         /*모달창 css*/
         #del-btn{display:inline-block;}
     </style>
+    
+    
     <script>
     
     /* Click on select all checkbox */
-    $("#result-div thead input[type='checkbox']").click(function(){
+    $("#coupon-div thead input[type='checkbox']").click(function(){
     	
     	if($(this).prop("checked")){
-    		$("#result-div tbody input[type='checkbox']").each(function(){
+    		$("#coupon-div tbody input[type='checkbox']").each(function(){
     			$(this).prop("checked", true);
     		})
     	}else {
-    		$("#result-div tbody input[type='checkbox']").each(function(){
+    		$("#coupon-div tbody input[type='checkbox']").each(function(){
     			$(this).prop("checked", false);
     		})
     	}
     })
     
     /* Click on another checkbox can affect the select all checkbox */
-	        $("#result-div tbody input[type='checkbox']").click(function(){
-	        	if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
-	        		$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+	        $("#coupon-div tbody input[type='checkbox']").click(function(){
+	        	if($("#coupon-div tbody input[type='checkbox']:checked").length == $("#coupon-div tbody input[type='checkbox']").length || !this.checked){
+	        		$("#coupon-div thead input[type='checkbox']").prop("checked", this.checked);
 	        	}
 	        })
     /* 쿠폰 삭제 (다중 체크박스) */
@@ -181,17 +189,7 @@
 		    	});
 		    	location.href="couponDelete.me?selectedCoupon=" + checkArr;
 		    })
-	 /* 테이블 행 선택 */  
-    $(".couponD").click(function(){
-	        	
-	        	var td = $(this);
-	        	
-	        	var couponNo = td.text();
-	        	location.href='couponList.me?cNo=' + cNo;
-	        	
-	        })
-	        
-	    })
+		    
     </script>
     
 </head>
@@ -210,18 +208,16 @@
     <br><br><br>
     <hr>    
  
-    <h3>등록한 쿠폰 리스트와 쿠폰의 게시여부를 보실 수 있습니다.</h3> 
-   
-    	<button type="button" class="btn btn-warning btn-lg" data-toggle="modal"  data-target="#msearch" style="margin-left: 450px;">쿠폰 등록하기</button>
-    <div id="del-btn">
-    	<button type="button" id="delete-coupon" class="btn btn-danger btn-lg">쿠폰 삭제하기</button>
+    <h3>등록한 쿠폰 리스트와 쿠폰의 게시여부를 보실 수 있습니다.</h3>
+    
+    <div id="commit-btn">
+   		<button type="button" data-toggle="modal"  data-target="#msearch">쿠폰 등록하기</button>
     </div>
-   
- <div id="result-div">
-   <table border="1" width="1200" height="200">
+    
+ <div id="coupon-div">
+   <table border="1" class="table table-bordered table-sm">
    	<thead>
-        <tr height="50">
-            <th width="70"><input type="checkbox" name="chBox" id="allCheck"> 선택</th>
+        <tr height="50">           
             <th width="80">쿠폰번호</th>
             <th>쿠폰명</th>
             <th>카테고리</th>
@@ -234,21 +230,19 @@
      <tbody>
         <c:forEach var="c" items="${ list }">
         <tr>
-            <td height="70"><input type="checkbox" name="cCheck" id="delCoupon"  value="${c.couponNo}"></td>
-            <td class="couponD">${ c.couponNo }</td>
+            <td >${ c.couponNo }</td>
             <td>${ c.couponName }</td>
             <td>${ c.couponKind }</td>
             <td>${ c.couponStartDate }</td>
             <td>${ c.couponEndDate }</td>
             <td>${ c.couponStatus }</td>
-            <td><button type="submit" id="del">삭제</button></td>
+            <td><button type="button" onclick="location.href='couponDelete.me?cno=${c.couponNo}'">삭제</button></td>
         </tr>
         </c:forEach>    
       </tbody>  
     </table>
 </div>
-	
-	
+    	
 	<!--  
 	 <script>
             $('#delCoupon').click(function(){
@@ -305,7 +299,7 @@
 
      <!-- 회원검색 모달 -->
      <div class="modal" id="msearch">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg"> 
             <div class="modal-content">
         
                 <!-- Modal Header -->
@@ -316,7 +310,7 @@
         
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <!-- 검색 바 -->
+    <!-- 검색 바 -->
     <div class="a_content">
         <div id="search-area">
             <form action="amSearch.me">
@@ -399,12 +393,12 @@
         
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">등록</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+	                <button type="button" class="btn btn-primary" data-dismiss="modal">등록</button>
+	                <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 </body>
 </html>

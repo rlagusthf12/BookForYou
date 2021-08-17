@@ -8,6 +8,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주소록</title>
+    
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css"></script>
+    <!-- 부트스트랩에서 제공하고 있는 스타일 -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -189,7 +197,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-toggle="modal" data-id="1" data-target="#ptable">
+                    <tr onclick="" data-toggle="modal" data-id="1" data-target="#ptable">
                         <td height="80">집</td>
                         <td>경기도 수원시</td>
                         <td>010-1234-1111</td>
@@ -230,7 +238,7 @@
                 
                 
         <!-- 추가 버튼 모달 -->
-    <div class="modal" id="add">
+    <div class="modal" id="ptable">
         <div class="modal-dialog">
             <div class="modal-content">
         
@@ -264,14 +272,14 @@
         </div>
     </div>
 
-         <!-- 테이블 클릭시 수정 모달 -->
-         <div class="modal" id="ptable">
+         <!-- 버튼 클릭시 추가 모달 -->
+         <div class="modal" id="add">
             <div class="modal-dialog">
             <div class="modal-content">
         
                 <!-- Modal Header -->
                 <div class="modal-header">
-                <h4 class="modal-title">주소록 수정</h4>
+                <h4 class="modal-title">주소록 추가</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
         
@@ -284,8 +292,7 @@
                 <br>
                 <br>
                 <input type="text" size="50" maxlength="30" placeholder=" 기본주소" value=""><br><br>
-                <input type="text" size="50" maxlength="30" placeholder=" 상세주소" value=""><br>
-                <br>
+
                 연락처<br>
                 <input type="text" size="30" maxlength="13" placeholder="010-XXXX-XXXX" value="">
             </div>

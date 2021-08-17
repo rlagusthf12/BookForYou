@@ -66,17 +66,13 @@ public class AcouponController {
 		return "Acoupon/couponList";
 	}
 	
+	//쿠폰삭제 (형우)
 	@RequestMapping("couponDelete.me")
-	public String adminBookDelete(ModelAndView mv,
-									@RequestParam(value="selectedCoupon") List<String> cNoArr) {
+	public String couponDelete(ModelAndView mv, String cno) {
+					
+			int result = acService.deleteCoupon(cno);
 		
-		for(String cn : cNoArr) {		
-			int CouponDelete = acService.deleteCoupon(cn); 
-		}
-		
-		mv.addObject("alertMsg", "도서가 삭제되었습니다.");
-		
-		return "redirect:/CouponList.me";
+		return "redirect:/couponList.me";
 	}
 }
 	

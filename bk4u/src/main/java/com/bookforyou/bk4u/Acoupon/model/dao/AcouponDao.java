@@ -34,7 +34,7 @@ public class AcouponDao {
 		return (ArrayList)sqlSession.selectList("couponDetailMapper.selectAcouponList", null, rowBounds);
 	}
 	//쿠폰삭제
-	public int deleteCoupon(SqlSessionTemplate sqlSession, String cn) {
-		return sqlSession.delete("couponDetailMapper.deleteCoupon", cn);
+	public int deleteCoupon(SqlSessionTemplate sqlSession, String cno) {
+		return sqlSession.delete("couponDetailMapper.deleteCoupon", cno);
 	}
 }

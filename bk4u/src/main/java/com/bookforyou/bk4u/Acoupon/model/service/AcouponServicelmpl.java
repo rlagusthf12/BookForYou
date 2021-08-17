@@ -36,9 +36,10 @@ public class AcouponServicelmpl implements AcouponService{
 		return acDao.selecltAcouponList(sqlSession, pi);
 	}
 
+	//쿠폰 삭제
 	@Override
-	public int deleteCoupon(String cn) {
-		return acDao.deleteCoupon(sqlSession, cn);
+	public int deleteCoupon(String cno) {
+		return acDao.deleteCoupon(sqlSession, cno);
 	}
 
 	

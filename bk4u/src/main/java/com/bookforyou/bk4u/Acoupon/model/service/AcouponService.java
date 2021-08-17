@@ -19,7 +19,7 @@ public interface AcouponService {
 	int insertAcoupon(Acoupon c) ;
 
 	// 쿠폰삭제
-	int deleteCoupon(String cn);
+	int deleteCoupon(String cno);
 
 
 	
