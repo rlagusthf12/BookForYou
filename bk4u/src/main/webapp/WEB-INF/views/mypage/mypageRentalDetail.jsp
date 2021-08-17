@@ -17,8 +17,6 @@
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 150px;
-            margin-bottom: 80px;
         }
         
 		@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -73,7 +71,11 @@
             height: 300px;
             margin-top: 20px;
             margin-left: 75px;
-            background-color: aliceblue;
+        }
+        
+        #main_content #book_img img{
+            width: 100%;
+            height: 100%;
         }
 
         #main_content #book_info{

@@ -26,8 +26,7 @@
         .wrap {
             width: 1200px;
             margin: auto;
-            margin-top: 150px;
-            margin-bottom: 80px;
+            margin-bottom: 50px;
         }
 
         #content {

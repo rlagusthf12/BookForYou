@@ -28,7 +28,6 @@
             width: 1200px;
             height: 1300px;
             margin: auto;
-            margin-top: 150px;
         }
 
         #content {
