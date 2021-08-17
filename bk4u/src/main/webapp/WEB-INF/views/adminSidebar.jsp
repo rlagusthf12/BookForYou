@@ -167,10 +167,7 @@
                 <ul>
                     <li>
                         <a href="amemSearch.me">회원 조회</a>
-                    </li>
-                    <li>
-                        <a href="amemDetail.me">회원 상세조회</a>
-                    </li>
+                    </li>                 
                     <li>
                         <a href="blackList.me">블랙 리스트</a>
                     </li>
