@@ -52,12 +52,15 @@
         font-weight: 600;
     }
     .bold{font-weight: 600;}
+    
+    .best-seller a, .book-report a{text-decoration:none; color:black;}
+    #recommand-area .carousel-inner .carousel-item:hover{cursor:pointer;}
 
     /* 베스트 셀러 */
     .best-seller{}
     .content-title{
         float:left;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 600;
     }
     .content-more{float:right;}
@@ -74,6 +77,7 @@
     .best-seller-introImg{border:1px solid grey;}
     .best-seller-info{text-align:center;}
     .best-seller-img{width:150px; margin:auto;}
+    .bestSeller:hover{cursor:pointer;}
 
     /* 독서록 */
     .book-report .content{margin: 0 20px;}
@@ -87,6 +91,7 @@
     .like{position:absolute; margin:35px 0 0 140px;}
     .book-title, .book-writer, .book-publish{margin:5px 0;}
     .book-report-bottom p{margin:0px; display:inline-block;}
+    .book-report .content:hover{cursor:pointer;}
 
     /* star-rating */
     .star-rating{
@@ -142,6 +147,7 @@
 		
 				for(let i=0; i<bestSeller.length; i++){
 					
+					let bkNo = bestSeller[i].bkNo;
 					let bkTitle = bestSeller[i].bkTitle;
 					let bkPublish = bestSeller[i].bkPublish;
 					let writerName = bestSeller[i].writerName;
@@ -157,7 +163,8 @@
 						writerName = writerName.substring(0, 5) + "...";
 					}
 					
-					let content = `<div class="content">
+					let content = `<div class="content bestSeller">
+										<input type="hidden" value=` + bkNo + `>
 					                    <div class="best-seller-img">
 					                        <img class="best-seller-introImg" src=` + introChangeName + ` width="150px;" height="180px;">
 					                    </div>
@@ -184,6 +191,7 @@
 				
 				for(let i=0; i<bookReport.length; i++) {
 					
+					let blNo = bookReport[i].blNo;
 					let bkTitle = bookReport[i].bkTitle;
 					let bkPublish = bookReport[i].bkPublish;
 					let writerName = bookReport[i].writerName;
@@ -195,7 +203,6 @@
 					let blCdate = bookReport[i].blCdate;
 					let introChangeName = bookReport[i].introChangeName;
 					let changeImgName = bookReport[i].changeImgName;
-			
 					
 					// 날짜
 					let month = blCdate.split("월")[0];
@@ -224,9 +231,8 @@
 						blContent = blContent.substring(0, 70) + "...";
 					}
 					
-					
-					
 					let content = `<div class="content">
+										<input type="hidden" value=` + blNo + `>
 						                <div class="book-report-top">
 						                <div class="user-img-area">
 						                    <img src=` + changeImgName + ` alt="" width="70px;" height="70px;">
@@ -283,12 +289,13 @@
 			}
 		})
 		
+		
+		/* 도서 추천 조회 ajax */
 		var $memNo = `${loginUser.memNo}`;
 		
 		if($memNo == "") {
 			$memNo = 0;
 		}
-		
 		
 			$.ajax({
 				url:"getMainBookRecommand.bk",
@@ -301,6 +308,7 @@
 						let a = `<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to=` + i + ` aria-label="Slide" ` + i+1 + `></button>`;
 			            $("#recommand-area .carousel-indicators").append(a);
 			            
+			            let bkNo = bookList[i].bkNo;
 			            let bkTitle = bookList[i].bkTitle;
 			            let bkWriter = bookList[i].writerName;
 			            let bkPublish = bookList[i].bkPublish;
@@ -313,8 +321,9 @@
 						}else if(bkGender == "F"){
 							bkGender = "여성";
 						}
-			            
-			            var c = `<div class="carousel-item" data-bs-interval="2000">
+						
+			            var c = `<div class="carousel-item" data-bs-interval="10000" onclick=detailB(` + bkNo + `);>
+			            			<input type="hidden" value=` + bkNo + ` name='bkno'>
 			                        <div>
 			                            <span class="bold">` + bkAge + `대 ` + bkGender + `</span>
 			                            <span>사이에서 인기있는 책</span>
@@ -338,7 +347,8 @@
 						bkGender0 = "여성";
 					}
 					
-					let b = `<div>
+					let b = `	<input type="hidden" value=` + bookList[0].bkNo + `>
+								<div class="bookRecommand-firstViwe">
 			                 	<span class="bold">` + bookList[0].bkAge + `대 ` + bkGender0 + `</span>
 			                    <span>사이에서 인기있는 책</span>
 			                 </div>
@@ -352,9 +362,6 @@
 			            
 			       	$("#recommand-area .carousel-item.active").append(b);
 			                    
-			                   
-					
-					
 				},
 				error:function(){
 					console.log("도서 추천 ajax 통신 실패");
@@ -362,13 +369,29 @@
 			})
 		
 		
+		/* 베스트 셀러 도서 클릭 시 상세 보기 창으로 이동 */
+		$(".bestSeller").click(function(){
+			var no = $(this).children("input[type='hidden']").val();
+			location.href="detail.bk?bkNo=" + no;
+		})
 		
-
+		/* 독서록 클릭 시 상세 보기 창으로 이동 */
+		$(".book-report .content").click(function(){
+			var no = $(this).children("input[type='hidden']").val();
+			location.href="detail.bl?blNo=" + no;
+		})
+		
+		/* 도서 추천 클릭 시 상세 보기 창으로 이동*/ 
+		$("#recommand-area .carousel-inner .carousel-item").click(function(){
+			var no = $(this).children("input[type='hidden']").val();
+			location.href="detail.bk?bkNo=" + no;
+		})
+		
 	})
 	
-	
-	
-	
+	function detailB(bkNo){
+		location.href="detail.bk?bkNo=" + bkNo;
+	}
 	
 </script>
 <body>
@@ -475,16 +498,16 @@
 
         <div class="best-seller">
             <div class="content-title"><p>베스트 셀러</p></div>
-            <div class="content-more"><p>더보기 ></p></div>
+            <div class="content-more"><a href="">더보기 ></a></div>
             <br><br><br>
             <div class="content-area">
             	     
             </div>
         </div>
-        <br><br>
+        <br><br><br>
         <div class="book-report">
             <div class="content-title"><p>인기 독서록</p></div>
-            <div class="content-more"><p>더보기 ></p></div>
+            <div class="content-more"><a href="list.bl">더보기 ></a></div>
             <br><br><br>
             <div class="content-area">
                 
