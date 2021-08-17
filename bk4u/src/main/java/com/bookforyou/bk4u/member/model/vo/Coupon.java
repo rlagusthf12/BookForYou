@@ -27,4 +27,5 @@ public class Coupon {
 	public String couponCategory;
 	public int couponPrice;
 	public int couponPriceRate;
+	private String couponContent;
 }

@@ -126,7 +126,7 @@
 	            <div class="editor_area">
 	                <div class="editor">
 	                    <div class="editor_content">
-							<textarea class="summernote" id="blContent" name="blContent" value="${ bl.blContent }"></textarea>  
+							<textarea class="summernote" id="blContent" name="blContent"></textarea>  
 	                    </div>
 	                </div>
 	            </div>
@@ -215,6 +215,9 @@
 		
 			// *summernote 에디터
 			$(document).ready(function() {
+				
+				var con = '<c:out value="${ bl.blContent }"/>';
+				$('textarea[name=blContent]').html(con);
 				
 				// 기본세팅
 	        	$('.summernote').summernote({

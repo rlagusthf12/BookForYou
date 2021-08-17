@@ -146,7 +146,17 @@ public interface BookService {
 	int deleteAdminBookInterest(String bn);
 
 	/**
-	 * 메인 베스트 셀러 조회 (한진)
+	 * [메인] 베스트 셀러 조회 (한진)
 	 */
 	ArrayList<Book> selectMainBestSeller();
+
+	/**
+	 * [메인] 도서 추천 조회 - 로그인 했을 경우 (한진)
+	 */
+	ArrayList<Book> selectMainBookRecommand(int memNo);
+
+	/**
+	 * [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진)
+	 */
+	ArrayList<Book> selectMainBookRecommandToAll();
 }

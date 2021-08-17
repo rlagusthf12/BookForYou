@@ -227,7 +227,7 @@ public class SubscriptionImpl implements SubscriptionService{
 		return sDao.insertSubscOrder(sqlSession, map);
 	}
 	
-	/** 포인트 조회
+	/** 쿠폰 조회
 	 * @author daeunlee
 	 */
 	@Override
@@ -235,11 +235,11 @@ public class SubscriptionImpl implements SubscriptionService{
 		return sDao.selectSubscCoupon(sqlSession, memNo);
 	}
 	
-	/** 쿠폰 조회 
+	/** 포인트 조회 
 	 * @author daeunlee
 	 */
 	@Override
-	public int selectSubPoint(int memNo) {
+	public ArrayList<Point> selectSubPoint(int memNo) {
 		return sDao.selectSubPoint(sqlSession, memNo);
 	}
 	

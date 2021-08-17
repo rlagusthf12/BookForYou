@@ -69,6 +69,7 @@
 		     , bo_content
 		     , bo_category
 		     , bo_cdate
+		     , bo_status
 		     )
 		values
 		     (
@@ -78,6 +79,7 @@
 		     , #{boContent}
 		     , #{boCategory}
 		     , SYSDATE
+		     , 'Y'
 		     )
 	</insert>
 	
@@ -120,6 +122,15 @@
 		     , bo_content = #{boContent}
 		     , bo_category = #{boCategory}
 		     , bo_mdate = SYSDATE
+		 where bo_no = #{boNo}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<!-- @author daeunlee -->
+	<update id="deleteBoard">
+		update
+		       board
+		   set bo_status = 'N'
 		 where bo_no = #{boNo}
 	</update>
 	 
@@ -170,6 +181,104 @@
 		     , #{depth}
 		     )
 	</insert>
+	
+	<!-- 게시글 검색 : 갯수 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectSearchListCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		  join members using (mem_no)
+		 where bo_status = 'Y'
+	 	<choose>
+	 		<when test="condition == 'title'">
+	 			and bo_title
+	 		</when>
+	 		<when test="condition == 'writer'"> 
+	 			and mem_nickname	 		
+	 		</when>
+	 		<otherwise>
+	 			and bo_content
+	 		</otherwise>
+	 	</choose>
+	 	       like '%' || #{keyword} || '%'	
+	</select>
+	
+	<!-- 게시글 검색 : 게시글 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectBoardSearchList" resultMap="boardResult">
+		select 
+		       bo_no
+		     , mem_nickname
+		     , bo_category
+		     , bo_title
+		     , bo_content
+		     , bo_count
+		     , bo_cdate
+		     , bo_mdate
+		     , bo_like
+		  from board
+		  join members using(mem_no)
+		 where bo_status = 'Y'
+	 	<choose>
+	 		<when test="condition == 'title'">
+	 			and bo_title
+	 		</when>
+	 		<when test="condition == 'writer'"> 
+	 			and mem_nickname	 		
+	 		</when>
+	 		<otherwise>
+	 			and bo_content
+	 		</otherwise>
+	 	</choose>
+	 	       like '%' || #{keyword} || '%'	
+	</select>
+	
+	
+	<!-- 카테고리별 갯수 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectBoardCategoryCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		  join members using (mem_no)
+		 where bo_status = 'Y'
+	 	<choose>
+	 		<when test="category == 'freetalk'">
+	 			and bo_category = '사담'
+	 		</when>
+	 		<otherwise>
+	 			and bo_category = '책이야기'		
+	 		</otherwise>
+	 	</choose>	
+	</select>
+	
+	<!-- 카테고리별 게시글 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectBoardCategory" resultMap="boardResult">
+		select 
+		       bo_no
+		     , mem_nickname
+		     , bo_category
+		     , bo_title
+		     , bo_content
+		     , bo_count
+		     , bo_cdate
+		     , bo_mdate
+		     , bo_like
+		  from board
+		  join members using(mem_no)
+		 where bo_status = 'Y'
+	 	<choose>
+	 		<when test="category == 'freetalk'">
+	 			and bo_category = '사담'
+	 		</when>
+	 		<otherwise>
+	 			and bo_category = '책이야기'		
+	 		</otherwise>
+	 	</choose>
+	</select>
+	
 	
 	<!-- 마이페이지 나의 게시판 글 갯수 조회(세아) -->
 	<select id="selectMyBoardListCount" resultType="_int">

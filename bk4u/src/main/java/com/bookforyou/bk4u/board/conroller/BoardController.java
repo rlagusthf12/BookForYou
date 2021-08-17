@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.board.conroller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,12 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.board.model.service.BoardService;
 import com.bookforyou.bk4u.board.model.vo.Board;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
+import com.google.gson.Gson;
 
 @Controller
 public class BoardController {
@@ -118,6 +123,89 @@ public class BoardController {
         }
 
     }
+    
+    /** 게시글 검색용
+	 * @author daeunlee
+	 */
+	@RequestMapping("search.bo")
+	public ModelAndView selectBoardSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+			                                     String condition, String keyword) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int listCount = boService.selectSearchListCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = boService.selectBoardSearchList(map, pi);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("condition", condition)
+		  .addObject("keyword", keyword)
+		  .setViewName("board/boardListView");
+		
+		return mv;
+	}
+	
+	/** 카테고리별 게시글 조회용
+	 * @author daeunlee
+	 */
+	@RequestMapping("category.bo")
+	public ModelAndView selectBoardCategory(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+			                                     String category) {
+		int listCount = boService.selectBoardCategoryCount(category);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = boService.selectBoardCategory(category, pi);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("category", category)
+		  .setViewName("board/boardListView");
+		
+		return mv;
+	}
+	
+	/** 댓글 리스트 조회
+	 * @author daeunlee
+	 */
+	@ResponseBody
+	@RequestMapping(value="rlistAjax.bo", produces="application/json; charset=utf-8")
+	public String selectReplyList(int boNo) {
+		ArrayList<Reply> list = boService.selectReplyList(boNo);
+		return new Gson().toJson(list);
+	}
+	
+	/** 댓글 작성
+	 * @author daeunlee
+	 */
+	@ResponseBody
+	@RequestMapping(value="rinsertAjax.bo", produces="application/json; charset=utf-8")
+	public String insertReply(Reply r) {
+		int result = boService.insertReply(r);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	/** 대댓글 작성
+	 * @author daeunlee
+	 */
+	@ResponseBody
+	@RequestMapping(value="recoinsertAjax.bo", produces="application/json; charset=utf-8")
+	public String insertReco(Reply r) {
+		int result = boService.insertReco(r);
+		System.out.println(r);
+		if(result>0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
 	
 	
 }

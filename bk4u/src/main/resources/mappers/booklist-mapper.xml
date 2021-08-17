@@ -15,6 +15,9 @@
 		<result column="bl_like" property="blLike"/>
 		<result column="bl_scrap" property="blScrap"/>
 		<result column="bk_no" property="bkNo"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="bk_publish" property="bkPublish"/>
+		<result column="writer_name" property="writerName"/>
 		<result column="rank" property="rank"/>
 		<result column="change_img_name" property="changeImgName"/>
 		<result column="bk_title" property="bkTitle"/>
@@ -34,6 +37,7 @@
 	<resultMap id="replyResult" type="Reply">
 		<result column="reply_no" property="replyNo"/>
 		<result column="mem_no" property="memNo"/>
+		<result column="mem_nickname" property="reWriter"/>
 		<result column="reply_type" property="replyType"/>
 		<result column="ref_post" property="refPost"/>
 		<result column="reply_content" property="replyContent"/>
@@ -42,6 +46,13 @@
 		<result column="delete_status" property="deleteStatus"/>
 		<result column="reply_refNo" property="replyRefNo"/>
 		<result column="depth" property="depth"/>
+	</resultMap>
+	
+	<resultMap id="likeResult" type="Like">
+		<result column="mem_no" property="memNo"/>
+		<result column="like_type" property="likeType"/>
+		<result column="ref_post" property="refPost"/>
+		<result column="like_date" property="likeDate"/>
 	</resultMap>
 
 	<!-- 독서록 게시글 갯수 조회용 -->
@@ -59,6 +70,9 @@
 		       bl_no
 		     , mem_nickname
 		     , bk_no
+		     , bk_title
+		     , bk_publish
+		     , writer_name
 		     , bl_title
 		     , bl_content
 		     , bl_count
@@ -69,6 +83,7 @@
 		     , bl_scrap
 		  from booklist
 		  join members using(mem_no)
+		  join book using(bk_no)
 		 where bl_status='Y'
 		 order
 		    by bl_no desc
@@ -182,6 +197,7 @@
 		     , reply_refNo
 		     , depth
 		  from reply
+		  join members using(mem_no)
 		 where reply_type = 2
 		   and ref_post = #{blNo}
 		 start with reply_refno = 0
@@ -229,6 +245,8 @@
 		 where bl_no = #{blNo}
 	</update>
 	
+	<!-- 독서록 삭제 -->
+	<!-- @author daeunlee -->
 	<update id="deleteBooklist">
 		update
 		       booklist
@@ -290,6 +308,89 @@
 	 	       like '%' || #{keyword} || '%'	
 	</select>
 	
+	<!-- 좋아요 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectLikeCount" resultType="_int">
+		SELECT count(*)
+		  FROM "LIKE"
+		 WHERE ref_post = #{refPost}
+		   AND like_type = 1
+		   AND mem_no = #{memNo}
+	</select>
+	
+	<!-- 좋아요 증가용 -->
+	<!-- @author daeunlee -->
+	<insert id="insertLike">
+		INSERT 
+		  INTO "LIKE"
+		     (
+		       mem_no
+		     , like_type
+		     , ref_post
+		     , like_date
+		     )
+		values
+		     (
+		       #{memNo}
+		     , 1
+		     , #{refPost}
+		     , sysdate
+		     )
+	</insert>
+	
+	<!-- 좋아요 삭제용 -->
+	<!-- @author daeunlee -->
+	<delete id="deleteLike">
+		delete 
+		  INTO "LIKE"
+		     (
+		       mem_no
+		     , like_type
+		     , ref_post
+		     , like_date
+		     )
+		values
+		     (
+		       #{memNo}
+		     , 1
+		     , #{refPost}
+		     , sysdate
+		     )
+	</delete>
+	
+	<!-- 인기독서록 조회용 -->
+	<!-- @author daeunlee -->
+	<select id="selectTopBooklist" resultMap="booklistResult">
+		select *
+			  from (
+					select ROWNUM rnum, A.*
+					  from (
+					  		select
+					  		       bl_no
+							     , mem_nickname
+							     , bk_no
+							     , bk_title
+							     , bk_publish
+							     , writer_name
+							     , bl_title
+							     , bl_content
+							     , bl_count
+							     , bl_rate
+							     , bl_cdate
+							     , bl_mdate
+							     , bl_like
+							     , bl_scrap
+							  from booklist
+					          join members using (mem_no)
+					          join book using (bk_no)
+					 	     where bl_status = 'Y'
+					         order
+					            by bl_count desc
+					  	   )A
+				   )
+			 where rownum between 1 and 2
+	</select>
+
 	<!-- [메인] 인기 독서록 불러오기 (한진) -->
 	<select id="selectMainBookReport" resultMap="booklistResult">
 		 select

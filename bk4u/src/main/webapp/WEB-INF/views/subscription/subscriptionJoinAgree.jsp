@@ -81,7 +81,7 @@
 
             <!-- 멤버십 기간/가격 넘기는 form -->
             <form method="post" action="pay.sub">
-            	<input type="hidden" id="memNo" name="memNo" value="${ loginUser.memNo }">
+            	<input type="hidden" id="memNo" name="memNo">
 	            <input type="hidden" id="subscName" name="subscName">
 	            <input type="hidden" id="subscPeriod" name="subscPeriod">
 	            <input type="hidden" id="subscPrice" name="subscPrice">
@@ -226,7 +226,11 @@
 
     <script>
 	    $(function(){
-	                
+	        var memNo = '<c:out value="${loginUser.memNo}"/>';
+	        $('input[name=memNo]').val(memNo);
+	    })
+    	
+	    $(function(){
 	        $('ul.tabs li').click(function(){
 	            var tab_id = $(this).attr('data-tab');  
 	            /*일단 li와 content에 부여된 current클래스를 모두 지워주고*/
@@ -236,6 +240,7 @@
 	            $(this).addClass('current');
 	            $("#"+tab_id).addClass('current'); /*content 아이디에서 tab_id와 같은 속성(tab-1|2|3)이 발생된 클래스에 currnet부여한다*/
 	        })
+	    })
 
 		$(function(){
 			// 기본 멤버십이름
@@ -284,7 +289,7 @@
 				$('input[name=subscPrice]').attr('value', $('#b12_p').text());
 			})
 		})
-            })
+            
     </script>
 	
 	<script>

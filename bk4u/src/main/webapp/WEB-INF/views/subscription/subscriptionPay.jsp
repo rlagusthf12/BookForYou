@@ -69,7 +69,7 @@
         
         /**배송일정보area*/
         .deliveryDate_title{display:inline-block; font-size:16px; font-weight:500; margin-bottom:20px;}
-        .delivery_icon{margin-left:15px;}
+        .fa-shipping-fast{color:rgb(252, 190, 52) !important;}
         #datepicker{padding:8px 15px; border:1px solid #dedede; border-radius:5px; color:rgb(252, 190, 52); font-size:18px; font-weight:bold; line-height: 10px; }
         
         /**포인트+할인쿠폰area*/
@@ -79,6 +79,9 @@
         .input_area input{width:220px; border:none;} .input_area input:focus{outline:none;}
         #point_table button, #coupon_table button{background:rgb(252, 190, 52) !important; color:#fff !important; padding:6px 8px;}
         
+		#couponTable th{border-bottom:1px solid rgb(252, 190, 52, 0.6); padding: 10px; background:rgb(252, 190, 52, 0.1);}
+		#couponTable td{padding: 10px;}
+        
         /**결제area*/
         .pay_area{display:flex; flex-direction:row;}
         /**결제수단area*/
@@ -87,7 +90,7 @@
         .payment-btn-item:focus{outline:1px solid rgb(252, 190, 52);}
         .far, .fas{color:rgb(190, 190, 190);}
         /**결제금액area*/
-        .paysum_area{display:flex; flex-direction:column; margin-left:auto; border:1px solid #ddd; border-radius:6px; width:390px; height:380px;}
+        .paysum_area{display:flex; flex-direction:column; margin:auto; border:1px solid #ddd; border-radius:6px; width:390px; height:380px;}
         .paysum-item{flex:1;}
         .paysum-wrap{padding:20px 40px 0 40px;}
         .paysum_area li{display:block;}
@@ -168,7 +171,7 @@
 			if ((day+"").length < 2) {// 일이 한자리 수인 경우 앞에 0을 붙여주기 위해
 		        day = "0" + day;
 			}
-		    var Today = year + "." + month + "." + day; // 오늘 날짜 (2021.08.11)
+		    var Today = year + month + day; // 오늘 날짜 (2021.08.11)
 		    
 			// 1) 멤버십 선택 == 1개월
 		    if('${ param.subscPeriod }' == '1개월'){
@@ -176,7 +179,7 @@
 			    if ((monthOne+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
 			    	monthOne = "0" + monthOne;
 				}
-			    var laterOne = year + "." + monthOne + "." + day; // 1개월뒤
+			    var laterOne = year + monthOne + day; // 1개월뒤
 			    $(".eDate").html(laterOne);
 			    $("input[name=subscEndDate]").val(laterOne);
 		    }
@@ -191,7 +194,7 @@
 			    if ((monthThree+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
 			    	monthThree = "0" + monthThree;
 				}
-			    var laterThree = year + "." + monthThree + "." + day; // 3개월뒤
+			    var laterThree = year + monthThree + day; // 3개월뒤
 			    $(".eDate").html(laterThree);
 			    $("input[name=subscEndDate]").val(laterThree);
 		    }
@@ -206,7 +209,7 @@
 			    if ((monthSix+"").length < 2) {// 월이 한자리 수인 경우 앞에 0을 붙여주기 위해
 			    	monthSix = "0" + monthSix;
 				}
-			    var laterSix = year + "." + monthSix + "." + day; // 6개월뒤
+			    var laterSix = year + monthSix + day; // 6개월뒤
 			    $(".eDate").html(monthSix);
 			    $("input[name=subscEndDate]").val(monthSix);
 		    }
@@ -214,7 +217,7 @@
 		    // 4) 멤버십 선택 == 12개월 == 1년
 			if('${ param.subscPeriod }' == '12개월'){
 			    var monthTwelve = date.getFullYear()+1;
-			    var laterTwelve = monthTwelve + "." + month + "." + day; // 12개월뒤
+			    var laterTwelve = monthTwelve + month + day; // 12개월뒤
 			    $(".eDate").html(laterTwelve);
 			    $("input[name=subscEndDate]").val(laterTwelve);
 		    }
@@ -256,7 +259,7 @@
                                 <th>받는 사람</th>
                                 <td>
                                     <div class="receiver_name">
-                                        <input type="text" name="subscReceiver">
+                                        <input type="text" name="subscReceiver" required>
                                     </div>
                                 </td>    
                             </tr>
@@ -264,7 +267,7 @@
                                 <th>휴대폰 번호</th>
                                 <td>
                                     <div class="phone">
-                                        <input type="text" name="subscPhone">
+                                        <input type="text" name="subscPhone" required>
                                     </div>
                                 </td>
                             </tr>
@@ -289,6 +292,7 @@
 		                                        </div>
 	                                        </div>
                                         </div>
+                                    </div>
             	<script>
             	function daumPostcode() {
                     new daum.Postcode({
@@ -352,57 +356,64 @@
                     }); 
                 });
             	
-            	function requestPay() {
-            		IMP.init('imp01966425'); //가맹점 식별코드
-            		IMP.request_pay({
-            		    pg : 'kakaopay', //결제방식
-            		    pay_method : 'card', //결제수단
-            		    merchant_uid : 'merchant_' + new Date().getTime(),
-            		    name : '북포유멤버십 : ${ param.subscName }', //결제창에서 보여질 이름
-            		    amount : '${ param.subscPrice }', //실제 결제되는 가격
-            		    buyer_email : '${ loginUser.memEmail }', //구매자email
-            		    buyer_name : '${ loginUser.memName }', //구매자이름
-            		    buyer_tel : '${ loginUser.memPhone }', //구매자전화번호
-            		    buyer_postcode : '$("#postcode").val()'
-            		}, function(rsp) {
-            			console.log(rsp);
-            			if (rsp.success) {
-            				
-            				$("#orderForm").attr("action", "insertSubPay.sub").submit();
-            				
-            				/*
-            				var msg = '결제가 완료되었습니다.';
-            				msg += '고유ID : ' + rsp.imp_uid;
-            				msg += '상점 거래ID : ' + rsp.merchant_uid;
-            				msg += '결제 금액 : ' + rsp.paid_amount;
-            				msg += '카드 승인번호 : ' + rsp.apply_num;
-            				
-            				// payment디비연결
-            				$.ajax({
-		    			        url:"insertSubsc.pay",
-		    			        method: "POST",
-		    		            headers: { "Content-Type": "application/json" },
-		    			        data:{
-		    			        	payWay:	rsp.pay_method,
-		    						price: rsp.paid_amount,
-		    						status: rsp.status
-		    			        }, 
-		    			        success: function(status){
-		    			        	if(status == "success"){
-		    			        	console.log(status);
-		    			        	}
-		    			        },error:function(){
-		    			        	console.log("ajaxㄴㄴ");
-		    			        }
-		    			   })*/
-                    	} else {
-            		        var msg = '결제에 실패하였습니다.';
-                    		msg += '에러내용 : ' + rsp.error_msg;
-            		    }
-            			alert(msg);
-            		});
-	       		
-            	}
+            	
+            	function requestPay(){
+                	var label = $('input:checkbox[id=btnAgree]').is(":checked");
+                	if(!label){
+                        alert('약관에 동의해주세요.');
+                    }else{
+                    	
+	            		IMP.init('imp01966425'); //가맹점 식별코드
+	            		IMP.request_pay({
+	            		    pg : 'kakaopay', //결제방식
+	            		    pay_method : 'card', //결제수단
+	            		    merchant_uid : 'merchant_' + new Date().getTime(),
+	            		    name : '북포유멤버십 : ${ param.subscName }', //결제창에서 보여질 이름
+	            		    amount : '${ param.subscPrice }', //실제 결제되는 가격
+	            		    buyer_email : '${ loginUser.memEmail }', //구매자email
+	            		    buyer_name : '${ loginUser.memName }', //구매자이름
+	            		    buyer_tel : '${ loginUser.memPhone }', //구매자전화번호
+	            		    buyer_postcode : '$("#postcode").val()'
+	            		}, function(rsp) {
+	            			console.log(rsp);
+	            			if (rsp.success) {
+	            				
+	            				$("#orderForm").attr("action", "insertSubPay.sub").submit();
+	            				
+	            				/*
+	            				var msg = '결제가 완료되었습니다.';
+	            				msg += '고유ID : ' + rsp.imp_uid;
+	            				msg += '상점 거래ID : ' + rsp.merchant_uid;
+	            				msg += '결제 금액 : ' + rsp.paid_amount;
+	            				msg += '카드 승인번호 : ' + rsp.apply_num;
+	            				
+	            				// payment디비연결
+	            				$.ajax({
+			    			        url:"insertSubsc.pay",
+			    			        method: "POST",
+			    		            headers: { "Content-Type": "application/json" },
+			    			        data:{
+			    			        	payWay:	rsp.pay_method,
+			    						price: rsp.paid_amount,
+			    						status: rsp.status
+			    			        }, 
+			    			        success: function(status){
+			    			        	if(status == "success"){
+			    			        	console.log(status);
+			    			        	}
+			    			        },error:function(){
+			    			        	console.log("ajaxㄴㄴ");
+			    			        }
+			    			   })*/
+	                    	} else {
+	            		        var msg = '결제에 실패하였습니다.';
+	                    		msg += '에러내용 : ' + rsp.error_msg;
+	            		    }
+	            			alert(msg);
+	            		});
+		       		
+	            	}
+                }
             	/*
        		    // 결제리스트 불러오기
        		    function selectPayList(){
@@ -416,15 +427,7 @@
        		    }*/
             	</script>                            
                                         
-                                        <label for="default-address">
-                                            <div style="display:inline-block;">
-                                                <input type="checkbox" id="default-address" style=" width:20px; height:20px; margin-top:14px;">
-                                            </div>
-                                            <span style="vertical-align:4px; font-size:14px; color: #3b3b3b;">
-                                                	기본 배송지로 저장
-                                            </span>
-                                        </label>
-                                    </div>
+                                    
                                 </td> 
                             </tr>
                             <tr>
@@ -450,9 +453,7 @@
                         <div>
                             <span class="deliveryDate_title">매월 정기배송 받을 날짜를 선택해주세요!</span>
                             <span>
-                                <a href="" class="delivery_icon">
-                                    <img src="" alt="" width="20px" height="20px">
-                                </a>
+                                <i class="fas fa-shipping-fast"></i>
                             </span>
                         </div>
                         <table>
@@ -481,7 +482,7 @@
                                     <div class="input_area">
                                     	<c:choose>
 	                                    	<c:when test="${ !empty pointPrice }">
-	                                        	<input type="number" id="mypoint" value="${ p.pointPrice }">
+	                                        	<input type="number" id="mypoint" value="${ p.totalPoint }">
 	                                        </c:when>
 	                                        <c:otherwise>
 	                                        	<input type="number" id="mypoint" value="0" readonly>
@@ -509,77 +510,107 @@
                         <table id="coupon_table">
                             <tr>
                                 <th>쿠폰 적용</th>
+                            	<th></th>
                                 <td>
-                                    <div class="input_area">
-                                        <input type="text" id="coupon">
-                                        <span class="measure"></span>
-                                    </div>
-                                    <button class="btn btn_coupon">쿠폰사용</button>
-                                    
+			                        <table id="couponTable">
+										<tr>
+											<th colspan="7">할인쿠폰 선택</th>
+										</tr>
+										<c:forEach var="c" items="${cList}">
+										<c:choose>
+											<c:when test="${ empty c.couponNo }">
+												<tr>
+													<th colspan="6">사용할 수 있는 쿠폰이 없습니다.</th>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td><input type="checkbox" name="couponIssueNum" value="${ c.couponIssueNum }"><td>
+													<td>${ c.couponKind }</td>
+													<td>${ c.couponName }</td>
+													<td>${ c.couponContent }</td>
+													<td>${ c.couponPrice }원 할인</td>
+													<td>${ c.createDate } ~ ${ c.expireDate }</td>
+												</tr>
+											</c:otherwise>
+										</c:choose>
+										</c:forEach>
+									</table>
                                 </td>
-                            </tr>
+								<td>
+									<button class="btn btn_coupon" onclick="btnCoupon()">쿠폰사용</button>
+								</td>
+                            </tr>    
                         </table>
                     </div>
-    
-                    <!--결제수단area-->
-                    <div class="item pay_area">
-                        <div class="payment_area">
-                            <div class="title">결제수단</div>
-                            <div class="payment-btn-container">
-                                <div class="payment-item">
-                                    <button type="button" class="payment-btn-item">
-                                        <i class="far fa-credit-card fa-2x"></i>
-                                        <div class="payment_label">신용카드</div>
-                                    </button>
-                                </div>
-                                <div class="payment-item">
-                                    <button type="button" class="payment-btn-item">
-                                        <i class="fas fa-mobile-alt fa-2x"></i>
-                                        <div class="payment_label">휴대폰</div>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!--결제금액area-->
-                        <div class="paysum_area">
-                            <div class="paysum-item paysum-wrap">
-                                <div class="title">결제금액</div>
-                                <ul>
-                                    <li>
-                                        <span>멤버십 결제 금액</span>
-                                        <p><em>${ param.subscPrice }</em>원</p>
-                                    </li>
-                                    <li>
-                                        <span>할인쿠폰</span>
-                                        <p><em>0</em>원</p>
-                                    </li>
-                                    <li>
-                                        <span>포인트</span>
-                                        <p><em>0</em>원</p>
-                                    </li>
-                                </ul>
-                                <ul style="padding:25px 0; border-top: 1px solid #ddd;">
-                                    <li>
-                                        <span>총 결제 금액</span>
-                                        <p class="total_price"><strong>19,900</strong>원</p>
-                                    </li>
-                                </ul>
-        
-                            </div>
-                            <div class="paysum-item paynotice_area">
-                                <input type="checkbox" class="btn_paynotice" id="btnAgree">
-                                <label for="btnAgree" id="btn_paynotice-label">상품, 가격, 할인, 유의 사항 등에 동의하였으며 결제에 동의합니다.</label>
-                            </div>
-                        </div>
+                    
+                    <script>
+                    
+                    function btnCoupon(){
+                    	var cn = $("input:radio[name='couponIssueNum']").is(":checked");
+                    	console.log(cList);
+                    }
+                    </script>
 
+                    <!--결제금액area-->
+                    <div class="paysum_area">
+                        <div class="paysum-item paysum-wrap">
+                            <div class="title">결제금액</div>
+                            <ul>
+	                            <li>
+	                                <span>멤버십 결제 금액</span>
+	                                <p><em>${ param.subscPrice }</em>원</p>
+	                            </li>
+	                            <li>
+	                                <span>할인쿠폰</span>
+	                                <p><em>
+	                                <c:choose>
+		                                 <c:when test="${empty param.couponIssueNum}">
+		                                 	${ param.couponPrice }
+		                                 </c:when>
+		                                 <c:otherwise>
+		                                  0
+		                                 </c:otherwise>
+	                                </c:choose>
+	                                </em>원</p>
+	                            </li>
+	                            <li>
+	                                <span>포인트</span>
+	                                <p><em>0</em>원</p>
+	                            </li>
+	                        </ul>
+	                        <ul style="padding:25px 0; border-top: 1px solid #ddd;">
+	                            <li>
+	                                <span>총 결제 금액</span>
+	                                <p class="total_price"><strong>19,900</strong>원</p>
+	                            </li>
+	                        </ul>
+    
+                        </div>
+                        <div class="paysum-item paynotice_area">
+                            <input type="checkbox" class="btn_paynotice" id="btnAgree">
+                            <label for="btnAgree" id="btn_paynotice-label">상품, 가격, 할인, 유의 사항 등에 동의하였으며 결제에 동의합니다.</label>
+                        </div>
                     </div>
+
                     
                     <div class="item btn_order_area">
-                        <button type="button" onclick="requestPay()">정기배송 신청하기</button>
+                        <button type="button" id="btn_requestPay" onclick="requestPay()">정기배송 신청하기</button>
                     </div>
                     
                 </form>
+                <script>
+                /*
+                function requestPay(){
+                	var label = $('input:checkbox[id=btnAgree]').is(":checked");
+                	if(!label){
+                        alert('약관에 동의해주세요.');
+                        $('#btn_requestPay').prop("disabled", true);
+                    }else{
+                    	$('#btn_requestPay').prop("disabled", false);
+                    }
+                }*/
+                </script>
 
             </div>
 

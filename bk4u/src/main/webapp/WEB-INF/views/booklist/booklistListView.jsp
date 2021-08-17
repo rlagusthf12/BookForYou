@@ -11,6 +11,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!--awesome icons--> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/69851f8880.js"></script>
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
         body{font-family: "Noto Sans KR", sans-serif !important;}
@@ -77,6 +80,7 @@
         li.booklist_item{margin:30px 0; height:180px; padding:10px; border:1px solid #ebebeb; text-decoration:none;}
         a.booklist-item{text-decoration:none;}
         .booklist_item a:hover{text-decoration:none;}
+        .book_stars{color:#8b8b8b;}
         /*독서록내용*/
         .booklist_container{display:flex;}
         .booklist_book_wrap{margin-left: auto; margin-right:30px; width:400px;}
@@ -103,6 +107,7 @@
         .searchBtn{background:rgb(252, 190, 52); border:none; border-radius:5px; padding: 8px 20px;}
         .custom-select{height: 38px;}
         .form-control{width: 350px;}
+        
 </style>
 </head>
 <body>
@@ -148,65 +153,7 @@
                 <!--인기독서록-->
                 <div class="top_list_box">
                     <div class="top_list_head">북포유 인기 독서록</div>
-                    <div class="top_list_item">
-                        <a href="" class="list-item">
-                            <div class="list_title">
-                                <span class="title_point">마음을 열지 않으면 당신은 얼어버려요.</span> 
-                            </div>
-                            <div class="list_content">
-                                “불행을 몰고 온 사람은 바로 나였다.” 왜 사랑받기를 원하면서 동시에 그 모든 것들을 떠나고 싶어 하는가? “이제 모든 게 가능해. 어쩌면 새로운 시작도!” 
-                                우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 이는 듣기만 하여도 가슴이 설레는 말이다 청춘! ...더보기
-                            </div>
-                            <div class="list_writer_box">
-                                <img src="" alt="" width="20px" height="20px">
-                                <span class="list_writer">바다요정님</span> 
-                            </div>
-                            <div class="list_date_like">
-                                <span>21/02/22</span>
-                                <span class="list_like">좋아요 40</span>
-                            </div>
-                            <div class="book_area">
-                                <span class="book_img">
-                                    <img src="" alt="" id="book_img-item" width="70px" height="100px">
-                                </span>
-                                <div class="book_info-wrap">
-                                    <div class="book_title">고양이님, 저랑 살 만하신가요?</div>
-                                    <div class="book_writer">이학범</div>
-                                    <div class="book_publish">팜파스</div>
-                                    <div class="book_stars">⭐⭐⭐⭐⭐</div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <p style="width:40px;"></p>
-
-                        <a href="" class="list-item">
-                            <div class="list_title">
-                                <span class="title_point">고양이는... 참으로 귀엽습니다</span>
-                            </div>
-                            <div class="list_content">
-                                귀엽고 사랑스럽고 짱짱이다 고양이만세 저희집 고양이 구경하실래요? ... 더보기
-                            </div>
-                            <div class="list_writer_box">
-                                <img src="" alt="" width="20px" height="20px">
-                                <span class="list_writer">바닐라님</span> 
-                            </div>
-                            <div class="list_date_like">
-                                <span>21/02/22</span>
-                                <span class="list_like">좋아요 40</span>
-                            </div>
-                            <div class="book_area">
-                                <span class="book_img">
-                                    <img src="" alt="" id="book_img-item" width="70px" height="100px">
-                                </span>
-                                <div class="book_info-wrap">
-                                    <div class="book_title">고양이님, 저랑 살 만하신가요?</div>
-                                    <div class="book_writer">이학범</div>
-                                    <div class="book_publish">팜파스</div>
-                                    <div class="book_stars">⭐⭐⭐⭐⭐</div>
-                                </div>
-                            </div>
-                        </a>
+                    <div class="top_list_item" id="topBooklist">
                     </div>
                 </div>
 
@@ -220,6 +167,7 @@
 	                                <div class="booklist_content">
 	                                    <a href="#" class="booklist-item">
 	                                    	<input type="hidden" id="blNo" name="blNo" value="${ bl.blNo }">
+	                                    	<input type="hidden" name="memNo" value="${ bl.memNo }">
 	                                        <div class="booklist_title">
 	                                            <span class="title_point">${ bl.blTitle }</span>
 	                                        </div>
@@ -227,7 +175,6 @@
 	                                            ${ bl.blContent }
 	                                        </div>
 	                                        <div class="booklist_writer_box">
-	                                            <img src="" alt="" width="20px" height="20px">
 	                                            <span class="booklist_writer">${ bl.blWriter }</span> 
 	                                        </div>
 	                                        <div class="booklist_date_like">
@@ -244,10 +191,10 @@
 	                                                <img src="" alt="" id="book_img-item" width="70px" height="100px">
 	                                            </span>
 	                                            <div class="book_info-wrap">
-	                                                <div class="book_title">고양이님, 저랑 살 만하신가요?</div>
-	                                                <div class="book_writer">이학범</div>
-	                                                <div class="book_publish">팜파스</div>
-	                                                <div class="book_stars">⭐⭐⭐⭐⭐</div>
+	                                                <div class="book_title">${ bl.bkTitle }</div>
+	                                                <div class="book_writer">${ bl.writerName }</div>
+	                                                <div class="book_publish">${ bl.bkPublish }</div>
+	                                                <div class="book_stars">${ bl.blRate }점</div>
 	                                            </div>
 	                                        </div>
 	                                    </a>
@@ -306,25 +253,81 @@
     </div>
     
     <script>
- 		// 독서록 검색 
+ 		
  		$(function(){
+ 			// 독서록 검색 
  			if("${condition}" != ""){
  				$("option[value=${condition}]").attr("selected", true);
  			}
- 		})
     	
-        // 독서록상세조회 스크립트
-        $(function(){
+       	 	// 독서록상세조회 스크립트
         	$(".booklist_outer>ul>li").click(function(){
-         	//var blNo = $(this).children("#blNo").val();
-         	//후손선택 find() input요소선택 input[] ㅠㅠ
-         	var blNo = $(this).find("input[name=blNo]").val();
-         	//console.log(blNo);
-         	location.href = "detail.bl?blNo=" + blNo;
-        		
+	         	var blNo = $(this).find("input[name=blNo]").val();
+	         	var memNo = $(this).find("input[name=memNo]").val();
+	         	location.href = "detail.bl?blNo=" + blNo + "&memNo=" + memNo;
         	})
         })
         
+        $(function(){
+    		topBooklist();
+    		setInterval(topBooklist, 1000);
+    		
+    		// 다음과 같은 방법으로만 동적으로 만들어진 요소에 이벤트 부여 가능
+    		$(document).on("click", "#topBooklist>#btl", function(){
+    			var blNo = $(this).find("input[name=blNo]").val();
+	         	var memNo = $(this).find("input[name=memNo]").val();
+	         	location.href = "detail.bl?blNo=" + $(this).children(".blno").text() + "&memNo=" + $(this).children(".memNo").text();
+	         	//location.href = "detail.bl?blNo=" + blNo + "&memNo=" + memNo;
+    		})
+    		
+    	})
+    	
+        function topBooklist(){
+    		$.ajax({
+    			url:"topList.bl",
+    			success:function(list){
+    				var value = "";
+    				
+    				for(var i in list){
+    					value += 
+	    					'<a href="detail.bl?blNo='+list[i].blNo+'&memNo='+list[i].memNo+'" class="list-item" id="tbl">'+
+    						'<input type="hidden" class="blno" name="blNo" value="' + list[i].blNo + '">' +
+    						'<input type="hidden" class="memno" name="memNo" value="' + list[i].memNo + '">' +
+	                        '<div class="list_title">'+
+	                            '<span class="title_point">' + list[i].blTitle + '</span>'+
+	                        '</div>'+
+	                        '<div class="list_content">' + list[i].blContent + '</div>'+
+	                        '<div class="list_writer_box">'+
+	                            '<span class="list_writer">' + list[i].blWriter + '</span> '+
+	                        '</div>'+
+	                        '<div class="list_date_like">'+
+	                            '<span>' + list[i].blCdate + '</span>'+
+	                            '<span class="list_like">좋아요' + list[i].blRate + '</span>'+
+	                       '</div>'+
+	                        '<div class="book_area">'+
+	                            '<span class="book_img">'+
+	                                '<img src="" alt="" id="book_img-item" width="70px" height="100px">'+
+	                            '</span>'+
+	                            '<div class="book_info-wrap">'+
+	                                '<div class="book_title">' + list[i].bkTitle + '</div>'+
+	                                '<div class="book_writer">' + list[i].writerName + '</div>'+
+	                                '<div class="book_publish">' + list[i].bkPublish + '</div>'+
+	                                '<div class="book_stars">' + list[i].blRate + '</div>'+
+	                            '</div>'+
+	                        '</div>'+
+	                    	'</a>';
+    				}
+    				
+    				$("#topBooklist").html(value);
+    			},error : function(jqXHR, textStatus, errorThrown){ 
+        			console.log(jqXHR); 
+        			console.log(textStatus); 
+        			console.log(errorThrown); 
+        		}
+    		})
+     	
+        }
+ 		
         // 독서록 작성 로그인한 회원만 가능
         function enrollClick(){
         	
@@ -333,7 +336,7 @@
         	if(!loginUser){
         		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
         		if(conf == true){ // 로그인창
-        			location.href = "loginForm.me"
+        			location.href = "login-form.me"
         		}else{ // 화면
         			return;
         		}
@@ -345,10 +348,8 @@
      	// 도서조회 스크립트
         function clickBk() {
         	location.href = "detail.bk?bkno=" + $(this).children("#bkNo").text();
-        }
-     	
-     	
-     	
+     	}
+    	
         
         </script>
                     

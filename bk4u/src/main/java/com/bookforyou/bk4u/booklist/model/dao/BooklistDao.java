@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.like.model.vo.Like;
 import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 @Repository
@@ -115,6 +116,21 @@ public class BooklistDao {
 	 */
 	public ArrayList<Booklist> selectMainBookReport(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("booklistMapper.selectMainBookReport");
+	}
+	
+	/** 인기 독서록 정렬
+	 * @author daeunlee
+	 */
+	public ArrayList<Booklist> selectTopBooklist(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("booklistMapper.selectTopBooklist");
+	}
+	
+	public int selectLikeCount(SqlSessionTemplate sqlSession, Like l) {
+		return sqlSession.selectOne("booklistMapper.selectLikeCount", l);
+	}
+	
+	public int insertLike(SqlSessionTemplate sqlSession, Like l) {
+		return sqlSession.insert("booklistMapper.insertLike", l);
 	}
 	
 }

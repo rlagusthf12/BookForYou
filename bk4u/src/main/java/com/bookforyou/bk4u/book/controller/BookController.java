@@ -550,13 +550,28 @@ public class BookController {
 	}
 	
 	/**
-	 * 메인 베스트 셀로 조회 (한진)
+	 * [메인] 베스트 셀러 조회 (한진)
 	 */
 	@ResponseBody
 	@RequestMapping("getMainBestSeller.bk")
 	public ArrayList selectMainBestSeller() {
 		
 		ArrayList<Book> bList = bookService.selectMainBestSeller();
+		return bList;
+	}
+	
+	/**
+	 * [메인] 도서 추천 조회 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("getMainBookRecommand.bk")
+	public ArrayList selectMainBookRecommand(int memNo) {
+		ArrayList<Book> bList = null;
+		if(memNo > 0) {
+			bList = bookService.selectMainBookRecommand(memNo);
+		}else if(memNo == 0) {
+			bList = bookService.selectMainBookRecommandToAll();
+		}
 		return bList;
 	}
 }

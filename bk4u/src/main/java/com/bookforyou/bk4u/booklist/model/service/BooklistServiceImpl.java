@@ -11,6 +11,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.dao.BooklistDao;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.like.model.vo.Like;
 import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 @Service
@@ -123,12 +124,23 @@ public class BooklistServiceImpl implements BooklistService{
 	public ArrayList<Booklist> selectBooklistSearchList(HashMap<String, String> map, PageInfo pi){
 		return blDao.selectBooklistSearchList(sqlSession, map, pi);
 	}
-
+	
+	/** 인기 독서록 정렬
+	 * @author daeunlee
+	 */
+	@Override
+	public ArrayList<Booklist> selectTopBooklist() {
+		return blDao.selectTopBooklist(sqlSession);
+	}
 
 	@Override
-	public ArrayList<Booklist> selectTopBooklistList() {
-		// TODO Auto-generated method stub
-		return null;
+	public int selectLikeCount(Like l) {
+		return blDao.selectLikeCount(sqlSession, l);
+	}
+
+	@Override
+	public int insertLike(Like l) {
+		return blDao.insertLike(sqlSession, l);
 	}
 
 	/**

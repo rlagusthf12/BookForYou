@@ -211,9 +211,23 @@ public class BookDao {
 	}
 
 	/**
-	 * 메인 베스트 셀러 조회 (한진)
+	 * [메인] 베스트 셀러 조회 (한진)
 	 */
 	public ArrayList<Book> selectMainBestSeller(SqlSessionTemplate sqlSession) {
 		 return (ArrayList)sqlSession.selectList("bookMapper.selectMainBestSeller");
+	}
+
+	/**
+	 * [메인] 도서 추천 조회 - 로그인 했을 경우 (한진)
+	 */
+	public ArrayList<Book> selectMainBookRecommand(SqlSessionTemplate sqlSession, int memNo) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectMainBookRecommand", memNo);
+	}
+
+	/**
+	 * [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진)
+	 */
+	public ArrayList<Book> selectMainBookRecommandToAll(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectMainBookRecommandToAll");
 	}
 }

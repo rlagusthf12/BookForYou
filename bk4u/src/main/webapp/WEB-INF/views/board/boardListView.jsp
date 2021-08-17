@@ -88,11 +88,15 @@
 	            <div class="add_info-wrap" style="margin:20px 0; padding:10px 0;">
 	                <!--카테고리area-->
 	                <div class="head-cate-wrap" style="float: right;">
-	                    <a href="">전체보기</a>
-	                </div>
-	                <!--목록갯수area-->
-	                <div class="list-count-wrap" style="float: right;">
-	                    <a href="">15개씩</a>
+	                    <form id="categoryForm" action="category.bo" method="Get" align="center">
+			                <div class="select">
+			                    <select class="custom-select" name="category">
+			                        <option value="freetalk">사담</option>
+		                            <option value="booktalk">책이야기</option>
+			                    </select>
+			                </div>
+			                <button type="submit" class="searchBtn">선택</button>
+			            </form>
 	                </div>
 	            </div>
 	        </div>
@@ -167,12 +171,12 @@
 		    </div>
 	
 	        <div id="search-wrap">
-	            <form id="searchForm" action="" method="Get" align="center">
+	            <form id="searchForm" action="search.bo" method="Get" align="center">
 	                <div class="select">
 	                    <select class="custom-select" name="condition">
 	                        <option value="writer">작성자</option>
-	                        <option value="title">제목</option>
-	                        <option value="content">내용</option>
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
 	                    </select>
 	                </div>
 	                <div class="text-input">
@@ -183,24 +187,36 @@
 	        </div>
 	    </div>
     <jsp:include page="../common/footer.jsp"/>
+    
     <script>
     
-	 	// 작성 로그인한 회원만 가능
-	    function enrollClick(){
-	    	
-	    	var loginUser = "<c:out value='${loginUser}'/>";
-	    	//console.log(loginUser);
-	    	if(!loginUser){
-	    		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
-	    		if(conf == true){ // 로그인창
-	    			location.href = "login-form.me";
-	    		}else{ // 화면
-	    			return;
-	    		}
-	    	}else{
-	    		location.href = "enrollForm.bo"
-	    	};
-	    }
+    $(function(){
+    	// 검색 
+		if("${condition}" != ""){
+			$("option[value=${condition}]").attr("selected", true);
+		}
+    	// 카테고리
+		if("${category}" != ""){
+			$("option[value=${category}]").attr("selected", true);
+		}
+    })
+    
+ 	// 작성 로그인한 회원만 가능
+    function enrollClick(){
+    	
+    	var loginUser = "<c:out value='${loginUser}'/>";
+    	//console.log(loginUser);
+    	if(!loginUser){
+    		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+    		if(conf == true){ // 로그인창
+    			location.href = "login-form.me";
+    		}else{ // 화면
+    			return;
+    		}
+    	}else{
+    		location.href = "enrollForm.bo"
+    	};
+    }
     
     </script>
     

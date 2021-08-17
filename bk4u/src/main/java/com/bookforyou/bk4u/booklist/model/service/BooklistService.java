@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
+import com.bookforyou.bk4u.like.model.vo.Like;
 import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 public interface BooklistService {
@@ -51,21 +52,26 @@ public interface BooklistService {
 	/** 8. 도서 검색 모달창 : 도서 조회용
 	 * @author daeunlee
 	 */
-	public ArrayList<Book> selectBookSearchList(HashMap<String, String> map);
+	ArrayList<Book> selectBookSearchList(HashMap<String, String> map);
 	
 	/** 9. 독서록 검색 : 갯수 조회용
 	 * @author daeunlee
 	 */
-	public int selectSearchListCount(HashMap<String, String> map);
+	int selectSearchListCount(HashMap<String, String> map);
 	
 	/** 10. 독서록 검색 : 게시글 조회용
 	 * @author daeunlee
 	 */
-	public ArrayList<Booklist> selectBooklistSearchList(HashMap<String, String> map, PageInfo pi);
+	ArrayList<Booklist> selectBooklistSearchList(HashMap<String, String> map, PageInfo pi);
 	
 	/** 11. 인기 독서록 정렬
 	 * @author daeunlee
 	 */
+	public ArrayList<Booklist> selectTopBooklist();
+	
+	int selectLikeCount(Like l);
+	
+	int insertLike(Like l);
 	public ArrayList<Booklist> selectTopBooklistList();
 	
 	/**
