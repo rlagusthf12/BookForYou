@@ -215,6 +215,12 @@ hr::after{
 		</script>
 		<c:remove var="byeMsg" scope="session"/>
 		</c:if>
+		<c:if test="${ !empty loginMsg }">
+		<script>
+			alertify.alert("${loginMsg}");
+		</script>
+		<c:remove var="loginMsg" scope="session"/>
+		</c:if>
         
         <div class="wrap">
             <br><br><br><br><br>
@@ -520,7 +526,7 @@ hr::after{
      <!-- 푸터바 -->
     <jsp:include page="common/footer.jsp"/>
 
-    <br><br><br><br><br><br>
+    <!--  <br><br><br><br><br><br>-->
 
 
 </body>

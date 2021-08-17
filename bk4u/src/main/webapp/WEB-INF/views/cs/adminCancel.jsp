@@ -186,7 +186,7 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
-        .detailO:hover, .detailC:hover{
+        .detailO:hover{
         	cursor:pointer;
         	color:#EC573B;
         	font-size:16px;
@@ -312,9 +312,10 @@
 			var tr = $(this).parent().parent().parent();
 	    	var td = tr.children();
 	    	var $memo = td.eq(13).text();
-	    	var $cancelNo = td.eq(1).text();
-	    	$(".admin-memo-content .cNo").val($cancelNo);
+	    	var $orderNo = td.eq(3).text();
+	    	$(".admin-memo-content .oNo").val($orderNo);
 	    	$(".admin-memo-content .memo-bottom input").val($memo);
+	    	console.log($orderNo);
 	    	
 	    	if($(this).parent().is(".no-exist")){
 	            $(".admin-memo-content .memo-delete-btn").hide();
@@ -330,8 +331,8 @@
 		/* 관리자 메모 삭제 */
 		$(".memo-delete-btn").click(function(){
 			
-			var $cacelNo = $(".cNo").val();
-			location.href="deleteCancelAdminMemo.cs?orderNo=" + $cancelNo;
+			var $orderNo = $(".oNo").val();
+			location.href="deleteAdminMemo.cs?orderNo=" + $orderNo + "&cStatus=cancel";
 			
 		})			
 	
@@ -347,6 +348,7 @@
 	        const a = $(this).offset();
 	        $(".user-memo-content").offset({top: a.top-40 , left: a.left-320});
 	    })
+	    
 	
 	    /* 주문 상세 보기 */
 	    $(".detailO").click(function(){
@@ -380,6 +382,8 @@
 	 		var cancelNo = tr.children().eq(1).text();
 	 		$(".cancelPcs").attr("href", 'adminCancelDatail.cs?cancelNo=' + cancelNo + '&orderNo=' + orderNo + "&no=2");
 	 	})
+	 	
+	 	
 	})
 </script>
 </head>
@@ -510,7 +514,7 @@
 		                    	<c:forEach var="c" items="${ cList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td class="detailC">${ c.cancelNo }</td>
+			                            <td>${ c.cancelNo }</td>
 			                            <td>${ c.cancelDate }</td>
 			                            <td class="detailO">${ c.orderNo }</td>
 			                            <td>${ c.memName } <br> (${ c.memId })</td>
@@ -570,8 +574,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateCancelAdminMemo.cs">
-																<input type="hidden" name="cancelNo" class="cNo"/>
+															<form action="updateAdminMemo.cs" method="POST">
+																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="cStatus" value="cancel"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -593,8 +598,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateCancelAdminMemo.cs">
-																<input type="hidden" name="cancelNo" class="cNo"/>
+															<form action="updateAdminMemo.cs" method="POST">
+																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="cStatus" value="cancel"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

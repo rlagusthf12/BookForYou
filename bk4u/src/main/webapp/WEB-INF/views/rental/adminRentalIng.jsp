@@ -249,12 +249,51 @@
 	    
 	    /* 정렬 시 해당 값 selected */
 	    $("#array-condition").val("${ ar }").prop("selected", true);
+		
+	    /* Click on select all checkbox */
+		$("#result-div thead input[type='checkbox']").click(function(){
+			
+			if($(this).prop('checked')){
+				$("#result-div tbody input[type='checkbox']").each(function(){
+					$(this).prop("checked", true);
+				})
+			}else {
+				$("#result-div tbody input[type='checkbox']").each(function(){
+					$(this).prop("checked", false);
+				})
+			}
+		})
+		
+		/* Click on another checkbox can affect the select all checkbox */
+		$("#result-div tbody input[type='checkbox']").click(function(){
+			if($("#result-div tbody input[type='checkbox']:checked").length == $("#result-div tbody input[type='checkbox']").length || !this.checked){
+				$("#result-div thead input[type='checkbox']").prop("checked", this.checked);
+			}
+		})
+		
+		/* 대여 상태 변경(다중 체크박스) */
+		$("#handling-btn button").each(function(){
+			$(this).click(function(){
+				var checkArr = [];
+				$("input:checkbox[name='rCheck']:checked").each(function(){
+					checkArr.push(this.value);
+				})
+				location.href="adminRentalStatusHandling.re?selectedRNo=" + checkArr + "&statusValue=" + $(this).val() + "&page=rental";
+			})
+		})
 	})
 </script>
 </head>
 <body>
 
 	<jsp:include page="../adminSidebar.jsp"/>
+	
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
 	
 	<div id="outer">
         <div id="main-title">
@@ -379,7 +418,14 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+	                <c:when test="${ not empty conListCount }">
+	                	<span>[총 ${ conListCount }개]</span>
+	                </c:when>
+	            	<c:otherwise>
+			            <span>[총 ${ rentalIngCount }개]</span>
+			        </c:otherwise>
+                </c:choose>
             </div>
             <br>
             <div id="array-div">
@@ -390,7 +436,8 @@
             </div>
 
             <div id="handling-btn">
-                <button>반납완료</button>
+                <button value="return">반납완료</button>
+                <button value="overDue">연체</button>
             </div>
 
             <div id="result-div">
@@ -414,7 +461,7 @@
 	                        <tr>
 	                            <td>${ no.count }</td>
 	                            <td>
-	                                <input type="checkbox">
+	                                <input type="checkbox" name="rCheck" value="${ r.rentalNo }">
 	                            </td>
 	                            <td>${ r.rentalNo }</td>
 	                            <td>${ r.memName }<br>(${ r.memId })</td>

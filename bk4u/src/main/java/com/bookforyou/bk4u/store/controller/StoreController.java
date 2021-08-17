@@ -13,10 +13,10 @@ import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
-import com.bookforyou.bk4u.rental.model.vo.Rental;
 import com.bookforyou.bk4u.store.model.service.StoreService;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
 import com.bookforyou.bk4u.store.model.vo.Store;
+import com.bookforyou.bk4u.store.model.vo.StoreBook;
 
 @Controller
 public class StoreController {
@@ -77,6 +77,54 @@ public class StoreController {
 		  .setViewName("store/offBookDetailView");
 		
 		return mv;
+	}
+	
+	
+	//관리자 (김현솔)
+	@RequestMapping("list.store")
+	public ModelAndView selectListStore(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage){
+		
+		int listCount = storeService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,10,5);
+		ArrayList<Store> list = storeService.selectStoreList(pi);
+		
+		mv.addObject("listCount",listCount).addObject("pi",pi).addObject("list",list).setViewName("store/storeListView");
+		return mv;
+	}
+	
+	@RequestMapping("list.storebook")
+	public ModelAndView selectListStoreBook(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,int storeNo){
+		
+		int listCount = storeService.selectBookListCount(storeNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,10,5);
+		ArrayList<StoreBook> list = storeService.selectStoreBookList(pi,storeNo);
+		
+		mv.addObject("listCount",listCount).addObject("pi",pi).addObject("list",list).setViewName("store/storeBooks");
+		return mv;
+	}
+	
+	@RequestMapping("add.store")
+	public String addStore(Store st) {
+		
+			int result =  storeService.addStore(st);
+		return "redirect:list.store";
+	}
+	
+	@RequestMapping("update.store")
+	public String updateStore(Store st) {
+		
+			int result =  storeService.updateStore(st);
+		return "redirect:list.store";
+	}
+	
+
+	@RequestMapping("delete.store")
+	public String deleteStore(int storeNo) {
+		
+			int result =  storeService.deleteStore(storeNo);
+		return "redirect:list.store";
 	}
 	
 }

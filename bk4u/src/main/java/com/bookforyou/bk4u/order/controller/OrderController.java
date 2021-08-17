@@ -1,6 +1,9 @@
 package com.bookforyou.bk4u.order.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -369,7 +372,15 @@ public class OrderController {
 			allPrice += (b.getBkPrice() * b.getBkQty());
 		}
 		
-		System.out.println(allPrice);
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd (E)");
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
+		for(int l = 1; l<5; l++) {
+			String today = sdf.format(cal.getTime());
+		}
 		
 		mv.addObject("bList", bList)
 		  .addObject("pList", pList)

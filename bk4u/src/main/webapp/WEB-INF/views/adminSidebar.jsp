@@ -167,10 +167,7 @@
                 <ul>
                     <li>
                         <a href="amemSearch.me">회원 조회</a>
-                    </li>
-                    <li>
-                        <a href="amemDetail.me">회원 상세조회</a>
-                    </li>
+                    </li>                 
                     <li>
                         <a href="blackList.me">블랙 리스트</a>
                     </li>
@@ -186,23 +183,12 @@
                 <a href="javascript:void(0);"><i class="fa fa-home"></i><span>매장</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="ui-alerts-notifications.html"></a>
+                        <a href="view.cc">매출 통계</a>
                     </li>
                     <li>
-                        <a href="ui-panels.html"></a>
+                        <a href="list.store">지점 관리</a>
                     </li>
-                    <li>
-                        <a href="ui-buttons.html"></a>
-                    </li>
-                    <li>
-                        <a href="ui-slider-progress.html"></a>
-                    </li>
-                    <li>
-                        <a href="ui-modals-popups.html"></a>
-                    </li>
-                    <li>
-                        <a href="ui-icons.html"></a>
-                    </li>
+                  
                 </ul>
             </li>
             <li class="sub-menu">
@@ -249,6 +235,9 @@
                     </li>
                     <li>
                         <a href="adminSubscDeliveryList.su">정기구독 발송</a>
+                    </li>
+                     <li>
+                        <a href="adminSubscOrderList.su">정기구독 발송 리스트</a>
                     </li>
                 </ul>
             </li>
@@ -307,7 +296,7 @@
         </ul>
     </div>
     <br><br>
-    <h1 align="center">Welcom To <br><i style="color:#EC573B; font-size: 40px;">BK4U</i></h1>
+    <h1 align="center">Welcome To <br><i style="color:#EC573B; font-size: 40px;">BK4U</i></h1>
 </aside>
 </body>
 </body>

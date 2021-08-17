@@ -168,6 +168,20 @@ public class CsDao {
 		return sqlSession.insert("csMapper.insertAdminRefundPoint", r);
 	}
 
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	public int updateAdminMemo(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("csMapper.updateAdminMemo", map);
+	}
+
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	public int deleteAdminMemo(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("csMapper.deleteAdminMemo",map);
+	}
+
 	
 
 	

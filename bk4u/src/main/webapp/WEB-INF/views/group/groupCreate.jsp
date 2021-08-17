@@ -50,8 +50,11 @@
                             
                             <thead>
                                 <tr>                            	
-                                	<td><input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter"></td>
-                               	
+                                	<td>
+                                	<input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter"></td>
+                                	<input type="hidden" id="groupDate" value="${g.gorupDate } name="groupDate">
+                                	<input type="hidden" id="groupBoardNo" value="${g.gorupBoardNo } name="groupBoardNo">
+                                	
                  				</tr>
                  				<tr>
                                     <td rowspan="2"><br><label for="">*모임이름</label></td>
@@ -80,53 +83,49 @@
                                     <tr>
                                         <td><label for="">지역검색</label></td>
                                         <td>
-                                            <select name="province" id="province" onChange="cityChange(this.value)" reqired>
-                                                <option>광역시도</option>
-                                                <option value="seoul">서울</option>
-                                                <option value="busan">부산</option>
-                                                <option value='3'>대구</option>
-                                                <option value='4'>인천</option>
-                                                <option value='5'>광주</option>
-                                                <option value='6'>대전</option>
-                                                <option value='7'>울산</option>
-                                                <option value='8'>강원</option>
-                                                <option value='9'>경기</option>
-                                                <option value='10'>경남</option>
-                                                <option value='11'>경북</option>
-                                                <option value='12' >전남</option>
-                                                <option value='13'>전북</option>
-                                                <option value='14'>제주</option>
-                                                <option value='15'>충남</option>
-                                                <option value='16'>충북</option>
-                                            </select>
-                                            <select name="city" id="city">
-                                                <option value='cityList'>시/구/군</option>
-                                            </select>
-                                            
+                                            <select id="select_type">
+											    <option>광역시도</option>
+											    <option>서울</option>
+											    <option>경기도</option>
+											    <option>부산</option>
+											    <option>강원도</option>
+											</select>
+											<select id="select_menu">
+											    <option>시/도/군</option>
+											</select>
+											
+											<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+											<script type="text/javascript">
+											    var f_china = ["강남구","강서구","강동구","노원구"];
+											    var f_japan = ["구리시","평택시"];
+											    var f_korea = ["비빔밥", "불고기", "삼겹살"];
+											    var f_america = ["충주시"]
+											    var foods = [ ["메뉴 선택"], f_china, f_japan, f_korea, f_america];
+											
+											    function createTag(index) {
+											        var result = "";
+											        foods[index].forEach(function (item) {
+											            result += "<option>" + item + "</option>";
+											        });
+											        return result;
+											    }
+											
+											    function chgOptions() {
+											        var selected_index = $("#select_type option").index($("#select_type option:selected"));
+											        $("#select_menu").html(createTag(selected_index));
+											    }
+											
+											    $("#select_type").on("change", function () { chgOptions(); });
+											</script>
+											                                            
                                                 </td>
                                       
-                                            </form>
-
                                 </tr>
 
-                                <script type="text/javascript" >
-                                    function cityChange(province){
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "placeSelect.do",
-                                            dataType: "json",
-                                            data: {param:province},
-                                            success: function(result){
-                            
-                                                $("#city").find("option").remove().end().append("<option value=''>시/구/군</option>");
-                            
-                                                $.each(result, function(i){
-                                                    $("#city").append("<option value='"+result[i]+"'>"+result[i]+"</option>")
-                                                });
-                                            }
-                                        })
-                                    }
-                                </script>
+                                
+
+ 								</form>
+
                          
                                 <tr>
                                     <td><label for="">모임소개</label></td>

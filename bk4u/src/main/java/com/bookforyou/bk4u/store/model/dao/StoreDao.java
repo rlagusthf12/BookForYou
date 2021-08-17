@@ -7,10 +7,10 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
 import com.bookforyou.bk4u.store.model.vo.Store;
+import com.bookforyou.bk4u.store.model.vo.StoreBook;
 
 @Repository
 public class StoreDao {
@@ -65,6 +65,41 @@ public class StoreDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("storeMapper.selectSearchOffBook", map, rowBounds);
+	}
+	
+	
+	//관리자 (김현솔)
+	
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("storeMapper.selectListCount");
+	}
+	
+	public int selectBookListCount(SqlSessionTemplate sqlSession, int storeNo) {
+		return sqlSession.selectOne("storeMapper.selectBookListCount",storeNo);
+	}
+	
+	public ArrayList<Store> selectStoreList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreList",null,rowBounds);		
+	}
+	
+
+	public ArrayList<StoreBook> selectStoreBookList(SqlSessionTemplate sqlSession, PageInfo pi,int storeNo){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreBookList",storeNo,rowBounds);		
+	}
+	
+	public int addStore(SqlSessionTemplate sqlSession, Store st) {
+		return sqlSession.insert("storeMapper.addStore",st);
+	}
+	public int updateStore(SqlSessionTemplate sqlSession, Store st) {
+		return sqlSession.update("storeMapper.updateStore",st);
+	}
+	
+	public int deleteStore(SqlSessionTemplate sqlSession,int storeNo) {
+		return sqlSession.delete("storeMapper.deleteStore",storeNo);
 	}
 
 }

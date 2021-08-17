@@ -167,4 +167,28 @@ public class MailSendService {
         }
     }
     
+    /**
+     * 이메일로 답변알림 보내기
+     * @author 김현솔 
+     * @param email
+     */    
+    public void sendMail(String email) {
+
+       
+        try {
+            MailUtils sendMail = new MailUtils(mailSender);
+            sendMail.setSubject("BK4U 문의 답변");
+            sendMail.setText(new StringBuffer().append("<h1>문의 답변 알림</h1>")
+            .append("<p>문의하신 질문내용에 대한 답변이 등록되었습니다</p>")           
+            .toString());
+            sendMail.setFrom("officialbookforyou@gmail.com", "BK4U");
+            sendMail.setTo(email);
+            sendMail.send();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

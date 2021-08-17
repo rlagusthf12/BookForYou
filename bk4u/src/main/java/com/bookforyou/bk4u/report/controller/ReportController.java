@@ -1,6 +1,7 @@
 package com.bookforyou.bk4u.report.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
+import com.bookforyou.bk4u.member.model.service.MemberService;
+import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.report.model.service.ReportService;
 import com.bookforyou.bk4u.report.model.vo.Report;
 import com.bookforyou.bk4u.report.model.vo.ReportList;
@@ -20,12 +23,15 @@ public class ReportController {
 	@Autowired
 	private ReportService rService;
 	
+	@Autowired
+	private MemberService mService;
+	
 	@RequestMapping("list.re")
-	public ModelAndView selectMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public ModelAndView selectMain(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, int memNo) {
 		
-		int listCount = rService.selectListCount();
+		int listCount = rService.selectListCount(memNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-		ArrayList<Report> list = rService.selectReportList(pi);
+		ArrayList<Report> list = rService.selectReportList(pi,memNo);
 		for(Report re : list) {
 			type(re);
 		}
@@ -33,6 +39,23 @@ public class ReportController {
 		mv .addObject("pi",pi)
 		   .addObject("list",list)
 		   .setViewName("report/reportList");
+		
+		return mv;
+	}
+	
+	@RequestMapping("listAd.re")
+	public ModelAndView selectMainAd(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int listCount = rService.selectListCountAd();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Report> list = rService.selectReportListAd(pi);
+		for(Report re : list) {
+			type(re);
+		}
+	
+		mv .addObject("pi",pi)
+		   .addObject("list",list)
+		   .setViewName("report/reportListAd");
 		
 		return mv;
 	}
@@ -122,8 +145,7 @@ public class ReportController {
 	@RequestMapping("update.reli")
 	public ModelAndView updateReReport(ModelAndView mv,ReportList reli) {
 		int result = rService.updateReReport(reli);
-		ReportList re = rService.selectReReport(reli.getReliNo());
-		System.out.println(re);
+		ReportList re = rService.selectReReport(reli.getReliNo());		
 		mv.addObject("reli",re)		
 		.setViewName("report/reportReasonDatailView");
 		
@@ -132,16 +154,18 @@ public class ReportController {
 	
 	@RequestMapping("writeForm.re")
 	public ModelAndView writeForm(ModelAndView mv, Report re) {
-		type(re);		
+		
+		type(re);
+		System.out.println(re);
 		mv.addObject("re",re)
-		.setViewName("report/reportReasonWriteForm");
+		.setViewName("report/reportWriteForm");
 		return mv;
 	}
 	
 	@RequestMapping("writeForm.reli")
-	public ModelAndView reasonWriteForm(ModelAndView mv,int reNo) {
+	public ModelAndView reasonWriteForm(ModelAndView mv,int reportNo) {
 		
-		Report re = rService.selectReport(reNo);
+		Report re = rService.selectReport(reportNo);
 		
 		System.out.println(re);
 		type(re);
@@ -153,10 +177,11 @@ public class ReportController {
 	
 	@RequestMapping("write.re")
 	public String reasonWriteForm(ModelAndView mv,Report report) {
+		System.out.println(report);
+		int result = rService.writeReport(report);
 		
-		int result = rService.writeReport(report);		
 		
-		return "redirect:list.re";
+		return "redirect:list.re?memNo="+report.getMemNo();
 	}
 	
 	
@@ -164,7 +189,9 @@ public class ReportController {
 	@RequestMapping("write.reli")
 	public String reasonWriteForm(ModelAndView mv,ReportList reli) {
 		
-		int result = rService.writeReReport(reli);		
+		int result1 = mService.updateReportStack(reli);		
+		int result = rService.writeReReport(reli);
+				
 		
 		return "redirect:list.reli";
 	}
@@ -186,6 +213,12 @@ public class ReportController {
 				
 		break;
 		case 4: re.setReportType1("리뷰");	
+		
+		break;
+		
+		
+		case 5: re.setReportType1("독서모임");
+		
 		break;
 		default:
 			re.setReportType1("error");

@@ -14,6 +14,7 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 import com.bookforyou.bk4u.member.model.vo.MemberCategory;
 import com.bookforyou.bk4u.member.model.vo.MemberInterest;
 import com.bookforyou.bk4u.member.model.vo.MemberPhonebook;
+import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 @Service
 public class MemberSerivceImpl implements MemberService{
@@ -165,6 +166,19 @@ public class MemberSerivceImpl implements MemberService{
 	@Override
 	public ArrayList<MemberPhonebook> selectMemPhonebookList(int memNo){
 		return memberDao.selectMemPhonebookList(sqlSession, memNo);
+	}
+	
+	/*
+	 * [관리자] 신고 스텍 증가 (김현솔)
+	 */
+	@Override
+	public int updateReportStack(ReportList reli) {
+		return memberDao.updateReportStack(sqlSession, reli);
+	}
+	
+	@Override
+	public int updateStatus(int memNo) {
+		return memberDao.updateStatus(sqlSession, memNo);
 	}
 
 }

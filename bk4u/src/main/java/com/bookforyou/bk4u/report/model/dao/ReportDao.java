@@ -13,7 +13,11 @@ import com.bookforyou.bk4u.report.model.vo.ReportList;
 @Repository
 public class ReportDao {
 
-	public int selectListCount(SqlSessionTemplate sqlSession) {
+	public int selectListCount(SqlSessionTemplate sqlSession,int memNo) {
+		return sqlSession.selectOne("reportMapper.selectListCount",memNo);
+	}
+	
+	public int selectListCountAd(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("reportMapper.selectListCount");
 	}	
 
@@ -21,11 +25,18 @@ public class ReportDao {
 		return sqlSession.selectOne("reportMapper.selectReListCount");
 	}
 	
-	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<Report> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi,int memNo){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("reportMapper.selectReportList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("reportMapper.selectReportList", memNo, rowBounds);
+	}
+	
+	public ArrayList<Report> selectReportListAd(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("reportMapper.selectReportListAd", null, rowBounds);
 	}
 	
 	public ArrayList<ReportList> selectReReportList(SqlSessionTemplate sqlSession, PageInfo pi){
@@ -60,10 +71,10 @@ public class ReportDao {
 	}
 	
 	public int writeReport(SqlSessionTemplate sqlSession, Report report) {
-		return sqlSession.insert("reportMapper.insertReport", report);
+		return sqlSession.insert("reportMapper.writeReport", report);
 	}
 	
 	public int writeReReport(SqlSessionTemplate sqlSession, ReportList reli) {
-		return sqlSession.insert("reportMapper.insertReReport", reli);
+		return sqlSession.insert("reportMapper.writeReReport", reli);
 	}
 }

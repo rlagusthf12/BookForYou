@@ -38,17 +38,7 @@
     #paging-wrap{width:fit-content; margin:auto;}
     .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 	
- .addButton{
-		font-size: 16px; 
-		color: rgb(64, 64, 64); 
-		text-align: center; 
-		line-height: 2.5em;
-		border-radius: 4px;
-		background-color: rgb(224, 224, 224);
-		width:80px;
-		height:40px;
-		float:right;			
-	}
+
 	span{
 	display: inline-block;
 	}
@@ -62,114 +52,98 @@
 	.choose{
 	 margin-left:310px;
 	}
+		.ListButton{		
+		font-size: 19px; 
+		color: rgb(64, 64, 64); 
+		text-align: center; 
+		line-height: 3em;
+		border-radius: 4px; 
+		background-color: rgb(252, 190, 52);
+		width:120px;
+		margin-top:300px;
+		margin-left:330px;
+		margin-bottom:200px;
+	}
+	
 </style>
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+<jsp:include page="../common/menubar.jsp"/>
  	<div id="content1">
- 		<div class="Title">지점 관리</div>
+ 		<div class="Title">보유 도서</div>
  	<div class="searchBar1">
  	<span class="listCount">
- 	<h5>목록   [총 10개]</h5>
+ 	<h5>목록   [총 ${listCount }개]</h5>
  	</span>
  	<span class="choose">
 	<select name="choice">
 	<option>전체</option>
-	<option>지점코드</option>
-	<option>매장명</option>
-	<option>전화번호</option>
-	<option>관리자명</option>
+	<option>저자</option>
+	<option>출간일</option>
+	<option>도서명</option>
+
 	</select>	
 	<input type="text"/>
 	<button>검색</button>
 	</span>
-	</div>
-
-	<table class="table_board">
-	<tbody>
-	<tr>
-	<th>No</th>
-	<th>지점코드</th>
-	<th>매장명</th>
-	<th>주소</th>
-	<th>전화번호</th>
-	<th>보유도서</th>
-	<th>등록일</th>
-	<th>상태</th>
-	</tr>
-	<tr>
-	<td style="height:60px;">1</td>
-	<td>of0001</td>
-	<td>bk4u강남점</td>
-	<td>서울 특별시 강남구</td>
-	<td>02-111-222</td>
-	<td><button>보기</button></td>
-	<td>2021-07-28</td>
-	<td>y</td>
-	</tr>
-	</tbody>
-	</table>
+	</div>	
 	
 	<table class="table_board">
 	<tbody>
 	<tr>
-	<th>No</th>
-	<th>지점코드</th>
-	<th>매장명</th>
-	<th>주소</th>
-	<th>전화번호</th>
-	<th>보유도서</th>
-	<th>등록일</th>
-	<th>상태</th>
+	<th>도서번호</th>	
+	<th>도서명</th>
+	<th>저자</th>
+	<th>출판사</th>	
+	<th>출간일</th>	
+	<th>대여 여부</th>
 	</tr>
+	<c:forEach var="of" items="${list}">
 	<tr>
-	<td style="height:60px;">1</td>
-	<td>of0001</td>
-	<td>bk4u강남점</td>
-	<td>서울 특별시 강남구</td>
-	<td>02-111-222</td>
-	<td><button>보기</button></td>
-	<td>2021-07-28</td>
-	<td>y</td>
+	<td style="height:60px;">${of.bookNo}</td>
+	<td>${of.bookTitle}</td>
+	<td>${of.bookAuthor}</td>
+	<td>${of.bookPubl}</td>
+	<td>${of.bookDate}</td>	
+	<td>${of.bookStatus}</td>
 	</tr>
-	<tr>
-	<td style="height:60px;">1</td>
-	<td>of0001</td>
-	<td>bk4u강남점</td>
-	<td>서울 특별시 강남구</td>
-	<td>02-111-222</td>
-	<td><button>보기</button></td>
-	<td>2021-07-28</td>
-	<td>y</td>
-	</tr>
-	<tr>
-	<td style="height:60px;">1</td>
-	<td>of0001</td>
-	<td>bk4u강남점</td>
-	<td>서울 특별시 강남구</td>
-	<td>02-111-222</td>
-	<td><button>보기</button></td>
-	<td>2021-07-28</td>
-	<td>y</td>
-	</tr>
+	</c:forEach>
+
 	</tbody>
 	</table>
+	
+	
 	<br><br><br>
-	 <div id="paging-wrap">
+	<div id="paging-wrap">
             <ul class="pagination">
+            	<c:choose>
+            	<c:when test="${pi.currentPage eq 1}">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+                </c:when>
+                <c:otherwise>
+                	<li class="page-item"><a class="page-link" href="list.storeBook?currentPage=${ pi.currentPage-1 }">Previous</a></li>
+                </c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}"> 
+                <li class="page-item"><a class="page-link" href="list.storeBook?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+             
+             <c:choose>
+             	<c:when test="${pi.currentPage eq pi.maxPage}">
+             		    <li class="page-item disabled"><a class="page-link">다음</a></li>
+             	</c:when>
+             	<c:otherwise>
+             		<li class="page-item"><a class="page-link" href="list.storeBook?currentPage=${ pi.currentPage+1 }">Next</a></li>
+		        </c:otherwise>
+             </c:choose>
+            
             </ul>
-        </div>
-        <div class="addButton">추가</div>
+        </div>   
+        <div class="ListButton" onclick="location.href='list.store'">목록으로</div>   
 </div>
 
 
-<jsp:include page="../footer.jsp"/>
+<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

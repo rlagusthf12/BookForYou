@@ -183,6 +183,22 @@ public class CsServiceImpl implements CsService{
 		return cDao.insertAdminRefundPoint(sqlSession, r);
 	}
 
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	@Override
+	public int updateAdminMemo(HashMap<String, String> map) {
+		return cDao.updateAdminMemo(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	@Override
+	public int deleteAdminMemo(HashMap<String, String> map) {
+		return cDao.deleteAdminMemo(sqlSession, map);
+	}
+
 	
 	
 	

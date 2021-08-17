@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -19,6 +20,7 @@ import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 public interface MypageService {
 
@@ -83,6 +85,14 @@ public interface MypageService {
 	int insertMyBookGrade(Grade grade);
 
 	Refund selectMyRefund(int orderNo);
+
+	int selectMyBoardListCount(int memNo);
+
+	ArrayList<Board> selectMyBoardList(PageInfo pi, int memNo);
+
+	int selectMyReplyListCount(int memNo);
+
+	ArrayList<Reply> selectMyReplyList(PageInfo pi, int memNo);
 
 
 

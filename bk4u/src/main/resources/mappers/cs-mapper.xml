@@ -688,5 +688,40 @@
 		where order_no = #{orderNo}
 	</select>
 	
+	<!-- [관리자] 메모 등록/수정 (한진) -->
+	<update id="updateAdminMemo">
+		update
+		       <choose>
+		       	<when test="cStatus == 'cancel'">
+		       		cancel
+		       	</when>
+		       	<when test="cStatus == 'return'">
+		       		return
+		       	</when>
+		       	<when test="cStatus == 'refund'">
+		       		refund
+		       	</when>
+		       </choose>
+		   set admin_memo = #{adminMemo}
+		 where order_no = #{orderNo}
+	</update>
+	
+	<!-- [관리자] 메모 삭제 (한진) -->
+	<update id="deleteAdminMemo">
+		update
+		<choose>
+		       	<when test="cStatus == 'cancel'">
+		       		cancel
+		       	</when>
+		       	<when test="cStatus == 'return'">
+		       		return
+		       	</when>
+		       	<when test="cStatus == 'refund'">
+		       		refund
+		       	</when>
+		       </choose>
+		   set admin_memo = null
+		 where order_no = #{orderNo}
+	</update>
 	
 </mapper>

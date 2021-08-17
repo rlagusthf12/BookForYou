@@ -179,6 +179,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailO:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 반품 처리 컬럼 버튼 */
         .handling{
@@ -304,7 +310,7 @@
 			var tr = $(this).parent().parent().parent();
 	    	var td = tr.children();
 	    	var $memo = td.eq(10).text();
-	    	var $orderNo = td.eq(1).text();
+	    	var $orderNo = td.eq(3).text();
 	    	$(".admin-memo-content .oNo").val($orderNo);
 	    	$(".admin-memo-content .memo-bottom input").val($memo);
 	    	
@@ -323,7 +329,7 @@
 		$(".memo-delete-btn").click(function(){
 			
 			var $orderNo = $(".oNo").val();
-			location.href="deleteAdminMemo.or?orderNo=" + $orderNo;
+			location.href="deleteAdminMemo.cs?orderNo=" + $orderNo + "&cStatus=return";
 			
 		})			
 	
@@ -341,7 +347,7 @@
 	    })
 	
 	    /* 주문 상세 보기 */
-	    $(".detailC").click(function(){
+	    $(".detailO").click(function(){
 	    	var td = $(this);
 	        var orderNo = td.text();
 	        location.href='adminOrderDetail.or?orderNo=' + orderNo;
@@ -492,9 +498,9 @@
 		                    	<c:forEach var="rt" items="${ rtList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td class="detailRt">${ rt.returnNo }</td>
+			                            <td>${ rt.returnNo }</td>
 			                            <td>${ rt.returnDate }</td>
-			                            <td class="detailC">${ rt.orderNo }</td>
+			                            <td class="detailO">${ rt.orderNo }</td>
 			                            <td>${ rt.memName } <br> (${ rt.memId })</td>
 			                            <td>${ rt.bkTitle }</td>
 			                            <td>${ rt.payWay }</td>
@@ -549,8 +555,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
+															<form action="updateAdminMemo.cs">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="cStatus" value="return"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -572,8 +579,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateAdminMemo.or">
+															<form action="updateAdminMemo.cs">
 																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="cStatus" value="return"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

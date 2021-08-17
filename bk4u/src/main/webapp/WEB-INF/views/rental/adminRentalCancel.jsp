@@ -380,7 +380,14 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+	                <c:when test="${ not empty conListCount }">
+	                	<span>[총 ${ conListCount }개]</span>
+	                </c:when>
+	            	<c:otherwise>
+			            <span>[총 ${ rentalCancelCount }개]</span>
+			        </c:otherwise>
+                </c:choose>
             </div>
             <div id="array-div">
                 <select name="" id="array-condition">

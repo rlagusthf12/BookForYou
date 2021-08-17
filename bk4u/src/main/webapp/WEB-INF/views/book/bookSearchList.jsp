@@ -65,6 +65,12 @@
             margin-left: 1px;
             text-decoration: none;
         }
+        
+        #content #empty_search{
+        	margin-top: -20px;
+        	margin-left: 10px;
+        	margin-bottom: 20px;
+        }
 
         #content .search_book{
             margin-top: 20px;
@@ -225,50 +231,50 @@
                     <span>"${ keyword }" 검색결과</span>
                     <span>${ pi.listCount }건</span>
                 </div>
-                <div id="search_sort">
-                    <a href="" style="font-weight: bolder;">정확도순</a>
-                    <a href="">판매량순</a>
-                    <a href="">출시일순</a>
-                    <a href="">상품명순</a>
-                    <a href="">평점순</a>
-                    <a href="">저가격순</a>
-                </div>
             </div>
             
-            <c:forEach var="b" items="${ bList }">
-	            <div class="search_book">
-	                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
-	                <div class="book_info">
-	                    <div>
-	                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
-	                        <div>
-	                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
-	                            <span>&nbsp;★★★★☆</span>
-	                        </div>
-	                        <div>
-	                            <span>${ b.bkPrice }</span>
-	                            <span>원</span>
-	                            <span>${ b.bkPrice * 0.01}원 적립</span>
-	                        </div>
-	                    </div>
-	                    
-	                    <span>
-							수량&nbsp;&nbsp;
-	                        <input type="number" min="1" max="5" value="1">
-	                    </span>
-	                    
-	                    <div class="book_content">
-							낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
-	                    </div>
-	                    <div>
-	                        <button class="btn_order">즉시구매</button>
-	                        <button class="btn_cart">장바구니</button>
-	                        <button class="btn_list">리스트</button>
-	                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
-	                    </div>
-	                </div>
-	            </div>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${ empty bList }">
+                	<div id="empty_search"><b>${ keyword } 와 일치하는 검색 결과가 없습니다.</b></div>
+                </c:when>
+                
+                <c:otherwise>
+	                <c:forEach var="b" items="${ bList }">
+			            <div class="search_book">
+			                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
+			                <div class="book_info">
+			                    <div>
+			                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
+			                        <div>
+			                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
+			                            <span>&nbsp;★★★★☆</span>
+			                        </div>
+			                        <div>
+			                            <span>${ b.bkPrice }</span>
+			                            <span>원</span>
+			                            <span>${ b.bkPrice * 0.01}원 적립</span>
+			                        </div>
+			                    </div>
+			                    
+			                    <span>
+									수량&nbsp;&nbsp;
+			                        <input type="number" min="1" max="5" value="1">
+			                    </span>
+			                    
+			                    <div class="book_content">
+									낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
+			                    </div>
+			                    <div>
+			                        <button class="btn_order">즉시구매</button>
+			                        <button class="btn_cart">장바구니</button>
+			                        <button class="btn_list">리스트</button>
+			                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
+			                    </div>
+			                </div>
+			            </div>
+		            </c:forEach>
+                </c:otherwise>            
+            </c:choose>
             
             <script>
 	        	$(".search_book .btn_cart").click(function(){
@@ -285,7 +291,7 @@
 		            		url:"cartUpdate.bk",
 		            		data:{
 		            			memNo:${ loginUser.memNo },
-		            			bkNo:$(this).siblings("input[id=book_no]").val();
+		            			bkNo:$(this).siblings("input[id=book_no]").val()
 		            		},
 		            		type:"post",
 		            		success:function(result){
@@ -315,7 +321,7 @@
 		            		url:"listInsert.bk",
 		            		data:{
 		            			memNo:${ loginUser.memNo },
-		            			bkNo:$(this).siblings("input[id=book_no]").val();
+		            			bkNo:$(this).siblings("input[id=book_no]").val()
 		            		},
 		            		type:"post",
 		            		success:function(result){
@@ -336,52 +342,58 @@
 	        	})
             </script>
             
-            <div id="paging-wrap">
-                <ul class="pagination">
-                    <c:choose>
-                		<c:when test="${ pi.currentPage eq 1 }">
-	                    	<li class="page-item disabled"><a class="page-link">이전</a></li>
-	                    </c:when>
-	                    <c:otherwise>
+            <c:choose>
+                <c:when test="${ !empty bList }">
+                
+                <div id="paging-wrap">
+	                <ul class="pagination">
+	                    <c:choose>
+	                		<c:when test="${ pi.currentPage eq 1 }">
+		                    	<li class="page-item disabled"><a class="page-link">이전</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<c:choose>
+		                    		<c:when test="${ !empty condition }">
+		                    			<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }&condition=${condition}&keyword=${keyword}">Previous</a></li>
+	                    			</c:when>
+	                    			<c:otherwise>
+	                    				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
+	                    			</c:otherwise>
+	                    		</c:choose>
+	                    	</c:otherwise>
+	                    </c:choose>
+	                    
+	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 	                    	<c:choose>
 	                    		<c:when test="${ !empty condition }">
-	                    			<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }&condition=${condition}&keyword=${keyword}">Previous</a></li>
-                    			</c:when>
-                    			<c:otherwise>
-                    				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
-                    			</c:otherwise>
-                    		</c:choose>
-                    	</c:otherwise>
-                    </c:choose>
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    	<c:choose>
-                    		<c:when test="${ !empty condition }">
-                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
-                   			</c:when>
-                   			<c:otherwise>
-                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
-                   			</c:otherwise>
-                    	</c:choose>
-                    </c:forEach>
-                    
-                    <c:choose>
-                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<c:choose>
-	                    		<c:when test="${ !empty condition }">
-		                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
-		                    	</c:when>
-		                    	<c:otherwise>
-		                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
-		                    	</c:otherwise>
-		                    </c:choose>
-	                    </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+	                   			</c:when>
+	                   			<c:otherwise>
+	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
+	                   			</c:otherwise>
+	                    	</c:choose>
+	                    </c:forEach>
+	                    
+	                    <c:choose>
+	                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
+		                    </c:when>
+		                    <c:otherwise>
+		                    	<c:choose>
+		                    		<c:when test="${ !empty condition }">
+			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
+			                    	</c:when>
+			                    	<c:otherwise>
+			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+			                    	</c:otherwise>
+			                    </c:choose>
+		                    </c:otherwise>
+	                    </c:choose>
+	                </ul>
+	            </div>
+	            
+	            </c:when>           
+            </c:choose>
 
             <div id="modal_cart" class="modal fade">
                 <div class="modal-dialog">
@@ -403,7 +415,7 @@
                         <div class="modal-body">
                             <div>성공적으로 리스트에 담겼습니다</div>
                             <div>
-                                <button type="button" class="btn btn-primary" onclick="openWindow();">리스트 보러가기</button>
+                                <button type="button" class="btn btn-primary" onclick="goToList();">리스트 보러가기</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
                             </div>
                         </div>
@@ -414,6 +426,12 @@
             <script>
             	function goToCart(){
             		location.href = "cart.bk?memNo=${loginUser.memNo}";
+            	}
+            </script>
+            
+            <script>
+            	function goToList(){
+            		location.href = "my-list.mp";
             	}
             </script>
 

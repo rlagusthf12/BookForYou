@@ -95,7 +95,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 상세 조회 (한진)
 	 */
 	@Override
-	public Subscription selectAdminSubscDetail(HashMap<String, Integer> map) {
+	public Subscription selectAdminSubscDetail(HashMap<String, String> map) {
 		return sDao.selectAdminSubscDetail(sqlSession, map);
 	}
 
@@ -103,7 +103,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 상세 조회 - 도서 (한진)
 	 */
 	@Override
-	public ArrayList<Book> selectAdminSubscDetailBook(HashMap<String, Integer> map) {
+	public ArrayList<Book> selectAdminSubscDetailBook(HashMap<String, String> map) {
 		return sDao.selectAdminSubscDetailBook(sqlSession, map);
 	}
 
@@ -111,7 +111,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 상세 조회 - 배송 (한진)
 	 */
 	@Override
-	public Subscription selectAdminSubscDetailDel(HashMap<String, Integer> map) {
+	public Subscription selectAdminSubscDetailDel(HashMap<String, String> map) {
 		return sDao.selectAdminSubscDetailDel(sqlSession, map);
 	}
 
@@ -119,7 +119,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 상세 조회 - 결제 (한진)
 	 */
 	@Override
-	public Payment selectAdminSubscDetailPay(HashMap<String, Integer> map) {
+	public Payment selectAdminSubscDetailPay(HashMap<String, String> map) {
 		return sDao.selectAdminSubscDetailPay(sqlSession, map);
 	}
 
@@ -127,7 +127,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 상세 조회 - 쿠폰 (한진)
 	 */
 	@Override
-	public Coupon selectAdminSubscDetailCoupon(HashMap<String, Integer> map) {
+	public Coupon selectAdminSubscDetailCoupon(HashMap<String, String> map) {
 		return sDao.selectAdminSubscDetailCoupon(sqlSession, map);
 	}
 
@@ -183,7 +183,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 개수 조회 (한진)
 	 */
 	@Override
-	public int selectAdminSubscBookCount(int sNo) {
+	public int selectAdminSubscBookCount(String sNo) {
 		return sDao.selectAdminSubscBookCount(sqlSession, sNo);
 	}
 
@@ -191,7 +191,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 조회 (한진)
 	 */
 	@Override
-	public ArrayList<Book> selectAdminSubscBookList(PageInfo pi, int sNo) {
+	public ArrayList<Book> selectAdminSubscBookList(PageInfo pi, String sNo) {
 		return sDao.selectAdminSubscBookList(sqlSession, pi, sNo);
 	}
 
@@ -199,7 +199,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 회원 조회 (한진)
 	 */
 	@Override
-	public Member selectAdminSubscMember(int sNo) {
+	public Member selectAdminSubscMember(String sNo) {
 		return sDao.selectAdminSubscMember(sqlSession, sNo);
 	}
 
@@ -207,7 +207,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 회원 interest 조회 (한진)
 	 */
 	@Override
-	public ArrayList<MemberInterest> selectAdminSubscInterest(int sNo) {
+	public ArrayList<MemberInterest> selectAdminSubscInterest(String sNo) {
 		return sDao.selectAdminSubscInterest(sqlSession, sNo);
 	}
 
@@ -215,7 +215,7 @@ public class SubscriptionImpl implements SubscriptionService{
 	 * [관리자] 정기구독 회원 sub_category 조회 (한진)
 	 */
 	@Override
-	public ArrayList<MemberCategory> selectAdminSubscCategory(int sNo) {
+	public ArrayList<MemberCategory> selectAdminSubscCategory(String sNo) {
 		return sDao.selectAdminSubscCategory(sqlSession, sNo);
 	}
 
@@ -250,6 +250,79 @@ public class SubscriptionImpl implements SubscriptionService{
 	public int insertSubsc(Subscription sub) {
 		return sDao.insertSubsc(sqlSession, sub);
 	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminSubscOrderCount() {
+		return sDao.selectAdminSubscOrderCount(sqlSession);
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Subscription> selectAdminSubscOrderList(PageInfo pi, HashMap<String, Integer> map) {
+		return sDao.selectAdminSubscOrderList(sqlSession, pi, map);
+	}
+
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	@Override
+	public int updateAdminMemo(HashMap<String, String> map) {
+		return sDao.updateAdminMemo(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	@Override
+	public int deleteAdminMemo(String subscNo) {
+		return sDao.deleteAdminMemo(sqlSession, subscNo);
+	}
+
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 결과 개수 조회 (한진)
+	 */
+	@Override
+	public int selectAdminBookSelectSearchListCount(HashMap<String, String> map) {
+		return sDao.selectAdminBookSelectSearchListCount(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 결과 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Book> selectAdminBookSelectSearchList(PageInfo pi, HashMap<String, String> map) {
+		return sDao.selectAdminBookSelectSearchList(sqlSession, pi, map);
+	}
+
+	/**
+	 * [관리자] 정기구독 도서 중복 체크 (한진)
+	 */
+	@Override
+	public int checkBookDuplicates(HashMap<String, String> map) {
+		return sDao.checkBookDuplicates(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진)
+	 */
+	@Override
+	public int selectSubscOrderSearchCount(HashMap<String, String> map) {
+		return sDao.selectSubscOrderSearchCount(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 조회 (한진)
+	 */
+	@Override
+	public ArrayList<Subscription> selectAdminSubscOrderSearchList(PageInfo pi, HashMap<String, String> map) {
+		return sDao.selectAdminOrderSearchList(sqlSession, pi, map);
+	}
+
 	
 	
 

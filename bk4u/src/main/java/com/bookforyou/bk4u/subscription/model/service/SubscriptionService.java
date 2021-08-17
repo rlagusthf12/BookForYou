@@ -59,27 +59,27 @@ public interface SubscriptionService {
 	/**
 	 * [관리자] 정기구독 상세 조회 (한진)
 	 */
-	Subscription selectAdminSubscDetail(HashMap<String, Integer> map);
+	Subscription selectAdminSubscDetail(HashMap<String, String> map);
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 도서 (한진)
 	 */
-	ArrayList<Book> selectAdminSubscDetailBook(HashMap<String, Integer> map);
+	ArrayList<Book> selectAdminSubscDetailBook(HashMap<String, String> map);
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 배송 (한진)
 	 */
-	Subscription selectAdminSubscDetailDel(HashMap<String, Integer> map);
+	Subscription selectAdminSubscDetailDel(HashMap<String, String> map);
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 결제 (한진)
 	 */
-	Payment selectAdminSubscDetailPay(HashMap<String, Integer> map);
+	Payment selectAdminSubscDetailPay(HashMap<String, String> map);
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 쿠폰 (한진)
 	 */
-	Coupon selectAdminSubscDetailCoupon(HashMap<String, Integer> map);
+	Coupon selectAdminSubscDetailCoupon(HashMap<String, String> map);
 
 	/**
 	 * [관리자] 배송지 변경 (한진)
@@ -114,27 +114,27 @@ public interface SubscriptionService {
 	/**
 	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 개수 조회 (한진)
 	 */
-	int selectAdminSubscBookCount(int sNo);
+	int selectAdminSubscBookCount(String sNo);
 
 	/**
 	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 조회 (한진)
 	 */
-	ArrayList<Book> selectAdminSubscBookList(PageInfo pi, int sNo);
+	ArrayList<Book> selectAdminSubscBookList(PageInfo pi, String sNo);
 
 	/**
 	 * [관리자] 회원 조회 (한진)
 	 */
-	Member selectAdminSubscMember(int sNo);
+	Member selectAdminSubscMember(String sNo);
 
 	/**
 	 * [관리자] 정기구독 회원 interest 조회 (한진)
 	 */
-	ArrayList<MemberInterest> selectAdminSubscInterest(int sNo);
+	ArrayList<MemberInterest> selectAdminSubscInterest(String sNo);
 
 	/**
 	 * [관리자] 정기구독 회원 sub_category 조회 (한진)
 	 */
-	ArrayList<MemberCategory> selectAdminSubscCategory(int sNo);
+	ArrayList<MemberCategory> selectAdminSubscCategory(String sNo);
 
 	/**
 	 * [관리자] 도서 발송 (한진)
@@ -155,5 +155,51 @@ public interface SubscriptionService {
 	 * @author daeunlee
 	 */
 	int insertSubsc(Subscription sub);
+
+	/**
+	 * [관리자] 정기구독 발송 내역 개수 조회 (한진)
+	 */
+	int selectAdminSubscOrderCount();
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 */
+	ArrayList<Subscription> selectAdminSubscOrderList(PageInfo pi, HashMap<String, Integer> map);
+
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	int updateAdminMemo(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	int deleteAdminMemo(String subscNo);
+
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 결과 개수 조회 (한진)
+	 */
+	int selectAdminBookSelectSearchListCount(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 결과 조회 (한진)
+	 */
+	ArrayList<Book> selectAdminBookSelectSearchList(PageInfo pi, HashMap<String, String> map);
+
+	/**
+	 * [관리자] 정기구독 도서 중복 체크 (한진)
+	 */
+	int checkBookDuplicates(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진)
+	 */
+	int selectSubscOrderSearchCount(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 조회 (한진)
+	 */
+	ArrayList<Subscription> selectAdminSubscOrderSearchList(PageInfo pi, HashMap<String, String> map);
+
 
 }

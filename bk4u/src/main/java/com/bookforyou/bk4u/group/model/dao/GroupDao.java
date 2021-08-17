@@ -33,6 +33,11 @@ public class GroupDao {
 			
 		}
 	
+	public ArrayList<Member> member(SqlSession sqlSession, Member m){
+		System.out.println(m);
+		return (ArrayList)sqlSession.selectList("groupMapper.memberInfo", m);
+	}
+	
 	
 	public int insertGMem(SqlSessionTemplate sqlSession, GroupMember gm) {
 		System.out.println(gm);
@@ -56,6 +61,7 @@ public class GroupDao {
 
 
 	public GroupBoard selectGroup(SqlSessionTemplate sqlSession, int groupBoard) {
+		System.out.println(groupBoard);
 		return sqlSession.selectOne("groupMapper.selectGroup", groupBoard);
 	}
 
@@ -72,5 +78,9 @@ public class GroupDao {
 		return sqlSession.update("groupMapper.updateGroup", g);
 	}
 	
+	public int insertMeet(SqlSessionTemplate sqlSession, GroupBoard g) {
+		return sqlSession.insert("groupMapper.insertMeet", g);
+			
+		}
 
 }

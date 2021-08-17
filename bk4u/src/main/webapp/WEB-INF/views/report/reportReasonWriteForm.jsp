@@ -99,7 +99,7 @@
 <input type="text" placeholder="신고계정명" class="titleinput"  name="memNickName">
 <br><br><br>
 <h2 style="margin-left:35px;">내용</h2>
-<textarea class="content" name="reliContent">내용을 입력해주세요.</textarea>
+<textarea class="content" name="reliContent" placeholder="내용을 입력해주세요."></textarea>
 <br><br><br><br>
 <h2>사진 첨부</h2>
 <div class="uploadfile">

@@ -10,6 +10,7 @@
 		<typeAlias type="com.bookforyou.bk4u.book.model.vo.Book" alias="Book"/>
 		<typeAlias type="com.bookforyou.bk4u.group.model.vo.GroupBoard" alias="GroupBoard"/>
 		<typeAlias type="com.bookforyou.bk4u.group.model.vo.GroupMember" alias="GroupMember"/>
+		<typeAlias type="com.bookforyou.bk4u.meet.model.vo.Meet" alias="Meet"/>
 		<typeAlias type="com.bookforyou.bk4u.notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.bookforyou.bk4u.faq.model.vo.Faq" alias="Faq"/>
 		<typeAlias type="com.bookforyou.bk4u.booklist.model.vo.Booklist" alias="Booklist"/>
@@ -22,6 +23,7 @@
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.Coupon" alias="Coupon"/>
 		<typeAlias type="com.bookforyou.bk4u.rental.model.vo.Rental" alias="Rental"/>
 		<typeAlias type="com.bookforyou.bk4u.store.model.vo.Store" alias="Store"/>
+		<typeAlias type="com.bookforyou.bk4u.store.model.vo.StoreBook" alias="StoreBook"/>
 		<typeAlias type="com.bookforyou.bk4u.store.model.vo.OffBook" alias="OffBook"/>
 		<typeAlias type="com.bookforyou.bk4u.couponDetail.model.vo.CouponDetail" alias="CouponDetail"/>
 		<typeAlias type="com.bookforyou.bk4u.cs.model.vo.Cancel" alias="Cancel"/>
@@ -38,6 +40,7 @@
 		<typeAlias type="com.bookforyou.bk4u.sales.model.vo.Sales" alias="Sales"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberPhonebook" alias="MemberPhonebook"/>
 		<typeAlias type="com.bookforyou.bk4u.like.model.vo.Like" alias="Like"/>
+		
 	</typeAliases>
 
 	<mappers>

@@ -179,10 +179,46 @@
 			}
 		})
 		
-		
 	})
 	
 	$(function(){
+		
+		/* 중복 여부 ajax */
+		var $bkNoArr = [];
+		$(".bkNo").each(function(){
+			var $bkNo = $(this).text();
+			$bkNoArr.push($bkNo);
+		})
+		var $sNo = ${sNo};
+		
+		$.ajax({
+			url:"checkBookDuplicates",
+			traditional : true,
+			data:{
+				bkNo:$bkNoArr,
+				sNo:$sNo
+			},
+			success:function(result){
+				
+				for(var i=0; i<result.length; i++){
+					$(".bkNo").each(function(){
+						$b = $(this).text();
+						if($(this).text() == result[i].bkNo){
+							
+							$(this).siblings(".checkDuplicates").text(result[i].result)
+						}
+					
+					})
+					
+				}
+				
+			},
+			error:function(){
+				console.log("ajax 통신 실패");
+			}
+		})
+		
+		
 		/* 도서 상세 조회 */
         $(".detailC").click(function(){
         	
@@ -269,41 +305,13 @@
 							    <label for="memAddress" class="form-label">Address</label>
 							    <input type="text" class="form-control" id="memAddress">
 							</div>
-							  
-							<div class="col-12">
-							  	 <button type="button" class="btn btn-primary" id="showAddressForm">주소  변경</button>
-							</div>
-							  
-							<div id="addressForm" class="hide">
-								<div class="col-md-6">
-									<input type="hidden" id="hiddenOdNo" name="orderNo">
-									<input type="text" id="sample6_postcode" name="orderPost" class="form-control" placeholder="우편번호">
-								</div>
-								<div class="col-md-6">
-								    <input type="button" onclick="sample6_execDaumPostcode()" class="d_btn" value="우편번호 찾기"><br>
-								</div>
-								<div class="col-12">
-									<input type="text" id="sample6_address" name="orderAddress" class="form-control" placeholder="주소"><br>
-								</div>
-								<div class="col-12">
-									<input type="text" id="sample6_extraAddress" name="addressRef" class="form-control" placeholder="참고항목">
-								</div>
-								<div class="col-md-6">
-									<input type="text" id="sample6_detailAddress" name="addressDetail"  class="form-control" placeholder="상세주소">
-								</div>
 							
-								<div class="col-12">
-									<div id="addressForm-btn" class="alterInfo-btn">
-			                            <button type="button" class="btn btn-primary" id="saveAddress">주소 저장</button>
-			                        </div>
-								</div>
-							</div>
-							  
 				    		<div class="modal-footer">
 				    			<button type="submit" class="btn btn-primary">발송하기</button>
 				    			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 				    		</div>
 						</form>	
+						
 					</div>
 				</div>
 		  	</div>
@@ -358,20 +366,19 @@
             </div>
         </div>
          <div id="search-area">
-            <form action="adminOListSearch.or">
-            <input type="hidden" name="array" value="${ ar }">
-            <input type="hidden" name="orStatus" value="5">
+            <form action="selectAdminBookSelectSearchList.su" method="POST">
+            <input type="hidden" name="sNo" value="${ s.subscNo }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >
                             <option value="searchAll">전체</option>
-                            <option value="orderNo">주문번호</option>
-                            <option value="memName">주문자명</option>
-                            <option value="memId">주문자ID</option>
+                            <option value="bookNo">도서번호</option>
+                            <option value="bookTitle">도서명</option>
+                            <option value="writerName">저자</option>
                         </select>
                     </div>
                     <div id="search-input">
-                        <input type="text" name="keyword" >
+                        <input type="text" name="keyword">
                     </div>
                     <div id="search-btn">
                         <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">
@@ -383,7 +390,14 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+                	<c:when test="${ not empty conListCount }">
+                		<span>[총 ${ conListCount }개]</span>
+                	</c:when>
+                	<c:otherwise>
+                		<span>[총 ${ listCount }개]</span>
+                	</c:otherwise>
+                </c:choose>
             </div>
             <br>
             <div id="array-div">
@@ -424,14 +438,14 @@
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="bCheck" value="${ b.bkNo }"></td>
 			                            <td><img src="" alt="" width="65" height="80"></td>
-			                            <td class="detailC">${ b.bkNo }</td>
+			                            <td class="detailC bkNo">${ b.bkNo }</td>
 			                            <td>${ b.bkTitle }</td>
 			                            <td>${ b.writerName }</td>
 			                            <td>${ b.bkPublish }</td>
 			                            <td>${ b.bkDate }</td>
 			                            <td>${ b.bkPrice }</td>
 			                            <td>${ b.bkStock }</td>
-			                            <td></td>
+			                            <td class="checkDuplicates"></td>
 			                        </tr>
 		                        </c:forEach>
 		                	</c:when>
@@ -475,55 +489,6 @@
         
     </div>
     
-    <!-- 우편번호API -->
-    <script>
-	    function sample6_execDaumPostcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	
-	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var addr = ''; // 주소 변수
-	                var extraAddr = ''; // 참고항목 변수
-	
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	
-	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-	                if(data.userSelectedType === 'R'){
-	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                        extraAddr += data.bname;
-	                    }
-	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                    }
-	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                    if(extraAddr !== ''){
-	                        extraAddr = ' (' + extraAddr + ')';
-	                    }
-	                    // 조합된 참고항목을 해당 필드에 넣는다.
-	                    document.getElementById("sample6_extraAddress").value = extraAddr;
-	                
-	                } else {
-	                    document.getElementById("sample6_extraAddress").value = '';
-	                }
-	
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('sample6_postcode').value = data.zonecode;
-	                document.getElementById("sample6_address").value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById("sample6_detailAddress").focus();
-	            }
-	        }).open();
-	    }
-    </script>
+    
 </body>
 </html>

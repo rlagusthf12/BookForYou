@@ -8,9 +8,11 @@ import com.bookforyou.bk4u.report.model.vo.ReportList;
 
 public interface ReportService {
 	
-	int selectListCount();
+	int selectListCount(int memNo);
+	int selectListCountAd();
 	int selectReListCount();
-	ArrayList<Report> selectReportList(PageInfo pi);
+	ArrayList<Report> selectReportList(PageInfo pi, int memNo);
+	ArrayList<Report> selectReportListAd(PageInfo pi);
 	ArrayList<ReportList> selectReReportList(PageInfo pi);
 	Report selectReport(int reportNo);
 	ReportList selectReReport(int reportNo);

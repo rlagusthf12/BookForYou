@@ -65,6 +65,12 @@
             margin-left: 1px;
             text-decoration: none;
         }
+        
+        #content #empty_search{
+        	margin-top: -20px;
+        	margin-left: 10px;
+        	margin-bottom: 20px;
+        }
 
         #content .search_book{
             margin-top: 20px;
@@ -250,45 +256,45 @@
                     <span>${ st.storeName }의 "${ keyword }" 검색결과</span>
                     <span>${ pi.listCount }건</span>
                 </div>
-                <div id="search_sort">
-                    <a href="" style="font-weight: bolder;">정확도순</a>
-                    <a href="">판매량순</a>
-                    <a href="">출시일순</a>
-                    <a href="">상품명순</a>
-                    <a href="">평점순</a>
-                    <a href="">저가격순</a>
-                </div>
             </div>
             
-            <c:forEach var="ob" items="${ obList }">
-            <div class="search_book">
-                <div class="book_img"><a href="bookDetail.st?bkNo=${ ob.bkNo }&storeNo=${ ob.storeNo }"><img src="${ ob.introChangeName }"></a></div>
-                <div class="book_info">
-                    <div>
-                        <div>
-                            <span><a href="bookDetail.st?bkNo=${ ob.bkNo }&storeNo=${ ob.storeNo }">${ ob.bkTitle }</a></span>
-                            <span>${ ob.bkStatus }</span>
-                        </div>
-                        <div>
-                            <span>${ ob.writerName } | ${ ob.bkPublish } | ${ ob.bkDate }</span>
-                            <span>&nbsp;★★★★☆</span>
-                        </div>
-                    </div>
-                    
-                    <div class="book_content">
-                        	낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
-                    </div>
-                    <div>
-                        <button class="btn_order"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal_rental">대여예약</button>
-                        <button class="btn_cart">장바구니</button>
-                        <button class="btn_list">리스트</button>
-	                    <input type="hidden" id="book_no" value="${ ob.bkNo }"></input>
-                    </div>
-                </div>
-            </div>
-            </c:forEach>
+            <c:choose>
+                <c:when test="${ empty obList }">
+                	<div id="empty_search"><b>${ keyword } 와 일치하는 검색 결과가 없습니다.</b></div>
+                </c:when>
+                
+                <c:otherwise>
+                	<c:forEach var="ob" items="${ obList }">
+		            <div class="search_book">
+		                <div class="book_img"><a href="bookDetail.st?bkNo=${ ob.bkNo }&storeNo=${ ob.storeNo }"><img src="${ ob.introChangeName }"></a></div>
+		                <div class="book_info">
+		                    <div>
+		                        <div>
+		                            <span><a href="bookDetail.st?bkNo=${ ob.bkNo }&storeNo=${ ob.storeNo }">${ ob.bkTitle }</a></span>
+		                            <span>${ ob.bkStatus }</span>
+		                        </div>
+		                        <div>
+		                            <span>${ ob.writerName } | ${ ob.bkPublish } | ${ ob.bkDate }</span>
+		                            <span>&nbsp;★★★★☆</span>
+		                        </div>
+		                    </div>
+		                    
+		                    <div class="book_content">
+		                        	낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
+		                    </div>
+		                    <div>
+		                        <button class="btn_order"
+		                        data-bs-toggle="modal"
+		                        data-bs-target="#modal_rental">대여예약</button>
+		                        <button class="btn_cart">장바구니</button>
+		                        <button class="btn_list">리스트</button>
+			                    <input type="hidden" id="book_no" value="${ ob.bkNo }"></input>
+		                    </div>
+		                </div>
+		            </div>
+		            </c:forEach>
+                </c:otherwise>
+            </c:choose>
             
             <script>
 	        	$(".search_book .btn_cart").click(function(){
@@ -353,52 +359,56 @@
 		        })
 	        </script>
             
-            <div id="paging-wrap">
-                <ul class="pagination">
-                    <c:choose>
-                		<c:when test="${ pi.currentPage eq 1 }">
-	                    	<li class="page-item disabled"><a class="page-link">이전</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<c:choose>
-	                    		<c:when test="${ !empty condition }">
-	                    			<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }&condition=${condition}&keyword=${keyword}">Previous</a></li>
-                    			</c:when>
-                    			<c:otherwise>
-                    				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
-                    			</c:otherwise>
-                    		</c:choose>
-                    	</c:otherwise>
-                    </c:choose>
-                    
-                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    	<c:choose>
-                    		<c:when test="${ !empty condition }">
-                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
-                   			</c:when>
-                   			<c:otherwise>
-                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
-                   			</c:otherwise>
-                    	</c:choose>
-                    </c:forEach>
-                    
-                    <c:choose>
-                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
-	                    </c:when>
-	                    <c:otherwise>
-	                    	<c:choose>
-	                    		<c:when test="${ !empty condition }">
-		                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
-		                    	</c:when>
-		                    	<c:otherwise>
-		                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+            <c:choose>
+                <c:when test="${ !empty bList }">
+                	<div id="paging-wrap">
+		                <ul class="pagination">
+		                    <c:choose>
+		                		<c:when test="${ pi.currentPage eq 1 }">
+			                    	<li class="page-item disabled"><a class="page-link">이전</a></li>
+			                    </c:when>
+			                    <c:otherwise>
+			                    	<c:choose>
+			                    		<c:when test="${ !empty condition }">
+			                    			<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }&condition=${condition}&keyword=${keyword}">Previous</a></li>
+		                    			</c:when>
+		                    			<c:otherwise>
+		                    				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage-1 }">이전</a></li>
+		                    			</c:otherwise>
+		                    		</c:choose>
 		                    	</c:otherwise>
 		                    </c:choose>
-	                    </c:otherwise>
-                    </c:choose>
-                </ul>
-            </div>
+		                    
+		                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+		                    	<c:choose>
+		                    		<c:when test="${ !empty condition }">
+		                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
+		                   			</c:when>
+		                   			<c:otherwise>
+		                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
+		                   			</c:otherwise>
+		                    	</c:choose>
+		                    </c:forEach>
+		                    
+		                    <c:choose>
+		                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+			                    	<li class="page-item disabled"><a class="page-link">다음</a></li>
+			                    </c:when>
+			                    <c:otherwise>
+			                    	<c:choose>
+			                    		<c:when test="${ !empty condition }">
+				                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
+				                    	</c:when>
+				                    	<c:otherwise>
+				                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+				                    	</c:otherwise>
+				                    </c:choose>
+			                    </c:otherwise>
+		                    </c:choose>
+		                </ul>
+		            </div>
+                </c:when>
+            </c:choose>
 
             <div id="modal_rental" class="modal fade">
                 <div class="modal-dialog">

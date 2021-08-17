@@ -9,7 +9,7 @@
 		<result column="REPORT_REFNO" property="reportRefNo"/>
 		<result column="REPORT_TYPE" property="reportType"/>
 		<result column="ORIGIN_NAME" property="originName"/>
-		<result column="CHANGE_NAME" property="changName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="REPORT_LINK" property="reportLink"/>	
 		<result column="REPORT_STATUS" property="reportStatus"/>		
 	</resultMap>
@@ -30,6 +30,13 @@
 		select
 		       count(*)
 		  from report	
+		  where mem_no =#{memNo}
+	</select>
+	
+	<select id="selectListCountAd" resultType="_int">
+		select
+		       count(*)
+		  from report			  
 	</select>
 	
 		<select id="selectReListCount" resultType="_int">
@@ -39,6 +46,21 @@
 	</select>
 	
 	<select id="selectReportList" resultMap="reportResult">
+		select REPORT_NO, 
+			   MEM_NO,
+			   REPORT_CONTENT,
+			   REPORT_DATE,
+			   REPORT_TYPE,
+			   REPORT_REFNO,
+			   REPORT_LINK,
+			   REPORT_STATUS
+			 
+		from report	
+		where mem_no=#{memNo}
+		
+	</select>
+	
+		<select id="selectReportListAd" resultMap="reportResult">
 		select REPORT_NO, 
 			   MEM_NO,
 			   REPORT_CONTENT,
@@ -128,7 +150,8 @@
 		       REPORT_TYPE,
 		       ORIGIN_NAME,
 		       CHANGE_NAME,
-		       REPORT_LINK)
+		       REPORT_LINK
+		      )
 		values(seq_reno.nextval,
 			   #{memNo},	
 			   #{reportContent},
@@ -136,12 +159,13 @@
 			   #{reportType},
 			   #{originName},
 			   #{changeName},
-			   #{reportLink})
+			   #{reportLink}
+			  )
 	</insert>
 	
 	<insert id="writeReReport">
 		insert into
-		report(RELI_NO,
+		reportlist(RELI_NO,
 		       RELI_CONTENT,		      
 		       MEM_NICKNAME,
 		       REPORT_LINK,

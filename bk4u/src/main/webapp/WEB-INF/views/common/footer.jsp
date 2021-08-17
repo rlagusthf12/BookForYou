@@ -16,29 +16,32 @@
 <style>
    
     #footer{
-        width:80%;
-        height:100px;
+        width:1200px;
         padding-top: 20px;
+        height:230px;
         margin:auto;
     }
     #footer>div{width:100%; margin-bottom:10px}
-    #footer_1{height:60%;}
-    #footer_2{height:40%;}
-
+    #footer_1{height:25%;}
+    #footer_2{height:65%;}
+	#footer_3{
+		height: 10%;
+	}
+	
     #footer_2>div{
         height:100%;
         float:left;
     }
-    #footer_2_left{width:20%;position:relative;color: rgb(236, 87, 59);font-size: 40px; font-weight: bold;}
-    #footer_2_center{width:40%;}
-    #footer_2_right{width:40%; margin-left: -350px;}
+    #footer_2_left{width:15%;position:relative;color: rgb(236, 87, 59);font-size: 40px; font-weight: bold;}
+    #footer_2_center{width:45%;}
+    #footer_2_right{width:40%; margin-left: 350px;}
 
     #footer_2_left>img{height:80%;position:absolute;margin:auto;top:0;bottom:0;right: 0;left:0;}
-    #footer_2_right{text-align: center; line-height:23px; font-size: 15px; text-indent: 35px;}
+    #footer_2_right{ text-align: center; line-height:23px; font-size: 15px; text-indent: 35px;}
     #footer_2_right>a{margin: 5px;}
     #footer_2_right>a:hover{cursor: pointer;}
 
-    #footer_1>ul{width:100%; height:100%; list-style-type: none; margin: auto; padding:0;}
+    #footer_1>ul{width:100%; list-style-type: none; margin: auto; padding:0;}
     #footer_1>ul>li{float:left; width:25%; height:100%; line-height: 35px; text-align:center;}
     #footer_1>ul>li a{text-decoration: none; color:black; font-size: 18px; font-weight: 900;}
 
@@ -84,36 +87,40 @@
             </ul>
         </div>
         <div id="footer_2">
-            <div id="footer_2_left" style="margin-top: 50px;">
+            <div id="footer_2_left" style="margin-top: 30px;">
                 <p>BK4U</p>
             </div>
 
             <br>
-
             <div id="footer_2_center">
+            	<p id="p1">(주) BookForYou</p>
+                    	본사 : 서울시 종로구 종로 1 <br>
+                    	대표이사 : 내코드가 최고조&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;전화 : 02-2222-2222<br>
+                    	사업자등록 : 111-11-11111&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;F A X : 02-1111-1111<br>
+            </div>
+
+            <!--  <div id="footer_2_center">
                 <div class="text2" align="center">
                     <p id="p1">(주) BookForYou</p>
-                    대표이사 : 내코드가 최고조<br>
-                    사업자등록 : 111-11-11111<br>
-                    본사 : 서울시 종로구 종로 1
+                    	대표이사 : 내코드가 최고조<br>
+                    	사업자등록 : 111-11-11111<br>
+                    	본사 : 서울시 종로구 종로 1
                     
                 </div>
             </div>
             <div id="footer_2_right">
-                <div class="text3" align="center"><br><br><br>
+                <div class="text3" align="center">
+                <p></p>
                     전화 : 02-2222-2222<br>
                     F A X : 02-1111-1111<br>
                     &nbsp;&nbsp;&nbsp;email : bk4u@bk4u.co.kr
                 </div>
-            </div>
-
-            <br><br><br>
-            <p id="p3" align="Right">Copyright ⓒ BookForYou Corporation All rights Reserved. </p>
+            </div>-->
+     	</div>
+        <div id="footer-3">
+        	<p id="p3" align="right">Copyright ⓒ BookForYou Corporation All rights Reserved. </p>
         </div>
-        
-        
-
-
+     
     </div>
 </body>
 </html>

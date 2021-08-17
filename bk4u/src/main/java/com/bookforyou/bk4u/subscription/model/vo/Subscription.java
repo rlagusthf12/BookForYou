@@ -40,4 +40,5 @@ public class Subscription {
 	private String shippingCompany;
 	private String shippingNumber;
 	private String shippingStatus;
+	private String bkTitle;
 }

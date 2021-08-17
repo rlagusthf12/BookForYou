@@ -111,6 +111,16 @@ public interface CsService {
 	 */
 	int insertAdminRefundPoint(Refund r);
 
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	int updateAdminMemo(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	int deleteAdminMemo(HashMap<String, String> map);
+
 	
 
 	

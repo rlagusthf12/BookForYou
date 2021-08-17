@@ -22,35 +22,35 @@
 <style>
     #header{
         width:1200px;
-        height:100px;
+        height:auto;
         padding-top: 20px;
         margin:auto;
     }
     #header>div{width:100%; margin-bottom:10px}
     #header_1{height:40%;}
-    #header_2{height:60%;}
+    #header_2{height:50px;}
 
     #header_1>div{
         height:100%;
         float:left;
     }
     #header_1_left{width:30%;position:relative;color: rgb(236, 87, 59);font-size: 40px; font-weight: bold;}
+   	#header_1_left>a{color: rgb(236, 87, 59); text-decoration:none;}
     #header_1_center{width:40%;}
     #header_1_right{width:30%;}
 
     #header_1_left>img{height:80%;position:absolute;margin:auto;top:0;bottom:0;right: 0;left:0;}
     #header_1_right{text-align: center; line-height:35px; font-size: 15px; text-indent: 35px;}
-    #header_1_right>a{margin: 5px;}
+    #header_1_right>a{margin: 5px; color:black; text-decoration:none;}
     #header_1_right>a:hover{cursor: pointer;}
     
-    #header_2>ul{width:100%; height:100%; list-style-type: none; margin: auto; padding:0;}
+    #header_2>ul{width:100%; height:100%; list-style-type: none; margin: auto; padding:0; }
     #header_2>ul>li{float:left; width:20%; height:100%; line-height: 35px; text-align:center;}
-    #header_2>ul>li a{text-decoration: none; font-size: 18px; font-weight: 900;}
+    #header_2>ul>li a{text-decoration: none; font-size: 18px; font-weight: 900; text-decoration:none; color:black}
 
-    #header_2{border-bottom:5px solid rgb(252, 190, 52);}
-
-    #header a{text-decoration:none; color:black}
-
+    #header_2{border-bottom:5px solid rgb(252, 190, 52); }
+	
+	
     /* 검색 영역 */
         #search-area{
             display:flex;
@@ -143,13 +143,16 @@
         #navi>li>ul>li>a{color:#fff; font-weight:normal;}
         #navi>li>a:hover+ul{display:block; }
         #navi>li>ul:hover{display:block;}
+        
+        /**/
+        #header_1_right button{background: none; border: none; font-weight: bold;}
 </style>
 </head>
 <body>
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
-                <p>BK4U</p>
+                <a href="main.me">BK4U</a>
             </div>
 
             <br>
@@ -188,7 +191,7 @@
                 		<c:choose>
                 			<c:when test="${loginUser.memStatus eq 'A' }">
                 				<a href="amain.me" style="font-weight: bold;">관리자 전환</a> |
-                				<a href="logout.me" style="font-weight: bold;">로그아웃 </a>
+                				<a href="logout.me">로그아웃 </a>
 		                    </c:when>
 		     
 		                    <c:otherwise>
@@ -197,8 +200,14 @@
 		                        
 		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        
-		                        <a href="my-order-list.mp" style="font-weight: bold;">마이페이지</a>
-		                        <a href="cart.bk?memNo=${ loginUser.memNo }" style="font-weight: bold;">장바구니</a>
+
+		                        <form  action="cart.bk" method="post" style="margin-top: -35px; margin-left: 40px;">
+		                        <a href="my-order-list.mp" style="font-weight: bold; color: black; text-decoration:none;">마이페이지</a>
+		                        <button type="submit" style="font-weight: bold;">장바구니</button>
+		                        <input type="hidden" name="memNo" value="${ loginUser.memNo }">
+		                        </form>
+
+		                      
 		                        
 		                   	</c:otherwise>
 		                   	
@@ -213,7 +222,7 @@
         <div id="header_2">
             <ul id="navi">
                 <li><a href="join.sub">정기구독</a></li>
-                <li><a href="">도서구매</a></li>
+                <li><a href="storeMain.st">bk4u 매장</a></li>
                 <li><a href="">커뮤니티</a>
                 	<ul>
                         <li><a href="list.bl">독서록</a></li>
@@ -221,7 +230,31 @@
                     </ul>
                 </li>
                 <li><a href="">이벤트</a></li>
-                <li><a href="">고객센터</a></li>
+                <li><a href="">고객센터</a>
+                	<ul>
+                        <li><a href="list.no">공지사항</a></li>
+                        <li><a href="main.faq">FAQ</a></li>
+                          <c:choose>
+                        <c:when test="${loginUser.memNo==1}">                       
+                     	<li><a href="list.qa">1:1문의</a></li>                    
+                        </c:when>
+                        <c:otherwise>
+                          <li><a href="listAd.qa?memNo=${loginUser.memNo}">1:1문의</a></li>                          
+                          </c:otherwise>
+                        </c:choose>
+                      
+                        <c:choose>
+                        <c:when test="${loginUser.memNo==1}">
+                         <li><a href="listAd.re">신고</a></li>
+                        <li><a href="list.reli">신고 사유</a></li>                         
+                        </c:when>
+                        <c:otherwise>
+                        <li><a href="list.re?memNo=${loginUser.memNo}">신고</a></li>
+                        </c:otherwise>
+                        </c:choose>
+                    </ul>   
+                
+                </li>
             </ul>
         </div>
     </div>

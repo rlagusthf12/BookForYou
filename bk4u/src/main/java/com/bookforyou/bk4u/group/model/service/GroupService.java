@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.group.model.vo.GroupMember;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 public interface GroupService {
   
@@ -41,10 +42,11 @@ public interface GroupService {
 	
 	ArrayList<GroupBoard> selectSearchList(HashMap<String, String> map);
 	
+	ArrayList<Member> memberInfo(Member m);
 	
-	
-	
-	
+
+
+
 	
 	
 	

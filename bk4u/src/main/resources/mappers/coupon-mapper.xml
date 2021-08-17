@@ -111,9 +111,9 @@
   	
   	<!-- 쿠폰 삭제 -->
 	<delete id="deleteCoupon">
-		delete
-		  from coupon
-		 where coupon_no = #{cn}
+		delete 
+		from coupon
+		 where coupon_no = #{cno}
            
 	</delete>
 	

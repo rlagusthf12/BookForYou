@@ -204,10 +204,6 @@ public class BookController {
 		int cpCount = memberService.selectCouponCount(memNo);
 		ArrayList<Coupon> cList = memberService.selectCouponList(memNo);
 		
-		for(Book b : bList) {
-			System.out.println(b);
-		}
-		
 		mv.addObject("bList", bList)
 		  .addObject("cpCount", cpCount)
 		  .addObject("cList", cList)
@@ -551,5 +547,31 @@ public class BookController {
 		mv.addObject("alertMsg", "도서가 삭제되었습니다.");
 		
 		return "redirect:/adminBookList.bk";
+	}
+	
+	/**
+	 * [메인] 베스트 셀러 조회 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("getMainBestSeller.bk")
+	public ArrayList selectMainBestSeller() {
+		
+		ArrayList<Book> bList = bookService.selectMainBestSeller();
+		return bList;
+	}
+	
+	/**
+	 * [메인] 도서 추천 조회 (한진)
+	 */
+	@ResponseBody
+	@RequestMapping("getMainBookRecommand.bk")
+	public ArrayList selectMainBookRecommand(int memNo) {
+		ArrayList<Book> bList = null;
+		if(memNo > 0) {
+			bList = bookService.selectMainBookRecommand(memNo);
+		}else if(memNo == 0) {
+			bList = bookService.selectMainBookRecommandToAll();
+		}
+		return bList;
 	}
 }

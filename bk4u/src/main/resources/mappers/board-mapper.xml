@@ -280,5 +280,58 @@
 	</select>
 	
 	
+	<!-- 마이페이지 나의 게시판 글 갯수 조회(세아) -->
+	<select id="selectMyBoardListCount" resultType="_int">
+		select count(*)
+		from board
+		where mem_no = #{memNo}
+		and bo_status = 'Y'
+	</select>
+	
+	<!-- 마이페이지 나의 게시판 글 조회(세아) -->
+	<select id="selectMyBoardList" resultMap="boardResult">
+		select
+			bo_no,
+			bo_category,
+			bo_title,
+			bo_cdate,
+			bo_count,
+			bo_like
+		from board
+		where mem_no = #{memNo}
+		and bo_status = 'Y'
+		order by
+		 bo_cdate desc
+	</select>
+	
+	<!-- 마이페이지 나의 자유 게시판 댓글 갯수 조회(세아) -->
+	<select id="selectMyReplyListCount" resultType="_int">
+		select count(*)
+		from reply
+		where mem_no = #{memNo}
+		and reply_type = 1
+		and delete_status = 'N'
+	</select>
+	
+	<!-- 마이페이지 나의 자유 게시판 댓글 조회(세아) -->
+	<select id="selectMyReplyList" resultMap="replyResult">
+		select
+    		reply_no,
+    		mem_no,
+    		reply_type,
+    		ref_post,
+    		reply_content,
+    		reply_cdate,
+    		reply_mdate,
+    		delete_status,
+    		reply_refno,
+    		depth
+		from reply
+		where mem_no = #{memNo}
+		and reply_type = 1
+		and delete_status = 'N'
+		order by
+			reply_cdate desc
+	</select>
 	
 </mapper>

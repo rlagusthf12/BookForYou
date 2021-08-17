@@ -31,6 +31,7 @@
 		<result column="shipping_company" property="shippingCompany"/>
 		<result column="shipping_number" property="shippingNumber"/>
 		<result column="shipping_status" property="shippingStatus"/>
+		<result column="bk_title" property="bkTitle"/>
 	</resultMap>
 	
 	<resultMap type="Point" id="PointResult">
@@ -166,21 +167,20 @@
 		 </choose>
 		<choose>
 			<when test="condition == 'searchAll'">
-				and subsc_no like '%' || #{keyword} || '%'
+				and (subsc_no like '%' || #{keyword} || '%'
 				   or mem_name like '%' || #{keyword} || '%'
-				   or mem_id
+				   or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'subscNo'">
-				  and order_no
+				  and order_no like '%' || #{keyword} || '%'
 			</when>		
 			<when test="condition == 'memName'">
-				  and mem_name
+				  and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-				  and mem_id
+				  and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-		like '%' || #{keyword} || '%'
 	</select>
 	
 	<!-- [관리자] 검색조건에 일치하는 목록 조회 (한진) -->
@@ -220,21 +220,20 @@
 		 </choose>
 		<choose>
 			<when test="condition == 'searchAll'">
-				and subsc_no like '%' || #{keyword} || '%'
+				and (subsc_no like '%' || #{keyword} || '%'
 				   or mem_name like '%' || #{keyword} || '%'
-				   or mem_id
+				   or mem_id like '%' || #{keyword} || '%')
 			</when>
 			<when test="condition == 'subscNo'">
-				  and order_no
+				  and order_no like '%' || #{keyword} || '%'
 			</when>		
 			<when test="condition == 'memName'">
-				  and mem_name
+				  and mem_name like '%' || #{keyword} || '%'
 			</when>
 			<when test="condition == 'memId'">
-				  and mem_id
+				  and mem_id like '%' || #{keyword} || '%'
 			</when>
 		</choose>
-		like '%' || #{keyword} || '%'
 		order
 		    by
 		  <choose>
@@ -330,6 +329,7 @@
 		       subsc_name,
 		       subsc_period,
 		       mem_name,
+		       mem_id,
 		       deliveryrequest,
 		       admin_memo
 		  from subscription
@@ -360,6 +360,7 @@
 		       subsc_name,
 		       subsc_period,
 		       mem_name,
+		       mem_id,
 		       deliveryrequest,
 		       admin_memo
 		  from subscription
@@ -475,5 +476,137 @@
 		     , #{deliveryRequest}
 		     )
 	</insert>
+	
+	<!-- [관리자] 정기구독 발송 내역 개수 조회 (한진) -->
+	<select id="selectAdminSubscOrderCount" resultType="_int">
+		select
+		       count(*)
+		  from subsc_bookorder
+	</select>
+	
+	<!-- [관리자] 정기구독 발송 내역 조회 (한진) -->
+	<select id="selectAdminSubscOrderList" resultMap="SubscResult">
+		select
+		       subsc_no,
+		       mem_name,
+		       mem_id,
+		       bk_title,
+		       shipping_date,
+		       shipping_company,
+		       shipping_number,
+		       shipping_status,
+		       deliveryrequest,
+		       admin_memo
+		  from subsc_bookorder
+		  join book using(bk_no)
+		  join subscription using(subsc_no)
+		  join members using (mem_no)
+		  <choose>
+		  	<when test="array == 0">
+		  		order 
+		  		   by shipping_date desc 
+		  	</when>
+		  	<when test="array == 1">
+		  		order 
+		  		   by shipping_date asc 
+		  	</when>
+		  </choose>
+	</select>
+	
+	<!-- [관리자] 메모 등록/수정 (한진) -->
+	<update id="updateAdminMemo">
+		update
+		       subscription
+		   set admin_memo = #{adminMemo}
+		 where subsc_no = #{subscNo}
+	</update>
+	
+	<!-- [관리자] 메모 삭제 (한진) -->
+	<update id="deleteAdminMemo">
+		update
+		       subscription
+		   set admin_memo = null
+		 where subsc_no = #{subscNo}
+	</update>
+	
+	<!-- [관리자] 정기구독 도서 중복 체크 (한진) -->
+	<select id="checkBookDuplicates" resultType="_int">
+		select
+		       count(*) count
+		  from subsc_bookorder
+		  join book using (bk_no)
+		 where subsc_no = #{sNo}
+		   and bk_no = #{bkNo}
+	</select>
+	
+	<!-- [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진) -->
+	<select id="selectSubscOrderSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from subsc_bookorder
+		  join subscription using (subsc_no)
+		  join members using (mem_no)
+		 <choose>
+	 		<when test="condition == 'searchAll'">
+	 			where (subsc_no like '%' || #{keyword} || '%'
+	 			 or mem_name like '%' || #{keyword} || '%'
+	 			 or mem_id like '%' || #{keyword} || '%')
+	 		</when>
+	 		<when test="condition == 'subscNo'">
+	 			where subsc_no like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memName'">
+	 			where mem_name like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			where mem_id like '%' || #{keyword} || '%'
+	 		</when>
+	 	</choose>
+	</select>
+	
+	<!-- [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진) -->
+	<select id="selectAdminOrderSearchList" resultMap="SubscResult">
+		select
+		       subsc_no,
+		       mem_name,
+		       mem_id,
+		       bk_title,
+		       shipping_date,
+		       shipping_company,
+		       shipping_number,
+		       shipping_status,
+		       deliveryrequest,
+		       admin_memo
+		  from subsc_bookorder
+		  join subscription using (subsc_no)
+		  join members using (mem_no)
+		  join book using (bk_no)
+		 <choose>
+	 		<when test="condition == 'searchAll'">
+	 			where (subsc_no like '%' || #{keyword} || '%'
+	 			 or mem_name like '%' || #{keyword} || '%'
+	 			 or mem_id like '%' || #{keyword} || '%')
+	 		</when>
+	 		<when test="condition == 'subscNo'">
+	 			where subsc_no like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memName'">
+	 			where mem_name like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			where mem_id like '%' || #{keyword} || '%'
+	 		</when>
+	 	</choose>
+	 	 order
+	 		by
+	 	<choose>
+	 		<when test="array == 0">
+	 			 shipping_date desc
+	 		</when>
+	 		<when test="array == 1">
+	 			 shipping_date asc
+	 		</when>
+	 	</choose>
+	</select>
 	
 </mapper>

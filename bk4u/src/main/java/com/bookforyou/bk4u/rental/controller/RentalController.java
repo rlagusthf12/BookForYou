@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.rental.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
@@ -186,6 +188,7 @@ public class RentalController {
 		  .addObject("returnCount", returnCount)
 		  .addObject("overDueCount", overDueCount)
 		  .addObject("rentalCancelCount", rentalCancelCount)
+		  .addObject("conListCount", conListCount)
 		  .addObject("pi", pi)
 		  .addObject("rStatus", rStatus)
 		  .addObject("ar", array)
@@ -197,4 +200,40 @@ public class RentalController {
 		
 	}
 	
+	/**
+	 * [관리자] 대여 상태 변경 (한진)
+	 */
+	@RequestMapping("adminRentalStatusHandling.re")
+	public String updateRentalStatus(RedirectAttributes ra, @RequestParam(value="selectedRNo") List<String> selectedRNo, String statusValue, String page) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("statusValue", statusValue);
+		
+		int result = 0;
+		for(int i=0; i<selectedRNo.size(); i++) {
+			map.put("rNo", selectedRNo.get(i));
+			
+			result = rentalService.updateRentalStatus(map);
+			
+			if(statusValue.equals("rental")) {
+				rentalService.updateRentalReceiveDate(map);
+			}else if(statusValue.equals("return")) {
+				rentalService.updateRentalReturnDate(map);
+			}
+		}
+		
+		if(result > 0) {
+			ra.addAttribute("alertMsg", "대여 상태가 변경되었습니다.");
+		}
+		
+		if(page.equals("reserve")) {
+			ra.addAttribute("rStatus", "1");
+		}else if(page.equals("rental")) {
+			ra.addAttribute("rStatus", "2");
+		}else if(page.equals("overDue")) {
+			ra.addAttribute("rStatus", "4");
+		}
+		
+		return "redirect:/adminRentalList.re?";
+	}
 }

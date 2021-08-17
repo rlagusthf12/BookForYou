@@ -32,7 +32,6 @@
             width: 80%;
             height: 100%;
             margin: auto;
-            position: relative;
         }
         
         #content #cart_title{
@@ -42,6 +41,12 @@
             height: 40px;
             font-size: 30px;
             font-weight: 1000;
+        }
+        
+        #content #empty_cart{
+            height: 60px;
+            padding-top: 10px;
+            padding-left: 20px;
         }
 
         #content #cart_top{
@@ -235,6 +240,7 @@
         }
 
         #cart_bottom>div{
+            position: relative;
             width: fit-content;
             margin-top: 20px;
             float: left;
@@ -275,8 +281,8 @@
             border-radius: 4px;
             background-color: white;
             position: absolute;
-            top: 820px;
-            left: 50px;
+            top: 500px;
+            left: 80px;
             display: none;
             z-index: 3;
         }
@@ -332,70 +338,106 @@
     <div class="wrap">
         <div id="content">
             <div id="cart_title">
-                장바구니
+            	장바구니
             </div>
-			
-            <div id="cart_top">
-                <div>
-                    <input type="checkbox" id="check_all"> 전체선택
-                </div>
-                <div>
-                    <span>선택한 상품을</span>
-                    <button class="btn_order" type="submit">주문하기</button>
-                    <button class="btn_list">리스트</button>
-                    <button class="btn_delete">삭제</button>
-                </div>
-            </div>
-			
-			<form id="orderForm" action="order.od" method="post">
-			<input type="hidden" name="memNo" value="${ loginUser.memNo }">
-                <input type="hidden" id="bkNoArr" name="bkNoArr">
-			
-			<c:forEach var="b" items="${ bList }" varStatus="status">
-            <div class="cart_book">
-                <input type="checkbox" name="bkNo" value="${ b.bkNo }">
-                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
-                <div class="book_info">
-                    <div>
-                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
-                        <div>
-                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
-                            <span>&nbsp;★★★★☆ </span>
-                        </div>
-                        <div>
-                            <div>내일 (7/8) 출고 예정</div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div><input type="number" name="bookList[${ status.index }].bkQty" min="1" max="5" value="${ b.bkQty }"></div>
-                        <div><button class="btn_qty">수량변경</button></div>
-                    </div>
-                    <div><span>${ b.bkPrice }</span>원</div>
-                    <div>
-                        <div>주문하기</div>
-                        <div>리스트</div>
-                        <div>삭제</div>
-                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
-                    </div>
-                </div>
-            </div>
-            </c:forEach>
-            </form>
             
+            <c:choose>
+                <c:when test="${ empty bList }">
+                	<div id="empty_cart"><b>장바구니가 비었습니다.</b></div>
+                </c:when>
+                
+                <c:otherwise>
+	                <div id="cart_top">
+		                <div>
+		                    <input type="checkbox" id="check_all"> 전체선택
+		                </div>
+		                <div>
+		                    <span>선택한 상품을</span>
+		                    <button class="btn_order" type="submit">주문하기</button>
+		                    <button class="btn_list">리스트</button>
+		                    <button class="btn_delete">삭제</button>
+		                </div>
+		            </div>
+					
+					<form id="orderForm" action="order.od" method="post">
+					<input type="hidden" name="memNo" value="${ loginUser.memNo }">
+		                <input type="hidden" id="bkNoArr" name="bkNoArr">
+					
+					<c:forEach var="b" items="${ bList }" varStatus="status">
+		            <div class="cart_book">
+		                <input type="checkbox" name="bkNo" value="${ b.bkNo }">
+		                <div class="book_img"><a href="detail.bk?bkNo=${ b.bkNo }"><img src="${ b.introChangeName }"></a></div>
+		                <div class="book_info">
+		                    <div>
+		                        <div><a href="detail.bk?bkNo=${ b.bkNo }">${ b.bkTitle }</a></div>
+		                        <div>
+		                            <span>${ b.writerName } | ${ b.bkPublish } | ${ b.bkDate }</span>
+		                            <span>&nbsp;★★★★☆ </span>
+		                        </div>
+		                        <div>
+		                            <div>내일 (7/8) 출고 예정</div>
+		                        </div>
+		                    </div>
+		                    
+		                    <div>
+		                        <div><input type="number" name="bookList[${ status.index }].bkQty" min="1" max="5" value="${ b.bkQty }"></div>
+		                        <div><button class="btn_qty">수량변경</button></div>
+		                    </div>
+		                    <div><span>${ b.bkPrice }</span>원</div>
+		                    <div>
+		                        <div>주문하기</div>
+		                        <div>리스트</div>
+		                        <div>삭제</div>
+		                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
+		                    </div>
+		                </div>
+		            </div>
+		            </c:forEach>
+		            </form>
+		            
+		            <div id="cart_bottom">
+		                <div>
+		                    <span>소지 쿠폰</span>
+		                    <span>${ cpCount }개</span>
+		                </div>
+		                <div>
+		                    <span>보유 포인트</span>
+		                    <span>0원</span>
+		                </div>
+		                <div>
+		                    <span>총 상품 가격</span>
+		                    <span>0원</span>
+		                </div>
+		            </div>
+                </c:otherwise>
+            </c:choose>
+
             <script>
 	            $("#cart_top .btn_order").click(function(){
+						            	
+					if($('input:checkbox[name=bkNo]:checked').length == 0){	
+						alert("주문할 도서를 선택해주세요.");
+					}else{
+						var array = new Array();
+			            $('input:checkbox[name=bkNo]:checked').each(function() {
+			                array.push($(this).val());
+			            });
+			            			
+			            $("#bkNoArr").val(array);
+			            $("#orderForm").submit();
+					}
 	            	
-	            	console.log("asd");
+	            })
+            </script>
+            
+            <script>
+	        	$(".book_info>div:nth-child(4)>div:nth-child(1)").click(function(){
 	            	var array = new Array();
-		            $('input:checkbox[name=bkNo]:checked').each(function() {
-		                array.push($(this).val());
-		            });
+	            	array.push($(this).next().next().next().val());
 		            			
 		            $("#bkNoArr").val(array);
 		            $("#orderForm").submit();
-	            })
-	            
+	        	})
             </script>
             
             <script>
@@ -524,21 +566,6 @@
             	
             });
             </script>
-            
-            <div id="cart_bottom">
-                <div>
-                    <span>소지 쿠폰</span>
-                    <span>${ cpCount }개</span>
-                </div>
-                <div>
-                    <span>보유 포인트</span>
-                    <span>0원</span>
-                </div>
-                <div>
-                    <span>총 상품 가격</span>
-                    <span>0원</span>
-                </div>
-            </div>
 
             <div id="coupon_box">
                 <table>

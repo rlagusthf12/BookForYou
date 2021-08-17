@@ -380,7 +380,14 @@
         <div id="result-area">
             <div id="result-title">
                 <p>조회결과</p>
-                <span>[총 10개]</span>
+                <c:choose>
+	                <c:when test="${ not empty conListCount }">
+	                	<span>[총 ${ conListCount }개]</span>
+	                </c:when>
+	            	<c:otherwise>
+			            <span>[총 ${ returnCount }개]</span>
+			        </c:otherwise>
+                </c:choose>
             </div>
             <br>
             <div id="array-div">
@@ -390,10 +397,6 @@
                     <option value="4">반납일 </option>
                     <option value="5">반납일 역순 </option>
                 </select>
-            </div>
-
-            <div id="handling-btn">
-                <button>반납완료</button>
             </div>
 
             <div id="result-div">

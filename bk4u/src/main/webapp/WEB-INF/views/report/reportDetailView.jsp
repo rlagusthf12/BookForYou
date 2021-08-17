@@ -68,7 +68,7 @@
 	<div class="reportTitle">신고</div>
 	<hr>
 	<div class="reportLittleTitle">신고 번호: ${re.reportNo}</div>
-	<div class="reportType">${re.reportType1}&nbsp;&nbsp;&nbsp;<a href="${re.reportLink}">신고글링크</a></div>
+	<div class="reportType">${re.reportType1}&nbsp;&nbsp;&nbsp;<a href="${re.reportLink}">${re.reportLink}</a></div>
 	
 	<div class="reportContent">
 	<p>${re.reportContent}</p>	
@@ -77,9 +77,15 @@
 			
 	<div class="Button" onclick="location.href='updateForm.re?reportNo=${re.reportNo}'">수정</div>
 	<div class="Button" onclick="location.href='delete.re?reportNo=${re.reportNo}'">삭제</div>
+	<c:if test="${loginUser.memNo==1}">
 	<div class="Button" onclick="location.href='writeForm.reli?reportNo=${re.reportNo}'">경고작성</div>
-	
-	<div class="ListButton" onclick="location.href='list.re'">목록으로</div>
+	</c:if>
+	<c:if test="${loginUser.memNo == 1}">
+	<div class="ListButton" onclick="location.href='listAd.re'">목록으로</div>
+	</c:if>
+	<c:if test="${loginUser.memNo != 1}">
+	<div class="ListButton" onclick="location.href='list.re?memNo=${loginUser.memNo}'">목록으로</div>
+	</c:if>
 	</div>
 <jsp:include page="../common/footer.jsp"/>
 </body>

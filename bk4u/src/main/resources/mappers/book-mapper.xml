@@ -30,6 +30,8 @@
 		<result column="bk_content" property="bkContent"/>
 		<result column="grade_star" property="bkGrade"/>
 		<result column="cart_qty" property="bkQty"/>
+		<result column="rank" property="rank"/>
+		<result column="quantity" property="quantity"/>
 	</resultMap>
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
@@ -703,7 +705,7 @@
 	<!-- [관리자] 회원 취향에 맞는 정기배송 책 목록 개수 조회 (한진) -->
 	<select id="selectAdminSubscBookCount" resultType="_int">
 		select 
-		       count(*)
+		       count(distinct bk_title)
 		  from book
 		  join sub_category using (sub_cate_no)
 		  join book_interest using (bk_no)
@@ -729,7 +731,7 @@
 	
 	<!-- [관리자] 회원 취향에 맞는 정기배송 목록 조회 (한진) -->
 	<select id="selectAdminSubscBookList" resultMap="bookResult">
-		select 
+		select distinct
                bk_no,
                bk_title,
                bk_publish,
@@ -740,7 +742,6 @@
                intro_originname,
                intro_changename,
                sub_cate_name,
-               interest_content,
                bk_age,
                bk_work,
                bk_gender,
@@ -795,4 +796,193 @@
 			#{gradeStar}
 		)
 	</insert>
+	
+	<!-- [관리자] 정기구독 도서 선택 페이지 검색 결과 개수 조회 (한진) -->
+	<select id="selectAdminBSSearchListCount" resultType="_int">
+		select 
+		       count(distinct bk_title)
+		  from book
+		  join sub_category using (sub_cate_no)
+		  join book_interest using (bk_no)
+		  join interest using (interest_no)
+		 where (sub_cate_no in (
+		                        select 
+		                               sub_cate_no
+		                          from subscription
+		                          join members using (mem_no)
+		                          join mem_category using (mem_no)
+		                         where subsc_no = #{subscNo}
+		                        )
+		    or interest_no in (
+		                        select
+		                               interest_no
+		                          from subscription s
+		                          join members m using (mem_no)
+		                          join mem_interest using (mem_no)
+		                          join interest using (interest_no)
+		                          where subsc_no = #{subscNo}
+		                        ))
+		  <choose>
+	 		<when test="condition == 'searchAll'">
+	 			and (bk_title like '%' || #{keyword} || '%'
+	 			 or bk_no like '%' || #{keyword} || '%'
+	 			 or writer_name like '%' || #{keyword} || '%')
+	 		</when>
+	 		<when test="condition == 'bookTitle'">
+	 			and bk_title like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'bookNo'">
+	 			and bk_no like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'writerName'">
+	 			and writer_name like '%' || #{keyword} || '%'
+	 		</when>
+	 	</choose>
+	</select>
+	
+	<!-- [관리자] 정기구독 도서 선택 페이지 검색 결과 조회 (한진) -->
+	<select id="selectAdminBSSearchList" resultMap="bookResult">
+		select distinct
+               bk_no,
+               bk_title,
+               bk_publish,
+               writer_name,
+               bk_date,
+               bk_price,
+               bk_stock,
+               intro_originname,
+               intro_changename,
+               sub_cate_name,
+               bk_age,
+               bk_work,
+               bk_gender,
+               bk_level
+          from book
+          join sub_category using (sub_cate_no)
+          join book_interest using (bk_no)
+          join interest using (interest_no)
+          where (sub_cate_no in (
+	                              select sub_cate_no
+	                                from subscription
+	                                join members using (mem_no)
+	                                join mem_category using (mem_no)
+	                               where subsc_no = #{subscNo} 
+                                )
+           or interest_no in (
+                                select
+                                       interest_no
+                                  from subscription s
+                                  join members m using (mem_no)
+                                  join mem_interest using (mem_no)
+                                  join interest using (interest_no)
+                                 where subsc_no = #{subscNo}
+                                ))
+           <choose>
+	 		<when test="condition == 'searchAll'">
+	 			and (bk_title like '%' || #{keyword} || '%'
+	 			 or bk_no like '%' || #{keyword} || '%'
+	 			 or writer_name like '%' || #{keyword} || '%')
+	 		</when>
+	 		<when test="condition == 'bookTitle'">
+	 			and bk_title like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'bookNo'">
+	 			and bk_no like '%' || #{keyword} || '%'
+	 		</when>
+	 		<when test="condition == 'writerName'">
+	 			and writer_name like '%' || #{keyword} || '%'
+	 		</when>
+	 	</choose>
+		
+	</select>
+	
+	<!-- [메인] 베스트 셀러 조회 (한진) -->
+	<select id="selectMainBestSeller" resultMap="bookResult">
+		select
+		       B2.rank,
+		       B2.quantity,
+		       B.bk_no,
+		       bk_title,
+		       bk_publish,
+		       writer_name,
+		       intro_changename
+		  from book B, (
+		                select *
+		                  from (
+		                        select rank() over (order by sum(quantity) desc, bk_no desc) rank,
+		                               O.bk_no,
+		                               sum(quantity)quantity
+		                          from order_detail O
+		                         group
+		                            by bk_no
+		                        )
+		                  <![CDATA[where rank < 6]]>
+		                )B2
+		 where B.bk_no in B2.bk_no
+	</select>
+	
+	<!-- [메인] 도서 추천 조회 - 로그인을 했을 경우 (한진) -->
+	<select id="selectMainBookRecommand" resultMap="bookResult">
+		select distinct
+               bk_no,
+               bk_title,
+               bk_publish,
+               writer_name,
+               bk_date,
+               bk_price,
+               bk_stock,
+               intro_originname,
+               intro_changename,
+               bk_age,
+               bk_work,
+               bk_gender,
+               bk_level
+          from book
+          join book_interest using (bk_no)
+          join interest using (interest_no)
+          where bk_age = (
+                            select
+                                   mem_age
+                              from members
+                             where mem_no = #{memNo}
+                          )
+           and bk_gender = (
+                            select
+                                   mem_gender
+                              from members
+                             where mem_no = #{memNo}
+                          )
+	</select>
+	
+	<!-- [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진) -->
+	<select id="selectMainBookRecommandToAll" resultMap="bookResult">
+		select *
+		  from 
+		     (
+		        select rank() over (order by bk_date desc, bk_seldate desc) rank,
+		               b.*
+		          from(
+		                select distinct
+		                               bk_no,
+		                               bk_title,
+		                               bk_publish,
+		                               writer_name,
+		                               bk_date,
+		                               bk_seldate,
+		                               bk_price,
+		                               bk_stock,
+		                               intro_originname,
+		                               intro_changename,
+		                               bk_age,
+		                               bk_work,
+		                               bk_gender,
+		                               bk_level
+		                          from book
+		                          join book_interest using (bk_no)
+		                          join interest using (interest_no)
+		                )b
+		        )
+		  <![CDATA[where rank < 4]]>
+	</select>
+	
 </mapper>

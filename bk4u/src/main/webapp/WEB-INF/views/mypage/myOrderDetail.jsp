@@ -27,11 +27,14 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
+    	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif;
+    	}
         .wrap {
             width: 1200px;
-            margin-top: 120px;
-            margin-left: auto;
-            margin-right: auto;
+           	height: 1200px;
+            margin: auto;
         }
 
         .wrap>div {
@@ -216,8 +219,8 @@
                             <ul>
                                 <li><a href="my-reading-group.mp"><i class="fa fa-users"></i>나의 독서모임</a></li>
                                 <li><a href="my-qna.mp"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
-                                <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
-                                <li><a href="#"><i class="fa fa-comment"></i>댓글</a></li>
+                                <li><a href="my-board.mp"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
+                                <li><a href="my-reply.mp"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>
                         <li>
@@ -347,7 +350,7 @@
                                             <textarea class="form-control" id="etc-text" name="etcText" style="width: 95%;" placeholder="기타를 선택할 경우 입력하세요" readonly></textarea>
                                         </div>
                                     </form>
-                                    <br>반품 안내사항은 <a href="">FAQ</a>를 참고해주세요.
+                                    <br>반품 안내사항은 <a href="main.faq">FAQ</a>를 참고해주세요.
                                 </div>
                                 <div class="modal-footer">
                                     <button class="btn btn-primary" data-bs-dismiss="modal" onclick="returnOrderFormSubmit();">확인</button>

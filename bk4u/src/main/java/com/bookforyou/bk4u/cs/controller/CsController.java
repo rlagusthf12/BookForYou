@@ -300,5 +300,49 @@ public class CsController {
 		return "error";
 		
 	}
-
+	
+	/**
+	 * [관리자] 관리자 메모 등록/수정 (한진)
+	 */
+	@RequestMapping("updateAdminMemo.cs")
+	public String updateAdminMemo(RedirectAttributes ra, String cStatus, String orderNo, String adminMemoContent) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("cStatus", cStatus);
+		map.put("orderNo", orderNo);
+		map.put("adminMemo", adminMemoContent);
+		
+		int result = cService.updateAdminMemo(map);
+		
+		if(cStatus.equals("cancel")) {
+			ra.addAttribute("cStatus", "1");
+		}else if(cStatus.equals("return")) {
+			ra.addAttribute("cStatus", "2");
+		}else if(cStatus.equals("refund")) {
+			ra.addAttribute("cStatus", "3");
+		}
+		
+		return "redirect:/adminCSList.cs";
+	}
+	
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	@RequestMapping("deleteAdminMemo.cs")
+	public String deleteAdminMemo(RedirectAttributes ra, String cStatus, String orderNo) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("cStatus", cStatus);
+		map.put("orderNo", orderNo);
+		
+		int result = cService.deleteAdminMemo(map);
+		
+		if(cStatus.equals("cancel")) {
+			ra.addAttribute("cStatus", "1");
+		}else if(cStatus.equals("return")) {
+			ra.addAttribute("cStatus", "2");
+		}else if(cStatus.equals("refund")) {
+			ra.addAttribute("cStatus", "3");
+		}
+		
+		return "redirect:/adminCSList.cs";
+	}
 }

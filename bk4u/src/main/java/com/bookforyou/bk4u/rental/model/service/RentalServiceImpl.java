@@ -124,4 +124,28 @@ public class RentalServiceImpl implements RentalService {
 		return rentalDao.selectAdminRentalSearchList(sqlSession, pi, map);
 	}
 
+	/**
+	 * [관리자] 대여 상태 변경 (한진)
+	 */
+	@Override
+	public int updateRentalStatus(HashMap<String, String> map) {
+		return rentalDao.updateRentalStatus(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] '대여중' 수령일 변경 (한진)
+	 */
+	@Override
+	public int updateRentalReceiveDate(HashMap<String, String> map) {
+		return rentalDao.updateRentalReceiveDate(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] '반납완료' 반납일 변경 (한진)
+	 */
+	@Override
+	public int updateRentalReturnDate(HashMap<String, String> map) {
+		return rentalDao.updateRentalReturnDate(sqlSession, map);
+	}
+
 }

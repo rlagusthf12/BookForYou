@@ -50,6 +50,30 @@ public class QaController {
 		return mv;
 	}
 	
+	@RequestMapping("listAd.qa")
+	public ModelAndView selectList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, int memNo) {
+		
+		int listCount = qService.selectListAdCount(memNo);
+		int ansListCount =qService.selectAnsAdListCount(memNo);
+		int yetListCount=qService.selectYetAdListCount(memNo);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Qa> list = qService.selectAdList(pi,memNo);
+		ArrayList<Qa> list1 = qService.selectTypeList();		
+		for(int i=0; i<list.size();i++) {
+			status(list.get(i));
+		}
+		
+		mv.addObject("pi",pi)
+		.addObject("listCount",listCount)
+		.addObject("ansCount",ansListCount)
+		.addObject("yetCount",yetListCount)
+		 .addObject("list1", list1)
+			.addObject("list",list)
+			.setViewName("qa/qaListView");
+		return mv;
+	}
+	
 	@RequestMapping("typeListView.qa")
 	public ModelAndView typeListView(ModelAndView mv ,@RequestParam(value="currentPage", defaultValue="1") int currentPage, String type) {
 				
@@ -128,11 +152,11 @@ public class QaController {
 	}
 	
 	@RequestMapping("write.qa")
-	public String writeQa(ModelAndView mv, Qa qa) {		
+	public String writeQa(ModelAndView mv, Qa qa, int memNo) {		
 		
 		int result = qService.writeQa(qa);		
 	
-	 return "redirect:list.qa";		
+	 return "redirect:listAd.qa?memNo="+memNo;		
 		
 	}
 	

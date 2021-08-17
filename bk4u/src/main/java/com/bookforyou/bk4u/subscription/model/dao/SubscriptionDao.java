@@ -81,35 +81,35 @@ public class SubscriptionDao {
 	/**
 	 * [관리자] 정기구독 상세 조회 (한진)
 	 */
-	public Subscription selectAdminSubscDetail(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+	public Subscription selectAdminSubscDetail(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("subscriptionMapper.selectAdminSubscDetail", map);
 	}
 
 	/*
 	 * [관리자] 정기구독 상세 조회 - 도서 조회 (한진)
 	 */
-	public ArrayList<Book> selectAdminSubscDetailBook(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+	public ArrayList<Book> selectAdminSubscDetailBook(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSubscDetailBook", map);
 	}
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 배송 (한진)
 	 */
-	public Subscription selectAdminSubscDetailDel(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+	public Subscription selectAdminSubscDetailDel(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("subscriptionMapper.selectAdminSubscDetailDel", map);
 	}
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 결제 (한진)
 	 */
-	public Payment selectAdminSubscDetailPay(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+	public Payment selectAdminSubscDetailPay(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("paymentMapper.selectAdminSubscDetailPay", map);
 	}
 
 	/**
 	 * [관리자] 정기구독 상세 조회 - 쿠폰 (한진)
 	 */
-	public Coupon selectAdminSubscDetailCoupon(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+	public Coupon selectAdminSubscDetailCoupon(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("couponDetailMapper.selectAdminSubscDetailCoupon", map);
 	}
 
@@ -164,14 +164,14 @@ public class SubscriptionDao {
 	/**
 	 * [관리자] 회원 취향에 맞는 정기배송 책 목록 개수 조회 (한진)
 	 */
-	public int selectAdminSubscBookCount(SqlSessionTemplate sqlSession, int sNo) {
+	public int selectAdminSubscBookCount(SqlSessionTemplate sqlSession, String sNo) {
 		return sqlSession.selectOne("bookMapper.selectAdminSubscBookCount", sNo);
 	}
 
 	/**
 	 * [관리자] 회원 취향에 맞는 정기배송 목록 조회 (한진)
 	 */
-	public ArrayList<Book> selectAdminSubscBookList(SqlSessionTemplate sqlSession, PageInfo pi, int sNo) {
+	public ArrayList<Book> selectAdminSubscBookList(SqlSessionTemplate sqlSession, PageInfo pi, String sNo) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminSubscBookList", sNo, rowBounds);
@@ -180,21 +180,21 @@ public class SubscriptionDao {
 	/**
 	 * [관리자] 정기구독 회원 조회 (한진)
 	 */
-	public Member selectAdminSubscMember(SqlSessionTemplate sqlSession, int sNo) {
+	public Member selectAdminSubscMember(SqlSessionTemplate sqlSession, String sNo) {
 		return sqlSession.selectOne("memberMapper.selectAdminSubscMember", sNo);
 	}
 
 	/**
 	 * [관리자] 정기구독 회원 interest 조회 (한진)
 	 */
-	public ArrayList<MemberInterest> selectAdminSubscInterest(SqlSessionTemplate sqlSession, int sNo) {
+	public ArrayList<MemberInterest> selectAdminSubscInterest(SqlSessionTemplate sqlSession, String sNo) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectAdminSubscInterest", sNo);
 	}
 
 	/**
 	 * [관리자] 정기구독 회원 sub_category 조회 (한진)
 	 */
-	public ArrayList<MemberCategory> selectAdminSubscCategory(SqlSessionTemplate sqlSession, int sNo) {
+	public ArrayList<MemberCategory> selectAdminSubscCategory(SqlSessionTemplate sqlSession, String sNo) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectAdminSubscCategory", sNo);
 	}
 
@@ -225,4 +225,75 @@ public class SubscriptionDao {
 	public int insertSubsc(SqlSessionTemplate sqlSession, Subscription sub) {
 		return sqlSession.insert("subscriptionMapper.insertSubsc", sub);
 	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 */
+	public int selectAdminSubscOrderCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("subscriptionMapper.selectAdminSubscOrderCount");
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 조회 (한진)
+	 * @param map 
+	 */
+	public ArrayList<Subscription> selectAdminSubscOrderList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Integer> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectAdminSubscOrderList", map, rowBounds);
+	}
+
+	/**
+	 * [관리자] 메모 등록/수정 (한진)
+	 */
+	public int updateAdminMemo(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("subscriptionMapper.updateAdminMemo", map);
+	}
+
+	/**
+	 * [관리자] 메모 삭제 (한진)
+	 */
+	public int deleteAdminMemo(SqlSessionTemplate sqlSession, String subscNo) {
+		return sqlSession.update("subscriptionMapper.deleteAdminMemo", subscNo);
+	}
+
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 결과 개수 조회 (한진)
+	 */
+	public int selectAdminBookSelectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("bookMapper.selectAdminBSSearchListCount", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 도서 선택 페이지 검색 결과 조회 (한진)
+	 */
+	public ArrayList<Book> selectAdminBookSelectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBSSearchList", map, rowBounds);
+	}
+
+	/**
+	 * [관리자] 정기구독 도서 중복 체크 (한진)
+	 */
+	public int checkBookDuplicates(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("subscriptionMapper.checkBookDuplicates", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 개수 조회 (한진)
+	 */
+	public int selectSubscOrderSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("subscriptionMapper.selectSubscOrderSearchCount", map);
+	}
+
+	/**
+	 * [관리자] 정기구독 발송 내역 페이지 검색 결과 조회 (한진)
+	 */
+	public ArrayList<Subscription> selectAdminOrderSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("subscriptionMapper.selectAdminOrderSearchList", map, rowBounds);
+	}
+
 }

@@ -27,6 +27,17 @@
 		<result column="store_name" property="storeName"/>
 	</resultMap>
 	
+	<resultMap id="storeBookResult" type="StoreBook">
+		<result column="BK_NO" property="bookNo"/>
+		<result column="STORE_NO" property="storeNo"/>
+		<result column="BK_TITLE" property="bookTitle"/>
+		<result column="WRITER_NAME" property="bookAuthor"/>
+		<result column="BK_PUBLISH" property="bookPubl"/>
+		<result column="BK_DATE" property="bookDate"/>
+		<result column="BK_STATUS" property="bookStatus"/>	
+	</resultMap>
+
+	<!-- [공통] 오프라인 매장 상세 조회 (연지) -->
 	<select id="selectStoreDetail" resultMap="storeResult">
 		select 
 			   store_no,
@@ -40,7 +51,8 @@
 		 where store_no = #{storeNo}
 		   and store_status = 'Y'
 	</select>
-	
+
+	<!-- [공통] 오프라인 매장 도서 조회 (연지) -->
 	<select id="selectStoreOffBookList" resultMap="offBookResult">
 		select 
 			   ob.bk_no,
@@ -50,12 +62,15 @@
 			   add_date,
 			   bk_title,
 			   bk_publish,
+		       intro_originname,
+		       intro_changename,
 			   writer_name
 		  from off_book ob
 		  join book b on (ob.bk_no = b.bk_no)
 		 where store_no = #{storeNo}
 	</select>
-	
+
+	<!-- [공통] 오프라인 매장 최근 추가 도서 조회 (연지) -->
 	<select id="selectStoreOffBookListRecent" resultMap="offBookResult">
 		select 
 			   ob.bk_no,
@@ -65,6 +80,8 @@
 			   add_date,
 			   bk_title,
 			   bk_publish,
+		       intro_originname,
+		       intro_changename,
 			   writer_name
 		  from off_book ob
 		  join book b on (ob.bk_no = b.bk_no)
@@ -72,6 +89,7 @@
 	  order by add_date
 	</select>
 	
+	<!-- [공통] 오프라인 매장 도서 상세 조회 (연지) -->
 	<select id="selectOffBook" resultMap="offBookResult">
 		select 
 			   ob.bk_no,
@@ -81,6 +99,8 @@
 			   add_date,
 			   bk_title,
 			   bk_publish,
+		       intro_originname,
+		       intro_changename,
 			   writer_name,
 			   store_name
 		  from off_book ob
@@ -89,7 +109,8 @@
 		 where ob.bk_no = #{bkNo}
 		   and ob.store_no = #{storeNo}
 	</select>
-	
+
+	<!-- [공통] 도서 보유 오프라인 매장 리스트 조회 (연지) -->
 	<select id="selectOffBookStoreList" resultMap="offBookResult">
 		select store_no,
 			   bk_status,
@@ -182,5 +203,74 @@
           join book bk on (ob.bk_no = bk.bk_no)
  		 where bk_title like '%' || #{keyword} || '%'
 	</select>
+	
+	
+	<!-- [관리자] 김현솔 -->
+	<select id="selectListCount" resultType="_int">
+		select
+		       count(*)
+		  from store	
+	</select>
+	
+	<select id="selectBookListCount" resultType="_int">
+		select
+		       count(*)
+		  from off_book
+		  where store_no = #{storeNo}	
+	</select>
+	
+	
+	
+	<select id="selectStoreList" resultMap="storeResult">
+		select 
+			   STORE_NO,
+			   STORE_NAME,
+			   STORE_ADDRESS,
+			   STORE_CLOSED,
+			   STORE_OPEN,
+			   STORE_PHONE,
+			   STORE_STATUS
+		      
+		  from store	
+	</select>
+	
+	<select id="selectStoreBookList" resultMap="storeBookResult">
+		   select 
+			   BK_NO,	
+			   STORE_NO,
+			   BK_TITLE,
+			   BK_PUBLISH,
+			   bk_date,				  
+			   WRITER_NAME,
+			   A.BK_STATUS
+			   
+		      
+		  from off_book  A   join store B using(store_no)
+           join book C using(bk_no)
+		  
+		  where store_no = #{storeNo}
+	</select>
+	<insert id="addStore">
+		insert into
+		store(STORE_NO,STORE_NAME,STORE_ADDRESS,STORE_CLOSED,STORE_OPEN,STORE_PHONE)
+		values(seq_store_no.nextval,#{storeName},#{storeAddress},#{storeClosed},#{storeOpen},#{storePhone})
+		
+	</insert>
+	
+	<update id="updateStore">
+		update store
+		set STORE_NAME=#{storeName}, 
+			STORE_ADDRESS=#{storeAddress},
+			STORE_CLOSED=#{storeClosed},
+			STORE_OPEN=#{storeOpen},
+			STORE_PHONE=#{storePhone}
+			
+		where store_no = #{storeNo} 
+	</update>
+	
+	<delete id="deleteStore">
+		delete from store
+		where store_no=#{storeNo}
+	</delete>
 	
 </mapper>

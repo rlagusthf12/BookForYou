@@ -177,7 +177,7 @@
                 <div class="book_list">
                 <c:forEach var="ob" items="${ obList }" begin="0" end="4" step="1">
                     <div class="book_detail">
-                        <div class="book_img"><a href="bookDetail.st?bkNo=${ ob.bkNo }"><img src=""></a></div>
+                        <div class="book_img"><a href="bookDetail.st?storeNo=${ ob.storeNo }&bkNo=${ ob.bkNo }"><img src="${ ob.introChangeName }"></a></div>
                         <div><a href="detail.bk?bkNo=${ ob.bkNo }">${ ob.bkTitle }</a></div>
                         <div>${ ob.writerName } | ${ ob.bkPublish }</div>
                     </div>
@@ -193,7 +193,7 @@
                 <div class="book_list">
                 <c:forEach var="ob" items="${ obRList }" begin="0" end="4" step="1">
                     <div class="book_detail">
-                        <div class="book_img"><a href="detail.bk?bkNo=${ ob.bkNo }"><img src=""></a></div>
+                        <div class="book_img"><a href="bookDetail.st?storeNo=${ ob.storeNo }&bkNo=${ ob.bkNo }"><img src="${ ob.introChangeName }"></a></div>
                         <div><a href="detail.bk?bkNo=${ ob.bkNo }">${ ob.bkTitle }</a></div>
                         <div>${ ob.writerName } | ${ ob.bkPublish }</div>
                     </div>

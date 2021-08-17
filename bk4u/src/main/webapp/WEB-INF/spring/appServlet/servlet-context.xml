@@ -26,5 +26,41 @@
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="100000000"/>
 	</beans:bean>
-
+	
+	<interceptors>
+	  		<interceptor>
+	  			<mapping path="/info.mp"/>
+	  			<mapping path="/delete-account-form.mp"/>
+	  			<mapping path="/my-recommend.mp"/>
+	  			<mapping path="/update-recommend.mp"/>
+	  			<mapping path="/interest.mp"/>
+	  			<mapping path="/subcategory.mp"/>
+	  			<mapping path="/my-work-level.mp"/>
+	  			<mapping path="/update-my-profile-img.mp"/>
+	  			<mapping path="/get-pwd.mp"/>
+	  			<mapping path="/update-pwd.mp"/>
+	  			<mapping path="/match-last-pwd.mp"/>
+	  			<mapping path="/nick-change.mp"/>
+	  			<mapping path="/certificate-send.mp"/>
+	  			<mapping path="/update-email.mp"/>
+	  			<mapping path="/update-detail-info.mp"/>
+	  			<mapping path="/disable-member.mp"/>
+	  			<mapping path="/my-list.mp"/>
+	  			<mapping path="/delete-my-list.mp"/>
+	  			<mapping path="/my-qna.mp"/>
+	  			<mapping path="/my-order-list.mp"/>
+	  			<mapping path="/my-reading-group.mp"/>
+	  			<mapping path="/my-order-detail.mp"/>
+	  			<mapping path="/cancel-my-order.mp"/>
+	  			<mapping path="/update-my-order-delivered.mp"/>
+	  			<mapping path="/return-my-order.mp"/>
+	  			<mapping path="/insert-grade.mp"/>
+	  			<mapping path="/my-board.mp"/>
+	  			<mapping path="/my-reply.mp"/>
+	  			<mapping path="/listAd.qa"/>
+	  			<mapping path="/list.re"/>
+	  			
+	  			<beans:bean id="loginInterceptor" class="com.bookforyou.bk4u.common.interceptor.LoginInterceptor"/>
+	  		</interceptor>
+	  </interceptors>
 </beans:beans>

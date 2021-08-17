@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.service.MailSendService;
@@ -46,6 +47,7 @@ import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
 import com.bookforyou.bk4u.qa.model.service.QaService;
 import com.bookforyou.bk4u.qa.model.vo.Qa;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 import com.google.gson.Gson;
 
 @Controller
@@ -841,9 +843,76 @@ public class MypageController {
 		}
 	}
 	
+	/**
+	 * 마이페이지 나의 자유게시판 글 조회
+	 * @author 안세아
+	 * @param currentPage
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("my-board.mp")
+	public String selectMyBoardList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		int listCount = mypageService.selectMyBoardListCount(memNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Board> list = mypageService.selectMyBoardList(pi,memNo);
+		
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("list",list);
+		
+		return "mypage/myBoard";
+	}
 	
+	/**
+	 * 마이페이지 내 댓글 리스트 조회
+	 * @author 안세아
+	 * @param currentPage
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("my-reply.mp")
+	public String selectMyReplyList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model,HttpSession session) {
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
+		int listCount = mypageService.selectMyReplyListCount(memNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Reply> list = mypageService.selectMyReplyList(pi,memNo);
+		
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("list",list);
+		
+		return "mypage/myReply";
+	}
+	/**
+	 * 주소록
+	 * 김형우
+	 */
+	@RequestMapping("phoneBook.mp")
+	public String phonBook() {
+		return "mypage/phonebook";
+	}
 	
+	/**
+	 * 독서록
+	 * 김형우
+	 */
+	@RequestMapping("myBook.mp")
+	public String mybook() {
+		return "mypage/mybook";
+	}
 	
-	
+	/**
+	 * 스크랩 독서록
+	 * 김형우
+	 */
+	@RequestMapping("clipping.mp")
+	public String clipping() {
+		return "mypage/clipping";
+	}
 	
 }

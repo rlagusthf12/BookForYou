@@ -184,6 +184,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailO:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 취소 처리 컬럼 버튼 */
         .handling.detail{
@@ -197,7 +203,7 @@
             background-color: #EC573B;
         }
         .handling>a{color: white;}
-
+		.showDetail:hover, .refundPcs:hover{cursor:pointer;}
 
         /* 메모 컬럼 */
         .user-memo-content.hide, .admin-memo-content.hide{display: none;}
@@ -305,8 +311,8 @@
 			var tr = $(this).parent().parent().parent();
 	    	var td = tr.children();
 	    	var $memo = td.eq(12).text();
-	    	var $cancelNo = td.eq(1).text();
-	    	$(".admin-memo-content .cNo").val($cancelNo);
+	    	var $orderNo = td.eq(3).text();
+	    	$(".admin-memo-content .oNo").val($orderNo);
 	    	$(".admin-memo-content .memo-bottom input").val($memo);
 	    	
 	    	if($(this).parent().is(".no-exist")){
@@ -323,10 +329,10 @@
 		/* 관리자 메모 삭제 */
 		$(".memo-delete-btn").click(function(){
 			
-			var $cacelNo = $(".cNo").val();
-			location.href="deleteCancelAdminMemo.cs?orderNo=" + $cancelNo;
+			var $orderNo = $(".oNo").val();
+			location.href="deleteAdminMemo.cs?orderNo=" + $orderNo + "&cStatus=refund";
 			
-		})			
+		})		
 	
 	    /* user-memo 모달 보여주기 */
 	    $(".user-memo.exist button").click(function(){
@@ -342,7 +348,7 @@
 	    })
 	
 	    /* 주문 상세 보기 */
-	    $(".detailC").click(function(){
+	    $(".detailO").click(function(){
 	        	
 	    	var td = $(this);
 	        var orderNo = td.text();
@@ -497,9 +503,9 @@
 		                    	<c:forEach var="rf" items="${ rfList }" varStatus="no">
 			                        <tr>
 			                            <td>${ no.count }</td>
-			                            <td class="detailC">${ rf.refundNo }</td>
+			                            <td>${ rf.refundNo }</td>
 			                            <td>${ rf.refundDate }</td>
-			                            <td>${ rf.orderNo }</td>
+			                            <td class="detailO">${ rf.orderNo }</td>
 			                            <td>${ rf.memName } <br> (${ rf.memId })</td>
 			                            <td>${ rf.bkTitle }</td>
 			                            <td>${ rf.orderPriceComma }</td>
@@ -556,8 +562,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateCancelAdminMemo.cs">
-																<input type="hidden" name="cancelNo" class="cNo"/>
+															<form action="updateAdminMemo.cs" method="POST">
+																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="cStatus" value="refund"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>
@@ -579,8 +586,9 @@
 															<div class="memo-top">
 																<p>관리자 메모</p>
 															</div>
-															<form action="updateCancelAdminMemo.cs">
-																<input type="hidden" name="cancelNo" class="cNo"/>
+															<form action="updateAdminMemo.cs" method="POST">
+																<input type="hidden" name="orderNo" class="oNo"/>
+																<input type="hidden" name="cStatus" value="refund"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

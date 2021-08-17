@@ -93,7 +93,7 @@
 <div class="body1">
 <form action="write.re" method="post">
 <div class="faqTitle">신고</div>
-<input type="hidden" name="memNo" value="${re.memNo}">
+<input type="hidden" name="memNo" value="${loginUser.memNo}">
 <input type="hidden" name="reportRefNo" value="${re.reportRefNo}">
 <hr>
 <h2 style="margin-top:10px;">신고 유형</h2>
@@ -103,7 +103,7 @@
 
 
 <h2 style="margin-left:35px;">내용</h2>
-<textarea class="content" name="reportContent">내용을 입력해주세요.</textarea>
+<textarea class="content" name="reportContent" placeholder="내용을 입력해주세요."></textarea>
 <br><br><br><br>
 <h2>사진 첨부</h2>
 <div class="uploadfile">
@@ -116,7 +116,7 @@
 <br><br><br><br><hr>
 
 <div class="foot">
-<div class="cancelButton" onclick="javascript:history.go(-1);">취소</div> 
+<div class="cancelButton" onclick="list.re">취소</div> 
 <button type="submit" class="uploadButton">등록하기</button>
 </div> 
  </form>

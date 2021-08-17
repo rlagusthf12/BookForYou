@@ -27,6 +27,7 @@ import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.google.gson.Gson;
 
 
+
 // 관리자 메인
 @Controller
 public class AmemberController {
@@ -36,6 +37,12 @@ public class AmemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+// 메인
+	@RequestMapping("main.me")
+	public String main() {
+		return "main";
+	}
 
 // 관리자 메인
 	@RequestMapping("amain.me")

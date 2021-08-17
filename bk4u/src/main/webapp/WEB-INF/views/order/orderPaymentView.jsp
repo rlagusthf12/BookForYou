@@ -10,7 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <!--bootstrap end-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         div{
             border: solid 1px white;
@@ -556,6 +555,7 @@
     </style>
 </head>
 <body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <jsp:include page="../common/menubar.jsp"/>
     
@@ -659,11 +659,58 @@
                 $(function(){
                     $("#shipping_info>div:nth-child(4) button:nth-child(1)").addClass("btn_select");
                 });
+                
+                $(function(){
+                	for(let i=1; i < 5; i++){
+                		var td = new Date();
+                		var td1 = td.getTime() + (i * 24 * 60 * 60 * 1000);
+                		td.setTime(td1);
+                		
+    					$("#shipping_info").children().eq(3).children().eq(1).children().eq(i-1).text(getToday(td));
+                	}
+            		
+            		
+                });
 
                 $("#shipping_info>div:nth-child(4) button").click(function(){
                     $("#shipping_info>div:nth-child(4) button").removeClass("btn_select");
                     $(this).addClass("btn_select");
                 });
+            </script>
+            
+            <script>
+	            function getToday(td){ /* 날짜 문자로 변환 */
+	            	
+	            	var mm = td.getMonth() + 1;
+	            	var dd = td.getDate();
+	            	var day = td.getDay();
+	                
+	        		if (day == 0){
+	        			day = "일";
+	        		}
+	        		else if(day == 1){
+	        			day = "월";
+	        		}
+	        		else if(day == 2){
+	        			day = "화";
+	        		}
+	        		else if(day == 3){
+	        			day = "수";
+	        		}
+	        		else if(day == 4){
+	        			day = "목";
+	        		}
+	        		else if(day == 5){
+	        			day = "금";
+	        		}
+	        		else if(day == 6){
+	        			day = "토";
+	        		}
+	                
+	                var today = mm + "/" + dd + " (" + day + ")";
+
+	                return today;
+	            };
             </script>
 
             <div id="address_box">
@@ -715,7 +762,11 @@
                 });
                 
                 $("#shipping_info #mem_info").click(function(){
-					console.log(${ loginUser.memName });
+                	$("#shipping_info table input[name=orderReceiver]").val("${ loginUser.memName }");
+                    $("#shipping_info table input[name=orderPost]").val("${ loginUser.memPost }");
+                    $("#shipping_info table input[name=orderAddress]").val("${ loginUser.memBasicAddress }" + "${ loginUser.memAddressRefer }");
+                    $("#shipping_info table input[name=addressDetail]").val("${ loginUser.memDetailAddress }");
+                    $("#shipping_info table input[name=orderPhone]").val("${ loginUser.memPhone }");
                 });
                 
                 $("#shipping_info #user_ip").click(function(){
@@ -796,7 +847,7 @@
                 </div>
                 
                 <div align="center">
-                	<button type="button">쿠폰적용</button>
+                	<button type="button" class="btn_apply">쿠폰적용</button>
                 	<button type="button" class="btn_cancel">취소</button>
                 </div>
             </div>
@@ -818,7 +869,7 @@
                     <input type="text" value="0"> <button>전액</button>
                 </div>
                 <div align="center">
-                    <button type="submit">포인트 적용</button>
+                    <button type="submit" class="btn_apply">포인트 적용</button>
                     <button type="button" class="btn_cancel">취소</button>
                 </div>
             </div>
@@ -829,7 +880,13 @@
                     $("#point_box").css('display', 'none');
                 });
 
+                $("#coupon_box .btn_apply").click(function(){
+                	$("#coupon_box").css('display', 'none');
+                });
+
                 $("#coupon_box .btn_cancel").click(function(){
+            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text("0원");
+                	$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } + "원");
                     $("#coupon_box").css('display', 'none');
                 });
 

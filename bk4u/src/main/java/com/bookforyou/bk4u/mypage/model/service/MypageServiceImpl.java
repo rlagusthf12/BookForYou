@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
@@ -26,6 +27,7 @@ import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 @Service
 public class MypageServiceImpl implements MypageService {
@@ -190,6 +192,26 @@ public class MypageServiceImpl implements MypageService {
 	@Override
 	public Refund selectMyRefund(int orderNo) {
 		return mypageDao.selectMyRefund(sqlSession,orderNo);
+	}
+
+	@Override
+	public int selectMyBoardListCount(int memNo) {
+		return mypageDao.selectMyBoardListCount(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<Board> selectMyBoardList(PageInfo pi, int memNo) {
+		return mypageDao.selectMyBoardList(sqlSession,pi,memNo);
+	}
+
+	@Override
+	public int selectMyReplyListCount(int memNo) {
+		return mypageDao.selectMyReplyListCount(sqlSession,memNo);
+	}
+
+	@Override
+	public ArrayList<Reply> selectMyReplyList(PageInfo pi, int memNo) {
+		return mypageDao.selectMyReplyList(sqlSession,pi,memNo);
 	}
 
 

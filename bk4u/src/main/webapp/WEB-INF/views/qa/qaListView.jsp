@@ -200,7 +200,9 @@
 		
 			</tbody>
 		</table>
+		<c:if test="${loginUser.memNo!=1}">
 		<div class="writeButton" onclick="location.href='writeForm.qa'">1:1문의 작성</div>
+		</c:if>
 		</div>
 		
 		<script>

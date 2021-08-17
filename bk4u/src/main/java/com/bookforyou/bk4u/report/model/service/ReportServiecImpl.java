@@ -20,8 +20,12 @@ public class ReportServiecImpl implements ReportService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int selectListCount() {
-		return rDao.selectListCount(sqlSession);
+	public int selectListCount(int memNo) {
+		return rDao.selectListCount(sqlSession,memNo);
+	}
+	@Override
+	public int selectListCountAd() {
+		return rDao.selectListCountAd(sqlSession);
 	}
 	@Override
 	public int selectReListCount() {
@@ -29,8 +33,13 @@ public class ReportServiecImpl implements ReportService{
 	}
 	
 	@Override
-	public ArrayList<Report> selectReportList(PageInfo pi){		
-		return rDao.selectReportList(sqlSession,pi);
+	public ArrayList<Report> selectReportList(PageInfo pi, int memNo){		
+		return rDao.selectReportList(sqlSession,pi,memNo);
+	}
+	
+	@Override
+	public ArrayList<Report> selectReportListAd(PageInfo pi){		
+		return rDao.selectReportListAd(sqlSession,pi);
 	}
 	
 	@Override

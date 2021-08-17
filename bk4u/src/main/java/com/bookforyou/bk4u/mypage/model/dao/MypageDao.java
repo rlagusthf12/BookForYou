@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
@@ -24,6 +25,7 @@ import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.order.model.vo.OrderDetail;
 import com.bookforyou.bk4u.payment.model.vo.Payment;
 import com.bookforyou.bk4u.point.model.vo.Point;
+import com.bookforyou.bk4u.reply.model.vo.Reply;
 
 @Repository
 public class MypageDao {
@@ -164,6 +166,26 @@ public class MypageDao {
 
 	public Refund selectMyRefund(SqlSessionTemplate sqlSession, int orderNo) {
 		return sqlSession.selectOne("csMapper.selectMyRefund",orderNo);
+	}
+
+	public int selectMyBoardListCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("boardMapper.selectMyBoardListCount",memNo);
+	}
+
+	public ArrayList<Board> selectMyBoardList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMyBoardList",memNo,rowBounds);
+	}
+
+	public int selectMyReplyListCount(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("boardMapper.selectMyReplyListCount",memNo);
+	}
+
+	public ArrayList<Reply> selectMyReplyList(SqlSessionTemplate sqlSession, PageInfo pi, int memNo) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMyReplyList",memNo,rowBounds);
 	}
 
 

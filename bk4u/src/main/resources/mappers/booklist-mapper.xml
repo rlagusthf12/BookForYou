@@ -18,6 +18,12 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="bk_publish" property="bkPublish"/>
 		<result column="writer_name" property="writerName"/>
+		<result column="rank" property="rank"/>
+		<result column="change_img_name" property="changeImgName"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="bk_publish" property="bkPublish"/>
+		<result column="writer_name" property="writerName"/>
+		<result column="intro_changename" property="introChangeName"/>
 	</resultMap>
 	
 	<resultMap id="bookResult" type="Book">
@@ -383,6 +389,45 @@
 					  	   )A
 				   )
 			 where rownum between 1 and 2
+
+	<!-- [메인] 인기 독서록 불러오기 (한진) -->
+	<select id="selectMainBookReport" resultMap="booklistResult">
+		 select
+		       B2.rank,
+		       B2.bl_no,
+		       B2.mem_no,
+		       B2.bl_rate,
+		       B2.bl_title,
+		       B2.bl_content,
+		       B2.bl_cdate,
+		       B2.bl_like,
+		       B2.mem_nickname,
+		       B2.change_img_name,
+		       B.bk_no,
+		       bk_title,
+		       bk_publish,
+		       writer_name,
+		       intro_changename
+		  from book B, (
+		                select *
+		                  from (
+		                        select rank() over (order by bl_like desc, bl_scrap desc) rank,
+		                               bl_no,
+		                               bl.bk_no,
+		                               bl.mem_no,
+		                               bl_title,
+		                               bl_content,
+		                               bl_rate,
+		                               bl_cdate,
+		                               bl_like,
+		                               mem_nickname,
+		                               change_img_name
+		                          from booklist bl
+		                          join members m on (m.mem_no = bl.mem_no)
+		                        )
+		                  <![CDATA[where rank < 4]]>
+		                )B2
+		 where B.bk_no in B2.bk_no
 	</select>
 
 </mapper>

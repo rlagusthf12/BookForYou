@@ -50,7 +50,7 @@
     <br><br>
     <hr>    
     <div class="homemsg">
-        <h1 align="center">Welcom To &nbsp;<i style="color:#EC573B; font-size: 40px;">BK4U</i></h1>
+        <h1 align="center">Welcome To &nbsp;<i style="color:#EC573B; font-size: 40px;">BK4U</i></h1>
     </div>
 
 </body>

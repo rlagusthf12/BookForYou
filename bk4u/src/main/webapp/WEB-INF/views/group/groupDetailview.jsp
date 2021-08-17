@@ -120,14 +120,22 @@
                 <br>
                 <h6 align="left"><b>${ g.groupWriter }</b></h6>
                 
-                
+                <form id="groupMember" method="post" action="insertGMem.me">
+                <input type="hidden" value="${ loginUser.memId }">
+                <input type="hidden" value="${ loginUser.memEmail }">
+                <input type="hidden" value="${ g.groupBoardNo }">
                 <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
-                
+                </form>
                 <button type="submit" action="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
+                
                 <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
                 
                 
                 <!--탈퇴여부 묻는 알람창-->
+                <form action="writeForm.re" method="post">                
+                <input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.gbo?gno=${g.groupBoardNo}">
+                <input type="hidden" name="reportType" value="5">               
+                <input type="hidden" name="reportRefNo" value="${g.groupBoardNo}">
                 <button type="submit" class="">신고하기</button>
                 <br>
 

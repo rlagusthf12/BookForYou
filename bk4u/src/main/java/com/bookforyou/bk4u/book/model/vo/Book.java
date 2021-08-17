@@ -45,5 +45,7 @@ public class Book {
 	public String bkIntroduce;
 	
 	public ArrayList<Book> bookList;
+	public int rank;
+	public int quantity;
 	
 }
