@@ -21,7 +21,6 @@
     	}
         .wrap {
             width: 1200px;
-           	height: 1200px;
             margin: auto;
         }
 
@@ -143,7 +142,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="phoneBook.mp">
                                 <i class="fa fa-home"></i>
                                 <strong>주소록 관리</strong>
                                 <small>주소록을 관리합니다.</small>
@@ -157,7 +156,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="myBook.mp">
                                 <i class="fa fa-book"></i>
                                 <strong>독서록 관리</strong>
                                 <small>내 독서록과 스크랩한 독서록을 조회합니다.</small>
