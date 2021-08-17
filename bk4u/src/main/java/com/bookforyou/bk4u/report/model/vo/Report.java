@@ -22,7 +22,7 @@ public class Report {
 	private int reportRefNo;
 	private int reportType;
 	private String originName;
-	private String changName;
+	private String changeName;
 	private String reportLink;
 	private String reportStatus;
 	private String reportType1;

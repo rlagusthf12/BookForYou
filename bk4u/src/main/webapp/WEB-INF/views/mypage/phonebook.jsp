@@ -9,16 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주소록</title>
 
-    <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link rel="stylesheet" href="./side-style.css">
+    <link rel="stylesheet" href="resources\mypage\css\side-style.css">
     <style>
         .wrap {
             width: 1200px;
@@ -81,6 +77,8 @@
     </style>
 </head>
 <body>
+	<!-- 메뉴바-->
+    <jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -88,7 +86,7 @@
                 <nav>
                     <ul class="mcd-menu">
                         <li>
-                            <a href="" class="active">
+                            <a href="my-order-list.mp" class="active">
                                 <i class="fa fa-shopping-cart"></i>
                                 <strong>주문내역</strong>
                                 <small>주문 및 배송 현황을 조회합니다.</small>
@@ -109,21 +107,21 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-list.mp">
                                 <i class="fa fa-archive"></i>
                                 <strong>보관함</strong>
                                 <small>찜한 내역을 조회합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="phoneBook.mp">
                                 <i class="fa fa-home"></i>
                                 <strong>주소록 관리</strong>
                                 <small>주소록을 관리합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-recommend.mp">
                                 <i class="fa fa-check-square-o"></i>
                                 <strong>추천 설정</strong>
                                 <small>도서 추천 정보를 조회/수정합니다.</small>
@@ -141,16 +139,16 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-reading-group.mp">
                                 <i class="fa fa-comments-o"></i>
                                 <strong>활동한 내역</strong>
                                 <small>활동 내역을 조회합니다.</small>
                             </a>
                             <ul>
-                                <li><a href="#"><i class="fa fa-users"></i>나의 독서모임</a></li>
-                                <li><a href="#"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
-                                <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
-                                <li><a href="#"><i class="fa fa-comment"></i>댓글</a></li>
+                                <li><a href="my-reading-group.mp"><i class="fa fa-users"></i>나의 독서모임</a></li>
+                                <li><a href="my-qna.mp"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
+                                <li><a href="my-board.mp"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
+                                <li><a href="my-reply.mp"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>
                         <li>
@@ -161,13 +159,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="info.mp">
                                 <i class="fa fa-user" class="active"></i>
                                 <strong>개인정보 수정</strong>
                                 <small>개인정보를 수정합니다.</small>
                             </a>
                         </li>
-                    </ul>      
+                    </ul>
                 </nav>
             </div>
             <!-- partial -->
@@ -307,16 +305,18 @@
         <div id="paging-wrap">
             <ul class="pagination">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
                 <li class="page-item disabled"><a class="page-link">다음</a></li>
             </ul>
         </div>
 
         </div>
     </div>
+ </div>
+
 </body>
 </html>

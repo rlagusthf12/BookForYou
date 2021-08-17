@@ -35,22 +35,22 @@
         float:left;
     }
     #header_1_left{width:30%;position:relative;color: rgb(236, 87, 59);font-size: 40px; font-weight: bold;}
+   	#header_1_left>a{color: rgb(236, 87, 59); text-decoration:none;}
     #header_1_center{width:40%;}
     #header_1_right{width:30%;}
 
     #header_1_left>img{height:80%;position:absolute;margin:auto;top:0;bottom:0;right: 0;left:0;}
     #header_1_right{text-align: center; line-height:35px; font-size: 15px; text-indent: 35px;}
-    #header_1_right>a{margin: 5px;}
+    #header_1_right>a{margin: 5px; color:black; text-decoration:none;}
     #header_1_right>a:hover{cursor: pointer;}
     
-    #header_2>ul{width:100%; height:100%; list-style-type: none; margin: auto; padding:0;}
+    #header_2>ul{width:100%; height:100%; list-style-type: none; margin: auto; padding:0; }
     #header_2>ul>li{float:left; width:20%; height:100%; line-height: 35px; text-align:center;}
-    #header_2>ul>li a{text-decoration: none; font-size: 18px; font-weight: 900;}
+    #header_2>ul>li a{text-decoration: none; font-size: 18px; font-weight: 900; text-decoration:none; color:black}
 
-    #header_2{border-bottom:5px solid rgb(252, 190, 52);}
-
-    #header a{text-decoration:none; color:black}
-
+    #header_2{border-bottom:5px solid rgb(252, 190, 52); }
+	
+	
     /* 검색 영역 */
         #search-area{
             display:flex;
@@ -152,7 +152,7 @@
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
-                <p>BK4U</p>
+                <a href="main.me">BK4U</a>
             </div>
 
             <br>
@@ -200,11 +200,14 @@
 		                        
 		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        
+
 		                        <form  action="cart.bk" method="post" style="margin-top: -35px; margin-left: 40px;">
-		                        <a href="my-order-list.mp" style="font-weight: bold;">마이페이지</a>
+		                        <a href="my-order-list.mp" style="font-weight: bold; color: black; text-decoration:none;">마이페이지</a>
 		                        <button type="submit" style="font-weight: bold;">장바구니</button>
 		                        <input type="hidden" name="memNo" value="${ loginUser.memNo }">
 		                        </form>
+
+		                      
 		                        
 		                   	</c:otherwise>
 		                   	
