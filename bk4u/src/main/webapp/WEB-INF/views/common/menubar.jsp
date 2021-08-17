@@ -200,16 +200,14 @@
 		                        
 		                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                        
-<<<<<<< Updated upstream
+
 		                        <form  action="cart.bk" method="post" style="margin-top: -35px; margin-left: 40px;">
-		                        <a href="my-order-list.mp" style="font-weight: bold;">마이페이지</a>
+		                        <a href="my-order-list.mp" style="font-weight: bold; color: black; text-decoration:none;">마이페이지</a>
 		                        <button type="submit" style="font-weight: bold;">장바구니</button>
 		                        <input type="hidden" name="memNo" value="${ loginUser.memNo }">
 		                        </form>
-=======
-		                        <a href="my-order-list.mp" style="font-weight: bold;">마이페이지</a>
-		                        <a href="cart.bk?memNo=${ loginUser.memNo }" style="font-weight: bold;">장바구니</a>
->>>>>>> Stashed changes
+
+		                      
 		                        
 		                   	</c:otherwise>
 		                   	

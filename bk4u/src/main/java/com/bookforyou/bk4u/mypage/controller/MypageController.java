@@ -888,9 +888,31 @@ public class MypageController {
 		
 		return "mypage/myReply";
 	}
+	/**
+	 * 주소록
+	 * 김형우
+	 */
+	@RequestMapping("phoneBook.mp")
+	public String phonBook() {
+		return "mypage/phonebook";
+	}
 	
+	/**
+	 * 독서록
+	 * 김형우
+	 */
+	@RequestMapping("myBook.mp")
+	public String mybook() {
+		return "mypage/mybook";
+	}
 	
-	
-	
+	/**
+	 * 스크랩 독서록
+	 * 김형우
+	 */
+	@RequestMapping("clipping.mp")
+	public String clipping() {
+		return "mypage/clipping";
+	}
 	
 }
