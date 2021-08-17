@@ -69,7 +69,7 @@
 	<div class="reportTitle">신고 사유</div>
 	<hr>
 	<div class="reportLittleTitle">신고 번호: ${reli.reliNo} <br><br>제재자 명:&nbsp;<b>${reli.memNickName}</b></div>
-	<div class="reportType">${reli.reliType}&nbsp;&nbsp;&nbsp;<a href="${reli.reliLink}">신고글링크</a></div>	
+	<div class="reportType">${reli.reliType}&nbsp;&nbsp;&nbsp;<a href="${reli.reliLink}">${reli.reliLink}</a></div>	
 	<div class="reportContent">
 	<p>${reli.reliContent}</p>	
 	</div>	

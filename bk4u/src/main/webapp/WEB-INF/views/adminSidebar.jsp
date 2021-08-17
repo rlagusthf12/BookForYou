@@ -186,23 +186,12 @@
                 <a href="javascript:void(0);"><i class="fa fa-home"></i><span>매장</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li>
-                        <a href="ui-alerts-notifications.html"></a>
+                        <a href="view.cc">매출 통계</a>
                     </li>
                     <li>
-                        <a href="ui-panels.html"></a>
+                        <a href="list.store">지점 관리</a>
                     </li>
-                    <li>
-                        <a href="ui-buttons.html"></a>
-                    </li>
-                    <li>
-                        <a href="ui-slider-progress.html"></a>
-                    </li>
-                    <li>
-                        <a href="ui-modals-popups.html"></a>
-                    </li>
-                    <li>
-                        <a href="ui-icons.html"></a>
-                    </li>
+                  
                 </ul>
             </li>
             <li class="sub-menu">

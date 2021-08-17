@@ -68,7 +68,7 @@
 	<div class="reportTitle">신고</div>
 	<hr>
 	<div class="reportLittleTitle">신고 번호: ${re.reportNo}</div>
-	<div class="reportType">${re.reportType1}&nbsp;&nbsp;&nbsp;<a href="${re.reportLink}">신고글링크</a></div>
+	<div class="reportType">${re.reportType1}&nbsp;&nbsp;&nbsp;<a href="${re.reportLink}">${re.reportLink}</a></div>
 	
 	<div class="reportContent">
 	<p>${re.reportContent}</p>	

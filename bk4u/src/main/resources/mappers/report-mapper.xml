@@ -9,7 +9,7 @@
 		<result column="REPORT_REFNO" property="reportRefNo"/>
 		<result column="REPORT_TYPE" property="reportType"/>
 		<result column="ORIGIN_NAME" property="originName"/>
-		<result column="CHANGE_NAME" property="changName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="REPORT_LINK" property="reportLink"/>	
 		<result column="REPORT_STATUS" property="reportStatus"/>		
 	</resultMap>
@@ -150,7 +150,8 @@
 		       REPORT_TYPE,
 		       ORIGIN_NAME,
 		       CHANGE_NAME,
-		       REPORT_LINK)
+		       REPORT_LINK
+		      )
 		values(seq_reno.nextval,
 			   #{memNo},	
 			   #{reportContent},
@@ -158,7 +159,8 @@
 			   #{reportType},
 			   #{originName},
 			   #{changeName},
-			   #{reportLink})
+			   #{reportLink}
+			  )
 	</insert>
 	
 	<insert id="writeReReport">

@@ -79,11 +79,11 @@ background-color: rgb(224, 224, 224);
  display:none;
  
 }
-ol{
+.quelist1>ol{
  list-style:none; 
 
 }
-li{
+.quelist1>ol>li{
 float:left;
 list-style:none;
 }
@@ -106,6 +106,7 @@ display:inline-block;
 
 .updatebutton{
 width:100%;
+margin-bottom:100px;
 }
 </style>
 </head>
@@ -153,7 +154,7 @@ width:100%;
 </div>
 <div class="updatebutton">
 <c:if test="${loginUser.memNo==1}">	
-<span class="updateFAQList" onclick="location.href='typeUpdateForm.faq'">목록수정</span>
+<span class="updateFAQList" onclick="location.href='typeUpdateForm.faq'" >목록수정</span>
 </c:if>
 </div>
 </div>

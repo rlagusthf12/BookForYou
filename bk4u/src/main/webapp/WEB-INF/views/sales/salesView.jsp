@@ -6,12 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<!-- 캘린더 불러오는 제이쿼리 버전이랑 충돌되어서 주석처리하였습니다. 필요하시면 각자의 페이지에 복사하셔서 써주시면 감사하겠습니다. -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!-- 부트스트랩에서 제공하고 있는 스타일 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> -->
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
 <style>
 #selectDays{
 	width:800px;
 	height:100px;	
-	 margin: 0px auto;
-	 margin-top:200px;
+	margin: 0px auto;
+	 
 }
 
 #chooseDay{
@@ -169,6 +181,7 @@ td {
   font-weight: 300;
   color: black;
   padding: 0 10px; 
+  text-align:center;
 }
 /* Headers */
 h1 {
@@ -203,7 +216,7 @@ h3 {
 </style>
 </head>
 <body>
-<jsp:include page="../menubar.jsp"/>
+ <jsp:include page="../adminSidebar.jsp"/>
 <div id="selectDays">
 <div style="font-size:50px; margin-bottom:30px;">매출통계</div>
 <br>
@@ -276,7 +289,7 @@ h3 {
 
   </div>
 </div>
-<jsp:include page="../footer.jsp"/>
+
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js'></script>
 <script src='https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.7.4/dist/progressbar.js'></script>

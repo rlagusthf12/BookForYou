@@ -132,6 +132,10 @@
                 
                 
                 <!--탈퇴여부 묻는 알람창-->
+                <form action="writeForm.re" method="post">                
+                <input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.gbo?gno=${g.groupBoardNo}">
+                <input type="hidden" name="reportType" value="5">               
+                <input type="hidden" name="reportRefNo" value="${g.groupBoardNo}">
                 <button type="submit" class="">신고하기</button>
                 <br>
 

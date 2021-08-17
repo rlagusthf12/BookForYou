@@ -154,9 +154,11 @@ public class ReportController {
 	
 	@RequestMapping("writeForm.re")
 	public ModelAndView writeForm(ModelAndView mv, Report re) {
-		type(re);		
+		
+		type(re);
+		System.out.println(re);
 		mv.addObject("re",re)
-		.setViewName("report/reportReasonWriteForm");
+		.setViewName("report/reportWriteForm");
 		return mv;
 	}
 	
@@ -175,10 +177,11 @@ public class ReportController {
 	
 	@RequestMapping("write.re")
 	public String reasonWriteForm(ModelAndView mv,Report report) {
+		System.out.println(report);
+		int result = rService.writeReport(report);
 		
-		int result = rService.writeReport(report);		
 		
-		return "redirect:list.re";
+		return "redirect:list.re?memNo="+report.getMemNo();
 	}
 	
 	
@@ -210,6 +213,12 @@ public class ReportController {
 				
 		break;
 		case 4: re.setReportType1("리뷰");	
+		
+		break;
+		
+		
+		case 5: re.setReportType1("독서모임");
+		
 		break;
 		default:
 			re.setReportType1("error");
