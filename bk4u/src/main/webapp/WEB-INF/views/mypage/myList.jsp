@@ -30,9 +30,8 @@
     	}
         .wrap {
             width: 1200px;
-            margin-top: 120px;
-            margin-left: auto;
-            margin-right: auto;
+           	height: 1200px;
+            margin: auto;
         }
 
         .wrap>div {
