@@ -2,6 +2,7 @@ package com.bookforyou.bk4u.order.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -188,6 +189,20 @@ public class OrderDao {
 	 */
 	public Book selectOrderBook(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.selectOne("orderMapper.selectOrderBook", map);
+	}
+
+	/*
+	 * [사용자] 주문 정보 입력 (연지)
+	 */
+	public int insertOrderInfo(SqlSessionTemplate sqlSession, Order o) {
+		return sqlSession.insert("orderMapper.insertOrderInfo", o);
+	}
+
+	/*
+	 * [사용자] 주문 상세 정보 입력 (연지)
+	 */
+	public int insertOrderDetailInfo(SqlSessionTemplate sqlSession, Map<String, Object> m) {
+		return sqlSession.insert("orderMapper.insertOrderDetailInfo", m);
 	}
 
 	

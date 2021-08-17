@@ -18,4 +18,11 @@ public class PaymentDao {
 		return (ArrayList)sqlSession.selectList("paymentMapper.selectPayList");
 	}
 
+	/*
+	 * [사용자] 결제 정보 입력 (연지)
+	 */
+	public int insertOrderPaymentInfo(SqlSessionTemplate sqlSession, int price) {
+		return sqlSession.insert("paymentMapper.insertOrderPaymentInfo", price);
+	}
+
 }

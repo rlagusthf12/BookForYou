@@ -774,5 +774,59 @@
 		    and mem_no = #{memNo}
 	</select>
 	
+	<!-- [사용자] 주문 정보 입력 (연지) -->
+	<insert id="insertOrderInfo">
+		insert
+		  into orders
+		     ( 
+		       order_no
+		     , mem_no
+		     , pay_no
+		     , order_date
+		     , order_receiver
+		     , order_post
+		     , order_address
+		     , address_detail
+		     , address_ref
+		     , order_phone
+		     , order_price
+		     , add_price
+		     , used_points
+		     , order_status
+		     , pay_status
+		     )
+	    values
+	         (
+	           seq_ono.nextval,
+	           #{memNo},
+	           seq_pno.curval,
+	           sysdate,
+	           #{orderReceiver},
+	           #{orderPost},
+	           #{orderAddress},
+	           #{addressDetail},
+	           #{AddressRef},
+	           #{OrderPhone},
+	           #{orderPrice},
+	           #{addPrice},
+	           #{usedPoints},
+	           '주문확인',
+	           '입금완료'
+	         )
+	</insert>
+	
+	<!-- [사용자] 주문 상세 정보 입력 (연지) -->
+	<insert id="insertOrderDetailInfo">
+		insert
+		  into order_detail
+	    values
+	         (
+	           seq_ono.curval,
+	           #{bkNo},
+	           #{quantity},
+	           #{detailPrice},
+	           '결제완료'
+	         )
+	</insert>
 	
 </mapper>

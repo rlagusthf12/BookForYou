@@ -75,4 +75,25 @@
 		  from payment
 	</select>
 	
+	<!-- [사용자] 결제 정보 입력 (연지) -->
+	<insert id="insertOrderPaymentInfo">
+		insert 
+		  into payment
+		     ( 
+		       pay_no
+		     , pay_way
+		     , price
+		     , status
+		     , pay_date
+		     )
+		values
+		     ( 
+		       seq_pno.nextval
+		     , "카드"
+		     , #{price}
+		     , "결제완료"
+		     , SYSDATE
+		     );
+	</insert>
+	
 </mapper>

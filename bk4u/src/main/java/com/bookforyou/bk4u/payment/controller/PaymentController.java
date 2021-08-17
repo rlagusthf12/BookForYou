@@ -34,5 +34,17 @@ public class PaymentController {
         ArrayList<Payment> list = pService.selectPayList();
         return new Gson().toJson(list);
     }
+
+	/*
+	 * [사용자] 결제 정보 입력 (연지)
+	 */
+	@ResponseBody
+	@RequestMapping(value="orderBook.pay", produces="text/html; charset=utf-8")
+	public String updateCartQty(int price) {
+
+		int result = pService.insertOrderPaymentInfo(price);
+		
+		return result> 0 ? "success" : "fail";
+	}
 	
 }
