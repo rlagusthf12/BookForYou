@@ -22,7 +22,7 @@
     	}
         .wrap {
             width: 1200px;
-           	height: 1200px;
+           	height: 1000px;
             margin: auto;
         }
 
