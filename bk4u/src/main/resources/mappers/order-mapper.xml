@@ -602,7 +602,7 @@
 		    and M.mem_no = O.mem_no
 		    and O.pay_no = P.pay_no
             and O.mem_no = #{memNo}
-            and O.order_date between #{beginDate} and #{endDate}
+            and O.order_date between TO_DATE(#{beginDate},'YYYY-MM-DD') and TO_DATE(#{endDate},'YYYY-MM-DD')
             <choose>
 		 		<when test="orderStatus == '주문확인'">
 		   			and order_status = '주문확인'
@@ -658,7 +658,7 @@
 		    and M.mem_no = O.mem_no
 		    and O.pay_no = P.pay_no
             and O.mem_no = #{memNo}
-            and O.order_date between #{beginDate} and #{endDate}
+            and O.order_date between TO_DATE(#{beginDate},'YYYY-MM-DD') and TO_DATE(#{endDate},'YYYY-MM-DD')
             <choose>
 		 		<when test="orderStatus == '주문확인'">
 		   			and order_status = '주문확인'
