@@ -148,8 +148,8 @@
                                 <small>내 독서록과 스크랩한 독서록을 조회합니다.</small>
                             </a>
                             <ul>
-                                <li><a href="#"><i class="fa fa-book"></i>내 독서록</a></li>
-                                <li><a href="#"><i class="fa fa-bookmark"></i>스크랩한 독서록</a></li>
+                                <li><a href="myBook.mp"><i class="fa fa-book"></i>내 독서록</a></li>
+                                <li><a href="clipping.mp"><i class="fa fa-bookmark"></i>스크랩한 독서록</a></li>
                             </ul>
                         </li>
                         <li>
