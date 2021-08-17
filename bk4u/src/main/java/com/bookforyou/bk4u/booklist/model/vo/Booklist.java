@@ -31,13 +31,8 @@ public class Booklist {
 	public String bkTitle;
 	public String bkPublish;
 	public String writerName;
-	
 	public ArrayList<Booklist> booklistList;
-	
 	public int rank;
 	public String changeImgName;
-	public String bkTitle;
-	public String bkPublish;
-	public String writerName;
 	public String introChangeName;
 }
