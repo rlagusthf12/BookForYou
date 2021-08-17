@@ -137,6 +137,7 @@
 		/* 베스트 셀러 불러오기 */
 		$.ajax({
 			url:"getMainBestSeller.bk",
+			async: false,
 			success:function(bestSeller){
 		
 				for(let i=0; i<bestSeller.length; i++){
@@ -178,8 +179,8 @@
 		/* 인기 독서록 불러오기 */
 		$.ajax({
 			url:"getMainBookReport.bl",
+			async: false,
 			success:function(bookReport){
-				console.log(bookReport);
 				
 				for(let i=0; i<bookReport.length; i++) {
 					
@@ -193,6 +194,7 @@
 					let blWriter = bookReport[i].blWriter;
 					let blCdate = bookReport[i].blCdate;
 					let introChangeName = bookReport[i].introChangeName;
+					let changeImgName = bookReport[i].changeImgName;
 			
 					
 					// 날짜
@@ -227,7 +229,7 @@
 					let content = `<div class="content">
 						                <div class="book-report-top">
 						                <div class="user-img-area">
-						                    <img src="resources/adminCommon/images/person.png" alt="" width="70px;" height="70px;">
+						                    <img src=` + changeImgName + ` alt="" width="70px;" height="70px;">
 						                </div>
 						                <div class="user-name"><p>` + blWriter + `</p></div>
 						                <div class="writer-date">` + cDate + `</div>
@@ -281,7 +283,91 @@
 			}
 		})
 		
+		var $memNo = `${loginUser.memNo}`;
+		
+		if($memNo == "") {
+			$memNo = 0;
+		}
+		
+		
+			$.ajax({
+				url:"getMainBookRecommand.bk",
+				data: {
+					memNo: $memNo
+				},
+				success:function(bookList){
+					
+					for(let i=1; i<bookList.length; i++){
+						let a = `<button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to=` + i + ` aria-label="Slide" ` + i+1 + `></button>`;
+			            $("#recommand-area .carousel-indicators").append(a);
+			            
+			            let bkTitle = bookList[i].bkTitle;
+			            let bkWriter = bookList[i].writerName;
+			            let bkPublish = bookList[i].bkPublish;
+			            let bkGender = bookList[i].bkGender;
+			            let bkAge = bookList[i].bkAge;
+			            let introChangeName = bookList[i].introChangeName;
+			            
+						if(bkGender == "M"){
+							bkGender = "남성";
+						}else if(bkGender == "F"){
+							bkGender = "여성";
+						}
+			            
+			            var c = `<div class="carousel-item" data-bs-interval="2000">
+			                        <div>
+			                            <span class="bold">` + bkAge + `대 ` + bkGender + `</span>
+			                            <span>사이에서 인기있는 책</span>
+			                        </div>
+			                        <br>
+			                        <img src=` + introChangeName + ` alt="..." width="140px;" height="170px;">
+			                        <div class="book-info">
+			                            <div class="book-title">` + bkTitle + `</div>
+			                            <div class="book-writer">` + bkWriter + `</div>
+			                            <div class="book-publish">` + bkPublish + `</div>
+			                        </div>
+			                    </div>`;
+			        	
+			        	$("#recommand-area .carousel-inner").append(c);
+					}
+					
+					let bkGender0 = bookList[0].bkGender;
+					if(bkGender0 == "M"){
+						bkGender0 = "남성";
+					}else if(bkGender0 == "F"){
+						bkGender0 = "여성";
+					}
+					
+					let b = `<div>
+			                 	<span class="bold">` + bookList[0].bkAge + `대 ` + bkGender0 + `</span>
+			                    <span>사이에서 인기있는 책</span>
+			                 </div>
+			                 <br>
+			                 <img src=` + bookList[0].introChangeName + ` width="140px;" height="170px;">
+			                 <div class="book-info">
+			                     <div class="book-title">` + bookList[0].bkTitle + `</div>
+			                     <div class="book-writer">` + bookList[0].writerName + `</div>
+			                     <div class="book-publish">` + bookList[0].bkPublish + `</div>
+			                 </div>`;
+			            
+			       	$("#recommand-area .carousel-item.active").append(b);
+			                    
+			                   
+					
+					
+				},
+				error:function(){
+					console.log("도서 추천 ajax 통신 실패");
+				}
+			})
+		
+		
+		
+
 	})
+	
+	
+	
 	
 	
 </script>
@@ -336,54 +422,17 @@
             	<c:choose>
             		<c:when test="${ empty loginUser }">
 	                <div id="recommand-title">
-	                    <p>XXX님께 추천해요</p>
+	                    <p>Today's 추천 도서</p>
 	                </div>
 	                <div id="carouselExampleDark" class="carousel carousel-dark slide book-area" data-bs-ride="carousel">
 	                    <div class="carousel-indicators">
 	                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-	                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-	                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
 	                    </div>
 	                    <div class="carousel-inner">
 	                        <div class="carousel-item active" data-bs-interval="10000">
-	                            <div>
-	                                <span class="bold">20대 여성</span>
-	                                <span>사이에서 인기있는 책</span>
-	                            </div>
-	                            <br>
-	                            <img src="../resources/기분이 태도가 되지 않게.jfif"  width="140px;" height="170px;">
-	                            <div class="book-info">
-	                                <div class="book-title">지적 대화를 위한 넓고 얕은 지식 (역사, 경제, 정치, 사회, 윤리 편)</div>
-	                                <div class="book-writer">채사장</div>
-	                                <div class="book-publish">한빛비즈</div>
-	                            </div>
+	                            
 	                        </div>
-	                        <div class="carousel-item" data-bs-interval="2000">
-	                            <div>
-	                                <span class="bold">30대 여성</span>
-	                                <span>사이에서 인기있는 책</span>
-	                            </div>
-	                            <br>
-	                            <img src="../resources/국가란 무엇인가.jfif"  alt="..." width="140px;" height="170px;">
-	                            <div class="book-info">
-	                                <div class="book-title">지적 대화를 위한 넓고 얕은 지식 (역사, 경제, 정치, 사회, 윤리 편)</div>
-	                                <div class="book-writer">채사장</div>
-	                                <div class="book-publish">한빛비즈</div>
-	                            </div>
-	                        </div>
-	                        <div class="carousel-item">
-	                            <div>
-	                                <span class="bold">40대 여성</span>
-	                                <span>사이에서 인기있는 책</span>
-	                            </div>
-	                            <br>
-	                            <img src="../resources/미드나잇 라이브러리.jfif" alt="..." width="140px;" height="170px;">
-	                            <div class="book-info">
-	                                <div class="book-title">지적 대화를 위한 넓고 얕은 지식 (역사, 경제, 정치, 사회, 윤리 편)</div>
-	                                <div class="book-writer">채사장</div>
-	                                <div class="book-publish">한빛비즈</div>
-	                            </div>
-	                        </div>
+	                        
 	                    </div>
 	                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
 	                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -401,50 +450,14 @@
 		                </div>
 		                <div id="carouselExampleDark" class="carousel carousel-dark slide book-area" data-bs-ride="carousel">
 		                    <div class="carousel-indicators">
-		                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-		                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-		                        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		                    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 		                    </div>
 		                    <div class="carousel-inner">
 		                        <div class="carousel-item active" data-bs-interval="10000">
-		                            <div>
-		                                <span class="bold">20대 여성</span>
-		                                <span>사이에서 인기있는 책</span>
-		                            </div>
-		                            <br>
-		                            <img src="../resources/기분이 태도가 되지 않게.jfif"  width="140px;" height="170px;">
-		                            <div class="book-info">
-		                                <div class="book-title">지적 대화를 위한 넓고 얕은 지식 (역사, 경제, 정치, 사회, 윤리 편)</div>
-		                                <div class="book-writer">채사장</div>
-		                                <div class="book-publish">한빛비즈</div>
-		                            </div>
+		                            
 		                        </div>
-		                        <div class="carousel-item" data-bs-interval="2000">
-		                            <div>
-		                                <span class="bold">30대 여성</span>
-		                                <span>사이에서 인기있는 책</span>
-		                            </div>
-		                            <br>
-		                            <img src="../resources/국가란 무엇인가.jfif"  alt="..." width="140px;" height="170px;">
-		                            <div class="book-info">
-		                                <div class="book-title">지적 대화를 위한 넓고 얕은 지식 (역사, 경제, 정치, 사회, 윤리 편)</div>
-		                                <div class="book-writer">채사장</div>
-		                                <div class="book-publish">한빛비즈</div>
-		                            </div>
-		                        </div>
-		                        <div class="carousel-item">
-		                            <div>
-		                                <span class="bold">40대 여성</span>
-		                                <span>사이에서 인기있는 책</span>
-		                            </div>
-		                            <br>
-		                            <img src="../resources/미드나잇 라이브러리.jfif" alt="..." width="140px;" height="170px;">
-		                            <div class="book-info">
-		                                <div class="book-title">지적 대화를 위한 넓고 얕은 지식 (역사, 경제, 정치, 사회, 윤리 편)</div>
-		                                <div class="book-writer">채사장</div>
-		                                <div class="book-publish">한빛비즈</div>
-		                            </div>
-		                        </div>
+		                        
+		                        
 		                    </div>
 		                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
 		                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>

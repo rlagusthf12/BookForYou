@@ -896,7 +896,7 @@
 		
 	</select>
 	
-	<!-- 메인 베스트 셀러 조회 (한진) -->
+	<!-- [메인] 베스트 셀러 조회 (한진) -->
 	<select id="selectMainBestSeller" resultMap="bookResult">
 		select
 		       B2.rank,
@@ -919,6 +919,70 @@
 		                  <![CDATA[where rank < 6]]>
 		                )B2
 		 where B.bk_no in B2.bk_no
+	</select>
+	
+	<!-- [메인] 도서 추천 조회 - 로그인을 했을 경우 (한진) -->
+	<select id="selectMainBookRecommand" resultMap="bookResult">
+		select distinct
+               bk_no,
+               bk_title,
+               bk_publish,
+               writer_name,
+               bk_date,
+               bk_price,
+               bk_stock,
+               intro_originname,
+               intro_changename,
+               bk_age,
+               bk_work,
+               bk_gender,
+               bk_level
+          from book
+          join book_interest using (bk_no)
+          join interest using (interest_no)
+          where bk_age = (
+                            select
+                                   mem_age
+                              from members
+                             where mem_no = #{memNo}
+                          )
+           and bk_gender = (
+                            select
+                                   mem_gender
+                              from members
+                             where mem_no = #{memNo}
+                          )
+	</select>
+	
+	<!-- [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진) -->
+	<select id="selectMainBookRecommandToAll" resultMap="bookResult">
+		select *
+		  from 
+		     (
+		        select rank() over (order by bk_date desc, bk_seldate desc) rank,
+		               b.*
+		          from(
+		                select distinct
+		                               bk_no,
+		                               bk_title,
+		                               bk_publish,
+		                               writer_name,
+		                               bk_date,
+		                               bk_seldate,
+		                               bk_price,
+		                               bk_stock,
+		                               intro_originname,
+		                               intro_changename,
+		                               bk_age,
+		                               bk_work,
+		                               bk_gender,
+		                               bk_level
+		                          from book
+		                          join book_interest using (bk_no)
+		                          join interest using (interest_no)
+		                )b
+		        )
+		  <![CDATA[where rank < 4]]>
 	</select>
 	
 </mapper>

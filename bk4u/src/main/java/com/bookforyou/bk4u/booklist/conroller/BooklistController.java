@@ -309,7 +309,6 @@ public class BooklistController {
 	public ArrayList selectMainBookReport() {
 		
 		ArrayList<Booklist> bl = blService.selectMainBookReport();
-		System.out.println(bl);
 		return bl;
 	}
 	

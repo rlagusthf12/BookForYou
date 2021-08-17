@@ -245,4 +245,20 @@ public class BookServiceImpl implements BookService {
 	public ArrayList<Book> selectMainBestSeller() {
 		return bookDao.selectMainBestSeller(sqlSession);
 	}
+
+	/**
+	 * [메인] 도서 추천 조회 - 로그인 했을 경우 (한진)
+	 */
+	@Override
+	public ArrayList<Book> selectMainBookRecommand(int memNo) {
+		return bookDao.selectMainBookRecommand(sqlSession, memNo);
+	}
+
+	/**
+	 * [메인] 도서 추천 조회 - 로그인 안했을 경우 (한진)
+	 */
+	@Override
+	public ArrayList<Book> selectMainBookRecommandToAll() {
+		return bookDao.selectMainBookRecommandToAll(sqlSession);
+	}
 }
