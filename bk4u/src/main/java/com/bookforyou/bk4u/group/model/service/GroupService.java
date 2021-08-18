@@ -24,6 +24,8 @@ public interface GroupService {
 	// 게시글 상세조회용
 	GroupBoard selectGroup(int GroupBoardNo);
 	
+	GroupBoard activeGroup(int GroupBoardNo);
+	
 	int deleteGroup(int GroupBoardNo);
 	
 	// 수정용

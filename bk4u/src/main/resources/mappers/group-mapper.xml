@@ -287,6 +287,23 @@
 		where group_boardno = #{groupBoardNo}
 	</update>
 	
+	<select id="activeGroup" resultMap="groupResult">
+		select
+		        group_type
+		       ,group_boardno
+		       ,group_title
+		       ,group_date
+		       ,group_place
+		       ,group_script
+		    from groupBoard g join groupMember m using(group_boardno)
+		    where group_status = 'Y'
+		      and m.mem_no = ${memNo}
+		      and group_boardNo = #{groupBoardNo}
+		      
+			
+	
+	</select>
+	
 	<insert id="insertMeet">
 		insert
 		into meet

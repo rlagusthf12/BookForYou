@@ -45,7 +45,9 @@ public class GroupController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		ArrayList<GroupBoard> groupList = gService.selectList();
+		GroupBoard activeGroup = gService.activeGroup(0);
 
+		model.addAttribute("activeGroup", activeGroup);
 		model.addAttribute("groupList", groupList);
 		model.addAttribute("groupBoard", "../group/groupList.jsp");
 		

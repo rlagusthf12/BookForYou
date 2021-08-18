@@ -147,10 +147,32 @@
                 <hr>
                 
                 <h6>활동중인 독서모임</h6><br>
-                <div>
-                    <!-- 현재 가입한 모임이 없다면 -->
+                <div id="activeGroup">
+                    <c:if test="${ loginUser.memNo eq groupMember.memNo }">
+                     
+                    	<c:forEach var="a" items="${ activeGroup }">
+                        <tr>    
+                        	<input type="hidden" value="${a.groupBoardNo}">  
+                        	  
+                            <td rowspan="3" width="230" height="200"><img src="${ a.changeName }"></td>
+                            <td width="80" height="20" style="font-size: 13px;">${ a.groupType }</td>
+                            <td height="20" style="font-size: 13px;">${ a.groupDate }</td>
+                            <td height="20" style="font-size: 13px;">${ a.groupPlace }</td>
+                        </tr>
+                        <tr>
+                        	<input type="hidden" value="${a.groupBoardNo}"> 
+                            <td colspan="3" height="20"><b>${ a.groupTitle }</b></td>                        
+                        </tr>
+                        <tr>
+                        	<input type="hidden" value="${a.groupBoardNo}"> 
+                            <td colspan="3" height="160">${ a.groupScript }</td>
+                        </tr>
+                         </c:forEach>
+                    </c:if>
+                    
+                    <otherwise>
                     <p>현재 가입한 모임이 없습니다</p>
-                    <!-- 현재 가입한 모임이 있다면 -->
+                    </otherwise>
                 </div>    
                 <hr>
                 <br>

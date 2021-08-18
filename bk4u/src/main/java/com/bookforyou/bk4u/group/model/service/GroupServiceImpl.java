@@ -46,6 +46,10 @@ public class GroupServiceImpl implements GroupService{
 	public GroupBoard selectGroup(int groupBoardNo) {
 		return gDao.selectGroup(sqlSession, groupBoardNo);
 	}
+	
+	public GroupBoard activeGroup(int groupBoardNo) {
+		return gDao.activeGroup(sqlSession, groupBoardNo);
+	}
 
 
 	@Override
@@ -55,9 +59,7 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public int insertGMem(GroupMember gm) {
-		return gDao.insertGMem(sqlSession, gm);
-		
-		
+		return gDao.insertGMem(sqlSession, gm);	
 	}
 	
 	@Override
