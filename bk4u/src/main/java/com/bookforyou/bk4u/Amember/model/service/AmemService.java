@@ -26,7 +26,8 @@ public interface AmemService {
 	int amDelete(String memId);
 	
 	// 블랙리스트 추가
-	int blackMember(int mno);
+	int blackMember(HashMap<String, String> map);
+
 	
 	// 블랙리스트 회원조회
 	int selectBlackListCount();

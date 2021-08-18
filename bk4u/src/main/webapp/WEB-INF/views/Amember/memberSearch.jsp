@@ -211,7 +211,7 @@
 	                    <td>${ am.memEmail }</td>
 	                    <td>${ am.memBasicAddress }</td>
 	                    <td>${ am.memEnrolldate }</td>  
-	                    <td><button type="button" data-toggle="modal"  data-target="#blackList">추가</button></td>                         
+	                    <td><button type="button" class="add-black-btn" data-toggle="modal"  data-target="#blackList">추가</button></td>                         
 	                </tr>        
        			</c:forEach>      		
             </tbody>
@@ -228,25 +228,39 @@
 						        <button type="button" class="close" data-dismiss="modal">&times;</button>
 						      </div>
 						
+							<form action="black.me" method="post">					      			      	
 						      <!-- Modal body -->
 						      <div class="modal-body">
 						      	<p>선택하신 회원을 블랙리스트에 추가하시겠습니까?<br>
 						      	   블랙리스트에 추가시 사이트 이용이 제한됩니다.</p><br>
-						        사유 : <input type="text" name="blackReason" id="blackReason" value="${ blackReason }"> 
+						      	   <input type="hidden" id="memNoForBlack" name="mno">
+						        사유 : <input type="text" name="blackReason" id="blackReason"> 
 						      </div>
 						
 						      <!-- Modal footer -->
 						      <div class="modal-footer">
-							      <form action="black.me" method="post">					      			      	
 							        <button type="submit" class="btn btn-danger">등록</button>
 							      	<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
-							      </form>	
 						      </div>
+							 </form>	
 						
 						    </div>
 						  </div>
 						</div>
-		 
+		 	
+				 		<script>
+					       $(function(){
+					          $(".add-black-btn").click(function(){
+					             var tr = $(this).parent().parent();
+					             var td = tr.children();
+					             var memNo = td.eq(0).text();
+					             
+					             $("#memNoForBlack").val(memNo);
+					          })
+					          
+					       })
+		    			</script>
+		 		
 
         <br><br>
 
