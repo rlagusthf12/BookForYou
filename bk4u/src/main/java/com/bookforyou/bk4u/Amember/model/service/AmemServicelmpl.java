@@ -83,7 +83,7 @@ public class AmemServicelmpl implements AmemService{
 	public ArrayList<Member> selectBlackSearchList(PageInfo pi, HashMap<String, String> map) {
 		return amDao.selectBlackSearchList(sqlSession, pi, map);
 	}
-
+	
 	
 
 }

@@ -447,7 +447,7 @@
 	 		like '%' || #{keyword} || '%'	 		 	
 	</select>
 	
-	<select id="selectBlackSearchAmemList" resultMap="memberResult">
+	<select id="selectBlackSearchList" resultMap="memberResult">
 		select	
 				mem_no,
   				mem_id, 				

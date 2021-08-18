@@ -35,7 +35,7 @@ public class AmemDao {
 	public ArrayList<Member> selectSearchAmemList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		//System.out.println(map);
+		System.out.println(map);
 		return (ArrayList)sqlSession.selectList("memberMapper.selectSearchAmemList", map, rowBounds);
 		
 	}
@@ -78,7 +78,7 @@ public class AmemDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println(map);
-		return (ArrayList)sqlSession.selectList("memberMapper.selectBlackSearchAmemList", map, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectBlackSearchList", map, rowBounds);
 		
 	}
 	

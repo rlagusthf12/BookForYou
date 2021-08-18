@@ -156,14 +156,14 @@
     <div class="a_content">
         <div class="a_content">
         <div id="search-area">
-            <form action="">
+            <form action="blackSearch.me">
             	<input type="hidden" name="Page" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition">                         
-                            <option value="memName">이름</option>                           
                             <option value="memId">아이디</option>
-                            <option value="mem_email">이메일</option>
+                            <option value="memName">이름</option>                           
+                            <option value="memEmail">이메일</option>
                         </select>
                     </div>
                     <div id="search-input">
