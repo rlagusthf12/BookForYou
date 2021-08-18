@@ -168,7 +168,7 @@
 <!-- 검색 바 -->
     <div class="a_content">
         <div id="search-area">
-            <form action="amSearch.me">
+            <form action="amemSearch.me">
             	<input type="hidden" name="Page" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
@@ -197,7 +197,7 @@
                     <th width="200">비밀번호</th>
                     <th width="100">이름</th>
                     <th width="250">이메일</th>
-                    <th width="150">거주지</th>
+                    <th width="150"	>거주지</th>
                     <th width="150">가입일</th>                   
                 </tr>
             </thead>

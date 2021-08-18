@@ -21,6 +21,7 @@ public class AmemServicelmpl implements AmemService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	//관리자 회원조회
 	@Override
 	public int selectAmemListCount() {
 		return amDao.selectAmemList(sqlSession);
@@ -30,7 +31,22 @@ public class AmemServicelmpl implements AmemService{
 	public ArrayList<Amem> selectList(PageInfo pi) {
 		return amDao.selecltAmemSearch(sqlSession, pi);
 	}
+	
+	//회원검색
+	@Override
+	public int selectAmemSearchListCount(HashMap<String, String> map) {
+		return amDao.selectAmemSearchListCount(sqlSession, map);
+		
+	}
 
+	@Override
+	public ArrayList<Amem> selectAmemSearchList(PageInfo pi, HashMap<String, String> map) {
+		return amDao.selectAmemSearchList(sqlSession, pi, map);
+		
+	}
+	
+	
+	//회원탈퇴
 	@Override
 	public int amDelete(String memId) {
 		return amDao.amDelete(sqlSession, memId);
@@ -43,18 +59,6 @@ public class AmemServicelmpl implements AmemService{
 	}
 
 	@Override
-	public int selectAmemSearchListCount(HashMap<String, String> map) {
-		return amDao.selectAmemSearchListCount(sqlSession, map);
-		
-	}
-
-	@Override
-	public ArrayList<Amem> selectAmemSearchList(PageInfo pi, HashMap<String, String> map) {
-		return amDao.selectAmemSearchList(sqlSession, pi, map);
-		
-	}
-
-	@Override
 	public int increaseCount(int memNo) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -64,6 +68,8 @@ public class AmemServicelmpl implements AmemService{
 	public Member selectAmemDetail(int memNo) {
 		return amDao.selectAmemDetail(sqlSession, memNo);
 	}
+
+
 
 
 }

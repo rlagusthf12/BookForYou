@@ -29,7 +29,6 @@
     #header>div{width:100%; margin-bottom:10px}
     #header_1{height:40%;}
     #header_2{height:60%;}
-
     #header_1>div{
         height:100%;
         float:left;
@@ -37,22 +36,18 @@
     #header_1_left{width:30%;position:relative;color: rgb(236, 87, 59);font-size: 40px; font-weight: bold;}
     #header_1_center{width:40%;}
     #header_1_right{width:30%;}
-
     table{
            margin-top: 30px;
            text-align: center;
        }
-
     #theader{
         background-color: lightgray;
         font-size: 20px;
         font-weight: bold;
     }
-
     
     /* 페이징 스타일 */
     #paging-wrap, input::placeholder{font-size: 25px; margin-left: 300px; }
-
     #paging-wrap{width:fit-content;}
     .page-link, .page-link:hover{color:rgb(252, 190, 52);
     } 
@@ -60,7 +55,6 @@
     background:salmon;
     cursor:pointer;
     }
-
     /* 검색 영역 */
         #search-area{
             display:flex;
@@ -76,7 +70,6 @@
             margin:auto;
             vertical-align: middle;
         }
-
         /* 검색 조건 select */
         #search-condition{
             display: inline-block;
@@ -111,7 +104,6 @@
             text-align-last: center;
             text-align: center;
         }
-
         /* 검색 이미지 버튼 */
         #search-btn{
             width: 5%;
@@ -122,7 +114,6 @@
             width: 30px;
             height: 30px;
         }
-
         /**/
         #recommand-condition{padding:15px; text-align: center;}
         #recommand-condition>div>p {display: inline-block;}
@@ -132,7 +123,6 @@
         #recommand-condition table th{font-size: 15px; width:130px;}
         #recommand-condition ul{list-style: none; margin: 0px; padding:0px;}
         #recommand-condition li{float:left; margin: 0 5px 0 5px;}
-
         /* 검색 결과 구역 */
         #result-area{margin-top:50px;}
         #result-title p{
@@ -141,13 +131,10 @@
             font-size:18px;
             font-weight: 600;
         }
-
         /* 처리 버튼 */
         .btn{
             padding:0.1em 0.5em;
         }
-
-
     </style>
 </head>
 <body>

@@ -371,7 +371,7 @@
 		 order
   		   		by mem_no asc
 	</select>
-	
+  		   	
 	
 	<!-- 관리자 회원상세조회 (형우)-->
 		
@@ -400,38 +400,6 @@
   		   set mem_status = 'N'
   		 where mem_id = #{memId}
   	</update>
-  	<!--  블랙리스트 조회 (형우) -->
-  	<select id="selectBlackList" resultMap="memberResult">
-		select	
-				mem_no,
-  				mem_id, 			
-  				mem_name,
-  				mem_email,
-  				mem_basic_address,
-  				mem_enrolldate,
-  				black_reason
-  			from members
-  		   where mem_status = 'N'
-  		   
-		 <choose>
-		 	<when test="condition == 'searchAll'">
-				and (mem_no like '%' || #{keyword} || '%'
-				   or mem_name like '%' || #{keyword} || '%')
-				   or mem_id
-			</when>
-	 		<when test="condition == 'memName'">
-	 			and mem_Name
-	 		</when>
-	 		<when test="condition == 'memId'">
-	 			and mem_id
-	 		</when>
-	 		
-	 	</choose>
-	 			like '%' || #{keyword} || '%'
-		 order
-  		   		by mem_no asc
-	</select>
-  	
   	
   	<!-- [사용자] 선호 관심사 삭제 (안세아) -->
   	<delete id="deleteAllMemInterest">

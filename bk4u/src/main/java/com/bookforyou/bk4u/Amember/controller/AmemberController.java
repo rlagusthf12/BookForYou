@@ -54,7 +54,7 @@ public class AmemberController {
 	@RequestMapping("amemSearch.me")
 	public String amemSearch(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		//System.out.println(currentPage);
+		System.out.println(currentPage);
 		
 		int amemCount = amService.selectAmemListCount();
 		
@@ -68,7 +68,6 @@ public class AmemberController {
 		
 		return "Amember/memberSearch";
 	}
-	
 	// 회원 상세조회
 		
 	@ResponseBody
@@ -94,10 +93,6 @@ public class AmemberController {
 		return jObj.toString();
 		
 	}
-		
-		
-	
-	
 	//회원 검색
 	@RequestMapping("amSearch.me")
 	public ModelAndView selectAmemSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
