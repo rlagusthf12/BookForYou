@@ -172,7 +172,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-rental-list.mp">
                                 <i class="fa fa-qrcode"></i>
                                 <strong>대여 내역 조회</strong>
                                 <small>대여 내역을 조회합니다.</small>
