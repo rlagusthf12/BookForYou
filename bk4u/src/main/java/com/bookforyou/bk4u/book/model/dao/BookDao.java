@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
@@ -230,6 +231,13 @@ public class BookDao {
 	 */
 	public ArrayList<Book> selectMainBookRecommandToAll(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectMainBookRecommandToAll");
+	}
+
+	/*
+	 * [공통] 도서 독서록 조회 (연지)
+	 */
+	public ArrayList<Booklist> selectBookList(SqlSessionTemplate sqlSession, int bkNo) {
+		return (ArrayList)sqlSession.selectList("bookMapper.selectBookList", bkNo);
 	}
 
 	/**

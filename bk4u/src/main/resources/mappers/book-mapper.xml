@@ -33,6 +33,30 @@
 		<result column="rank" property="rank"/>
 		<result column="quantity" property="quantity"/>
 	</resultMap>
+
+	<resultMap id="booklistResult" type="Booklist">
+		<result column="bl_no" property="blNo"/>
+		<result column="mem_no" property="memNo"/>
+		<result column="mem_nickname" property="blWriter"/>
+		<result column="bl_title" property="blTitle"/>
+		<result column="bl_content" property="blContent"/>
+		<result column="bl_count" property="blCount"/>
+		<result column="bl_rate" property="blRate"/>
+		<result column="bl_cdate" property="blCdate"/>
+		<result column="bl_mdate" property="blMdate"/>
+		<result column="bl_like" property="blLike"/>
+		<result column="bl_scrap" property="blScrap"/>
+		<result column="bk_no" property="bkNo"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="bk_publish" property="bkPublish"/>
+		<result column="writer_name" property="writerName"/>
+		<result column="rank" property="rank"/>
+		<result column="change_img_name" property="changeImgName"/>
+		<result column="bk_title" property="bkTitle"/>
+		<result column="bk_publish" property="bkPublish"/>
+		<result column="writer_name" property="writerName"/>
+		<result column="intro_changename" property="introChangeName"/>
+	</resultMap>
 	
 	<!-- [관리자] 전체 도서 개수 조회 (한진) -->
 	<select id="selectAllListCount" resultType="_int">
@@ -985,6 +1009,32 @@
 		  <![CDATA[where rank < 4]]>
 	</select>
 	
+	<!-- [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진) -->
+	<select id="selectBookList" resultMap="booklistResult">
+		select 
+		       bl_no
+		     , mem_nickname
+		     , bk.bk_no
+		     , bk_title
+		     , bk_publish
+		     , writer_name
+		     , bl_title
+		     , bl_content
+		     , bl_count
+		     , bl_rate
+		     , bl_cdate
+		     , bl_mdate
+		     , bl_like
+		     , bl_scrap
+		  from booklist bkl
+		  join members m on (m.mem_no = bkl.mem_no)
+		  join book bk on (bk.bk_no = bkl.bk_no)
+		 where bkl.bk_no = #{bkNo}
+           and bl_status = 'Y'
+		 order
+		    by bl_no desc
+	</select>
+	
 	<!-- [관리자] 지점별 도서 추가 (한진) -->
 	<insert id="insertBookForStore">
 		insert 
@@ -1040,6 +1090,5 @@
 		 where bk_no = #{bkNo}
 		   and store_no = #{storeNo}
 	</update>
-	
 	
 </mapper>

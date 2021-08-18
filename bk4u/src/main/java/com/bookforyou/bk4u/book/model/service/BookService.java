@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
 import com.bookforyou.bk4u.store.model.vo.OffBook;
@@ -161,6 +162,11 @@ public interface BookService {
 	 */
 	ArrayList<Book> selectMainBookRecommandToAll();
 
+	/*
+	 * [공통] 도서 독서록 조회 (연지)
+	 */
+	ArrayList<Booklist> selectBookList(int bkNo);
+	
 	/**
 	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
 	 */
@@ -190,4 +196,5 @@ public interface BookService {
 	 * [관리자] 지점별 도서 삭제 (한진)
 	 */
 	int deleteStoreBook(HashMap<String, String> map);
+	
 }
