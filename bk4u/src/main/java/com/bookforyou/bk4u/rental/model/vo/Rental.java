@@ -32,5 +32,11 @@ public class Rental {
 	public String bkLct;
 	public String memName;
 	public String memId;
-
+	public String memPhone;
+	public String memEmail;
+	public String storeClosed;
+	public String storeOpen;
+	public String storePhone;
+	public String storeStatus;
+	public String bkDate;
 }

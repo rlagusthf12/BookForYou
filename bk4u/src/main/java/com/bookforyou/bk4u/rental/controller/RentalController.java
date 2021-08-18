@@ -242,4 +242,18 @@ public class RentalController {
 		
 		return "redirect:/adminRentalList.re?";
 	}
+	
+	/**
+	 * [관리자] 대여 상세 보기 (한진)
+	 */
+	@RequestMapping("adminRentalDetail.re")
+	public ModelAndView selectAdminRentalDetail(ModelAndView mv, String rentalNo, String distinctionNo) {
+		
+		Rental r = rentalService.selectAdminRentalDetail(rentalNo);
+		
+		mv.addObject("r", r)
+		  .setViewName("rental/adminRentalDetail");
+		
+		return mv;
+	}
 }

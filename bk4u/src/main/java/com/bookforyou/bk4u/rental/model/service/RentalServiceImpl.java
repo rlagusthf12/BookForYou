@@ -148,4 +148,12 @@ public class RentalServiceImpl implements RentalService {
 		return rentalDao.updateRentalReturnDate(sqlSession, map);
 	}
 
+	/**
+	 * [관리자] 대여 상세 보기 (한진)
+	 */
+	@Override
+	public Rental selectAdminRentalDetail(String rentalNo) {
+		return rentalDao.selectAdminRentalDetail(sqlSession, rentalNo);
+	}
+
 }
