@@ -41,4 +41,5 @@ public class Subscription {
 	private String shippingNumber;
 	private String shippingStatus;
 	private String bkTitle;
+	private String priceComma;
 }

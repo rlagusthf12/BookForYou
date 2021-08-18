@@ -135,15 +135,16 @@
 	    var sNo = $("#sNo").text();
 	    $("#hiddenSubscNo").val(sNo);	    
 
-	    /* 결제쪽 계산 */
-	    var $price = Number($("#price").text());
-	    var $point = Number($("#point").text());
-	    var $add = Number($("#add").text());
-	    var $total = $price - $point + $add;
-	    $("#total").text($total);
-	    $("#total2").text($total);
-	    var $gp = $total * 0.01;
-	    $("#givPoint").text($gp);
+	    /* 포인트 계산 */
+	    var priceNoComma = `${ s.priceComma }`.split(",")[0] + `${ s.priceComma }`.split(",")[1];
+	    $("#givePoint").text(Number(priceNoComma) * 0.01);
+		
+		/* 주문 상품 정가 금액 콤마 표시 */
+		$(".convert").each(function(){
+			var $price = $(this).text();
+			var $priceComma = $price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).text($priceComma);
+		})
 	    
 	    /* 닫기 버튼 */
 		$("#back").click(function(){
@@ -189,7 +190,7 @@
                         <td>${ s.subscName }</td>
                         <td>${ s.subscPeriod }</td>
                         <td>${ s.subscDelDate }</td>
-                        <td>${ s.subscPrice }</td>
+                        <td class="convert">${ s.subscPrice }</td>
                         <td>${ s.subscSdate }</td>
                         <td>${ s.subscEndDate }</td>
                         <td>${ s.subscStatus }</td>
@@ -302,42 +303,36 @@
                     <table class="table table-bordered table-sm vertical">
                         <tr>
                             <th>주문 금액</th>
-	                            <td id="price">${ s.subscPrice }</td>
+	                        <td class="convert">${ s.subscPrice }</td>
                             <th>결제 금액</th>
-                            <td id="total2"></td>
-                        </tr>
-                        <tr>
-                            <th>추가금</th>
-                            <td id="add"></td>
-                            <th>적립 포인트</th>
-                            <td id="givPoint"></td>
+                            <td class="convert">${ s.priceComma }</td>
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
                             <c:choose>
-                            	<c:when test="${ not empty cp.couponIssueNum }">
-		                            <td width="300px;">[${ cp.couponIssueNum } - ${ cp.couponName } (${ cp.couponPrice } ${ cp.couponPriceRate })]</td>
-                            	</c:when>
-                            	<c:otherwise>
-                            		<td width="300px;">-</td>
-                            	</c:otherwise>
-                            </c:choose>
-                            <th>결제 수단</th>
-                            <td>${ p.payWay }</td>
+		                     	<c:when test="${ not empty cd.couponIssueNum }">
+		                     		<c:choose>
+		                     			<c:when test="${ not empty cd.couponPrice }">
+				                			<td width="300px;" class="convert">[${ cd.couponIssueNum } - ${ cd.couponName }] ${ cd.couponPrice }</td>
+		                        		</c:when>
+		                        		<c:otherwise>
+		                        			<td width="300px;">[${ cd.couponIssueNum } - ${ cd.couponName }] ${ cd.couponPriceRate }%</td>
+		                        		</c:otherwise>
+		                        	</c:choose>
+		                        </c:when>
+		                        <c:otherwise>
+		                            <td width="300px;">-</td>
+		                        </c:otherwise>
+		                    </c:choose>
+		                    <th>결제일</th>
+		                    <td>${ p.payDate }</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
                             <td id="point"></td>
-                            <th>결제 상태</th>
-                            <td>${ p.status }</td>
+                            <th>적립 포인트</th>
+                            <td class="convert" id="givePoint"></td>
                         </tr>
-                        <tr>
-                            <th>합계</th>
-                            <td id="total"></td>
-                            <th>결제일</th>
-                            <td>${ p.payDate }</td>
-                        </tr>
-
                     </table>
                 </div>
             </div>
