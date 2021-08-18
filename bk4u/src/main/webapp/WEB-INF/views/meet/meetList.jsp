@@ -41,12 +41,12 @@
               <div class="innerOuter"  style="padding:5% 5%;" align="center">
              
                   
-                  <input type="hidden" value="${ groupBoardNo }">
+                  <input type="hidden" value="${ g.groupBoardNo }">
                   
                    <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
                        	   <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${g.groupBoardNo}">모임정보</a>
+                              <a class="nav-link" href="detail.gbo?gno=${ gno }">모임정보</a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link active" href="meet.bo">정모게시판</a>
@@ -181,12 +181,13 @@
                         <table width="580px" border="1" align="left">
                             <br>
                             <td height="180">
-                                <table width="570px">
+                                <table  id="selectLastList" width="570px">
+                                     <c:forEach var="l" items="${ selectLastList }">
                                     <tr>
-                                        <td style="height:5px">날짜 : </td>
+                                        <td style="height:5px">날짜 : ${ l.meetDate } </td>
                                     </tr>
                                     <tr>
-                                        <td style="height:40px">장소 : </td>
+                                        <td style="height:40px">장소 : ${ l.offlineAddress }</td>
                                     </tr>
                                     <tr>
                                         <td style="height:100px">
@@ -195,31 +196,14 @@
                                             data-toggle="tooltip" title="회원닉네임" 
                                         </td>
                                     </tr>
+                                    </c:forEach>
                                 </table>
                             </td>
                         </table> 
                       
                       
 
-                        <table width="580px" border="1" align="left">
-                            <td height="180">
-                                <table width="570px">
-                                    <tr>
-                                        <td style="height:5px">날짜 : </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="height:40px">장소 : </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="height:100px">
-                                            참여자프로필아이콘
-                                            <!--토글튜토리얼 갖다대면 닉네임보이게-->
-                                            data-toggle="tooltip" title="회원닉네임" 
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </table> 
+              
 
                         
                 
@@ -229,7 +213,7 @@
 
                     <div class="attandGroup">
                             <table width="750px" align="center">
-                            <input type="hidden" value="${g.groupBoardNo }">
+                            <input type="hidden" value="${m.groupBoardNo }">
                             <input type="hidden" value="${m.meetNo }">
                             <c:if test="${num eq 1 }">
                                 <tr>

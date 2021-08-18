@@ -261,4 +261,20 @@ public class BookServiceImpl implements BookService {
 	public ArrayList<Book> selectMainBookRecommandToAll() {
 		return bookDao.selectMainBookRecommandToAll(sqlSession);
 	}
+
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	@Override
+	public ArrayList<Book> selectBookListForStore(PageInfo pi, HashMap<String, String> filter) {
+		return bookDao.selectBookListForStore(sqlSession, pi, filter);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	@Override
+	public int insertBookForStore(HashMap<String, String> map) {
+		return bookDao.insertBookForStore(sqlSession, map);
+	}
 }

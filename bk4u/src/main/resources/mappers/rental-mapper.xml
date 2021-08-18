@@ -21,6 +21,13 @@
 		<result column="bk_lct" property="bkLct"/>
 		<result column="mem_name" property="memName"/>
 		<result column="mem_id" property="memId"/>
+		<result column="mem_phone" property="memPhone"/>
+		<result column="mem_email" property="memEmail"/>
+		<result column="store_closed" property="storeClosed"/>
+		<result column="store_open" property="storeOpen"/>
+		<result column="store_phone" property="storePhone"/>
+		<result column="store_status" property="storeStatus"/>
+		<result column="bk_date" property="bkDate"/>
 	</resultMap>
 	
 	<!-- [사용자] 대여 내역 개수 조회 (연지) -->
@@ -381,4 +388,40 @@
 		   set return_date = sysdate
 		 where rental_no = #{rNo}
 	</update>
+	
+	<!-- [관리자] 대여 상세 조회  (한진) -->
+	<select id="selectAdminRentalDetail" resultMap="rentalResult">
+		select
+		       rental_no,
+		       M.mem_no,
+		       mem_id,
+		       mem_name,
+		       mem_phone,
+		       mem_email,
+		       S.store_no,
+		       store_name,
+		       store_address,
+		       store_closed,
+		       store_open,
+		       store_phone,
+		       store_status,
+		       B.bk_no,
+		       bk_title,
+		       bk_publish,
+		       writer_name,
+		       bk_date,
+		       bk_lct,
+		       request_date,
+		       receive_date,
+		       return_date,
+		       rental_status
+		  from rental
+		  join members M on(M.mem_no = rental.mem_no)
+		  join store S on (S.store_no = rental.store_no)
+		  join book B on (B.bk_no = rental.bk_no)
+		  join off_book on (B.bk_no = off_book.bk_no)
+		 where rental_no = #{rentalNo}
+		   and rental.store_no = off_book.store_no
+	</select>
+	
 </mapper>

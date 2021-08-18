@@ -28,8 +28,10 @@ public class MeetController {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		ArrayList<Meet> meetList = mService.selectMList();
+		ArrayList<Meet> meetLastList = mService.selectLastList();
 
 		model.addAttribute("meetList", meetList);
+		model.addAttribute("meetLastList", meetLastList);
 		model.addAttribute("meet", "../meet/meetList.jsp");
 		
 				

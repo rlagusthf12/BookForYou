@@ -159,4 +159,14 @@ public interface BookService {
 	 * [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진)
 	 */
 	ArrayList<Book> selectMainBookRecommandToAll();
+
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	ArrayList<Book> selectBookListForStore(PageInfo pi, HashMap<String, String> filter);
+
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	int insertBookForStore(HashMap<String, String> map);
 }

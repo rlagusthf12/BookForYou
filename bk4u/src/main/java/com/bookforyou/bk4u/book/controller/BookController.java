@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
@@ -590,5 +591,54 @@ public class BookController {
 			bList = bookService.selectMainBookRecommandToAll();
 		}
 		return bList;
+	}
+	
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	@RequestMapping("bookListForAdd.bk")
+	public ModelAndView selectBookListForStore(ModelAndView mv, String storeNo, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+												@RequestParam(value="array", defaultValue="0") String array) {
+		
+		int listCount = bookService.selectAllListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		HashMap<String, String> filter = new HashMap<>();
+		filter.put("array", array);
+		
+		ArrayList<Book> bList = bookService.selectBookListForStore(pi, filter);
+		
+		mv.addObject("storeNo", storeNo)
+		  .addObject("listCount", listCount)
+		  .addObject("pi", pi)
+		  .addObject("bList", bList)
+		  .addObject("ar", array)
+		  .setViewName("book/adminOfflineBookList");
+		
+		return mv;
+	}
+	
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	@RequestMapping("addBookForStore.bk")
+	public String insertBookForStore(String storeNo,
+									 @RequestParam(value="selectedBook") List<String> bkNoArr,
+									 RedirectAttributes ra) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		
+		int result = 0;
+		for(int i=0; i<bkNoArr.size(); i++) {
+			String bkNo = bkNoArr.get(i);
+			map.put("bkNo", bkNo);
+			result = bookService.insertBookForStore(map);
+		}
+		
+		ra.addAttribute("storeNo", storeNo);
+		ra.addAttribute("alertMsg", "도서가 추가되었습니다.");
+		
+		return "redirect:/list.storebook";
 	}
 }

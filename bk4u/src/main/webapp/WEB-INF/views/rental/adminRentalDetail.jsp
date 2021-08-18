@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -100,6 +101,23 @@
             background-color: #EC573B;
         }
 </style>
+
+<script>
+	$(function(){
+		
+		/* 대여 상태 체크 */
+		$("input[type='radio']").each(function(){
+			if($(this).val() == `${ r.rentalStatus }`){
+				$(this).prop("checked", true);
+			}
+		})
+		
+		/* 닫기 */
+		$("#back").click(function(){
+			history.back();
+		})		
+	})
+</script>
 </head>
 <body>
 
@@ -107,7 +125,7 @@
 	
 	<div id="outer">
         <div id="main-title">
-            <img src="resources/menu.png" alt="메뉴아이콘" width="30px" height="30px">
+            <img src="resources/adminCommon/images/menu.png" alt="메뉴아이콘" width="30px" height="30px">
             <p>대여 상세</p>
         </div>
         <br>
@@ -123,24 +141,24 @@
                         <th scope="col">대여신청일</th>
                         <th scope="col">수령일</th>
                         <th scope="col">반납일</th>
-                        <th scop="col">상태</th>
+                        <th scope="col">상태</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>0001</td>
-                        <td>김나무<br>(kim0001)</td>
-                        <td>강남점</td>
-                        <td>행복한어쩌고</td>
-                        <td>2021-07-01</td>
-                        <td>2021-07-05</td>
-                        <td>2021-10-10</td>
+                        <td>${ r.rentalNo }</td>
+                        <td>${ r.memName }<br>(${ r.memId })</td>
+                        <td>${ r.storeName }</td>
+                        <td>${ r.bkTitle }</td>
+                        <td>${ r.requestDate }</td>
+                        <td>${ r.receiveDate }</td>
+                        <td>${ r.returnDate }</td>
                         <td class="rental-status">
-                            <input type="radio" id="possible" name="rentalStatus"><label for="possible">예약중</label>
-                            <input type="radio" id="impossible" name="rentalStatus"><label for="impossible">대여중</label>
-                            <input type="radio" id="reservation" name="rentalStatus"><label for="reservation">반납완료</label>
-                            <input type="radio" id="reservation" name="rentalStatus"><label for="reservation">연체</label>
-                            <input type="radio" id="reservation" name="rentalStatus"><label for="reservation">예약취소</label>
+                            <input type="radio" id="reserve" name="rentalStatus" value="예약중"><label for="reserve">예약중</label>
+                            <input type="radio" id="rental" name="rentalStatus" value="대여중"><label for="rental">대여중</label>
+                            <input type="radio" id="return" name="rentalStatus" value="반납완료"><label for="return">반납완료</label>
+                            <input type="radio" id="overDue" name="rentalStatus" value="연체"><label for="overDue">연체</label>
+                            <input type="radio" id="cancel" name="rentalStatus" value="예약취소"><label for="cancel">예약취소</label>
                         </td>
                     </tr>
                 </tbody>
@@ -164,11 +182,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>0011</td>
-                            <td>kim002</td>
-                            <td>김바람</td>
-                            <td>010-1111-2222</td>
-                            <td>kim00@naver.com</td>
+                            <td>${ r.memNo }</td>
+                            <td>${ r.memId }</td>
+                            <td>${ r.memName }</td>
+                            <td>${ r.memPhone }</td>
+                            <td>${ r.memEmail }</td>
                         </tr>
                     </tbody>
 				</table>
@@ -191,11 +209,11 @@
                         </thead>
                  		<tbody>
                         	<tr>
-                                <td>0001</td>
-                                <td>강남점</td>
-                                <td>서울특별시 강남구</td>
-                                <td>010-1111-2222</td>
-                                <td>2021-07-07</td>
+                                <td>${ r.storeNo }</td>
+                                <td>${ r.storeName }</td>
+                                <td>${ r.storeAddress }</td>
+                                <td>${ r.storePhone }</td>
+                                <td>${ r.storeClosed }</td>
                             </tr>
                         </tbody>
                     </table>
@@ -213,12 +231,12 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>0001</td>
-                                <td>완전한행복</td>
-                                <td>정유정</td>
-                                <td>은행나무</td>
-                                <td>2021-07-07</td>
-                                <td>E01 <br> [위에서부터 1번째칸]</td>
+                                <td>${ r.bkNo }</td>
+                                <td>${ r.bkTitle }</td>
+                                <td>${ r.writerName }</td>
+                                <td>${ r.bkPublish }</td>
+                                <td>${ r.bkDate }</td>
+                                <td>${ r.bkLct }</td>
                             </tr>
                         </tbody>
                     </table>
@@ -227,8 +245,7 @@
         	</div>
 	        <br><br>
 	        <div id="btn-area">
-	            <button type="button">저장</button>
-	            <button type="button">닫기</button>
+	            <button type="button" id="back">닫기</button>
 	        </div>
 	        <br><br><br>
         </div>   

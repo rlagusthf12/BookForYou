@@ -65,10 +65,22 @@
 		margin-bottom:200px;
 	}
 	
+	#addBook{float:left; margin-bottom:10px;}
+	#addBook .btn{padding:0.1em 0.5em;}
+	
 </style>
+
+
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"/>
+
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+	</c:if>
+	
  	<div id="content1">
  		<div class="Title">보유 도서</div>
  	<div class="searchBar1">
@@ -87,6 +99,10 @@
 	<button>검색</button>
 	</span>
 	</div>	
+	
+	<div id="addBook">
+		<button class="btn btn-outline-success"  onclick="location.href=`bookListForAdd.bk?storeNo=${storeNo}`">추가</button>
+	</div>
 	
 	<table class="table_board">
 	<tbody>

@@ -35,7 +35,7 @@ public class BookDao {
 	 * [공통] 도서 검색 개수 조회 (연지)
 	 */
 	public int selectSearchBookCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		return sqlSession.selectOne("bookMapper.selectSearchBookCount");
+		return sqlSession.selectOne("bookMapper.selectSearchBookCount", map);
 	}
 	
 	/*
@@ -229,5 +229,21 @@ public class BookDao {
 	 */
 	public ArrayList<Book> selectMainBookRecommandToAll(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectMainBookRecommandToAll");
+	}
+
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	public ArrayList<Book> selectBookListForStore(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> filter) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBookList", filter, rowBounds);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	public int insertBookForStore(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("bookMapper.insertBookForStore", map);
 	}
 }
