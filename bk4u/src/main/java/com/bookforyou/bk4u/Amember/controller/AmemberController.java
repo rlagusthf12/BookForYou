@@ -52,22 +52,23 @@ public class AmemberController {
 	
 // 관리자 회원조회	
 	@RequestMapping("amemSearch.me")
-	public String amemSearch(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+	public ModelAndView selectList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
 		
-		System.out.println(currentPage);
+		//System.out.println(currentPage);
+		int listCount = amService.selectListCount();
 		
-		int amemCount = amService.selectAmemListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Member> list = amService.selectList(pi);
 		
-		PageInfo pi = Pagination.getPageInfo(amemCount, currentPage, 10, 5);
-		ArrayList<Amem> list = amService.selectList(pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("Amember/memberSearch");
 		
-		System.out.println(amemCount);
+		return mv;
 		
-		return "Amember/memberSearch";
 	}
+	
 	// 회원 상세조회
 		
 	@ResponseBody
@@ -93,18 +94,21 @@ public class AmemberController {
 		return jObj.toString();
 		
 	}
+			
 	//회원 검색
 	@RequestMapping("amSearch.me")
-	public ModelAndView selectAmemSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+	public ModelAndView selectSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
 										 String condition, String keyword) {
+		
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);
 		
-		int amemCount = amService.selectAmemSearchListCount(map);
+		int listCount = amService.selectSearchListCount(map);
 		
-		PageInfo pi = Pagination.getPageInfo(amemCount, currentPage, 10, 5);
-		ArrayList<Amem> list = amService.selectAmemSearchList(pi, map);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Member> list = amService.selectSearchAmemList(pi, map);
+		
 		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
@@ -142,9 +146,5 @@ public class AmemberController {
 		}
 	}
 	
-// 블랙리스트
-	@RequestMapping("blackList.me")
-	public String blackList() {
-		return "Amember/blacklist";
-	}
+
 }

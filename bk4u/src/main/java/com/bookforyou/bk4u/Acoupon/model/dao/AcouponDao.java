@@ -27,7 +27,7 @@ public class AcouponDao {
 		return sqlSession.selectOne("couponDetailMapper.selectAcoupon");
 	}
 	
-	public ArrayList<Acoupon> selecltAcouponList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<Acoupon> selectAcouponList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		

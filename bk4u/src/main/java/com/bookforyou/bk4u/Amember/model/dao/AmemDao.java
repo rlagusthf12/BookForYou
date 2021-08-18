@@ -14,34 +14,31 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 @Repository
 public class AmemDao {
 	
-	public int selectAmemList(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.selectAmemList");
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.selectListCount");
 	}
 	
-	public ArrayList<Amem> selecltAmemSearch(SqlSessionTemplate sqlSession, PageInfo pi){
-		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+	public ArrayList<Member> selectList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.selectAmemSearch", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectAmemList", null, rowBounds);
+		
 	}
 	
 	
 	//검색
-	public int selectAmemSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		return sqlSession.selectOne("memberMapper.selectAmemSearchListCount", map);
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("memberMapper.selectSearchListCount", map);
 	}
 	
-	
-	public ArrayList<Amem> selectAmemSearchList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
+	public ArrayList<Member> selectSearchAmemList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map){
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
 		System.out.println(map);
-		
-		return (ArrayList)sqlSession.selectList("memberMapper.selectAmemSearchList", map, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.selectSearchAmemList", map, rowBounds);
 		
 	}
-	
 	//회원 탈퇴
 	public int amDelete(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.delete("memberMapper.amDelete", memId);

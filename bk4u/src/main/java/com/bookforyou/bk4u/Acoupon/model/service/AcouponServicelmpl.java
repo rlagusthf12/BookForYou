@@ -33,7 +33,7 @@ public class AcouponServicelmpl implements AcouponService{
 
 	@Override
 	public ArrayList<Acoupon> selectList(PageInfo pi) {
-		return acDao.selecltAcouponList(sqlSession, pi);
+		return acDao.selectAcouponList(sqlSession, pi);
 	}
 
 	//쿠폰 삭제

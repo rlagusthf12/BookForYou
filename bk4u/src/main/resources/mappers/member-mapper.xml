@@ -297,14 +297,14 @@
   	</select>
   	
   	<!-- 관리자 회원조회 (형우) -->
-  	<select id="selectAmemList" resultType="_int">
+  	<select id="selectListCount" resultType="_int">
   		select
   				count(*)
   			from members
   			where mem_status = 'M'
   	</select>
   	
-  	<select id="selectAmemSearch" resultMap="memberResult">
+  	<select id="selectAmemList" resultMap="memberResult">
   		select
   				mem_no,
   				mem_id,
@@ -320,7 +320,7 @@
   	</select>
   	
   	<!-- 관리자 회원검색 (형우) -->
-  	<select id="selectAmemSearchListCount" resultType="_int">
+  	<select id="selectSearchListCount" resultType="_int">
 		select
 		       count(*)
 		  from members
@@ -341,7 +341,7 @@
 	 		like '%' || #{keyword} || '%'	 		 	
 	</select>
 	
-	<select id="selectAmemSearchList" resultMap="memberResult">
+	<select id="selectSearchAmemList" resultMap="memberResult">
 		select	
 				mem_no,
   				mem_id,
@@ -352,7 +352,7 @@
   				mem_enrolldate
   			from members
   		   where mem_status = 'M'
-  		   
+
 		 <choose>
 		 	<when test="condition == 'searchAll'">
 				and (mem_no like '%' || #{keyword} || '%'

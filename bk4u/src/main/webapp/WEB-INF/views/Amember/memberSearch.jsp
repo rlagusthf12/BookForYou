@@ -168,7 +168,7 @@
 <!-- 검색 바 -->
     <div class="a_content">
         <div id="search-area">
-            <form action="amemSearch.me">
+            <form action="amSearch.me">
             	<input type="hidden" name="Page" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
@@ -197,25 +197,25 @@
                     <th width="200">비밀번호</th>
                     <th width="100">이름</th>
                     <th width="250">이메일</th>
-                    <th width="150"	>거주지</th>
+                    <th width="150">거주지</th>
                     <th width="150">가입일</th>                   
                 </tr>
             </thead>
             <tbody>
-            	<c:forEach var="as" items="${ list }">
-                <tr onclick="detail(${as.memNo});" data-toggle="modal" data-id="1" data-target="#amemDetailModal">
-                    <td class="ano" height="80">${ as.memNo }</td>
-                    <td>${ as.memId }</td>
-                    <td width="700">${ as.memPwd }</td>
-                    <td>${ as.memName }</td>
-                    <td>${ as.memEmail }</td>
-                    <td>${ as.memBasicAddress }</td>
-                    <td>${ as.memEnrolldate }</td>                           
+            	<c:forEach var="am" items="${ list }">
+                <tr onclick="detail(${am.memNo});" data-toggle="modal" data-id="1" data-target="#amemDetailModal">
+                    <td class="ano" height="80">${ am.memNo }</td>
+                    <td>${ am.memId }</td>
+                    <td width="700">${ am.memPwd }</td>
+                    <td>${ am.memName }</td>
+                    <td>${ am.memEmail }</td>
+                    <td>${ am.memBasicAddress }</td>
+                    <td>${ am.memEnrolldate }</td>                           
                 </tr>
        			</c:forEach>
             </tbody>
         </table>
-
+		 
 		
 
         <br><br>
@@ -227,7 +227,7 @@
                 		<li class="page-item disabled"><a class="page-link">이전</a></li>
                 	</c:when>
                 	<c:otherwise>
-                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                		<li class="page-item disabled"><a class="page-link" href="amSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
                 	</c:otherwise>
                 </c:choose>
                 
@@ -261,7 +261,7 @@
                 <!-- Modal body -->
                 <div class="modal-body" style="text-align:left">
                     <h4>&nbsp;&nbsp;&nbsp;
-                    	아이디 : <input type="text" name="id" value="${ m.memId }" readonly>&nbsp;&nbsp; 
+                    	아이디 : <input type="text" name="id" value="member3" readonly>&nbsp;&nbsp; 
                     	이름: <input type="text" name="name" value="XXX" style="width:80px" readonly></h4>
                     
                     <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -269,10 +269,10 @@
                     	
                     	
                     <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    	주소 : <input type="text" name="address" value="" readonly>  <input type="text" name="address2" value="" readonly></h4>
+                    	주소 : <input type="text" name="address" value="강원도 춘천시 " readonly>  <input type="text" name="address2" value="가래매기길1" readonly></h4>
                     
                     <h4>&nbsp;&nbsp;&nbsp;
-                    	이메일 : <input type="email" name="email" value="" readonly></h4>
+                    	이메일 : <input type="email" name="email" value="member3@gmail.com"></h4>
                     
                     <h4>전화번호 : <input type="text" name="phone" value="010-2424-2424" maxlength="13" readonly></h4>
                     
@@ -280,7 +280,7 @@
                     	&nbsp;&nbsp;
                     	가입일 : <input type="text" name="startDate" value="2021-08-04" style="width:100px" maxlength="10" readonly></h4>
                     
-                    <h4>보유쿠폰 : <input type="text" name="coupon" value="XX 장" readonly></h4>
+                    <h4>보유쿠폰 : <input type="text" name="coupon" value="1 매" readonly></h4>
                    
                     <!-- Modal footer -->
 				      <div class="modal-footer">

@@ -11,12 +11,12 @@ import com.bookforyou.bk4u.member.model.vo.Member;
 public interface AmemService {
 	
 	// 관리자 회원조회 (페이징)
-	int selectAmemListCount();
-	ArrayList<Amem> selectList(PageInfo pi);
+	int selectListCount();
+	ArrayList<Member> selectList(PageInfo pi);
 	
 	// 회원검색
-	public int selectAmemSearchListCount(HashMap<String, String> map);
-	public ArrayList<Amem> selectAmemSearchList(PageInfo pi, HashMap<String, String> map);
+	public int selectSearchListCount(HashMap<String, String> map);
+	public ArrayList<Member> selectSearchAmemList(PageInfo pi, HashMap<String, String> map);
 	
 	// 회원상세조회
 	int increaseCount(int memNo);
