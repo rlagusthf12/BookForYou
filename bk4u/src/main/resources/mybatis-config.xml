@@ -41,7 +41,6 @@
 		<typeAlias type="com.bookforyou.bk4u.sales.model.vo.Sales" alias="Sales"/>
 		<typeAlias type="com.bookforyou.bk4u.member.model.vo.MemberPhonebook" alias="MemberPhonebook"/>
 		<typeAlias type="com.bookforyou.bk4u.like.model.vo.Like" alias="Like"/>
-		
 	</typeAliases>
 
 	<mappers>

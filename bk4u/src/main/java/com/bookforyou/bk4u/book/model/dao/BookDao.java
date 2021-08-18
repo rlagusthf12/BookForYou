@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.store.model.vo.OffBook;
 
 @Repository
 public class BookDao {
@@ -245,5 +246,26 @@ public class BookDao {
 	 */
 	public int insertBookForStore(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.insert("bookMapper.insertBookForStore", map);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 상세 조회 (한진)
+	 */
+	public OffBook selectStoreBookDetail(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("storeMapper.selctStoreBookDetail", map);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 수정 (한진)
+	 */
+	public int updateStoreBook(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.update("bookMapper.updateStoreBook", b);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 상태 수정 (한진)
+	 */
+	public int updateStoreBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("bookMapper.updateStoreBookStatus", map);
 	}
 }

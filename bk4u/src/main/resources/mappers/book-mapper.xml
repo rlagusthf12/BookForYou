@@ -999,4 +999,47 @@
 		       ) 
 	</insert>
 	
+	<!-- [관리자] 지점별 도서 수정 (한진) -->
+	<update id="updateStoreBook">
+		update
+			   (
+			   	 select
+			   	 		*
+			   	   from book
+				  where bk_no = #{bkNo}
+			    )
+		   set bk_title = #{bkTitle},
+		   	   writer_name = #{writerName},
+		   	   bk_publish = #{bkPublish},
+		   	   bk_date = #{bkDate},
+		   	   bk_price = #{bkPrice},
+		   	   intro_originname = #{introOriginName},
+		       intro_changename = #{introChangeName},
+		   	   bk_age = #{bkAge},
+		   	   bk_gender = #{bkGender},
+		   	   bk_work = #{bkWork},
+		   	   bk_level = #{bkLevel},
+		   	   sub_cate_no = (
+		   	   					select 
+		   	   					       sub_cate_no
+		   	   					  from sub_category
+		   	   					 where sub_cate_name = #{subCateName}
+		   	   					),
+		   	   writer_intro = #{writerIntro},
+		   	   writer_origin_name = #{writerOriginName},
+		   	   writer_change_name = #{writerChangeName},
+		   	   bk_content = #{bkContent}
+	</update>
+	
+	<!-- [관리자] 지점별 도서 상태 수정 (한진) -->
+	<update id="updateStoreBookStatus">
+		update
+		       off_book
+		   set bk_status = #{bkStatus},
+		       bk_lct = #{bkLct}
+		 where bk_no = #{bkNo}
+		   and store_no = #{storeNo}
+	</update>
+	
+	
 </mapper>
