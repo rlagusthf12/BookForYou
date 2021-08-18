@@ -35,7 +35,7 @@ public class BookDao {
 	 * [공통] 도서 검색 개수 조회 (연지)
 	 */
 	public int selectSearchBookCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		return sqlSession.selectOne("bookMapper.selectSearchBookCount");
+		return sqlSession.selectOne("bookMapper.selectSearchBookCount", map);
 	}
 	
 	/*
