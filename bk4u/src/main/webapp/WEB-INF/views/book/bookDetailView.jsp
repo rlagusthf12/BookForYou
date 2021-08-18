@@ -265,6 +265,49 @@
         .modal-body button:nth-child(2){
             width: 80px;
         }
+        
+        /*타이틀*/
+        .list_title{font-size:18px; text-align:center; margin-bottom:30px;}
+        .title_point{position: relative;}
+        .title_point::after{
+        content: ''; display: block; position: absolute;
+        width: 0; height: 7px; left: 0; bottom: 0px;
+        background: rgba(255, 211, 129, 0.5);
+        }
+        .list-item:hover span::after { width: 100%; transition: width .3s;}
+        .list_content{height:90px; margin:5px 0; font-size:15px; color:#5c5c5c;}
+        .list_writer_box{font-size:14px; font-weight:500;} 
+        .list_writer{margin-left:6px;}
+        .list_date_like, .booklist_date_like{display:flex; margin:10px 0; font-size:13px; color:#5c5c5c;}
+        .list_like{margin-left:auto;}
+        /**독서록_책정보*/
+        .book_area, .booklist_book_area{display:flex; border:1px solid #dedede; border-radius:6px; padding:10px; margin-top:10px;}
+        .book_img1{margin:0 10px;}
+        .book_title{font-size:15px; font-weight:bold;}
+        .book_writer, .book_publish{font-size:12px; color:#8b8b8b; padding:1px 0;}
+        .book_stars{font-size:12px;}
+        /**독서록리스트*/
+        .booklist_outer{margin-top:150px;}
+        .booklist-wrap{margin:0; padding:0;}
+        li.booklist_item{margin:30px 0; height:180px; padding:10px; border:1px solid #ebebeb; text-decoration:none;}
+        a.booklist-item{text-decoration:none;}
+        .booklist_item a:hover{text-decoration:none;}
+        .book_stars{color:#8b8b8b;}
+        /*독서록내용*/
+        .booklist_container{display:flex;}
+        .booklist_book_wrap{margin-left: auto; margin-right:30px; width:400px;}
+        .booklist_content{margin:10px 0; margin-right: 20px; padding-left:10px; font-size:14px; color:#5c5c5c;}
+        a.book_info-area{text-decoration:none;}
+        .booklist_title{color: #000;}
+        .booklist_rcontent{
+        width:690px; height:70px; margin:10px 0; font-size:14px; color:#5c5c5c;
+        text-overflow:ellipsis; overflow:hidden; white-space:nowrap; line-height:10px;
+        display: -webkit-box; -webkit-line-clamp:2; /* 라인수 */
+        -webkit-box-orient: vertical; word-wrap:break-word; line-height: 1.2em; height: 3.6em;
+        }
+        .booklist_writer{width:690px; height:50px; font-size:14px; color:#5c5c5c;}
+        /*독서록리스트_책정보*/
+        .booklist_book_wrap .book_title{color:#000; font-weight:400;}
     </style>
 </head>
 <body>
@@ -327,15 +370,26 @@
 
                     $(".btn_info").click(function(){
                         $("#bk_info_box").css('display', 'block');
+                        $("#bkl_info_box").css('display', 'none');
                         $("#info_box").css('display', 'none');
                         $(".btn_review").removeClass("btn_select");
                         $(".btn_refund").removeClass("btn_select");
                         $(".btn_info").addClass("btn_select");
                     });
 
+                    $(".btn_review").click(function(){
+                        $("#bkl_info_box").css('display', 'block');
+                        $("#bk_info_box").css('display', 'none');
+                        $("#info_box").css('display', 'none');
+                        $(".btn_info").removeClass("btn_select");
+                        $(".btn_refund").removeClass("btn_select");
+                        $(".btn_review").addClass("btn_select");
+                    });
+
                     $(".btn_refund").click(function(){
                         $("#info_box").css('display', 'block');
                         $("#bk_info_box").css('display', 'none');
+                        $("#bkl_info_box").css('display', 'none');
                         $(".btn_info").removeClass("btn_select");
                         $(".btn_review").removeClass("btn_select");
                         $(".btn_refund").addClass("btn_select");
@@ -347,7 +401,7 @@
                         <div class="info_title">책 소개</div>
                         <div class="info_content">
                             ‘한국과학문학상’의 또 다른 성취로 기억될 이름!<br>
-                            우리 SF가 품게 된 가장 따뜻한 물결, 천선란!
+                                                    우리 SF가 품게 된 가장 따뜻한 물결, 천선란!
                             <br><br><br>
                             2019년 첫 장편소설 『무너진 다리』로 SF 팬들에게 눈도장을 찍었고, 2020년 7월, 소설집 『어떤 물질의 사랑』을 통해 우리 SF의 대세로 굳건히 자리 잡은 천선란. 2019년 한국과학문학상 장편 대상 수상작 『천 개의 파랑』은 이를 방증하듯 출간 전부터 많은 SF 팬들의 뜨거운 기대를 모았다. 『천 개의 파랑』은 한국과학문학상 심사위원 김보영에게 “천 개의 파랑이 가득한 듯한 환상적이고 우아한 소설”, “이미 활발하게 활동하고 있는 유명 작가의 작품이라 해도 믿을 법했다” 라는 찬사를 이끌어냈다. 이는 김창규 작가가 한국과학문학상 심사평에서 언급한 말과 맥을 같이 한다. “더 이상 좋은 한국 SF의 가능성’이란 얘기는 듣지 않아도 되겠다는 생각이 들어 기뻤다. 그만큼 SF를 충분히 소화하고 빚은 작품들이, 가능성을 넘어 다양한 길을 정하고 완성되고 있었다.” 천선란은 더 이상 SF의 가능성이 아니다. 그는 이미 완숙하게 무르익은 상태로 우리에게 도달한 ‘준비된 작가’다.
                             <br><br>
@@ -358,11 +412,11 @@
                     <div class="info_box">
                         <div class="info_title">목차</div>
                         <div class="info_content">
-                            천 개의 파랑 · 7
+                                                    천 개의 파랑 · 7
                             <br><br>
-                            작가노트 · 356<br>
-                            심사평 · 359<br>
-                            수상소감 · 373 
+                                                     작가노트 · 356<br>
+                                                     심사평 · 359<br>
+                                                     수상소감 · 373 
                         </div>
                     </div>
 
@@ -374,9 +428,55 @@
                     </div>
                 </div>
 
+                <div id="bkl_info_box" style="display: none; border: 1px solid white;">
+                	<ul class="booklist-wrap" style="margin-top: 120px;">
+                    	<c:forEach var="bl" items="${ bkList }">
+	                        <li class="booklist_item" type="none" style="">
+	                            <div class="booklist_container">
+	                                <div class="booklist_content">
+	                                    <a href="#" class="booklist-item">
+	                                    	<input type="hidden" id="blNo" name="blNo" value="${ bl.blNo }">
+	                                    	<input type="hidden" name="memNo" value="${ bl.memNo }">
+	                                        <div class="booklist_title">
+	                                            <span class="title_point">${ bl.blTitle }</span>
+	                                        </div>
+	                                        <div class="booklist_rcontent">
+	                                            ${ bl.blContent }
+	                                        </div>
+	                                        <div class="booklist_writer_box">
+	                                            <span class="booklist_writer">${ bl.blWriter }</span> 
+	                                        </div>
+	                                        <div class="booklist_date_like">
+	                                            <span>${ bl.blCdate }</span>
+	                                            <span class="list_like">좋아요 ${ bl.blLike }</span>
+	                                        </div>
+	                                    </a>
+	                                </div>
+	                                
+	                                <div class="booklist_book_wrap">
+	                                    <a href="javascript:clickBk()" class="book_info-area">
+	                                        <div class="book_area">
+	                                            <span class="book_img1">
+	                                                <img src="${ bk.introChangeName }" id="book_img-item" width="70px" height="100px">
+	                                            </span>
+	                                            <div class="book_info-wrap">
+	                                                <div class="book_title">${ bl.bkTitle }</div>
+	                                                <div class="book_writer">${ bl.writerName }</div>
+	                                                <div class="book_publish">${ bl.bkPublish }</div>
+	                                                <div class="book_stars">${ bl.blRate }점</div>
+	                                            </div>
+	                                        </div>
+	                                    </a>
+	                                </div>
+	                            </div>
+	                        </li>
+                        </c:forEach>
+                    </ul>
+            	</div>
+
                 <div id="info_box" style="display: none;">
                     <div class="info_title">
-                        반품 안내
+                    	반품 안내
                     </div>
                     <div class="info_table">
                         <table>
@@ -401,7 +501,7 @@
                                     o 해외직배송도서의 변심 혹은 구매착오로 인한 취소/반품은 판매가의 20% 취소수수료 고객 부담<br>
                                     <br><br>
                                     * 취소수수료 : 수입제반비용(국내 까지의 운송비, 관세사비, 보세창고료, 내륙 운송비, 통관비 등)과 재고리스크(미판매 리스크, 환차손)에 따른 비용 등<br>
-                                    단, 아래의 주문/취소 조건인 경우, 취소 수수료 면제<br>
+                                   	단, 아래의 주문/취소 조건인 경우, 취소 수수료 면제<br>
                                     - 오늘 00시~06시 주문을 오늘 06시 이전 취소<br>
                                     - 오늘 06시 이후 주문 후 다음 날 06시 이전 취소
                                 </td>
@@ -411,9 +511,9 @@
                                 <td>
                                     o 소비자의 책임 있는 사유로 상품 등이 손실 또는 훼손된 경우<br>
                                     o 소비자의 사용, 포장 개봉에 의해 상품 등의 가치가 현저히 감소한 경우<br>
-                                    예) 전자책 단말기,가전제품, 래핑이 제거된 만화책/라이트노벨/수험서/문제집류<br>
+                                                                   예) 전자책 단말기,가전제품, 래핑이 제거된 만화책/라이트노벨/수험서/문제집류<br>
                                     o 복제가 가능 또는 단기간 내 완독 가능 상품의 자체 포장이나 래핑을 훼손한 경우<br>
-                                    예) 음반,DVD,비디오,Blu-ray,소프트웨어, 잡지, 영상 화보집<br>
+                                                                   예) 음반,DVD,비디오,Blu-ray,소프트웨어, 잡지, 영상 화보집<br>
                                     o 소비자 요청에 의한 주문 제작 상품(분철도서, POD 도서 등)<br>
                                     o 세트 상품 일부만 반품 불가(전체 반품 후 낱권 재구매)<br>
                                     o 디지털 컨텐츠인 eBook, 오디오북 등을 1회 이상 다운로드 받았거나, 대여 기간이 종료된 eBook 대여제 상품<br>
@@ -422,7 +522,7 @@
                             </tr>
                             <tr>
                                 <th> 소비자 피해보상<br>
-                                    환불지연에 따른 배상</th>
+                                                             환불지연에 따른 배상</th>
                                 <td>
                                     o 상품의 불량에 의한 반품, 교환, A/S, 환불, 품질보증 및 피해보상 등에 관한 사항은 소비자분쟁해결기준 (공정거래위원회 고시)에 준하여 처리됨<br>
                                     o 대금 환불 및 환불 지연에 따른 배상금 지급 조건, 절차 등은 전자상거래 등에서의 소비자 보호에 관한 법률에 따라 처리함
@@ -432,6 +532,19 @@
                     </div>
                 </div>
             </div>
+            
+            <script>
+
+     		
+     		$(function(){
+           	 	// 독서록상세조회 스크립트
+            	$("#bkl_info_box>ul>li").click(function(){
+    	         	var blNo = $(this).find("input[name=blNo]").val();
+    	         	var memNo = $(this).find("input[name=memNo]").val();
+    	         	location.href = "detail.bl?blNo=" + blNo + "&memNo=" + memNo;
+            	})
+            })
+            </script>
             
             <script>
 	        	$(".book_info .btn_cart").click(function(){

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.member.model.service.MemberService;
@@ -190,7 +191,10 @@ public class BookController {
 	public ModelAndView selectBook(ModelAndView mv, int bkNo) {
 		
 		Book bk = bookService.selectBook(bkNo);
-		mv.addObject("bk", bk).setViewName("book/bookDetailView");
+		ArrayList<Booklist> bkList = bookService.selectBookList(bkNo);
+		mv.addObject("bk", bk)
+		  .addObject("bkList", bkList)
+		  .setViewName("book/bookDetailView");
 		
 		return mv;
 	}

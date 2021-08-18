@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.bookforyou.bk4u.book.model.vo.Book;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
 
@@ -159,4 +160,9 @@ public interface BookService {
 	 * [메인] 도서 추천 조회 - 로그인을 하지 않았을 경우 (한진)
 	 */
 	ArrayList<Book> selectMainBookRecommandToAll();
+
+	/*
+	 * [공통] 도서 독서록 조회 (연지)
+	 */
+	ArrayList<Booklist> selectBookList(int bkNo);
 }
