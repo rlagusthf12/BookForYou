@@ -78,9 +78,8 @@ public class GroupDao {
 			
 		}
 	
-	public GroupBoard activeGroup(SqlSessionTemplate sqlSession, int groupBoardNo) {
-		System.out.println(groupBoardNo);
-		return sqlSession.selectOne("groupMapper.activeGroup", groupBoardNo);
+	public GroupBoard activeGroup(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("groupMapper.activeGroup");
 	}
 
 }

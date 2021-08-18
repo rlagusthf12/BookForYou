@@ -147,14 +147,16 @@
                 <hr>
                 
                 <h6>활동중인 독서모임</h6><br>
-                <div id="activeGroup">
-                    <c:if test="${ loginUser.memNo eq groupMember.memNo }">
+                <div >
+                	<table id="activeGroup">
+                	
+                    <c:if test="${ loginUser.memId eq groupMember.memId }">
                      
                     	<c:forEach var="a" items="${ activeGroup }">
                         <tr>    
                         	<input type="hidden" value="${a.groupBoardNo}">  
                         	  
-                            <td rowspan="3" width="230" height="200"><img src="${ a.changeName }"></td>
+                            <td rowspan="3" width="230" height="200"><img src="${ a.changeName }" style="height:200px"></td>
                             <td width="80" height="20" style="font-size: 13px;">${ a.groupType }</td>
                             <td height="20" style="font-size: 13px;">${ a.groupDate }</td>
                             <td height="20" style="font-size: 13px;">${ a.groupPlace }</td>
@@ -169,10 +171,8 @@
                         </tr>
                          </c:forEach>
                     </c:if>
-                    
-                    <otherwise>
                     <p>현재 가입한 모임이 없습니다</p>
-                    </otherwise>
+                    </table>
                 </div>    
                 <hr>
                 <br>
@@ -184,7 +184,7 @@
                     <c:forEach var="g" items="${ groupList }">
                         <tr>    
                         	<input type="hidden" value="${g.groupBoardNo}">    
-                            <td rowspan="3" width="230" height="200"><img src="${ g.changeName }"></td>
+                            <td rowspan="3" width="230" height="200"><img src="${ g.changeName }" style="height:200px"></td>
                             <td width="80" height="20" style="font-size: 13px;">${ g.groupType }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupDate }</td>
                             <td height="20" style="font-size: 13px;">${ g.groupPlace }</td>

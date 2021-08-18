@@ -47,8 +47,8 @@ public class GroupServiceImpl implements GroupService{
 		return gDao.selectGroup(sqlSession, groupBoardNo);
 	}
 	
-	public GroupBoard activeGroup(int groupBoardNo) {
-		return gDao.activeGroup(sqlSession, groupBoardNo);
+	public GroupBoard activeGroup() {
+		return gDao.activeGroup(sqlSession);
 	}
 
 
