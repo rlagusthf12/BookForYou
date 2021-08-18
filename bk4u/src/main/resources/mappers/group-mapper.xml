@@ -124,23 +124,19 @@
 		insert
 		into groupMember
 		(
-		group_boardno
+		  group_boardno
 		, mem_no
-		, group_enrolldate
 		, mem_email
-		, group_level
 		, group_withdraw
-		, group_reason
+		, mem_id
 		)
 		values
 		(
-		seq_gno.nextval
+		 #{groupBoardNo}
 		, #{memNo}
-		, sysdate
 		, #{memEmail}
-		, #{groupLevel}
-		, #{groupWithdraw}
-		, #{groupReason}
+		, null
+		, #{memId}
 		)
 
 	</insert>
@@ -229,6 +225,8 @@
 		,group_limit
 		,change_name
 		,group_open
+		,group_status
+		,group_date
 		)
 		values
 		(
@@ -240,6 +238,8 @@
 		,#{groupLimit}
 		,#{changeName}
 		,#{groupOpen}
+		,#{groupStatus}
+		,sysdate
 		)
 
 	</insert>
@@ -329,6 +329,22 @@
 		WHERE NUM = 1
 		
 		
+	</select>	
+	
+	<select id="selectLastList" resultMap="meetResult">
+		SELECT *
+		FROM (SELECT ROWNUM NUM
+		, s.group_boardno
+		, s.meet_no
+		, s.offline_address
+		, s.meet_date
+		, s.meet_time
+
+		FROM
+		(SELECT * FROM MEET
+		WHERE MEET_STATUS = 'Y'
+		ORDER BY MEET_NO DESC)s)
+		WHERE NUM BETWEEN 2 AND 3
 	</select>	
 	
 	<select id="selectGBList" resultMap="boardResult">

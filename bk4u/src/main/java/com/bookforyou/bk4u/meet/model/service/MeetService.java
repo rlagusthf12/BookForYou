@@ -15,4 +15,6 @@ public interface MeetService {
 	int updateMeet(Meet m); 
 
 	ArrayList<Meet> selectMList();
+	
+	ArrayList<Meet> selectLastList();
 }

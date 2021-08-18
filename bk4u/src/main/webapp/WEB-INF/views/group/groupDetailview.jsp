@@ -94,7 +94,7 @@
                             </li>
                     </div>
 
-                <table border="1" style="width: 800px;">
+               		 <table border="1" style="width: 800px;" id="groupMembe">
                         <tr>
                             <td rowspan="2" width="500" height="200">
                                 <div class="card" style="width:500px">
@@ -108,12 +108,12 @@
                             
                             <td align="center"><b>회원목록</b></td>
 							<!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                          	<c:forEach var="gm" items="${ groupMemberList }">
+                          	<c:forEach var="m" items="${ groupMemberList }">
                             <tr>    
-                            	<input type="hidden" value="${ g.groupBoardNo }">   
-                            	<td>${ gm.memNo }</td> 
-                            	<td>${ gm.memEmail }</td>  
-                            	<td>${ gm.groupEnrollDate }</td> 
+                            	<input type="hidden" value="${ m.groupBoardNo }">   
+                            	<td>${ m.memNo }</td> 
+                            	<td>${ m.memEmail }</td>  
+                            	<td>${ m.groupEnrollDate }</td> 
                                 <td> <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> 
                                 </td>   
 							</tr>
@@ -136,9 +136,10 @@
                 <h6 align="left"><b>${ g.groupWriter }</b></h6>
                 
                 <form id="groupMember" method="post" action="insertGMem.me">
-                <input type="hidden" value="${ loginUser.memId eq groupMemberList.memId}">
-                <input type="hidden" value="${ loginUser.memEmail eq groupMemberList.memEmail }">
-                <input type="hidden" value="${ g.groupBoardNo eq groupMemberList.groupBoardNo }">
+                <input type="hidden" name="memNo" value="${ loginUser.memNo }">
+                <input type="hidden" name="memId" value="${ loginUser.memId }">
+                <input type="hidden" name="memEmail" value="${ loginUser.memEmail  }">
+                <input type="hidden" name="groupBoardNo" value="${ g.groupBoardNo }">
                 <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
                 </form>
                 <button type="submit" action="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
@@ -152,6 +153,7 @@
                 <input type="hidden" name="reportType" value="5">               
                 <input type="hidden" name="reportRefNo" value="${g.groupBoardNo}">
                 <button type="submit" class="">신고하기</button>
+                </form>
                 <br>
 
                 <h6 align="left"><b>독서모임 소개</b></h6>
@@ -175,7 +177,7 @@
                 <br>
                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
                 <c:if test="${ loginUser.memId eq g.groupWriter }">
-                <button type="submit"  style="float: right;" onclick="postFormSubmit(2);">삭제하기</button>
+                <button type="submit"  style="float: right;" onclick="postFormSubmit(3);">삭제하기</button>
                 <button type="submit"  style="float: right;" onclick="postFormSubmit(1);">수정하기</button>
                 
                 <br><br>

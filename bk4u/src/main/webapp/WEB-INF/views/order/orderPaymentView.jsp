@@ -580,6 +580,14 @@
                 </div>
 
                 <script>
+                	var price = ${ allPrice };
+                	var cpPrice = 0;
+                	var ptPrice = 0;
+                	
+                    $(function(){
+                        console.log(price);
+                    });
+                	
                     $("#info_top>span:nth-child(1)").click(function(){
                         $("#order_info").css('display', 'block');
                         $("#shipping_info").css('display', 'none');
@@ -946,9 +954,10 @@
             
             <script>
             	$("#coupon_box .btn_select").click(function(){
+            		cpPrice = $(this).parent().parent().find("input[type=hidden]").val();
             		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text($(this).parent().parent().find("input[type=hidden]").val() + "원");
-            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } - $(this).parent().parent().find("input[type=hidden]").val() + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(${ allPrice } - $(this).parent().parent().find("input[type=hidden]").val());
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
                 });
             </script>
 
@@ -959,7 +968,7 @@
                 <div id="line"></div>
                 <div>
                     <div>보유 포인트: ${ point }원</div>
-                    <input type="text" name="uPoint" value="0"> <button onclick="pointSelect()">전액</button>
+                    <input type="text" name="uPoint" value="0"> <button class="btn_select">전액</button>
                 </div>
                 <div align="center">
                     <button type="submit" class="btn_apply">포인트 적용</button>
@@ -978,9 +987,10 @@
                 });
 
                 $("#coupon_box .btn_cancel").click(function(){
+                	cpPrice = 0;
             		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text("0원");
-                	$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(${ allPrice });
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
                     $("#coupon_box").css('display', 'none');
                 });
 
@@ -1001,15 +1011,29 @@
             </script>
             
             <script>
-            	function pointSelect(){
+	            $("#point_box .btn_select").click(function(){
             		$("#point_box input[name=uPoint]").val(${ point });
-            	}
-            	
-            	$("#point_box .btn_apply").click(function(){
+	        	});
+	            
+	        	$("#point_box .btn_apply").click(function(){
+	            	ptPrice = $("#point_box input[name=uPoint]").val();
             		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text($("#point_box input[name=uPoint]").val() + "원");
-            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(${ allPrice } - $("#point_box input[name=uPoint]").val() + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(${ allPrice } - $("#point_box input[name=uPoint]").val());
-                });
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+            		$("#point_box").css('display', 'none');
+	        	});
+	        	
+            	$("#point_box .btn_cancel").click(function(){
+                	ptPrice = 0;
+                	$("#point_box input[name=uPoint]").val(0);
+            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text("0원");
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+            		$("#point_box").css('display', 'none');
+            	});
+            </script>
+            
+            <script>
             </script>
 
             <div id="policy_info">
