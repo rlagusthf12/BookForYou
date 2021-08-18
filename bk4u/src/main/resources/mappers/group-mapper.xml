@@ -29,6 +29,7 @@
 		<result column="group_level" property="groupLevel" />
 		<result column="group_withdraw" property="groupWithdraw" />
 		<result column="group_reason" property="groupReason" />
+		<result column="mem_no" property="memNo" />
 
 
 	</resultMap>
@@ -145,12 +146,14 @@
 	<select id="groupMemberList" resultMap="groupMemberResult">
 	SELECT
        		GROUP_BOARDNO
+       	  , MEM_ID
 		  ,	MEM_NO
 	      , MEM_EMAIL
 	      , GROUP_ENROLLDATE
 	      
-			from groupMember m
+			from groupMember m 
 			where m.group_level ='GM' 
+              and m.group_boardno = #{gno}
 	        order by m.group_enrolldate desc
 
 	</select>
@@ -218,6 +221,7 @@
 		into groupBoard
 		(
 		group_boardno
+		,group_writer
 		,group_type
 		,group_title
 		,group_place
@@ -225,12 +229,12 @@
 		,group_limit
 		,change_name
 		,group_open
-		,group_status
 		,group_date
 		)
 		values
 		(
 		seq_gno.nextval
+		,#{groupWriter}
 		,#{groupType}
 		,#{groupTitle}
 		,#{groupPlace}
@@ -238,7 +242,6 @@
 		,#{groupLimit}
 		,#{changeName}
 		,#{groupOpen}
-		,#{groupStatus}
 		,sysdate
 		)
 

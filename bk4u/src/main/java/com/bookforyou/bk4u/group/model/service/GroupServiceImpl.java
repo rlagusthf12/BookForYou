@@ -61,8 +61,8 @@ public class GroupServiceImpl implements GroupService{
 	}
 	
 	@Override
-	public ArrayList<GroupMember> groupMemberList() {
-		return gDao.groupMemberList(sqlSession);
+	public ArrayList<GroupMember> groupMemberList(int gno) {
+		return gDao.groupMemberList(sqlSession, gno);
 	}
 	
 	@Override

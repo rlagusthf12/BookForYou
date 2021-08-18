@@ -99,7 +99,8 @@ public class GroupController {
 	public String insertGroup( GroupBoard g , MultipartFile upfile, HttpSession session, Model model) {
 		
 				
-				
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 				if(!upfile.getOriginalFilename().equals("")) {
 
 					
@@ -127,7 +128,8 @@ public class GroupController {
 	@RequestMapping("insertGMem.me")
 	public String insertGMem (GroupMember gm ,HttpSession session, Member m) {
 
-		ArrayList<Member> member = gService.memberInfo(m);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		int result = gService.insertGMem(gm);
 		
 		if(result > 0) {
@@ -135,10 +137,10 @@ public class GroupController {
 			session.setAttribute("alertMsg", "가입되었습니다.");
 		} 
 		
-			return"redirect:group.bo";
+		return"redirect:detail.gbo?gno="+gm.getGroupBoardNo();
 	}
 	
-	
+	/*
 	@RequestMapping("gorupMemberList")
 	public ModelAndView home(Model model) throws Exception {
 		
@@ -153,6 +155,7 @@ public class GroupController {
 		
 		return mv;
 	}
+	*/
 	
 	
 	public String saveFile(HttpSession session, MultipartFile upfile) {
@@ -181,11 +184,17 @@ public class GroupController {
 	@RequestMapping("detail.gbo")
 	public ModelAndView selectGroup( int gno, ModelAndView mv) {
 		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		int result = gService.increaseCount(gno);
 		
 		if(result > 0 ) {
 			GroupBoard g = gService.selectGroup(gno);
-			mv.addObject("g", g).setViewName("group/groupDetailview");
+			
+			// 현재 이 그룹에 속한 회원 리스트 조회
+			ArrayList<GroupMember> list = gService.groupMemberList(gno);
+			
+			mv.addObject("groupMemberList", list).addObject("g", g).setViewName("group/groupDetailview");
 		
 			
 		}else { 

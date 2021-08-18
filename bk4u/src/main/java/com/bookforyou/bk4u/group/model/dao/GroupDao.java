@@ -44,8 +44,8 @@ public class GroupDao {
 		return sqlSession.insert("groupMapper.insertGMem", gm);
 	}
 	
-	public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("groupMapper.groupMemberList");
+	public ArrayList<GroupMember> groupMemberList(SqlSessionTemplate sqlSession, int gno){
+		return (ArrayList)sqlSession.selectList("groupMapper.groupMemberList", gno);
 	}
 	
 		
