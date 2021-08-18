@@ -81,7 +81,38 @@
 			location.href=`storeBookDetail.bk?storeNo=${storeNo}&bkNo=` + bkNo;
 		})
 		
+		/* Click on select all checkbox */
+	    $("#headCheck").click(function(){
+	        	
+	    	if($(this).prop("checked")){
+	        	$("input[name='bCheck']").each(function(){
+	        		$(this).prop("checked", true);
+	        	})
+	        }else {
+	        	$("input[name='bCheck']").each(function(){
+	        		$(this).prop("checked", false);
+	        	})
+	        }
+	    })
+	        
+	    /* Click on another checkbox can affect the select all checkbox */
+	    $("input[name='bCheck']").click(function(){
+	        if($("input[name='bCheck']:checked").length == $("input[name='bCheck']").length || !this.checked){
+	        	$("#headCheck").prop("checked", this.checked);
+	        }
+	    })
+	    
+	    $("#delete").click(function(){
+	    	var checkArr = [];
+	    	$("input[name='bCheck']:checked").each(function(){
+	    		checkArr.push(this.value);
+	    	})
+	    	location.href=`deleteStoreBook?storeNo=${storeNo}&selectedBkNo=` + checkArr;
+	    })
+			
+		
 	})
+	
 </script>
 
 </head>
@@ -115,11 +146,13 @@
 	
 	<div id="addBook">
 		<button class="btn btn-outline-success"  onclick="location.href=`bookListForAdd.bk?storeNo=${storeNo}`">추가</button>
+		<button class="btn btn-outline-success" id="delete">삭제</button>
 	</div>
 	
 	<table class="table_board">
 	<tbody>
 	<tr>
+	<th><input type="checkbox" id="headCheck"></th>
 	<th>도서번호</th>	
 	<th>도서명</th>
 	<th>저자</th>
@@ -129,6 +162,7 @@
 	</tr>
 	<c:forEach var="of" items="${list}">
 	<tr>
+	<td><input type="checkbox" name="bCheck" value="${ of.bookNo }"></td>
 	<td style="height:60px;"  class="detailB">${of.bookNo}</td>
 	<td>${of.bookTitle}</td>
 	<td>${of.bookAuthor}</td>

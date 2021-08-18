@@ -286,4 +286,12 @@
 		   and bk_no = #{bkNo}
 	</select>
 	
+	<!-- [관리자] 지점별 도서 삭제 (한진) -->
+	<delete id="deleteStoreBook">
+		delete
+		  from off_book
+		 where store_no = #{storeNo}
+		   and bk_no = #{bkNo}
+	</delete>
+	
 </mapper>
