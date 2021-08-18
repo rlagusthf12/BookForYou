@@ -41,7 +41,9 @@ public class GroupController {
 	
 	@RequestMapping(value="group.bo",  method=RequestMethod.GET)
 	public String groupListView(Model model) throws Exception {
-		
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		ArrayList<GroupBoard> groupList = gService.selectList();
 
 		model.addAttribute("groupList", groupList);
@@ -55,7 +57,8 @@ public class GroupController {
 	@RequestMapping(value="group.bo", method=RequestMethod.POST)
 	public String groupListMore(String more, Model model) throws Exception{
 		
-		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 		int page = Integer.parseInt(more);
 		
 		List<GroupBoard> selectListMore = gService.selectListMore(page);

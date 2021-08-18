@@ -27,7 +27,7 @@
 </head>
 <body>
   
-           <jsp:include page="../group/groupDetailview.jsp"/> 
+           <jsp:include page="../common/menubar.jsp"/> 
               
             <div class="content">
   
@@ -35,7 +35,7 @@
                 <div align="left" style="padding-left:19px">
                     <ul class="nav nav-tabs">
                        <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${g.groupBoardNo}">모임정보</a>
+                              <a class="nav-link" href="detail.gbo?gno=">${g.groupBoardNo}모임정보</a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link" href="meet.bo">정모게시판</a>

@@ -90,7 +90,7 @@
 											    <option>부산</option>
 											    <option>강원도</option>
 											</select>
-											<select id="select_menu">
+											<select id="select_menu" name="groupPlace">
 											    <option>시/도/군</option>
 											</select>
 											

@@ -1,5 +1,6 @@
 package com.bookforyou.bk4u.meetboard.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,23 @@ import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 public class MeetBoardController {
 
 	@Autowired
-	private MeetBoardService mbService;
+	private MeetBoardService bService;
 	
 	@RequestMapping(value="meetBoard.bo",  method=RequestMethod.GET)
 	public String groupboardList(Model model) throws Exception {
 		
-		ArrayList<MeetBoard> meetBoardList = mbService.selectGBList();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<MeetBoard> groupBoardList = bService.selectGBList();
 
-		model.addAttribute("meetBoardList", meetBoardList);
+		model.addAttribute("groupBoardList", groupBoardList);
 		model.addAttribute("groupBoard", "../groupboard/groupBoardList.jsp");
 		
 				
 		return "../views/groupboard/groupBoardList";
+	}
+	
+	@RequestMapping("createBoard.gbo")
+	public String createBoard() {
+		return "../views/groupboard/groupBoardContentEdit";
 	}
 }

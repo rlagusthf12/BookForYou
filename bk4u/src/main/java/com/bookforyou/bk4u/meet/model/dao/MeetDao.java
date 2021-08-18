@@ -19,4 +19,9 @@ public class MeetDao {
 		return (ArrayList)sqlSession.selectList("groupMapper.selectMList");
 		
 	}
+	
+	public ArrayList<Meet> selectLastMList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("groupMapper.selectLastList");
+		
+	}
 }
