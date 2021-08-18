@@ -338,7 +338,6 @@ public class SubscriptionController {
 		// 쿠폰,포인트 조회
 		ArrayList<Coupon> cList = sService.selectSubscCoupon(memNo);
 		ArrayList<Point> p = sService.selectSubPoint(memNo);
-		System.out.println(cList);
 		
 		mv.addObject("cList", cList)
 		  .addObject("p", p)
@@ -351,16 +350,15 @@ public class SubscriptionController {
 	 * @author daeunlee
 	 */
 	@RequestMapping("insertSubPay.sub")
-	public String insertSubsc(Subscription sub, Model model) {
+	public ModelAndView insertSubsc(Subscription sub, ModelAndView mv, Model model) {
 		int result = sService.insertSubsc(sub);
 		
 		if(result > 0) {
-			model.addAttribute("sub", sub);
-			return "subscription/subscriptionPayComplete";
-		}else {
-			model.addAttribute("errorMsg", "게시글 등록 실패");
-            return "common/errorPage";
+			Subscription subsc = sService.selectSubscription(sub.getMemNo());
+			mv.addObject("subsc", subsc)
+			  .setViewName("subscription/subscriptionPayComplete");
 		}
+		return mv;
 	}
 	
 	/**

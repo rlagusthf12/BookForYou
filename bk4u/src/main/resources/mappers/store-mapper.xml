@@ -273,4 +273,17 @@
 		where store_no=#{storeNo}
 	</delete>
 	
+	<!-- [관리자] 지점별 도서 상세 조회 (한진) -->
+	<select id="selctStoreBookDetail" resultMap="offBookResult">
+		select
+		       bk_no,
+		       store_no,
+		       bk_status,
+		       bk_lct,
+		       add_date
+		  from off_book
+		 where store_no = #{storeNo}
+		   and bk_no = #{bkNo}
+	</select>
+	
 </mapper>

@@ -198,7 +198,8 @@
                     <th width="100">이름</th>
                     <th width="250">이메일</th>
                     <th width="150">거주지</th>
-                    <th width="150">가입일</th>                   
+                    <th width="150">가입일</th>
+                    <th width="150">블랙</th>                   
                 </tr>
             </thead>
             <tbody>
@@ -210,13 +211,47 @@
                     <td>${ am.memName }</td>
                     <td>${ am.memEmail }</td>
                     <td>${ am.memBasicAddress }</td>
-                    <td>${ am.memEnrolldate }</td>                           
-                </tr>
-       			</c:forEach>
+                    <td>${ am.memEnrolldate }</td>  
+                    <td><button type="button" data-toggle="modal"  data-target="#blackList">추가</button></td>                         
+                	<td style="display:none">
+	                	<!-- 블랙리스트 추가 모달 -->
+						<div class="modal" class="modal blackList">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						
+						      <!-- Modal Header -->
+						      <div class="modal-header">
+						        <h4 class="modal-title">블랙리스트 등록</h4>
+						        <button type="button" class="close" data-dismiss="modal">&times;</button>
+						      </div>
+						
+						      <!-- Modal body -->
+						      <div class="modal-body">
+						      	<p>선택하신 회원을 블랙리스트에 추가하시겠습니까?<br>
+						      	   블랙리스트에 추가시 사이트 이용이 제한됩니다.</p><br>
+						        사유 : <input type="text" name="blackReason" id="blackReason" value="${ blackReason }"> 
+						      </div>
+						
+						      <!-- Modal footer -->
+						      <div class="modal-footer">
+							      <form action="black.me" method="post">					      			      	
+							        <button type="submit" class="btn btn-danger">등록</button>
+							      	<button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+							      </form>	
+						      </div>
+						
+						    </div>
+						  </div>
+						</div>
+                	</td>
+                </tr>        
+                      
+       			</c:forEach>      		
             </tbody>
         </table>
-		 
+        
 		
+		 
 
         <br><br>
 
@@ -227,7 +262,7 @@
                 		<li class="page-item disabled"><a class="page-link">이전</a></li>
                 	</c:when>
                 	<c:otherwise>
-                		<li class="page-item disabled"><a class="page-link" href="amSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
                 	</c:otherwise>
                 </c:choose>
                 

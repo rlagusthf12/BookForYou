@@ -250,6 +250,14 @@ public class SubscriptionImpl implements SubscriptionService{
 	public int insertSubsc(Subscription sub) {
 		return sDao.insertSubsc(sqlSession, sub);
 	}
+	
+	/** 정기구독 조회
+	 * @author daeunlee
+	 */
+	@Override
+	public Subscription selectSubscription(int memNo) {
+		return sDao.selectSubscription(sqlSession, memNo);
+	}
 
 	/**
 	 * [관리자] 정기구독 발송 내역 개수 조회 (한진)
@@ -322,6 +330,8 @@ public class SubscriptionImpl implements SubscriptionService{
 	public ArrayList<Subscription> selectAdminSubscOrderSearchList(PageInfo pi, HashMap<String, String> map) {
 		return sDao.selectAdminOrderSearchList(sqlSession, pi, map);
 	}
+
+	
 
 	
 	

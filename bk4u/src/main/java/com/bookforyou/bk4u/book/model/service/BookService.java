@@ -8,6 +8,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.store.model.vo.OffBook;
 
 public interface BookService {
 
@@ -165,4 +166,30 @@ public interface BookService {
 	 * [공통] 도서 독서록 조회 (연지)
 	 */
 	ArrayList<Booklist> selectBookList(int bkNo);
+	
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	ArrayList<Book> selectBookListForStore(PageInfo pi, HashMap<String, String> filter);
+
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	int insertBookForStore(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 지점별 도서 상세 조회 (한진)
+	 */
+	OffBook selectStroreBookDetail(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 지점별 도서 수정 (한진)
+	 */
+	int updateStoreBook(Book b);
+
+	/**
+	 * [관리자] 지점별 도서상태 수정 (한진)
+	 */
+	int updateStoreBookStatus(HashMap<String, String> map);
+	
 }

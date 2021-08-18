@@ -1,6 +1,6 @@
 package com.bookforyou.bk4u.book.model.service;
 
-import java.util.ArrayList;
+import java.util.ArrayList ;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +13,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.store.model.vo.OffBook;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -269,5 +270,45 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public ArrayList<Booklist> selectBookList(int bkNo){
 		return bookDao.selectBookList(sqlSession, bkNo);
+	}
+
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	@Override
+	public ArrayList<Book> selectBookListForStore(PageInfo pi, HashMap<String, String> filter) {
+		return bookDao.selectBookListForStore(sqlSession, pi, filter);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	@Override
+	public int insertBookForStore(HashMap<String, String> map) {
+		return bookDao.insertBookForStore(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 상세 조회 (한진)
+	 */
+	@Override
+	public OffBook selectStroreBookDetail(HashMap<String, String> map) {
+		return bookDao.selectStoreBookDetail(sqlSession, map);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 수정 (한진)
+	 */
+	@Override
+	public int updateStoreBook(Book b) {
+		return bookDao.updateStoreBook(sqlSession, b);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 상태 수정 (한진)
+	 */
+	@Override
+	public int updateStoreBookStatus(HashMap<String, String> map) {
+		return bookDao.updateStoreBookStatus(sqlSession, map);
 	}
 }

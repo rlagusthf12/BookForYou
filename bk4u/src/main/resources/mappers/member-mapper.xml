@@ -372,6 +372,13 @@
   		   		by mem_no asc
 	</select>
   		   	
+  	<!-- 관리자 회원탈퇴 처리 (형우) -->
+  	<update id="amDelete">
+  		update
+  			  member
+  		   set mem_status = 'N'
+  		 where mem_id = #{memId}
+  	</update>
 	
 	<!-- 관리자 회원상세조회 (형우)-->
 		
@@ -391,16 +398,88 @@
 		  from members
 		 where mem_no = #{memNo}
 	</select>
+	<!-- 블랙리스트 조회 -->
+	<select id="selectBlackListCount" resultType="_int">
+  		select
+  				count(*)
+  			from members
+  			where mem_status = 'N'
+  	</select>
+  	<select id="selectBlackList" resultMap="memberResult">
+  		select
+  				mem_no,
+  				mem_id, 				
+  				mem_name,
+  				mem_email,
+  				mem_enrolldate,
+  				black_reason
+  			from members
+  		   where mem_status = 'N'
+  		   order
+  		   		by mem_no asc
+  	</select>
+  	
+  	<!--  블랙리스트 추가 (형우) -->
+  	<update id="blackMember">
+		update
+		       members
+		   set mem_status = 'N'
+		 where mem_no = #{memNo}
+	</update>
 	
-  	
-  	<!-- 관리자 회원탈퇴 처리 (형우) -->
-  	<update id="amDelete">
-  		update
-  			  member
-  		   set mem_status = 'N'
-  		 where mem_id = #{memId}
-  	</update>
-  	
+	<!-- 블랙리스트 검색 -->
+	<select id="selectBlackSearchListCount" resultType="_int">
+		select
+		       count(*)
+		  from members
+		 where mem_status = 'N'
+	 	<choose> 		
+	 		<when test="condition == 'memName'">
+	 			and mem_name
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			and mem_id
+	 		</when>
+	 		<otherwise>
+	 			and mem_email
+	 		</otherwise>		
+	 	</choose>	 	
+	 		like '%' || #{keyword} || '%'	 		 	
+	</select>
+	<!-- 블랙리스트 삭제 -->
+	<update id="deleteBlack">
+		update
+		       members
+		   set mem_status = 'M'
+		 where mem_no = #{memNo}
+	</update>
+	
+	<select id="selectBlackSearchList" resultMap="memberResult">
+		select	
+				mem_no,
+  				mem_id, 				
+  				mem_name,
+  				mem_email,
+  				mem_enrolldate,
+  				black_reason
+  			from members
+  		   where mem_status = 'N'
+		 <choose>		 	
+	 		<when test="condition == 'memName'">
+	 			and mem_name
+	 		</when>
+	 		<when test="condition == 'memId'">
+	 			and mem_id
+	 		</when>
+	 		<otherwise>
+	 			and mem_email
+	 		</otherwise>	 		
+	 	</choose>
+	 			like '%' || #{keyword} || '%'
+		 order
+  		   		by mem_no asc
+	</select>
+	
   	<!-- [사용자] 선호 관심사 삭제 (안세아) -->
   	<delete id="deleteAllMemInterest">
   		delete

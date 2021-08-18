@@ -74,6 +74,7 @@
         
         /**포인트+할인쿠폰area*/
         .point-wrap{margin-bottom:20px;}
+        .point_area{margin-bottom:100px;}
         #point_table th, #coupon_table th{text-align: left;}
         .input_area{display:inline-block; width:280px; padding:8px 15px; border:1px solid #dedede; border-radius:5px;}
         .input_area input{width:220px; border:none;} .input_area input:focus{outline:none;}
@@ -125,7 +126,6 @@
                 <form class="orderForm" id="orderForm" name="orderForm" method="post" action="">
     				<input type="hidden" name="memNo" value="${ loginUser.memNo }">
     				<input type="hidden" name="subscName" value="${ param.subscName }">
-    				<input type="hidden" name="subscPrice" value="${ param.subscPrice }">
     				<input type="hidden" name="subscPeriod" value="${ param.subscPeriod }">
     				<input type="hidden" name="subscSdate">
     				<input type="hidden" name="subscEndDate">
@@ -377,34 +377,7 @@
 	            		}, function(rsp) {
 	            			console.log(rsp);
 	            			if (rsp.success) {
-	            				
 	            				$("#orderForm").attr("action", "insertSubPay.sub").submit();
-	            				
-	            				/*
-	            				var msg = '결제가 완료되었습니다.';
-	            				msg += '고유ID : ' + rsp.imp_uid;
-	            				msg += '상점 거래ID : ' + rsp.merchant_uid;
-	            				msg += '결제 금액 : ' + rsp.paid_amount;
-	            				msg += '카드 승인번호 : ' + rsp.apply_num;
-	            				
-	            				// payment디비연결
-	            				$.ajax({
-			    			        url:"insertSubsc.pay",
-			    			        method: "POST",
-			    		            headers: { "Content-Type": "application/json" },
-			    			        data:{
-			    			        	payWay:	rsp.pay_method,
-			    						price: rsp.paid_amount,
-			    						status: rsp.status
-			    			        }, 
-			    			        success: function(status){
-			    			        	if(status == "success"){
-			    			        	console.log(status);
-			    			        	}
-			    			        },error:function(){
-			    			        	console.log("ajaxㄴㄴ");
-			    			        }
-			    			   })*/
 	                    	} else {
 	            		        var msg = '결제에 실패하였습니다.';
 	                    		msg += '에러내용 : ' + rsp.error_msg;
@@ -472,39 +445,6 @@
     
                     <!--포인트area-->
                     <div class="item point_area">
-
-                        <div class="point-wrap">
-                            <div class="title">포인트</div>
-                            <table id="point_table">
-                            <tr>
-                                <th>보유 포인트</th>
-                                <td>
-                                    <div class="input_area">
-                                    	<c:choose>
-	                                    	<c:when test="${ !empty pointPrice }">
-	                                        	<input type="number" id="mypoint" value="${ p.totalPoint }">
-	                                        </c:when>
-	                                        <c:otherwise>
-	                                        	<input type="number" id="mypoint" value="0" readonly>
-	                                        </c:otherwise>
-                                        </c:choose>
-                                        <span class="measure">원</span>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>사용 포인트</th>
-                                <td>
-                                    <div class="input_area">
-                                        <input type="text" id="use_point">
-                                        <span class="measure">원</span>
-                                    </div>
-                                    <button class="btn btn_coupon">전액사용</button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    
                     
                     <div class="title">할인쿠폰</div>
                         <table id="coupon_table">
@@ -513,33 +453,35 @@
                             	<th></th>
                                 <td>
 			                        <table id="couponTable">
+			                        	<thead>
 										<tr>
-											<th colspan="7">할인쿠폰 선택</th>
+											<th colspan="8">할인쿠폰 선택</th>
 										</tr>
+										</thead>
+										<tbody>
 										<c:forEach var="c" items="${cList}">
 										<c:choose>
 											<c:when test="${ empty c.couponNo }">
 												<tr>
-													<th colspan="6">사용할 수 있는 쿠폰이 없습니다.</th>
+													<th colspan="8">사용할 수 있는 쿠폰이 없습니다.</th>
 												</tr>
 											</c:when>
 											<c:otherwise>
-												<tr>
-													<td><input type="checkbox" name="couponIssueNum" value="${ c.couponIssueNum }"><td>
-													<td>${ c.couponKind }</td>
+												<tr id="cTb">
+													<td class="cn"><input type="radio" name="couponIssueNum" value="${ c.couponIssueNum }"></td>
+													<td class="ck">${ c.couponKind }</td>
 													<td>${ c.couponName }</td>
 													<td>${ c.couponContent }</td>
-													<td>${ c.couponPrice }원 할인</td>
+													<td class="cp">${ c.couponPrice }원 할인<input type="hidden" name="couponPrice" value="${ c.couponPrice }"></td>
 													<td>${ c.createDate } ~ ${ c.expireDate }</td>
+													<td><button type="button" class="btn btn_coupon" onclick="btnCoupon()">쿠폰사용</button></td>
 												</tr>
 											</c:otherwise>
 										</c:choose>
 										</c:forEach>
+										</tbody>
 									</table>
                                 </td>
-								<td>
-									<button class="btn btn_coupon" onclick="btnCoupon()">쿠폰사용</button>
-								</td>
                             </tr>    
                         </table>
                     </div>
@@ -547,8 +489,25 @@
                     <script>
                     
                     function btnCoupon(){
-                    	var cn = $("input:radio[name='couponIssueNum']").is(":checked");
-                    	console.log(cList);
+                    	var ck = $(event.target).parent().siblings(".ck").html();
+                    	
+                    	if(ck == '도서구매'){
+                    		alert('도서구매 쿠폰은 사용할 수 없습니다.');
+                    	}else{
+	                    	var cn = $(event.target).parent().siblings(".cn").children('input:radio[name="couponIssueNum"]:checked').val();
+	                    	var cp = $(event.target).parent().siblings(".cp").children().val(); // 쿠폰금액
+	                    	//쿠폰가격넣기
+	                    	$('.paysum_area').find('.coupon_re').html(cp);
+	                    	$('input[name=couponPrice]').val(cp);
+	                    	
+	                    	var subori = $('#subOriginPrice').html(); // 원래가격
+	                    	var totalPrice = subori - cp; // 최종
+	                    	
+	                    	//최종가격 적용
+	                    	$('input[name=subscPrice]').val(totalPrice);
+	                    	$('.total_price').children().html(totalPrice);
+                    	}                    
+                    	
                     }
                     </script>
 
@@ -559,30 +518,19 @@
                             <ul>
 	                            <li>
 	                                <span>멤버십 결제 금액</span>
-	                                <p><em>${ param.subscPrice }</em>원</p>
+	                                <p><em id="subOriginPrice">${ param.subscPrice }</em>원</p>
 	                            </li>
 	                            <li>
 	                                <span>할인쿠폰</span>
-	                                <p><em>
-	                                <c:choose>
-		                                 <c:when test="${empty param.couponIssueNum}">
-		                                 	${ param.couponPrice }
-		                                 </c:when>
-		                                 <c:otherwise>
-		                                  0
-		                                 </c:otherwise>
-	                                </c:choose>
-	                                </em>원</p>
-	                            </li>
-	                            <li>
-	                                <span>포인트</span>
-	                                <p><em>0</em>원</p>
+	                                <p><em class="coupon_re">0</em>원</p>
+	                                <input type="hidden" name="couponPrice">
 	                            </li>
 	                        </ul>
 	                        <ul style="padding:25px 0; border-top: 1px solid #ddd;">
 	                            <li>
 	                                <span>총 결제 금액</span>
 	                                <p class="total_price"><strong>19,900</strong>원</p>
+	                                <input type="hidden" name="subscPrice" value="${ param.subscPrice }">
 	                            </li>
 	                        </ul>
     
@@ -599,18 +547,7 @@
                     </div>
                     
                 </form>
-                <script>
-                /*
-                function requestPay(){
-                	var label = $('input:checkbox[id=btnAgree]').is(":checked");
-                	if(!label){
-                        alert('약관에 동의해주세요.');
-                        $('#btn_requestPay').prop("disabled", true);
-                    }else{
-                    	$('#btn_requestPay').prop("disabled", false);
-                    }
-                }*/
-                </script>
+                
 
             </div>
 

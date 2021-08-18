@@ -111,14 +111,11 @@
                           	<c:forEach var="m" items="${ groupMemberList }">
                             <tr>    
                             	<input type="hidden" value="${ m.groupBoardNo }">   
-                            	<td>${ m.memNo }</td> 
-                            	<td>${ m.memEmail }</td>  
-                            	<td>${ m.groupEnrollDate }</td> 
-                                <td> <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> 
-                                </td>   
+                            	<td>${ m.memId } ${ m.memEmail } ${ m.groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button></td> 
+                            	 
 							</tr>
 							</c:forEach>
-							<br>
+							
 							
 							
                         

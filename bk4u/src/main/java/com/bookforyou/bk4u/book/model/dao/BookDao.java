@@ -12,6 +12,7 @@ import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.order.model.vo.Order;
+import com.bookforyou.bk4u.store.model.vo.OffBook;
 
 @Repository
 public class BookDao {
@@ -237,5 +238,42 @@ public class BookDao {
 	 */
 	public ArrayList<Booklist> selectBookList(SqlSessionTemplate sqlSession, int bkNo) {
 		return (ArrayList)sqlSession.selectList("bookMapper.selectBookList", bkNo);
+	}
+
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	public ArrayList<Book> selectBookListForStore(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> filter) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("bookMapper.selectAdminBookList", filter, rowBounds);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	public int insertBookForStore(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("bookMapper.insertBookForStore", map);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 상세 조회 (한진)
+	 */
+	public OffBook selectStoreBookDetail(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.selectOne("storeMapper.selctStoreBookDetail", map);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 수정 (한진)
+	 */
+	public int updateStoreBook(SqlSessionTemplate sqlSession, Book b) {
+		return sqlSession.update("bookMapper.updateStoreBook", b);
+	}
+
+	/**
+	 * [관리자] 지점별 도서 상태 수정 (한진)
+	 */
+	public int updateStoreBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("bookMapper.updateStoreBookStatus", map);
 	}
 }

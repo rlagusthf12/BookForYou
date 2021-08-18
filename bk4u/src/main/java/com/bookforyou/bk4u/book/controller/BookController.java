@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
@@ -595,4 +596,165 @@ public class BookController {
 		}
 		return bList;
 	}
+	
+	/**
+	 * [관리자] 도서 목록 조회 - 지점별 도서 추가를 위해서 (한진)
+	 */
+	@RequestMapping("bookListForAdd.bk")
+	public ModelAndView selectBookListForStore(ModelAndView mv, String storeNo, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+												@RequestParam(value="array", defaultValue="0") String array) {
+		
+		int listCount = bookService.selectAllListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		HashMap<String, String> filter = new HashMap<>();
+		filter.put("array", array);
+		
+		ArrayList<Book> bList = bookService.selectBookListForStore(pi, filter);
+		
+		mv.addObject("storeNo", storeNo)
+		  .addObject("listCount", listCount)
+		  .addObject("pi", pi)
+		  .addObject("bList", bList)
+		  .addObject("ar", array)
+		  .setViewName("book/adminOfflineBookList");
+		
+		return mv;
+	}
+	
+	/**
+	 * [관리자] 지점별 도서 추가 (한진)
+	 */
+	@RequestMapping("addBookForStore.bk")
+	public String insertBookForStore(String storeNo,
+									 @RequestParam(value="selectedBook") List<String> bkNoArr,
+									 RedirectAttributes ra) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		
+		int result = 0;
+		for(int i=0; i<bkNoArr.size(); i++) {
+			String bkNo = bkNoArr.get(i);
+			map.put("bkNo", bkNo);
+			result = bookService.insertBookForStore(map);
+		}
+		
+		ra.addAttribute("storeNo", storeNo);
+		ra.addAttribute("alertMsg", "도서가 추가되었습니다.");
+		
+		return "redirect:/list.storebook";
+	}
+	
+	/**
+	 * [관리자] 지점별 도서 상세 보기 (한진)
+	 */
+	@RequestMapping("storeBookDetail.bk")
+	public ModelAndView selectStoreBookDetail(ModelAndView mv, String storeNo, String bkNo) {
+
+		HashMap<String, String> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		map.put("bkNo", bkNo);
+		
+		OffBook offB = bookService.selectStroreBookDetail(map);
+		
+		int iBkNo = Integer.valueOf(bkNo);
+		
+		ArrayList<Book> bo = bookService.selectAdminBookDetail(iBkNo);
+		
+		JsonArray jsonList = new JsonArray();
+		
+		for(Book bk :bo) {
+			
+			JsonObject jObj = new JsonObject();
+			jObj.addProperty("subCate", bk.getSubCateName());
+			jObj.addProperty("interest", bk.getInterestContent());
+			
+			jsonList.add(jObj);
+			
+		}
+		
+		mv.addObject("storeNo", storeNo)
+		  .addObject("book", bo.get(0))
+		  .addObject("offB", offB)
+		  .addObject("bkObj", jsonList)
+		  .setViewName("store/adminStoreBookDetail");
+		
+		return mv;
+	}
+	
+	/**
+	 * [관리자] 지점별 도서 수정 (한진)
+	 */
+	@RequestMapping("storeBookUpdate.bk")
+	public String updateStoreBook(Book b, int bkNo, String year, String month, String day, 
+									String storeNo, String storeBkStatus, String bkLct,
+									@RequestParam(value="itrs") List<String> itrs, 
+									@RequestParam(value="ganre") String subCateName,
+									MultipartFile[] bkFile, HttpSession session, RedirectAttributes ra) {
+		
+		
+		String date = year + "-" + month + "-" + day;
+		b.setBkDate(date);
+		b.setBkNo(bkNo);
+		b.setSubCateName(subCateName);
+		
+		// 전달된 파일이 있을 경우 => 파일명 수정 작업 후 서버 업로드 후 => 원본명, 서버업로드된 경로 b에 담기
+		if(!bkFile[0].getOriginalFilename().equals("")) {
+			// 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 삭제
+			if(b.getIntroOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getIntroChangeName())).delete();
+			}
+			// 새로 넘어온 첨부파일 업로드 시키기
+			String introChangeName = saveFile(session, bkFile[0]);
+			// b에 새로 넘어온 첨부파일에 대한 정보 담기
+			b.setIntroOriginName(bkFile[0].getOriginalFilename());
+			b.setIntroChangeName("resources/book/" + introChangeName);
+		}
+		
+		if(!bkFile[1].getOriginalFilename().equals("")) {
+			if(b.getWriterOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getWriterChangeName())).delete();
+			}
+			String writerChangeName = saveFile(session, bkFile[1]);
+			b.setWriterOriginName(bkFile[1].getOriginalFilename());
+			b.setWriterChangeName("resources/book/" + writerChangeName);
+		}
+		
+		int result = bookService.updateStoreBook(b);
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		map.put("bkStatus", storeBkStatus);
+		map.put("bkLct", bkLct);
+		String sBkNo = Integer.toString(bkNo);
+		map.put("bkNo", sBkNo);
+		
+		int storeResult = bookService.updateStoreBookStatus(map);
+		
+		List<String> selectedIntr = bookService.selectAdminBookInterest(b);
+		
+		// 수정된 관심사목록이 원래 관심사목록에 포함되어있지 않을 경우 해당 관심사는 삭제하기
+		String interest = "";
+		for(int i=0; i<selectedIntr.size(); i++) {
+			if(!itrs.contains(selectedIntr.get(i))) {
+				b.setInterestContent(selectedIntr.get(i));
+				int delete = bookService.deleteAdminBookItrs(b);
+			}
+		}
+		
+		// 새롭게 등록된 관심사 목록은 추가
+		for(int i=0; i<itrs.size(); i++) {
+			interest = itrs.get(i);
+			if(!selectedIntr.contains(interest)) {
+				b.setInterestContent(interest);
+				int	result1 = bookService.insertAdminBookItrs(b);					
+			}
+		}
+		
+		ra.addAttribute("storeNo", storeNo);
+		ra.addAttribute("bkNo", bkNo);
+		return "redirect:/storeBookDetail.bk";
+	}
+	
 }

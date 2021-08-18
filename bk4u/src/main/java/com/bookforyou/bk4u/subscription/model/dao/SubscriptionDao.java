@@ -225,6 +225,13 @@ public class SubscriptionDao {
 	public int insertSubsc(SqlSessionTemplate sqlSession, Subscription sub) {
 		return sqlSession.insert("subscriptionMapper.insertSubsc", sub);
 	}
+	
+	/** 정기구독 조회
+	 * @author daeunlee
+	 */
+	public Subscription selectSubscription(SqlSessionTemplate sqlSession, int memNo) {
+		return sqlSession.selectOne("subscriptionMapper.selectSubscription", memNo);
+	}
 
 	/**
 	 * [관리자] 정기구독 발송 내역 조회 (한진)

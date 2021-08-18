@@ -41,12 +41,12 @@
               <div class="innerOuter"  style="padding:5% 5%;" align="center">
              
                   
-                  <input type="hidden" value="${ groupBoardNo }">
+                  <input type="hidden" value="${ g.groupBoardNo }">
                   
                    <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
                        	   <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${g.groupBoardNo}">모임정보</a>
+                              <a class="nav-link" href="detail.gbo?gno=${ gno }">모임정보</a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link active" href="meet.bo">정모게시판</a>

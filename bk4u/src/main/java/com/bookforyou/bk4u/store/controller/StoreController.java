@@ -101,7 +101,7 @@ public class StoreController {
 		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,10,5);
 		ArrayList<StoreBook> list = storeService.selectStoreBookList(pi,storeNo);
 		
-		mv.addObject("listCount",listCount).addObject("pi",pi).addObject("list",list).setViewName("store/storeBooks");
+		mv.addObject("listCount",listCount).addObject("pi",pi).addObject("list",list).addObject("storeNo", storeNo).setViewName("store/storeBooks");
 		return mv;
 	}
 	

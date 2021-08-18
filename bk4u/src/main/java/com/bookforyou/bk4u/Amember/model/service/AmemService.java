@@ -25,8 +25,17 @@ public interface AmemService {
 	// 회원탈퇴
 	int amDelete(String memId);
 	
+	// 블랙리스트 추가
+	int blackMember(int mno);
 	
-	// 블랙리스트
-	int updateAmem(Amem am);
+	// 블랙리스트 회원조회
+	int selectBlackListCount();
+	ArrayList<Member>selectBlackList(PageInfo pi);
+	// 블랙리스트 검색
+	public int selectBlackSearchListCount(HashMap<String, String> map);
+	public ArrayList<Member> selectBlackSearchList(PageInfo pi, HashMap<String, String> map);
+	
+	//블랙리스트 삭제
+	int deleteBlack(int mno);
 	
 }

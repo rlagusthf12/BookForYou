@@ -155,6 +155,11 @@ public interface SubscriptionService {
 	 * @author daeunlee
 	 */
 	int insertSubsc(Subscription sub);
+	
+	/** 정기구독 조회
+	 * @author daeunlee
+	 */
+	Subscription selectSubscription(int memNo);
 
 	/**
 	 * [관리자] 정기구독 발송 내역 개수 조회 (한진)

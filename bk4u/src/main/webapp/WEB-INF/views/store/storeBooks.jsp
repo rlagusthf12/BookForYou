@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <style>
 	#content1{
 		width:800px;
@@ -65,10 +68,32 @@
 		margin-bottom:200px;
 	}
 	
+	#addBook{float:left; margin-bottom:10px;}
+	#addBook .btn{padding:0.1em 0.5em;}
+	
 </style>
+
+<script>
+	$(function(){
+		
+		$(".detailB").click(function(){
+			var bkNo = $(this).text();
+			location.href=`storeBookDetail.bk?storeNo=${storeNo}&bkNo=` + bkNo;
+		})
+		
+	})
+</script>
+
 </head>
 <body>
 <jsp:include page="../common/menubar.jsp"/>
+
+	<c:if test="${ !empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+	</c:if>
+	
  	<div id="content1">
  		<div class="Title">보유 도서</div>
  	<div class="searchBar1">
@@ -88,6 +113,10 @@
 	</span>
 	</div>	
 	
+	<div id="addBook">
+		<button class="btn btn-outline-success"  onclick="location.href=`bookListForAdd.bk?storeNo=${storeNo}`">추가</button>
+	</div>
+	
 	<table class="table_board">
 	<tbody>
 	<tr>
@@ -100,7 +129,7 @@
 	</tr>
 	<c:forEach var="of" items="${list}">
 	<tr>
-	<td style="height:60px;">${of.bookNo}</td>
+	<td style="height:60px;"  class="detailB">${of.bookNo}</td>
 	<td>${of.bookTitle}</td>
 	<td>${of.bookAuthor}</td>
 	<td>${of.bookPubl}</td>
