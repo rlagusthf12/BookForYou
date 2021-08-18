@@ -302,4 +302,12 @@ public class BookServiceImpl implements BookService {
 	public int updateStoreBookStatus(HashMap<String, String> map) {
 		return bookDao.updateStoreBookStatus(sqlSession, map);
 	}
+
+	/**
+	 * [관리자] 지점별 도서 삭제 (한진)
+	 */
+	@Override
+	public int deleteStoreBook(HashMap<String, String> map) {
+		return bookDao.deleteStoreBook(sqlSession, map);
+	}
 }

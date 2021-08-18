@@ -185,4 +185,9 @@ public interface BookService {
 	 * [관리자] 지점별 도서상태 수정 (한진)
 	 */
 	int updateStoreBookStatus(HashMap<String, String> map);
+
+	/**
+	 * [관리자] 지점별 도서 삭제 (한진)
+	 */
+	int deleteStoreBook(HashMap<String, String> map);
 }

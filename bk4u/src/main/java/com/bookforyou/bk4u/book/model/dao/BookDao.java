@@ -268,4 +268,11 @@ public class BookDao {
 	public int updateStoreBookStatus(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.update("bookMapper.updateStoreBookStatus", map);
 	}
+
+	/**
+	 * [관리자] 지점별 도서 삭제 (한진)
+	 */
+	public int deleteStoreBook(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.delete("storeMapper.deleteStoreBook", map);
+	}
 }

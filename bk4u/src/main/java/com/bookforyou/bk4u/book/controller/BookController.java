@@ -753,4 +753,28 @@ public class BookController {
 		return "redirect:/storeBookDetail.bk";
 	}
 	
+	/**
+	 * [관리자] 지점별 도서 삭제 
+	 */
+	@RequestMapping("deleteStoreBook")
+	public String deleteStoreBook(String storeNo, @RequestParam(value="selectedBkNo") List<String> bkNoArr,
+								RedirectAttributes ra) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		
+		for(int i=0; i<bkNoArr.size(); i++) {
+			String bkNo = bkNoArr.get(i);
+			map.put("bkNo", bkNo);
+			
+			int result = bookService.deleteStoreBook(map);
+		}
+		
+		ra.addAttribute("storeNo", storeNo);
+		ra.addAttribute("alertMsg", "도서가 추가되었습니다.");
+		
+		return "redirect:/list.storebook";
+	
+	}
+	
 }
