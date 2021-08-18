@@ -70,9 +70,10 @@ public class AmemServicelmpl implements AmemService{
 
 	// 블랙리스트 추가
 	@Override
-	public int blackMember(int mno) {
-		return amDao.blackMember(sqlSession, mno);
+	public int blackMember(HashMap<String, String> map) {
+		return amDao.blackMember(sqlSession, map);
 	}
+	
 	// 블랙리스트 검색
 	@Override
 	public int selectBlackSearchListCount(HashMap<String, String> map) {
@@ -88,6 +89,7 @@ public class AmemServicelmpl implements AmemService{
 	public int deleteBlack(int mno) {
 		return amDao.deleteBlack(sqlSession, mno);
 	}
+
 	
 	
 

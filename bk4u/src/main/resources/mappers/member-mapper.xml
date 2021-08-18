@@ -423,9 +423,12 @@
   	<update id="blackMember">
 		update
 		       members
-		   set mem_status = 'N'
-		 where mem_no = #{memNo}
+		   set 
+		   black_reason = #{blackReason},
+		   mem_status = 'N'		   
+		 where mem_no = #{mno}
 	</update>
+	
 	
 	<!-- 블랙리스트 검색 -->
 	<select id="selectBlackSearchListCount" resultType="_int">
@@ -446,7 +449,7 @@
 	 	</choose>	 	
 	 		like '%' || #{keyword} || '%'	 		 	
 	</select>
-	<!-- 블랙리스트 삭제 -->
+	<!-- 블랙리스트 삭제(형우) -->
 	<update id="deleteBlack">
 		update
 		       members

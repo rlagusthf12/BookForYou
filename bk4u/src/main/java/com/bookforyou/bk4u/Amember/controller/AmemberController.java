@@ -148,9 +148,14 @@ public class AmemberController {
 	
 	// 블랙리스트 추가
 	@RequestMapping("black.me")
-	public String memberBlack(int mno, Model model, HttpSession session) {
+	public String memberBlack(Model model, HttpSession session, String mno, String blackReason) {
 		
-		int result = amService.blackMember(mno); // service, dao, sql문
+		HashMap<String, String> map = new HashMap<>();
+		map.put("mno", mno);
+		map.put("blackReason", blackReason);
+		
+		int result = amService.blackMember(map);
+					 
 	
 		if(result > 0) { // 성공 => 리스트페이지
 		
