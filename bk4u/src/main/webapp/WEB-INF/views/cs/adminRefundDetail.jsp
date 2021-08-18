@@ -78,15 +78,16 @@
 <script>
 	$(function(){
 		
-		/* 결제쪽 계산 */
-		var $price = Number($("#price").text());
-		var $point = Number($("#point").text());
-		var $add = Number($("#add").text());
-		var $total = $price - $point + $add;
-		$("#total").text($total);
-		$("#total2").text($total);
-		var $gp = $total * 0.01;
-		$("#givPoint").text($gp);	
+		/* 포인트 계산 */
+	    var priceNoComma = `${ o.orderPriceComma }`.split(",")[0] + `${ o.orderPriceComma }`.split(",")[1];
+	    $("#givePoint").text(Number(priceNoComma) * 0.01);
+		
+		/* 주문 상품 정가 금액 콤마 표시 */
+		$(".convert").each(function(){
+			var $price = $(this).text();
+			var $priceComma = $price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).text($priceComma);
+		})
 		
 		/* 닫기 버튼 */
 		$("#back").click(function(){
@@ -181,7 +182,7 @@
 	                        <td>${ b.bkTitle }</td>
 	                        <td>${ b.writerName }</td>
 	                        <td>${ b.bkPublish }</td>
-	                        <td>${ b.detailPrice }</td>
+	                        <td class="convert">${ b.detailPrice }</td>
 	                        <td>${ b.quantity }</td>
 	                    </tr>
                     </c:forEach>
@@ -196,40 +197,39 @@
             <table class="table table-bordered table-sm vertical">
                 <tr>
                     <th>주문 금액</th>
-                    <td id="price">${ o.orderPrice }</td>
-                    <th>결제 금액</th>
-                    <td id="total2"></td>
+                    <td class="convert">${ o.orderPrice }</td>
+                    <th rowspan="2">결제 금액</th>
+                    <td rowspan="2" class="convert">${ o.orderPriceComma }</td>
                 </tr>
                 <tr>
                     <th>추가금</th>
-                    <td id="add">${ o.addPrice }</td>
-                    <th>적립 포인트</th>
-                    <td id="givPoint"></td>
+                    <td class="convert">${ o.addPrice }</td>
                 </tr>
                 <tr>
                     <th>사용 쿠폰</th>
                     <c:choose>
                      	<c:when test="${ not empty cd.couponIssueNum }">
-		                	<td width="300px;">[${ cd.couponIssueNum } - ${ cd.couponName } (${ cd.couponPrice } ${ cd.couponPriceRate })]</td>
+                     		<c:choose>
+                     			<c:when test="${ not empty cd.couponPrice }">
+		                			<td width="300px;" class="convert">[${ cd.couponIssueNum } - ${ cd.couponName }] ${ cd.couponPrice }</td>
+                        		</c:when>
+                        		<c:otherwise>
+                        			<td width="300px;">[${ cd.couponIssueNum } - ${ cd.couponName }] ${ cd.couponPriceRate }%</td>
+                        		</c:otherwise>
+                        	</c:choose>
                         </c:when>
                         <c:otherwise>
                             <td width="300px;">-</td>
                         </c:otherwise>
                     </c:choose>
-                    <th>결제 수단</th>
-                    <td>${ p.payWay }</td>
+                    <th>결제일</th>
+                    <td>${ p.payDate }</td>
                 </tr>
                 <tr>
                     <th>사용 포인트</th>
-                    <td id="point">${ o.usedPoints }</td>
-                    <th>결제 상태</th>
-                    <td>${ p.status }</td>
-                </tr>
-                <tr>
-                    <th>합계</th>
-                    <td id="total"></td>
-                    <th>결제일</th>
-                    <td>${ p.payDate }</td>
+                    <td class="convert">${ o.usedPoints }</td>
+                    <th>적립 포인트</th>
+                    <td id="givePoint"></td>
                 </tr>
             </table>
         </div>
@@ -246,15 +246,29 @@
                 </tr>
                 <tr>
 	                <th scope="col">사용된 쿠폰 반환</th>
-	                <td>${ cd.couponPrice }</td>
+	                <c:choose>
+                     	<c:when test="${ not empty cd.couponIssueNum }">
+                     		<c:choose>
+                     			<c:when test="${ not empty cd.couponPrice }">
+		                			<td width="300px;" class="convert">[${ cd.couponIssueNum } - ${ cd.couponName }] ${ cd.couponPrice }</td>
+                        		</c:when>
+                        		<c:otherwise>
+                        			<td width="300px;">[${ cd.couponIssueNum } - ${ cd.couponName }] ${ cd.couponPriceRate }%</td>
+                        		</c:otherwise>
+                        	</c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <td width="300px;">-</td>
+                        </c:otherwise>
+                    </c:choose>
 	            </tr>
                 <tr>
                     <th scope="col">사용된 포인트 반환</th>
-                    <td>${ o.usedPoints }</td>
+                    <td class="convert">${ o.usedPoints }</td>
                 </tr>
                 <tr>
                     <th scope="col">총환불액</th>
-                    <td>${ p.price + o.usedPoints + cd.couponPrice }</td>
+                    <td class="convert">${ o.orderPrice + o.addPrice }</td>
                 </tr>
             </table>
         </div>

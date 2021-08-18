@@ -270,7 +270,7 @@
 
 				var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(11).text();
+            	var $memo = td.eq(10).text();
             	var $subscNo = td.eq(1).text();
             	$(".admin-memo-content .sNo").val($subscNo);
             	$(".admin-memo-content .memo-bottom input").val($memo);
@@ -300,7 +300,7 @@
             	
             	var tr = $(this).parent().parent().parent();
             	var td = tr.children();
-            	var $memo = td.eq(10).text();
+            	var $memo = td.eq(9).text();
             	$(".user-memo-content .memo-bottom p").text($memo);
             	
                 $(".user-memo-content").toggleClass("hide");
@@ -439,7 +439,6 @@
                             <th>구독기간</th>
                             <th>배송희망일</th>
                             <th>결제금액</th>
-                            <th>결제상태</th>
                             <th>구독상태</th>
                             <th width="70px">메모</th>
                         </tr>
@@ -456,8 +455,7 @@
 			                            <td>${ s.subscName }</td>
 			                            <td>${ s.subscPeriod }</td>
 			                            <td>${ s.subscDelDate }</td>
-			                            <td>${ s.subscPrice }</td>
-			                            <td>${ s.payStatus }</td>
+			                            <td>${ s.priceComma }</td>
 			                            <td>${ s.subscStatus }</td>
 			                            <td style="display:none">${ s.deliveryRequest }</td>
 			                            <td style="display:none">${ s.adminMemo }</td>
@@ -497,7 +495,7 @@
 															</div>
 															<form action="updateAdminMemo.su" method="POST">
 																<input type="hidden" name="subscNo" class="sNo"/>
-																<input type="hidden" name="page" value="${ s.subscStatus }"/>
+																<input type="hidden" name="page" value="${ subscStatus }"/>
 																<div class="memo-bottom">
 																	<p><input type="text" name="adminMemoContent"></p>
 																</div>

@@ -437,7 +437,7 @@
 			                        <tr>
 			                            <td>${ no.count }</td>
 			                            <td><input type="checkbox" name="bCheck" value="${ b.bkNo }"></td>
-			                            <td><img src="" alt="" width="65" height="80"></td>
+			                            <td><img src="${ b.introChangeName }" alt="" width="65" height="80"></td>
 			                            <td class="detailC bkNo">${ b.bkNo }</td>
 			                            <td>${ b.bkTitle }</td>
 			                            <td>${ b.writerName }</td>

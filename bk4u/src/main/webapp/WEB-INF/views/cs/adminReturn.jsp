@@ -486,7 +486,7 @@
                             <th>주문번호</th>
                             <th>주문자</th>
                             <th>도서명</th>
-                            <th>결제수단</th>
+                            <th>취소금액</th>
                             <th>반품상태</th>
                             <th>반품처리</th>
                             <th width="70px">메모</th>
@@ -503,7 +503,7 @@
 			                            <td class="detailO">${ rt.orderNo }</td>
 			                            <td>${ rt.memName } <br> (${ rt.memId })</td>
 			                            <td>${ rt.bkTitle }</td>
-			                            <td>${ rt.payWay }</td>
+			                            <td>${ rt.orderPriceComma }</td>
 			                            <td>${ rt.status }</td>
 			                            <td>
 			                            	<c:choose>

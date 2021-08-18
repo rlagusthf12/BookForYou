@@ -311,7 +311,7 @@
 	
 			var tr = $(this).parent().parent().parent();
 	    	var td = tr.children();
-	    	var $memo = td.eq(13).text();
+	    	var $memo = td.eq(12).text();
 	    	var $orderNo = td.eq(3).text();
 	    	$(".admin-memo-content .oNo").val($orderNo);
 	    	$(".admin-memo-content .memo-bottom input").val($memo);
@@ -341,7 +341,7 @@
 	    	
 	    	var tr = $(this).parent().parent().parent();
 	    	var td = tr.children();
-	    	var $memo = td.eq(12).text();
+	    	var $memo = td.eq(11).text();
 	    	$(".user-memo-content .memo-bottom p").text($memo);
 	    	
 	        $(".user-memo-content").toggleClass("hide");
@@ -502,7 +502,6 @@
                             <th width="85px">주문자</th>
                             <th width="165px">도서명</th>
                             <th width="75px">취소금액</th>
-                            <th width="75px">결제수단</th>
                             <th width="90px">취소상태</th>
                             <th width="80px">취소처리</th>
                             <th width="70px">메모</th>
@@ -520,7 +519,6 @@
 			                            <td>${ c.memName } <br> (${ c.memId })</td>
 			                            <td>${ c.bkTitle }</td>
 			                            <td>${ c.orderPriceComma }</td>
-			                            <td>${ c.payWay }</td>
 			                            <td>${ c.status }</td>
 			                            <td style="display:none">${ c.deliveryMsg }</td>
 			                            <td style="display:none">${ c.adminMemo }</td>

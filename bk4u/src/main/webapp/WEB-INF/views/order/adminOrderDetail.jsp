@@ -132,19 +132,11 @@
 	    $("#showAddressForm").click(function(){
 	        $("#addressForm").toggleClass("hide");
 	    })
-	
-	    /* 결제쪽 계산 */
+	    
+	    /* 배송지 변경에 필요한 oderNo */
 	    var orderNo = $("#odNo").text();
 	    $("#hiddenOdNo").val(orderNo);	    
-	    var $price = Number($("#price").text());
-	    var $point = Number($("#point").text());
-	    var $add = Number($("#add").text());
-	    var $total = $price - $point + $add;
-	    $("#total").text($total);
-	    /*$("#total2").text($total);*/
-	    var $gp = $total * 0.01;
-	    $("#givPoint").text($gp);
-	    
+	
 	    /* 닫기 버튼 */
 		$("#back").click(function(){
 			history.back();
@@ -161,6 +153,18 @@
 			var orderNo = $("#odNo").text();
 			location.href="adminOrderConfirm.or?selectedOd=" + orderNo + "&odStatus=6&orStatus=dt";
 		})
+		
+	    /* 포인트 계산 */
+	    var priceNoComma = `${ od.orderPriceComma }`.split(",")[0] + `${ od.orderPriceComma }`.split(",")[1];
+	    $("#givePoint").text(Number(priceNoComma) * 0.01);
+		
+		/* 주문 상품 정가 금액 콤마 표시 */
+		$(".convert").each(function(){
+			var $price = $(this).text();
+			var $priceComma = $price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).text($priceComma);
+		})
+		
 	})
 </script>
 </head>
@@ -232,7 +236,7 @@
 				                            <td>${ ob.bkTitle }</td>
 				                            <td>${ ob.writerName }</td>
 				                            <td>${ ob.bkPublish }</td>
-				                            <td>${ ob.detailPrice }</td>
+				                            <td class="convert">${ ob.detailPrice }</td>
 				                            <td>${ ob.quantity }</td>
 				                        </tr>
 			                        </c:forEach>
@@ -333,14 +337,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	
 	                                <tr>
 	                                    <td>${ od.shippingNumber }</td>
 	                                    <td>${ od.deliveryCompany }</td>
 	                                    <td>${ od.deliveryStatus }</td>
-	                                    <td>${ od.addPrice }</td>
+	                                    <td class="convert">${ od.addPrice }</td>
 	                                </tr>
-                                
                             </tbody>
                         </table>
                     </div>
@@ -355,36 +357,46 @@
                     <table class="table table-bordered table-sm vertical">
                         <tr>
                             <th>주문 금액</th>
-	                        <td id="price">${ od.orderPrice }</td>
-                            <th>결제 금액</th>
-                            <td id="total2"${ od.payAmount }></td>
+	                        <td class="convert">${ od.orderPrice }</td>
+                            <th rowspan="2">결제 금액</th>
+                            <td rowspan="2">${ od.orderPriceComma }</td>
                         </tr>
                         <tr>
                             <th>추가금</th>
-                           	<td id="add">${ od.addPrice }</td>
-                            <th>적립 포인트</th>
-                            <td id="givPoint"></td>
+                           	<td class="convert">${ od.addPrice }</td>
                         </tr>
                         <tr>
                             <th>사용 쿠폰</th>
                             <c:choose>
-                            	<c:when test="${ not empty oCou.couponIssueNum }">
-		                            <td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName } (${ oCou.couponPrice } ${ oCou.couponPriceRate })]</td>
-                            	</c:when>
-                            	<c:otherwise>
-                            		<td width="300px;">-</td>
-                            	</c:otherwise>
-                            </c:choose>
+		                     	<c:when test="${ not empty oCou.couponIssueNum }">
+		                     		<c:choose>
+		                     			<c:when test="${ not empty oCou.couponPrice }">
+				                			<td width="300px;" class="convert">[${ oCou.couponIssueNum } - ${ oCou.couponName }] ${ oCou.couponPrice }</td>
+		                        		</c:when>
+		                        		<c:otherwise>
+		                        			<td width="300px;">[${ oCou.couponIssueNum } - ${ oCou.couponName }] ${ oCou.couponPriceRate }%</td>
+		                        		</c:otherwise>
+		                        	</c:choose>
+		                        </c:when>
+		                        <c:otherwise>
+		                            <td width="300px;">-</td>
+		                        </c:otherwise>
+		                    </c:choose>
+                            <th>결제일</th>
+                            <td>${ oPay.payDate }</td>
                         </tr>
                         <tr>
                             <th>사용 포인트</th>
-                            <td id="point">0</td>
-                        </tr>
-                        <tr>
-                            <th>합계</th>
-                            <td id="total"></td>
-                            <th>결제일</th>
-                            <td>${ oPay.payDate }</td>
+                            <c:choose>
+                            	<c:when test="${ not empty od.usedPoints }">
+                            		<td class="convert">${od.usedPoints}</td>
+                        		</c:when>
+                        		<c:otherwise>
+                        			<td class="convert">0</td>
+                        		</c:otherwise>
+                        	</c:choose>
+                        	<th>적립 예정 포인트</th>
+                            <td class="convert" id="givePoint"></td>
                         </tr>
 
                     </table>

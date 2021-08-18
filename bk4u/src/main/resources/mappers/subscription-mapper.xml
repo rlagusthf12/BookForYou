@@ -32,6 +32,7 @@
 		<result column="shipping_number" property="shippingNumber"/>
 		<result column="shipping_status" property="shippingStatus"/>
 		<result column="bk_title" property="bkTitle"/>
+		<result column="price_comma" property="priceComma"/>
 	</resultMap>
 	
 	<resultMap type="Point" id="PointResult">
@@ -72,7 +73,7 @@
 		       subsc_no,
 		       mem_name,
 		       mem_id,
-		       p.status,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(p.price)), '([0-9]{3})','\1,')),'^,','') as "price_comma",		       
 		       subsc_sdate,
 		       subsc_enddate,
 		       subsc_name,
@@ -189,7 +190,7 @@
 			   subsc_no,
 		       mem_name,
 		       mem_id,
-		       p.status,
+		       regexp_replace(reverse(regexp_replace(reverse(to_char(p.price)), '([0-9]{3})','\1,')),'^,','') as "price_comma",
 		       subsc_sdate,
 		       subsc_enddate,
 		       subsc_name,
@@ -255,6 +256,7 @@
                mem_name,
                mem_phone,
                mem_email,
+               regexp_replace(reverse(regexp_replace(reverse(to_char(p.price)), '([0-9]{3})','\1,')),'^,','') as "price_comma",
 		       subsc_sdate,
 		       subsc_enddate,
 		       subsc_name,
@@ -271,6 +273,7 @@
 		       deliveryrequest
 		  from subscription
           join members using (mem_no)
+          join payment p using (pay_no)
 		 where subsc_no = #{subscNo}
 	</select>
 	
