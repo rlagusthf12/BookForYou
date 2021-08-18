@@ -1014,13 +1014,26 @@
 	            $("#point_box .btn_select").click(function(){
             		$("#point_box input[name=uPoint]").val(${ point });
 	        	});
+	            
+	        	$("#point_box .btn_apply").click(function(){
+	            	ptPrice = $("#point_box input[name=uPoint]").val();
+            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text($("#point_box input[name=uPoint]").val() + "원");
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+            		$("#point_box").css('display', 'none');
+	        	});
+	        	
+            	$("#point_box .btn_cancel").click(function(){
+                	ptPrice = 0;
+                	$("#point_box input[name=uPoint]").val(0);
+            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text("0원");
+            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+            		$("#point_box").css('display', 'none');
+            	});
             </script>
             
             <script>
-	        	$("#point_box .btn_apply").click(function(){
-	            	ptPrice = $("#point_box input[name=uPoint]").val();
-	            	console.log(ptPrice);
-	        	});
             </script>
 
             <div id="policy_info">
