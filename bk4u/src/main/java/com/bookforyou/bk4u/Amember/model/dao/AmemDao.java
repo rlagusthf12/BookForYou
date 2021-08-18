@@ -69,6 +69,7 @@ public class AmemDao {
 	public int blackMember(SqlSessionTemplate sqlSession, int mno) {
 		return sqlSession.update("memberMapper.blackMember", mno);
 	}
+	
 	// 블랙리스트 검색
 	public int selectBlackSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("memberMapper.selectBlackSearchListCount", map);
@@ -81,5 +82,8 @@ public class AmemDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectBlackSearchList", map, rowBounds);
 		
 	}
-	
+	// 블랙리스트 추가
+		public int deleteBlack(SqlSessionTemplate sqlSession, int mno) {
+			return sqlSession.update("memberMapper.deleteBlack", mno);
+		}
 }

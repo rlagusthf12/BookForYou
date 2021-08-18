@@ -148,17 +148,17 @@ public class AmemberController {
 	
 	// 블랙리스트 추가
 	@RequestMapping("black.me")
-	public String memberBlack(int mno, String filePath, Model model, HttpSession session) {
+	public String memberBlack(int mno, Model model, HttpSession session) {
 		
 		int result = amService.blackMember(mno); // service, dao, sql문
 	
 		if(result > 0) { // 성공 => 리스트페이지
 		
-					session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+					session.setAttribute("alertMsg", "블랙리스트 등록 성공.");
 					return "redirect:blackList.me";
 					
 				}else { // 실패
-					model.addAttribute("errorMsg", "게시글 삭제 실패");
+					model.addAttribute("errorMsg", "블랙리스트 삭제 실패");
 					return "common/errorPage";
 				}
 		
@@ -204,6 +204,23 @@ public class AmemberController {
 		  .setViewName("Amember/blacklist");
 		
 		return mv;
+		
+	}
+	// 블랙리스트 삭제
+	@RequestMapping("blackDelete.me")
+	public String DeleteBlack(int mno, String filePath, Model model, HttpSession session) {
+		
+		int result = amService.deleteBlack(mno); // service, dao, sql문
+	
+		if(result > 0) { // 성공 => 리스트페이지
+		
+					session.setAttribute("alertMsg", "블랙리스트에서 삭제되었습니다.");
+					return "redirect:blackList.me";
+					
+				}else { // 실패
+					model.addAttribute("errorMsg", "블랙리스트 삭제 실패");
+					return "common/errorPage";
+				}
 		
 	}
 	

@@ -35,4 +35,7 @@ public interface AmemService {
 	public int selectBlackSearchListCount(HashMap<String, String> map);
 	public ArrayList<Member> selectBlackSearchList(PageInfo pi, HashMap<String, String> map);
 	
+	//블랙리스트 삭제
+	int deleteBlack(int mno);
+	
 }

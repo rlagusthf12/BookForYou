@@ -83,6 +83,11 @@ public class AmemServicelmpl implements AmemService{
 	public ArrayList<Member> selectBlackSearchList(PageInfo pi, HashMap<String, String> map) {
 		return amDao.selectBlackSearchList(sqlSession, pi, map);
 	}
+	// 블랙리스트 삭제
+	@Override
+	public int deleteBlack(int mno) {
+		return amDao.deleteBlack(sqlSession, mno);
+	}
 	
 	
 

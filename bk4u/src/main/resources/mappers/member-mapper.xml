@@ -446,6 +446,13 @@
 	 	</choose>	 	
 	 		like '%' || #{keyword} || '%'	 		 	
 	</select>
+	<!-- 블랙리스트 삭제 -->
+	<update id="deleteBlack">
+		update
+		       members
+		   set mem_status = 'M'
+		 where mem_no = #{memNo}
+	</update>
 	
 	<select id="selectBlackSearchList" resultMap="memberResult">
 		select	

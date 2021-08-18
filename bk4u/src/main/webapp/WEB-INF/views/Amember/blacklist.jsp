@@ -200,7 +200,7 @@
                     <td>${ as.memEmail }</td>
                     <td>${ as.memEnrolldate }</td>
                     <td>${ as.blackReason }</td>
-                    <td><button type="button" class="btn btn-danger">삭제</button></td>
+                    <td><button type="button" onclick="location.href='blackDelete.me?mno=${as.memNo}'" class="btn btn-danger">삭제</button></td>
                     
                 </tr>                
                 </c:forEach>
