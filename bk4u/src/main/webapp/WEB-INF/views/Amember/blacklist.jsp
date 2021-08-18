@@ -160,10 +160,10 @@
             	<input type="hidden" name="Page" value="1">
                 <div id="search-bar">
                     <div id="search-condition">
-                        <select name="condition">
-                            <option value="searchAll">전체</option>
-                            <option value="memId">아이디</option>
+                        <select name="condition">                         
                             <option value="memName">이름</option>                           
+                            <option value="memId">아이디</option>
+                            <option value="mem_email">이메일</option>
                         </select>
                     </div>
                     <div id="search-input">
@@ -192,7 +192,7 @@
                 </tr>
             </thead>
             <tbody>
-            	<c:forEach var="as" items="${ list }">
+            	<c:forEach var="as" items="${ blist }">
                 <tr data-toggle="modal" data-id="1" data-target="#ptable">
                     <td height="80">${ as.memNo }</td>
                     <td>${ as.memId }</td>
@@ -211,16 +211,30 @@
 
         <div id="paging-wrap">
             <ul class="pagination">
-                <li class="page-item disabled"><a class="page-link">이전</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item disabled"><a class="page-link">다음</a></li>
+            	<c:choose>
+            		<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="blackList.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                	<li class="page-item"><a class="page-link" href="blackList.me?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">            
+                		<li class="page-item disabled"><a class="page-link">다음</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="blackList.me?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                	</c:otherwise>
+                </c:choose>          
             </ul>
         </div>
-    </div>
 
 </body>
 </html>

@@ -198,7 +198,8 @@
                     <th width="100">이름</th>
                     <th width="250">이메일</th>
                     <th width="150">거주지</th>
-                    <th width="150">가입일</th>                   
+                    <th width="150">가입일</th>
+                    <th width="150">블랙</th>                   
                 </tr>
             </thead>
             <tbody>
@@ -210,7 +211,8 @@
                     <td>${ am.memName }</td>
                     <td>${ am.memEmail }</td>
                     <td>${ am.memBasicAddress }</td>
-                    <td>${ am.memEnrolldate }</td>                           
+                    <td>${ am.memEnrolldate }</td>  
+                    <td><button type="button" onclick="location.href='black.me?mno=${am.memNo}'">추가</button></td>                         
                 </tr>
        			</c:forEach>
             </tbody>
@@ -227,7 +229,7 @@
                 		<li class="page-item disabled"><a class="page-link">이전</a></li>
                 	</c:when>
                 	<c:otherwise>
-                		<li class="page-item disabled"><a class="page-link" href="amSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                		<li class="page-item disabled"><a class="page-link" href="amemSearch.me?currentPage=${ pi.currentPage-1 }">이전</a></li>
                 	</c:otherwise>
                 </c:choose>
                 

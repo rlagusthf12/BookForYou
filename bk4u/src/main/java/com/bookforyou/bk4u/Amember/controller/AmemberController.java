@@ -146,5 +146,65 @@ public class AmemberController {
 		}
 	}
 	
-
+	// 블랙리스트 추가
+	@RequestMapping("black.me")
+	public String memberBlack(int mno, String filePath, Model model, HttpSession session) {
+		
+		int result = amService.blackMember(mno); // service, dao, sql문
+	
+		if(result > 0) { // 성공 => 리스트페이지
+		
+					session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+					return "redirect:blackList.me";
+					
+				}else { // 실패
+					model.addAttribute("errorMsg", "게시글 삭제 실패");
+					return "common/errorPage";
+				}
+		
+	}
+	
+	//블랙리스트 조회
+	@RequestMapping("blackList.me")
+	public ModelAndView selectBlackList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		//System.out.println(currentPage);
+		int listCount = amService.selectBlackListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Member> blist = amService.selectBlackList(pi);
+		
+		
+		mv.addObject("pi", pi)
+		  .addObject("blist", blist)
+		  .setViewName("Amember/blacklist");
+		//System.out.println(blist);
+		return mv;
+		
+	}
+	// 블랙리스트 검색
+	@RequestMapping("blackSearch.me")
+	public ModelAndView selectBlackSearchList(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,
+										 String condition, String keyword) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int listCount = amService.selectBlackSearchListCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Member> blist = amService.selectBlackSearchList(pi, map);
+		
+		
+		mv.addObject("pi", pi)
+		  .addObject("blist", blist)
+		  .addObject("condition", condition)
+		  .addObject("keyword", keyword)
+		  .setViewName("Amember/blacklist");
+		
+		return mv;
+		
+	}
+	
 }

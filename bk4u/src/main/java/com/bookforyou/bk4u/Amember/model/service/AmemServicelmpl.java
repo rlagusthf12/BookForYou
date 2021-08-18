@@ -27,12 +27,6 @@ public class AmemServicelmpl implements AmemService{
 	}
 
 	@Override
-	public int updateAmem(Amem am) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public int increaseCount(int memNo) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -64,6 +58,32 @@ public class AmemServicelmpl implements AmemService{
 	public ArrayList<Member> selectList(PageInfo pi) {
 		return amDao.selectList(sqlSession, pi);
 	}
+	//블랙리스트 조회
+	@Override
+	public int selectBlackListCount() {
+		return amDao.selectBlackListCount(sqlSession);
+	}
+	@Override
+	public ArrayList<Member> selectBlackList(PageInfo pi) {
+		return amDao.selectBlackList(sqlSession, pi);
+	}
 
+	// 블랙리스트 추가
+	@Override
+	public int blackMember(int mno) {
+		return amDao.blackMember(sqlSession, mno);
+	}
+	// 블랙리스트 검색
+	@Override
+	public int selectBlackSearchListCount(HashMap<String, String> map) {
+		return amDao.selectBlackSearchListCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Member> selectBlackSearchList(PageInfo pi, HashMap<String, String> map) {
+		return amDao.selectBlackSearchList(sqlSession, pi, map);
+	}
+
+	
 
 }
