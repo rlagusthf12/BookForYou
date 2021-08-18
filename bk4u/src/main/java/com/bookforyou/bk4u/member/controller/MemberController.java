@@ -55,7 +55,7 @@ public class MemberController {
 	public String loginMember(Member member,Model model,HttpSession session) {
 		Member loginUser = memberService.loginMember(member);
 		System.out.println(loginUser);
-		if(loginUser.getReportCount()>=3) {
+		if(loginUser != null  && loginUser.getReportCount()>=3) {
 			int result = memberService.updateStatus(member.getMemNo());
 		}
 		if(loginUser != null && bcryptPasswordEncoder.matches(member.getMemPwd(), loginUser.getMemPwd())) {
