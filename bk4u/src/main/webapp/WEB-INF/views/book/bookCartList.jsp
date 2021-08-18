@@ -37,12 +37,12 @@
         }
         
         #content #cart_title{
-            margin-top: 50px;
-            margin-bottom: 50px;
+            margin-top: 30px;
+            margin-bottom: 40px;
             margin-left: 20px;
             height: 40px;
-            font-size: 30px;
-            font-weight: 1000;
+            font-size: 33px;
+            font-weight: 500;
         }
         
         #content #empty_cart{
