@@ -88,5 +88,10 @@ public interface RentalService {
 	 */
 	int updateRentalReturnDate(HashMap<String, String> map);
 
+	/**
+	 * [관리자] 대여 상세 보기 (한진)
+	 */
+	Rental selectAdminRentalDetail(String rentalNo);
+
 
 }

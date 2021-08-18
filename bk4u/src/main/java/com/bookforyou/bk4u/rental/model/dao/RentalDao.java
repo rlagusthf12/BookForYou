@@ -132,4 +132,11 @@ public class RentalDao {
 		return sqlSession.update("rentalMapper.updateRentalReturnDate", map);
 	}
 
+	/**
+	 * [관리자] 대여 상세 조회 (한진)
+	 */
+	public Rental selectAdminRentalDetail(SqlSessionTemplate sqlSession, String rentalNo) {
+		return sqlSession.selectOne("rentalMapper.selectAdminRentalDetail", rentalNo);
+	}
+
 }

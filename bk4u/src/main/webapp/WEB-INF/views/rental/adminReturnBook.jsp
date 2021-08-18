@@ -199,6 +199,12 @@
         .table{border:0.08em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
+        .detailR:hover{
+        	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
+        }
 
         /* 페이징 */
        	#paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
@@ -249,6 +255,12 @@
 	    
 	    /* 정렬 시 해당 값 selected */
 	    $("#array-condition").val("${ ar }").prop("selected", true);
+		
+	    /* 상세 보기 */
+        $(".detailR").click(function(){
+        	var $rNo = $(this).text();
+        	location.href=`adminRentalDetail.re?rentalNo=` + $rNo + `&distinctionNo=1`;
+        })
 	})
 	
 </script>
@@ -422,7 +434,7 @@
 	                            <td>
 	                                <input type="checkbox">
 	                            </td>
-	                            <td>${ r.rentalNo }</td>
+	                            <td class="detailR">${ r.rentalNo }</td>
 	                            <td>${ r.memName }<br>(${ r.memId })</td>
 	                            <td>${ r.storeName }</td>
 	                            <td>${ r.bkTitle }</td>

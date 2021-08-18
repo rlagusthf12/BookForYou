@@ -371,6 +371,13 @@
 	 		var refundNo = tr.children().eq(1).text();
 	 		$(".refundPcs").attr("href", 'adminRefundDetail.cs?refundNo=' + refundNo + '&orderNo=' + orderNo + "&no=2");
 	 	})
+	 	
+	 	/*금액 콤마 표시 */
+		$(".convert").each(function(){
+			var $price = $(this).text();
+			var $priceComma = $price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).text($priceComma);
+		})
 	
 	})
 </script>
@@ -508,7 +515,7 @@
 			                            <td>${ rf.memName } <br> (${ rf.memId })</td>
 			                            <td>${ rf.bkTitle }</td>
 			                            <td>${ rf.orderPriceComma }</td>
-			                            <td>${ rf.refundPoint }</td>
+			                            <td class="convert">${ rf.refundPoint }</td>
 			                            <td>${ rf.status }</td>
 			                            <td>
 			                            	<c:choose>
