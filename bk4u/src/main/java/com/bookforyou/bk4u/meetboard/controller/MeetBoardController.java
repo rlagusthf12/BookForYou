@@ -20,10 +20,10 @@ public class MeetBoardController {
 	public String groupboardList(Model model) throws Exception {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		ArrayList<MeetBoard> groupBoardList = bService.selectGBList();
+		ArrayList<MeetBoard> meetBoardList = bService.selectGBList();
 
-		model.addAttribute("groupBoardList", groupBoardList);
-		model.addAttribute("groupBoard", "../groupboard/groupBoardList.jsp");
+		model.addAttribute("meetBoardList", meetBoardList);
+		model.addAttribute("meetBoard", "../groupboard/groupBoardList.jsp");
 		
 				
 		return "../views/groupboard/groupBoardList";

@@ -105,7 +105,37 @@
                             <button type="submit" class="searchBtn btn btn-secondary">검색</button>
                            
                     </form>
-                   
+                   <script>
+    
+					    $(function(){
+					    	// 검색 
+							if("${condition}" != ""){
+								$("option[value=${condition}]").attr("selected", true);
+							}
+					    	// 카테고리
+							if("${category}" != ""){
+								$("option[value=${category}]").attr("selected", true);
+							}
+					    })
+					    
+					 	// 작성 로그인한 회원만 가능
+					    function enrollClick(){
+					    	
+					    	var loginUser = "<c:out value='${loginUser}'/>";
+					    	//console.log(loginUser);
+					    	if(!loginUser){
+					    		var conf = confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?");
+					    		if(conf == true){ // 로그인창
+					    			location.href = "login-form.me";
+					    		}else{ // 화면
+					    			return;
+					    		}
+					    	}else{
+					    		location.href = "enrollForm.bo"
+					    	};
+					    }
+					    
+					    </script>
                     
                 <br><br><br><br>
 			

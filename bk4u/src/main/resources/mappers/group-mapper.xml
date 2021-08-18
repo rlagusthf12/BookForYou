@@ -316,7 +316,7 @@
 
 	</insert>
 	
-	<select id="selectMList" resultMap="meetResult">
+	<select id="meetList" resultMap="meetResult">
 		SELECT *
 		FROM (SELECT ROWNUM NUM
 		, s.group_boardno
@@ -324,17 +324,20 @@
 		, s.offline_address
 		, s.meet_date
 		, s.meet_time
+		, s.group_writer
+		, s.meet_price
 
 		FROM
-		(SELECT * FROM MEET
+		(SELECT * FROM MEET 
 		WHERE MEET_STATUS = 'Y'
+		  
 		ORDER BY MEET_NO DESC)s)
 		WHERE NUM = 1
 		
 		
 	</select>	
 	
-	<select id="selectLastList" resultMap="meetResult">
+	<select id="meetLastList" resultMap="meetResult">
 		SELECT *
 		FROM (SELECT ROWNUM NUM
 		, s.group_boardno

@@ -23,12 +23,13 @@ public class MeetController {
 
 	
 	@RequestMapping(value="meet.bo",  method=RequestMethod.GET)
-	public String meetList(Model model) throws Exception {
+	public String meetList(Model model, Meet m) throws Exception {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-		ArrayList<Meet> meetList = mService.selectMList();
-		ArrayList<Meet> meetLastList = mService.selectLastList();
+		
+		ArrayList<Meet> meetList = mService.meetList();
+		ArrayList<Meet> meetLastList = mService.meetLastList();
 
 		model.addAttribute("meetList", meetList);
 		model.addAttribute("meetLastList", meetLastList);
@@ -47,14 +48,13 @@ public class MeetController {
 	@RequestMapping("insertMeet.bo")
 	public String insertMeet(Meet m ,GroupBoard g, HttpSession session, Model model) {
 		
-		System.out.println(m);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 				int result = mService.insertMeet(m);
 				
 			
-					
 					if(result > 0) {
+						session.setAttribute("alertMsg", "독서모임 등록");
 						return "redirect:meetList.jsp";
 					}else {
 						model.addAttribute("errorMsg", "게시글 작성실패");

@@ -41,12 +41,13 @@
               <div class="innerOuter"  style="padding:5% 5%;" align="center">
              
                   
-                  <input type="hidden" value="${ g.groupBoardNo }">
+                  <input type="hidden" value="${ m.groupBoardNo }">
+                  <input type="hidden" value="${ m.meetNo }">
                   
                    <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
                        	   <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${ gno }">모임정보</a>
+                              <a class="nav-link" href="detail.gbo?gno=${ g.gno }">모임정보</a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link active" href="meet.bo">정모게시판</a>
@@ -81,25 +82,26 @@
                                     
                                 
                                     <td height="180" width="570px">
-                                      <table  id="selectMList">
-                                           <c:forEach var="m" items="${ selectMList }">
+                                      <table  id="meetList">
+                                      
+                                         <input type="hidden" value="${m.groupBoardNo}">    
+					                     <input type="hidden" value="${m.meetNo}">  
+					                     
+                                           <c:forEach var="ml" items="${ meetList }">
                                     
 			                            <tr>
-					                            <input type="hidden" value="${m.groupBoardNo}">    
-					                            <input type="hidden" value="${m.meetNo}">  
+					                         
 					                            
-                                              <td style="height:5px">날짜 : ${ m.meetDate } </td>
+                                              <td style="height:5px">날짜 : ${ ml.meetDate } </td>
                                           </tr>
                                           <tr>
-                                              <td style="height:40px">장소 :  ${ m.offlineAddress }</td>
+                                              <td style="height:40px">장소 :  ${ ml.offlineAddress }</td>
                                           </tr>
                                           
                                           <tr>
                                               <td style="height:100px">
-                                              
-                            
-					                            <input type="hidden" value="${m.groupBoardNo}">    
-					                            <input type="hidden" value="${m.meetNo}">
+                                             
+					                            <input type="hidden" value="${ml.meetNo}">
 					                            
 					                            <c:forEach var="ma" items="${ meetAttendList }">
                                                    ${ ma.memId }  
@@ -181,8 +183,12 @@
                         <table width="580px" border="1" align="left">
                             <br>
                             <td height="180">
-                                <table  id="selectLastList" width="570px">
-                                     <c:forEach var="l" items="${ selectLastList }">
+                                <table  id="meetLastList" width="570px">
+                                
+                                   <input type="hidden" value="${m.groupBoardNo}">    
+					               <input type="hidden" value="${m.meetNo}">
+					                 
+                                    <c:forEach var="l" items="${ meetLastList }">
                                     <tr>
                                         <td style="height:5px">날짜 : ${ l.meetDate } </td>
                                     </tr>
@@ -212,24 +218,25 @@
                     <br>
 
                     <div class="attandGroup">
-                            <table width="750px" align="center">
+                            <table id="meetList" width="750px" align="center">
                             <input type="hidden" value="${m.groupBoardNo }">
                             <input type="hidden" value="${m.meetNo }">
-                            <c:if test="${num eq 1 }">
+                            <c:forEach var="ml" items="${ meetList }">
+                            
                                 <tr>
-                                    <td>${ m.meetDate }</td>
-                                    <td colspan="2">${ m.meetTime }</td>
+                                    <td>${ ml.meetDate }</td>
+                                    <td colspan="2">${ ml.meetTime }</td>
                                 </tr>
                                 <tr>
-                                    <td>${ m.meetPlace } </td> 
-                                    <td align="right">${ m.meetPrice } 원 </td>
+                                    <td>${ ml.offlineAddress } </td> 
+                                    <td align="right">${ ml.meetPrice } 원 </td>
                                     <td width="200">
                                     
                                         <button style="float: right; border-color: black; background-color: white; border-radius: 10px;" >취소하기</button>
                                         <button style="float: right;  border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;" >참여하기</button>
                                     </td> 
                                 </tr>
-                                </c:if>
+                               </c:forEach>
                                 <br>
                             </table>
                     </div>

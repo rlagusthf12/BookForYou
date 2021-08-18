@@ -39,13 +39,14 @@ public class MeetServiceImpl implements MeetService {
 
 
 	@Override
-	public ArrayList<Meet> selectMList() {
-		return mDao.selectMList(sqlSession);
+	public ArrayList<Meet> meetList() {
+		return mDao.meetList(sqlSession);
 	}
 
 	@Override
-	public ArrayList<Meet> selectLastList() {
-		return mDao.selectLastMList(sqlSession);
+	public ArrayList<Meet> meetLastList() {
+		return mDao.meetLastList(sqlSession);
 	}
+
 
 }

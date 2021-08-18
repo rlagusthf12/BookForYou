@@ -15,13 +15,13 @@ public class MeetDao {
 		return sqlSession.insert("groupMapper.insertMeet", m);
 		}
 	
-	public ArrayList<Meet> selectMList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("groupMapper.selectMList");
+	public ArrayList<Meet> meetList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("groupMapper.meetList");
 		
 	}
 	
-	public ArrayList<Meet> selectLastMList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("groupMapper.selectLastList");
+	public ArrayList<Meet> meetLastList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("groupMapper.meetLastList");
 		
 	}
 }

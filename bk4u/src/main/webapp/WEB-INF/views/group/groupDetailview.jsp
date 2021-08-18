@@ -105,16 +105,18 @@
                                 </div>
                               </div>
                             </td>	
-                            
-                            <td align="center"><b>회원목록</b></td>
-							<!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                          	<c:forEach var="m" items="${ groupMemberList }">
-                            <tr>    
+                            </tr>
+                            <td align="center"><b>회원목록</b>
+                            <c:forEach var="m" items="${ groupMemberList }">
+                          	
                             	<input type="hidden" value="${ m.groupBoardNo }">   
-                            	<td>${ m.memId } ${ m.memEmail } ${ m.groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button></td> 
-                            	 
-							</tr>
+                            	<li>${ m.memId } ${ m.memEmail } ${ m.groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button><br></li>
+							
 							</c:forEach>
+                            
+                            
+                            </td>
+                          	
 							
 							
 							
