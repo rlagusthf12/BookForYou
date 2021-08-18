@@ -230,7 +230,7 @@ public class OrderServiceImpl implements OrderService {
 	 * [사용자] 주문 상세 정보 입력 (연지)
 	 */
 	@Override
-	public int insertOrderDetailInfo(Map<String, Object> m) {
+	public int insertOrderDetailInfo(Map<String, Integer> m) {
 		return oDao.insertOrderDetailInfo(sqlSession, m);
 	}
 
@@ -240,6 +240,14 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int insertUsedPoint(Order o) {
 		return oDao.insertUsedPoint(sqlSession, o);
+	}
+
+	/*
+	 * [사용자] 주문 번호 조회 (연지)
+	 */
+	@Override
+	public int selectOrderNo() {
+		return oDao.selectOrderNo(sqlSession);
 	}
 	
 }

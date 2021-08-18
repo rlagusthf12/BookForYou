@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bookforyou.bk4u.book.model.service.BookService;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
@@ -44,6 +45,9 @@ public class OrderController {
 
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private BookService bookService;
 	
 	/**
 	 * [관리자] 전체 주문 목록 조회 (한진)
@@ -421,7 +425,10 @@ public class OrderController {
 	public String insertOrderInfo(Order o) {
 
 		int result = oService.insertOrderInfo(o);
-		int result1 = oService.insertUsedPoint(o);
+		
+		if(o.getUsedPoints() != 0) {
+			int result1 = oService.insertUsedPoint(o);
+		}
 		
 		return result> 0 ? "success" : "fail";
 	}
@@ -429,9 +436,11 @@ public class OrderController {
 	/*
 	 * [사용자] 주문 상세 정보 입력 (연지)
 	 */
-	@ResponseBody
 	@RequestMapping(value="orderDetail.od", produces="text/html; charset=utf-8")
-	public String insertOrderDetailInfo(@RequestParam String data) {
+	public String insertOrderDetailInfo(@RequestParam String data, HttpSession session) {
+
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
 		
 		JSONArray jsonArray = JSONArray.fromObject(data);
 	    List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
@@ -439,20 +448,23 @@ public class OrderController {
 	    for (int i=0; i<jsonArray.size(); i++) {
 	    	JSONObject obj = (JSONObject)jsonArray.get(i);
 	    	
-	    	Map<String, Object> map = new HashMap<String, Object>();   
+	    	Map<String, Integer> map = new HashMap<String, Integer>();
 	    	
-	        map.put("bkNo", obj.get("bkNo"));
-	        map.put("quantity", obj.get("quantity"));
-	        map.put("detailPrice", obj.get("detailPrice"));
-	            
-	        list.add(map);
+	        map.put("bkNo", Integer.parseInt(String.valueOf(obj.get("bkNo"))));
+	        map.put("quantity", Integer.parseInt(String.valueOf(obj.get("quantity"))));
+	        map.put("detailPrice", Integer.parseInt(String.valueOf(obj.get("detailPrice"))));
+	        
+	        int result = oService.insertOrderDetailInfo(map);
+	        
+	        if(result>0) {
+	        	HashMap<String, Integer> m = new HashMap<>();
+	    		m.put("memNo", memNo);
+	    		m.put("bkNo", Integer.parseInt(String.valueOf(obj.get("bkNo"))));
+	        	bookService.deleteCart(m);
+	        }
 	    }
-
-		for( Map<String,Object> m : list) {
-			int result = oService.insertOrderDetailInfo(m);
-		}
 		
-		return "success";
+		return "redirect:/result.bk?orderNo=2";
 	}
 	
 	

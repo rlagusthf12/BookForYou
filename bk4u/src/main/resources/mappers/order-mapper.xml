@@ -796,14 +796,14 @@
 	         (
 	           seq_ono.nextval,
 	           #{memNo},
-	           seq_pno.curval,
+	           seq_pno.currval,
 	           sysdate,
 	           #{orderReceiver},
 	           #{orderPost},
 	           #{orderAddress},
 	           #{addressDetail},
-	           #{AddressRef},
-	           #{OrderPhone},
+	           #{addressRef},
+	           #{orderPhone},
 	           #{orderPrice},
 	           #{addPrice},
 	           #{usedPoints},
@@ -818,7 +818,7 @@
 		  into order_detail
 	    values
 	         (
-	           seq_ono.curval,
+	           seq_ono.currval,
 	           #{bkNo},
 	           #{quantity},
 	           #{detailPrice},
@@ -832,14 +832,19 @@
 		  into point
 	    values
 	         (
-	           seq_point.nextval,
+	           seq_pointno.nextval,
 	           #{memNo},
-	           seq_ono.curval,
+	           seq_ono.currval,
 	           null,
 	           '차감',
 	           #{detailPrice} * 0.01,
 	           sysdate
 	         )
 	</insert>
+	
+	<!-- [사용자] 주문 번호 조회 (연지) -->
+	<select id="selectOrderNo" resultType="_int">
+		select seq_ono.currval from dual
+	</select>
 	
 </mapper>

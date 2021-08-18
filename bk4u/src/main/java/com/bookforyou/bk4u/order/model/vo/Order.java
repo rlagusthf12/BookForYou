@@ -25,7 +25,7 @@ public class Order {
 	private String orderReceiver;
 	private String orderPost;
 	private String orderAddress;
-	private String AddressDetail;
+	private String addressDetail;
 	private String addressRef;
 	private String orderPhone;
 	private String deliveryMsg;

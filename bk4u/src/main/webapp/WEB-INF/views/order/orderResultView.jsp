@@ -43,7 +43,7 @@
             width: fit-content;
             height: 40px;
             font-size: 28px;
-            font-weight: 1000;
+            font-weight: 700;
         }
 
         #content>#adress_info>div:nth-child(1){
@@ -127,7 +127,7 @@
         .book_info>div:nth-child(1)>div:nth-child(1){
             margin-top: 40px;
             font-size: 16px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         .book_info>div:nth-child(1)>div:nth-child(2){
@@ -221,7 +221,7 @@
 
         #payment_main>div>div:nth-child(2){
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 700;
         }
 
         #payment_main>div:nth-child(7){
@@ -236,7 +236,7 @@
             width: 28px;
             height: 28px;
             font-size: 17px;
-            font-weight: 1000;
+            font-weight: 700;
             text-align: center;
             border-radius: 5px;
             background-color: rgb(228, 228, 228);
@@ -301,7 +301,7 @@
         }
         
         #payment_detail #point_result{
-            font-weight: 800;
+            font-weight: 700;
             margin-top: 35px;
         }
 
@@ -420,11 +420,11 @@
                             </div>
                             <div>
                                 <div>+ 적립 포인트</div>
-                                <div><fmt:formatNumber value="<fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>" type = "number" minFractionDigits="0"/>원</div>
+                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/></div>
                             </div>
                             <div id="point_result">
                                 <div>총 예상 포인트</div>
-                                <div><fmt:formatNumber value="<fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>" type = "number" minFractionDigits="0"/>원</div>
+                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/></div>
                             </div>
                         </div>
                     </div>

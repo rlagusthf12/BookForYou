@@ -584,10 +584,6 @@
                 	var cpPrice = 0;
                 	var ptPrice = 0;
                 	
-                    $(function(){
-                        console.log(price);
-                    });
-                	
                     $("#info_top>span:nth-child(1)").click(function(){
                         $("#order_info").css('display', 'block');
                         $("#shipping_info").css('display', 'none');
@@ -1050,6 +1046,15 @@
     <script>
     	function payRequest() {
     		
+    		var aInput = $("#shipping_info table input[type=text]")
+    		
+    		for(var i = 0; i < aInput.length; i ++){
+    			if($(aInput[i]).val() == "" || $(aInput[i]).val() == null){
+        			alert("배송지 정보를 입력해주세요.")
+        			return true;
+    			}
+    		}
+    		
     		if($("#policy_info input[name=policy_check]").is(":checked")){
     			var IMP = window.IMP;
         	    IMP.init("imp49550969");
@@ -1066,14 +1071,13 @@
         	      pay_method: "card", // 지불 수단
         	      merchant_uid: 'merchant_' + new Date().getTime(), //가맹점에서 구별할 수 있는 고유한id
         	      name: oName, // 상품명
-        	      amount: $("#payment_info>#info_box>div:nth-child(4)>input").val(), // 가격
+        	      amount: 100, // 가격
         	      buyer_email: "${ loginUser.memEmail }",
         	      buyer_name: "${ loginUser.memName }", // 구매자 이름
         	      buyer_tel: "${ loginUser.memPhone }", // 구매자 연락처 
         	      buyer_addr: "${ loginUser.memBasicAddress }",// 구매자 주소지
         	      buyer_postcode: "${ loginUser.memPost }" // 구매자 우편번호
         	    }, function (rsp) {
-        	    	console.log(rsp);
         	    	if (rsp.success) { // 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
         	    	     // jQuery로 HTTP 요청
         	    		 $.ajax({
@@ -1110,8 +1114,8 @@
   	              orderReceiver: $("#shipping_info table input[name=orderReceiver]").val(),
   	              orderPost: $("#shipping_info table input[name=orderPost]").val(),
   	              orderAddress: $("#shipping_info table input[name=orderAddress]").val(),
-  	              AddressDetail: $("#shipping_info table input[name=orderDetail]").val(),
-  	              addressRef: $("#shipping_info table input[name=AddressRef]").val(),
+  	              addressDetail: $("#shipping_info table input[name=addressDetail]").val(),
+  	              addressRef: $("#shipping_info table input[name=addressRef]").val(),
   	              orderPhone: $("#shipping_info table input[name=orderPhone]").val(),
 				  orderPrice: ${ allPrice },
 				  addPrice: 0,
@@ -1150,9 +1154,6 @@
     		$.ajax({
   	          url: "orderDetail.od",
 			  type: "post",
-			  headers: {
-  	              "mode" : CommonConstant.RequestMode.regist
-  	          },
   	          data: {
   	              data: jsonData
   	          },

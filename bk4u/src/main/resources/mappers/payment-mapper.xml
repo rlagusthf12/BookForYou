@@ -89,11 +89,11 @@
 		values
 		     ( 
 		       seq_pno.nextval
-		     , "카드"
+		     , '카드'
 		     , #{price}
-		     , "결제완료"
+		     , '결제완료'
 		     , SYSDATE
-		     );
+		     )
 	</insert>
 	
 </mapper>

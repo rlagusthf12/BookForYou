@@ -201,7 +201,7 @@ public class OrderDao {
 	/*
 	 * [사용자] 주문 상세 정보 입력 (연지)
 	 */
-	public int insertOrderDetailInfo(SqlSessionTemplate sqlSession, Map<String, Object> m) {
+	public int insertOrderDetailInfo(SqlSessionTemplate sqlSession, Map<String, Integer> m) {
 		return sqlSession.insert("orderMapper.insertOrderDetailInfo", m);
 	}
 
@@ -212,5 +212,11 @@ public class OrderDao {
 		return sqlSession.insert("orderMapper.insertUsedPoint", o);
 	}
 
-	
+	/*
+	 * [사용자] 주문 번호 조회 (연지)
+	 */
+	public int selectOrderNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("orderMapper.selectOrderNo");
+	}
+
 }
