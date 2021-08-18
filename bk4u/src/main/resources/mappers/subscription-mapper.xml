@@ -33,6 +33,7 @@
 		<result column="shipping_status" property="shippingStatus"/>
 		<result column="bk_title" property="bkTitle"/>
 		<result column="price_comma" property="priceComma"/>
+		<result column="coupon_price" property="couponPrice"/>
 	</resultMap>
 	
 	<resultMap type="Point" id="PointResult">
@@ -458,6 +459,7 @@
 		     , address_ref
 		     , subsc_phone
 		     , deliveryrequest
+		     , coupon_price
 		     )
 		values
 		     ( 
@@ -477,8 +479,47 @@
 		     , #{addressRef}
 		     , #{subscPhone}
 		     , #{deliveryRequest}
+		     , #{couponPrice}
 		     )
 	</insert>
+	
+	<!-- 정기구독 조회 -->
+	<!-- @author daeunlee -->
+	<select id="selectSubscription" resultMap="SubscResult">
+		select *
+				  from (
+						select ROWNUM rnum, A.*
+						  from (
+						  		select
+						  		       subsc_no
+	                                 , mem_no
+	                                 , coupon_issue_no
+	                                 , s.coupon_price
+	                                 , subsc_name
+	                                 , subsc_price
+	                                 , subsc_period
+	                                 , subsc_sdate
+	                                 , subsc_enddate
+	                                 , subsc_deldate
+	                                 , subsc_status
+	                                 , subsc_receiver
+	                                 , subsc_post
+	                                 , subsc_address
+	                                 , address_detail
+	                                 , address_ref
+	                                 , subsc_phone
+	                                 , deliveryrequest
+								  from subscription s
+						          join members using (mem_no)
+	                              join mem_coupon using (mem_no)
+	                              join coupon using (coupon_no)
+						 	     where mem_no = #{memNo}
+						         order
+						            by subsc_sdate desc
+						  	   )A
+					   )
+				<![CDATA[where rownum < 2]]>
+	</select>
 	
 	<!-- [관리자] 정기구독 발송 내역 개수 조회 (한진) -->
 	<select id="selectAdminSubscOrderCount" resultType="_int">

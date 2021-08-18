@@ -83,19 +83,26 @@
             <!--텍스트정보area-->
             <div class="text_info-warp">
                 <div class="text_info-items">
-                    <span class="period-item">${sub.subscName}(${sub.subscPeriod})</span>
+                    <span class="period-item">${subsc.subscName}(${subsc.subscPeriod})</span>
                     <span class="txt-item">멤버십 결제가 완료되었습니다.</span>
                 </div>
                 <div class="add_info-wrap">결제내역은 마이페이지 > 
-                    <a href="" class="add_info-item">정기구독 관리</a>
-                     에서 확인하실 수 있습니다.
+                    <a href="" class="add_info-item">정기구독 관리</a>에서 확인하실 수 있습니다.
                 </div>
             </div>
+            
             <script>
-            $(function(){
-            	var subNo = ${sub.subscNo};
-            	console.log(subNo);
-            })
+	            $(function(){
+	            	var couponPrice = $('input[name=couponPrice]').val();
+	            	
+	            	if(couponPrice != "0"){
+	            		$('#couponPrice').html(couponPrice);
+	            		
+	            		var subp = parseInt(${subsc.subscPrice});
+	            		var coup = parseInt(couponPrice);
+	            		$('#originPrice').html(subp + coup);
+	            	}
+	            })
             </script>
 
             <!--주문정보area-->
@@ -110,23 +117,24 @@
                     <tbody>
                         <tr>
                             <th>주문일자</th>
-                            <td>${sub.subscSdate}</td>
+                            <td>${subsc.subscSdate}</td>
                         </tr>
                         <tr>
                             <th>상품정보</th>
-                            <td>${sub.subscName}(${sub.subscPeriod})</td>
+                            <td>${subsc.subscName}(${subsc.subscPeriod})</td>
                         </tr>
                         <tr>
                             <th>상품금액</th>
                             <td>
-                                <em class="price-item">${sub.subscPrice}</em>
+                                <em class="price-item" id="originPrice"></em>
                                 <span class="measure">원</span>
                             </td>
                         </tr>
                         <tr>
                             <th>할인</th>
                             <td>
-                                <em class="price-item">0</em>
+                            	<input type="hidden" name="couponPrice" value="${subsc.couponPrice}">
+                                <em class="price-item" id="couponPrice">0</em>
                                 <span class="measure">원</span>
                             </td>
                         </tr>
@@ -135,7 +143,7 @@
                         <tr>
                             <th><strong>총 결제 금액</strong></th>
                             <td>
-                                <em class="price-item">19,900</em>
+                                <em class="price-item">${subsc.subscPrice}</em>
                                 <span class="measure">원</span>
                             </td>
                         </tr>
@@ -143,39 +151,6 @@
                 </table>
             </div>
             
-
-            <!--결제정보area
-            <div class="pay_info-wrap">
-                <div class="title_txt">
-                    <div class="title_txt-wrap">
-                        <span class="title_txt-item">결제정보</span>
-                    </div>
-                </div>
-    
-                <table class="order-wrap">
-                    <tbody>
-                        <tr>
-                            <th>결제일시</th>
-                            <td>2021.07.05 16:47:25</td>
-                        </tr>
-                        <tr>
-                            <th>결제수단</th>
-                            <td>신용카드</td>
-                        </tr>
-                        <tr>
-                            <th>결제카드</th>
-                            <td>국민카드</td>
-                        </tr>
-                        <tr style="border-bottom:1px solid #ddd;">
-                            <th>카드번호</th>
-                            <td>
-                                1111-****-****-****
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            -->
 
             <!--추가이동버튼area-->
             <div class="btn-wrap">
