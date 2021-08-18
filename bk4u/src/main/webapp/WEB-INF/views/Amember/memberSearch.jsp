@@ -16,7 +16,6 @@
      
      <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
      <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-     <link rel="stylesheet" href="./side-style.css">
 <style>
         #header{
         width:80%;
@@ -204,18 +203,22 @@
             </thead>
             <tbody>
             	<c:forEach var="am" items="${ list }">
-                <tr onclick="detail(${am.memNo});" data-toggle="modal" data-id="1" data-target="#amemDetailModal">
-                    <td class="ano" height="80">${ am.memNo }</td>
-                    <td>${ am.memId }</td>
-                    <td width="700">${ am.memPwd }</td>
-                    <td>${ am.memName }</td>
-                    <td>${ am.memEmail }</td>
-                    <td>${ am.memBasicAddress }</td>
-                    <td>${ am.memEnrolldate }</td>  
-                    <td><button type="button" data-toggle="modal"  data-target="#blackList">추가</button></td>                         
-                	<td style="display:none">
-	                	<!-- 블랙리스트 추가 모달 -->
-						<div class="modal" class="modal blackList">
+	                <tr>
+	                    <td class="ano" height="80">${ am.memNo }</td>
+	                    <td onclick="detail(${am.memNo});" data-toggle="modal" data-id="1" data-target="#amemDetailModal">${ am.memId }</td>
+	                    <td width="700">${ am.memPwd }</td>
+	                    <td>${ am.memName }</td>
+	                    <td>${ am.memEmail }</td>
+	                    <td>${ am.memBasicAddress }</td>
+	                    <td>${ am.memEnrolldate }</td>  
+	                    <td><button type="button" data-toggle="modal"  data-target="#blackList">추가</button></td>                         
+	                </tr>        
+       			</c:forEach>      		
+            </tbody>
+        </table>
+        
+		<!-- 블랙리스트 추가 모달 -->
+						<div class="modal" id="blackList">
 						  <div class="modal-dialog">
 						    <div class="modal-content">
 						
@@ -243,14 +246,6 @@
 						    </div>
 						  </div>
 						</div>
-                	</td>
-                </tr>        
-                      
-       			</c:forEach>      		
-            </tbody>
-        </table>
-        
-		
 		 
 
         <br><br>
@@ -380,11 +375,7 @@
         </div>
     </div>
 			
-			    </div>
-			  </div>
-			</div>
-        
-    </div>
+			    
 
 </body>
 </html>

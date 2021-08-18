@@ -36,6 +36,13 @@
     .table_board>tbody>tr>td{    	
     	text-align:center;
     }
+    .detailB:hover{
+        cursor:pointer;
+        color:#EC573B;
+        font-size:16px;
+        font-weight:bold;
+    }
+        
   #paging-wrap, #search-wrap, .custom-select ,input::placeholder{font-size: 14px;}
 
     #paging-wrap{width:fit-content; margin:auto;}
