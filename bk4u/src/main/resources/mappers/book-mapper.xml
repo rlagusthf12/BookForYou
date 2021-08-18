@@ -985,4 +985,18 @@
 		  <![CDATA[where rank < 4]]>
 	</select>
 	
+	<!-- [관리자] 지점별 도서 추가 (한진) -->
+	<insert id="insertBookForStore">
+		insert 
+		  into off_book
+		values
+		       (
+		         #{bkNo},
+		         #{storeNo},
+		         '대여가능',
+		         'N',
+		         sysdate
+		       ) 
+	</insert>
+	
 </mapper>

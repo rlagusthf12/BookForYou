@@ -141,7 +141,7 @@
                         <th scope="col">대여신청일</th>
                         <th scope="col">수령일</th>
                         <th scope="col">반납일</th>
-                        <th scop="col">상태</th>
+                        <th scope="col">상태</th>
                     </tr>
                 </thead>
                 <tbody>
