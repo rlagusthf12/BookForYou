@@ -28,6 +28,7 @@
 		<result column="writer_origin_name" property="writerOriginName"/>
 		<result column="writer_change_name" property="writerChangeName"/>
 		<result column="bk_content" property="bkContent"/>
+		<result column="bk_introduce" property="bkIntroduce"/>
 		<result column="grade_star" property="bkGrade"/>
 		<result column="cart_qty" property="bkQty"/>
 		<result column="rank" property="rank"/>
@@ -175,6 +176,7 @@
 		     , writer_origin_name
 		     , writer_change_name
 		     , bk_content
+		     , bk_introduce
 		  from book
 		 where bk_selstatus = 'Y'
 	 	<choose>
@@ -328,7 +330,8 @@
 		       writer_intro,
 		       writer_origin_name,
 		       writer_change_name,
-		       bk_content
+		       bk_content,
+		       bk_introduce
 		  from book
 		 where bk_no = #{bkNo}
 	</select>

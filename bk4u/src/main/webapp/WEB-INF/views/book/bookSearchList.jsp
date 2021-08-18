@@ -150,12 +150,10 @@
         }
 
         .book_info>.book_content{
+        	height: 90px;
             margin-top: 100px;
+            margin-bottom: 10px;
             font-size: 14px;
-        }
-        
-        .book_info>div:nth-child(4){
-            margin-top: 20px;
         }
 
         .book_info button{
@@ -264,7 +262,7 @@
 			                    </span>
 			                    
 			                    <div class="book_content">
-									낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴? 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로 무한한 가치를 가진 것이다 사람은 크고 작고 간에 이상이 있음으로써 용감하고
+									${ b.bkIntroduce }
 			                    </div>
 			                    <div>
 			                        <button class="btn_order">즉시구매</button>

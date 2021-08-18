@@ -184,7 +184,36 @@
             float: left;
         }
 
-        #detail_bottom>#info_box .info_title{
+        #detail_bottom>#bk_info_box>.info_box{
+            width: 90%;
+            margin-top: 40px;
+            margin-left: 70px;
+            float: left;
+        }
+
+        #detail_bottom>#bk_info_box>.info_box>.info_title{
+            width: 500px;
+            font-size: 23px;
+            font-weight: 600;
+            margin: 10px;
+        }
+
+        #detail_bottom>#bk_info_box>.info_box>.info_content{
+            border: solid 1px darkgrey;
+            border-radius: 4px;
+            background-color: rgb(245, 245, 245);
+            margin: 20px 0px;
+            padding: 15px;
+        }
+
+        #detail_bottom>#info_box{
+            width: 90%;
+            margin-top: 40px;
+            margin-left: 70px;
+            float: left;
+        }
+
+        #detail_bottom>#info_box>.info_title{
             width: 500px;
             font-size: 23px;
             font-weight: 600;
@@ -192,18 +221,18 @@
             margin-bottom: 30px;
         }
 
-        #detail_bottom>#info_box .info_table{
+        #detail_bottom>#info_box>.info_table{
             margin: 20px 0px;
         }
 
-        #detail_bottom>#info_box .info_table th{
+        #detail_bottom>#info_box>.info_table th{
             width: 200px;
             background-color: rgb(240, 240, 240);
             border: solid 1px darkgrey;
             text-align: center;
         }
 
-        #detail_bottom>#info_box .info_table td{
+        #detail_bottom>#info_box>.info_table td{
             padding: 15px 10px;
             font-size: 14px;
             border: solid 1px darkgrey;
@@ -367,11 +396,37 @@
                     });
                 </script>
 
-                <div id="bk_info_box" style="display: block; border: 1px solid white;">
-                	<div style="margin-top: 120px;">
-                		${ bk.bkContent }
-                	</div>
-            	</div>
+                <div id="bk_info_box" style="display: block;">
+                    <div class="info_box">
+                        <div class="info_title">책 소개</div>
+                        <div class="info_content">
+                            ‘한국과학문학상’의 또 다른 성취로 기억될 이름!<br>
+                                                    우리 SF가 품게 된 가장 따뜻한 물결, 천선란!
+                            <br><br><br>
+                            2019년 첫 장편소설 『무너진 다리』로 SF 팬들에게 눈도장을 찍었고, 2020년 7월, 소설집 『어떤 물질의 사랑』을 통해 우리 SF의 대세로 굳건히 자리 잡은 천선란. 2019년 한국과학문학상 장편 대상 수상작 『천 개의 파랑』은 이를 방증하듯 출간 전부터 많은 SF 팬들의 뜨거운 기대를 모았다. 『천 개의 파랑』은 한국과학문학상 심사위원 김보영에게 “천 개의 파랑이 가득한 듯한 환상적이고 우아한 소설”, “이미 활발하게 활동하고 있는 유명 작가의 작품이라 해도 믿을 법했다” 라는 찬사를 이끌어냈다. 이는 김창규 작가가 한국과학문학상 심사평에서 언급한 말과 맥을 같이 한다. “더 이상 좋은 한국 SF의 가능성’이란 얘기는 듣지 않아도 되겠다는 생각이 들어 기뻤다. 그만큼 SF를 충분히 소화하고 빚은 작품들이, 가능성을 넘어 다양한 길을 정하고 완성되고 있었다.” 천선란은 더 이상 SF의 가능성이 아니다. 그는 이미 완숙하게 무르익은 상태로 우리에게 도달한 ‘준비된 작가’다.
+                            <br><br>
+                            SF가 진보하는 기술 속에서 변화하고 발전하는 모습을 예견하는 장르라면, 『천 개의 파랑』은 진보하는 기술 속에서 희미해지는 존재들을 올곧게 응시하는 소설이다. 발달한 기술이 배제하고 지나쳐버리는 이들, 엉망진창인 자본 시스템에서 소외된 이들, 부서지고 상처 입은 채 수면 아래로 가라앉아 있던 이들을 천선란은 다정함과 우아함으로 엮은 문장의 그물로 가볍게 건져 올린다. 그의 소설은 희미해진 이들에게 선명한 색을 덧입히는 과정으로 이루어져 있다. 『천 개의 파랑』은 천선란 작가가 휴대폰 메모장에 적어놓은 한 줄에서부터 시작한다. ‘우리는 모두 천천히 달리는 연습을 해야 한다.’ 빠른 속도로 지나가는 풍경 속에서도 ‘있는 힘껏 고개를 돌려 흐릿한 풀잎을 바라보는’ 천선란의 시선은 올곧으며, 개미 한 마리조차 밟지 않기 위해 느린 걸음을 연습하는 작가의 태도는 믿음직스럽다. 그렇기에 우리는 천선란의 시선과 발걸음에 맞추어 『천 개의 파랑』을 읽는 동안 ‘부서지고 다친 작은 존재들의 끈질긴 연대 너머로만 엿볼 수 있는 촘촘한 기쁨’을 누릴 수 있게 된다.
+                        </div>
+                    </div>
+
+                    <div class="info_box">
+                        <div class="info_title">목차</div>
+                        <div class="info_content">
+                                                    천 개의 파랑 · 7
+                            <br><br>
+                                                     작가노트 · 356<br>
+                                                     심사평 · 359<br>
+                                                     수상소감 · 373 
+                        </div>
+                    </div>
+
+                    <div class="info_box">
+                        <div class="info_title">저자 소개</div>
+                        <div class="info_content">
+                            ${ bk.writerIntro }
+                        </div>
+                    </div>
+                </div>
 
                 <div id="bkl_info_box" style="display: none; border: 1px solid white;">
                 	<ul class="booklist-wrap" style="margin-top: 120px;">
@@ -419,68 +474,67 @@
                     </ul>
             	</div>
 
-                <div id="info_box" style="display: none; border: 1px solid white;">
-                	<div style="margin-top: 100px;">
-                		<div class="info_title">
-	                    	반품 안내
-	                    </div>
-	                    <div class="info_table">
-	                        <table>
-	                            <tr>
-	                                <th>반품/교환 방법</th>
-	                                <td>
-	                                    "나의계정>주문조회>반품/교환신청", 1:1상담 > 반품/교환 또는 고객센터(1544-2514)<br>
-	                                                                   판매자 배송상품은 판매자와 반품/교환이 협의된 상품에 한해 가능
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <th>반품/교환 가능기간</th>
-	                                <td>
-	                                    o 변심반품 수령 후 20일(단, 중고매장 상품은 구매 후 구매 다음날로 부터 7일, 회원직거래 중고상품은 출고일로 부터 구매확정 전 상태로 6일, 전자책 단말기 등 전자제품은 수령 후 7일 이내 제품 포장 미개봉시, eBook은 결제 후 다운로드 받지 않은 상태에서 20일 이내)<br>
-	                                    o 파본 등 상품결함 시 '문제점 발견 후 30일(단, 수령일로 부터 3개월)' 이내
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <th>반품/교환 비용</th>
-	                                <td>
-	                                    o 변심 혹은 구매착오의 경우에만 반송료 고객 부담<br>
-	                                    o 해외직배송도서의 변심 혹은 구매착오로 인한 취소/반품은 판매가의 20% 취소수수료 고객 부담<br>
-	                                    <br><br>
-	                                    * 취소수수료 : 수입제반비용(국내 까지의 운송비, 관세사비, 보세창고료, 내륙 운송비, 통관비 등)과 재고리스크(미판매 리스크, 환차손)에 따른 비용 등<br>
-	                                   	단, 아래의 주문/취소 조건인 경우, 취소 수수료 면제<br>
-	                                    - 오늘 00시~06시 주문을 오늘 06시 이전 취소<br>
-	                                    - 오늘 06시 이후 주문 후 다음 날 06시 이전 취소
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <th>반품/교환 불가 사유</th>
-	                                <td>
-	                                    o 소비자의 책임 있는 사유로 상품 등이 손실 또는 훼손된 경우<br>
-	                                    o 소비자의 사용, 포장 개봉에 의해 상품 등의 가치가 현저히 감소한 경우<br>
-	                                                                   예) 전자책 단말기,가전제품, 래핑이 제거된 만화책/라이트노벨/수험서/문제집류<br>
-	                                    o 복제가 가능 또는 단기간 내 완독 가능 상품의 자체 포장이나 래핑을 훼손한 경우<br>
-	                                                                   예) 음반,DVD,비디오,Blu-ray,소프트웨어, 잡지, 영상 화보집<br>
-	                                    o 소비자 요청에 의한 주문 제작 상품(분철도서, POD 도서 등)<br>
-	                                    o 세트 상품 일부만 반품 불가(전체 반품 후 낱권 재구매)<br>
-	                                    o 디지털 컨텐츠인 eBook, 오디오북 등을 1회 이상 다운로드 받았거나, 대여 기간이 종료된 eBook 대여제 상품<br>
-	                                    o 신선도 문제로 일정 기한 경과 시 상품 가치가 현저하게 감소하는 상품 (원두, 콜드브루, 드립백 등)<br>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                                <th> 소비자 피해보상<br>
-	                                                             환불지연에 따른 배상</th>
-	                                <td>
-	                                    o 상품의 불량에 의한 반품, 교환, A/S, 환불, 품질보증 및 피해보상 등에 관한 사항은 소비자분쟁해결기준 (공정거래위원회 고시)에 준하여 처리됨<br>
-	                                    o 대금 환불 및 환불 지연에 따른 배상금 지급 조건, 절차 등은 전자상거래 등에서의 소비자 보호에 관한 법률에 따라 처리함
-	                                </td>
-	                            </tr>
-	                        </table>
-	                    </div>
-                	</div>
-            	</div>
+                <div id="info_box" style="display: none;">
+                    <div class="info_title">
+                    	반품 안내
+                    </div>
+                    <div class="info_table">
+                        <table>
+                            <tr>
+                                <th>반품/교환 방법</th>
+                                <td>
+                                    "나의계정>주문조회>반품/교환신청", 1:1상담 > 반품/교환 또는 고객센터(1544-2514)<br>
+                                                                   판매자 배송상품은 판매자와 반품/교환이 협의된 상품에 한해 가능
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>반품/교환 가능기간</th>
+                                <td>
+                                    o 변심반품 수령 후 20일(단, 중고매장 상품은 구매 후 구매 다음날로 부터 7일, 회원직거래 중고상품은 출고일로 부터 구매확정 전 상태로 6일, 전자책 단말기 등 전자제품은 수령 후 7일 이내 제품 포장 미개봉시, eBook은 결제 후 다운로드 받지 않은 상태에서 20일 이내)<br>
+                                    o 파본 등 상품결함 시 '문제점 발견 후 30일(단, 수령일로 부터 3개월)' 이내
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>반품/교환 비용</th>
+                                <td>
+                                    o 변심 혹은 구매착오의 경우에만 반송료 고객 부담<br>
+                                    o 해외직배송도서의 변심 혹은 구매착오로 인한 취소/반품은 판매가의 20% 취소수수료 고객 부담<br>
+                                    <br><br>
+                                    * 취소수수료 : 수입제반비용(국내 까지의 운송비, 관세사비, 보세창고료, 내륙 운송비, 통관비 등)과 재고리스크(미판매 리스크, 환차손)에 따른 비용 등<br>
+                                   	단, 아래의 주문/취소 조건인 경우, 취소 수수료 면제<br>
+                                    - 오늘 00시~06시 주문을 오늘 06시 이전 취소<br>
+                                    - 오늘 06시 이후 주문 후 다음 날 06시 이전 취소
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>반품/교환 불가 사유</th>
+                                <td>
+                                    o 소비자의 책임 있는 사유로 상품 등이 손실 또는 훼손된 경우<br>
+                                    o 소비자의 사용, 포장 개봉에 의해 상품 등의 가치가 현저히 감소한 경우<br>
+                                                                   예) 전자책 단말기,가전제품, 래핑이 제거된 만화책/라이트노벨/수험서/문제집류<br>
+                                    o 복제가 가능 또는 단기간 내 완독 가능 상품의 자체 포장이나 래핑을 훼손한 경우<br>
+                                                                   예) 음반,DVD,비디오,Blu-ray,소프트웨어, 잡지, 영상 화보집<br>
+                                    o 소비자 요청에 의한 주문 제작 상품(분철도서, POD 도서 등)<br>
+                                    o 세트 상품 일부만 반품 불가(전체 반품 후 낱권 재구매)<br>
+                                    o 디지털 컨텐츠인 eBook, 오디오북 등을 1회 이상 다운로드 받았거나, 대여 기간이 종료된 eBook 대여제 상품<br>
+                                    o 신선도 문제로 일정 기한 경과 시 상품 가치가 현저하게 감소하는 상품 (원두, 콜드브루, 드립백 등)<br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th> 소비자 피해보상<br>
+                                                             환불지연에 따른 배상</th>
+                                <td>
+                                    o 상품의 불량에 의한 반품, 교환, A/S, 환불, 품질보증 및 피해보상 등에 관한 사항은 소비자분쟁해결기준 (공정거래위원회 고시)에 준하여 처리됨<br>
+                                    o 대금 환불 및 환불 지연에 따른 배상금 지급 조건, 절차 등은 전자상거래 등에서의 소비자 보호에 관한 법률에 따라 처리함
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
             
             <script>
+
      		
      		$(function(){
            	 	// 독서록상세조회 스크립트

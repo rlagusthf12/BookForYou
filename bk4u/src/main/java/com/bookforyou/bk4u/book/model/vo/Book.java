@@ -40,9 +40,9 @@ public class Book {
 	public String writerOriginName;
 	public String writerChangeName;
 	public String bkContent;
+	public String bkIntroduce;
 	public double bkGrade;
 	public int bkQty;
-	public String bkIntroduce;
 	
 	public ArrayList<Book> bookList;
 	public int rank;
