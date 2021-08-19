@@ -372,8 +372,10 @@ public class OrderController {
 	 * [사용자] 도서 주문 (연지)
 	 */
 	@RequestMapping("order.od")
-	public ModelAndView adminOListSearch(ModelAndView mv, int memNo,
-										@RequestParam(value = "bkNoArr") List<Integer> bkNoArr) {
+	public ModelAndView adminOListSearch(ModelAndView mv, @RequestParam(value = "memNo") int memNo,
+										@RequestParam(value = "bkNoArr") List<Integer> bkNoArr,
+										@RequestParam(value="bkPrice", defaultValue="0") int bkPrice,
+										@RequestParam(value="bkQty", defaultValue="0") int bkQty) {
 		
 		int i = 0;
 		ArrayList<Book> bList = new ArrayList<Book>();
@@ -381,6 +383,21 @@ public class OrderController {
 		map.put("memNo", memNo);
 		
 		for( int bkNo : bkNoArr) {
+			
+			if(bkPrice != 0) {
+				HashMap<String, Integer> map1 = new HashMap<>();
+				map1.put("memNo", memNo);
+				map1.put("bkNo", bkNo);
+				map1.put("cartQty", bkQty);
+				
+				int check = bookService.checkCart(map1);
+				int result = 0;
+				
+				if(check == 0) {
+					bookService.insertCart(map1);
+				}
+			}
+			
 			map.put("bkNo", bkNo);
 			Book bk = oService.selectOrderBook(map);
 			bList.add(i, bk);
@@ -395,6 +412,9 @@ public class OrderController {
 		int allPrice = 0;
 		
 		for(Book b : bList) {
+			if(bkPrice != 0) {
+				b.setBkQty(bkQty);
+			}
 			allPrice += (b.getBkPrice() * b.getBkQty());
 		}
 		

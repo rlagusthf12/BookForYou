@@ -289,42 +289,51 @@
         <div id="content">
             <div id="detail_top">
                 <div class="book_img"><img src="${ bk.introChangeName }"></div>
-                <div class="book_info">
-                    <div>
-                        <div>${ bk.bkTitle }</div>
-                        <div>${ bk.writerName } | ${ bk.bkPublish } | ${ bk.bkDate }</div>
-                    </div>
-                    <div id="line"></div>
-                    <div>
-                        <table>
-                            <tr>
-                                <td>정가</td>
-                                <td>${ bk.bkPrice }</td>
-                            </tr>
-                            <tr>
-                                <td>적립포인트</td>
-                                <td><fmt:formatNumber value="${ bk.bkPrice * 0.01 }" type = "number" minFractionDigits="0"/>p</td>
-                            </tr>
-                            <tr>
-                                <td>배송비</td>
-                                <td>무료</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">★★★★☆ 9.3 독서록() 보러가기 ></td>
-                            </tr>
-                            <tr>
-                                <td>수량</td>
-                                <td><input type="number" min="1" max="10" value="1"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div>
-                        <button class="btn_order">즉시구매</button>
-                        <button class="btn_cart">장바구니</button>
-                        <button class="btn_list">리스트</button>
-                    </div>
-                </div>
+                
+	            <form id="orderForm" action="order.od" method="post">
+					<input type="hidden" name="memNo" value="${ loginUser.memNo }">
+				    <input type="hidden" id="bkNoArr" name="bkNoArr">
+				    
+	                <div class="book_info">
+	                    <div>
+	                        <div>${ bk.bkTitle }</div>
+	                        <div>${ bk.writerName } | ${ bk.bkPublish } | ${ bk.bkDate }</div>
+	                    </div>
+	                    <div id="line"></div>
+	                    <div>
+	                        <table>
+	                            <tr>
+	                                <td>정가</td>
+	                                <td>${ bk.bkPrice }</td>
+	                            </tr>
+	                            <tr>
+	                                <td>적립포인트</td>
+	                                <td><fmt:formatNumber value="${ bk.bkPrice * 0.01 }" type = "number" minFractionDigits="0"/>p</td>
+	                            </tr>
+	                            <tr>
+	                                <td>배송비</td>
+	                                <td>무료</td>
+	                            </tr>
+	                            <tr>
+	                                <td colspan="2">★★★★☆ 9.3 독서록() 보러가기 ></td>
+	                            </tr>
+	                            <tr>
+	                                <td>수량</td>
+	                                <td><input type="number" name="bkQty" min="1" max="10" value="1"></td>
+	                            </tr>
+	                        </table>
+	                    </div>
+	                    <div>
+	                        <button class="btn_order" type="button">즉시구매</button>
+	                        <button class="btn_cart" type="button">장바구니</button>
+	                        <button class="btn_list" type="button">리스트</button>
+			                <input type="hidden" id="book_no" value="${ bk.bkNo }"></input>
+			                <input type="hidden" name="bkPrice" value="${ bk.bkPrice }">
+	                    </div>
+	                </div>
+	            </form>
             </div>
+            
             <div id="detail_bottom">
                 <div id="info_tab">
                     <button class="btn_info">도서정보</button>
@@ -490,6 +499,23 @@
     	         	location.href = "detail.bl?blNo=" + blNo + "&memNo=" + memNo;
             	})
             })
+            </script>
+            
+            <script>
+	        	$(".book_info .btn_order").click(function(){
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+        					alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		var array = new Array();
+			            	array.push($(this).next().next().next().val());
+				            			
+				            $("#bkNoArr").val(array);
+				            $("#orderForm").submit();
+		        		</c:otherwise>
+	        		</c:choose>
+	        	})
             </script>
             
             <script>
