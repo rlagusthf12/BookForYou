@@ -115,13 +115,28 @@ public class OrderController {
 	 * [사용자] 도서 결제 결과 페이지 (연지)
 	 */
 	@RequestMapping("result.bk")
-	public ModelAndView resultPayment(ModelAndView mv, int orderNo) {
+	public ModelAndView resultPayment(ModelAndView mv, HttpSession session, int orderNo) {
+
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
 
 		Order od = oService.selectOrder(orderNo);
-		ArrayList<Order> oList = oService.selectOrderList(orderNo);
+		ArrayList<OrderDetail> oList = oService.selectOrderList(orderNo);
+		
+		ArrayList<Point> ptList = memberService.selectMemPoint(memNo);
+		int point = 0;
+				
+		for(Point p : ptList) {
+			if(p.getPointContent().equals("적립")) {
+				point += p.getPointPrice();
+			}else {
+				point -= p.getPointPrice();
+			}
+		}
 		
 		mv.addObject("od", od)
 		  .addObject("oList", oList)
+		  .addObject("point", point)
 		  .setViewName("order/orderResultView");
 		
 		return mv;

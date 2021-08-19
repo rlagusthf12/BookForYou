@@ -21,6 +21,7 @@ public class OrderDetail {
 	private String bkTitle;
 	private String bkPublish;
 	private String writerName;
+	public String introChangeName;
 	private int gradeStar;
 	
 	private ArrayList<OrderDetail> odList;
