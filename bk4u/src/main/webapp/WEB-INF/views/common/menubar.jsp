@@ -167,7 +167,7 @@
 			                        </select>
 			                    </div>
 			                    <div id="search-input">
-			                        <input type="text" name="keyword">
+			                        <input type="text" name="keyword" required>
 			                    </div>
 			                    <div id="search-btn">
 			                        <input type="image" src="resources/adminCommon/images/search.png" name="Submit" value="Submit" align="absmiddle">

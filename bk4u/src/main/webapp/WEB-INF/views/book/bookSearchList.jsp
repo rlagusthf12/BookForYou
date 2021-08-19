@@ -369,7 +369,7 @@
 	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
 	                   			</c:when>
 	                   			<c:otherwise>
-	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
+	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
 	                   			</c:otherwise>
 	                    	</c:choose>
 	                    </c:forEach>
@@ -384,7 +384,7 @@
 			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
 			                    	</c:when>
 			                    	<c:otherwise>
-			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음	</a></li>
 			                    	</c:otherwise>
 			                    </c:choose>
 		                    </c:otherwise>
