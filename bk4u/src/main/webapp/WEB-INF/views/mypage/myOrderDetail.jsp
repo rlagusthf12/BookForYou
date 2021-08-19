@@ -473,6 +473,7 @@
                             </thead>
                             <tbody>
                              <c:forEach var="orderDetail" items="${list }">
+                             <fmt:parseNumber var="bookPrice" integerOnly="true" value="${orderDetail.detailPrice/orderDetail.quantity}"/>
                              <c:choose>
                              	<c:when test="${ orderDetail.detailStatus eq '배송완료' }">
                                 <tr>
@@ -485,7 +486,7 @@
                                     </c:if>
                                     <td style="width: 395px;"><a href="detail.bk?bkNo=${ orderDetail.bkNo }">${orderDetail.bkTitle }</a></td>
                                     <td style="width: 40px;">${orderDetail.quantity }</td>
-                                    <td style="width: 160px;">${orderDetail.detailPrice }</td>
+                                    <td style="width: 160px;">${bookPrice }</td>
                                 </tr>
                                 </c:when>
                                 <c:otherwise>
@@ -493,7 +494,7 @@
                                     <td style="width: 135px;">${orderDetail.detailStatus }</td>
                                     <td style="width: 395px;"><a href="detail.bk?bkNo=${ orderDetail.bkNo }">${orderDetail.bkTitle }</a></td>
                                     <td style="width: 40px;">${orderDetail.quantity }</td>
-                                    <td style="width: 160px;">${orderDetail.detailPrice }</td>
+                                    <td style="width: 160px;">${bookPrice }</td>
                                 </tr>
                                 </c:otherwise>
                               </c:choose>

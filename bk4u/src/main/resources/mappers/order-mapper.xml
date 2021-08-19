@@ -720,7 +720,7 @@
 	<!-- [사용자] 마이페이지 주문 상세 책의 총 개수 조회(세아) -->
 	<select id="selectMyOrderDeatilQuantity" resultType="_int">
 		select 
-       		count(quantity)
+       		sum(quantity)
 		from order_detail
 		where order_no = #{orderNo}
 	</select>
