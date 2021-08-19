@@ -154,7 +154,12 @@
                 <div class="content_info_box">
                     <span class="content_info_date">${ b.boCdate }</span>
                     <span class="content_info_views">조회수 ${ b.boCount }</span>
-                    <button id="reportBtn">신고</button>
+	                <form action="writeForm.re" method="post">                
+	                <input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.bo?boNo=${b.boNo}">
+	                <input type="hidden" name="reportType" value="1">               
+	                <input type="hidden" name="reportRefNo" value="${b.boNo}">
+	                <button id="reportBtn" type="submit">신고</button>
+	                </form>                    
                 </div>
 
                 <!--에디터글내용area-->
@@ -222,8 +227,10 @@
 	                                      '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>' +
 	                                      '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>' +
 	                                      '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
-	                                      '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' + '<a href="" class="btn_report">신고</a></div>' +
-	                                      '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><button id="addRecomment">답글쓰기</button></div></div>' +
+	                                      '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' +'<form action="writeForm.re" method="post">'+                
+	                  	                  '<input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.bo?boNo=${b.boNo}">'+
+	                	                  '<input type="hidden" name="reportType" value="3">'+  '<input type="hidden" name="reportRefNo" value="${b.boNo}">'+
+	                	                  '<button id="reportBtn" type="submit">신고</button>'+ '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><button id="addRecomment">답글쓰기</button></div></div>' +
 	                                  '</div>' +
 	                              '</div>' +
 	                               
