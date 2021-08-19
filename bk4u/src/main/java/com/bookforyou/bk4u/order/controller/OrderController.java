@@ -424,18 +424,22 @@ public class OrderController {
 	@RequestMapping(value="orderBook.od", produces="text/html; charset=utf-8")
 	public String insertOrderInfo(Order o) {
 
-		int result = oService.insertOrderInfo(o);
+		oService.insertOrderInfo(o);
 		
 		if(o.getUsedPoints() != 0) {
-			int result1 = oService.insertUsedPoint(o);
+			oService.insertUsedPoint(o);
 		}
 		
-		return result> 0 ? "success" : "fail";
+		int orderNo = oService.selectOrderNo();
+		System.out.println(orderNo);
+		
+		return Integer.toString(orderNo);
 	}
 
 	/*
 	 * [사용자] 주문 상세 정보 입력 (연지)
 	 */
+	@ResponseBody
 	@RequestMapping(value="orderDetail.od", produces="text/html; charset=utf-8")
 	public String insertOrderDetailInfo(@RequestParam String data, HttpSession session) {
 

@@ -583,6 +583,7 @@
                 	var price = ${ allPrice };
                 	var cpPrice = 0;
                 	var ptPrice = 0;
+                	var orderNo = "";
                 	
                     $("#info_top>span:nth-child(1)").click(function(){
                         $("#order_info").css('display', 'block');
@@ -1123,9 +1124,8 @@
   	          },
   	          type:"post",
       		  success:function(result){
-      			  if(result == "success"){
+      			  	  orderNo = result;
       				  insertOrderDetailInfo();
-      			  }
       		  },error:function(){
       			  console.log("order insert ajax 실패");
       		  }
@@ -1162,6 +1162,7 @@
       			  console.log(result);
       		  },error:function(){
       			  console.log("order detail insert ajax 실패");
+      			  location.href = "result.bk?orderNo=" + orderNo;
       		  }
   	      })
     	}

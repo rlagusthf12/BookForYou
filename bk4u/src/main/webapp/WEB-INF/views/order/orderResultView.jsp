@@ -340,7 +340,7 @@
                 <div>
                 	<c:forEach var="o" items="${ oList }">
                     <div>
-                        <div class="book_img"><img src=""></div>
+                        <div class="book_img"><img src="${ o.introChangeName } }"></div>
                         <div class="book_info">
                             <div>
                                 <div>${ o.bkTitle }</div>
