@@ -562,10 +562,18 @@
                                 <th class="table-secondary">배송지 주소</th>
                                 <td colspan="3">(${order.orderPost }) ${order.orderAddress } ${order.addressDetail } ${order.addressRef }</td>
                             </tr>
+                            <c:if test="${order.deliveryCompany ne null }">
                             <tr>
                                 <th class="table-secondary">배송정보</th>
                                 <td colspan="3">${order.deliveryCompany }(${order.shippingNumber })</td>
                             </tr>
+                            </c:if>
+                            <c:if test="${order.deliveryCompany eq null }">
+                             <tr>
+                                <th class="table-secondary">배송정보</th>
+                                <td colspan="3">배송 정보가 등록되지 않았습니다.</td>
+                            </tr>
+                            </c:if>
                         </table>
                     </div>
                     <p><b>결제 정보</b></p>
