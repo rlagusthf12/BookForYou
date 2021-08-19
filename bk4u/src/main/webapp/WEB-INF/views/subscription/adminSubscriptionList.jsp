@@ -43,14 +43,15 @@
             margin: 0 3px 0 3px;
             width:179px;
             height:87px;
-            border:1px solid black;
             text-align: center;
             padding:10px;
             font-weight: 600;
-           	box-shadow: 3px 3px 3px grey;
+           	background-color:#D8E5ED;
+           	border-radius:10px;
+           	box-shadow: 5px 5px 10px #9EA7AD;
         }
-        #status-bar p {font-size:17px; margin-bottom:10px;}
-        #status-bar span {color:#EC573B; font-size:20px;}
+        #status-bar p {color:#758B8E; font-size:17px; margin-bottom:10px;}
+        #status-bar span {color:#454B87; font-size:20px;}
 		#status-bar > div:hover {
 			cursor:pointer;
 			box-shadow: 10px 10px 10px grey; 
@@ -145,7 +146,7 @@
             
         }
         
-        .table{border:0.08em solid grey;}
+        .table{border:0.05em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
 		.detailS:hover{

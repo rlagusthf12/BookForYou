@@ -125,7 +125,7 @@
             text-align: center;
             
         }
-        .table{border:0.08em solid grey;}
+        .table{border:0.09em solid grey;}
         .table *{vertical-align: middle;}
         .table td, .table th{border: 0.01em solid #dee2e6;}
         .detailR:hover{

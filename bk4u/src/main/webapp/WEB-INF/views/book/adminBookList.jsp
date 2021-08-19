@@ -46,10 +46,12 @@
             text-align: center;
             padding:10px;
             font-weight: 600;
-           	background-color:#F7F6E7;
+           	background-color:#D8E5ED;
+           	border-radius:10px;
+           	box-shadow: 5px 5px 10px #9EA7AD;
         }
-        #status-bar p {font-size:17px; margin-bottom:10px;}
-        #status-bar span {color:#EC573B; font-size:20px;}
+        #status-bar p {color:#758B8E; font-size:17px; margin-bottom:5px;}
+        #status-bar span {color:#454B87; font-size:25px;}
 		#status-bar > div:hover {
 			cursor:pointer;
 			box-shadow: 10px 10px 10px grey; 
@@ -162,14 +164,16 @@
         
         /* 테이블 */
         .table{
-            border:0.08em solid grey;
+            border:0.05em solid grey;
             vertical-align: middle;
         }
         .table td, .table th{border: 0.01em solid #dee2e6;}
         
-        #result-div table tbody tr:hover{
-        	color:#EC573B;
+        .detailC:hover{
         	cursor:pointer;
+        	color:#EC573B;
+        	font-size:16px;
+        	font-weight:bold;
         }
         
         /* 페이징 */

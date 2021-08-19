@@ -44,7 +44,7 @@
 		       coupon_name,
 		       c.coupon_kind,
 		       coupon_content,
-		       coupon_price,
+		       c.coupon_price,
 		       coupon_pricerate,
 		       coupon_startdate,
 		       coupon_enddate,
