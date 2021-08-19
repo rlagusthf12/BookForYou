@@ -69,10 +69,9 @@ public interface BooklistService {
 	 */
 	public ArrayList<Booklist> selectTopBooklist();
 	
+	// 좋아요 미완성
 	int selectLikeCount(Like l);
-	
 	int insertLike(Like l);
-	public ArrayList<Booklist> selectTopBooklistList();
 	
 	/**
 	 * 12. [메인] 인기 독서록 불러오기 (한진)

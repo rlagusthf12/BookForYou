@@ -31,6 +31,8 @@ import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.like.model.vo.Like;
 import com.bookforyou.bk4u.reply.model.vo.Reply;
+import com.bookforyou.bk4u.report.model.service.ReportService;
+import com.bookforyou.bk4u.report.model.vo.Report;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -39,6 +41,8 @@ public class BooklistController {
 	
 	@Autowired
 	private BooklistService blService;
+	@Autowired
+	private ReportService rService;
 	
 	/** 독서록 리스트 조회용 + 페이징
 	 * @author daeunlee
@@ -307,13 +311,45 @@ public class BooklistController {
 		}
 	}
 	
+	/** 인기독서록 조회
+	 * @author daeunlee
+	 */
 	@ResponseBody
 	@RequestMapping(value="topList.bl", produces="application/json; charset=utf-8")
 	public String selectTopBooklist(){
 		return new Gson().toJson(blService.selectTopBooklist());
 	}
 	
-	
+	/** 독서록 신고
+	 * @author daeunlee
+	 */
+	@ResponseBody
+	@RequestMapping(value="insertReport.bl")
+	public String writeReport(Report report, HashMap<String, Object> map, MultipartFile upfile, HttpSession session){
+		System.out.println(report);
+		System.out.println(upfile);
+		System.out.println(map);
+		
+		/*
+		if (!upfile.getOriginalFilename().contentEquals("")) {
+            String changeName = saveFile(session, upfile);
+            report.setOriginName(upfile.getOriginalFilename());
+            report.setChangeName("resources/report/" + changeName); // "resources/uploadFiles/2021070217013021142.png"
+        }
+		 */
+		int result = 0;
+		if (upfile == null) { // 첨부파일없음
+			result = rService.writeReport(report);
+        }else { // 있음
+        	String changeName = saveFile(session, upfile);
+            report.setOriginName(upfile.getOriginalFilename());
+            report.setChangeName("resources/report/" + changeName);
+            
+            
+            result = rService.writeReport(report);
+        }
+		return result > 0 ? "success" : "fail";
+	}
 	
 	
 	

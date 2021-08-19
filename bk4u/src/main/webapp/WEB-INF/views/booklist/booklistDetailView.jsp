@@ -122,7 +122,9 @@
         #paging-wrap{width:fit-content; margin:auto; font-size:14px;}
         .page-link, .page-link:hover{color:rgb(252, 190, 52);}
 		
-		#reportBtn{margin-left:15px; font-size:13px; padding:0; color:#9c9c9c; border:none; background:#fff;}
+		#reportBtn{margin-left:15px; font-size:13px; padding:0; color:#9c9c9c; border:none; background:#fff; text-decoration:none;}
+        #reportText{width:100%; height:300px; resize:none; text-aline:center; border-color:#9c9c9c; border-radius:2px; margin-top:10px;}
+        .reportR{margin:20px 0;}
         </style>
 </head>
 <body>
@@ -180,9 +182,133 @@
                 <div class="content_info_box">
                     <span class="content_info_date">${ bl.blCdate }</span>
                     <span class="content_info_views">조회수 ${ bl.blCount }</span>
-                    <button id="reportBtn">신고</button>
+                    <a data-toggle="modal" href="#myModal" id="reportBtn">신고</a>
                 </div>
-
+                
+                <!------- Modal ------->
+			    <!-- 신고 클릭 시 뜨는 모달 -->
+			    <div class="modal fade" id="myModal"> <!-- 사용자 지정 부분① : id명 -->
+			    	<div class="modal-dialog modal-lg">
+			    		<div class="modal-content">
+			    		<!-- Modal Header -->
+			    		<div class="modal-header">
+			    			<h4 class="modal-title">신고하기</h4>
+			    			<button type="button" class="close" data-dismiss="modal">&times;</button> 
+			    		</div>
+			    		<!-- Modal Body -->
+			    		<div class="modal-body">
+			    			<div class="reportTitle">
+			    				<span style="color:#000; font-size:15px;">제목 : </span>
+			    				<span style="color:#000; font-size:15px;">${ bl.blTitle }</span>
+			    			</div>
+			    			<div>
+			    				<span style="color:#000; font-size:15px;">작성자 : </span>
+			    				<span style="color:#000; font-size:15px;">${ bl.blWriter }</span>
+			    			</div>
+			    			<input type="hidden" name="memNo" value="${ loginUser.memNo }"><!--신고자 회원번호-->
+			    			<input type="hidden" name="reportRefNo" value="${ bl.blNo }"><!--신고 글번호-->
+			    			<input type="hidden" name="reportLink"><!--신고 글링크-->
+			    			<input type="hidden" name="reportType" value="2"><!--게시판 유형-->
+					        <div class="reportR">
+			    				<div>신고사유</div>
+				    				<textarea id="reportText" name="reportContent"></textarea>
+				    				<input type="file" id="upfile" class="form-control-file border" name="upfile">
+			    			</div>
+			    		</div>
+			    		<!-- Modal footer -->
+			    		<div class="modal-footer">
+			    			<button type="button" class="btn btn_choose" id="reportBl">신고하기</button>
+			    		</div>
+			    		</div>
+			    	</div>
+			    </div> <!-- 모달끝 -->
+				
+				<script>
+				$(function(){
+					
+					$('#reportBl').click(function(){
+						
+						var memNo = ${loginUser.memNo}; // 신고자 회원번호
+						var reportContent = $('textarea[name=reportContent]').val(); // 신고내용
+						var reportRefNo = $('input[name=reportRefNo]').val(); // 신고글번호
+						var reportType = $('input[name=reportType]').val(); // 게시글타입
+						
+						var url = window.location.href; // 현재 글 링크
+						if(url != null){
+							$('input[name=reportLink]').val(url);
+						}
+						var reportLink = $('input[name=reportLink]').val();
+						
+						var formData = new FormData();
+						formData.append("memNo", memNo);
+						formData.append("reportContent", reportContent);
+						formData.append("reportRefNo", reportRefNo);
+						formData.append("reportType", reportType);
+						formData.append("reportLink", reportLink);
+						var upfile = $("input[name='upfile']");
+						var files = upfile[0].files;
+						
+						for(var i=0; i<files.length; i++){
+							formData.append("upfile", files[i]);
+							console.log(formData.get("upfile"));
+						}
+						
+			        	if($("#reportContent").val() != ""){
+			        		if(formData.append("upfile", files[i]) == null){ // 첨부파일없음
+					        	 $.ajax({
+					        		url:"insertReport.bl",
+					        		type:"post",
+					    			data:{
+					    				memNo: memNo,
+					    				reportContent: reportContent,
+					    				reportRefNo: reportRefNo,
+					    				reportType: reportType,
+					    				reportLink: reportLink
+					    			},success:function(result){
+					        			if(result == "success"){
+					        				alert("독서록을 신고했습니다.");
+					        				location.reload();
+					        			}else{
+					        				alert("독서록을 신고하지 못했습니다.");
+					        			}
+					        		},error : function(jqXHR, textStatus, errorThrown){ 
+					        			console.log(jqXHR); 
+					        			console.log(textStatus); 
+					        			console.log(errorThrown); 
+					        		}
+					        	});
+			        		}else{ // 있음
+			        			$.ajax({
+					        		url:"insertReport.bl",
+					        		processData: false,
+									contentType: false,
+					        		type:"post",
+					    			data:formData
+					    			,success:function(result){
+					        			if(result == "success"){
+					        				alert("독서록을 신고했습니다.");
+					        				location.reload();
+					        			}else{
+					        				alert("독서록을 신고하지 못했습니다.");
+					        			}
+					        		},error : function(jqXHR, textStatus, errorThrown){ 
+					        			console.log(jqXHR); 
+					        			console.log(textStatus); 
+					        			console.log(errorThrown); 
+					        		}
+					        	});
+			        		}
+			        	}else{
+			        		alert("내용작성하렴");
+			        	}
+					})
+				
+				})
+					
+					
+					
+				</script>
+				
                 <!--에디터글내용area-->
                 <div class="article_content_area">
                     <div class="content_viewer">
