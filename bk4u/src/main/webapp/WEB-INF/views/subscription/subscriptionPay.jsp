@@ -468,7 +468,7 @@
 											</c:when>
 											<c:otherwise>
 												<tr id="cTb">
-													<td class="cn"><input type="radio" name="couponIssueNum" value="${ c.couponIssueNum }"></td>
+													<td class="cn"><input type="radio" name="couponIssueNo" value="${ c.couponIssueNum }"></td>
 													<td class="ck">${ c.couponKind }</td>
 													<td>${ c.couponName }</td>
 													<td>${ c.couponContent }</td>
@@ -490,11 +490,12 @@
                     
                     function btnCoupon(){
                     	var ck = $(event.target).parent().siblings(".ck").html();
+                    	var cn = $(event.target).parent().siblings(".cn").html();
                     	
                     	if(ck == '도서구매'){
                     		alert('도서구매 쿠폰은 사용할 수 없습니다.');
                     	}else{
-	                    	var cn = $(event.target).parent().siblings(".cn").children('input:radio[name="couponIssueNum"]:checked').val();
+	                    	var cn = $(event.target).parent().siblings(".cn").children('input:radio[name="couponIssueNo"]:checked').val();
 	                    	var cp = $(event.target).parent().siblings(".cp").children().val(); // 쿠폰금액
 	                    	//쿠폰가격넣기
 	                    	$('.paysum_area').find('.coupon_re').html(cp);

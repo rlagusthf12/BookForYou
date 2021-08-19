@@ -74,6 +74,7 @@
         .book_title{font-size:15px; font-weight:bold;}
         .book_writer, .book_publish{font-size:12px; color:#8b8b8b; padding:1px 0;}
         .book_stars{font-size:12px;}
+        .fa-star{color:rgb(252, 190, 52);}
         
         /**독서록리스트*/
         .booklist_outer{margin-top:150px;}
@@ -184,7 +185,6 @@
 	                                        </div>
 	                                    </a>
 	                                </div>
-	                                
 	                                <div class="booklist_book_wrap">
 	                                    <a href="javascript:clickBk()" class="book_info-area">
 	                                        <div class="book_area">
@@ -195,7 +195,7 @@
 	                                                <div class="book_title">${ bl.bkTitle }</div>
 	                                                <div class="book_writer">${ bl.writerName }</div>
 	                                                <div class="book_publish">${ bl.bkPublish }</div>
-	                                                <div class="book_stars">${ bl.blRate }점</div>
+	                                                <div class="book_stars"><span><i class="fas fa-star"></i></span>${ bl.blRate }</div>
 	                                            </div>
 	                                        </div>
 	                                    </a>
@@ -313,7 +313,7 @@
 	                                '<div class="book_title">' + list[i].bkTitle + '</div>'+
 	                                '<div class="book_writer">' + list[i].writerName + '</div>'+
 	                                '<div class="book_publish">' + list[i].bkPublish + '</div>'+
-	                                '<div class="book_stars">' + list[i].blRate + '</div>'+
+	                                '<div class="book_stars"><span><i class="fas fa-star"></i></span>' + list[i].blRate + '</div>'+
 	                            '</div>'+
 	                        '</div>'+
 	                    	'</a>';

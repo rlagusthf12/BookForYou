@@ -194,9 +194,27 @@
 	       </div>
        </form>
 		
+		<div class="choose_star">
+	                    <div class="make_star">
+	                    	<input type="hidden" id="blRate" name="blRate" value="${ bl.blRate }">
+					        <div class="rating" data-rate="#" id="starRating">
+					            <i class="fas fa-star"></i>
+					            <i class="fas fa-star"></i>
+					            <i class="fas fa-star"></i>
+					            <i class="fas fa-star"></i>
+					            <i class="fas fa-star"></i>	
+					        </div>
+					    </div>
+	                    <div class="star_txt">독서록 별점</div> 
+	                </div>
 		<script>
 			// 별점
 			$(function(){
+				var star = $('input[name=blRate]').val();
+				//console.log(star);
+				$(' .make_star i ').css( {color:'#dedede'});
+                $(' .make_star i:nth-child(-n+ ' + star + ')').css({color:'rgb(252, 190, 52)'});
+				
 				//별 아이콘을 클릭하면 할 일
 	            $(' .make_star i ').click(function(){
 	            	

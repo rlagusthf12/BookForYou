@@ -60,6 +60,7 @@
         display: inline-block; 
         padding:10px 25px; margin:0 10px;
         border-radius:6px;
+        text-decoration:none;
         }
         .btn-order_detail, .btn-order_detail:hover{color: rgb(126, 126, 126); border:1px solid rgb(252, 190, 52);}
         .btn-buy, .btn-buy:hover{color: #fff; background:rgb(252, 190, 52);}
@@ -115,6 +116,10 @@
     
                 <table class="order-wrap">
                     <tbody>
+                    	<tr>
+                            <th>주문번호</th>
+                            <td>${subsc.subscNo}</td>
+                        </tr>
                         <tr>
                             <th>주문일자</th>
                             <td>${subsc.subscSdate}</td>

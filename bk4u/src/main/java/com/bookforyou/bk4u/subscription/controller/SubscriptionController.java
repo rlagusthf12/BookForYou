@@ -355,6 +355,7 @@ public class SubscriptionController {
 		
 		if(result > 0) {
 			Subscription subsc = sService.selectSubscription(sub.getMemNo());
+			System.out.println(subsc);
 			mv.addObject("subsc", subsc)
 			  .setViewName("subscription/subscriptionPayComplete");
 		}
