@@ -28,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.service.MailSendService;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.common.template.Pagination;
@@ -898,21 +899,57 @@ public class MypageController {
 	}
 	
 	/**
-	 * 독서록
+	 * 작성한 독서록 조회
 	 * 김형우
 	 */
 	@RequestMapping("myBook.mp")
-	public String mybook() {
+public String selectList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+		
+		int listCount = mypageService.selectListCount(); // 독서록 총 게시글 갯수 조회
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		ArrayList<Booklist> list = mypageService.selectMbList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
 		return "mypage/mybook";
 	}
-	
+	// 스크랩 독서록 조회
+	@RequestMapping("clipping.mp")
+	public String selectClippingList(Model model, @RequestParam(value="currentPage", defaultValue="1") int currentPage) {
+			
+			int listCount = mypageService.selectClippingListCount(); // 독서록 총 게시글 갯수 조회
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			ArrayList<Booklist> list = mypageService.selectMbList(pi);
+			
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+			
+			return "mypage/clipping";
+		}
 	/**
-	 * 스크랩 독서록
+	 * 스크랩 독서록 추가
 	 * 김형우
 	 */
-	@RequestMapping("clipping.mp")
+	@RequestMapping("inClipping.mp")
 	public String clipping() {
 		return "mypage/clipping";
+	}
+	// 스크랩 추가
+	@RequestMapping("clipping.bl")
+	public String insertBooklist(Booklist bl, Model model, HttpSession session) {
+		
+		int result = mypageService.insertClippinglist(bl);
+			System.out.println(bl);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "독서록이 작성되었습니다!");
+			return "redirect:clipping.mp";
+		}else {
+			model.addAttribute("errorMag", "독서록을 작성하지 못했습니다.");
+			return "common/errorPage";
+		}
 	}
 	
 }

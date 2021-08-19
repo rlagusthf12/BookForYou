@@ -216,7 +216,7 @@
                             	좋아요
                             <span id="btn_num">${ bl.blLike }</span>
                         </button>
-                        <button id="btn_scrap" type="button">
+                        <button id="btn_scrap" type="button" onclick="location.href='clipping.bl?blNo=${bl.blNo}&memNo=${bl.memNo}'">
                             <img src="" alt="" style="width: 20px; height: 20px;">
                             	스크랩
                             <span id="btn_num">${ bl.blScrap }</span>

@@ -12,6 +12,7 @@ import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.dao.BookDao;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Refund;
@@ -213,9 +214,39 @@ public class MypageServiceImpl implements MypageService {
 	public ArrayList<Reply> selectMyReplyList(PageInfo pi, int memNo) {
 		return mypageDao.selectMyReplyList(sqlSession,pi,memNo);
 	}
+	
+	//마이페이지 독서록
+	@Override
+	public int selectListCount() {
+		return mypageDao.selectListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Booklist> selectMbList(PageInfo pi) {
+		return mypageDao.selectMbList(sqlSession, pi);
+	}
+	// 스크랩조회
+	@Override
+	public int selectClippingListCount() {
+		return mypageDao.selectClippingListCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Booklist> selectClippingList(PageInfo pi) {
+		return mypageDao.selectClippingList(sqlSession, pi);
+	}
+	
+	// 스크랩추가
+
+	@Override
+	public int insertClippinglist(Booklist bl) {
+		return mypageDao.insertClippinglist(sqlSession, bl);
+	}
+
+	
 
 
-
+	
 
 
 }

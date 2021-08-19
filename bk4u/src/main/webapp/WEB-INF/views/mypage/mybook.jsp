@@ -192,143 +192,51 @@
             <br>
 
             <div class="mybooktext">
-                
+                <c:forEach var="mb" items="${ list }">
                     <div class="book-outer">
+                    	<input type="hidden" id="blNo" name="blNo" value="${ mb.blNo }">
+                    	<input type="hidden" name="memNo" value="${ mb.memNo }">
                         <div class="img-area">
-                            <a href="">
+                            <a href=""><br>
                                 <img src="" width="150" height="150"></img>
                             </a>
                         </div>
                     
                         <div class="mybook">    
-                            <div class="bookcontent">제목</div>
+                            <div class="bookcontent" align="center">제목${ mb.blTitle }</div>
                                 <div class="content">
-                                    줄거리
+                                   <textarea name="content" cols="40" rows="3" style="resize:none;">${ mb.blContent }</textarea> 
                                 </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                            </div>
-                        </div>
+                            <div class="bookName">책이름 ${ mb.bkTitle }</div>
+                            <div class="author">저자명 ${ mb.writerName }</div>                                                                              
+                        </div>                 
                     </div>
+             	 </c:forEach>
                 
-                    <div class="book-outer" style="margin-left: 65px;">
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-outer"><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" style="display:inline-block">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="book-outer" style="margin-left: 65px;"><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" style="display:inline-block">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-outer"><br><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" style="display:inline-block">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div class="book-outer" style="margin-left: 65px;"><br><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" >    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
 
-                    <div id="paging-wrap">
+                     <div id="paging-wrap">
                         <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link">이전</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                            <li class="page-item disabled"><a class="page-link">다음</a></li>
+                        	<c:choose>
+                        		<c:when test="${ pi.currentPage eq 1 }">
+                            		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                            	</c:when>
+                            	<c:otherwise>
+                            		<li class="page-item disabled"><a class="page-link" href="myBook.mp?currentPage=${ pi.currentPage -1 }">이전</a></li>
+                            	</c:otherwise>
+                            </c:choose>
+                            <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                            	<li class="page-item"><a class="page-link" href="myBook.mp?currentPage=${ p }">${ p }</a></li>
+                            </c:forEach>
+                            <c:choose>
+                            	<c:when test="${ pi.currentPage eq pi.maxPage }">
+		                            <li class="page-item disabled"><a class="page-link">다음</a></li>
+                            	</c:when>
+                            	<c:otherwise>
+									<li class="page-item disabled"><a class="page-link" href="myBook.mp?currentPage=${ pi.currentPage + 1 }">다음</a></li>
+                            	</c:otherwise>
+                            </c:choose>
                         </ul>
                     </div>
                     
