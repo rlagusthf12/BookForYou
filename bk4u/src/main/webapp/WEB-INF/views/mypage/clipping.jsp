@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
 
     <style>
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif;
+    	}
         .wrap {
             width: 1200px;
             height: 1200px;
@@ -201,8 +205,8 @@
                 
                     <div class="book-outer">
                         <div  id="result-div">
-		                    <input type="hidden" id="blNo" name="blNo" value="${ mb.blNo }">
-		                    <input type="hidden" id="memNo" name="memNo" value="${ mb.memNo }">
+		                    <input type="hidden" id="blNo" name="blNo" value="${ blNo }">
+		                    <input type="hidden" id="memNo" name="memNo" value="${ memNo }">
                 <table class="table table-bordered table-sm">
                     <thead>
                         <tr>
@@ -217,29 +221,44 @@
                     </thead>
                     <tbody>              	 		                    	
 			            <tr>
-			                <td>${ mb.brNo }</td>		                            
+			                <td>${ brNo }</td>		                            
 			                <td><img src="" alt="" width="65" height="80"></td>
-			                <td>${ mb.blTitle }</td>
-			                <td>${ mb.blContent }</td>
-			                <td>${ mb.writerName }</td>
-			                <td>${ mb.scrapDate }</td>
+			                <td>${ blTitle }</td>
+			                <td>${ blContent }</td>
+			                <td>${ writerName }</td>
+			                <td>${ scrapDate }</td>
 			                <td><button type="button" onclick="">해제</button></td>
 			            </tr>
                     </tbody>
                 </table>
             </div>
 
-                    <div id="paging-wrap">
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link">이전</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">1</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">2</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">3</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">4</a></li>
-                            <li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">5</a></li>
-                            <li class="page-item disabled"><a class="page-link">다음</a></li>
-                        </ul>
-                    </div>
+                   <div id="paging-wrap">
+            <ul class="pagination">
+            	<c:choose>
+            		<c:when test="${ pi.currentPage eq 1 }">
+                		<li class="page-item disabled"><a class="page-link">이전</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="clipping.mp?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                	</c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                	<li class="page-item"><a class="page-link" href="clipping.mp?currentPage=${ p }">${ p }</a></li>
+                </c:forEach>
+                
+                
+                <c:choose>
+                	<c:when test="${ pi.currentPage eq pi.maxPage }">            
+                		<li class="page-item disabled"><a class="page-link">다음</a></li>
+                	</c:when>
+                	<c:otherwise>
+                		<li class="page-item disabled"><a class="page-link" href="clipping.mp?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                	</c:otherwise>
+                </c:choose>          
+            </ul>
+        </div>
                     
                 </div>
 

@@ -158,7 +158,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="standingOrders.mp">
                                 <i class="fa fa-credit-card"></i>
                                 <strong>정기구독 관리</strong>
                                 <small>정기구독 플랜을 조회/수정합니다.</small>
