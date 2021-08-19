@@ -30,6 +30,8 @@ import com.bookforyou.bk4u.common.template.Pagination;
 import com.bookforyou.bk4u.group.model.service.GroupService;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.group.model.vo.GroupMember;
+import com.bookforyou.bk4u.meet.model.service.MeetService;
+import com.bookforyou.bk4u.meet.model.vo.Meet;
 import com.bookforyou.bk4u.member.model.vo.Member;
 
 
@@ -39,13 +41,16 @@ public class GroupController {
 	@Autowired
 	private GroupService gService;
 	
+	@Autowired
+	private MeetService mService;
+	
 	@RequestMapping(value="group.bo",  method=RequestMethod.GET)
 	public String groupListView(Model model) throws Exception {
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		ArrayList<GroupBoard> groupList = gService.selectList();
-		GroupBoard activeGroup = gService.activeGroup();
+		ArrayList<GroupBoard> activeGroup = gService.activeGroup();
 
 		model.addAttribute("activeGroup", activeGroup);
 		model.addAttribute("groupList", groupList);

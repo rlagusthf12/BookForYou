@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bookforyou.bk4u.meetboard.model.dao.MeetBoardDao;
 import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 
+@Service
 public class MeetBoardServiceImpl implements MeetBoardService{
 
 	

@@ -15,6 +15,8 @@ public interface GroupService {
 	// 게시글 리스트
 	ArrayList<GroupBoard> selectList();
 	ArrayList<GroupBoard> selectListMore(int page);
+	ArrayList<GroupBoard> activeGroup();
+
 	
 	// 게시글 작성하기
 	int insertGroup(GroupBoard g);
@@ -24,7 +26,6 @@ public interface GroupService {
 	// 게시글 상세조회용
 	GroupBoard selectGroup(int GroupBoardNo);
 	
-	GroupBoard activeGroup();
 	
 	int deleteGroup(int GroupBoardNo);
 	

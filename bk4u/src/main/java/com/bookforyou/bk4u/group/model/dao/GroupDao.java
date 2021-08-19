@@ -78,7 +78,7 @@ public class GroupDao {
 			
 		}
 	
-	public GroupBoard activeGroup(SqlSessionTemplate sqlSession) {
+	public ArrayList<GroupBoard> activeGroup(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("groupMapper.activeGroup");
 	}
 
