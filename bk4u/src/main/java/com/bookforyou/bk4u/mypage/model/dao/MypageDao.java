@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Refund;
@@ -188,8 +189,31 @@ public class MypageDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectMyReplyList",memNo,rowBounds);
 	}
 
+	/** 마이페이지 독서록 조회
+	 * 형우
+	 */
+	public int selectListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("booklistMapper.selectMbListCount");
+	}
 
+	public ArrayList<Booklist> selectMbList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("booklistMapper.selectMbList", null, rowBounds);
+	}
+	//스크랩 조회
+	public int selectClippingListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("booklistMapper.selectClippingListCount");
+	}
 
-
-
+	public ArrayList<Booklist> selectClippingList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("booklistMapper.selectClippingList", null, rowBounds);
+	}
+	// 스크랩추가 
+	public int insertClippinglist(SqlSessionTemplate sqlSession, Booklist bl) {
+		System.out.println(bl);
+		return sqlSession.insert("booklistMapper.insertClippinglist", bl);
+	}
 }

@@ -383,7 +383,7 @@
 		                    
 		                    <div>
 		                        <div><input type="number" name="bookList[${ status.index }].bkQty" min="1" max="5" value="${ b.bkQty }"></div>
-		                        <div><button class="btn_qty">수량변경</button></div>
+		                        <div><button class="btn_qty" type="button">수량변경</button></div>
 		                    </div>
 		                    <div><span>${ b.bkPrice }</span>원</div>
 		                    <div>

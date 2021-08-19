@@ -35,4 +35,6 @@ public class Booklist {
 	public int rank;
 	public String changeImgName;
 	public String introChangeName;
+	public int brNo;
+	public Date scrapDate;
 }

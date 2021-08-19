@@ -233,6 +233,10 @@
                 </div>
             </div>
             
+            <form id="orderForm" action="order.od" method="post">
+			<input type="hidden" name="memNo" value="${ loginUser.memNo }">
+		    <input type="hidden" id="bkNoArr" name="bkNoArr">
+            
             <c:choose>
                 <c:when test="${ empty bList }">
                 	<div id="empty_search"><b>${ keyword } 와 일치하는 검색 결과가 없습니다.</b></div>
@@ -258,16 +262,17 @@
 			                    
 			                    <span>
 									수량&nbsp;&nbsp;
-			                        <input type="number" min="1" max="5" value="1">
+			                        <input type="number" name="bkQty" min="1" max="5" value="1">
+			                        <input type="hidden" name="bkPrice" value="${ b.bkPrice }">
 			                    </span>
 			                    
 			                    <div class="book_content">
 									${ b.bkIntroduce }
 			                    </div>
 			                    <div>
-			                        <button class="btn_order">즉시구매</button>
-			                        <button class="btn_cart">장바구니</button>
-			                        <button class="btn_list">리스트</button>
+			                        <button class="btn_order" type="button">즉시구매</button>
+			                        <button class="btn_cart" type="button">장바구니</button>
+			                        <button class="btn_list" type="button">리스트</button>
 			                        <input type="hidden" id="book_no" value="${ b.bkNo }"></input>
 			                    </div>
 			                </div>
@@ -275,6 +280,25 @@
 		            </c:forEach>
                 </c:otherwise>            
             </c:choose>
+            
+            </form>
+            
+            <script>
+	        	$(".search_book .btn_order").click(function(){
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+        					alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		var array = new Array();
+			            	array.push($(this).next().next().next().val());
+				            			
+				            $("#bkNoArr").val(array);
+				            $("#orderForm").submit();
+		        		</c:otherwise>
+	        		</c:choose>
+	        	})
+            </script>
             
             <script>
 	        	$(".search_book .btn_cart").click(function(){
@@ -315,6 +339,7 @@
 	        		<c:choose>
 	        		<c:when test="${empty loginUser}">
 	        			alert("로그인 후 이용해주세요");
+    					return false;
 	        		</c:when>
 	        		<c:otherwise>
 		        		$.ajax({
@@ -369,7 +394,7 @@
 	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
 	                   			</c:when>
 	                   			<c:otherwise>
-	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }">${ p }</a></li>
+	                   				<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ p }&condition=${condition}&keyword=${keyword}">${ p }</a></li>
 	                   			</c:otherwise>
 	                    	</c:choose>
 	                    </c:forEach>
@@ -384,7 +409,7 @@
 			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음</a></li>
 			                    	</c:when>
 			                    	<c:otherwise>
-			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }">다음	</a></li>
+			                    		<li class="page-item"><a class="page-link" href="search.bk?currentPage=${ pi.currentPage+1 }&condition=${condition}&keyword=${keyword}">다음	</a></li>
 			                    	</c:otherwise>
 			                    </c:choose>
 		                    </c:otherwise>

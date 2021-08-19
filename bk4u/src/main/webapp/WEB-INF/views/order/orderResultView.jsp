@@ -340,7 +340,7 @@
                 <div>
                 	<c:forEach var="o" items="${ oList }">
                     <div>
-                        <div class="book_img"><img src=""></div>
+                        <div class="book_img"><img src="${ o.introChangeName }"></div>
                         <div class="book_info">
                             <div>
                                 <div>${ o.bkTitle }</div>
@@ -357,6 +357,7 @@
                     </c:forEach>
                 </div>
             </div>
+            
             <div id="payment_info">
                 <div>
                     <div>결제 정보</div>
@@ -416,20 +417,29 @@
                         <div>
                             <div>
                                 <div>보유 포인트</div>
-                                <div>0원</div>
+                                <div>${ point }원</div>
                             </div>
                             <div>
                                 <div>+ 적립 포인트</div>
-                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/></div>
+                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>원</div>
                             </div>
                             <div id="point_result">
                                 <div>총 예상 포인트</div>
-                                <div><fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/></div>
+                                <div></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
+            <script>
+            	var ptPrice = <fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>;
+            	
+            	$(function(){
+            		$("#payment_detail #point_result>div:nth-child(2)").text(ptPrice + ${point} + "원");
+            	})
+            </script>
+            
         </div>
     </div>
     

@@ -41,7 +41,7 @@ public class AmemberController {
 // 메인
 	@RequestMapping("main.me")
 	public String main() {
-		return "main";
+		return "main2";
 	}
 
 // 관리자 메인

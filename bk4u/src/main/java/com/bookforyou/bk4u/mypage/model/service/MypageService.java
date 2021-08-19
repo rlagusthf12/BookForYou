@@ -7,6 +7,7 @@ import java.util.List;
 import com.bookforyou.bk4u.board.model.vo.Board;
 import com.bookforyou.bk4u.book.model.vo.Book;
 import com.bookforyou.bk4u.book.model.vo.Grade;
+import com.bookforyou.bk4u.booklist.model.vo.Booklist;
 import com.bookforyou.bk4u.common.model.vo.PageInfo;
 import com.bookforyou.bk4u.cs.model.vo.Cancel;
 import com.bookforyou.bk4u.cs.model.vo.Refund;
@@ -94,8 +95,14 @@ public interface MypageService {
 
 	ArrayList<Reply> selectMyReplyList(PageInfo pi, int memNo);
 
-
-
+	// 마이페이지 독서록 조회 형우
+	int selectListCount();
+	ArrayList<Booklist> selectMbList(PageInfo pi);
+	// 스크랩조회
+	int selectClippingListCount();
+	ArrayList<Booklist> selectClippingList(PageInfo pi);
+	// 스크랩추가
+	int insertClippinglist(Booklist bl);
 
 
 }

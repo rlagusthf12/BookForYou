@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
 	 * [사용자] 도서 상세 주문 리스트 조회 (연지)
 	 */
 	@Override
-	public ArrayList<Order> selectOrderList(int orderNo){
+	public ArrayList<OrderDetail> selectOrderList(int orderNo){
 		return oDao.selectOrderList(sqlSession, orderNo);
 	}
 

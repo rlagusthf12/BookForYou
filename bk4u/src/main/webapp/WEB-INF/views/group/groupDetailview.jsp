@@ -77,28 +77,29 @@
       
          
             <table style="width: 800px;">
+            <br><br><br><br><br><br><br><br>
             
-                <h6 align="left"><b>독서모임게시판</b></h6>
+                <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                 <br><br>
                 
                 <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
                        	   <li class="nav-item">
-                              <a class="nav-link active" href="redirect:detail.gbo?gno=" + g.getGroupBoardNo()">모임정보</a>
+                              <a class="nav-link active" href="detail.gbo?gno=${ g.groupBoardNo }">모임정보</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="meet.bo">정모게시판</a>
+                              <a class="nav-link" href="meet.bo?gno=${ g.groupBoardNo }">정모게시판</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="meetBoard.bo">소게시판</a>
+                              <a class="nav-link" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
                             </li>
                     </div>
 
                		 <table border="1" style="width: 800px;" id="groupMembe">
                         <tr>
-                            <td rowspan="2" width="500" height="200">
-                                <div class="card" style="width:500px">
-                                    <img class="card-img-top" src="${ g.changeName }" alt="Card image">
+                            <td rowspan="2">
+                                <div class="card" style="height:400px; width:300px;">
+                                    <img class="card-img-top" src="${ g.changeName }" alt="Card image" style="height:400px; width:300px;" >
                                         <div class="card-img-overlay">
                                         <h4 class="card-title" style="background:white;">${ g.groupTitle }</h4>
                                         <p class="card-text" style="background:white;">${ g.groupDate }</p>
@@ -139,14 +140,20 @@
                 <input type="hidden" name="memId" value="${ loginUser.memId }">
                 <input type="hidden" name="memEmail" value="${ loginUser.memEmail  }">
                 <input type="hidden" name="groupBoardNo" value="${ g.groupBoardNo }">
+                <c:choose>
+                <c:when test="${ loginUser.memId ne m.memId }">
                 <button type="submit" style="border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;">가입하기</button>
-                </form>
+                </c:when>
+                <c:otherwise>
                 <button type="submit" action="deleteGMem.me" style="border-color: black; background-color: white; border-radius: 10px;">탈퇴하기</button>
+                </c:otherwise>
+                </c:choose>
+                </form>
+               
+               
                 
-                <!-- 모임가입을 했으면 가입하기 나오고 아니면 탈퇴하기 나오게 하기-->
+                <!--  신고하기 버튼  -->
                 
-                
-                <!--탈퇴여부 묻는 알람창-->
                 <form action="writeForm.re" method="post">                
                 <input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.gbo?gno=${g.groupBoardNo}">
                 <input type="hidden" name="reportType" value="5">               

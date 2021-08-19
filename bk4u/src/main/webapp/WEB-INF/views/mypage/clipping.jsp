@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	String mem_no = "memNo";
+	session.setAttribute("memNo", mem_no);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -196,143 +200,34 @@
             <div class="mybooktext">
                 
                     <div class="book-outer">
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                                <br>
-                                <button type="button" class="btn btn-info">해제</button>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="book-outer" style="margin-left: 65px;">
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                                <br>
-                                <button type="button" class="btn btn-info">해제</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-outer"><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" style="display:inline-block">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                                <br>
-                                <button type="button" class="btn btn-info">해제</button>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="book-outer" style="margin-left: 65px;"><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" style="display:inline-block">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                                <br>
-                                <button type="button" class="btn btn-info">해제</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-outer"><br><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" style="display:inline-block">    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                                <br>
-                                <button type="button" class="btn btn-info">해제</button>
-                            </div>
-                        </div>
-                    </div>
-            
-                    <div class="book-outer" style="margin-left: 65px;"><br><br>
-                        <div class="img-area">
-                            <a href="">
-                                <img src="" width="150" height="150"></img>
-                            </a>
-                        </div>
-                    
-                        <div class="mybook" >    
-                            <div class="bookcontent">제목</div>
-                                <div class="content">
-                                    줄거리
-                                </div>
-                            <div class="author">저자명</div>
-                            <div class="">출판사</div>
-                            <div class="price">
-                                <strong>가격 원</strong> 
-                                <span>[10%<img src="http://image.kyobobook.co.kr/ink/images/common/icon_down04.gif" alt="할인" />+5%<b title="적립">P</b>]</span>
-                                <br>
-                                <button type="button" class="btn btn-info">해제</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <div  id="result-div">
+		                    <input type="hidden" id="blNo" name="blNo" value="${ mb.blNo }">
+		                    <input type="hidden" id="memNo" name="memNo" value="${ mb.memNo }">
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th width="45px">NO</th>                         
+                            <th width="85px">이미지</th>
+                            <th width="100px">제목</th>
+                            <th width="200px">줄거리</th>
+                            <th width="55px">저자</th>
+                            <th width="70px">출간일</th>
+                            <th width="50px">버튼</th>
+                        </tr>
+                    </thead>
+                    <tbody>              	 		                    	
+			            <tr>
+			                <td>${ mb.brNo }</td>		                            
+			                <td><img src="" alt="" width="65" height="80"></td>
+			                <td>${ mb.blTitle }</td>
+			                <td>${ mb.blContent }</td>
+			                <td>${ mb.writerName }</td>
+			                <td>${ mb.scrapDate }</td>
+			                <td><button type="button" onclick="">해제</button></td>
+			            </tr>
+                    </tbody>
+                </table>
+            </div>
 
                     <div id="paging-wrap">
                         <ul class="pagination">

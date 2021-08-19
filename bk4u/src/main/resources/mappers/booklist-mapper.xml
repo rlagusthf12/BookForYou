@@ -430,5 +430,65 @@
 		                )B2
 		 where B.bk_no in B2.bk_no
 	</select>
-
+	<!-- 마이페이지 독서록조회 형우-->
+	<select id="selectMbListCount" resultType="_int">
+		select count(*)
+		  from booklist
+		 where bl_status='Y'
+	</select>
+	
+	<select id="selectMbList" resultMap="booklistResult">
+		select 
+		       bl_no
+		     , bk_no
+		     , bk_title
+		     , writer_name
+		     , bl_title
+		     , bl_content
+		     , bl_count		     
+		  from booklist
+		  join members using(mem_no)
+		  join book using(bk_no)
+		 where bl_status='Y'
+		 order
+		    by bl_no desc
+	</select>
+	<!--  스크랩 조회 (형우) -->
+	<select id="selectClippingListCount" resultType="_int">
+		select count(*)
+		  from booklist
+		 where bl_status='Y'
+	</select>
+	
+	<select id="selectClippingList" resultMap="booklistResult">
+		select 
+		       bl_no
+		     , br_no  
+		     , bl_title
+		     , bl_content	     
+		     , writer_name
+		     , scrap_date
+		  from booklist
+		  join members using(mem_no)
+		  join scrap using(br_no)
+		 where bl_status='Y'
+		 order
+		    by bl_no desc
+	</select>
+	<!--  스크랩 추가 -->
+	<insert id="insertClippinglist">
+		insert
+			into scrap
+			(
+			  br_no
+			, mem_no
+			, scrap_date
+			)
+			values
+			(
+			  #{ brNo }
+			, #{ memNo }
+			, sysdate			
+			)
+	</insert>
 </mapper>

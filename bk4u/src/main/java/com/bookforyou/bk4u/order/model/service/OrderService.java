@@ -32,7 +32,7 @@ public interface OrderService {
 	/*
 	 * [사용자] 도서 상세 주문 리스트 조회 (연지)
 	 */
-	ArrayList<Order> selectOrderList(int orderNo);
+	ArrayList<OrderDetail> selectOrderList(int orderNo);
 
 	/**
 	 * [관리자] '주문확인'인 주문 개수 조회 (한진)

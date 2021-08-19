@@ -45,7 +45,7 @@ public class OrderDao {
 	/*
 	 * [사용자] 도서 상세 주문 리스트 조회 (연지)
 	 */
-	public ArrayList<Order> selectOrderList(SqlSessionTemplate sqlSession, int orderNo) {
+	public ArrayList<OrderDetail> selectOrderList(SqlSessionTemplate sqlSession, int orderNo) {
 		return (ArrayList)sqlSession.selectList("orderMapper.selectOrderList", orderNo);
 	}
 

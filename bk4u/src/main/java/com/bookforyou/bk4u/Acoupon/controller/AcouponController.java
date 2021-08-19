@@ -61,7 +61,7 @@ public class AcouponController {
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		
-		System.out.println(acouponCount);
+		//System.out.println(acouponCount);
 		
 		return "Acoupon/couponList";
 	}

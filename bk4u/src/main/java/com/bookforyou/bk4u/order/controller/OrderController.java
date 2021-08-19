@@ -115,13 +115,28 @@ public class OrderController {
 	 * [사용자] 도서 결제 결과 페이지 (연지)
 	 */
 	@RequestMapping("result.bk")
-	public ModelAndView resultPayment(ModelAndView mv, int orderNo) {
+	public ModelAndView resultPayment(ModelAndView mv, HttpSession session, int orderNo) {
+
+		Member member = (Member)session.getAttribute("loginUser");
+		int memNo = member.getMemNo();
 
 		Order od = oService.selectOrder(orderNo);
-		ArrayList<Order> oList = oService.selectOrderList(orderNo);
+		ArrayList<OrderDetail> oList = oService.selectOrderList(orderNo);
+		
+		ArrayList<Point> ptList = memberService.selectMemPoint(memNo);
+		int point = 0;
+				
+		for(Point p : ptList) {
+			if(p.getPointContent().equals("적립")) {
+				point += p.getPointPrice();
+			}else {
+				point -= p.getPointPrice();
+			}
+		}
 		
 		mv.addObject("od", od)
 		  .addObject("oList", oList)
+		  .addObject("point", point)
 		  .setViewName("order/orderResultView");
 		
 		return mv;
@@ -357,8 +372,10 @@ public class OrderController {
 	 * [사용자] 도서 주문 (연지)
 	 */
 	@RequestMapping("order.od")
-	public ModelAndView adminOListSearch(ModelAndView mv, int memNo,
-										@RequestParam(value = "bkNoArr") List<Integer> bkNoArr) {
+	public ModelAndView adminOListSearch(ModelAndView mv, @RequestParam(value = "memNo") int memNo,
+										@RequestParam(value = "bkNoArr") List<Integer> bkNoArr,
+										@RequestParam(value="bkPrice", defaultValue="0") int bkPrice,
+										@RequestParam(value="bkQty", defaultValue="0") int bkQty) {
 		
 		int i = 0;
 		ArrayList<Book> bList = new ArrayList<Book>();
@@ -366,6 +383,21 @@ public class OrderController {
 		map.put("memNo", memNo);
 		
 		for( int bkNo : bkNoArr) {
+			
+			if(bkPrice != 0) {
+				HashMap<String, Integer> map1 = new HashMap<>();
+				map1.put("memNo", memNo);
+				map1.put("bkNo", bkNo);
+				map1.put("cartQty", bkQty);
+				
+				int check = bookService.checkCart(map1);
+				int result = 0;
+				
+				if(check == 0) {
+					bookService.insertCart(map1);
+				}
+			}
+			
 			map.put("bkNo", bkNo);
 			Book bk = oService.selectOrderBook(map);
 			bList.add(i, bk);
@@ -380,6 +412,9 @@ public class OrderController {
 		int allPrice = 0;
 		
 		for(Book b : bList) {
+			if(bkPrice != 0) {
+				b.setBkQty(bkQty);
+			}
 			allPrice += (b.getBkPrice() * b.getBkQty());
 		}
 		
@@ -424,18 +459,22 @@ public class OrderController {
 	@RequestMapping(value="orderBook.od", produces="text/html; charset=utf-8")
 	public String insertOrderInfo(Order o) {
 
-		int result = oService.insertOrderInfo(o);
+		oService.insertOrderInfo(o);
 		
 		if(o.getUsedPoints() != 0) {
-			int result1 = oService.insertUsedPoint(o);
+			oService.insertUsedPoint(o);
 		}
 		
-		return result> 0 ? "success" : "fail";
+		int orderNo = oService.selectOrderNo();
+		System.out.println(orderNo);
+		
+		return Integer.toString(orderNo);
 	}
 
 	/*
 	 * [사용자] 주문 상세 정보 입력 (연지)
 	 */
+	@ResponseBody
 	@RequestMapping(value="orderDetail.od", produces="text/html; charset=utf-8")
 	public String insertOrderDetailInfo(@RequestParam String data, HttpSession session) {
 

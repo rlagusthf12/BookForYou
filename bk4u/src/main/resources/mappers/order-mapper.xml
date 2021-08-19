@@ -44,8 +44,9 @@
 		<result column="detail_price" property="detailPrice"/>
 		<result column="detail_status" property="detailStatus"/>
 		<result column="bk_title" property="bkTitle"/>
-		<result column="writer_name" property="writerName"/>
 		<result column="bk_publish" property="bkPublish"/>
+		<result column="writer_name" property="writerName"/>
+		<result column="intro_changename" property="introChangeName"/>
 		<result column="grade_star" property="gradeStar" />
 	</resultMap>
 
@@ -262,7 +263,8 @@
 			   detail_price,
 			   detail_status,
 			   bk_title,
-			   writer_name
+			   writer_name,
+			   intro_changename
 		  from order_detail o
 		  join book b on (o.bk_no = b.bk_no)
 		 where order_no = #{orderNo}

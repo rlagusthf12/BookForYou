@@ -44,13 +44,16 @@
                         
 						<form id="createMeet" method="post" action="insertMeet.bo" enctype="multipart/form-data">
                         <div style="border-radius: 10%; border: solid; width: 600px;">
-                        <table>
+                        <table >
                             <br><br>
                             <h4 align="center">모임 장소 및 시간</h4>
                             <br><br>
                            
-                           <input type="hidden" value="${meetNo}">
-                           <input type="hidden" value="${groupBoardNo }"  > 
+                           <tr>
+                           			<input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter"></td>
+                                	<input type="hidden" id="groupDate" value="${g.gorupDate } name="groupDate">
+                                	<input type="hidden" id="groupBoardNo" value="${g.gorupBoardNo } name="groupBoardNo">
+                           </tr>
                            
 							
                             <tr>
