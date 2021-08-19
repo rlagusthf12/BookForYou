@@ -446,7 +446,7 @@
                         </div>
                     </div>
                     <div id="state-change-button-box">
-                    	 <c:if test="${ order.orderStatus eq '결제완료' }">
+                    	 <c:if test="${ order.orderStatus eq '주문확인' }">
                         <!--상품이 결제/주문일경우-->
                         <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#cancel-order-modal">주문 취소</button>
