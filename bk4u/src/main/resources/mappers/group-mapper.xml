@@ -55,12 +55,11 @@
 		<result column="mem_no" property="memNo" />
 		<result column="mboard_content" property="mBoardContent" />
 		<result column="mboard_createdate" property="mBoardCreateDate" />
-		<result column="mboard_status" property="mboardStatus" />
+		<result column="mboard_status" property="mBoardStatus" />
 		<result column="group_level" property="groupLevel" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
 		<result column="mboard_writer" property="mBoardWriter"/>
-
 	</resultMap>
 
 	<select id="selectList" resultMap="groupResult">
@@ -299,7 +298,7 @@
 		    from groupBoard g join groupMember m using(group_boardno)
 		    where group_status = 'Y'
 		      and m.mem_no = #{memNo}
-		      and group_boardNo = #{groupBoardNo}
+		      and group_boardNo = #{gno}
 		      
 			
 	
@@ -337,20 +336,21 @@
 	<select id="meetList" resultMap="meetResult">
 		SELECT *
 		FROM (SELECT ROWNUM NUM
-		, s.group_boardno
-		, s.meet_no
-		, s.offline_address
-		, s.meet_date
-		, s.meet_time
-		, s.group_writer
-		, s.meet_price
-
-		FROM
-		(SELECT * FROM MEET 
-		WHERE MEET_STATUS = 'Y'
-		  
-		ORDER BY MEET_NO DESC)s)
-		WHERE NUM = 1
+			, s.group_boardno
+			, s.meet_no
+			, s.offline_address
+			, s.meet_date
+			, s.meet_time
+			, s.group_writer
+			, s.meet_price
+	
+			FROM
+			(SELECT * FROM MEET 
+			WHERE MEET_STATUS = 'Y'
+			ORDER BY MEET_NO DESC)s)
+			WHERE NUM = 1
+		     AND GROUP_BOARDNO = #{groupBoardNo}
+		      AND MEET_NO = #{mno}  
 		
 		
 	</select>	
@@ -363,35 +363,126 @@
 		, s.offline_address
 		, s.meet_date
 		, s.meet_time
-
+		
 		FROM
-		(SELECT * FROM MEET
+		(SELECT * FROM MEET m
 		WHERE MEET_STATUS = 'Y'
-		ORDER BY MEET_NO DESC)s)
+		ORDER BY MEET_NO DESC)s)g
 		WHERE NUM BETWEEN 2 AND 3
+		 and g.meet_no = #{mno}
+          and g.group_boardno = #{groupBoardNo}
+		
 	</select>	
 	
 	<select id="selectGBList" resultMap="boardResult">
 		SELECT *
 		FROM (SELECT ROWNUM NUM
+         , s.group_boardno
 		, s.mboard_no
-		, s.memNo
+		, s.mem_no
 		, s.mboard_content
 		, s.mboard_createdate
 		, s.mboard_status
-		, s.originName
-		, s.changeName
+		, s.origin_name
+		, s.change_name
+		, s.mboard_writer
+		
+		FROM
+		(SELECT * FROM MEETBOARD m
+		WHERE MBOARD_STATUS = 'Y'
+		ORDER BY MBOARD_NO DESC)s)g
+		WHERE NUM BETWEEN 1 AND 4
+        and g.group_boardno = #{groupBoardNo} 
+
+	</select>
+	
+	<select id="selectGBListMore" resultMap="boardResult">
+		SELECT *
+		FROM (SELECT ROWNUM NUM
+		, s.mboard_no
+		, s.mem_no
+		, s.mboard_content
+		, s.mboard_createdate
+		, s.mboard_status
+		, s.origin_name
+		, s.change_name
 		, s.mboard_writer
 		
 		FROM
 		(SELECT * FROM MEETBOARD
 		WHERE MBOARD_STATUS = 'Y'
-		  AND GROUP_BOARDNO = #{GROUPBOARDNO}
-		ORDER BY MBOARD_NO DESC)s)
-		WHERE NUM BETWEEN 1 AND 4
-
+		ORDER BY MBOARD_NO DESC)s)g
+		WHERE NUM BETWEEN 5+(4*#{more}) AND 8+(4*#{MORE})
+		AND G.GROUP_BOARDNO = #{groupBoardNo}
+		  AND g.MBOARD_NO = #{mbno}
 
 	</select>
+	
+		<insert id="insertMBoard">
+		insert
+			into meetBoard
+				(
+				mboard_no
+				,mem_no
+				,mboard_content
+				,mboard_createdate
+				,mboard_status
+				,change_name
+				,mboard_writer
+				)
+				values
+				(
+				seq_mbno.nextval
+				,#{memNo}
+				,#{mBoardContent}
+				,sysdate
+				,#{mBoardStatus}
+				,#{changeName}
+				,#{mBoardWriter}
+				)
+
+	</insert>
+	
+	<select id="selectMBoard" resultMap="boardResult">
+		select
+				, mboard_no
+				, mem_no
+				, mboard_content
+				, mboard_createdate
+				, mboard_status
+				, origin_name
+				, change_name
+				, mboard_writer
+				from meetBoard 
+			 m join groupBoard g using (group_boardno)
+				 where g.group_boardNo = #{groupBoardNo}
+				  and m.mboard_no = #{mbno}
+	</select>
+
+	<update id="deleteMBoard">
+		update
+			  meetBoard
+			set mboard_status ='N'
+			where group_boardno = #{groupBoardNo}
+			  and mboard_no = #{mbno}  
+
+	</update>
+
+	<update id="updateMBoard">
+
+		update
+				meetBoard
+			set
+				mboard_no = #{mBoardNo}
+				,mem_no = #{memNo}
+				,mboard_content = #{mBoardContent}
+				,mboard_createdate = #{mBoardCreateDate}
+				,mboard_status = #{mBoardStatus}
+				,change_name =  #{changeName}
+				,mboard_writer = #{mBoardWriter}
+		
+				  where mboard_no = #{mbno} 
+	</update>
 
 	<!-- 마이페이지에 쓰이니 삭제하지 말아주세요 -->
 	<!-- [사용자] 마이페이지 내가 속한 그룹 리스트들 개수 조회 (세아) -->

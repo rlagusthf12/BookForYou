@@ -38,22 +38,45 @@
                 
               <div class="content">
       
+      <div id="topButton" style="cursor: pointer"><button id="headbutton" style="border-radius: 10px;">맨위로△</button></div>
+            
+            <script>
+            $(document).ready(function() {
+    
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > 500) {
+                        $('#topButton').fadeIn();
+                    } else {
+                        $('#topButton').fadeOut();
+                    }
+                });
+    
+                $("#headbutton").click(function() {
+                    $('html, body').animate({scrollTop:0}, '300');
+                });
+    
+            });
+        </script>
+      
               <div class="innerOuter"  style="padding:5% 5%;" align="center">
-             
+            <br><br><br><br><br><br><br><br>
+            
+            
+                  <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
+                  <br><br>
                   
-                  <input type="hidden" value="${ m.groupBoardNo }">
-                  <input type="hidden" value="${ m.meetNo }">
+                  
                   
                    <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
                        	   <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${ g.gno }">모임정보</a>
+                              <a class="nav-link" href="detail.gbo?gno=${ g.groupBoardNo }">모임정보</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link active" href="meet.bo">정모게시판</a>
+                              <a class="nav-link active" href="meet.bo?gno=${ g.groupBoardNo }">정모게시판</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="meetBoard.bo">소게시판</a>
+                              <a class="nav-link" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
                             </li>
                     </div>
       

@@ -31,19 +31,44 @@
               
             <div class="content">
   
+		  <div id="topButton" style="cursor: pointer"><button id="headbutton" style="border-radius: 10px;">맨위로△</button></div>
+		            
+		            <script>
+		            $(document).ready(function() {
+		    
+		                $(window).scroll(function() {
+		                    if ($(this).scrollTop() > 500) {
+		                        $('#topButton').fadeIn();
+		                    } else {
+		                        $('#topButton').fadeOut();
+		                    }
+		                });
+		    
+		                $("#headbutton").click(function() {
+		                    $('html, body').animate({scrollTop:0}, '300');
+		                });
+		    
+		            });
+		        </script>
+  
+  
             <div class="innerOuter"  style="padding:5% 5%;" align="center">
+            
+            <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
+  			<br><br>
+  			
                 <div align="left" style="padding-left:19px">
-                    <ul class="nav nav-tabs">
-                       <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=">${g.groupBoardNo}모임정보</a>
+                        <ul class="nav nav-tabs">
+                       	   <li class="nav-item">
+                              <a class="nav-link" href="detail.gbo?gno=${ g.groupBoardNo }">모임정보</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link" href="meet.bo">정모게시판</a>
+                              <a class="nav-link" href="meet.bo?gno=${ g.groupBoardNo }">정모게시판</a>
                             </li>
                             <li class="nav-item">
-                              <a class="nav-link active" href="meetBoard.bo">소게시판</a>
+                              <a class="nav-link active" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
                             </li>
-                </div>
+                    </div>
 
                     <div align="center" style="width: 800px; border-radius: 10px; height: auto; border: 1px solid; padding-right: 20px; padding-left: 20px;"> 
                             <br><br>
@@ -53,18 +78,25 @@
                         
                     <br><br>
                     <div style="border: 1px solid; width: 750; height: 800; margin: auto; border-radius: 10px;">
-                        <table align="center" >
+                        <table align="center" id="selectGBList">
+                        
+                        <input type="hidden" value="${m.groupBoardNo}">    
+					    <input type="hidden" value="${m.meetNo}">
+					    
+					    <c:forEach var="g" items="${ selectGBList }">
+					    
                             <tr>
                                 <td width="200">작성자아이콘 </td>
-                                <td>작성자닉네임</td>
+                                <td>${ g.mBoardWriter }</td>
                             </tr>
                             <tr>
-                                <td>작성날짜</td>
-                                <td>작성시간</td>
+                                <td>${ g.mBoardCreateDate }</td>
                             </tr>
                             <tr>
-                                <td colspan="2" width="650px" height="150"> 작성내용 미리보기 </td>
+                                <td colspan="2" width="650px" height="150"> ${ g.mBoardContent } </td>
                             </tr>
+                            
+                            </c:forEach>
                         </table>
                     </div>
 

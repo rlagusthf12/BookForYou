@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meet.model.dao.MeetDao;
 import com.bookforyou.bk4u.meet.model.vo.Meet;
@@ -48,5 +49,7 @@ public class MeetServiceImpl implements MeetService {
 		return mDao.meetLastList(sqlSession);
 	}
 
+	
+	
 
 }
