@@ -351,7 +351,7 @@
                                 <th scope="col" style="width: 10%;">주문번호</th>
                                 <th scope="col">주문일자</th>
                                 <th scope="col" id="book-title">상품이름</th>
-                                <th scope="col">주문금액</th>
+                                <th scope="col">결제금액</th>
                                 <th scope="col">주문상태</th>
                             </tr>
                         </thead>
