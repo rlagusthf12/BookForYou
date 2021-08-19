@@ -951,5 +951,9 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 			return "common/errorPage";
 		}
 	}
-	
+	// 정기구독
+	@RequestMapping("standingOrders.mp")
+	public String standingOrders() {
+		return "mypage/standingOrders";
+	}
 }

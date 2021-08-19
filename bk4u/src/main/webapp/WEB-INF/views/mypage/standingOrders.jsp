@@ -8,10 +8,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/brands.min.css"></script>
+    <!-- 부트스트랩에서 제공하고 있는 스타일 -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
     <link rel='stylesheet' href='https://puertokhalid.com/up/demos/puerto-Mega_Menu/css/normalize.css'>
-    <link rel="stylesheet" href="./side-style.css">
+    <link rel="stylesheet" href="resources\mypage\css\side-style.css">
+    
     <style>
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif;
+    	}
         .wrap {
             width: 1200px;
             height: 1200px;
@@ -52,6 +68,8 @@
 </head>
 
 <body>
+	<!-- 메뉴바 -->
+	<jsp:include page="../common/menubar.jsp"/>
     <div class="wrap">
         <div id="content">
             <!-- partial:index.partial.html -->
@@ -142,12 +160,12 @@
                 </nav>
             </div>
             <!-- partial -->
-            <div id="main_content">
+            <div id="main_content"><br>
                 <h1>&nbsp;&nbsp;정기구독 관리</h1>
                 
                 <hr>
 
-                <table border="1" height="350", width="800">
+                <table border="2" height="350", width="800">
                     <tr>
                         <th>이용 플랜</th>
                         <td>Premium(3개월 이용권)</td>
