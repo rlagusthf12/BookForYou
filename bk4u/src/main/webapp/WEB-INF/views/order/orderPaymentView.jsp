@@ -1072,7 +1072,7 @@
         	      pay_method: "card", // 지불 수단
         	      merchant_uid: 'merchant_' + new Date().getTime(), //가맹점에서 구별할 수 있는 고유한id
         	      name: oName, // 상품명
-        	      amount: 100, // 가격
+        	      amount: $("#payment_info>#info_box>div:nth-child(4)>input").val(), // 가격
         	      buyer_email: "${ loginUser.memEmail }",
         	      buyer_name: "${ loginUser.memName }", // 구매자 이름
         	      buyer_tel: "${ loginUser.memPhone }", // 구매자 연락처 
