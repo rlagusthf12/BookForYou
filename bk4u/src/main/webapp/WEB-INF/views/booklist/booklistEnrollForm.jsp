@@ -57,6 +57,7 @@
         .modal-body .select{width:20%; display:inline-block;}
         .modal-body #keyword{width:60%; display:inline-block;}
         .btn_search, .btn_choose{background:rgb(252, 190, 52); color: #fff; border:none; border-radius:4px; padding:5px 20px; margin-bottom:20px;}
+        .bookimg{width:150px; height:200px;}
         /*검색결과*/
         .search_title{background:rgb(248, 248, 248); line-height:40px; height:40px;}
         ul{list-style-type:none; margin: auto;}
@@ -70,7 +71,8 @@
         .select_book_area a:hover{color:#000; text-decoration:none;}
         .book_area-wrap{display:flex; height:210px;}
         /*책이미지*/
-        .book_img{width: 30%; margin-right:40px; background-color: rgb(223, 223, 223);}
+        .book_img{margin-right:40px;}
+        #bookImage{width:170px; height:220px;}
         /*책정보내용area*/
         .book_info-wrap{width:75%;}
         .book_title{font-size:18px; font-weight:500; color:rgb(236, 87, 59);}
@@ -178,7 +180,7 @@
 	        	<div class="book_area-wrap">
 	        		<input type="hidden" id="bkNo">
 	        		<span class="book_img">
-	        			<img src="" alt="" id="book_img-item">
+	        			<img src="" alt="" id="bookImage">
 	        		</span>
 	        		<div class="book_info-wrap">
 	        			<div class="book_title">고양이님, 저랑 살 만하신가요?</div>
@@ -313,11 +315,11 @@
 		        				result +=
 		        					
 		        				"<li class='search_result'>" +
-		    						"<a href='#' class='bookitem_add' id='dataBk' onclick='selectBk();' data-bktitle='"+ list[i].bkTitle +"' data-introoriginname="+ list[i].introOriginName +" data-writername='"+ list[i].writerName +"' data-bkno="+ list[i].bkNo +" data-bkintroduce='"+list[i].bkIntroduce+"' '>" +
+		    						"<a href='#' class='bookitem_add' id='dataBk' onclick='selectBk();' data-bktitle='"+ list[i].bkTitle +"' data-introchangename="+ list[i].introChangeName +" data-writername='"+ list[i].writerName +"' data-bkno="+ list[i].bkNo +" data-bkintroduce='"+list[i].bkIntroduce+"' '>" +
 		    							"<div class='bookitem_wrap'>" +
 		    								"<div class='bookitem_img'>" +
 		    									"<span class='hover'>" +
-		    										"<img alt=" + list[i].bkTitle + "' src='" + list[i].introOriginName + " '>" + 
+		    										"<img class='bookimg' alt=" + list[i].bkTitle + "' src='" + list[i].introChangeName + " '>" + 
 		    									"</span>" +
 		    								"</div>" +
 		    							"</div>" +
@@ -325,7 +327,7 @@
 		    							"<p class='book_writer'>" + list[i].writerName + "</p>" +
 		    						"</a>" +
 	    						"</li>"
-		        				
+	    						console.log(list[i].introChangeName);
 		        			}
 		        		
 		        			$('#searchBk_result').html(result);
@@ -345,7 +347,7 @@
 	        	var bkno = $("#dataBk").data("bkno");
 	        	var bktitle = $("#dataBk").data("bktitle");
 	        	var writername = $("#dataBk").data("writername");
-	        	var introoriginname = $("#dataBk").data("introoriginname");
+	        	var introchangename = $("#dataBk").data("introchangename");
 	        	var bkintroduce = $("#dataBk").data("bkintroduce");
 	        	
 	        	if($("#dataBk").data("bkno") != ""){
@@ -356,7 +358,7 @@
 	        		$(".book_title").html(bktitle);
 	        		$(".book_writer").html(writername);
 	        		$(".book_content").html(bkintroduce);
-	        		$("#book_img-item").html(introoriginname);
+	        		$("#bookImage").attr("src", introchangename);
 	        		
 	        		$('#myModal').modal("hide");
 	        		

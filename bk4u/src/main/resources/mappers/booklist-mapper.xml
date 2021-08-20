@@ -31,6 +31,7 @@
 		<result column="bk_title" property="bkTitle"/>
 		<result column="writer_name" property="writerName"/>
 		<result column="intro_originname" property="introOriginName"/>
+		<result column="intro_changename" property="introChangeName"/>
 		<result column="bk_introduce" property="bkIntroduce"/>
 	</resultMap>
 	
@@ -123,6 +124,7 @@
              , bk_title
              , writer_name
              , intro_originname
+             , intro_changename
              , bk_introduce
 		  from book
 		 where bk_selstatus = 'Y'
@@ -176,6 +178,7 @@
 		     , bk_title
 		     , writer_name
 		     , bk_introduce
+		     , intro_changename
 		  from booklist
 		  join book using(bk_no)		  
 		 where bl_no = #{blNo}
