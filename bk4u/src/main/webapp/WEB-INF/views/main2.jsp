@@ -406,16 +406,17 @@
 			
 			for(var s=5; s>=1; s--){
 		        if(s == rt){
-		        	 c = `<input type="radio" id="star` + s + `" name="rate" value="`+ s + `" checked>`
+		        	 c = `<input type="radio" id="star` + s + `" name="rate` + rt + `" value="`+ s + `" checked>`
+		        	 console.log(rt + " : " + c );
 		         }else{
-		             c = `<input type="radio" id="star` + s + `" name="rate" value="` + s + `">`
+		             c = `<input type="radio" id="star` + s + `" name="rate` + rt + `" value="` + s + `">`
 		         }
 		        
 		        d = `<label for="star` + s + `" title="text">` + s + " stars" + `</label>`
 		     	
 		         radio.append(c+d);
-		        console.log(rt + " : " + c + " / " + d);
 		     }
+		       
 			
 			var rr = radio.children();
 			
