@@ -97,6 +97,7 @@
         .page-link, .page-link:hover{color:rgb(252, 190, 52);}
         
 		#reportBtn{margin-left:15px; font-size:13px; padding:0; color:#9c9c9c; border:none; background:#fff;}
+		#reportForm{display:inline-block;}
         </style>
 </head>
 <body>
@@ -154,13 +155,15 @@
                 <div class="content_info_box">
                     <span class="content_info_date">${ b.boCdate }</span>
                     <span class="content_info_views">조회수 ${ b.boCount }</span>
-	                <form action="writeForm.re" method="post">                
+	                <form id="reportForm" action="writeForm.re" method="post">                
 	                <input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.bo?boNo=${b.boNo}">
 	                <input type="hidden" name="reportType" value="1">               
 	                <input type="hidden" name="reportRefNo" value="${b.boNo}">
 	                <button id="reportBtn" type="submit">신고</button>
-	                </form>                    
+	                </form>         
                 </div>
+                
+                
 
                 <!--에디터글내용area-->
                 <div class="article_content_area">
@@ -199,6 +202,8 @@
 		
 		$(function(){
 			selectReplyList();
+			var refNo = ${ b.boNo };
+			console.log(refNo);
 		})
 		
 		// 댓글 리스트 조회용 ajax
@@ -227,13 +232,16 @@
 	                                      '<div class="comment_nick_box"><div class="comment_nick_info"><a id="" href="" class="comment_nickname">' + list[i].memNo + '</a></div></div>' +
 	                                      '<div class="comment_text_box"><p class="comment_text_view"><span class="text_comment">' + list[i].replyContent + '</span></p></div>' +
 	                                      '<div class="CommentItemImage" style="display:none;"><a href="" role="button" class="comment_image_link"><img alt="" class="image" src="" width="150px" height="150px"></a></div>' +
-	                                      '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' +'<form action="writeForm.re" method="post">'+                
+	                                      '<div class="comment_info_box"><span class="comment_info_date">' + list[i].replyCdate + '</span>' + 
+	                                      '<form id="reportForm" action="writeForm.re" method="post">' +                
 	                  	                  '<input type="hidden" name="reportLink" value="http://localhost:8888/bk4u/detail.bo?boNo=${b.boNo}">'+
 	                	                  '<input type="hidden" name="reportType" value="3">'+  '<input type="hidden" name="reportRefNo" value="${b.boNo}">'+
-	                	                  '<button id="reportBtn" type="submit">신고</button>'+ '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><button id="addRecomment">답글쓰기</button></div></div>' +
+	                	                  '<button id="reportBtn" type="submit">신고</button></form>'+ 
+	                                      '<div class="recomment_box"><div id="recomment_report" class="recomment_report"><button type="button" id="addRecomment">답글쓰기</button></div></div>' +
 	                                  '</div>' +
 	                              '</div>' +
 	                               
+	                         '</li>' +
 	                              // 대댓글 작성창
 	                              '<div class="reply-input" id="popup" style="display:none;">' +
                                   '<div class="reply-text">' +
@@ -244,7 +252,6 @@
 	                                      '<button id="removeRecomment">취소</button>' +
                                   '</div>' +
                                   '</div>' +
-	                         '</li>' +
 	                         '<div class="subReply' + list[i].replyNo + '"></div>'
 	 					}	
 						$("#replyArea").html(result);
@@ -301,18 +308,18 @@
 					dataType:'text',
 					data:{
 						memNo:${loginUser.memNo},
-						refPost:$("input[name=boNo]").val(),
+						refPost:${ b.boNo },
 						replyContent:$("#replyContent").val(),
 						replyRefNo:$("input[id=replyNo]").val(),
 						depth:$("input[name=depth]").val()
 					},success: function(status){ 
 						
 						if(status == "success"){
-							console.log('success:성공');
+							console.log('success:댓글 성공');
 							selectReplyList();
 							$("#replyContent").val("");
 						}else if(status == "fail"){
-							console.log('success:실패');
+							console.log('success:댓글 실패');
 						}else{
 							console.log('success:데이터오류?' + data);
 						}
@@ -331,18 +338,18 @@
 					dataType:'text',
 					data:{
 						memNo:${loginUser.memNo},
-						refPost:$("input[name=boNo]").val(),
+						refPost:${ b.boNo },
 						replyContent:$("#recoContent").val(),
 						replyRefNo:$("#reNo").val(),
 						depth:$("input[name=depth]").val()
 					},success: function(status){ 
 						
 						if(status == "success"){
-							console.log('success:성공');
+							console.log('success:대댓글 성공');
 							selectReplyList();
 							$("#replyContent").val("");
 						}else if(status == "fail"){
-							console.log('success:실패');
+							console.log('success:대댓글 실패');
 						}else{
 							console.log('success:데이터오류?' + data);
 						}
@@ -355,8 +362,11 @@
 		}
 	</script>
 
-
-
+	<script>
+                $('#reportBtn').on("click", function(){
+                	$("#reportForm").attr("action", "writeForm.re").submit();
+                })
+  	</script>
 
 
     <jsp:include page="../common/footer.jsp"/>

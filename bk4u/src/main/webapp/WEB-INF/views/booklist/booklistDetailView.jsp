@@ -50,7 +50,8 @@
         .book_area a:hover{color:#000; text-decoration:none;}
         .book_area-wrap{display:flex; height:210px;}
         /*책이미지*/
-        .book_img{width: 30%; margin-right:40px; background-color: rgb(223, 223, 223);}
+        .book_img{margin-right:40px;}
+        #bookImage{width:170px; height:220px;}
         /*책정보내용area*/
         .book_info-wrap{width:75%;}
         .book_title{font-size:18px; font-weight:500; color:rgb(236, 87, 59);}
@@ -322,7 +323,7 @@
                 <div class="book_area">
                     <a href="" class="book_area-wrap">
                         <span class="book_img">
-                            <img src="" alt="" id="book_img-item">
+                            <img src="${ bk.introChangeName }" alt="" id="bookImage">
                         </span>
                         <div class="book_info-wrap">
                         	<input type="hidden" id="bkNo" name="bkNo" value="${ bk.bkNo }">
@@ -333,23 +334,21 @@
                         </div>
                     </a>
                 </div>
-
+				  
                 <!--좋아요/스크랩-->
                 <div class="like_area">
                     <div class="like-wrap">
                         <button id="btn_like" type="button">
-                            <img src="" alt="" style="width: 20px; height: 20px;">
                             	좋아요
                             <span id="btn_num">${ bl.blLike }</span>
                         </button>
                         <button id="btn_scrap" type="button" onclick="location.href='clipping.bl?blNo=${bl.blNo}&memNo=${loginUser.memNo}'">
-                            <img src="" alt="" style="width: 20px; height: 20px;">
                             	스크랩
                             <span id="btn_num">${ bl.blScrap }</span>
                         </button>
                     </div>
                 </div>
-
+				
                 <!--작성자의 독서록area-->
                 <div class="booklist_area">
                     <div class="writer_box">

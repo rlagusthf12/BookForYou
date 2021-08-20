@@ -219,6 +219,7 @@ public class BooklistController {
 	@RequestMapping("updateForm.bl")
 	public String updateForm(int blNo, Model model) {
 		model.addAttribute("bl", blService.selectBooklist(blNo));
+		model.addAttribute("bk", blService.selectBook(blNo));
 		return "booklist/booklistUpdateForm";
 	}
 	
