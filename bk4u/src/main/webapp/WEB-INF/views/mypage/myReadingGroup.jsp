@@ -208,7 +208,7 @@
                    <h4 style="text-align:center; cursor: default">참가한 그룹이 없습니다.</h4>
                 </c:if>
                 <c:forEach var="group" items="${list }">
-                    <div class="card mb-3" id="group-card" style="max-width: 800px;">
+                    <div class="card mb-3 group-card" id="group-card" style="max-width: 800px;">
                     	<input type="hidden" name="groupBoardNo" id="groupBoardNo" value="${group.groupBoardNo }"/>
                         <div class="row g-0">
                           <div class="col-md-4">
@@ -228,8 +228,8 @@
                       
                   <script type="text/javascript">
             		$(function(){
-            			$("#group-card").click(function(){
-            				console.log($(this).children("#groupBoardNo").val());
+            			$(".group-card").click(function(){
+            				console.log($(this));
             				location.href = "detail.gbo?gno=" + $(this).children("#groupBoardNo").val();
             			})
             		})
