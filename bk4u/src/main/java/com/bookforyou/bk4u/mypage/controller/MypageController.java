@@ -953,16 +953,16 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 	}
 	// 스크랩 삭제
 	@RequestMapping("ClippingDelete.me")
-	public String DeleteClipping(int blno, Model model, HttpSession session) {
+	public String DeleteClipping(int blNo, Model model, HttpSession session) {
 		
-		int result = mypageService.deleteClipping(blno); // service, dao, sql문
+		int result = mypageService.deleteClipping(blNo);
 	
-		if(result > 0) { // 성공 => 리스트페이지
+		if(result > 0) {
 		
 					session.setAttribute("alertMsg", "스크랩에서 삭제되었습니다.");
-					return "redirect:blackList.me";
+					return "redirect:clipping.mp";
 					
-				}else { // 실패
+				}else {
 					model.addAttribute("errorMsg", "스크랩 삭제 실패");
 					return "common/errorPage";
 				}
