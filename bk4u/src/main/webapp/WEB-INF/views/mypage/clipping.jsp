@@ -210,7 +210,7 @@
                 <table class="table table-bordered table-sm" style="table-layout:fixed">
                     <thead>
                         <tr>
-                            <th width="45px">NO</th>                         
+                            <th width="45px">NO</th>                                                  
                             <th width="85px">이미지</th>
                             <th width="100px">제목</th>
                             <th width="200px">줄거리</th>
@@ -219,7 +219,7 @@
                         </tr>
                     </thead>
                     <tbody>        
-                    <c:forEach var="a" items="${list }">	 		                    	
+                    <c:forEach var="a" items="${ list }">	 		                    	
 			            <tr>
 			                <td>${ a.blNo }</td>		                            
 			                <td><img src="${a.introChangeName}" alt="" width="65" height="80"></td>

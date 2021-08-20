@@ -217,7 +217,8 @@ public class MypageDao {
 		return sqlSession.insert("booklistMapper.insertClippinglist", bl);
 	}
 	// 스크랩 삭제
-			public int deleteClipping(SqlSessionTemplate sqlSession, int brno) {
-				return sqlSession.delete("booklistMapper.deleteClipping", brno);
+			public int deleteClipping(SqlSessionTemplate sqlSession, int blno) {
+			System.out.println(blno);
+				return sqlSession.delete("booklistMapper.deleteClipping", blno);
 			}
 }

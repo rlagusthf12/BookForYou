@@ -245,8 +245,8 @@ public class MypageServiceImpl implements MypageService {
 
 	// 스크랩 삭제
 	@Override
-	public int deleteClipping(int brno) {
-		return mypageDao.deleteClipping(sqlSession, brno);
+	public int deleteClipping(int blno) {
+		return mypageDao.deleteClipping(sqlSession, blno);
 	}
 
 	

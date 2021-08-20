@@ -922,7 +922,7 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 			int listCount = mypageService.selectClippingListCount(); // 독서록 총 게시글 갯수 조회
 			
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-			ArrayList<Booklist> list = mypageService.selectMbList(pi);
+			ArrayList<Booklist> list = mypageService.selectClippingList(pi);
 			
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
@@ -953,9 +953,9 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 	}
 	// 스크랩 삭제
 	@RequestMapping("ClippingDelete.me")
-	public String DeleteClipping(int brno, Model model, HttpSession session) {
+	public String DeleteClipping(int blno, Model model, HttpSession session) {
 		
-		int result = mypageService.deleteClipping(brno); // service, dao, sql문
+		int result = mypageService.deleteClipping(blno); // service, dao, sql문
 	
 		if(result > 0) { // 성공 => 리스트페이지
 		

@@ -457,9 +457,9 @@
 	<select id="selectClippingListCount" resultType="_int">
 		select count(*)
 		  from booklist B
-		  join scrap on (bl_no = br_no)
+		  join scrap S on (bl_no = br_no)
 		  join book using (bk_no)
-		 where B.mem_no = #{mem_no}
+		 where S.mem_no = #{mem_no}
 	</select>
 	
 	<select id="selectClippingList" resultMap="booklistResult">
@@ -477,7 +477,7 @@
 		  from booklist B
 		  join scrap S on (bl_no = br_no)
 		  join book using (bk_no)
-		 where S.mem_no = #{mem_no}
+		 where S.mem_no = '2'
 	</select>
 	<!--  스크랩 추가 -->
 	<insert id="insertClippinglist">
@@ -499,6 +499,6 @@
 	<update id="deleteClipping">
 		delete
 		     from scrap
-		 where bl_no = #{blNo}
+		 where bl_no = #{brNo}
 	</update>
 </mapper>

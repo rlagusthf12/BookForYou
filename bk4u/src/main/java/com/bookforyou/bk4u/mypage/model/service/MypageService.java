@@ -104,6 +104,6 @@ public interface MypageService {
 	// 스크랩추가
 	int insertClippinglist(Booklist bl);
 	// 스크랩삭제
-	int deleteClipping(int brno);
+	int deleteClipping(int blno);
 
 }
