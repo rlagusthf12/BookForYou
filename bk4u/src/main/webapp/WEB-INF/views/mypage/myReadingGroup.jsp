@@ -30,7 +30,7 @@
 
         #content {
             background: #EEE;
-            height: 1100px;
+            height: 1200px;
             position: relative;
             display: inline-flex;
         }
@@ -40,7 +40,7 @@
             margin-top: 50px;
             margin-right: 60px;
             width: 100%;
-            height: 880px;
+            height: 1080px;
             background-color: #FFF;
             box-shadow: 5px 5px 5px 5px #C6C6C6;
         }
@@ -60,7 +60,7 @@
         #table-box{
             margin-top: 50px;
             width: 90%;
-            height: 650px;
+            height: 830px;
             margin:auto;
         }
 
@@ -205,14 +205,14 @@
                 <br>
                 <div id="table-box">
                 <c:if test="${ empty list }">
-                   <h3 style="text-align:center; cursor: default">보관함에 담긴 책이 없습니다.</h3>
+                   <h4 style="text-align:center; cursor: default">참가한 그룹이 없습니다.</h4>
                 </c:if>
                 <c:forEach var="group" items="${list }">
                     <div class="card mb-3" id="group-card" style="max-width: 800px;">
                     	<input type="hidden" name="groupBoardNo" id="groupBoardNo" value="${group.groupBoardNo }"/>
                         <div class="row g-0">
                           <div class="col-md-4">
-                            <img src="${group.originName }" style="max-width: 100%; height: 100%;" class="rounded-start" alt="..." onerror="this.src='resources/mypage/images/group.jpg'">
+                            <img src="${group.changeName }" style="width: 236px; height:250px; over-flow:hidden;" class="rounded-start" alt="..." onerror="this.src='resources/mypage/images/group.jpg'">
                           </div>
                           <div class="col-md-8">
                             <div class="card-body">
@@ -225,9 +225,11 @@
                         </div>
                       </div>
                   </c:forEach>
+                      
                   <script type="text/javascript">
             		$(function(){
             			$("#group-card").click(function(){
+            				console.log($(this).children("#groupBoardNo").val());
             				location.href = "detail.gbo?gno=" + $(this).children("#groupBoardNo").val();
             			})
             		})

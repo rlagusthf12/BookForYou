@@ -648,7 +648,7 @@ public class MypageController {
 		Member member = (Member)session.getAttribute("loginUser");
 		int memNo = member.getMemNo();
 		int listCount = mypageService.selectMyReadingGroupListCount(member);
-		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,3,5);
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,5,3);
 		ArrayList<GroupBoard> list = mypageService.selectMyReadingGroupList(pi,memNo);
 		
 		for(int i=0; i<list.size();i++) {
