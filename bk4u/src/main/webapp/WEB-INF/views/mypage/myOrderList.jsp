@@ -357,7 +357,7 @@
                         </thead>
                         <tbody>
                         <c:if test="${ empty list }">
-                        	  <td colspan="5" style="text-align:center; cursor: default">해당하는 주문내역이 없습니다.</td>
+                        	  <td colspan="5" style="text-align:center; cursor: default" onclick="event.cancelBubble=true">해당하는 주문내역이 없습니다.</td>
                         </c:if>
                         <c:forEach var="order" items="${list }">
                             <tr>

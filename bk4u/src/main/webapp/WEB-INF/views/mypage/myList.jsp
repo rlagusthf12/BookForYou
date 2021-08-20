@@ -211,7 +211,7 @@
                           </thead>
                           <tbody>
                           <c:if test="${ empty list }">
-                        	  <td colspan="6" style="text-align:center; cursor: default"><b>보관함에 담긴 책이 없습니다.</b></td>
+                        	  <td colspan="6" style="text-align:center; cursor: default" onclick="event.cancelBubble=true"><b>보관함에 담긴 책이 없습니다.</b></td>
                           </c:if>
                           <c:forEach var="book" items="${list }">
                           	<tr>
