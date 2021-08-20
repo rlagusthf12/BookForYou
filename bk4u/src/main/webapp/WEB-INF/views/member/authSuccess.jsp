@@ -214,8 +214,8 @@
             <div id="blank-box"></div>
             <div id="blank-box"></div>
             <div id="blank-box"></div>
-            <p><input type="submit" value="로그인 하러 가기" class="black-button" /></p>
-            <p><input type="submit" value="메인 페이지로" class="silver-button" /></p>
+            <p><button class="black-button" onClick="location.href='login-form.me'">로그인하러가기</button></p>
+            <p><button class="silver-button" onClick="location.href='/'">메인페이지로</button></p>
 
         </div>
     </div>
