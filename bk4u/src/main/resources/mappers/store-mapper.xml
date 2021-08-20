@@ -212,6 +212,29 @@
 		  from store	
 	</select>
 	
+	<select id="selectSearchListCount" resultType="_int">
+		select
+		       count(*)
+		  from store	
+		 where store_no >=1 
+		 	<choose>
+	 		<when test="type == 'storeName'">
+	 			and store_name
+	 		</when>
+	 		<when test="type == 'storeAddress'">
+	 			and store_address
+	 		</when>
+	 		<when test="type == 'all'">
+	 			and store_name like '%' || #{keyword} || '%' or store_address like '%' || #{keyword} || '%' or store_phone
+	 		</when>
+	 		<otherwise>
+	 			and store_phone
+	 		</otherwise>
+	 	</choose>
+	 	like '%' || #{keyword} || '%'
+	</select>
+	
+	
 	<select id="selectBookListCount" resultType="_int">
 		select
 		       count(*)
@@ -232,7 +255,43 @@
 			   STORE_STATUS
 		      
 		  from store	
+		 
+		 order
+		    by store_no desc
 	</select>
+	
+		<select id="selectSearchStoreList" resultMap="storeResult">
+		select 
+			   STORE_NO,
+			   STORE_NAME,
+			   STORE_ADDRESS,
+			   STORE_CLOSED,
+			   STORE_OPEN,
+			   STORE_PHONE,
+			   STORE_STATUS
+		      
+		  from store	
+		where store_no >=1 
+		 	<choose>
+	 		<when test="type == 'storeName'">
+	 			and store_name
+	 		</when>
+	 		<when test="type == 'storeAddress'">
+	 			and store_address
+	 		</when>
+	 		<when test="type == 'all'">
+	 			and store_name like '%' || #{keyword} || '%' or store_address like '%' || #{keyword} || '%' or store_phone
+	 		</when>
+	 		<otherwise>
+	 			and store_phone
+	 		</otherwise>
+	 	</choose>
+	 	like '%' || #{keyword} || '%'
+	 	
+	 	 order
+		    by store_no desc  
+	</select>
+	
 	
 	<select id="selectStoreBookList" resultMap="storeBookResult">
 		   select 

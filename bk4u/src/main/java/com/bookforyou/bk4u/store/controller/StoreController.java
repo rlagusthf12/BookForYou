@@ -93,6 +93,23 @@ public class StoreController {
 		return mv;
 	}
 	
+	@RequestMapping("searchList.st")
+	public ModelAndView selectSearchListStore(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage, String keyword, String type){
+		
+		HashMap<String, String> map = new HashMap<>();
+		
+		map.put("keyword", keyword);
+		map.put("type", type);
+		
+		int listCount = storeService.selectSearchListCount(map);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount,currentPage,10,5);
+		ArrayList<Store> list = storeService.selectSearchStoreList(pi,map);
+		
+		mv.addObject("listCount",listCount).addObject("pi",pi).addObject("list",list).addObject("keyword",keyword).addObject("type",type).setViewName("store/storeListView");
+		return mv;
+	}
+	
 	@RequestMapping("list.storebook")
 	public ModelAndView selectListStoreBook(ModelAndView mv, @RequestParam(value="currentPage", defaultValue="1") int currentPage,int storeNo){
 		

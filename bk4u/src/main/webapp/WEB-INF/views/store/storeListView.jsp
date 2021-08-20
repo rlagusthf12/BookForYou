@@ -72,7 +72,7 @@
 	font-size:36px;	
 	}
 	.choose{
-	 margin-left:310px;
+	 margin-left:450px;
 	}
 	
 	
@@ -111,16 +111,18 @@
  	<span class="listCount">
  	<h5>목록   [총${listCount}개]</h5>
  	</span>
+	<form action="searchList.st" method="post">
  	<span class="choose">
-	<select name="choice">
-	<option>전체</option>
-	<option>매장명</option>
-	<option>전화번호</option>
-	<option>관리자명</option>
+	<select id="type" name="type" value="${type}">
+	<option value="all">전체</option>
+	<option value="storeName">매장명</option>
+	<option value="storeAddress">주소</option>
+	<option value="storePhone">전화번호</option>
 	</select>	
-	<input type="text"/>
-	<button>검색</button>
+	<input id="keyword" type="text" name="keyword" value="${keyword}"/>
+	<input id="input_submit" type="submit" value="검색"> 	
 	</span>
+	</form>
 	</div>
 
 	<table class="table_board">
@@ -194,13 +196,27 @@
             	<c:when test="${pi.currentPage eq 1}">
                 <li class="page-item disabled"><a class="page-link">이전</a></li>
                 </c:when>
-                <c:otherwise>
-                	<li class="page-item"><a class="page-link" href="list.store?currentPage=${ pi.currentPage-1 }">이전</a></li>
-                </c:otherwise>
+                 <c:otherwise>
+	                    	<c:choose>
+	                    		<c:when test="${ !empty type }">
+	                    			<li class="page-item"><a class="page-link" href="searchList.st?currentPage=${ pi.currentPage-1 }&type=${type}&keyword=${keyword}">이전</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+                    				<li class="page-item"><a class="page-link" href="list.store?currentPage=${ pi.currentPage-1 }">이전</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
+                    	</c:otherwise>                
                 </c:choose>
                 
                 <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}"> 
-                <li class="page-item"><a class="page-link" href="list.store?currentPage=${ p }">${ p }</a></li>
+                			<c:choose>
+	                    	<c:when test="${ !empty type }">
+	                    			<li class="page-item"><a class="page-link" href="searchList.st?currentPage=${ p }&type=${type}&keyword=${keyword}">${p}</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+                    				<li class="page-item"><a class="page-link" href="list.store?currentPage=${ p}">${p}</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
                 </c:forEach>
              
              <c:choose>
@@ -208,7 +224,14 @@
              		    <li class="page-item disabled"><a class="page-link">다음</a></li>
              	</c:when>
              	<c:otherwise>
-             		<li class="page-item"><a class="page-link" href="list.store?currentPage=${ pi.currentPage+1 }">다음</a></li>
+             		<c:choose>
+	                    		<c:when test="${ !empty type }">
+	                    			<li class="page-item"><a class="page-link" href="searchList.st?currentPage=${ pi.currentPage+1 }&type=${type}&keyword=${keyword}">다음</a></li>
+                    			</c:when>
+                    			<c:otherwise>
+                    				<li class="page-item"><a class="page-link" href="list.store?currentPage=${ pi.currentPage+1 }">다음</a></li>
+                    			</c:otherwise>
+                    		</c:choose>
 		        </c:otherwise>
              </c:choose>
             
