@@ -112,11 +112,7 @@
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	
-		<div class="reportTitle">신고</div>
-		<div class="searchBar">
-		<select name="choice"><option>전체</option></select>
-		<input type="text"/>
-		</div>
+		<div class="reportTitle">신고</div>		
 		
 		<div class="reportListTable">
 		<table class="table_board" >

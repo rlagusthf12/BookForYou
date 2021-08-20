@@ -446,7 +446,7 @@
                         </div>
                     </div>
                     <div id="state-change-button-box">
-                    	 <c:if test="${ order.orderStatus eq '결제완료' }">
+                    	 <c:if test="${ order.orderStatus eq '주문확인' }">
                         <!--상품이 결제/주문일경우-->
                         <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
                             data-bs-target="#cancel-order-modal">주문 취소</button>
@@ -473,6 +473,7 @@
                             </thead>
                             <tbody>
                              <c:forEach var="orderDetail" items="${list }">
+                             <fmt:parseNumber var="bookPrice" integerOnly="true" value="${orderDetail.detailPrice/orderDetail.quantity}"/>
                              <c:choose>
                              	<c:when test="${ orderDetail.detailStatus eq '배송완료' }">
                                 <tr>
@@ -485,7 +486,7 @@
                                     </c:if>
                                     <td style="width: 395px;"><a href="detail.bk?bkNo=${ orderDetail.bkNo }">${orderDetail.bkTitle }</a></td>
                                     <td style="width: 40px;">${orderDetail.quantity }</td>
-                                    <td style="width: 160px;">${orderDetail.detailPrice }</td>
+                                    <td style="width: 160px;">${bookPrice }</td>
                                 </tr>
                                 </c:when>
                                 <c:otherwise>
@@ -493,7 +494,7 @@
                                     <td style="width: 135px;">${orderDetail.detailStatus }</td>
                                     <td style="width: 395px;"><a href="detail.bk?bkNo=${ orderDetail.bkNo }">${orderDetail.bkTitle }</a></td>
                                     <td style="width: 40px;">${orderDetail.quantity }</td>
-                                    <td style="width: 160px;">${orderDetail.detailPrice }</td>
+                                    <td style="width: 160px;">${bookPrice }</td>
                                 </tr>
                                 </c:otherwise>
                               </c:choose>
@@ -561,10 +562,18 @@
                                 <th class="table-secondary">배송지 주소</th>
                                 <td colspan="3">(${order.orderPost }) ${order.orderAddress } ${order.addressDetail } ${order.addressRef }</td>
                             </tr>
+                            <c:if test="${order.deliveryCompany ne null }">
                             <tr>
                                 <th class="table-secondary">배송정보</th>
                                 <td colspan="3">${order.deliveryCompany }(${order.shippingNumber })</td>
                             </tr>
+                            </c:if>
+                            <c:if test="${order.deliveryCompany eq null }">
+                             <tr>
+                                <th class="table-secondary">배송정보</th>
+                                <td colspan="3">배송 정보가 등록되지 않았습니다.</td>
+                            </tr>
+                            </c:if>
                         </table>
                     </div>
                     <p><b>결제 정보</b></p>

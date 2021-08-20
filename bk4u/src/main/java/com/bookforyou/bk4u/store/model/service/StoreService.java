@@ -49,9 +49,13 @@ public interface StoreService {
 	
 	 int selectListCount();
 	 
+	 int selectSearchListCount(HashMap<String, String> map);
+	 
 	 int selectBookListCount(int storeNo);
 	 
 	 ArrayList<Store> selectStoreList(PageInfo pi);
+	 
+	 ArrayList<Store> selectSearchStoreList(PageInfo pi,HashMap<String,String> map);
 	 
 	 ArrayList<StoreBook> selectStoreBookList(PageInfo pi,int storeNo);
 	 

@@ -85,6 +85,11 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	@Override
+	public int selectSearchListCount(HashMap<String,String> map) {
+		return storeDao.selectSearchListCount(sqlSession,map);
+	}
+	
+	@Override
 	 public int selectBookListCount(int storeNo) {
 		return storeDao.selectBookListCount(sqlSession,storeNo);
 	}
@@ -92,6 +97,11 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	 public ArrayList<Store> selectStoreList(PageInfo pi){
 		return storeDao.selectStoreList(sqlSession,pi);
+	}
+	
+	@Override
+	 public ArrayList<Store> selectSearchStoreList(PageInfo pi,HashMap<String,String> map){
+		return storeDao.selectSearchStoreList(sqlSession,pi,map);
 	}
 	
 	@Override
