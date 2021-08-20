@@ -83,7 +83,7 @@ public class AmemDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectBlackSearchList", map, rowBounds);
 		
 	}
-	// 블랙리스트 추가
+	// 블랙리스트 삭제
 		public int deleteBlack(SqlSessionTemplate sqlSession, int mno) {
 			return sqlSession.update("memberMapper.deleteBlack", mno);
 		}

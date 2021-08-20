@@ -944,12 +944,29 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 		int result = mypageService.insertClippinglist(bl);
 			System.out.println(bl);
 		if(result > 0) {
-			session.setAttribute("alertMsg", "독서록이 작성되었습니다!");
+			session.setAttribute("alertMsg", "스크랩 되었습니다!");
 			return "redirect:clipping.mp";
 		}else {
-			model.addAttribute("errorMag", "독서록을 작성하지 못했습니다.");
+			model.addAttribute("errorMag", "스크랩 실패.");
 			return "common/errorPage";
 		}
+	}
+	// 스크랩 삭제
+	@RequestMapping("ClippingDelete.me")
+	public String DeleteClipping(int brno, Model model, HttpSession session) {
+		
+		int result = mypageService.deleteClipping(brno); // service, dao, sql문
+	
+		if(result > 0) { // 성공 => 리스트페이지
+		
+					session.setAttribute("alertMsg", "스크랩에서 삭제되었습니다.");
+					return "redirect:blackList.me";
+					
+				}else { // 실패
+					model.addAttribute("errorMsg", "스크랩 삭제 실패");
+					return "common/errorPage";
+				}
+		
 	}
 	// 정기구독
 	@RequestMapping("standingOrders.mp")

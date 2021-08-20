@@ -103,6 +103,7 @@ public interface MypageService {
 	ArrayList<Booklist> selectClippingList(PageInfo pi);
 	// 스크랩추가
 	int insertClippinglist(Booklist bl);
-
+	// 스크랩삭제
+	int deleteClipping(int brno);
 
 }
