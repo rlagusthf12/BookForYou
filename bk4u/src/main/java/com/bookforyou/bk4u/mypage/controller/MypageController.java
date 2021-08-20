@@ -461,7 +461,7 @@ public class MypageController {
 		
 		int listCount = mypageService.selectMyListCount(loginUser);
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		HashMap<String,Object> listParam = new HashMap<String,Object>();
 		listParam.put("pi", pi);
@@ -516,7 +516,7 @@ public class MypageController {
 		Member member = (Member) session.getAttribute("loginUser");
 		int memNo = member.getMemNo();
 		int listCount = qService.selectMemNoQaListCount(memNo);		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Qa> list = qService.searchMemNoQaList(pi,memNo);
 		
 		for(int i=0; i<list.size();i++) {
@@ -580,7 +580,7 @@ public class MypageController {
 		
 		int listCount = mypageService.selectMyOrderListCount(listParam);
 		log.info("listCount: "+ listCount );
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		//listParam.put("pi",pi);
 		ArrayList<Order> list = mypageService.selectMyOrderList(listParam , pi);
 		
@@ -857,7 +857,7 @@ public class MypageController {
 		Member member = (Member)session.getAttribute("loginUser");
 		int memNo = member.getMemNo();
 		int listCount = mypageService.selectMyBoardListCount(memNo);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Board> list = mypageService.selectMyBoardList(pi,memNo);
 		
 		model.addAttribute("pi",pi);
@@ -880,7 +880,7 @@ public class MypageController {
 		Member member = (Member)session.getAttribute("loginUser");
 		int memNo = member.getMemNo();
 		int listCount = mypageService.selectMyReplyListCount(memNo);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Reply> list = mypageService.selectMyReplyList(pi,memNo);
 		
 		model.addAttribute("pi",pi);
@@ -907,7 +907,7 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 		
 		int listCount = mypageService.selectListCount(); // 독서록 총 게시글 갯수 조회
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Booklist> list = mypageService.selectMbList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -921,7 +921,7 @@ public String selectList(Model model, @RequestParam(value="currentPage", default
 			
 			int listCount = mypageService.selectClippingListCount(); // 독서록 총 게시글 갯수 조회
 			
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 			ArrayList<Booklist> list = mypageService.selectClippingList(pi);
 			
 			model.addAttribute("pi", pi);
