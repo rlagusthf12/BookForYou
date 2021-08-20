@@ -140,7 +140,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="myBook.mp">
+                            <a href="clipping.mp">
                                 <i class="fa fa-book"></i>
                                 <strong>독서록 관리</strong>
                                 <small>내 독서록과 스크랩한 독서록을 조회합니다.</small>
