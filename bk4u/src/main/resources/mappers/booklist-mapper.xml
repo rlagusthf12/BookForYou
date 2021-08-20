@@ -496,9 +496,10 @@
 			)
 	</insert>
 	<!--  스크랩삭제  -->
-	<update id="deleteClipping">
+	<delete id="deleteClipping">
 		delete
-		     from scrap
-		 where bl_no = #{brNo}
-	</update>
+		    from scrap
+		    where br_no = ${blNo}
+
+	</delete>
 </mapper>

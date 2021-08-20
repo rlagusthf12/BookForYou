@@ -226,7 +226,7 @@
 			                <td>${ a.blTitle }</td>
 			                <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; maxlengt">${ a.blContent }</td>
 			                <td>${ a.writerName }</td>
-			                <td><button type="button" onclick="location.href='ClippingDelete.me?blNo=${a.blNo}'">해제</button></td>
+			                <td><button type="button" onclick="location.href='ClippingDelete.me?blNo=${a.blNo}'">삭제</button></td>
 			            </tr>
 			        </c:forEach>
                     </tbody>
