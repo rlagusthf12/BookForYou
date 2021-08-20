@@ -130,88 +130,88 @@
             <!-- partial:index.partial.html -->
             <div class="container">
                 <nav>
-                    <ul class="mcd-menu">
+                     <ul class="mcd-menu">
                         <li>
-                            <a href="">
+                            <a href="my-order-list.mp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <strong>주문내역</strong>
                                 <small>주문 및 배송 현황을 조회합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="standingOrders.mp">
                                 <i class="fa fa-credit-card"></i>
                                 <strong>정기구독 관리</strong>
                                 <small>정기구독 플랜을 조회/수정합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="" class="active">
+                            <a href="my-rental-list.mp" class="active">
                                 <i class="fa fa-qrcode"></i>
                                 <strong>대여 내역 조회</strong>
                                 <small>대여 내역을 조회합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-list.mp">
                                 <i class="fa fa-archive"></i>
                                 <strong>보관함</strong>
                                 <small>찜한 내역을 조회합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="phoneBook.mp">
                                 <i class="fa fa-home"></i>
                                 <strong>주소록 관리</strong>
                                 <small>주소록을 관리합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-recommend.mp">
                                 <i class="fa fa-check-square-o"></i>
                                 <strong>추천 설정</strong>
                                 <small>도서 추천 정보를 조회/수정합니다.</small>
                             </a>
                         </li>
-                        <li>
-                            <a href="">
+                       <li>
+                            <a href="clipping.mp">
                                 <i class="fa fa-book"></i>
                                 <strong>독서록 관리</strong>
                                 <small>내 독서록과 스크랩한 독서록을 조회합니다.</small>
                             </a>
                             <ul>
-                                <li><a href="myBook.mp"><i class="fa fa-book"></i>내 독서록</a></li>
+                                <!--  <li><a href="myBook.mp"><i class="fa fa-book"></i>내 독서록</a></li>-->
                                 <li><a href="clipping.mp"><i class="fa fa-bookmark"></i>스크랩한 독서록</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="my-reading-group.mp">
                                 <i class="fa fa-comments-o"></i>
                                 <strong>활동한 내역</strong>
                                 <small>활동 내역을 조회합니다.</small>
                             </a>
                             <ul>
-                                <li><a href="#"><i class="fa fa-users"></i>나의 독서모임</a></li>
-                                <li><a href="#"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
-                                <li><a href="#"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
-                                <li><a href="#"><i class="fa fa-comment"></i>댓글</a></li>
+                                <li><a href="my-reading-group.mp"><i class="fa fa-users"></i>나의 독서모임</a></li>
+                                <li><a href="my-qna.mp"><i class="fa fa-question-circle"></i>내 문의내역</a></li>
+                                <li><a href="my-board.mp"><i class="fa fa-pencil-square-o"></i>내가 쓴 글</a></li>
+                                <li><a href="my-reply.mp"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>
-                        <li>
+                        <!--  <li>
                             <a href="">
                                 <i class="fa fa-ticket"></i>
                                 <strong>쿠폰/포인트</strong>
                                 <small>내 쿠폰과 포인트를 조회합니다.</small>
                             </a>
-                        </li>
+                        </li>-->
                         <li>
-                            <a href="">
+                            <a href="info.mp">
                                 <i class="fa fa-user" class="active"></i>
                                 <strong>개인정보 수정</strong>
                                 <small>개인정보를 수정합니다.</small>
                             </a>
                         </li>
-                    </ul>      
+                    </ul>     
                 </nav>
             </div>
             <!-- partial -->

@@ -74,6 +74,10 @@ public class StoreDao {
 		return sqlSession.selectOne("storeMapper.selectListCount");
 	}
 	
+	public int selectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String,String> map) {
+		return sqlSession.selectOne("storeMapper.selectSearchListCount",map);
+	}
+	
 	public int selectBookListCount(SqlSessionTemplate sqlSession, int storeNo) {
 		return sqlSession.selectOne("storeMapper.selectBookListCount",storeNo);
 	}
@@ -82,6 +86,12 @@ public class StoreDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("storeMapper.selectStoreList",null,rowBounds);		
+	}
+	
+	public ArrayList<Store> selectSearchStoreList(SqlSessionTemplate sqlSession, PageInfo pi,HashMap<String, String> map){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("storeMapper.selectSearchStoreList",map,rowBounds);		
 	}
 	
 

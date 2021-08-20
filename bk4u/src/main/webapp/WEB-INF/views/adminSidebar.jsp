@@ -152,16 +152,7 @@
         <ul class="nano-content">
             <li>
                 <a href="amain.me"><i class="fa fa-dashboard"></i><span>HOME</span></a>
-            </li>
-            <li class="sub-menu">
-                <a href="javascript:void(0);"><i class="fa fa-table"></i><span>배너</span><i class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li>
-                        <a href="banner.me">배너 관리</a>
-                    </li>
-
-                </ul>
-            </li>
+            </li>            
             <li class="sub-menu">
                 <a href="javascript:void(0);"><i class="fa fa-user"></i><span>회원</span><i class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>

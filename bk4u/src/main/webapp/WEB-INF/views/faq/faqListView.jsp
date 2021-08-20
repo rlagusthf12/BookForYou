@@ -106,11 +106,9 @@
 <jsp:include page="../common/menubar.jsp"/>
 	<div class="body1">
 	
-		<div class="faqTitle">문의 유형별 도움말</div>
-		<div class="searchBar">
-		<select name="choice"><option>전체</option></select>
-		<input type="text"/>
-		</div>
+		<div class="faqTitle">문의 유형별 도움말</div>	
+			
+		
 		<div class="faqType">
 		<c:forEach var="f" items="${list1}">
 		<span class="type" onclick="location.href='typeListView.faq?type=${f.queType}'">${f.queType}</span>

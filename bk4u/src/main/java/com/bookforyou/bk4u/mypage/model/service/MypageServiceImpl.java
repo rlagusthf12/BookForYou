@@ -243,8 +243,13 @@ public class MypageServiceImpl implements MypageService {
 		return mypageDao.insertClippinglist(sqlSession, bl);
 	}
 
-	
+	// 스크랩 삭제
+	@Override
+	public int deleteClipping(int blNo) {
+		return mypageDao.deleteClipping(sqlSession, blNo);
+	}
 
+	
 
 	
 

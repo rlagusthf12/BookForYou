@@ -202,7 +202,7 @@
         </tr>
         <tr>
             <td>
-                <input type="radio" name="period" value="sdate"> 출력시간부터
+                <input type="radio" name="period" value="sdate" required> 출력시간부터
             </td>
             <td colspan="3">
                 <div style="margin-right: 450px;">

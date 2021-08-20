@@ -17,6 +17,10 @@
     <link rel="stylesheet" href="resources\mypage\css\side-style.css">
 
     <style>
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+    	*{
+    		font-family: "Noto Sans KR", sans-serif;
+    	}
         .wrap {
             width: 1200px;
             margin: auto;
@@ -98,14 +102,14 @@
                 <nav>
                     <ul class="mcd-menu">
                         <li>
-                            <a href="my-order-list.mp" class="active">
+                            <a href="my-order-list.mp">
                                 <i class="fa fa-shopping-cart"></i>
                                 <strong>주문내역</strong>
                                 <small>주문 및 배송 현황을 조회합니다.</small>
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="standingOrders.mp">
                                 <i class="fa fa-credit-card"></i>
                                 <strong>정기구독 관리</strong>
                                 <small>정기구독 플랜을 조회/수정합니다.</small>
@@ -140,13 +144,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="myBook.mp">
+                            <a href="clipping.mp">
                                 <i class="fa fa-book"></i>
                                 <strong>독서록 관리</strong>
                                 <small>내 독서록과 스크랩한 독서록을 조회합니다.</small>
                             </a>
                             <ul>
-                                <li><a href="myBook.mp"><i class="fa fa-book"></i>내 독서록</a></li>
+                                <!--  <li><a href="myBook.mp"><i class="fa fa-book"></i>내 독서록</a></li>-->
                                 <li><a href="clipping.mp"><i class="fa fa-bookmark"></i>스크랩한 독서록</a></li>
                             </ul>
                         </li>
@@ -163,13 +167,13 @@
                                 <li><a href="my-reply.mp"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>
-                        <li>
+                        <!--  <li>
                             <a href="">
                                 <i class="fa fa-ticket"></i>
                                 <strong>쿠폰/포인트</strong>
                                 <small>내 쿠폰과 포인트를 조회합니다.</small>
                             </a>
-                        </li>
+                        </li>-->
                         <li>
                             <a href="info.mp">
                                 <i class="fa fa-user" class="active"></i>
