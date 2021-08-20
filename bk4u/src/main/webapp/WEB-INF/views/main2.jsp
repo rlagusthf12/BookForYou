@@ -103,11 +103,12 @@
 	.user-name{font-size:15px; font-weight:600;}
 	
     /* star-rating */
+    
     .star-rating{
         display: inline-block;
         margin-top:5px;
     }
-    .rate:not(:checked) > input {
+	.rate:not(:checked) > input {
         position:absolute;
         top:-9999px;
     }
@@ -129,7 +130,6 @@
         color: #ffc700;    
     }
     
-    
     /*
     .rate:not(:checked) > label:hover,
     .rate:not(:checked) > label:hover ~ label {
@@ -143,6 +143,8 @@
         color: #c59b08;
     }
     */
+
+	
     
 </style>
 
@@ -198,6 +200,7 @@
 			async: false,
 			success:function(bookReport){
 				
+				
 				for(let i=0; i<bookReport.length; i++) {
 					
 					let blNo = bookReport[i].blNo;
@@ -240,6 +243,8 @@
 						blContent = blContent.substring(0, 80) + "...";
 					}
 					
+					
+					
 					let content = `<div class="content">
 										<input type="hidden" value=` + blNo + `>
 						                <div class="book-report-top">
@@ -259,21 +264,14 @@
 						                    <div class="book-title">` + bkTitle + `</div>
 						                    <div class="book-writer">` + writerName + `</div>
 						                    <div class="book-publish">` + bkPublish + `</div>
-						
+											
 						                    <div class="star-rating">
-						                        <div class="rate">
-						                            <input type="radio" id="star5" name="rate" value="5" />
-						                            <label for="star5" title="text">5 stars</label>
-						                            <input type="radio" id="star4" name="rate" value="4" />
-						                            <label for="star4" title="text">4 stars</label>
-						                            <input type="radio" id="star3" name="rate" value="3" />
-						                            <label for="star3" title="text">3 stars</label>
-						                            <input type="radio" id="star2" name="rate" value="2" />
-						                            <label for="star2" title="text">2 stars</label>
-						                            <input type="radio" id="star1" name="rate" value="1" />
-						                            <label for="star1" title="text">1 star</label>
-						                        </div>
+						                    	<input type="hidden" class="blRate" value=` + blRate + `>
+						                    	<div class="rate">
+							                    	
+		                                		</div>
 						                    </div>
+						                    
 						                </div>
 						                
 						            </div>
@@ -281,15 +279,9 @@
 						                <p>` + blContent + `</p>
 						            </div>
 						        </div>`;
-						     
-					// 별점
-					for(var j=1; j<=blRate; j++) {
-						$("input[name='rate']").each(function(){
-							if($(this).val() <= blRate){
-								$(this).prop("checked", true);								
-							}
-						})
-					}        
+					
+					
+					
 					$(".book-report .content-area").append(content);
 				}
 			},
@@ -401,6 +393,35 @@
 	function detailB(bkNo){
 		location.href="detail.bk?bkNo=" + bkNo;
 	}
+	
+	// 별점
+	$(function(){
+	    $(".blRate").each(function(){
+	    	var rt = $(this).val();
+	    	
+	    	var radio = $(this).siblings(".rate");
+	    	
+			let c = "";
+			let d = "";
+			
+			for(var s=5; s>=1; s--){
+		        if(s == rt){
+		        	 c = `<input type="radio" id="star` + s + `" name="rate" value="`+ s + `" checked>`
+		         }else{
+		             c = `<input type="radio" id="star` + s + `" name="rate" value="` + s + `">`
+		         }
+		        
+		        d = `<label for="star` + s + `" title="text">` + s + " stars" + `</label>`
+		     	
+		         radio.append(c+d);
+		        console.log(rt + " : " + c + " / " + d);
+		     }
+			
+			var rr = radio.children();
+			
+	    })
+	})
+	
 	
 </script>
 <body>
