@@ -221,7 +221,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="standingOrders.mp">
                                 <i class="fa fa-credit-card"></i>
                                 <strong>정기구독 관리</strong>
                                 <small>정기구독 플랜을 조회/수정합니다.</small>
@@ -255,7 +255,7 @@
                                 <small>도서 추천 정보를 조회/수정합니다.</small>
                             </a>
                         </li>
-                        <li>
+                        <!--  <li>
                             <a href="myBook.mp">
                                 <i class="fa fa-book"></i>
                                 <strong>독서록 관리</strong>
@@ -265,7 +265,7 @@
                                 <li><a href="myBook.mp"><i class="fa fa-book"></i>내 독서록</a></li>
                                 <li><a href="clipping.mp"><i class="fa fa-bookmark"></i>스크랩한 독서록</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         <li>
                             <a href="my-reading-group.mp">
                                 <i class="fa fa-comments-o"></i>
@@ -279,13 +279,13 @@
                                 <li><a href="my-reply.mp"><i class="fa fa-comment"></i>댓글</a></li>
                             </ul>
                         </li>
-                        <li>
+                        <!--  <li>
                             <a href="">
                                 <i class="fa fa-ticket"></i>
                                 <strong>쿠폰/포인트</strong>
                                 <small>내 쿠폰과 포인트를 조회합니다.</small>
                             </a>
-                        </li>
+                        </li>-->
                         <li>
                             <a href="info.mp" class="active">
                                 <i class="fa fa-user" class="active"></i>
