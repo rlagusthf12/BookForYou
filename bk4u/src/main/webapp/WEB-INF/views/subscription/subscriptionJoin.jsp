@@ -64,7 +64,7 @@
                 <!--정기구독설명area-->
                 <div class="bk4uPlus-content">
                     <div class="text-wrap">
-                        <p>도서 정기배송 서비스</p>
+                        <p>도서 정기구독 서비스</p>
                         <h2>북포유 플러스</h2>
                     </div>
                 </div>
@@ -73,6 +73,7 @@
         </div>
 
         <div class="btnSubJoin-wrap">
+        	<input type="hidden" name="memNo" value="${loginUser.memNo }">
             <a class="btnSubJoin" href="joinAgree.sub">멤버십 가입하기</a>
         </div>
 
@@ -89,11 +90,7 @@
                                 <p>책 정기 배송은 언제 받을 수 있나요?</p>
                             </div>
                             <div class="answer">
-                                <p>
-                                    책은 멤버십 가입 후 배송 받기를 원하는 날짜를 직접 선택할 수 있습니다.
-                                    <br>
-                                    선택한 날짜로부터 한달마다 매달 정기 배송 받을 수 있어요.
-                                </p>
+                                <p>책은 멤버십 가입 후 배송 받기를 원하는 날짜를 직접 선택할 수 있습니다.<br>선택한 날짜로부터 한달마다 매달 정기 배송 받을 수 있어요.</p>
                             </div>
                         </li>
                         <li class="faq-content_item">
@@ -101,23 +98,15 @@
                                 <p>정기구독 중에 멤버십 해지할 수 있나요?</p>
                             </div>
                             <div class="answer">
-                                <p>
-                                    다음달 부터 결제되지 않도록 수수료 없이 언제든지 해지하실 수 있습니다.
-                                    <br>
-                                    <b>[마이페이지 > 정기구독 관리]</b> 메뉴를 통해 기간에 상관없이 직접 가능해요.
-                                </p>
+                                <p>다음달 부터 결제되지 않도록 수수료 없이 언제든지 해지하실 수 있습니다.<br><b>[마이페이지 > 정기구독 관리]</b> 메뉴를 통해 기간에 상관없이 직접 가능해요.</p>
                             </div>
                         </li>
                         <li class="faq-content_item">
                             <div class="question">
-                                <p>어떤 질문을 넣어야하지</p>
+                                <p>멤버십에 가입하면 오프라인 매장에서 도서대여를 할 수 있나요?</p>
                             </div>
                             <div class="answer">
-                                <p>
-                                    답변은 멀로하지요.
-                                    <br>
-                                    나중에 생각해볼게요.
-                                </p>
+                                <p>프리미엄, 베이직 등급에 상관없이 <br> 멤버십에 가입하신 고객님이라면 언제든 오프라인 매장에서 도서대여가 가능합니다!</p>
                             </div>
                         </li>
                     </ul>
@@ -141,6 +130,15 @@
                 }
             })
         })
+        
+        $('.btnSubJoin').on("click", function(){
+        	var loginUser = $('input[name=memNo]').val();
+        	if(!loginUser){
+                alert('로그인이 반드시 필요한 서비스입니다.');
+                return false;
+            }
+        })
+        
     </script>
 	
 	<jsp:include page="../common/footer.jsp"/>
