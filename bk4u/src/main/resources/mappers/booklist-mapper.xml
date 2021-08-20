@@ -456,24 +456,28 @@
 	<!--  스크랩 조회 (형우) -->
 	<select id="selectClippingListCount" resultType="_int">
 		select count(*)
-		  from booklist
-		 where bl_status='Y'
+		  from booklist B
+		  join scrap S on (bl_no = br_no)
+		  join book using (bk_no)
+		 where S.mem_no = #{mem_no}
 	</select>
 	
 	<select id="selectClippingList" resultMap="booklistResult">
-		select 
-		       bl_no
-		     , br_no  
-		     , bl_title
-		     , bl_content	     
-		     , writer_name
-		     , scrap_date
-		  from booklist
-		  join members using(mem_no)
-		  join scrap using(br_no)
-		 where bl_status='Y'
-		 order
-		    by bl_no desc
+		select
+		       bl_no,
+		       br_no,
+		       S.mem_no,
+		       bk_no,
+		       bk_title,
+		       writer_name,
+		       intro_changeName,
+		       bk_date,
+		       bl_content,
+		       bl_title
+		  from booklist B
+		  join scrap S on (bl_no = br_no)
+		  join book using (bk_no)
+		 where S.mem_no = '2'
 	</select>
 	<!--  스크랩 추가 -->
 	<insert id="insertClippinglist">
@@ -486,9 +490,15 @@
 			)
 			values
 			(
-			  #{ brNo }
+			  #{ blNo }
 			, #{ memNo }
 			, sysdate			
 			)
 	</insert>
+	<!--  스크랩삭제  -->
+	<update id="deleteClipping">
+		delete
+		     from scrap
+		 where bl_no = #{brNo}
+	</update>
 </mapper>

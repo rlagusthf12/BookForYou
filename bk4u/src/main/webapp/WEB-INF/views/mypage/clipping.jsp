@@ -207,28 +207,28 @@
                         <div  id="result-div">
 		                    <input type="hidden" id="blNo" name="blNo" value="${ blNo }">
 		                    <input type="hidden" id="memNo" name="memNo" value="${ memNo }">
-                <table class="table table-bordered table-sm">
+                <table class="table table-bordered table-sm" style="table-layout:fixed">
                     <thead>
                         <tr>
-                            <th width="45px">NO</th>                         
+                            <th width="45px">NO</th>                                                  
                             <th width="85px">이미지</th>
                             <th width="100px">제목</th>
                             <th width="200px">줄거리</th>
                             <th width="55px">저자</th>
-                            <th width="70px">출간일</th>
                             <th width="50px">버튼</th>
                         </tr>
                     </thead>
-                    <tbody>              	 		                    	
+                    <tbody>        
+                    <c:forEach var="a" items="${ list }">	 		                    	
 			            <tr>
-			                <td>${ brNo }</td>		                            
-			                <td><img src="" alt="" width="65" height="80"></td>
-			                <td>${ blTitle }</td>
-			                <td>${ blContent }</td>
-			                <td>${ writerName }</td>
-			                <td>${ scrapDate }</td>
-			                <td><button type="button" onclick="">해제</button></td>
+			                <td>${ a.blNo }</td>		                            
+			                <td><img src="${a.introChangeName}" alt="" width="65" height="80"></td>
+			                <td>${ a.blTitle }</td>
+			                <td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; maxlengt">${ a.blContent }</td>
+			                <td>${ a.writerName }</td>
+			                <td><button type="button" onclick="location.href='ClippingDelete.me?blNo=${a.blNo}'">해제</button></td>
 			            </tr>
+			        </c:forEach>
                     </tbody>
                 </table>
             </div>
