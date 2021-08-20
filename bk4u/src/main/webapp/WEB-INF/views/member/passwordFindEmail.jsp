@@ -166,7 +166,7 @@
             <div id="blank-box"></div>
             <br>
             <br>
-            <p><button type="submit" class="blue-button" onclick="location.href='login-form.me'">로그인</button></p>
+            <p><button class="blue-button" onclick="location.href='login-form.me'">로그인</button></p>
         </div>
 
     </div>

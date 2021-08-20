@@ -219,7 +219,7 @@
             <div id="blank-box"></div>
             <div id="blank-box"></div>
             <p><button class="black-button" onClick="location.href='login-form.me'">로그인하러가기</button></p>
-            <p><button class="silver-button" onClick="location.href='/'">메인페이지로</button></p>
+            <p><button class="silver-button" onClick="location.href='main.me'">메인페이지로</button></p>
 
         </div>
     </div>
