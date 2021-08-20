@@ -701,10 +701,10 @@
 			    bk_title,
 			    bk_publish,
 			    bk_price, 
-			    grade_star
+			    nvl(grade_star,0) grade_star
 		from list
 		inner join book b using(bk_no)
-		inner join (select nvl(round(avg(nvl(grade_star, 0)),1),0) as grade_star, bk_no
+		left join (select nvl(round(avg(nvl(grade_star, 0)),1),0) as grade_star, bk_no
   					from grade
   					group by bk_no) using(bk_no)
 		where mem_no = #{memNo}
