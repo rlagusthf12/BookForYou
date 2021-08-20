@@ -188,7 +188,7 @@ public class BookDao {
 	 * [공통] 도서 리스트 유무 확인 (연지)
 	 */
 	public int checkList(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
-		return sqlSession.update("bookMapper.checkList", map);
+		return sqlSession.selectOne("bookMapper.checkList", map);
 	}
 
 	/*

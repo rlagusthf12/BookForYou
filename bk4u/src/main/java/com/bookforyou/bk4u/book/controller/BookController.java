@@ -543,12 +543,11 @@ public class BookController {
 		int check = bookService.checkList(map);
 		String result = "";
 		
-		if(check != 0) {
+		if(check > 0) {
 			result = "done";
 		}else {
 			int i = bookService.insertList(map);
 			result = i>0 ? "success" : "fail";
-			
 		}
 		
 		return result;
