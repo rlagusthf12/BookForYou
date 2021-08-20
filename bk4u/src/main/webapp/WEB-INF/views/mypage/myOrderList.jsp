@@ -128,12 +128,9 @@
     	var $statusInput = $("select[name='orderStatus'] option:selected");
     	var status = $statusInput.text();
     	$('#state-of-order li').each(function (index, item) {
-    	     console.log($(this).text());
     	     if($(this).text() == status){
-    	    	 console.log("일치함");
     	    	 $(this).css("color","black");
     	     }else{
-    	    	 console.log("일치하지 않음");
     	     }
     	});
     	
@@ -301,11 +298,9 @@
                         $('#endDate').datepicker('option', 'dateFormat', 'yy-mm-dd');
                         
                        	var tempBegin = $("#tempBeginDate").val();
-                       	console.log(tempBegin);
                         var tempEnd = $("#tempEndDate").val();
                         
                         let d = new Date(tempEnd);
-                        console.log(d);
                         let year = d.getFullYear();
                         let month = d.getMonth() + 1; // 월은 0에서 시작하기 때문에 +1
                         let day = d.getDate();
@@ -373,7 +368,6 @@
                     <script type="text/javascript">
             		$(function(){
             			$("#order-list-box>table>tbody>tr").click(function(){
-            			console.log("확인");
             			location.href = "my-order-detail.mp?orderNo=" + $(this).children(".ono").text();
             		})
             		})
