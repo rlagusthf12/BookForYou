@@ -469,7 +469,7 @@
                 <div style="margin-top: 20px; text-align: center;">
                     <label>
                         <input type="checkbox" name="subCategoryNo" value="17"/>    
-                          <div class="btn btn-sık"><span>경제/경영</span></div>
+                          <div class="btn btn-sık"><span>회계</span></div>
                     </label>
                     <label>
                         <input type="checkbox" name="subCategoryNo" value="18"/>     
