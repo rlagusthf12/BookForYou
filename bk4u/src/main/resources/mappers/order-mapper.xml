@@ -574,9 +574,9 @@
 	<!-- [관리자] 운송장정보 등록/저장 (한진) -->
 	<update id="updateDeliveryInfo">
 	 	update
-	 	       shipping_number = #{shippingNumber}
 	 	       orders
 	 	   set delivery_company = #{deliveryCompany},
+	 	       shipping_number = #{shippingNumber}
 	 	 where order_no = #{orderNo}
 	</update>
 	

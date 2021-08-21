@@ -179,6 +179,7 @@
 			}
 		})
 		
+		console.log(`${ sNo }`);
 	})
 	
 	$(function(){
@@ -282,7 +283,7 @@
 		      		</div>
 		      		<div class="modal-body">
 		        		<form class="row g-3" action="subscDeliveryComplete.su">
-		        			<input type="hidden" id="suNo" name="suNo" value="${ s.subscNo }">
+		        			<input type="hidden" id="sNo" name="sNo" value="${ sNo }">
 		        			<div class="col-12">
 							    <label for="selectedBook" class="form-label">선택한 도서</label>
 							    <input type="text" class="form-control" id="selectedBook">
@@ -367,7 +368,7 @@
         </div>
          <div id="search-area">
             <form action="selectAdminBookSelectSearchList.su" method="POST">
-            <input type="hidden" name="sNo" value="${ s.subscNo }">
+            <input type="hidden" name="sNo" value="${ sNo }">
                 <div id="search-bar">
                     <div id="search-condition">
                         <select name="condition" >

@@ -631,7 +631,7 @@
 			                            <td>${ o.orderDate }</td>
 			                            <td>${ o.memName } <br> (${ o.memId })</td>
 			                            <td>${ o.bkTitle }</td>
-			                            <td>${ o.orderPrice }</td>
+			                            <td>${ o.orderPriceComma }</td>
 			                            <td>
 			                            	<form action="updateDeliveryInfo.or" method="POST">
 			                            		<input type="hidden" name="orderNo" value="${ o.orderNo }">

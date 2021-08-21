@@ -293,10 +293,10 @@ public class SubscriptionController {
 	 * [관리자] 도서 발송 (한진)
 	*/
 	@RequestMapping("subscDeliveryComplete.su")
-	public String inputSubscDelBook(ModelAndView mv, String suNo, String selectedBkNo, String delCompany, String shippingNumber) {
+	public String inputSubscDelBook(ModelAndView mv, String sNo, String selectedBkNo, String delCompany, String shippingNumber) {
 		
 		HashMap<String, String> map = new HashMap<>();
-		map.put("sNo", suNo);
+		map.put("sNo", sNo);
 		map.put("bNo", selectedBkNo);
 		map.put("delCompany", delCompany);
 		map.put("shippingNumber", shippingNumber);

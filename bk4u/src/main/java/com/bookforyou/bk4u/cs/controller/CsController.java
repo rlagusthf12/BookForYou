@@ -191,10 +191,16 @@ public class CsController {
 		
 		if(cancelResult > 0) {
 			ra.addFlashAttribute("alertMsg", "'취소처리중'으로 변경되었습니다.");
-			return "redirect:/adminCancelDetail.cs?canlcelNo=" + r.getKindNo() + "&orderNo=" + r.getOrderNo() + "&no=1";
+			ra.addAttribute("cancelNo", r.getKindNo());
+			ra.addAttribute("orderNo", r.getOrderNo());
+			ra.addAttribute("no", "1");
+			return "redirect:/adminCancelDetail.cs";
 		}else if(returnResult > 0) {
 			ra.addFlashAttribute("alertMsg", "'반품처리중'으로 변경되었습니다.");
-			return "redirect:/adminReturnDetail.cs?returnNo=" + r.getKindNo() + "&orderNo=" + r.getOrderNo() + "&no=1";
+			ra.addAttribute("returnNo", r.getKindNo());
+			ra.addAttribute("orderNo", r.getOrderNo());
+			ra.addAttribute("no", "1");
+			return "redirect:/adminReturnDetail.cs";
 		}
 		
 		return "error";
