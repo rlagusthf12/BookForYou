@@ -422,7 +422,7 @@
 		                               bl_title,
 		                               bl_content,
 		                               bl_rate,
-		                               TO_DATE(bl_cdate, 'YY-MM-DD') bl_cdate,
+		                               TO_CHAR(TO_DATE(bl_cdate, 'YY-MM-DD'), 'YYYY-MM-DD') bl_cdate,
 		                               bl_like,
 		                               mem_nickname,
 		                               change_img_name

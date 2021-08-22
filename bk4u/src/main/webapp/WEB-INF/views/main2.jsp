@@ -212,23 +212,9 @@
 					let blTitle = bookReport[i].blTitle;
 					let blContent = bookReport[i].blContent;
 					let blWriter = bookReport[i].blWriter;
-					let blCdate = bookReport[i].blCdate;
+					let cDate = bookReport[i].blCdate;
 					let introChangeName = bookReport[i].introChangeName;
 					let changeImgName = bookReport[i].changeImgName;
-					
-					// 날짜
-					let month = blCdate.split("월")[0];
-					if(month.length < 2) {
-						month = "0" + month;
-					}
-					let year = blCdate.split(",")[1];
-					
-					let splitMonth = blCdate.split("월 ")[1];
-					let day = splitMonth.split(",")[0];
-					if(day.length < 2) {
-						day = "0" + day;
-					}
-					cDate = year + "-" + month + "-" + day;
 					
 					// 글자수
 					if(bkTitle.length > 11) {
