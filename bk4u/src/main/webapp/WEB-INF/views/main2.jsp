@@ -222,7 +222,9 @@
 						month = "0" + month;
 					}
 					let year = blCdate.split(",")[1];
-					let day = blCdate.split("월 ")[1].split(",")[0];
+					
+					let splitMonth = blCdate.split("월 ")[1];
+					let day = splitMonth.split(",")[0];
 					if(day.length < 2) {
 						day = "0" + day;
 					}
