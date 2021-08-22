@@ -409,7 +409,6 @@
 			for(var s=5; s>=1; s--){
 		        if(s == rt){
 		        	 c = `<input type="radio" id="star` + s + `" name="rate` + rt + `" value="`+ s + `" checked>`
-		        	 console.log(rt + " : " + c );
 		         }else{
 		             c = `<input type="radio" id="star` + s + `" name="rate` + rt + `" value="` + s + `">`
 		         }
@@ -418,7 +417,6 @@
 		     	
 		         radio.append(c+d);
 		     }
-		       
 			
 			var rr = radio.children();
 			
