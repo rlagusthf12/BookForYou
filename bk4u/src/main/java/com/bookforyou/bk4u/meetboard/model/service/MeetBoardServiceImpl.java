@@ -20,8 +20,8 @@ public class MeetBoardServiceImpl implements MeetBoardService{
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<MeetBoard> selectGBList() {
-		return mbDao.selectGBList(sqlSession);
+	public ArrayList<MeetBoard> selectGBList(int groupBoardNo) {
+		return mbDao.selectGBList(sqlSession,groupBoardNo);
 	}
 
 	@Override

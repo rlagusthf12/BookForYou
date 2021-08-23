@@ -51,8 +51,8 @@
                            
                            <tr>
                            			<input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter"></td>
-                                	<input type="hidden" id="groupDate" value="${g.gorupDate } name="groupDate">
-                                	<input type="hidden" id="groupBoardNo" value="${g.gorupBoardNo } name="groupBoardNo">
+                                	<input type="hidden" id="groupDate" value="${g.groupDate } name="groupDate">
+                                	<input type="hidden" id="groupBoardNo" value="${g.groupBoardNo } name="groupBoardNo">
                            </tr>
                            
 							

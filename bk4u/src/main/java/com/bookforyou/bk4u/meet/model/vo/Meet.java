@@ -31,8 +31,10 @@ public class Meet {
  	private int meetLimit;
  	private String meetPrice;
  	private String groupLevel;
-	
-		
+	private String meetAttand;
+	private String memEmail;
+	private String memId;
+ 	
 	
  	
  	

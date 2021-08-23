@@ -84,7 +84,7 @@
         </script>
 
            <div class="innerOuter" style="padding:5% 10%;">
-            <br><br><br><br><br><br><br><br>
+            <br><br>
                 <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                 <br><br>
 
@@ -141,6 +141,7 @@
 			
                 <!--로그인한 모든 회원에게 보이는 버튼-->
                 <c:if test="${ !empty loginUser }">
+                <input type="hidden" value="${ g.groupBoardNo }">
                 <button type="button" id="makeBoard" ><a href="createGroup.bo">독서모임 만들기</a></button>
                 </c:if>
                 <br><br>
@@ -150,7 +151,7 @@
                 <div >
                 	<table id="activeGroup">
                 	
-                    <c:if test="${ loginUser.memId eq groupMember.memId }">
+                    <c:if test="${ loginUser.memId eq groupMemberList.memId }">
                      
                     	<c:forEach var="a" items="${ activeGroup }">
                         <tr>    

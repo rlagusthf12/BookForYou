@@ -59,45 +59,44 @@
   			
                 <div align="left" style="padding-left:19px">
                         <ul class="nav nav-tabs">
-                       	   <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${ g.groupBoardNo }">모임정보</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="meet.bo?gno=${ g.groupBoardNo }">정모게시판</a>
-                            </li>
+                       	   
                             <li class="nav-item">
                               <a class="nav-link active" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
                             </li>
                     </div>
 
-                    <div align="center" style="width: 800px; border-radius: 10px; height: auto; border: 1px solid; padding-right: 20px; padding-left: 20px;"> 
+                    <div align="center" style="width: 800px; border-radius: 10px; height: auto; border: 1px solid; padding-right: 20px; padding-left: 20px;">
+                     
                             <br><br>
                             <h6 align="left"><b>소게시판<b></h6>
+                    					<input type="hidden" name="groupBoardNo" value="${ g.groupBoardNo }">
                                 
-                            <button type="submit" style="float: right; margin: auto; border-radius: 10px; background: white;">글쓰기</button>
+                            <button type="submit" style="float: right; margin: auto; border-radius: 10px; background: white;"><a href="createBoard.gbo">글쓰기</a></button>
                         
                     <br><br>
                     <div style="border: 1px solid; width: 750; height: 800; margin: auto; border-radius: 10px;">
-                        <table align="center" id="selectGBList">
-                        
-                        <input type="hidden" value="${m.groupBoardNo}">    
-					    <input type="hidden" value="${m.meetNo}">
-					    
-					    <c:forEach var="g" items="${ selectGBList }">
+                         
+                        <table align="center" id="bContentList">
+					    <input type="hidden" value="${b.groupBoardNo}"> 
 					    
                             <tr>
+                            
                                 <td width="200">작성자아이콘 </td>
-                                <td>${ g.mBoardWriter }</td>
+                                <td>${ b.mBoardWriter }</td>
                             </tr>
                             <tr>
-                                <td>${ g.mBoardCreateDate }</td>
+                            
+                                <td>${ b.mBoardCreateDate }</td>
                             </tr>
                             <tr>
-                                <td colspan="2" width="650px" height="150"> ${ g.mBoardContent } </td>
+                             
+                                <td colspan="2" width="650px" height="150"> ${ b.mBoardContent } </td>
                             </tr>
                             
                             </c:forEach>
                         </table>
+                         
+                            
                     </div>
 
 

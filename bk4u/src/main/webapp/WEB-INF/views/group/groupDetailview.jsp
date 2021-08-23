@@ -77,12 +77,14 @@
       
          
             <table style="width: 800px;">
-            <br><br><br><br><br><br><br><br>
+            <br><br>
             
                 <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                 <br><br>
                 
                 <div align="left" style="padding-left:19px">
+                <input type="hidden" value="${ g.groupBoardNo }">   
+                
                         <ul class="nav nav-tabs">
                        	   <li class="nav-item">
                               <a class="nav-link active" href="detail.gbo?gno=${ g.groupBoardNo }">모임정보</a>
@@ -90,9 +92,12 @@
                             <li class="nav-item">
                               <a class="nav-link" href="meet.bo?gno=${ g.groupBoardNo }">정모게시판</a>
                             </li>
+                            <!-- 
                             <li class="nav-item">
                               <a class="nav-link" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
                             </li>
+                             -->
+                           
                     </div>
 
                		 <table border="1" style="width: 800px;" id="groupMembe">
@@ -111,7 +116,7 @@
                             <c:forEach var="m" items="${ groupMemberList }">
                           	
                             	<input type="hidden" value="${ m.groupBoardNo }">   
-                            	<li>${ m.memId } ${ m.memEmail } ${ m.groupEnrollDate } <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button><br></li>
+                            	<li>${ m.memId } ${ m.memEmail } ${ m.groupEnrollDate }<!-- <button type="submit" style="border-color: grey; background-color: white; border-radius: 10px;">강퇴하기</button> --><br></li>
 							
 							</c:forEach>
                             
@@ -208,8 +213,9 @@
               
                 <h6 align="left"><b>한줄공지</b></h6>
                 <!-- 작성자가 모임장일 경우 뜨는 버튼-->
+                <c:if test="${ loginUser.memId eq m.groupWriter}">
                 <div id='editbtn'><button type="button" id='btn' style="float: right;">수정하기</button></div> 
-              
+              	</c:if>
                          
                 <table border="1" style="width: 800px; border: 1px solid ;">   
                   

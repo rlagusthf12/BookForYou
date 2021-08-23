@@ -61,6 +61,19 @@
 		<result column="change_name" property="changeName" />
 		<result column="mboard_writer" property="mBoardWriter"/>
 	</resultMap>
+	
+	<resultMap type="meetMember" id="meetMemberResult">
+
+		<result column="group_boardno" property="groupBoardNo" />
+		<result column="mem_email" property="memEmail" />
+		<result column="group_level" property="groupLevel" />
+		<result column="mem_no" property="memNo" />
+		<result column="mem_id" property="memId" />
+		<result column="meet_no" property="meetNo" />
+		<result column="meet_attand" property="meetAttand" />
+
+
+	</resultMap>
 
 	<select id="selectList" resultMap="groupResult">
 		SELECT *
@@ -295,9 +308,8 @@
 			, change_name
 			, group_script
 			, group_notice
-		    from groupBoard g join groupMember m using(group_boardno)
+		    from groupBoard 
 		    where group_status = 'Y'
-		      and m.mem_no = #{memNo}
 		      and group_boardNo = #{gno}
 		      
 			
@@ -349,8 +361,7 @@
 			WHERE MEET_STATUS = 'Y'
 			ORDER BY MEET_NO DESC)s)
 			WHERE NUM = 1
-		     AND GROUP_BOARDNO = #{groupBoardNo}
-		      AND MEET_NO = #{mno}  
+		     AND GROUP_BOARDNO = #{groupBoardNo} 
 		
 		
 	</select>	
@@ -358,21 +369,62 @@
 	<select id="meetLastList" resultMap="meetResult">
 		SELECT *
 		FROM (SELECT ROWNUM NUM
-		, s.group_boardno
-		, s.meet_no
-		, s.offline_address
-		, s.meet_date
-		, s.meet_time
-		
-		FROM
-		(SELECT * FROM MEET m
-		WHERE MEET_STATUS = 'Y'
-		ORDER BY MEET_NO DESC)s)g
-		WHERE NUM BETWEEN 2 AND 3
-		 and g.meet_no = #{mno}
-          and g.group_boardno = #{groupBoardNo}
-		
+			, s.group_boardno
+			, s.meet_no
+			, s.offline_address
+			, s.meet_date
+			, s.meet_time
+			
+			FROM
+			(SELECT * FROM MEET m
+			WHERE MEET_STATUS = 'Y'
+			ORDER BY MEET_NO DESC)s)g
+			WHERE NUM BETWEEN 2 AND 3
+	          and g.group_boardno = #{groupBoardNo}
+			
 	</select>	
+	
+	<insert id="insertMeetMem">
+
+
+		insert
+		into meetMember
+		(
+		  group_boardno
+		, mem_no
+		, meet_no
+		, meet_attand
+		, mem_email
+		, mem_id
+		)
+		values
+		(
+		 #{groupBoardNo}
+		, #{memNo}
+		, #{meetNo}
+		, #{meetAttand}
+		, #{memEmail}
+		, #{memId}
+		)
+
+	</insert>
+	
+
+	<select id="meetMemberList" resultMap="meetMemberResult">
+	SELECT
+       		group_boardno
+			, mem_no
+			, meet_no
+			, meet_attand
+			, mem_email
+			, mem_id
+			from meetMember t
+			where t.group_level ='GM' 
+              and t.group_boardno = #{gno}
+	        order by t.mem_email desc
+
+	</select>
+	
 	
 	<select id="selectGBList" resultMap="boardResult">
 		SELECT *
@@ -399,6 +451,7 @@
 	<select id="selectGBListMore" resultMap="boardResult">
 		SELECT *
 		FROM (SELECT ROWNUM NUM
+		, s.group_boardno
 		, s.mboard_no
 		, s.mem_no
 		, s.mboard_content
@@ -422,7 +475,8 @@
 		insert
 			into meetBoard
 				(
-				mboard_no
+				group_boardno
+				,mboard_no
 				,mem_no
 				,mboard_content
 				,mboard_createdate
@@ -432,6 +486,7 @@
 				)
 				values
 				(
+				,#{groupBoardNo}
 				seq_mbno.nextval
 				,#{memNo}
 				,#{mBoardContent}
@@ -445,6 +500,7 @@
 	
 	<select id="selectMBoard" resultMap="boardResult">
 		select
+		        , group_boardno
 				, mboard_no
 				, mem_no
 				, mboard_content
@@ -453,8 +509,8 @@
 				, origin_name
 				, change_name
 				, mboard_writer
-				from meetBoard 
-			 m join groupBoard g using (group_boardno)
+				from meetBoard m
+			  join groupBoard g using (group_boardno)
 				 where g.group_boardNo = #{groupBoardNo}
 				  and m.mboard_no = #{mbno}
 	</select>

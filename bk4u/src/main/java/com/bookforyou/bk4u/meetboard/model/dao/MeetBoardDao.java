@@ -10,9 +10,9 @@ import com.bookforyou.bk4u.meetboard.model.vo.MeetBoard;
 @Repository
 public class MeetBoardDao {
 	
-	public ArrayList<MeetBoard> selectGBList(SqlSessionTemplate sqlSession) {
+	public ArrayList<MeetBoard> selectGBList(SqlSessionTemplate sqlSession, int groupBoardNo) {
 
-		return (ArrayList)sqlSession.selectList("groupMapper.selectGBList");
+		return (ArrayList)sqlSession.selectList("groupMapper.selectGBList", groupBoardNo);
 	}
 
 

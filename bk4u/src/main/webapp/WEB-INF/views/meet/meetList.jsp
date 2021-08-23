@@ -38,6 +38,11 @@
                 
               <div class="content">
       
+      
+              <div class="innerOuter"  style="padding:5% 5%;" align="center">
+            <br><br><br><br><br><br><br><br>
+            	
+            	
       <div id="topButton" style="cursor: pointer"><button id="headbutton" style="border-radius: 10px;">맨위로△</button></div>
             
             <script>
@@ -57,41 +62,47 @@
     
             });
         </script>
-      
-              <div class="innerOuter"  style="padding:5% 5%;" align="center">
-            <br><br><br><br><br><br><br><br>
-            
+            		
             
                   <h6 align="left"><b><a href="group.bo">독서모임게시판</a></b></h6>
                   <br><br>
                   
                   
                   
+                  
                    <div align="left" style="padding-left:19px">
+                   
                         <ul class="nav nav-tabs">
-                       	   <li class="nav-item">
-                              <a class="nav-link" href="detail.gbo?gno=${ g.groupBoardNo }">모임정보</a>
-                            </li>
+                       	   
                             <li class="nav-item">
+                           <input type="hidden" value="${ g.groupBoardNo }">   
+                            
                               <a class="nav-link active" href="meet.bo?gno=${ g.groupBoardNo }">정모게시판</a>
                             </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
-                            </li>
+                            
                     </div>
       
                   <div style="width: 800px; border-radius: 10px; height: 780px; border: 1px solid; margin: auto; padding-left: 10px;" > 
 
                   <br>
+					<input type="hidden" name="groupBoardNo" value="${ g.groupBoardNo }">
                     
                         <table width="820px">
                                     <td>
                                         <b>진행 예정인 정모</b>
+                                        
                                         <!-- 작성자가 모임장일 경우 뜨는 버튼-->
-                                        <button type="submit" class="" style="float: right;" >삭제하기</button> 
-                                         <button type="submit" class="" style="float: right;" ><a href="createMeet.bo">정모공지</a></button>
+                                        
+                                     <form id="">
+										<c:if test="${ loginUser.memId eq g.groupWriter }"> 
+                                     					<input type="hidden" name="groupBoardNo" value="${ g.groupBoardNo }">
+                                      
+                                         <button type="submit" class="" style="float: right;" ><a href="createMeet.bo">정모공지</a></button>                                         
+                                       </form> 
+                                       <button type="submit" class="" style="float: right;" >삭제하기</button>
+                                       </c:if> 
                                     </td>
-                                    <td style="padding-right: 35px;"><b>만남의 장소</b></td>
+                                   <!--   <td style="padding-right:5%;"><b>만남의 장소</b></td> -->
                                 </tr>
                                 <br>
                         </table>    
@@ -107,11 +118,11 @@
                                     <td height="180" width="570px">
                                       <table  id="meetList">
                                       
-                                         <input type="hidden" value="${m.groupBoardNo}">    
-					                     <input type="hidden" value="${m.meetNo}">  
+                                          
 					                     
                                            <c:forEach var="ml" items="${ meetList }">
-                                    
+                                    		 <input type="hidden" value="${ml.groupBoardNo}">    
+					                    	 <input type="hidden" value="${ml.meetNo}"> 
 			                            <tr>
 					                         
 					                            
@@ -123,20 +134,24 @@
                                           
                                           <tr>
                                               <td style="height:100px">
-                                             
-					                            <input type="hidden" value="${ml.meetNo}">
-					                            
-					                            <c:forEach var="ma" items="${ meetAttendList }">
-                                                   ${ ma.memId }  
-                                                </c:forEach>
+                                              <c:forEach var="ma" items="${ meetMemberList }">
+					                              <input type="hidden" value="${ ma.groupBoardNo }">
+					                              <input type="hidden" value="${ ma.meetNo }"> 
+					                                <li>${ ma.memId }</li>
+					                                </c:forEach>
                                               </td>
+                                              
                                           </tr>
                                           </c:forEach>
                                       </table>
                                     </td> 
                                     <td height="180">
+                                   		<input type="hidden" value="${ml.meetNo}">
+                                   		<input type="hidden" value="${ml.offlineAddress}">  
+                                   		  
+                                   	
                                         <div id="map" style="width:200px;height:180px;"></div>
-            
+            		
                                                     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=59b5fb5033b78ddb6353f23ac7eb1bc7&libraries=services"></script>
                                                     <script>
                                                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -152,7 +167,7 @@
                                                     var geocoder = new kakao.maps.services.Geocoder();
                                                     
                                                     // 주소로 좌표를 검색합니다
-                                                    geocoder.addressSearch('${ offlineAddress }', function(result, status) {
+                                                    geocoder.addressSearch('서울 강남구 강남대로 지하 396', function(result, status) {
                                                     
                                                         // 정상적으로 검색이 완료됐으면 
                                                         if (status === kakao.maps.services.Status.OK) {
@@ -176,6 +191,7 @@
                                                         } 
                                                     });    
                                                     </script>
+                                                   
                                 </td>
                                 </tr>
                 
@@ -218,15 +234,13 @@
                                     <tr>
                                         <td style="height:40px">장소 : ${ l.offlineAddress }</td>
                                     </tr>
-                                    <tr>
-                                        <td style="height:100px">
-                                            참여자프로필아이콘
-                                            <!--토글튜토리얼 갖다대면 닉네임보이게-->
-                                            data-toggle="tooltip" title="회원닉네임" 
-                                        </td>
-                                    </tr>
-                                    </c:forEach>
-                                </table>
+                                          <tr>
+                                              <td style="height:100px"> 
+					                                <li>${ n.memId }</li>
+                                              </td>
+                                              
+                                          </tr>
+                                          </c:forEach>                                </table>
                             </td>
                         </table> 
                       
@@ -239,11 +253,13 @@
 
                     </div>
                     <br>
-
+				
                     <div class="attandGroup">
                             <table id="meetList" width="750px" align="center">
+                            
                             <input type="hidden" value="${m.groupBoardNo }">
                             <input type="hidden" value="${m.meetNo }">
+                            
                             <c:forEach var="ml" items="${ meetList }">
                             
                                 <tr>
@@ -255,15 +271,24 @@
                                     <td align="right">${ ml.meetPrice } 원 </td>
                                     <td width="200">
                                     
-                                        <button style="float: right; border-color: black; background-color: white; border-radius: 10px;" >취소하기</button>
-                                        <button style="float: right;  border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;" >참여하기</button>
+                                    <form id="meetMember" method="post" action="insertMeet.me">
+               						 <input type="hidden" name="memId" value="${ loginUser.memId }">
+               						 <input type="hidden" name="memEmail" value="${ loginUser.memEmail  }">
+                					 <input type="hidden" name="groupBoardNo" value="${ ml.groupBoardNo }">
+                					 <input type="hidden" name="meetNo" value="${ ml.meetNo }">                					 
+                					                 					 
+                                        <button type="submit" style="float: right;  border-color: rgb(236, 87, 59); background-color: white; border-radius: 10px;" >참여하기</button>
+                                     </form>
+                                
+                                      <button style="float: right; border-color: black; background-color: white; border-radius: 10px;" >취소하기</button>
+                                     
                                     </td> 
                                 </tr>
                                </c:forEach>
                                 <br>
                             </table>
                     </div>
-
+						
                     <br><br>
 
                 </div>

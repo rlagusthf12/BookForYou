@@ -19,20 +19,20 @@ public class MeetBoardController {
 	private MeetBoardService bService;
 	
 	@RequestMapping(value="meetBoard.bo",  method=RequestMethod.GET)
-	public String groupBoardList(Model model) throws Exception {
+	public String groupBoardList(Model model, int gno) throws Exception {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		ArrayList<MeetBoard> meetBoardList = bService.selectGBList();
+		ArrayList<MeetBoard> meetBoardList = bService.selectGBList(gno);
 
 		model.addAttribute("meetBoardList", meetBoardList);
 		model.addAttribute("meetBoard", "../meetboard/groupBoardList.jsp");
 		
 				
-		return "meetboard/groupBoardList";
+		return "../views/meetboard/groupBoardList";
 	}
 	
 	@RequestMapping("createBoard.gbo")
 	public String createBoard() {
-		return "../views/meetboard/groupBoardContentEdit";
+		return "../views/meetboard/groupBoardContent";
 	}
 }

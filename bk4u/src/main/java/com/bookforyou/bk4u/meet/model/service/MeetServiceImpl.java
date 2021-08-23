@@ -10,6 +10,8 @@ import com.bookforyou.bk4u.group.model.dao.GroupDao;
 import com.bookforyou.bk4u.group.model.vo.GroupBoard;
 import com.bookforyou.bk4u.meet.model.dao.MeetDao;
 import com.bookforyou.bk4u.meet.model.vo.Meet;
+import com.bookforyou.bk4u.meet.model.vo.MeetMember;
+import com.bookforyou.bk4u.member.model.vo.Member;
 
 @Service
 public class MeetServiceImpl implements MeetService {
@@ -40,13 +42,31 @@ public class MeetServiceImpl implements MeetService {
 
 
 	@Override
-	public ArrayList<Meet> meetList() {
-		return mDao.meetList(sqlSession);
+	public ArrayList<Meet> meetList(int groupBoardNo) {
+		return mDao.meetList(sqlSession,groupBoardNo);
 	}
 
 	@Override
-	public ArrayList<Meet> meetLastList() {
-		return mDao.meetLastList(sqlSession);
+	public ArrayList<Meet> meetLastList(int groupBoardNo) {
+		return mDao.meetLastList(sqlSession, groupBoardNo);
+	}
+	
+	@Override
+	public ArrayList<MeetMember> meetMemberList(int gno) {
+		return mDao.meetMemberList(sqlSession, gno);
+
+	}
+
+	@Override
+	public int insertMeetMem(MeetMember mb) {
+		return mDao.insertMeetMem(sqlSession, mb);	
+
+	}
+
+	@Override
+	public ArrayList<Member> memberInfo(Member m) {
+		return (ArrayList)sqlSession.selectList("groupMapper.memberInfo", m);
+
 	}
 
 	

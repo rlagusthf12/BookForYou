@@ -51,9 +51,10 @@
                             <thead>
                                 <tr>                            	
                                 	<td>
-                                	<input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter"></td>
+                                	<input type="hidden" id="groupWirter" class="form-control" value="${ loginUser.memId }" name="groupWriter">
                                 	<input type="hidden" id="groupDate" value="${g.gorupDate } name="groupDate">
-                                	<input type="hidden" id="groupBoardNo" value="${g.gorupBoardNo } name="groupBoardNo">
+                                	<input type="hidden" id="groupBoardNo" value="${g.groupBoardNo } name="groupBoardNo">
+                                	</td>
                                 	
                  				</tr>
                  				<tr>
@@ -96,7 +97,7 @@
 											
 											<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 											<script type="text/javascript">
-											    var seoul = ["강남구","강서구","강동구","노원구"];
+											    var seoul = ["강남구","강서구","강동구","노원구","종로구","중구","용산구","성동구","광진구","동대문구","중랑구","성북구"];
 											    var kyeongki = ["구리시","평택시"];
 											    var busan = ["해운대구", "광안리"];
 											    var kangwon = ["충주시"]

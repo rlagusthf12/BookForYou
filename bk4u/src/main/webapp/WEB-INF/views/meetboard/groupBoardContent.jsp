@@ -27,21 +27,19 @@
 <body>
 
       <!--독서모임게시판상세불러오기-->
-      <jsp:include page=""/>
+      <jsp:include page="../common/menubar.jsp"/>
           
         <div class="content">
 
         <div class="innerOuter"  style="padding:5% 5%;" align="center">
-              <br><br><br><br><br><br><br><br>
+              <br><br>
               <div align="left" style="padding-left:19px">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">모임정보</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#">소게시판</a>
-                    </li>
-            </div>
+                       	   
+                            <li class="nav-item">
+                              <a class="nav-link active" href="meetBoard.bo?gno=${ g.groupBoardNo }">소게시판</a>
+                            </li>
+                    </div>
 
         <div style="width: 800px; border-radius: 10px; height: auto; border: 1px solid; margin: auto;"> 
             <br><br>
@@ -50,23 +48,31 @@
                 
                 <table align="center" style="padding: 40px;">
                     <tr>
+                    <td>
+                                	<input type="hidden" id="mBoardWirter" class="form-control" value="${ loginUser.memId }" name="mBoardWriter">
+                                	<input type="hidden" id="mBoardCreateDate" value="${b.mBoardCreateDate } name="mBoardCreateDate">
+                                	<input type="hidden" id="mBoardNo" value="${b.mBoardNo } name="mBoardNo">
+                                	<input type="hidden" id="groupBoardNo" value="${m.groupBoardNo } name="groupBoardNo">
+                                	
+                       </td>
                         <td>
-                          <textarea name="" id="" cols="70" rows="10"></textarea>
+                        
+                          <textarea name="mBoardContent" id="" cols="70" rows="10"></textarea>
                         </td>
                         
                     </tr>
                     <tr>
                       <td>
-                        <img src="" id="img">
+                        <img src="resources/groupFiles" id="upfile" name="upfile">
                                         <br>
-                                        <input type="file" name="groupImg" onchange="miri(this);">
+                                        <input type="file" name="upfile" onchange="miri(this);">
 
                                         <script>
                                             function miri(tag){
                                                 var reader = new FileReader();
                                                 reader.readAsDataURL(tag.files[0]);
                                                 reader.onload = function() {
-                                                    document.getElementById("img").src = this.result;
+                                                    document.getElementById("upfile").src = this.result;
                                                 } 
                                             }
                                         </script>
@@ -90,7 +96,7 @@
 
          </div>   
          <!--푸터바 입력-->
-         <jsp:include page=""/>  
+         <jsp:include page="../common/footer.jsp"/>  
 
 
     </body>
