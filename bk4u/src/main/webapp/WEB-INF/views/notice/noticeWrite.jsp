@@ -70,7 +70,7 @@
 		width:136px;
 		height:48px;
 		margin-top:100px;
-		margin-left:20px;	
+		margin-left:200px;	
 	}
 	
 </style>
@@ -90,7 +90,6 @@
 
 <div style="width:360px; height:100px; float:right;">
 <button type="submit" class="uploadButton">등록하기</button>
-<button type="reset" class="uploadButton">취소하기</button>
 </div>  
 </form>
  
