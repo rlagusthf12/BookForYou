@@ -56,7 +56,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;    
     font-size: 20px;
-    margin-left: 50px;
+    margin-left: 40px;
     
 	}
 	

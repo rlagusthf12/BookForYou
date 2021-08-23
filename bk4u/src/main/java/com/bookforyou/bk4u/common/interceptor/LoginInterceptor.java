@@ -15,7 +15,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 		if(session.getAttribute("loginUser") == null) {
 			session.setAttribute("loginMsg", "로그인 후 이용 가능한 서비스입니다.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect("main.me");
 			
 			return false;
 		}
