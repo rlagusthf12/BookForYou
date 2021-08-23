@@ -230,8 +230,7 @@
 					if(blContent.length > 80) {
 						blContent = blContent.substring(0, 80) + "...";
 					}
-					
-					
+				
 					
 					let content = `<div class="content">
 										<input type="hidden" value=` + blNo + `>
