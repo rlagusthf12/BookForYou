@@ -579,28 +579,6 @@
                     <span>배송지정보</span>
                 </div>
 
-                <script>
-                	var price = ${ allPrice };
-                	var cpPrice = 0;
-                	var ptPrice = 0;
-                	var orderNo = "";
-                	
-                    $("#info_top>span:nth-child(1)").click(function(){
-                        $("#order_info").css('display', 'block');
-                        $("#shipping_info").css('display', 'none');
-                        $("#info_top>span:nth-child(1)").css('color', 'black');
-                        $("#info_top>span:nth-child(2)").css('color', 'rgb(192, 192, 192)');
-                        $("#address_box").css('display', 'none');
-                    });
-
-                    $("#info_top>span:nth-child(2)").click(function(){
-                        $("#shipping_info").css('display', 'block');
-                        $("#order_info").css('display', 'none');
-                        $("#info_top>span:nth-child(2)").css('color', 'black');
-                        $("#info_top>span:nth-child(1)").css('color', 'rgb(192, 192, 192)');
-                    });
-                </script>
-
                 <div id="order_info" style="display: block;">
                 
                 <c:forEach var="b" items="${ bList }" varStatus="status">
@@ -679,65 +657,7 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-                $(function(){
-                    $("#shipping_info>div:nth-child(4) button:nth-child(1)").addClass("btn_select");
-                });
-                
-                $(function(){
-                	for(let i=1; i < 5; i++){
-                		var td = new Date();
-                		var td1 = td.getTime() + (i * 24 * 60 * 60 * 1000);
-                		td.setTime(td1);
-                		
-    					$("#shipping_info").children().eq(3).children().eq(1).children().eq(i-1).text(getToday(td));
-                	}
-            		
-            		
-                });
-
-                $("#shipping_info>div:nth-child(4) button").click(function(){
-                    $("#shipping_info>div:nth-child(4) button").removeClass("btn_select");
-                    $(this).addClass("btn_select");
-                });
-            </script>
             
-            <script>
-	            function getToday(td){ /* 날짜 문자로 변환 */
-	            	
-	            	var mm = td.getMonth() + 1;
-	            	var dd = td.getDate();
-	            	var day = td.getDay();
-	                
-	        		if (day == 0){
-	        			day = "일";
-	        		}
-	        		else if(day == 1){
-	        			day = "월";
-	        		}
-	        		else if(day == 2){
-	        			day = "화";
-	        		}
-	        		else if(day == 3){
-	        			day = "수";
-	        		}
-	        		else if(day == 4){
-	        			day = "목";
-	        		}
-	        		else if(day == 5){
-	        			day = "금";
-	        		}
-	        		else if(day == 6){
-	        			day = "토";
-	        		}
-	                
-	                var today = mm + "/" + dd + " (" + day + ")";
-
-	                return today;
-	            };
-            </script>
-
             <div id="address_box">
                 <div>
                     	주소록
@@ -768,111 +688,6 @@
                     </table>
                 </div>
             </div>
-
-            <script>
-	            $("#shipping_info #recent_ad").click(function(){
-	            	<c:choose>
-	                	<c:when test="${ empty mp }">
-	                    	alert("최근 주문한 배송지가 없습니다.");
-	                    </c:when>
-	                	<c:otherwise>
-		                	$("#shipping_info table input[name=orderReceiver]").val("${ mp.memName }");
-		                    $("#shipping_info table input[name=orderPost]").val("${ mp.postNo }");
-		                    $("#shipping_info table input[name=orderAddress]").val("${ mp.basicAddress }");
-		                    $("#shipping_info table input[name=addressDetail]").val("${ mp.detailAddress }");
-		                    $("#shipping_info table input[name=addressRef]").val("${ mp.addressRefer }");
-		                    $("#shipping_info table input[name=orderPhone]").val("${ mp.phone }");
-	                	</c:otherwise>
-	                </c:choose>
-	            });
-            
-                $("#shipping_info #ad_list").click(function(){
-                    $("#address_box").css('display', 'block');
-                });
-
-                $("#address_box>div:nth-child(1)>button").click(function(){
-                    $("#address_box").css('display', 'none');
-                });
-
-                $("#address_box>div:nth-child(2)>table button").click(function(){
-                    $("#address_box").css('display', 'none');
-                    $("#shipping_info table input[name=orderReceiver]").val($(this).parent().next().text());
-                    $("#shipping_info table input[name=orderPost]").val($(this).parent().next().next().next().next().next().next().text());
-                    $("#shipping_info table input[name=orderAddress]").val($(this).parent().next().next().text());
-                    $("#shipping_info table input[name=addressDetail]").val($(this).parent().next().next().next().text());
-                    $("#shipping_info table input[name=addressRef]").val($(this).parent().next().next().next().next().text());
-                    $("#shipping_info table input[name=orderPhone]").val($(this).parent().next().next().next().next().next().text());
-                });
-                
-                $("#shipping_info #mem_info").click(function(){
-                	$("#shipping_info table input[name=orderReceiver]").val("${ loginUser.memName }");
-                    $("#shipping_info table input[name=orderPost]").val("${ loginUser.memPost }");
-                    $("#shipping_info table input[name=orderAddress]").val("${ loginUser.memBasicAddress }");
-                    $("#shipping_info table input[name=addressDetail]").val("${ loginUser.memDetailAddress }");
-                    $("#shipping_info table input[name=addressRef]").val("${ loginUser.memAddressRefer }");
-                    $("#shipping_info table input[name=orderPhone]").val("${ loginUser.memPhone }");
-                });
-                
-                $("#shipping_info #user_ip").click(function(){
-                	$("#shipping_info table input[name=orderReceiver]").val("");
-                    $("#shipping_info table input[name=orderPost]").val("");
-                    $("#shipping_info table input[name=orderAddress]").val("");
-                    $("#shipping_info table input[name=addressDetail]").val("");
-                    $("#shipping_info table input[name=addressRef]").val("");
-                    $("#shipping_info table input[name=orderPhone]").val("");
-                });
-            </script>
-            
-            <script>
-            	function postSearch(){
-            		new daum.Postcode({
-            	        oncomplete: function(data) {
-            	        	// 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-        	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-        	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-        	                var addr = ''; // 주소 변수
-        	                var extraAddr = ''; // 참고항목 변수
-
-        	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-        	                    addr = data.roadAddress;
-        	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-        	                    addr = data.jibunAddress;
-        	                }
-
-        	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-        	                if(data.userSelectedType === 'R'){
-        	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-        	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-        	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-        	                        extraAddr += data.bname;
-        	                    }
-        	                    // 건물명이 있고, 공동주택일 경우 추가한다.
-        	                    if(data.buildingName !== '' && data.apartment === 'Y'){
-        	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-        	                    }
-        	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-        	                    if(extraAddr !== ''){
-        	                        extraAddr = ' (' + extraAddr + ')';
-        	                    }
-        	                    // 조합된 참고항목을 해당 필드에 넣는다.
-        	                    $("#shipping_info table input[name=addressRef]").val(extraAddr);
-        	                
-        	                } else {
-        	                	$("#shipping_info table input[name=addressRef]").val('');
-        	                }
-
-        	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        	                $("#shipping_info table input[name=orderPost]").val(data.zonecode);
-        	                $("#shipping_info table input[name=orderAddress]").val(addr);
-        	                
-        	                // 커서를 상세주소 필드로 이동한다.
-        	                $("#shipping_info table input[name=addressDetail]").focus();
-            	        }
-            	    }).open();
-            	}
-            </script>
             
             <div id="payment_info">
                 <div>결제정보</div>
@@ -948,15 +763,6 @@
                 	<button type="button" class="btn_cancel">취소</button>
                 </div>
             </div>
-            
-            <script>
-            	$("#coupon_box .btn_select").click(function(){
-            		cpPrice = $(this).parent().parent().find("input[type=hidden]").val();
-            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text($(this).parent().parent().find("input[type=hidden]").val() + "원");
-            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
-                });
-            </script>
 
             <div id="point_box">
                 <div>
@@ -973,66 +779,6 @@
                 </div>
             </div>
 
-            <script>
-                $("#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(1)").click(function(){
-                    $("#coupon_box").css('display', 'block');
-                    $("#point_box").css('display', 'none');
-                });
-
-                $("#coupon_box .btn_apply").click(function(){
-                	$("#coupon_box").css('display', 'none');
-                });
-
-                $("#coupon_box .btn_cancel").click(function(){
-                	cpPrice = 0;
-            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text("0원");
-            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
-                    $("#coupon_box").css('display', 'none');
-                });
-
-                $("#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(1)").click(function(){
-                    $("#point_box").css('display', 'block');
-                    $("#coupon_box").css('display', 'none');
-                });
-
-                $("#point_box .btn_cancel").click(function(){
-                    $("#point_box").css('display', 'none');
-                });
-
-                /*
-                $("#point_box>div:nth-child(3)>button").click(function(){
-                    $("#point_box input[type=text]").val("100");
-                });
-                */
-            </script>
-            
-            <script>
-	            $("#point_box .btn_select").click(function(){
-            		$("#point_box input[name=uPoint]").val(${ point });
-	        	});
-	            
-	        	$("#point_box .btn_apply").click(function(){
-	            	ptPrice = $("#point_box input[name=uPoint]").val();
-            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text($("#point_box input[name=uPoint]").val() + "원");
-            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
-            		$("#point_box").css('display', 'none');
-	        	});
-	        	
-            	$("#point_box .btn_cancel").click(function(){
-                	ptPrice = 0;
-                	$("#point_box input[name=uPoint]").val(0);
-            		$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text("0원");
-            		$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
-                	$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
-            		$("#point_box").css('display', 'none');
-            	});
-            </script>
-            
-            <script>
-            </script>
-
             <div id="policy_info">
                 <div>구매 동의</div>
                 <div>
@@ -1045,8 +791,254 @@
     </div>
     
     <script>
+    	// 도서 총 가격, 쿠폰 할인 금액, 포인트 할인 금액, 주문 번호 변수
+		var price = ${ allPrice };
+		var cpPrice = 0;
+		var ptPrice = 0;
+		var orderNo = "";
+		
+		/* 주문 정보 탭 이동 */
+	    $("#info_top>span:nth-child(1)").click(function(){
+	        $("#order_info").css('display', 'block');
+	        $("#shipping_info").css('display', 'none');
+	        $("#info_top>span:nth-child(1)").css('color', 'black');
+	        $("#info_top>span:nth-child(2)").css('color', 'rgb(192, 192, 192)');
+	        $("#address_box").css('display', 'none');
+	    });
+	
+	    /* 배송지 정보 탭 이동 */
+	    $("#info_top>span:nth-child(2)").click(function(){
+	        $("#shipping_info").css('display', 'block');
+	        $("#order_info").css('display', 'none');
+	        $("#info_top>span:nth-child(2)").css('color', 'black');
+	        $("#info_top>span:nth-child(1)").css('color', 'rgb(192, 192, 192)');
+	    });
+    
+	    /* 기본 배송일자 선택 */
+		$(function(){
+		    $("#shipping_info>div:nth-child(4) button:nth-child(1)").addClass("btn_select");
+		});
+		
+		/* 배송일 선택 버튼 날짜 지정 */
+		$(function(){
+			for(let i=1; i < 5; i++){
+				var td = new Date();
+				var td1 = td.getTime() + (i * 24 * 60 * 60 * 1000);
+				td.setTime(td1);
+				
+				$("#shipping_info").children().eq(3).children().eq(1).children().eq(i-1).text(getToday(td));
+			}
+		});
+		
+		/* 배송일 선택 버튼용 date 형식 설정 */
+		function getToday(td){ /* 날짜 문자로 변환 */
+			
+			var mm = td.getMonth() + 1;
+			var dd = td.getDate();
+			var day = td.getDay();
+		    
+			if (day == 0){
+				day = "일";
+			}
+			else if(day == 1){
+				day = "월";
+			}
+			else if(day == 2){
+				day = "화";
+			}
+			else if(day == 3){
+				day = "수";
+			}
+			else if(day == 4){
+				day = "목";
+			}
+			else if(day == 5){
+				day = "금";
+			}
+			else if(day == 6){
+				day = "토";
+			}
+		    
+		    var today = mm + "/" + dd + " (" + day + ")";
+		
+		    return today;
+		};
+		
+		/* 배송일 선택 버튼 css 변경 */
+		$("#shipping_info>div:nth-child(4) button").click(function(){
+		    $("#shipping_info>div:nth-child(4) button").removeClass("btn_select");
+		    $(this).addClass("btn_select");
+		});
+		
+		/* 최근 사용 배송지 설정 */
+		$("#shipping_info #recent_ad").click(function(){
+			<c:choose>
+		    	<c:when test="${ empty mp }">
+		        	alert("최근 주문한 배송지가 없습니다.");
+		        </c:when>
+		    	<c:otherwise>
+		        	$("#shipping_info table input[name=orderReceiver]").val("${ mp.memName }");
+		            $("#shipping_info table input[name=orderPost]").val("${ mp.postNo }");
+		            $("#shipping_info table input[name=orderAddress]").val("${ mp.basicAddress }");
+		            $("#shipping_info table input[name=addressDetail]").val("${ mp.detailAddress }");
+		            $("#shipping_info table input[name=addressRef]").val("${ mp.addressRefer }");
+		            $("#shipping_info table input[name=orderPhone]").val("${ mp.phone }");
+		    	</c:otherwise>
+		    </c:choose>
+		});
+		
+		/* 주소록 박스 띄우기 */
+		$("#shipping_info #ad_list").click(function(){
+		    $("#address_box").css('display', 'block');
+		});
+
+		/* 주소록 박스 나가기 */
+		$("#address_box>div:nth-child(1)>button").click(function(){
+		    $("#address_box").css('display', 'none');
+		});
+		
+		/* 주소록 선택 */
+		$("#address_box>div:nth-child(2)>table button").click(function(){
+		    $("#address_box").css('display', 'none');
+		    $("#shipping_info table input[name=orderReceiver]").val($(this).parent().next().text());
+		    $("#shipping_info table input[name=orderPost]").val($(this).parent().next().next().next().next().next().next().text());
+		    $("#shipping_info table input[name=orderAddress]").val($(this).parent().next().next().text());
+		    $("#shipping_info table input[name=addressDetail]").val($(this).parent().next().next().next().text());
+		    $("#shipping_info table input[name=addressRef]").val($(this).parent().next().next().next().next().text());
+		    $("#shipping_info table input[name=orderPhone]").val($(this).parent().next().next().next().next().next().text());
+		});
+		
+		/* 회원 정보 배송지 설정 */
+		$("#shipping_info #mem_info").click(function(){
+			$("#shipping_info table input[name=orderReceiver]").val("${ loginUser.memName }");
+		    $("#shipping_info table input[name=orderPost]").val("${ loginUser.memPost }");
+		    $("#shipping_info table input[name=orderAddress]").val("${ loginUser.memBasicAddress }");
+		    $("#shipping_info table input[name=addressDetail]").val("${ loginUser.memDetailAddress }");
+		    $("#shipping_info table input[name=addressRef]").val("${ loginUser.memAddressRefer }");
+		    $("#shipping_info table input[name=orderPhone]").val("${ loginUser.memPhone }");
+		});
+		
+		/* 배송지 설정 직접 입력 */
+		$("#shipping_info #user_ip").click(function(){
+			$("#shipping_info table input[name=orderReceiver]").val("");
+		    $("#shipping_info table input[name=orderPost]").val("");
+		    $("#shipping_info table input[name=orderAddress]").val("");
+		    $("#shipping_info table input[name=addressDetail]").val("");
+		    $("#shipping_info table input[name=addressRef]").val("");
+		    $("#shipping_info table input[name=orderPhone]").val("");
+		});
+		
+		/* 주소 검색 api */
+		function postSearch(){
+			new daum.Postcode({
+		        oncomplete: function(data) {
+		        	// 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		
+		            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+		            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+		            var addr = ''; // 주소 변수
+		            var extraAddr = ''; // 참고항목 변수
+		
+		            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                addr = data.roadAddress;
+		            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                addr = data.jibunAddress;
+		            }
+		
+		            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+		            if(data.userSelectedType === 'R'){
+		                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+		                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+		                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+		                    extraAddr += data.bname;
+		                }
+		                // 건물명이 있고, 공동주택일 경우 추가한다.
+		                if(data.buildingName !== '' && data.apartment === 'Y'){
+		                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+		                }
+		                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+		                if(extraAddr !== ''){
+		                    extraAddr = ' (' + extraAddr + ')';
+		                }
+		                // 조합된 참고항목을 해당 필드에 넣는다.
+		                $("#shipping_info table input[name=addressRef]").val(extraAddr);
+		            
+		            } else {
+		            	$("#shipping_info table input[name=addressRef]").val('');
+		            }
+		
+		            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+		            $("#shipping_info table input[name=orderPost]").val(data.zonecode);
+		            $("#shipping_info table input[name=orderAddress]").val(addr);
+		            
+		            // 커서를 상세주소 필드로 이동한다.
+		            $("#shipping_info table input[name=addressDetail]").focus();
+		        }
+		    }).open();
+		}
+		
+		/* 할인 쿠폰 선택 */
+		$("#coupon_box .btn_select").click(function(){
+			cpPrice = $(this).parent().parent().find("input[type=hidden]").val();
+			$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text($(this).parent().parent().find("input[type=hidden]").val() + "원");
+			$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+			$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+		});
+		
+		/* 쿠폰 박스 띄우기 */
+		$("#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(1)").click(function(){
+		    $("#coupon_box").css('display', 'block');
+		    $("#point_box").css('display', 'none');
+		});
+
+		$("#coupon_box .btn_apply").click(function(){
+			$("#coupon_box").css('display', 'none');
+		});
+		
+		/* 쿠폰 적용 취소 */
+		$("#coupon_box .btn_cancel").click(function(){
+			cpPrice = 0;
+			$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(1)>div:nth-child(2)").text("0원");
+			$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+			$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+		    $("#coupon_box").css('display', 'none');
+		});
+		
+		/* 포인트 박스 띄우기 */
+		$("#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(1)").click(function(){
+		    $("#point_box").css('display', 'block');
+		    $("#coupon_box").css('display', 'none');
+		});
+		
+		/* 보유 포인트 전액 선택 */
+		$("#point_box .btn_select").click(function(){
+			$("#point_box input[name=uPoint]").val(${ point });
+		});
+		
+		/* 포인트 할인 적용 */
+		$("#point_box .btn_apply").click(function(){
+			ptPrice = $("#point_box input[name=uPoint]").val();
+			$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text($("#point_box input[name=uPoint]").val() + "원");
+			$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+			$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+			$("#point_box").css('display', 'none');
+		});
+		
+		/* 포인트 적용 취소 */
+		$("#point_box .btn_cancel").click(function(){
+			ptPrice = 0;
+			$("#point_box input[name=uPoint]").val(0);
+			$("#payment_info>#info_box>div:nth-child(3)>div:nth-child(2)>div:nth-child(2)").text("0원");
+			$("#payment_info>#info_box>div:nth-child(4)>div:nth-child(2)").text(price - cpPrice - ptPrice + "원");
+			$("#payment_info>#info_box>div:nth-child(4)>input").val(price - cpPrice - ptPrice);
+			$("#point_box").css('display', 'none');
+		});
+
+		/* 도서 주문 - 결제 api */
     	function payRequest() {
     		
+			// 배송지 설정 input 입력값 확인
     		var aInput = $("#shipping_info table input[type=text]")
     		
     		for(var i = 0; i < aInput.length; i ++){
@@ -1056,6 +1048,7 @@
     			}
     		}
     		
+			// 약관 동의 여부 확인
     		if($("#policy_info input[name=policy_check]").is(":checked")){
     			var IMP = window.IMP;
         	    IMP.init("imp49550969");
@@ -1103,10 +1096,8 @@
     			alert("구매 동의에 체크해주세요.");
     		}
     	}
-	    
-    </script>
-    
-    <script>
+		
+    	/* 주문 테이블 insert ajax */
     	function insertOrderInfo(){
     		$.ajax({
   	          url: "orderBook.od",
@@ -1131,9 +1122,8 @@
       		  }
   	      })
     	}
-    </script>
-    
-    <script>
+
+    	/* 주문 상세 테이블 insert ajax */
     	function insertOrderDetailInfo(){
     		
     		var param = [];

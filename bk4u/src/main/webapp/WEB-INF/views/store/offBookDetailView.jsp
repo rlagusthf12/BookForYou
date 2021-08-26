@@ -347,26 +347,6 @@
                 
                 <div id="line"></div>
 
-                <script>
-                    $(function(){
-                        $(".btn_info").addClass("btn_select");
-                    });
-
-                    $(".btn_info").click(function(){
-                        $("#bk_info_box").css('display', 'block');
-                        $("#info_box").css('display', 'none');
-                        $(".btn_store").removeClass("btn_select");
-                        $(".btn_info").addClass("btn_select");
-                    });
-
-                    $(".btn_store").click(function(){
-                        $("#info_box").css('display', 'block');
-                        $("#bk_info_box").css('display', 'none');
-                        $(".btn_info").removeClass("btn_select");
-                        $(".btn_store").addClass("btn_select");
-                    });
-                </script>
-
                 <div id="bk_info_box" style="display: block;">
                     <div class="info_box">
                         <div class="info_title">책 소개</div>
@@ -412,68 +392,6 @@
                     </div>
                 </div>
             </div>
-            
-            <script>
-	        	$(".book_info .btn_cart").click(function(){
-	        		
-	        		<c:choose>
-		        		<c:when test="${empty loginUser}">
-		        			alert("로그인 후 이용해주세요");
-		        		</c:when>
-		        		<c:otherwise>
-			        		$.ajax({
-			            		url:"cartUpdate.bk",
-			            		data:{
-			            			memNo:${ loginUser.memNo },
-			            			bkNo:${ bk.bkNo }
-			            		},
-			            		type:"post",
-			            		success:function(result){
-			            			if(result == "success"){
-				    	        		$("#modal_cart").modal('show');
-			            			}else{
-			            				alert("장바구니 추가에 실패했습니다.");
-			            			}
-			            		},error:function(){
-			            			console.log("장바구니 추가 실패");
-			            		}
-				            })
-		        		</c:otherwise>
-	        		</c:choose>
-	        	})
-            </script>
-            
-            <script>
-	        	$(".book_info .btn_list").click(function(){
-	        		
-	        		<c:choose>
-		        		<c:when test="${empty loginUser}">
-		        			alert("로그인 후 이용해주세요");
-		        		</c:when>
-		        		<c:otherwise>
-			        		$.ajax({
-			            		url:"listInsert.bk",
-			            		data:{
-			            			memNo:${ loginUser.memNo },
-			            			bkNo:${ bk.bkNo }
-			            		},
-			            		type:"post",
-			            		success:function(result){
-			            			if(result == "success"){
-				    	        		$("#modal_list").modal('show');
-			            			}else if(result == "done"){
-			            				alert("이미 리스트에 존재하는 도서입니다.")
-			            			}else{
-			            				alert("리스트 추가에 실패했습니다.");
-			            			}
-			            		},error:function(){
-			            			console.log("리스트 추가 실패");
-			            		}
-				            })
-		        		</c:otherwise>
-	        		</c:choose>
-	        	})
-            </script>
 
             <div id="modal_rental" class="modal fade">
                 <div class="modal-dialog">
@@ -519,38 +437,120 @@
                 </div>
             </div>
 
-            <script>
-	        	$("#modal_rental .btn_rental").click(function(){
-	        		
-	        		<c:choose>
-		        		<c:when test="${empty loginUser}">
-		        			alert("로그인 후 이용해주세요");
-		        		</c:when>
-		        		<c:otherwise>
-			        		$.ajax({
-			            		url:"rentalInsert.rt",
-			            		data:{
-			            			memNo:${ loginUser.memNo },
-			            			bkNo:${ bk.bkNo },
-			            			storeNo:${ ob.storeNo }
-			            		},
-			            		type:"post",
-			            		success:function(result){
-			            			if(result == "success"){
-				    	        		alert("예약 신청되었습니다.");
-			            			}else{
-			            				alert("예약 신청에 실패했습니다.");
-			            			}
-			            		},error:function(){
-			            			console.log("예약 신청 실패");
-			            		}
-				            })
-		        		</c:otherwise>
-	        		</c:choose>
-	        		
-	        	})
+                <script>
+                	/* 도서 소개 탭 선택 */
+                    $(function(){
+                        $(".btn_info").addClass("btn_select");
+                    });
+
+                    /* 도서 소개 탭으로 이동 */
+                    $(".btn_info").click(function(){
+                        $("#bk_info_box").css('display', 'block');
+                        $("#info_box").css('display', 'none');
+                        $(".btn_store").removeClass("btn_select");
+                        $(".btn_info").addClass("btn_select");
+                    });
+
+                    /* 매장 조회 탭으로 이동 */
+                    $(".btn_store").click(function(){
+                        $("#info_box").css('display', 'block');
+                        $("#bk_info_box").css('display', 'none');
+                        $(".btn_info").removeClass("btn_select");
+                        $(".btn_store").addClass("btn_select");
+                    });
+
+                    /* 도서 장바구니 추가 */
+		        	$(".book_info .btn_cart").click(function(){
+		        		<c:choose>
+			        		<c:when test="${empty loginUser}">
+			        			alert("로그인 후 이용해주세요");
+			        		</c:when>
+			        		<c:otherwise>
+				        		$.ajax({
+				            		url:"cartUpdate.bk",
+				            		data:{
+				            			memNo:${ loginUser.memNo },
+				            			bkNo:${ bk.bkNo }
+				            		},
+				            		type:"post",
+				            		success:function(result){
+				            			if(result == "success"){
+					    	        		$("#modal_cart").modal('show');
+				            			}else{
+				            				alert("장바구니 추가에 실패했습니다.");
+				            			}
+				            		},error:function(){
+				            			console.log("장바구니 추가 실패");
+				            		}
+					            })
+			        		</c:otherwise>
+		        		</c:choose>
+		        	});
+		        	
+                    /* 도서 리스트 추가 */
+		        	$(".book_info .btn_list").click(function(){
+		        		<c:choose>
+			        		<c:when test="${empty loginUser}">
+			        			alert("로그인 후 이용해주세요");
+			        		</c:when>
+			        		<c:otherwise>
+				        		$.ajax({
+				            		url:"listInsert.bk",
+				            		data:{
+				            			memNo:${ loginUser.memNo },
+				            			bkNo:${ bk.bkNo }
+				            		},
+				            		type:"post",
+				            		success:function(result){
+				            			if(result == "success"){
+					    	        		$("#modal_list").modal('show');
+				            			}else if(result == "done"){
+				            				alert("이미 리스트에 존재하는 도서입니다.")
+				            			}else{
+				            				alert("리스트 추가에 실패했습니다.");
+				            			}
+				            		},error:function(){
+				            			console.log("리스트 추가 실패");
+				            		}
+					            })
+			        		</c:otherwise>
+		        		</c:choose>
+		        	});
+		        	
+                    /* 도서 대여 예약 */
+		        	$("#modal_rental .btn_rental").click(function(){
+		        		<c:choose>
+			        		<c:when test="${empty loginUser}">
+			        			alert("로그인 후 이용해주세요");
+			        		</c:when>
+			        		<c:otherwise>
+			        			<c:when test="${ ob.bkStatus eq '대여가능'}">
+				        			$.ajax({
+					            		url:"rentalInsert.rt",
+					            		data:{
+					            			memNo:${ loginUser.memNo },
+					            			bkNo:${ bk.bkNo },
+					            			storeNo:${ ob.storeNo }
+					            		},
+					            		type:"post",
+					            		success:function(result){
+					            			if(result == "success"){
+						    	        		alert("예약 신청되었습니다.");
+					            			}else{
+					            				alert("예약 신청에 실패했습니다.");
+					            			}
+					            		},error:function(){
+					            			console.log("예약 신청 실패");
+					            		}
+						            })
+			        			</c:when>
+			        			<c:otherwise>
+			        				alert("대여 가능 상태가 아닙니다.");
+			        			</c:otherwise>
+			        		</c:otherwise>
+		        		</c:choose>
+		        	});
             </script>
-            
         </div>
     </div>
     

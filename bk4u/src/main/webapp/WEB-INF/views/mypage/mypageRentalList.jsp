@@ -215,15 +215,6 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                
-                <script>
-                	$("table tr").click(function(){
-                		var rentalNo = $(this).children().eq(0).text();
-                		console.log(rentalNo);
-                		
-                		location.href = "rentalDetail.mp?rentalNo=" + rentalNo;
-                	})
-                </script>
             
 	            <div id="paging-wrap">
 	                <ul class="pagination">
@@ -272,6 +263,16 @@
 	                </ul>
 	            </div>
 
+                <script>
+                	/* 대여 상세 조회로 이동 */
+                	$("table tr").click(function(){
+                		var rentalNo = $(this).children().eq(0).text();
+                		console.log(rentalNo);
+                		
+                		location.href = "rentalDetail.mp?rentalNo=" + rentalNo;
+                	})
+                </script>
+                
             </div>  
         </div>
     </div>

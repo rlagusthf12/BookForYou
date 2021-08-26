@@ -139,4 +139,11 @@ public class RentalDao {
 		return sqlSession.selectOne("rentalMapper.selectAdminRentalDetail", rentalNo);
 	}
 
+	/*
+	 * [공통] 오프라인 도서 대여 상태 수정 (연지)
+	 */
+	public int updateOffBookStatus(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.update("rentalMapper.updateOffBookStatus", map);
+	}
+
 }

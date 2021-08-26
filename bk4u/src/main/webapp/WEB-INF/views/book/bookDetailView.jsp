@@ -343,39 +343,6 @@
 
                 <div id="line"></div>
 
-                <script>
-                    $(function(){
-                        $(".btn_info").addClass("btn_select");
-                    });
-
-                    $(".btn_info").click(function(){
-                        $("#bk_info_box").css('display', 'block');
-                        $("#bkl_info_box").css('display', 'none');
-                        $("#info_box").css('display', 'none');
-                        $(".btn_review").removeClass("btn_select");
-                        $(".btn_refund").removeClass("btn_select");
-                        $(".btn_info").addClass("btn_select");
-                    });
-
-                    $(".btn_review").click(function(){
-                        $("#bkl_info_box").css('display', 'block');
-                        $("#bk_info_box").css('display', 'none');
-                        $("#info_box").css('display', 'none');
-                        $(".btn_info").removeClass("btn_select");
-                        $(".btn_refund").removeClass("btn_select");
-                        $(".btn_review").addClass("btn_select");
-                    });
-
-                    $(".btn_refund").click(function(){
-                        $("#info_box").css('display', 'block');
-                        $("#bk_info_box").css('display', 'none');
-                        $("#bkl_info_box").css('display', 'none');
-                        $(".btn_info").removeClass("btn_select");
-                        $(".btn_review").removeClass("btn_select");
-                        $(".btn_refund").addClass("btn_select");
-                    });
-                </script>
-
                 <div id="bk_info_box" style="display: block; border: 1px solid white;">
                 	<div style="margin-top: 120px;">
                 		${ bk.bkContent }
@@ -488,99 +455,6 @@
                 	</div>
             	</div>
             </div>
-            
-            <script>
-     		
-     		$(function(){
-           	 	// 독서록상세조회 스크립트
-            	$("#bkl_info_box>ul>li").click(function(){
-    	         	var blNo = $(this).find("input[name=blNo]").val();
-    	         	var memNo = $(this).find("input[name=memNo]").val();
-    	         	location.href = "detail.bl?blNo=" + blNo + "&memNo=" + memNo;
-            	})
-            })
-            </script>
-            
-            <script>
-	        	$(".book_info .btn_order").click(function(){
-	        		<c:choose>
-		        		<c:when test="${empty loginUser}">
-        					alert("로그인 후 이용해주세요");
-		        		</c:when>
-		        		<c:otherwise>
-			        		var array = new Array();
-			            	array.push($(this).next().next().next().val());
-				            			
-				            $("#bkNoArr").val(array);
-				            $("#orderForm").submit();
-		        		</c:otherwise>
-	        		</c:choose>
-	        	})
-            </script>
-            
-            <script>
-	        	$(".book_info .btn_cart").click(function(){
-	        		
-	        		<c:choose>
-		        		<c:when test="${empty loginUser}">
-		        			alert("로그인 후 이용해주세요");
-		        		</c:when>
-		        		<c:otherwise>
-			        		$.ajax({
-			            		url:"cartUpdate.bk",
-			            		data:{
-			            			memNo:${ loginUser.memNo },
-			            			bkNo:${ bk.bkNo }
-			            		},
-			            		type:"post",
-			            		success:function(result){
-			            			if(result == "success"){
-				    	        		$("#modal_cart").modal('show');
-			            			}else{
-			            				alert("장바구니 추가에 실패했습니다.");
-			            			}
-			            		},error:function(){
-			            			console.log("장바구니 추가 실패");
-			            		}
-				            })
-		        		</c:otherwise>
-	        		</c:choose>
-	        		
-	        	})
-            </script>
-            
-            <script>
-	        	$(".book_info .btn_list").click(function(){
-	        		
-	        		<c:choose>
-		        		<c:when test="${empty loginUser}">
-		        			alert("로그인 후 이용해주세요");
-		        		</c:when>
-		        		<c:otherwise>
-			        		$.ajax({
-			            		url:"listInsert.bk",
-			            		data:{
-			            			memNo:${ loginUser.memNo },
-			            			bkNo:${ bk.bkNo }
-			            		},
-			            		type:"post",
-			            		success:function(result){
-			            			if(result == "success"){
-				    	        		$("#modal_list").modal('show');
-			            			}else if(result == "done"){
-			            				alert("이미 리스트에 존재하는 도서입니다.")
-			            			}else{
-			            				alert("리스트 추가에 실패했습니다.");
-			            			}
-			            		},error:function(){
-			            			console.log("리스트 추가 실패");
-			            		}
-				            })
-		        		</c:otherwise>
-	        		</c:choose>
-	        		
-	        	})
-            </script>
 
             <div id="modal_cart" class="modal fade">
                 <div class="modal-dialog">
@@ -610,13 +484,131 @@
                 </div>
             </div>
             
-            <script>
+	        <script>
+				/* 도서 소개 탭 선택 */
+	            $(function(){
+	                $(".btn_info").addClass("btn_select");
+	            });
+	
+	            /* 도서 소개 탭으로 이동 */
+	            $(".btn_info").click(function(){
+	                $("#bk_info_box").css('display', 'block');
+	                $("#bkl_info_box").css('display', 'none');
+	                $("#info_box").css('display', 'none');
+	                $(".btn_review").removeClass("btn_select");
+	                $(".btn_refund").removeClass("btn_select");
+	                $(".btn_info").addClass("btn_select");
+	            });
+
+	            /* 독서록 탭으로 이동 */
+	            $(".btn_review").click(function(){
+	                $("#bkl_info_box").css('display', 'block');
+	                $("#bk_info_box").css('display', 'none');
+	                $("#info_box").css('display', 'none');
+	                $(".btn_info").removeClass("btn_select");
+	                $(".btn_refund").removeClass("btn_select");
+	                $(".btn_review").addClass("btn_select");
+	            });
+
+	            /* 환불 안내 탭으로 이동 */
+	            $(".btn_refund").click(function(){
+	                $("#info_box").css('display', 'block');
+	                $("#bk_info_box").css('display', 'none');
+	                $("#bkl_info_box").css('display', 'none');
+	                $(".btn_info").removeClass("btn_select");
+	                $(".btn_review").removeClass("btn_select");
+	                $(".btn_refund").addClass("btn_select");
+	            });
+	            
+	     		/* 독서록 상세 조회 */
+	     		$(function(){
+	            	$("#bkl_info_box>ul>li").click(function(){
+	    	         	var blNo = $(this).find("input[name=blNo]").val();
+	    	         	var memNo = $(this).find("input[name=memNo]").val();
+	    	         	location.href = "detail.bl?blNo=" + blNo + "&memNo=" + memNo;
+	            	})
+	            });
+	     		
+				/* 도서 주문 */
+	        	$(".book_info .btn_order").click(function(){
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+	    					alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		var array = new Array();
+			            	array.push($(this).next().next().next().val());
+				            			
+				            $("#bkNoArr").val(array);
+				            $("#orderForm").submit();
+		        		</c:otherwise>
+	        		</c:choose>
+	        	});
+	        	
+            	/* 도서 장바구니 추가 */
+	        	$(".book_info .btn_cart").click(function(){
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"cartUpdate.bk",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		$("#modal_cart").modal('show');
+			            			}else{
+			            				alert("장바구니 추가에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("장바구니 추가 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
+	        	});
+	        	
+				/* 도서 리스트 추가 */
+	        	$(".book_info .btn_list").click(function(){
+	        		<c:choose>
+		        		<c:when test="${empty loginUser}">
+		        			alert("로그인 후 이용해주세요");
+		        		</c:when>
+		        		<c:otherwise>
+			        		$.ajax({
+			            		url:"listInsert.bk",
+			            		data:{
+			            			memNo:${ loginUser.memNo },
+			            			bkNo:${ bk.bkNo }
+			            		},
+			            		type:"post",
+			            		success:function(result){
+			            			if(result == "success"){
+				    	        		$("#modal_list").modal('show');
+			            			}else if(result == "done"){
+			            				alert("이미 리스트에 존재하는 도서입니다.")
+			            			}else{
+			            				alert("리스트 추가에 실패했습니다.");
+			            			}
+			            		},error:function(){
+			            			console.log("리스트 추가 실패");
+			            		}
+				            })
+		        		</c:otherwise>
+	        		</c:choose>
+	        	});
+				
+				/* 장바구니 추가 후 장바구니 이동 */
             	function goToCart(){
             		location.href = "cart.bk?memNo=${loginUser.memNo}";
             	}
-            </script>
-            
-            <script>
+            	
+				/* 리스트 추가 후 리스트 이동 */
             	function goToList(){
             		location.href = "my-list.mp";
             	}

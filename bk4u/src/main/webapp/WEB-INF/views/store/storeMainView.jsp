@@ -126,7 +126,7 @@
                             <td><a href="">서울대점</a></td>
                             <td><a href="">수유점</a></td>
                             <td><a href="storeDetail.st?storeNo=5">신촌점</a></td>
-                            <td><a href="storeDetail.st?storeNo=6	">종로점</a></td>
+                            <td><a href="storeDetail.st?storeNo=6">종로점</a></td>
                             <td><a href="">영등포점</a></td>
                         </tr>
                         <tr>

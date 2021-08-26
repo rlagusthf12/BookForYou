@@ -414,161 +414,6 @@
                 </c:otherwise>
             </c:choose>
 
-            <script>
-	            $("#cart_top .btn_order").click(function(){
-						            	
-					if($('input:checkbox[name=bkNo]:checked').length == 0){	
-						alert("주문할 도서를 선택해주세요.");
-					}else{
-						var array = new Array();
-			            $('input:checkbox[name=bkNo]:checked').each(function() {
-			                array.push($(this).val());
-			            });
-			            			
-			            $("#bkNoArr").val(array);
-			            $("#orderForm").submit();
-					}
-	            	
-	            })
-            </script>
-            
-            <script>
-	        	$(".book_info>div:nth-child(4)>div:nth-child(1)").click(function(){
-	            	var array = new Array();
-	            	array.push($(this).next().next().next().val());
-		            			
-		            $("#bkNoArr").val(array);
-		            $("#orderForm").submit();
-	        	})
-            </script>
-            
-            <script>
-	        	$(".book_info>div:nth-child(4)>div:nth-child(2)").click(function(){
-	        		
-	        		$.ajax({
-	            		url:"listInsert.bk",
-	            		data:{
-	            			memNo:${ loginUser.memNo },
-	            			bkNo:$(this).parent().children("input[id=book_no]").val()
-	            		},
-	            		type:"post",
-	            		success:function(result){
-	            			if(result == "success"){
-		    	        		$("#modal_list").modal('show');
-	            			}else if(result == "done"){
-	            				alert("이미 리스트에 존재하는 도서입니다.")
-	            			}
-	            			else{
-	            				alert("리스트 추가에 실패했습니다.");
-	            			}
-	            		},error:function(){
-	            			console.log("리스트 추가 실패");
-	            		}
-		            })
-	        	})
-            </script>
-            
-            <script>
-            $(".book_info>div:nth-child(4)>div:nth-child(3)").click(function(){
-    			
-    			var div = $(this).parent().parent().parent();
-    			
-    			$.ajax({
-            		url:"cartDelete.bk",
-            		data:{
-            			memNo:${ loginUser.memNo },
-            			bkNo:$(this).parent().children("input[id=book_no]").val()
-            		},
-            		type:"post",
-            		success:function(result){
-            			if(result == "success"){
-            				div.remove();
-            			}else{
-            				alert("장바구니 삭제에 실패했습니다.");
-            			}
-            		},error:function(){
-            			console.log("장바구니 삭제 실패");
-            		}
-	            })
-    		})
-            </script>
-            
-            <script>
-        	$(".btn_qty").click(function(){
-    			
-        		var input = $(this).parent().prev().children().val();
-        		
-        		console.log(${ loginUser.memNo });
-        		console.log($(this).parent().parent().next().next().children("input[id=book_no]").val());
-        		console.log(input);
-    			
-    			$.ajax({
-    				url:"updateCartQty.bk",
-            		data:{
-            			memNo:${ loginUser.memNo },
-            			bkNo:$(this).parent().parent().next().next().children("input[id=book_no]").val(),
-            			cartQty:input
-            		},
-            		type:"post",
-            		success:function(result){
-            			if(result == "success"){
-            				alert("장바구니 수량을 변경했습니다.");
-            			}else{
-            				alert("장바구니 수량 변경에 실패했습니다.");
-            			}
-            		},error:function(){
-            			console.log("장바구니 수량 갱신 실패");
-            		}
-	            })
-    		})
-            </script>
-            
-            <script>
-            	var allPrice = 0;
-            </script>
-            
-            <script>
-            /*
-            $("#check_all").change(function(){
-            	if($("#check_all").is(":checked")){
-            		$(".cart_book").children("input[type=checkbox]").attr('checked', true);
-            	}else{
-            		$(".cart_book").children("input[type=checkbox]").attr('checked', false);
-            	}
-            })
-            */
-            
-            $("#check_all").change(function(){
-            	if($("#check_all").is(":checked")){
-            		$(".cart_book").children("input[type=checkbox]").prop('checked', true);
-            		allPrice = 82000;
-                	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
-            		
-            	}else{
-            		$(".cart_book").children("input[type=checkbox]").prop('checked', false);
-                	allPrice = 0;
-                	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
-            	}
-            })
-            </script>
-            
-            <script>
-            $(".cart_book input[type=checkbox]").change(function(){
-            	
-                var bq = $(this).next().next().children().eq(1).children().eq(0).children("input").val();
-                var bp = $(this).next().next().children().eq(2).children("span").text();
-            	
-            	if($(this).is(":checked")){
-	                allPrice += (bq * bp);
-	            }else{
-	                allPrice -= (bq * bp);
-	            }
-            	
-            	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
-            	
-            });
-            </script>
-
             <div id="coupon_box">
                 <table>
                     <tr>
@@ -590,14 +435,6 @@
                     </c:forEach>
                 </table>
             </div>
-
-            <script>
-                $("#cart_bottom>div:nth-child(1)").hover(function(){
-                    $("#coupon_box").css('display', 'block');
-                }, function(){
-                    $("#coupon_box").css('display', 'none');
-                });
-            </script>
             
             <div id="modal_list" class="modal fade">
                 <div class="modal-dialog">
@@ -612,6 +449,146 @@
                     </div>
                 </div>
             </div>
+            
+            <script>
+            	// 도서 총 금액 변수
+            	var allPrice = 0;
+            
+            	/* 체크박스 - 도서 다수 주문 */
+	            $("#cart_top .btn_order").click(function(){
+					// 체크된 도서 유무 확인
+					if($('input:checkbox[name=bkNo]:checked').length == 0){	
+						alert("주문할 도서를 선택해주세요.");
+					}else{
+						var array = new Array();
+			            $('input:checkbox[name=bkNo]:checked').each(function() {
+			                array.push($(this).val());
+			            });
+			            			
+			            $("#bkNoArr").val(array);
+			            $("#orderForm").submit();
+					}
+	            });
+	            
+            	/* 도서 단일 주문 */
+	        	$(".book_info>div:nth-child(4)>div:nth-child(1)").click(function(){
+	            	var array = new Array();
+	            	array.push($(this).next().next().next().val());
+		            			
+		            $("#bkNoArr").val(array);
+		            $("#orderForm").submit();
+	        	});
+	        	
+            	/* 도서 단일 리스트 추가 */
+	        	$(".book_info>div:nth-child(4)>div:nth-child(2)").click(function(){
+	        		$.ajax({
+	            		url:"listInsert.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:$(this).parent().children("input[id=book_no]").val()
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+		    	        		$("#modal_list").modal('show');
+	            			}else if(result == "done"){
+	            				alert("이미 리스트에 존재하는 도서입니다.")
+	            			}
+	            			else{
+	            				alert("리스트 추가에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("리스트 추가 실패");
+	            		}
+		            })
+		        });
+	
+	        	/* 도서 단일 장바구니 삭제 */
+	            $(".book_info>div:nth-child(4)>div:nth-child(3)").click(function(){
+	    			// 삭제할 도서 div 선택
+	    			var div = $(this).parent().parent().parent();
+	    			
+	    			$.ajax({
+	            		url:"cartDelete.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:$(this).parent().children("input[id=book_no]").val()
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+	            				div.remove();
+	            			}else{
+	            				alert("장바구니 삭제에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("장바구니 삭제 실패");
+	            		}
+		            })
+	    		});
+	            
+	        	/* 장바구니 도서 수량 변경 */
+	        	$(".btn_qty").click(function(){
+	    			// 변경할 도서의 수량 선택
+	        		var input = $(this).parent().prev().children().val();
+	    			
+	    			$.ajax({
+	    				url:"updateCartQty.bk",
+	            		data:{
+	            			memNo:${ loginUser.memNo },
+	            			bkNo:$(this).parent().parent().next().next().children("input[id=book_no]").val(),
+	            			cartQty:input
+	            		},
+	            		type:"post",
+	            		success:function(result){
+	            			if(result == "success"){
+	            				alert("장바구니 수량을 변경했습니다.");
+	            			}else{
+	            				alert("장바구니 수량 변경에 실패했습니다.");
+	            			}
+	            		},error:function(){
+	            			console.log("장바구니 수량 갱신 실패");
+	            		}
+		            })
+	    		});
+				
+	        	/* 체크박스 전체 선택/해제 */
+	            $("#check_all").change(function(){
+	            	if($("#check_all").is(":checked")){
+	            		$(".cart_book").children("input[type=checkbox]").prop('checked', true);
+	            		allPrice = 82000;
+	                	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
+	            		
+	            	}else{
+	            		$(".cart_book").children("input[type=checkbox]").prop('checked', false);
+	                	allPrice = 0;
+	                	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
+	            	}
+	            });
+	            
+	        	/* 선택한 도서 가격 변경 */
+	            $(".cart_book input[type=checkbox]").change(function(){
+	            	
+	                var bq = $(this).next().next().children().eq(1).children().eq(0).children("input").val();
+	                var bp = $(this).next().next().children().eq(2).children("span").text();
+	            	
+	            	if($(this).is(":checked")){
+		                allPrice += (bq * bp);
+		            }else{
+		                allPrice -= (bq * bp);
+		            }
+	            	
+	            	$("#cart_bottom").children().eq(2).children().eq(1).text(allPrice + "원");
+	            	
+	            });
+	            
+	            /* 쿠폰 박스 */
+	            $("#cart_bottom>div:nth-child(1)").hover(function(){
+	                $("#coupon_box").css('display', 'block');
+	            }, function(){
+	                $("#coupon_box").css('display', 'none');
+	            });
+            </script>
 
         </div>
     </div>

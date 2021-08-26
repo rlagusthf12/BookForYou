@@ -64,7 +64,7 @@ public class RentalController {
 	}
 	
 	/*
-	 * [사용자] 대여 내역 조회 (연지)
+	 * [사용자] 대여 신청 (연지)
 	 */
 	@ResponseBody
 	@RequestMapping(value="rentalInsert.rt", produces="text/html; charset=utf-8")
@@ -77,7 +77,9 @@ public class RentalController {
 
 		int result = rentalService.insertRental(map);
 		
-		System.out.println(result);
+		if(result > 0) {
+			result = rentalService.updateOffBookStatus(map);
+		}
 		
 		return result> 0 ? "success" : "fail";
 		

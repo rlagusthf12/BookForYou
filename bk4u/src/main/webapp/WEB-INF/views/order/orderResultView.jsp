@@ -433,8 +433,10 @@
             </div>
             
             <script>
+            	// 적립 포인트 정수화
             	var ptPrice = <fmt:formatNumber value="${od.orderPrice * 0.01}" type = "number" minFractionDigits="0"/>;
             	
+            	/* 총 예상 포인트 변경 */
             	$(function(){
             		$("#payment_detail #point_result>div:nth-child(2)").text(ptPrice + ${point} + "원");
             	})

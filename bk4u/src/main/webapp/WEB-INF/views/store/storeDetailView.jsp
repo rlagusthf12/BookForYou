@@ -154,12 +154,12 @@
     <div class="wrap">
         <div id="content">
             <div id="store_info">
-                <div>
-                    <div>${ st.storeName }</div>
-                    <div>
-                        영업시간 : ${ st.storeOpen }<br>
-                        정기휴일 : ${ st.storeClosed }<br>
-                        주소 : ${ st.storeAddress }
+                <div  style="border-right: none;">
+                    <div style="border: none;">${ st.storeName }</div>
+                    <div style="border: none; margin-left: 10px;">
+                    	영업시간 : ${ st.storeOpen }<br>
+                    	정기휴일 : ${ st.storeClosed }<br>
+                    	주소 : ${ st.storeAddress }
                     </div>
                 </div>
             </div>

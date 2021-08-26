@@ -424,4 +424,13 @@
 		   and rental.store_no = off_book.store_no
 	</select>
 	
+	<!-- [공통] 오프라인 도서 대여 상태 수정 (연지) -->
+	<update id="updateOffBookStatus">
+		update
+		       off_book
+		   set bk_status = '예약중'
+		 where bk_no = #{bkNo}
+		   and store_no = #{storeNo} 
+	</update>
+	
 </mapper>
